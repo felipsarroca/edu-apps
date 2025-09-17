@@ -1,0 +1,21 @@
+﻿
+function setMode(mode) {
+  state.mode = mode;
+  const subtitle = document.getElementById('subtitle');
+  const indicator = document.getElementById('mode-indicator');
+  subtitle.textContent = `Mode: ${modeMeta[mode].label}`;
+  indicator.textContent = modeMeta[mode].icon;
+
+  colorize();
+  renderLegendV2();
+  // Reajustar escala (el contingut pot canviar alÃ§ada)
+  fitGridScale();
+}
+
+function colorize() {
+  const grid = document.getElementById('periodic-grid');
+  const cards = grid.querySelectorAll('.cell');
+  cards.forEach(c => { c.className = 'cell blank'; c.style.background = ''; c.style.removeProperty('--cell-fg'); });
+
+  switch (state.mode) {
+    case 'blank':

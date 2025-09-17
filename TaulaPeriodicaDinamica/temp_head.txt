@@ -1,0 +1,80 @@
+﻿// App: Taula periÃ²dica dinÃ mica
+// Dades: data/elements.json (Bowserinator - PeriodicTableJSON)
+
+const state = {
+  elements: [],
+  mode: 'blank',
+};
+
+// Noms en catalÃ  (accepta tant objecte {"H":"Hidrogen"} com array [{Key:"H", Value:"Hidrogen"}])
+let PT_NAMES_CA = null;
+function getNameCA(symbol, fallback) {
+  if (typeof window !== 'undefined' && window.PT_NOMS_CA) {
+    if (!PT_NAMES_CA) {
+      if (Array.isArray(window.PT_NOMS_CA)) {
+        PT_NAMES_CA = {};
+        for (const row of window.PT_NOMS_CA) {
+          const k = row.Key || row.symbol || row.sym;
+          const v = row.Value || row.name_ca || row.NameCA || row.name || row.ValueCA;
+          if (k && v) PT_NAMES_CA[k] = v;
+        }
+      } else if (typeof window.PT_NOMS_CA === 'object') {
+        PT_NAMES_CA = window.PT_NOMS_CA;
+      } else {
+        PT_NAMES_CA = {};
+      }
+    }
+    if (PT_NAMES_CA[symbol]) return PT_NAMES_CA[symbol];
+  }
+  return fallback;
+}
+
+const modeMeta = {
+  blank: { label: 'en blanc', icon: 'â€”' },
+  families: { label: 'famÃ­lies / grups', icon: 'F' },
+  blocks: { label: 'blocs electrÃ²nics', icon: 'b' },
+  valence: { label: 'valÃ¨ncia', icon: 'v' },
+  electronegativity: { label: 'electronegativitat', icon: 'eâ»' },
+  ionization: { label: 'energia dâ€™ionitzaciÃ³', icon: 'I' },
+  state: { label: 'estat fÃ­sic (TA)', icon: 'â—·' },
+  reactivity: { label: 'reactivitat (aprox.)', icon: 'R' },
+  condElectric: { label: 'conductivitat elÃ¨ctrica (aprox.)', icon: 'âš¡' },
+  condThermal: { label: 'conductivitat tÃ¨rmica (aprox.)', icon: 'â™¨' },
+  ferromagnetism: { label: 'ferromagnetisme', icon: 'â¦¿' },
+  bioessential: { label: 'essencials per a la vida', icon: 'â¤' },
+  toxic: { label: 'tÃ²xics/contaminants (selecciÃ³)', icon: 'â˜ ' },
+  radioactive: { label: 'radioactivitat', icon: 'â˜¢' },
+  body: { label: 'cos humÃ  (%)', icon: 'ðŸ‘¤' },
+  earth: { label: 'presÃ¨ncia a la Terra (%)', icon: 'ðŸŒ' },
+  universe: { label: 'abundÃ ncia a lâ€™Univers (%)', icon: 'âœ¦' },
+  density: { label: 'densitat', icon: 'Ï' },
+  atomicRadius: { label: 'radi atÃ²mic', icon: 'âŒ€' },
+  metallic: { label: 'metÃ lÂ·lics', icon: 'M' },
+};
+
+const familiesPalette = {
+  // Mapa de categories (en anglÃ¨s al dataset) -> colors
+  'alkali metal': '#fca5a5',
+  'alkaline earth metal': '#fdba74',
+  'transition metal': '#fde047',
+  'post-transition metal': '#60a5fa',
+  'metalloid': '#34d399',
+  'polyatomic nonmetal': '#a78bfa',
+  'diatomic nonmetal': '#c084fc',
+  'noble gas': '#f472b6',
+  'lanthanide': '#5eead4',
+  'actinide': '#67e8f9',
+  'unknown': '#94a3b8',
+};
+
+// Ordre explÃ­cit per a la llegenda de famÃ­lies
+const familiesOrder = [
+  'alkali metal',
+  'alkaline earth metal',
+  'transition metal',
+  'post-transition metal',
+  'metalloid',
+  'polyatomic nonmetal',
+  'diatomic nonmetal',
+  'noble gas',
+  'lanthanide',
