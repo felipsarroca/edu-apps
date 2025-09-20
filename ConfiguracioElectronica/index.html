@@ -1,65 +1,119 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ca">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <title>Visualitzador de Configuració Electrònica</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'alkali-metal': '#f472b6', // pink-400
-              'alkaline-earth-metal': '#f87171', // red-400
-              'lanthanide': '#34d399', // emerald-400
-              'actinide': '#14b8a6', // teal-500
-              'transition-metal': '#facc15', // amber-400
-              'post-transition-metal': '#60a5fa', // blue-400
-              'metalloid': '#818cf8', // indigo-400
-              'nonmetal': '#a3e635', // lime-400
-              'halogen': '#38bdf8', // sky-400
-              'noble-gas': '#a855f7', // purple-500
-              'unknown': '#64748b', // slate-500
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              popIn: {
-                '0%': { transform: 'scale(0.8)', opacity: '0' },
-                '100%': { transform: 'scale(1)', opacity: '1' },
-              },
-              glow: {
-                '0%, 100%': { boxShadow: '0 0 5px #0891b2, 0 0 10px #0891b2' },
-                '50%': { boxShadow: '0 0 20px #0891b2, 0 0 30px #0891b2' },
-              }
-            },
-            animation: {
-              fadeIn: 'fadeIn 0.5s ease-in-out',
-              popIn: 'popIn 0.3s ease-out',
-              glow: 'glow 1.5s infinite',
-            }
-          }
-        }
-      }
-    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Configuració electrònica · orbitals i taula periòdica</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Configuració electrònica</h1>
+      <p class="subtitle">Emplenament d'orbitals i posició a la Taula Periòdica</p>
+    </header>
 
-<!-- Eliminat CSS inexistent i assegurades rutes relatives -->
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
-    "react": "https://aistudiocdn.com/react@^19.1.1"
-  }
-}
-</script>
-  <script type="module" crossorigin src="./assets/index-exMoNHyc.js"></script>
-</head>
-  <body class="bg-slate-100 text-gray-800 antialiased">
-    <div id="root"></div>
-</body>
+    <main class="layout">
+      <!-- Panell esquerre: orbitals -->
+      <section class="panel" id="orbitals-panel">
+        <div class="panel-header">
+          <h2>Emplenament d'orbitals</h2>
+          <div class="controls">
+            <button id="remove-electron" class="btn btn-secondary btn-electron" title="Treure 1 electró">− electró</button>
+            <button id="add-electron" class="btn btn-primary btn-electron" title="Afegir 1 electró">+ electró</button>
+            <button id="reset" class="btn" title="Reiniciar">reinicia</button>
+          </div>
+        </div>
+
+        <div class="status">
+          <div><strong>Electrons:</strong> <span id="electron-count">0</span></div>
+          <div class="status-config"><strong>Configuració completa:</strong> <span id="config-full">—</span></div>
+          <div class="status-config"><strong>Notació amb gas noble:</strong> <span id="config-noble">—</span></div>
+        </div>
+
+        <div class="orbital-stage">
+          <div id="orbital-diagram" class="orbital-diagram" aria-live="polite"></div>
+
+          <div class="atom-wrapper">
+            <div class="atom-visual" id="atom-visual" role="img" aria-live="polite" aria-label="Representació esquemàtica de l'àtom seleccionat">
+              <svg id="atom-svg" class="atom-svg" viewBox="0 0 360 360" role="presentation" focusable="false">
+                <g id="atom-shell-group"></g>
+                <circle id="atom-nucleus" class="atom-nucleus-circle" cx="180" cy="180" r="44"></circle>
+                <g id="atom-shell-badges"></g>
+              </svg>
+            </div>
+            <div class="atom-core-label">
+              <span id="atom-symbol" class="atom-core-symbol">—</span>
+              <span id="atom-name" class="atom-core-name">Cap element</span>
+              <span id="atom-number" class="atom-core-number">Z = 0</span>
+            </div>
+            <ul class="atom-shell-list" id="atom-shell-list" aria-live="polite" aria-label="Electrons per capa"></ul>
+            <p class="atom-hint">Verd: capa plena · Rosa: capa en curs</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Panell dret: taula periòdica -->
+      <section class="panel" id="periodic-panel">
+        <div class="panel-header">
+          <h2>Taula periòdica</h2>
+        </div>
+
+        <div class="status">
+          <div><strong>Element:</strong> <span id="el-title">—</span></div>
+          <div><strong>Coordenades:</strong> <span id="coords">—</span></div>
+        </div>
+
+        <div class="legend">
+          <span class="legend-item s">bloc s</span>
+          <span class="legend-item d">bloc d</span>
+          <span class="legend-item p">bloc p</span>
+          <span class="legend-item f">bloc f (lantànids/actínids)</span>
+        </div>
+
+        <div class="periodic-area">
+          <div class="corner"></div>
+          <div id="group-header" class="group-header" aria-hidden="true"></div>
+          <div id="period-labels" class="period-labels" aria-hidden="true"></div>
+          <div class="periodic-wrapper">
+            <div id="periodic-main" class="periodic-grid" aria-label="Taula periòdica principal"></div>
+            
+            <span class="f-label f-label-lan">Lantànids</span>
+            <div id="periodic-f-lan" class="periodic-f-grid" aria-label="Lantànids"></div>
+            
+            <span class="f-label f-label-act">Actínids</span>
+            <div id="periodic-f-act" class="periodic-f-grid" aria-label="Actínids"></div>
+          </div>
+        </div>
+
+        <div class="aufbau-display-wrapper">
+          <h3 class="aufbau-title">Configuració d'Aufbau</h3>
+          <div id="aufbau-config-display" class="aufbau-display"></div>
+        </div>
+
+        <div class="oxidation-wrapper">
+          <h3 class="oxidation-title">Valències d'oxidació</h3>
+          <div id="oxidation-states" class="oxidation-states" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="footer-credit">
+        <span class="footer-author">Aplicació creada per Felip Sarroca amb l'assistència de la IA</span>
+        <div class="footer-license">
+          <span class="license-text">Obra sota llicència <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></span>
+          <span class="license-icons" aria-hidden="true">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" class="license-icon" loading="lazy" />
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" class="license-icon" loading="lazy" />
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" class="license-icon" loading="lazy" />
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="enhancements.js"></script>
+  </body>
 </html>
