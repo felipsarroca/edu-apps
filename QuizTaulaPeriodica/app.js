@@ -575,12 +575,13 @@ function handleSendResults() {
   submissionStatus.textContent = "Enviant dades...";
   submissionStatus.classList.remove("success", "error");
 
-  const payload = {
-    name: state.playerName,
-    difficulty: DIFFICULTY_CONFIG[state.difficultyKey].label,
-    completedStreak: 10,
-    timestamp: new Date().toISOString(),
+   const payload = {
+    nom: state.playerName,
+    puntuacio: state.streak, // sempre 10 quan guanya
+    nivell: DIFFICULTY_CONFIG[state.difficultyKey].label,
+    temps: statusTimer.textContent // format mm:ss
   };
+
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
