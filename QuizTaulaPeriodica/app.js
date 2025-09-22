@@ -560,6 +560,7 @@ function toggleModal(show) {
   resultModal.hidden = !show;
 }
 
+// --- ENVIAMENT DE RESULTATS (sense CORS, simple request) ---
 function handleSendResults() {
   if (!state.hasWon) return;
 
@@ -577,42 +578,27 @@ function handleSendResults() {
 
   const payload = {
     nom: state.playerName,
-    puntuacio: state.streak, // en guanyar és 10
+    puntuacio: state.streak, // 10 quan acabes
     nivell: DIFFICULTY_CONFIG[state.difficultyKey].label,
     temps: statusTimer.textContent // mm:ss
   };
 
-  sendViaJSONP(GOOGLE_SCRIPT_URL, payload)
-    .then(() => {
-      submissionStatus.textContent = "Resultat enviat correctament!";
-      submissionStatus.classList.add("success");
-    })
-    .catch((error) => {
-      submissionStatus.textContent = `No s'ha pogut enviar: ${error.message || error}`;
-      submissionStatus.classList.add("error");
-      sendResultsBtn.disabled = false;
-    });
-}
-
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
+    mode: "no-cors",                      // evita preflight i CORS
+    headers: { "Content-Type": "text/plain" }, // simple request
+    body: JSON.stringify(payload)
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error de xarxa: ${response.status}`);
-      }
-      return response.json().catch(() => ({ success: true }));
-    })
     .then(() => {
+      // Resposta "opaque", però sabem que s'ha enviat
       submissionStatus.textContent = "Resultat enviat correctament!";
+      submissionStatus.classList.remove("error");
       submissionStatus.classList.add("success");
+      // sendResultsBtn.disabled = true; // opcional
     })
     .catch((error) => {
-      submissionStatus.textContent = `No s'ha pogut enviar: ${error.message}`;
+      submissionStatus.textContent = `No s'ha pogut enviar: ${error?.message || error}`;
+      submissionStatus.classList.remove("success");
       submissionStatus.classList.add("error");
       sendResultsBtn.disabled = false;
     });
@@ -627,56 +613,6 @@ function clearTimers() {
     clearTimeout(state.nextQuestionTimeout);
     state.nextQuestionTimeout = null;
   }
-}
-
-function sendViaJSONP(baseUrl, params) {
-  return new Promise((resolve, reject) => {
-    // Callback únic per cada crida
-    const cbName = "__jsonp_cb_" + Math.random().toString(36).slice(2);
-    params = { ...params, callback: cbName };
-
-    // Construeix query string
-    const qs = Object.entries(params)
-      .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
-      .join("&");
-
-    const url = `${baseUrl}?${qs}`;
-    const script = document.createElement("script");
-    let done = false;
-
-    // Defineix la funció callback accessible globalment
-    window[cbName] = (data) => {
-      if (done) return;
-      done = true;
-      cleanup();
-      if (data && data.status === "ok") resolve(data);
-      else reject(data || { message: "Error desconegut" });
-    };
-
-    script.onerror = () => {
-      if (done) return;
-      done = true;
-      cleanup();
-      reject({ message: "No s'ha pogut carregar l'script JSONP" });
-    };
-
-    function cleanup() {
-      try { delete window[cbName]; } catch (_) { window[cbName] = undefined; }
-      if (script.parentNode) script.parentNode.removeChild(script);
-    }
-
-    // Injecció del <script> (això evita CORS)
-    document.head.appendChild(script);
-    script.src = url;
-
-    // Timeout de seguretat (10s)
-    setTimeout(() => {
-      if (done) return;
-      done = true;
-      cleanup();
-      reject({ message: "Timeout connectant amb el servidor" });
-    }, 10000);
-  });
 }
 
 window.addEventListener("beforeunload", clearTimers);
