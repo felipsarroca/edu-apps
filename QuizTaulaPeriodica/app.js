@@ -576,33 +576,30 @@ function handleSendResults() {
   submissionStatus.textContent = "Enviant dades...";
   submissionStatus.classList.remove("success", "error");
 
-  const payload = {
-    nom: state.playerName,
-    puntuacio: state.streak, // 10 quan acabes
-    nivell: DIFFICULTY_CONFIG[state.difficultyKey].label,
-    temps: statusTimer.textContent // mm:ss
-  };
+const payload = {
+  nom: state.playerName,
+  puntuacio: state.streak, // en guanyar és 10
+  nivell: DIFFICULTY_CONFIG[state.difficultyKey].label,
+  temps: statusTimer.textContent // mm:ss
+};
 
-  fetch(GOOGLE_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",                      // evita preflight i CORS
-    headers: { "Content-Type": "text/plain" }, // simple request
-    body: JSON.stringify(payload)
+fetch(GOOGLE_SCRIPT_URL, {
+  method: "POST",
+  mode: "no-cors",
+  headers: { "Content-Type": "text/plain" }, // simple request (sense preflight)
+  body: JSON.stringify(payload)
+})
+  .then(() => {
+    submissionStatus.textContent = "Resultat enviat correctament!";
+    submissionStatus.classList.remove("error");
+    submissionStatus.classList.add("success");
   })
-    .then(() => {
-      // Resposta "opaque", però sabem que s'ha enviat
-      submissionStatus.textContent = "Resultat enviat correctament!";
-      submissionStatus.classList.remove("error");
-      submissionStatus.classList.add("success");
-      // sendResultsBtn.disabled = true; // opcional
-    })
-    .catch((error) => {
-      submissionStatus.textContent = `No s'ha pogut enviar: ${error?.message || error}`;
-      submissionStatus.classList.remove("success");
-      submissionStatus.classList.add("error");
-      sendResultsBtn.disabled = false;
-    });
-}
+  .catch((error) => {
+    submissionStatus.textContent = `No s'ha pogut enviar: ${error?.message || error}`;
+    submissionStatus.classList.remove("success");
+    submissionStatus.classList.add("error");
+    sendResultsBtn.disabled = false;
+  });
 
 function clearTimers() {
   if (state.timerId) {
