@@ -576,44 +576,29 @@ function handleSendResults() {
   submissionStatus.textContent = "Enviant dades...";
   submissionStatus.classList.remove("success", "error");
 
-  const payload = {
-    nom: state.playerName,
-    puntuacio: state.streak, // 10 quan acabes
-    nivell: DIFFICULTY_CONFIG[state.difficultyKey].label,
-    temps: statusTimer.textContent, // mm:ss
-  };
+  // Canviem a FormData per evitar problemes de CORS
+  const formData = new FormData();
+  formData.append('nom', state.playerName);
+  formData.append('puntuacio', state.streak);
+  formData.append('nivell', DIFFICULTY_CONFIG[state.difficultyKey].label);
+  formData.append('temps', statusTimer.textContent);
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
-    mode: "cors", // Canviat de 'no-cors' a 'cors' per poder llegir la resposta
-    headers: {
-      "Content-Type": "application/json", // El tipus de contingut que espera l'script
-    },
-    body: JSON.stringify(payload),
+    mode: "no-cors", // Tornem a no-cors, que amb FormData és més fiable
+    body: formData,
   })
-    .then((response) => {
-      // Com que ja no és 'no-cors', podem comprovar la resposta del servidor
-      if (!response.ok) {
-        throw new Error(`Error de xarxa: ${response.statusText}`);
-      }
-      return response.json(); // Processem la resposta JSON que envia l'script
-    })
-    .then((data) => {
-      // Ara podem llegir la resposta de l'script i actuar en conseqüència
-      if (data.status === "ok") {
-        submissionStatus.textContent = "Resultat enviat correctament!";
-        submissionStatus.classList.remove("error");
-        submissionStatus.classList.add("success");
-      } else {
-        // Si l'script ha retornat un error controlat, el mostrem
-        throw new Error(data.missatge || "L'script ha retornat un error.");
-      }
+    .then(() => {
+      // Amb no-cors, no podem confirmar, però mostrem un missatge optimista
+      submissionStatus.textContent = "Resultat enviat! Es registrarà en breus.";
+      submissionStatus.classList.remove("error");
+      submissionStatus.classList.add("success");
     })
     .catch((error) => {
       submissionStatus.textContent = `No s'ha pogut enviar: ${error?.message || error}`;
       submissionStatus.classList.remove("success");
       submissionStatus.classList.add("error");
-      sendResultsBtn.disabled = false; // Tornem a habilitar el botó si hi ha error
+      sendResultsBtn.disabled = false;
     });
 }
 
