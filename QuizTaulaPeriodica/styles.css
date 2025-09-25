@@ -824,14 +824,37 @@ body {
 .instructions-list li {
   font-size: 1rem;
   line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+}
+
+.instruction-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  font-size: 1.1rem;
 }
 
 .instructions-tip {
-  margin: 12px 0 0;
+  margin: 18px 0 0;
   font-size: 0.95rem;
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.65);
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: 12px;
-  line-height: 1.4;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
+
+.instructions-tip span:last-child {
+  color: #d35400;
+  font-weight: 600;
+}
+
+.instruction-tip-icon {
+  font-size: 1.2rem;
+}
+
