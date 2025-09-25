@@ -580,7 +580,7 @@ body {
 .modal-status {
   min-height: 1.2em;
   font-weight: 600;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 .modal-status.success {

@@ -578,7 +578,7 @@ function handleVictory() {
     }
     sendResultsBtn.hidden = false;
     const discardBtn = document.getElementById("close-modal-2");
-    if (discardBtn) discardBtn.textContent = "No, gr�cies";
+    if (discardBtn) discardBtn.textContent = "No, gràcies";
   } else {
     if (modalText) {
       modalText.textContent = "Has completat el repte amb 10 encerts seguits.";
