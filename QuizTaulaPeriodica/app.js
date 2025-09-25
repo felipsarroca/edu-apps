@@ -219,6 +219,7 @@ const statusPlayer = document.getElementById("status-player");
 const statusLevel = document.getElementById("status-level");
 const statusTimer = document.getElementById("status-timer");
 const statusStreak = document.getElementById("status-streak");
+const statusTotal = document.getElementById("status-total");
 const startForm = document.getElementById("start-form");
 const playerNameInput = document.getElementById("player-name");
 const difficultyInput = document.getElementById("difficulty");
@@ -251,6 +252,9 @@ const state = {
   nextQuestionTimeout: null,
   hasWon: false,
   currentPool: [],
+  totalTimerId: null,
+  totalStartMs: null,
+  totalElapsedMs: 0,
 };
 
 tableOverlay.style.display = "flex";
@@ -406,6 +410,8 @@ function handleStartGame(event) {
   state.isActive = true;
 
   clearTimers();
+  stopTotalTimer();
+  startTotalTimer();
   scheduleNextQuestion(120);
 }
 
@@ -506,7 +512,6 @@ function updateStreakVisual() {
       delete slot.dataset.streakLevel;
     }
   });
-  statusStreak.textContent = `${state.streak}/10`;
 }
 
 function setFeedback(message, tone = "neutral") {
@@ -520,7 +525,7 @@ function updateStatusPanel() {
   const config = DIFFICULTY_CONFIG[state.difficultyKey];
   statusPlayer.textContent = state.playerName;
   statusLevel.textContent = config.label;
-  statusStreak.textContent = "0/10";
+  if (statusTotal) statusTotal.textContent = "00:00";
   updateTimerDisplay(config.timeLimit * 1000);
 }
 
@@ -558,6 +563,7 @@ function handleVictory() {
   state.isActive = false;
   state.hasWon = true;
   clearTimers();
+  stopTotalTimer();
   elementButtons.forEach((btn) => btn.classList.remove("target"));
   setFeedback("Partida completada!", "positive");
   statusTimer.textContent = "00:00";
@@ -610,7 +616,7 @@ function handleSendResults() {
   formData.append('nom', state.playerName);
   formData.append('puntuacio', state.streak);
   formData.append('nivell', DIFFICULTY_CONFIG[state.difficultyKey].label);
-  formData.append('temps', statusTimer.textContent);
+  formData.append('temps', formatMMSS(state.totalElapsedMs || 0));
 
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
@@ -650,6 +656,7 @@ window.addEventListener("beforeunload", clearTimers);
 
 // --- Tornar a l'inici per rejugar ---
 function resetToStart() {
+  stopTotalTimer();
   state.playerName = playerNameInput.value.trim();
   state.difficultyKey = "";
   state.poolSymbols = [];
@@ -670,7 +677,7 @@ function resetToStart() {
   spotlight.hidden = true;
   tableOverlay.style.display = "flex";
   statusTimer.textContent = "00:00";
-  statusStreak.textContent = "0/10";
+  if (statusTotal) statusTotal.textContent = "00:00";
   startBtn.textContent = "Comenca el repte";
 
   // Neteja seleccio del nivell
@@ -685,5 +692,38 @@ function resetToStart() {
 
   // Reinicia ratxa visual
   prepareStreakTrack();
+}
+
+// --- Cron�metre total ---
+function startTotalTimer() {
+  state.totalStartMs = Date.now();
+  state.totalElapsedMs = 0;
+  updateTotalTimerDisplay(0);
+  stopTotalTimer();
+  state.totalTimerId = setInterval(() => {
+    const elapsed = Date.now() - state.totalStartMs;
+    state.totalElapsedMs = elapsed;
+    updateTotalTimerDisplay(elapsed);
+  }, 100);
+}
+
+function stopTotalTimer() {
+  if (state.totalTimerId) {
+    clearInterval(state.totalTimerId);
+    state.totalTimerId = null;
+  }
+}
+
+function updateTotalTimerDisplay(ms) {
+  if (statusTotal) {
+    statusTotal.textContent = formatMMSS(ms);
+  }
+}
+
+function formatMMSS(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
 }
 
