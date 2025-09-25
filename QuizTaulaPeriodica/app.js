@@ -1,5 +1,5 @@
 ﻿import { ELEMENTS } from "./elementsData.js";
-import { GOOGLE_SCRIPT_URL } from "./config.js";
+import { GOOGLE_SCRIPT_URL, LEADERBOARD_SHEET_ID, LEADERBOARD_SHEET_GID } from "./config.js";
 
 const SYMBOL_CATALOG = new Set(ELEMENTS.map((element) => element.symbol));
 
@@ -143,6 +143,11 @@ const LEADERBOARD_DATE_FORMAT = new Intl.DateTimeFormat("ca-ES", {
   month: "2-digit",
   year: "numeric",
 });
+const LEADERBOARD_FEED_URL = (() => {
+  if (!LEADERBOARD_SHEET_ID) return null;
+  const gid = (typeof LEADERBOARD_SHEET_GID === "string" && LEADERBOARD_SHEET_GID.trim()) ? LEADERBOARD_SHEET_GID.trim() : "0";
+  return `https://docs.google.com/spreadsheets/d/${LEADERBOARD_SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}`;
+})();
 
 const sanitizePool = (symbols) => [
   ...new Set(symbols.filter((symbol) => SYMBOL_CATALOG.has(symbol))),
@@ -223,7 +228,9 @@ const TIMEOUT_FEEDBACK = [
 const streakTrack = document.getElementById("streak-track");
 const feedbackCard = document.getElementById("feedback-card");
 const feedbackMessage = document.getElementById("feedback-message");
-const leaderboardCard = document.getElementById("leaderboard-card");
+const leaderboardModal = document.getElementById("leaderboard-modal");
+const openLeaderboardBtn = document.getElementById("open-leaderboard");
+const closeLeaderboardBtn = document.getElementById("close-leaderboard");
 const leaderboardGrid = document.getElementById("leaderboard-grid");
 const leaderboardEmpty = document.getElementById("leaderboard-empty");
 const refreshLeaderboardBtn = document.getElementById("refresh-leaderboard");
@@ -357,9 +364,25 @@ function attachEventListeners() {
       }
     });
   }
+  if (openLeaderboardBtn) {
+    openLeaderboardBtn.addEventListener("click", () => {
+      toggleLeaderboard(true);
+      void loadLeaderboard({ silent: false });
+    });
+  }
+  if (closeLeaderboardBtn) {
+    closeLeaderboardBtn.addEventListener("click", () => toggleLeaderboard(false));
+  }
+  if (leaderboardModal) {
+    leaderboardModal.addEventListener("click", (event) => {
+      if (event.target === leaderboardModal) {
+        toggleLeaderboard(false);
+      }
+    });
+  }
   if (refreshLeaderboardBtn) {
     refreshLeaderboardBtn.addEventListener("click", () => {
-      loadLeaderboard({ force: true });
+      void loadLeaderboard({ force: true });
     });
   }
   document.addEventListener("keydown", (event) => {
@@ -367,6 +390,9 @@ function attachEventListeners() {
       if (!resultModal.hidden) toggleModal(false);
       if (instructionsModal && !instructionsModal.hidden) {
         toggleInstructions(false);
+      }
+      if (leaderboardModal && !leaderboardModal.hidden) {
+        toggleLeaderboard(false);
       }
     }
   });
@@ -383,6 +409,7 @@ function attachEventListeners() {
   sendResultsBtn.addEventListener("click", handleSendResults);
   difficultyButtons.addEventListener("click", handleDifficultyButtonClick);
 }
+
 
 function handleDifficultyButtonClick(event) {
   const button = event.target.closest(".difficulty-btn");
@@ -662,16 +689,26 @@ function toggleInstructions(show) {
   }
 }
 
+function toggleLeaderboard(show) {
+  if (!leaderboardModal) return;
+  leaderboardModal.hidden = !show;
+  if (show) {
+    if (closeLeaderboardBtn) {
+      closeLeaderboardBtn.focus();
+    }
+  } else if (openLeaderboardBtn) {
+    openLeaderboardBtn.focus();
+  }
+}
+
 async function loadLeaderboard({ silent = false, force = false } = {}) {
-  if (!leaderboardCard || !leaderboardGrid) return;
+  if (!leaderboardGrid) return;
 
-  leaderboardCard.hidden = false;
-
-  if (!GOOGLE_SCRIPT_URL) {
+  if (!LEADERBOARD_FEED_URL) {
     leaderboardGrid.innerHTML = "";
     if (leaderboardEmpty) {
       leaderboardEmpty.hidden = false;
-      leaderboardEmpty.textContent = "Configura la URL de Google Apps Script per mostrar el rànquing.";
+      leaderboardEmpty.textContent = "Configura la graella de rànquing al fitxer config.js.";
     }
     if (refreshLeaderboardBtn) {
       refreshLeaderboardBtn.disabled = true;
@@ -703,10 +740,7 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
   leaderboardGrid.setAttribute("aria-busy", "true");
 
   try {
-    const url = new URL(GOOGLE_SCRIPT_URL);
-    url.searchParams.set("action", "leaderboard");
-
-    const response = await fetch(url.toString(), {
+    const response = await fetch(LEADERBOARD_FEED_URL, {
       method: "GET",
       mode: "cors",
     });
@@ -715,8 +749,8 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
       throw new Error(`Resposta ${response.status}`);
     }
 
-    const payload = await response.json();
-    const entries = Array.isArray(payload.entries) ? payload.entries : [];
+    const rawText = await response.text();
+    const entries = extractLeaderboardEntries(rawText);
 
     state.leaderboard.entries = entries;
     state.leaderboard.lastFetched = now;
@@ -737,6 +771,67 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
       refreshLeaderboardBtn.removeAttribute("aria-busy");
     }
   }
+}
+
+function extractLeaderboardEntries(rawText) {
+  if (typeof rawText !== "string" || !rawText.trim()) {
+    return [];
+  }
+  const match = rawText.match(/google\.visualization\.Query.setResponse\((.*)\);?/s);
+  if (!match) {
+    throw new Error('Format inesperat de la resposta de Google Sheets.');
+  }
+  const payload = JSON.parse(match[1]);
+  const rows = payload?.table?.rows ?? [];
+  return rows
+    .map((row) => row?.c ?? [])
+    .map((cells) => ({
+      nom: getCellString(cells[0]),
+      puntuacio: getCellNumber(cells[1]),
+      nivell: getCellString(cells[2]),
+      temps: getCellString(cells[3]),
+      dataISO: parseGvizDateCell(cells[4]),
+    }))
+    .filter((entry) => entry.nom || entry.nivell || entry.temps);
+}
+
+function getCellString(cell) {
+  if (!cell) return '';
+  if (typeof cell.f === 'string' && cell.f.trim()) return cell.f.trim();
+  const value = cell.v;
+  if (value == null) return '';
+  if (typeof value === 'string') return value.trim();
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  return String(value ?? '');
+}
+
+function getCellNumber(cell) {
+  const str = getCellString(cell);
+  const parsed = Number(str.replace(',', '.'));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function parseGvizDateCell(cell) {
+  if (!cell) return null;
+  const raw = cell.v ?? cell.f;
+  if (raw == null) return null;
+  if (typeof raw === 'string') {
+    if (raw.startsWith('Date(') && raw.endsWith(')')) {
+      const parts = raw.slice(5, -1).split(',').map((part) => Number.parseInt(part.trim(), 10));
+      if (parts.length >= 3 && parts.every((num) => Number.isFinite(num))) {
+        return new Date(parts[0], parts[1], parts[2], parts[3] || 0, parts[4] || 0, parts[5] || 0).toISOString();
+      }
+    }
+    const parsed = Date.parse(raw);
+    if (!Number.isNaN(parsed)) {
+      return new Date(parsed).toISOString();
+    }
+    return raw;
+  }
+  if (typeof raw === 'object' && raw !== null && Number.isFinite(raw.year)) {
+    return new Date(raw.year, raw.month ?? 0, raw.day ?? 1, raw.hour ?? 0, raw.minute ?? 0, raw.second ?? 0).toISOString();
+  }
+  return null;
 }
 
 function renderLeaderboard(entries) {
@@ -994,3 +1089,4 @@ function formatMMSS(ms) {
   const seconds = String(totalSeconds % 60).padStart(2, "0");
   return `${minutes}:${seconds}`;
 }
+

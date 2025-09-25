@@ -22,10 +22,16 @@
           <span class="sparkle">✨</span>
           <span>Encerta'n 10 seguits!</span>
         </div>
-        <button type="button" class="help-trigger" id="open-instructions" aria-label="Mostra les instruccions del joc" aria-haspopup="dialog" aria-controls="instructions-modal">
-          <span aria-hidden="true">?</span>
-          <span class="sr-only">Instruccions del joc</span>
-        </button>
+        <div class="header-actions">
+          <button type="button" class="circle-trigger" id="open-instructions" aria-label="Mostra les instruccions del joc" aria-haspopup="dialog" aria-controls="instructions-modal">
+            <span aria-hidden="true">?</span>
+            <span class="sr-only">Instruccions del joc</span>
+          </button>
+          <button type="button" class="circle-trigger" id="open-leaderboard" aria-label="Mostra el rànquing" aria-haspopup="dialog" aria-controls="leaderboard-modal">
+            <span aria-hidden="true">🏆</span>
+            <span class="sr-only">Rànquing</span>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -82,16 +88,6 @@
           <p id="feedback-message">Endavant, tria l’element correcte!</p>
         </div>
 
-        <div class="card leaderboard-card" id="leaderboard-card" hidden>
-          <div class="leaderboard-header">
-            <h2>Rànquing dels 3 millors</h2>
-            <button type="button" class="text-btn" id="refresh-leaderboard">Actualitza</button>
-          </div>
-          <p class="leaderboard-hint">Temps més ràpid per nivell (mm:ss).</p>
-          <div class="leaderboard-grid" id="leaderboard-grid" aria-live="polite"></div>
-          <p class="leaderboard-empty" id="leaderboard-empty" hidden>Encara no hi ha registres disponibles.</p>
-        </div>
-
         <div class="attribution-card">
           <p class="attribution-text">Aplicació realitzada per Felip Sarroca amb assistència de la IA i a partir d'una idea d'E. Boixader.</p>
           <p class="license-text">
@@ -136,6 +132,21 @@
           <li><span class="instruction-icon" aria-hidden="true">📤</span>Si acabes en nivell normal o difícil, podràs enviar els resultats perquè quedin registrats.</li>
         </ul>
         <p class="instructions-tip"><span class="instruction-tip-icon" aria-hidden="true">💡</span><span>Comença pels nivells més assequibles i augmenta la dificultat a mesura que guanyis destresa.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="leaderboard-modal" hidden>
+    <div class="modal-content leaderboard-modal">
+      <div class="modal-header">
+        <h2>Rànquing</h2>
+        <button class="close-btn" id="close-leaderboard" aria-label="Tanca">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="leaderboard-hint">Temps més ràpid per nivell (mm:ss).</p>
+        <div class="leaderboard-grid" id="leaderboard-grid" aria-live="polite"></div>
+        <p class="leaderboard-empty" id="leaderboard-empty" hidden>Encara no hi ha registres disponibles.</p>
+        <button type="button" class="text-btn leaderboard-refresh" id="refresh-leaderboard">Actualitza</button>
       </div>
     </div>
   </div>

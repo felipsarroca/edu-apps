@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 87.5%; /* 14px base font size */
 }
 
@@ -83,7 +83,13 @@ body {
   gap: 16px;
 }
 
-.help-trigger {
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.circle-trigger {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -99,13 +105,13 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.help-trigger:hover {
+.circle-trigger:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
   background: rgba(255, 255, 255, 0.28);
 }
 
-.help-trigger:focus-visible {
+.circle-trigger:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55);
 }
@@ -239,6 +245,11 @@ body {
   font-size: 0.9rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+.leaderboard-refresh {
+  align-self: flex-end;
+  margin-top: 8px;
 }
 
 .streak-card {
@@ -812,6 +823,17 @@ body {
   gap: 12px;
 }
 
+.modal-content.leaderboard-modal {
+  max-width: 560px;
+  gap: 16px;
+}
+
+.modal-content.leaderboard-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .instructions-list {
   margin: 0;
   padding-left: 1.1rem;
@@ -857,4 +879,5 @@ body {
 .instruction-tip-icon {
   font-size: 1.2rem;
 }
+
 
