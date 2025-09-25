@@ -82,6 +82,16 @@
           <p id="feedback-message">Endavant, tria l’element correcte!</p>
         </div>
 
+        <div class="card leaderboard-card" id="leaderboard-card" hidden>
+          <div class="leaderboard-header">
+            <h2>Rànquing dels 3 millors</h2>
+            <button type="button" class="text-btn" id="refresh-leaderboard">Actualitza</button>
+          </div>
+          <p class="leaderboard-hint">Temps més ràpid per nivell (mm:ss).</p>
+          <div class="leaderboard-grid" id="leaderboard-grid" aria-live="polite"></div>
+          <p class="leaderboard-empty" id="leaderboard-empty" hidden>Encara no hi ha registres disponibles.</p>
+        </div>
+
         <div class="attribution-card">
           <p class="attribution-text">Aplicació realitzada per Felip Sarroca amb assistència de la IA i a partir d'una idea d'E. Boixader.</p>
           <p class="license-text">

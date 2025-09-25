@@ -130,6 +130,20 @@ const BASE_POOLS = {
   ],
 };
 
+const LEADERBOARD_ORDER = [
+  "Molt difícil",
+  "Difícil",
+  "Normal",
+  "Fàcil",
+  "Molt fàcil",
+];
+const LEADERBOARD_CACHE_MS = 60_000;
+const LEADERBOARD_DATE_FORMAT = new Intl.DateTimeFormat("ca-ES", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+
 const sanitizePool = (symbols) => [
   ...new Set(symbols.filter((symbol) => SYMBOL_CATALOG.has(symbol))),
 ];
@@ -209,6 +223,11 @@ const TIMEOUT_FEEDBACK = [
 const streakTrack = document.getElementById("streak-track");
 const feedbackCard = document.getElementById("feedback-card");
 const feedbackMessage = document.getElementById("feedback-message");
+const leaderboardCard = document.getElementById("leaderboard-card");
+const leaderboardGrid = document.getElementById("leaderboard-grid");
+const leaderboardEmpty = document.getElementById("leaderboard-empty");
+const refreshLeaderboardBtn = document.getElementById("refresh-leaderboard");
+const refreshLeaderboardDefaultLabel = refreshLeaderboardBtn ? refreshLeaderboardBtn.textContent.trim() : "";
 const periodicTable = document.getElementById("periodic-table");
 const tableOverlay = document.getElementById("table-overlay");
 const spotlight = document.getElementById("spotlight");
@@ -258,6 +277,10 @@ const state = {
   totalTimerId: null,
   totalStartMs: null,
   totalElapsedMs: 0,
+  leaderboard: {
+    entries: [],
+    lastFetched: null,
+  },
 };
 
 tableOverlay.style.display = "flex";
@@ -269,6 +292,7 @@ streakCard.hidden = true;
 buildPeriodicTable();
 prepareStreakTrack();
 attachEventListeners();
+loadLeaderboard({ silent: true });
 
 function buildPeriodicTable() {
   const fragment = document.createDocumentFragment();
@@ -331,6 +355,11 @@ function attachEventListeners() {
       if (event.target === instructionsModal) {
         toggleInstructions(false);
       }
+    });
+  }
+  if (refreshLeaderboardBtn) {
+    refreshLeaderboardBtn.addEventListener("click", () => {
+      loadLeaderboard({ force: true });
     });
   }
   document.addEventListener("keydown", (event) => {
@@ -633,6 +662,204 @@ function toggleInstructions(show) {
   }
 }
 
+async function loadLeaderboard({ silent = false, force = false } = {}) {
+  if (!leaderboardCard || !leaderboardGrid) return;
+
+  leaderboardCard.hidden = false;
+
+  if (!GOOGLE_SCRIPT_URL) {
+    leaderboardGrid.innerHTML = "";
+    if (leaderboardEmpty) {
+      leaderboardEmpty.hidden = false;
+      leaderboardEmpty.textContent = "Configura la URL de Google Apps Script per mostrar el rànquing.";
+    }
+    if (refreshLeaderboardBtn) {
+      refreshLeaderboardBtn.disabled = true;
+      refreshLeaderboardBtn.textContent = refreshLeaderboardDefaultLabel || "Actualitza";
+      refreshLeaderboardBtn.removeAttribute("aria-busy");
+    }
+    return;
+  }
+
+  const now = Date.now();
+  if (!force && state.leaderboard.entries.length && state.leaderboard.lastFetched && now - state.leaderboard.lastFetched < LEADERBOARD_CACHE_MS) {
+    renderLeaderboard(state.leaderboard.entries);
+    return;
+  }
+
+  if (refreshLeaderboardBtn) {
+    refreshLeaderboardBtn.disabled = true;
+    refreshLeaderboardBtn.textContent = "Actualitzant...";
+    refreshLeaderboardBtn.setAttribute("aria-busy", "true");
+  }
+
+  if (!silent) {
+    leaderboardGrid.innerHTML = "";
+    if (leaderboardEmpty) {
+      leaderboardEmpty.hidden = false;
+      leaderboardEmpty.textContent = "Carregant rànquing...";
+    }
+  }
+  leaderboardGrid.setAttribute("aria-busy", "true");
+
+  try {
+    const url = new URL(GOOGLE_SCRIPT_URL);
+    url.searchParams.set("action", "leaderboard");
+
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      mode: "cors",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Resposta ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const entries = Array.isArray(payload.entries) ? payload.entries : [];
+
+    state.leaderboard.entries = entries;
+    state.leaderboard.lastFetched = now;
+
+    renderLeaderboard(entries);
+  } catch (error) {
+    console.error("Error carregant el rànquing", error);
+    leaderboardGrid.innerHTML = "";
+    if (leaderboardEmpty) {
+      leaderboardEmpty.hidden = false;
+      leaderboardEmpty.textContent = `No s'ha pogut carregar el rànquing (${error?.message || error}).`;
+    }
+  } finally {
+    leaderboardGrid.removeAttribute("aria-busy");
+    if (refreshLeaderboardBtn) {
+      refreshLeaderboardBtn.disabled = false;
+      refreshLeaderboardBtn.textContent = refreshLeaderboardDefaultLabel || "Actualitza";
+      refreshLeaderboardBtn.removeAttribute("aria-busy");
+    }
+  }
+}
+
+function renderLeaderboard(entries) {
+  if (!leaderboardGrid) return;
+
+  leaderboardGrid.innerHTML = "";
+  let totalRendered = 0;
+
+  if (!Array.isArray(entries) || entries.length === 0) {
+    if (leaderboardEmpty) {
+      leaderboardEmpty.hidden = false;
+      leaderboardEmpty.textContent = "Encara no hi ha registres disponibles.";
+    }
+    return;
+  }
+
+  const grouped = new Map();
+
+  entries.forEach((raw) => {
+    const name = String(raw?.nom ?? raw?.name ?? "").trim() || "Anònim";
+    const level = String(raw?.nivell ?? raw?.level ?? "").trim() || "Sense nivell";
+    const time = String(raw?.temps ?? raw?.time ?? "").trim() || "--:--";
+    const score = Number.parseInt(raw?.puntuacio ?? raw?.score ?? raw?.punts ?? 0, 10) || 0;
+    const dateValue = raw?.dataISO ?? raw?.dataIso ?? raw?.data ?? raw?.timestamp ?? raw?.date ?? null;
+    const dateMs = dateValue ? new Date(dateValue).getTime() : Number.POSITIVE_INFINITY;
+
+    const entry = {
+      name,
+      level,
+      score,
+      time,
+      timeMs: parseLeaderboardTime(time),
+      dateText: formatLeaderboardDate(dateValue),
+      dateMs: Number.isNaN(dateMs) ? Number.POSITIVE_INFINITY : dateMs,
+    };
+
+    if (!grouped.has(level)) {
+      grouped.set(level, []);
+    }
+    grouped.get(level).push(entry);
+  });
+
+  const sortedLevels = Array.from(grouped.keys()).sort((a, b) => {
+    const idxA = LEADERBOARD_ORDER.indexOf(a);
+    const idxB = LEADERBOARD_ORDER.indexOf(b);
+    if (idxA === -1 && idxB === -1) return a.localeCompare(b, "ca", { sensitivity: "base" });
+    if (idxA === -1) return 1;
+    if (idxB === -1) return -1;
+    return idxA - idxB;
+  });
+
+  sortedLevels.forEach((level) => {
+    const list = grouped.get(level);
+    if (!list || list.length === 0) return;
+
+    list.sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
+      return a.dateMs - b.dateMs;
+    });
+
+    const topEntries = list.slice(0, 3);
+    if (topEntries.length === 0) return;
+
+    const groupEl = document.createElement("div");
+    groupEl.className = "leaderboard-group";
+
+    const heading = document.createElement("h3");
+    heading.textContent = level;
+    groupEl.appendChild(heading);
+
+    const listEl = document.createElement("ol");
+    topEntries.forEach((entry) => {
+      const item = document.createElement("li");
+      const wrapper = document.createElement("div");
+      wrapper.className = "leaderboard-entry";
+
+      const nameEl = document.createElement("strong");
+      nameEl.textContent = entry.name;
+      wrapper.appendChild(nameEl);
+
+      const meta = document.createElement("span");
+      meta.className = "leaderboard-meta";
+      meta.textContent = `Temps: ${entry.time} · Data: ${entry.dateText}`;
+      wrapper.appendChild(meta);
+
+      item.appendChild(wrapper);
+      listEl.appendChild(item);
+    });
+
+    groupEl.appendChild(listEl);
+    leaderboardGrid.appendChild(groupEl);
+    totalRendered += topEntries.length;
+  });
+
+  if (leaderboardEmpty) {
+    if (totalRendered === 0) {
+      leaderboardEmpty.hidden = false;
+      leaderboardEmpty.textContent = "Encara no hi ha registres disponibles.";
+    } else {
+      leaderboardEmpty.hidden = true;
+      leaderboardEmpty.textContent = "";
+    }
+  }
+}
+
+function parseLeaderboardTime(value) {
+  if (typeof value !== "string") return Number.POSITIVE_INFINITY;
+  const parts = value.split(":");
+  if (parts.length !== 2) return Number.POSITIVE_INFINITY;
+  const minutes = Number.parseInt(parts[0], 10);
+  const seconds = Number.parseInt(parts[1], 10);
+  if (Number.isNaN(minutes) || Number.isNaN(seconds)) return Number.POSITIVE_INFINITY;
+  return minutes * 60_000 + seconds * 1_000;
+}
+
+function formatLeaderboardDate(rawValue) {
+  if (!rawValue) return "Data desconeguda";
+  const date = rawValue instanceof Date ? rawValue : new Date(rawValue);
+  if (Number.isNaN(date.getTime())) return "Data desconeguda";
+  return LEADERBOARD_DATE_FORMAT.format(date);
+}
+
 // --- ENVIAMENT DE RESULTATS (CORS, request robusta) ---
 function handleSendResults() {
   if (!state.hasWon) return;
@@ -666,6 +893,9 @@ function handleSendResults() {
       submissionStatus.textContent = "Resultats enviats correctament.";
       submissionStatus.classList.remove("error");
       submissionStatus.classList.add("success");
+      loadLeaderboard({ force: true, silent: true }).catch((error) => {
+        console.error("No s'ha pogut refrescar el rànquing", error);
+      });
       setTimeout(() => {
         resetToStart();
         toggleModal(false);
