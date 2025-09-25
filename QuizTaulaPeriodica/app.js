@@ -161,6 +161,7 @@ const DIFFICULTY_CONFIG = {
     label: "Difícil",
     timeLimit: 11,
     symbols: sanitizePool([
+      ...BASE_POOLS.starter,
       ...BASE_POOLS.core,
       ...BASE_POOLS.advanced,
     ]),
@@ -168,7 +169,12 @@ const DIFFICULTY_CONFIG = {
   "very-hard": {
     label: "Molt difícil",
     timeLimit: 9,
-    symbols: sanitizePool([...BASE_POOLS.rare]),
+    symbols: sanitizePool([
+      ...BASE_POOLS.starter,
+      ...BASE_POOLS.core,
+      ...BASE_POOLS.advanced,
+      ...BASE_POOLS.rare,
+    ]),
   },
 };
 
@@ -222,6 +228,7 @@ const resultModal = document.getElementById("result-modal");
 const closeModalBtn = document.getElementById("close-modal");
 const sendResultsBtn = document.getElementById("send-results");
 const submissionStatus = document.getElementById("submission-status");
+const modalText = document.getElementById("modal-text");
 
 const elementTemplate = document.getElementById("element-template");
 const elementButtons = new Map();
@@ -304,7 +311,11 @@ function attachEventListeners() {
   startForm.addEventListener("submit", handleStartGame);
   periodicTable.addEventListener("click", handleElementClick);
   closeModalBtn.addEventListener("click", () => toggleModal(false));
-  document.getElementById("close-modal-2").addEventListener("click", () => toggleModal(false));
+  document.getElementById("close-modal-2").addEventListener("click", () => {
+    // Descarta l'enviament i torna a l'inici
+    resetToStart();
+    toggleModal(false);
+  });
   resultModal.addEventListener("click", (event) => {
     if (event.target === resultModal) {
       toggleModal(false);
@@ -553,6 +564,24 @@ function handleVictory() {
   submissionStatus.textContent = "";
   submissionStatus.classList.remove("success", "error");
   sendResultsBtn.disabled = false;
+
+  const allowSend = ["normal", "hard", "very-hard"].includes(state.difficultyKey);
+  if (allowSend) {
+    if (modalText) {
+      modalText.textContent = "Has completat el repte amb 10 encerts seguits. Vols enviar el teu resultat?";
+    }
+    sendResultsBtn.hidden = false;
+    const discardBtn = document.getElementById("close-modal-2");
+    if (discardBtn) discardBtn.textContent = "No, gr�cies";
+  } else {
+    if (modalText) {
+      modalText.textContent = "Has completat el repte amb 10 encerts seguits.";
+    }
+    sendResultsBtn.hidden = true;
+    const discardBtn = document.getElementById("close-modal-2");
+    if (discardBtn) discardBtn.textContent = "Torna a l'inici";
+  }
+
   toggleModal(true);
 }
 
@@ -593,6 +622,10 @@ function handleSendResults() {
       submissionStatus.textContent = "Resultat enviat! Es registrarà en breus.";
       submissionStatus.classList.remove("error");
       submissionStatus.classList.add("success");
+      setTimeout(() => {
+        resetToStart();
+        toggleModal(false);
+      }, 1200);
     })
     .catch((error) => {
       submissionStatus.textContent = `No s'ha pogut enviar: ${error?.message || error}`;
@@ -614,3 +647,42 @@ function clearTimers() {
 }
 
 window.addEventListener("beforeunload", clearTimers);
+
+// --- Tornar a l'inici per rejugar ---
+function resetToStart() {
+  state.playerName = playerNameInput.value.trim();
+  state.difficultyKey = "";
+  state.poolSymbols = [];
+  state.currentElement = null;
+  state.streak = 0;
+  state.timerId = null;
+  state.questionDeadline = null;
+  state.isActive = false;
+  state.lastSymbol = null;
+  state.nextQuestionTimeout = null;
+  state.hasWon = false;
+  state.currentPool = [];
+
+  // UI
+  statusCard.hidden = true;
+  streakCard.hidden = true;
+  feedbackCard.hidden = true;
+  spotlight.hidden = true;
+  tableOverlay.style.display = "flex";
+  statusTimer.textContent = "00:00";
+  statusStreak.textContent = "0/10";
+  startBtn.textContent = "Comenca el repte";
+
+  // Neteja seleccio del nivell
+  difficultyInput.value = "";
+  const buttons = difficultyButtons.querySelectorAll(".difficulty-btn");
+  buttons.forEach((btn) => btn.classList.remove("selected"));
+
+  // Rehabilita taula
+  elementButtons.forEach((btn) =>
+    btn.classList.remove("target", "correct", "incorrect", "out-of-pool")
+  );
+
+  // Reinicia ratxa visual
+  prepareStreakTrack();
+}

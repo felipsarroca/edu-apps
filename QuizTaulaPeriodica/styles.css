@@ -84,7 +84,7 @@ body {
 
 .game-layout {
   display: grid;
-  grid-template-columns: 280px 1fr auto;
+  grid-template-columns: minmax(260px, 320px) 1fr minmax(96px, 140px);
   gap: 20px;
   padding: 20px 25px 25px;
   height: 100%;
@@ -111,8 +111,8 @@ body {
 }
 
 .streak-card {
-  width: 120px;
-  padding: 14px;
+  width: clamp(96px, 8vw, 140px);
+  padding: 12px;
   text-align: center;
 }
 
@@ -217,15 +217,16 @@ body {
 .streak-card .streak-track {
   display: flex;
   flex-direction: column-reverse;
-  gap: 8px;
+  gap: 4px;
 }
 
 .streak-card .streak-track div {
-  padding: 12px 0;
-  border-radius: 12px;
+  padding: 6px 0;
+  border-radius: 10px;
   border: 2px dashed rgba(20, 0, 198, 0.25);
   text-align: center;
   font-weight: 600;
+  font-size: 0.85rem;
   color: var(--text-muted);
   transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
@@ -356,7 +357,7 @@ body {
   background: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
-  min-height: 55px;
+  min-height: clamp(44px, 4.2vh, 64px);
   text-align: center;
 }
 
@@ -568,6 +569,7 @@ body {
 .modal-status {
   min-height: 1.2em;
   font-weight: 600;
+  margin-top: 14px;
 }
 
 .modal-status.success {
@@ -600,6 +602,15 @@ body {
     min-height: 62px;
     padding: 6px;
   }
+}
+
+/* Better fit for shorter desktop heights */
+@media (max-height: 800px) {
+  .spotlight-card { padding: 10px; }
+  .periodic-table { gap: 4px; }
+  .element-cell { min-height: clamp(40px, 3.8vh, 56px); }
+  .streak-card .streak-track { gap: 3px; }
+  .streak-card .streak-track div { padding: 4px 0; font-size: 0.8rem; }
 }
 
 @media (max-width: 520px) {
