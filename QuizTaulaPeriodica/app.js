@@ -225,6 +225,9 @@ const playerNameInput = document.getElementById("player-name");
 const difficultyInput = document.getElementById("difficulty");
 const difficultyButtons = document.getElementById("difficulty-buttons");
 const startBtn = document.getElementById("start-btn");
+const instructionsModal = document.getElementById("instructions-modal");
+const openInstructionsBtn = document.getElementById("open-instructions");
+const closeInstructionsBtn = document.getElementById("close-instructions");
 const resultModal = document.getElementById("result-modal");
 const closeModalBtn = document.getElementById("close-modal");
 const sendResultsBtn = document.getElementById("send-results");
@@ -315,6 +318,29 @@ function attachEventListeners() {
   startForm.addEventListener("submit", handleStartGame);
   periodicTable.addEventListener("click", handleElementClick);
   closeModalBtn.addEventListener("click", () => toggleModal(false));
+  if (openInstructionsBtn) {
+    openInstructionsBtn.addEventListener("click", () => {
+      toggleInstructions(true);
+    });
+  }
+  if (closeInstructionsBtn) {
+    closeInstructionsBtn.addEventListener("click", () => toggleInstructions(false));
+  }
+  if (instructionsModal) {
+    instructionsModal.addEventListener("click", (event) => {
+      if (event.target === instructionsModal) {
+        toggleInstructions(false);
+      }
+    });
+  }
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      if (!resultModal.hidden) toggleModal(false);
+      if (instructionsModal && !instructionsModal.hidden) {
+        toggleInstructions(false);
+      }
+    }
+  });
   document.getElementById("close-modal-2").addEventListener("click", () => {
     // Descarta l'enviament i torna a l'inici
     resetToStart();
@@ -595,6 +621,18 @@ function toggleModal(show) {
   resultModal.hidden = !show;
 }
 
+function toggleInstructions(show) {
+  if (!instructionsModal) return;
+  instructionsModal.hidden = !show;
+  if (show) {
+    if (closeInstructionsBtn) {
+      closeInstructionsBtn.focus();
+    }
+  } else if (openInstructionsBtn) {
+    openInstructionsBtn.focus();
+  }
+}
+
 // --- ENVIAMENT DE RESULTATS (CORS, request robusta) ---
 function handleSendResults() {
   if (!state.hasWon) return;
@@ -726,4 +764,3 @@ function formatMMSS(ms) {
   const seconds = String(totalSeconds % 60).padStart(2, "0");
   return `${minutes}:${seconds}`;
 }
-

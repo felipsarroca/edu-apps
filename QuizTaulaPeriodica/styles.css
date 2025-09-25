@@ -77,6 +77,51 @@ body {
   letter-spacing: 0.08em;
 }
 
+.header-extras {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.help-trigger {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.help-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.help-trigger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .branding-badge .sparkle {
   font-size: 1.5rem;
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.75));
@@ -580,7 +625,7 @@ body {
 .modal-status {
   min-height: 1.2em;
   font-weight: 600;
-  margin-top: 32px;
+  margin-top: 40px;
 }
 
 .modal-status.success {
@@ -674,4 +719,33 @@ body {
 
 .license-text a:hover {
   text-decoration: underline;
+}
+
+.modal-content.instructions {
+  max-width: 520px;
+  gap: 12px;
+}
+
+.instructions-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-main);
+}
+
+.instructions-list li {
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.instructions-tip {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.65);
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.4;
 }

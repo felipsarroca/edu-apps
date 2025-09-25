@@ -1,71 +1,85 @@
-﻿# Repte de la taula periòdica
+# Repte de la taula periòdica
 
-## Contingut del repositori
+Aplicació web per treballar el reconeixement dels elements químics a partir del seu símbol. El repte consisteix a encertar 10 elements consecutius en el menor temps possible, amb pistes visuals i nivells de dificultat graduats.
 
-- `index.html`: esquelet de laplicació i estructura HTML principal.
-- `styles.css`: disseny visual amb èmfasi en una estètica molt acolorida i responsiva.
-- `app.js`: lògica del joc, gestió de dificultats, temps, feedback i enviament de resultats.
-- `elementsData.js`: catàleg dels 118 elements amb posicions i categories per muntar la taula.
-- `config.js`: punt únic de configuració per afegir la URL de Google Apps Script.
+## Característiques principals
+- Interfície responsiva pensada per projector, pissarra digital o ordinador portàtil.
+- Cinc nivells de dificultat que controlen el temps disponible i el conjunt d'elements que poden aparèixer.
+- Botó d'ajuda visible (icona "?") que obre un resum de les instruccions sense sortir de la partida.
+- Seguiment automàtic de la ratxa d'encerts i del temps total emprat.
+- Possibilitat d'enviar el resultat final a un registre extern quan el repte es completa en nivell normal, difícil o molt difícil.
 
-## Com executar el joc
+## Fitxers principals
+- `index.html`: estructura de la pàgina i components del joc.
+- `styles.css`: estilisme general, taula periòdica i modalitats emergents.
+- `app.js`: lògica del joc, gestió dels nivells, temporitzadors i enviament de dades.
+- `elementsData.js`: catàleg complet amb la informació de cada element químic.
+- `config.js`: punt de configuració per indicar l'URL del teu Google Apps Script.
 
-1. Obre el fitxer `index.html` amb el teu navegador (Chrome recomanat).
-2. Introdueix el nom i cognom i tria el nivell de dificultat.
-3. Comença la partida i identifica els elements a partir del símbol que apareix al focus central.
-4. Aconsegueix 10 encerts seguits abans que sacabi el temps. Podràs reiniciar el repte sempre que vulguis.
+## Requisits
+- Navegador modern (Chrome, Edge, Firefox o Safari) amb JavaScript habilitat.
+- Per registrar resultats: un compte de Google amb accés a Google Sheets i Apps Script.
 
-### Suggeriment per a docència
+## Posada en marxa
+1. Clona o descarrega el repositori a la teva carpeta de treball (`I:\Mi unidad\Github` si segueixes la mateixa estructura).
+2. Obre `index.html` amb el navegador. No cal servidor web.
+3. (Opcional) Edita `config.js` i afegeix l'URL del teu Apps Script per habilitar l'enviament de resultats.
 
-- Pots allotjar el projecte a [GitHub Pages](https://pages.github.com) o bé compartir el fitxer `index.html` mitjançant Google Classroom.
-- Si fas servir Classroom, afegeix instruccions perquè els alumnes introdueixin el seu nom i cognom real per registrar lactivitat.
+## Funcionament del joc
+1. Escriu el nom i cognoms a la targeta de configuració inicial.
+2. Tria el nivell de dificultat que vulguis practicar.
+3. Si tens dubtes, clica el botó circular amb el símbol `?` per llegir les instruccions resumides.
+4. Prem "Comença el repte" i identifica l'element correcte cada vegada que aparegui un símbol destacat.
+5. Cal aconseguir 10 encerts seguits. Qualsevol error reinicia la ratxa.
+6. En finalitzar la partida en nivell normal, difícil o molt difícil, apareix una finestra modal per enviar (o no) el resultat.
 
-## Configuració de lenviament a Google Sheets
+## Nivells de dificultat
+| Nivell | Temps per pregunta | Conjunt d'elements |
+| --- | --- | --- |
+| Molt fàcil | 20 s | Elements bàsics (grup starter)
+| Fàcil | 17 s | Starter + part del grup central
+| Normal | 14 s | Starter + grup central complet + primers avançats
+| Difícil | 11 s | Starter + central + avançats complets
+| Molt difícil | 9 s | Tots els anteriors + elements més rars
 
-1. **Crea el full de càlcul** a Google Drive amb les columnes: `Nom`, `Nivell`, `Encerts`, `Marca de temps`.
-2. **Obre Apps Script** des del full (`Extensions → Apps Script`).
-3. **Enganxa aquest codi** a `Code.gs`:
-
+## Enviament dels resultats a Google Sheets
+1. Crea un full de càlcul i prepara una pestanya amb les columnes `Nom`, `Puntuació`, `Nivell`, `Temps` i `Data`.
+2. Obre **Extensions → Apps Script** i enganxa aquest codi a `Code.gs`:
    ```javascript
    function doPost(e) {
-     const SHEET_NAME = 'Full1'; // Canvia-ho si cal
+     const SHEET_NAME = 'Full1';
      const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
-     const body = JSON.parse(e.postData.contents);
+     const { nom, puntuacio, nivell, temps } = e.parameter;
      sheet.appendRow([
-       body.name,
-       body.difficulty,
-       body.completedStreak,
-       new Date(body.timestamp || Date.now()),
+       nom,
+       puntuacio,
+       nivell,
+       temps,
+       new Date(),
      ]);
-     return ContentService.createTextOutput(
-       JSON.stringify({ success: true })
-     ).setMimeType(ContentService.MimeType.JSON);
+     return ContentService.createTextOutput('OK');
    }
    ```
-
-4. **Desplega el servei web** (`Desplega → Desplegaments → Nou desplegament`).
-   - Tipus: *Aplicació web*
-   - Executal com a: *Tu*
-   - Accés: *Qualsevol persona amb lenllaç*
-5. **Copia la URL del desplegament** i enganxa-la a `config.js`:
-
+3. Desa el projecte i publica'l com a **Aplicació web** (accés: qualsevol amb l'enllaç, executar com a tu).
+4. Copia la URL del desplegament i defineix-la a `config.js`:
    ```javascript
    export const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/EL-TEU-ID/exec";
    ```
+5. Desa canvis i recarrega el joc. Quan un/a alumne/a finalitzi el repte en nivell admissible, podrà enviar el registre; el missatge "Resultats enviats correctament" confirma l'enviament.
 
-6. Desa els canvis i recarrega el joc. Quan un jugador acabi amb 10 encerts, podrà enviar el resultat i el trobaràs al full.
+> Si prefereixes registrar les dades amb un altre sistema (Make, n8n, servidor propi), adapta la petició `POST` que el joc envia amb els camps `nom`, `puntuacio`, `nivell` i `temps`.
 
-> **Nota:** Si prefereixes mantenir laplicació local, també pots fer servir un servei intermedi (p. ex. Make, n8n) que rebi la petició `POST` i guardi les dades al teu flux habitual.
+## Personalització
+- Modifica la configuració temporal o els conjunts d'elements a `app.js` (`BASE_POOLS` i `DIFFICULTY_CONFIG`).
+- Ajusta els colors de cada família d'elements a `styles.css` (classes `category-*`).
+- Canvia o tradueix els textos de suport editant `index.html` i les constants d'`app.js`.
+- Afegeix més apartats d'instruccions al modal si treballes competències específiques.
 
-## Adaptació i ampliació
+## Bones pràctiques a l'aula
+- Fes que l'alumnat comenci en nivells fàcil o molt fàcil i puja la dificultat quan guanyi seguretat.
+- Complementa l'activitat amb rúbriques a Google Classroom que valorin el procediment i la justificació.
+- Després del repte, proposa investigar un element desconegut i crear una infografia amb Canva.
+- Utilitza els resultats exportats per treballar estadística bàsica (mitjana de temps, percentatges d'encert, etc.).
 
-- Pots modificar les llistes delements per dificultat a `app.js` (const `BASE_POOLS`).
-- Ajusta els temps límit canviant `timeLimit` dins `DIFFICULTY_CONFIG`.
-- A `styles.css` trobaràs les classes `category-*` per personalitzar més els degradats de cada família delements.
-- Si vols treballar competències específiques, afegeix preguntes complementàries (p. ex. un camp de resposta oberta) abans de mostrar el missatge final.
-
-## Bones pràctiques daula
-
-- Treballa amb parelles o petits grups per fomentar laprenentatge cooperatiu.
-- Crea rúbriques ràpides a Google Classroom per valorar no només lencert sinó també largumentació.
-- Després del joc, proposa als alumnes elaborar una infografia (Canva) sobre un element que els hagi costat identificar.
+## Crèdits i llicència
+Projecte desenvolupat per Felip Sarroca amb assistència de la IA i basat en una idea d'E. Boixader. Llicència [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).

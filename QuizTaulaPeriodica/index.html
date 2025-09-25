@@ -17,9 +17,15 @@
         <h1>Repte de la taula periòdica</h1>
         <p>Encerta 10 elements seguits abans que s’esgoti el temps</p>
       </div>
-      <div class="branding-badge">
-        <span class="sparkle">✨</span>
-        <span>Encerta'n 10 seguits!</span>
+      <div class="header-extras">
+        <div class="branding-badge">
+          <span class="sparkle">✨</span>
+          <span>Encerta'n 10 seguits!</span>
+        </div>
+        <button type="button" class="help-trigger" id="open-instructions" aria-label="Mostra les instruccions del joc" aria-haspopup="dialog" aria-controls="instructions-modal">
+          <span aria-hidden="true">?</span>
+          <span class="sr-only">Instruccions del joc</span>
+        </button>
       </div>
     </header>
 
@@ -104,6 +110,24 @@
         <p class="tip">Recorda: un error i hauràs de començar de nou!</p>
       </div>
     </main>
+  </div>
+
+  <div class="modal" id="instructions-modal" hidden>
+    <div class="modal-content instructions">
+      <div class="modal-header">
+        <h2>Com funciona el repte</h2>
+        <button class="close-btn" id="close-instructions" aria-label="Tanca">×</button>
+      </div>
+      <div class="modal-body">
+        <ul class="instructions-list">
+          <li>Introdueix el teu nom i cognoms i escull el nivell de dificultat.</li>
+          <li>Observa el símbol ressaltat i tria l'element correcte: cal encertar-ne 10 seguits.</li>
+          <li>El temps és limitat, així que intenta completar la ratxa el més ràpid possible.</li>
+          <li>Si acabes en nivell normal o difícil, podràs enviar els resultats perquè quedin registrats.</li>
+        </ul>
+        <p class="instructions-tip">Comença pels nivells més assequibles i augmenta la dificultat a mesura que guanyis destresa.</p>
+      </div>
+    </div>
   </div>
 
   <div class="modal" id="result-modal" hidden>
