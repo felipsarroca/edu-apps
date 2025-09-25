@@ -722,7 +722,7 @@ body {
 .modal-status {
   min-height: 1.2em;
   font-weight: 600;
-  margin-top: 40px;
+  margin-top: 56px;
 }
 
 .modal-status.success {
