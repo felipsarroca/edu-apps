@@ -602,7 +602,7 @@ function handleSendResults() {
   }
 
   sendResultsBtn.disabled = true;
-  submissionStatus.textContent = "Enviant dades...";
+  submissionStatus.textContent = "Enviant resultats...";
   submissionStatus.classList.remove("success", "error");
 
   // Canviem a FormData per evitar problemes de CORS
@@ -619,7 +619,7 @@ function handleSendResults() {
   })
     .then(() => {
       // Amb no-cors, no podem confirmar, però mostrem un missatge optimista
-      submissionStatus.textContent = "Resultat enviat! Es registrarà en breus.";
+      submissionStatus.textContent = "Resultats enviats correctament.";
       submissionStatus.classList.remove("error");
       submissionStatus.classList.add("success");
       setTimeout(() => {
@@ -686,3 +686,4 @@ function resetToStart() {
   // Reinicia ratxa visual
   prepareStreakTrack();
 }
+

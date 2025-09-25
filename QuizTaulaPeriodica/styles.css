@@ -111,9 +111,14 @@ body {
 }
 
 .streak-card {
-  width: clamp(96px, 8vw, 140px);
-  padding: 12px;
+  width: auto;
+  padding: 8px;
   text-align: center;
+  align-self: start;
+}
+.streak-card h2 {
+  font-size: 1rem;
+  margin: 0 0 6px 0;
 }
 
 .card h2 {
@@ -217,11 +222,11 @@ body {
 .streak-card .streak-track {
   display: flex;
   flex-direction: column-reverse;
-  gap: 4px;
+  gap: 6px;
 }
 
 .streak-card .streak-track div {
-  padding: 6px 0;
+  padding: 10px 0;
   border-radius: 10px;
   border: 2px dashed rgba(20, 0, 198, 0.25);
   text-align: center;
@@ -240,33 +245,33 @@ body {
 .streak-card .streak-track div.filled[data-streak-level="1"],
 .streak-card .streak-track div.filled[data-streak-level="2"],
 .streak-card .streak-track div.filled[data-streak-level="3"] {
-  background: linear-gradient(135deg, #d4fc79, #96e6a1);
-  box-shadow: 0 7px 14px rgba(150, 230, 161, 0.3);
+  background: linear-gradient(135deg, #6EC1FF, #34D399);
+  box-shadow: 0 7px 14px rgba(110, 193, 255, 0.35);
 }
 
 .streak-card .streak-track div.filled[data-streak-level="4"],
 .streak-card .streak-track div.filled[data-streak-level="5"],
 .streak-card .streak-track div.filled[data-streak-level="6"] {
-  background: linear-gradient(135deg, #96e6a1, #38ef7d);
-  box-shadow: 0 7px 14px rgba(56, 239, 125, 0.35);
+  background: linear-gradient(135deg, #34D399, #FDE047);
+  box-shadow: 0 7px 14px rgba(253, 224, 71, 0.35);
 }
 
 .streak-card .streak-track div.filled[data-streak-level="7"],
 .streak-card .streak-track div.filled[data-streak-level="8"],
 .streak-card .streak-track div.filled[data-streak-level="9"] {
-  background: linear-gradient(135deg, #38ef7d, #11998e);
-  box-shadow: 0 7px 17px rgba(17, 153, 142, 0.4);
+  background: linear-gradient(135deg, #FDE047, #FB923C);
+  box-shadow: 0 7px 17px rgba(251, 146, 60, 0.4);
 }
 
 .streak-card .streak-track div.filled[data-streak-level="10"] {
-  background: linear-gradient(135deg, #fff886, #fde68a);
-  box-shadow: 0 0 18px #fde68a;
-  color: #583d00;
+  background: linear-gradient(135deg, #FB923C, #EF4444);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.65);
+  color: #3f0a0a;
 }
 
 .streak-card .tip {
-  margin-top: 14px;
-  font-size: 0.9rem;
+  margin-top: 8px;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
@@ -569,7 +574,7 @@ body {
 .modal-status {
   min-height: 1.2em;
   font-weight: 600;
-  margin-top: 14px;
+  margin-top: 24px;
 }
 
 .modal-status.success {
@@ -640,7 +645,7 @@ body {
 .attribution-card {
   margin-top: auto;
   padding: 10px;
-  text-align: center;
+  text-align: left;
   font-size: 0.8rem;
   color: var(--text-main);
   opacity: 0.7;
