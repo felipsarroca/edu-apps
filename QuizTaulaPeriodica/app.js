@@ -847,30 +847,39 @@ function renderLeaderboard(entries) {
   if (!leaderboardGrid) return;
 
   leaderboardGrid.innerHTML = "";
-  let totalRendered = 0;
+  if (leaderboardEmpty) {
+    leaderboardEmpty.hidden = true;
+    leaderboardEmpty.textContent = "";
+  }
 
+  let totalRendered = 0;
+  const knownLevels = new Set(LEADERBOARD_DISPLAY_LEVELS.map((level) => level.key));
   const normalizedEntries = Array.isArray(entries)
-    ? entries.map((entry) => {
-        const level = (entry.level ?? entry.nivell ?? '').trim();
-        const name = (entry.name ?? entry.nom ?? '').trim() || 'Anònim';
-        let score = Number(entry.score ?? entry.puntuacio ?? entry.punts ?? 0);
-        if (!Number.isFinite(score)) score = 0;
-        const timeRaw = (entry.time ?? entry.temps ?? '').trim();
-        const time = timeRaw || '--:--';
-        const timeMs = parseLeaderboardTime(time);
-        const dateValue = entry.dataISO ?? entry.dateISO ?? entry.dataIso ?? entry.data ?? entry.date ?? null;
-        const parsedDateMs = dateValue ? Date.parse(dateValue) : Number.POSITIVE_INFINITY;
-        const dateMs = Number.isNaN(parsedDateMs) ? Number.POSITIVE_INFINITY : parsedDateMs;
-        return {
-          name,
-          score,
-          levelKey: normalizeLevelKey(level),
-          time,
-          timeMs,
-          dateText: formatLeaderboardDate(dateValue),
-          dateMs,
-        };
-      })
+    ? entries
+        .map((entry) => {
+          const levelLabel = (entry.level ?? entry.nivell ?? entry.label ?? '').trim();
+          const levelKey = normalizeLevelKey(levelLabel);
+          const name = (entry.name ?? entry.nom ?? '').trim() || 'Anònim';
+          let score = Number(entry.score ?? entry.puntuacio ?? entry.punts ?? 0);
+          if (!Number.isFinite(score)) score = 0;
+          const timeRaw = (entry.time ?? entry.temps ?? '').trim();
+          const time = timeRaw || '--:--';
+          const timeMs = parseLeaderboardTime(time);
+          const dateValue = entry.dataISO ?? entry.dateISO ?? entry.dataIso ?? entry.data ?? entry.date ?? null;
+          const parsedDateMs = dateValue ? Date.parse(dateValue) : Number.POSITIVE_INFINITY;
+          const dateMs = Number.isNaN(parsedDateMs) ? Number.POSITIVE_INFINITY : parsedDateMs;
+
+          return {
+            name,
+            score,
+            levelKey,
+            time,
+            timeMs,
+            dateText: formatLeaderboardDate(dateValue),
+            dateMs,
+          };
+        })
+        .filter((entry) => knownLevels.has(entry.levelKey))
     : [];
 
   LEADERBOARD_DISPLAY_LEVELS.forEach(({ key, label, className, icon }) => {
@@ -895,8 +904,8 @@ function renderLeaderboard(entries) {
     const levelEntries = normalizedEntries
       .filter((entry) => entry.levelKey === key)
       .sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
         if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
+        if (b.score !== a.score) return b.score - a.score;
         if (a.dateMs !== b.dateMs) return a.dateMs - b.dateMs;
         return a.name.localeCompare(b.name, 'ca', { sensitivity: 'base' });
       })
@@ -929,7 +938,7 @@ function renderLeaderboard(entries) {
 
         const meta = document.createElement('span');
         meta.className = 'leaderboard-meta';
-        meta.textContent = `Temps: ${entry.time} · Punts: ${entry.score} · Data: ${entry.dateText}`;
+        meta.textContent = `Temps: ${entry.time} · Data: ${entry.dateText}`;
         wrapper.appendChild(meta);
 
         item.appendChild(wrapper);
@@ -956,12 +965,25 @@ function renderLeaderboard(entries) {
 
 function parseLeaderboardTime(value) {
   if (typeof value !== "string") return Number.POSITIVE_INFINITY;
-  const parts = value.split(":");
-  if (parts.length !== 2) return Number.POSITIVE_INFINITY;
-  const minutes = Number.parseInt(parts[0], 10);
-  const seconds = Number.parseInt(parts[1], 10);
-  if (Number.isNaN(minutes) || Number.isNaN(seconds)) return Number.POSITIVE_INFINITY;
-  return minutes * 60_000 + seconds * 1_000;
+  const trimmed = value.trim();
+  if (!trimmed) return Number.POSITIVE_INFINITY;
+  const parts = trimmed.split(':').map((part) => part.trim());
+  if (parts.length === 2) {
+    const minutes = Number.parseInt(parts[0], 10);
+    const seconds = Number.parseInt(parts[1], 10);
+    if (Number.isNaN(minutes) || Number.isNaN(seconds)) return Number.POSITIVE_INFINITY;
+    return (minutes * 60 + seconds) * 1_000;
+  }
+  if (parts.length === 3) {
+    const hours = Number.parseInt(parts[0], 10);
+    const minutes = Number.parseInt(parts[1], 10);
+    const seconds = Number.parseInt(parts[2], 10);
+    if ([hours, minutes, seconds].some((num) => Number.isNaN(num))) {
+      return Number.POSITIVE_INFINITY;
+    }
+    return (hours * 3_600 + minutes * 60 + seconds) * 1_000;
+  }
+  return Number.POSITIVE_INFINITY;
 }
 
 function formatLeaderboardDate(rawValue) {
