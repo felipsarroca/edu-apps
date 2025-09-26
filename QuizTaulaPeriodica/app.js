@@ -1039,9 +1039,49 @@ function renderLeaderboard(entries) {
         nameEl.textContent = entry.name;
         wrapper.appendChild(nameEl);
 
-        const meta = document.createElement('span');
+        const meta = document.createElement('div');
         meta.className = 'leaderboard-meta';
-        meta.textContent = `Temps: ${entry.time} · Data: ${entry.dateText}`;
+
+        const timeBlock = document.createElement('span');
+        timeBlock.className = 'leaderboard-meta-block leaderboard-meta-time';
+
+        const timeIcon = document.createElement('span');
+        timeIcon.className = 'leaderboard-meta-icon';
+        timeIcon.setAttribute('aria-hidden', 'true');
+        timeIcon.textContent = '⏳';
+        timeBlock.appendChild(timeIcon);
+
+        const timeLabel = document.createElement('span');
+        timeLabel.className = 'sr-only';
+        timeLabel.textContent = 'Temps';
+        timeBlock.appendChild(timeLabel);
+
+        const timeValue = document.createElement('strong');
+        timeValue.className = 'leaderboard-time-value';
+        timeValue.textContent = entry.time;
+        timeBlock.appendChild(timeValue);
+
+        const dateBlock = document.createElement('span');
+        dateBlock.className = 'leaderboard-meta-block leaderboard-meta-date';
+
+        const dateIcon = document.createElement('span');
+        dateIcon.className = 'leaderboard-meta-icon';
+        dateIcon.setAttribute('aria-hidden', 'true');
+        dateIcon.textContent = '📅';
+        dateBlock.appendChild(dateIcon);
+
+        const dateLabel = document.createElement('span');
+        dateLabel.className = 'sr-only';
+        dateLabel.textContent = 'Data';
+        dateBlock.appendChild(dateLabel);
+
+        const dateValue = document.createElement('span');
+        dateValue.className = 'leaderboard-date-value';
+        dateValue.textContent = entry.dateText;
+        dateBlock.appendChild(dateValue);
+
+        meta.appendChild(timeBlock);
+        meta.appendChild(dateBlock);
         wrapper.appendChild(meta);
 
         item.appendChild(wrapper);
