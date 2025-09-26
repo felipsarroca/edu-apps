@@ -1,50 +1,31 @@
-# Repte de la taula periòdica
+﻿# Repte de la taula periòdica
 
-Aplicació web per treballar el reconeixement dels elements químics a partir del seu símbol. El repte consisteix a encertar 10 elements consecutius en el menor temps possible, amb pistes visuals i nivells de dificultat graduats.
+Aplicació web per reforçar la identificació dels elements químics a partir del seu símbol. L’objectiu és encertar deu elements consecutius en el mínim temps possible, gestionant la pressió del cronòmetre i els diferents nivells de dificultat.
 
-## Característiques principals
-- Interfície responsiva pensada per projector, pissarra digital o ordinador portàtil.
-- Cinc nivells de dificultat que controlen el temps disponible i el conjunt d'elements que poden aparèixer.
-- Icona d'ajuda (❓) amb les instruccions resumides del joc i icona de rànquing (🏆) per desplegar els cinc millors resultats per nivell (Normal, Difícil i Molt difícil).
-- Rànquing automàtic alimentat des d'un full de càlcul de Google Sheets (lectura en temps real i memòria cau de 60 s).
-- Seguiment automàtic de la ratxa d'encerts, del temps total i possibilitat d'enviar el resultat final.
+## Funcionalitats destacades
+- Interfície responsive optimitzada per projector, pissarra digital o portàtil.
+- Cinc nivells de dificultat que combinen temps disponible i pool d’elements.
+- Modal d’instruccions accessible des de la icona `❓` amb un resum del repte.
+- Pantalla de rànquing en tres columnes (Normal, Difícil i Molt difícil) amb icones `⏳` i `📅` per destacar el temps i la data respectivament.
+- Rànquing automàtic alimentat per Google Sheets amb memòria cau de 60 segons i opció de refrescar manualment.
+- Seguiment de la ratxa d’encerts, temps total i enviament opcional del resultat mitjançant Apps Script.
 
-## Fitxers principals
-- `index.html`: estructura de la pàgina, capçalera amb icones i modals.
-- `styles.css`: estilisme general, modalitats, icones circulars i rànquing.
-- `app.js`: lògica del joc, gestió de nivells, temporitzadors, enviament i lectura de resultats.
-- `elementsData.js`: catàleg complet amb la informació de cada element químic.
-- `config.js`: punt de configuració per indicar la URL d'Apps Script i la graella pública del rànquing.
+## Com s’hi juga
+1. Escriu el teu nom a la targeta de configuració inicial.
+2. Selecciona el nivell de dificultat que vols practicar.
+3. Revisa les instruccions amb la icona `❓` si necessites un recordatori ràpid.
+4. Prem “Comença el repte” i tria l’element que correspon al símbol il·luminat.
+5. Aconsegueix una ratxa de 10 encerts consecutius; qualsevol error reinicia la seqüència.
+6. En acabar, pots enviar el resultat (nom, puntuació, nivell i temps) al full compartit.
+7. Consulta els millors registres amb la icona `🏆`; els nivells es mostren en paral·lel perquè la comparativa sigui immediata.
 
-## Requisits
-- Navegador modern (Chrome, Edge, Firefox o Safari) amb JavaScript habilitat.
-- Per registrar i consultar resultats: un compte de Google amb accés a Google Sheets i Apps Script i un full compartit en mode lectura pública.
+## Integració amb Google Sheets
+### Preparar el full de càlcul
+1. Crea un full amb les columnes `Nom`, `Puntuació`, `Nivell`, `Temps`, `Data`.
+2. Comparteix-lo en mode “Qualsevol amb l’enllaç pot veure” per permetre la lectura del rànquing.
 
-## Posada en marxa
-1. Clona o descarrega el repositori a la teva carpeta de treball (`I:\Mi unidad\Github` si segueixes la mateixa estructura).
-2. Obre `index.html` amb el navegador (no cal servidor web).
-3. Edita `config.js` i revisa aquestes constants:
-   ```javascript
-   export const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/EL-TEU-ID/exec";
-   export const LEADERBOARD_SHEET_ID = "1-W01-KZ1v7PVAQc72pHth9h-CkAAcDBJrBqqsfUd8ZU";
-   export const LEADERBOARD_SHEET_GID = "0";
-   ```
-   - `GOOGLE_SCRIPT_URL`: servei Apps Script que rep els resultats (vegeu la secció següent).
-   - `LEADERBOARD_SHEET_ID` / `GID`: identificadors del full de càlcul públic des d'on es llegirà el rànquing. Si canvies de full, actualitza aquests valors.
-4. Comparteix el full de càlcul perquè qualsevol amb l'enllaç el pugui veure (sense necessitat d'inici de sessió) i guarda els canvis.
-
-## Funcionament del joc
-1. Escriu el nom i cognoms a la targeta de configuració inicial.
-2. Tria el nivell de dificultat que vulguis practicar.
-3. Si tens dubtes, clica la icona `❓` per llegir les instruccions.
-4. Prem "Comença el repte" i identifica l'element correcte cada vegada que aparegui un símbol destacat.
-5. Cal aconseguir 10 encerts seguits. Qualsevol error reinicia la ratxa.
-6. En finalitzar la partida en nivell normal, difícil o molt difícil, apareix una finestra modal per enviar (o no) el resultat.
-7. La icona `🏆` de la capçalera mostra el rànquing: cinc millors resultats en els nivells Normal, Difícil i Molt difícil (ordenats per punts, temps i data). Pots forçar una nova consulta amb el botó "Actualitza".
-
-## Configuració del full de resultats
-1. Crea un full de càlcul (pestanya `Resultats`, per exemple) amb les columnes `Nom`, `Puntuació`, `Nivell`, `Temps`, `Data`.
-2. Obre **Extensions → Apps Script** i enganxa aquest codi a `Code.gs` per registrar les partides via `POST`:
+### Publicar l’endpoint Apps Script
+1. A **Extensions → Apps Script**, enganxa aquest codi a `Code.gs`:
    ```javascript
    const SHEET_NAME = 'Resultats';
 
@@ -74,22 +55,38 @@ Aplicació web per treballar el reconeixement dels elements químics a partir de
      return sheet;
    }
    ```
-3. Desa el projecte i publica'l com a **Aplicació web** (accés: qualsevol amb l'enllaç, executar com a tu) i copia la URL al `config.js`.
-4. Perquè el rànquing funcioni, publica o comparteix el full en mode "Qualsevol amb l'enllaç pot veure". L'app fa servir l'endpoint `gviz/tq` de Google Sheets per llegir les dades, de manera que no cal cap `doGet` personalitzat.
+2. Desa el projecte i publica’l com a **Aplicació web** (execució com a tu, accés per a qualsevol amb l’enllaç).
+3. Copia la URL de desplegament i enganxa-la a `GOOGLE_SCRIPT_URL` dins `config.js`.
 
-> Si prefereixes un altre servei de backend (Make, n8n, servidor propi), replica la mateixa API: rep `nom`, `puntuacio`, `nivell`, `temps` via `POST` i escriu-los al full; assegura't que el full resultant continua sent accessible en lectura.
+### Configurar la lectura del rànquing
+- Copia l’ID del full i el `gid` de la pestanya pública i assigna’ls a `LEADERBOARD_SHEET_ID` i `LEADERBOARD_SHEET_GID`.
+- L’app consulta el full via `https://docs.google.com/spreadsheets/d/<ID>/gviz/tq?gid=<GID>`; no cal cap `doGet` personalitzat.
+
+## Configuració inicial del projecte
+1. Clona o descarrega el repositori (ex.: `I:\La meva unitat\Github\QuizTaulaPeriodica`).
+2. Obre `index.html` directament al navegador; no cal servidor local.
+3. Revisa `config.js` i actualitza les constants de connexió segons el teu full i Apps Script.
+
+## Estructura del projecte
+- `index.html`: estructura, capçalera i modals (instruccions i rànquing).
+- `styles.css`: estils generals, temàtica visual, graella de rànquing i estats interactius.
+- `app.js`: lògica del joc, temporitzadors, gestió de nivells, enviament i lectura de resultats.
+- `elementsData.js`: catàleg complet dels elements químics (nom, símbol, número atòmic, categoria).
+- `config.js`: valors de configuració per a Apps Script i Google Sheets.
 
 ## Personalització
-- Modifica la configuració temporal o els conjunts d'elements a `app.js` (`BASE_POOLS` i `DIFFICULTY_CONFIG`).
-- Ajusta els colors i l'aspecte general a `styles.css` (classes `category-*`, `circle-trigger`, etc.).
-- Adapta els textos mostrats a la interfície editant `index.html` o les constants d'`app.js`.
-- Afegeix més seccions al modal d'instruccions o noves mètriques al rànquing segons les necessitats del teu centre.
+- Ajusta temps, pools o recompenses a `app.js` (`BASE_POOLS`, `DIFFICULTY_CONFIG`).
+- Modifica colors, gradients i tipografies a `styles.css` per adaptar-los al vostre centre.
+- Canvia els textos de suport a `index.html` o les cadenes definides a `app.js`.
+- Afegeix noves mètriques al rànquing ampliant la renderització i el full de càlcul.
 
-## Bones pràctiques a l'aula
-- Comença en nivells més assequibles i puja la dificultat quan l'alumnat guanyi seguretat.
-- Complementa l'activitat amb rúbriques a Google Classroom que valorin procediments i justificació.
-- Després del repte, proposa investigar un element desconegut i crear una infografia amb Canva.
-- Utilitza els resultats exportats per treballar estadística bàsica (mitjana del temps, percentatges d'encert, etc.).
+## Bones pràctiques a l’aula
+- Comença pels nivells més assequibles i augmenta la dificultat a mesura que l’alumnat guanya confiança.
+- Emmarca l’activitat amb rúbriques a Google Classroom per valorar estratègies i constància.
+- Demana a cada alumne que investigui un element nou i elabori una infografia amb Canva com a tasca d’ampliació.
+- Exporta els resultats per treballar estadística bàsica (mitjana de temps, percentatge d’encerts, rànquing per classes, etc.).
 
 ## Crèdits i llicència
-Projecte desenvolupat per Felip Sarroca amb assistència de la IA i basat en una idea d'E. Boixader. Llicència [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).
+Projecte desenvolupat per Felip Sarroca amb assistència de la IA i inspirat en una idea d’E. Boixader. Llicència [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca).
+
+
