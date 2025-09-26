@@ -144,12 +144,89 @@ const LEADERBOARD_DATE_FORMAT = new Intl.DateTimeFormat("ca-ES", {
 const LEADERBOARD_FEED_URL = (() => {
   if (!LEADERBOARD_SHEET_ID) return null;
   const gid = (typeof LEADERBOARD_SHEET_GID === "string" && LEADERBOARD_SHEET_GID.trim()) ? LEADERBOARD_SHEET_GID.trim() : "0";
-  return `https://docs.google.com/spreadsheets/d/${LEADERBOARD_SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}`;
+  return `https://docs.google.com/spreadsheets/d/${LEADERBOARD_SHEET_ID}/gviz/tq?gid=${gid}`;
 })();
 
 const sanitizePool = (symbols) => [
   ...new Set(symbols.filter((symbol) => SYMBOL_CATALOG.has(symbol))),
 ];
+
+const leaderboardJsonpRequests = new Map();
+let leaderboardJsonpCounter = 0;
+let gvizSetResponseHooked = false;
+let previousGvizSetResponse = null;
+
+function ensureGvizSetResponseHook() {
+  if (gvizSetResponseHooked) return;
+  gvizSetResponseHooked = true;
+  const googleNs = (window.google = window.google || {});
+  const visualization = (googleNs.visualization = googleNs.visualization || {});
+  const Query = (visualization.Query = visualization.Query || {});
+  previousGvizSetResponse = Query.setResponse;
+  Query.setResponse = function patchedSetResponse(response) {
+    const reqId = response?.reqId;
+    if (reqId && leaderboardJsonpRequests.has(reqId)) {
+      const pending = leaderboardJsonpRequests.get(reqId);
+      leaderboardJsonpRequests.delete(reqId);
+      pending.cleanup();
+      try {
+        const entries = extractLeaderboardEntries(response);
+        pending.resolve(entries);
+      } catch (error) {
+        pending.reject(error);
+      }
+      return;
+    }
+    if (typeof previousGvizSetResponse === 'function') {
+      previousGvizSetResponse(response);
+    }
+  };
+}
+
+function fetchLeaderboardEntriesJsonp() {
+  return new Promise((resolve, reject) => {
+    if (!LEADERBOARD_FEED_URL) {
+      reject(new Error("No hi ha cap graella configurada per al rànquing."));
+      return;
+    }
+
+    ensureGvizSetResponseHook();
+
+    leaderboardJsonpCounter += 1;
+    const reqId = `lb_${Date.now()}_${leaderboardJsonpCounter}`;
+    const separator = LEADERBOARD_FEED_URL.includes('?') ? '&' : '?';
+    const src = `${LEADERBOARD_FEED_URL}${separator}tqx=out:json&reqId=${encodeURIComponent(reqId)}`;
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+
+    const timeoutId = window.setTimeout(() => {
+      if (!leaderboardJsonpRequests.has(reqId)) return;
+      const pending = leaderboardJsonpRequests.get(reqId);
+      leaderboardJsonpRequests.delete(reqId);
+      pending.cleanup();
+      pending.reject(new Error("La resposta del rànquing ha trigat massa."));
+    }, 8000);
+
+    const cleanup = () => {
+      window.clearTimeout(timeoutId);
+      script.remove();
+    };
+
+    script.onerror = () => {
+      if (!leaderboardJsonpRequests.has(reqId)) return;
+      const pending = leaderboardJsonpRequests.get(reqId);
+      leaderboardJsonpRequests.delete(reqId);
+      cleanup();
+      pending.reject(new Error("No s'ha pogut carregar el rànquing des de Google Sheets."));
+    };
+
+    leaderboardJsonpRequests.set(reqId, { resolve, reject, cleanup });
+    document.body.appendChild(script);
+  });
+}
+
 
 const DIFFICULTY_CONFIG = {
   "very-easy": {
