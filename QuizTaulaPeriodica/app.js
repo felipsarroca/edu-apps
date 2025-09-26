@@ -815,17 +815,7 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
   leaderboardGrid.setAttribute("aria-busy", "true");
 
   try {
-    const response = await fetch(LEADERBOARD_FEED_URL, {
-      method: "GET",
-      mode: "cors",
-    });
-
-    if (!response.ok) {
-      throw new Error(`Resposta ${response.status}`);
-    }
-
-    const rawText = await response.text();
-    const entries = extractLeaderboardEntries(rawText);
+    const entries = await fetchLeaderboardEntriesJsonp();
 
     state.leaderboard.entries = entries;
     state.leaderboard.lastFetched = now;
@@ -833,7 +823,6 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
     renderLeaderboard(entries);
   } catch (error) {
     console.error("Error carregant el rànquing", error);
-    leaderboardGrid.innerHTML = "";
     renderLeaderboard([]);
     if (leaderboardEmpty) {
       leaderboardEmpty.hidden = false;
@@ -849,24 +838,32 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
   }
 }
 
-function extractLeaderboardEntries(rawText) {
-  if (typeof rawText !== "string" || !rawText.trim()) {
+function extractLeaderboardEntries(rawInput) {
+  let payload;
+  if (typeof rawInput === "string") {
+    if (!rawInput.trim()) {
+      return [];
+    }
+    const match = rawInput.match(/google\.visualization\.Query.setResponse\((.*)\);?/s);
+    if (!match) {
+      throw new Error('Format inesperat de la resposta de Google Sheets.');
+    }
+    payload = JSON.parse(match[1]);
+  } else if (rawInput && typeof rawInput === "object") {
+    payload = rawInput;
+  } else {
     return [];
   }
-  const match = rawText.match(/google\.visualization\.Query.setResponse\((.*)\);?/s);
-  if (!match) {
-    throw new Error('Format inesperat de la resposta de Google Sheets.');
-  }
-  const payload = JSON.parse(match[1]);
+
   const rows = payload?.table?.rows ?? [];
   return rows
     .map((row) => row?.c ?? [])
     .map((cells) => ({
-      nom: getCellString(cells[0]),
-      puntuacio: getCellNumber(cells[1]),
-      nivell: getCellString(cells[2]),
-      temps: getCellString(cells[3]),
-      dataISO: parseGvizDateCell(cells[4]),
+      dataISO: parseGvizDateCell(cells[0]),
+      nom: getCellString(cells[1]),
+      puntuacio: getCellNumber(cells[2]),
+      nivell: getCellString(cells[3]),
+      temps: getCellString(cells[4]),
     }))
     .filter((entry) => entry.nom || entry.nivell || entry.temps);
 }
