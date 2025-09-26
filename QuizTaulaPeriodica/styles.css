@@ -161,19 +161,6 @@ body {
   box-shadow: 0 15px 34px var(--shadow-color);
 }
 
-.leaderboard-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.leaderboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
 .text-btn {
   background: transparent;
   border: none;
@@ -191,6 +178,13 @@ body {
   outline: none;
 }
 
+.leaderboard-empty {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 .leaderboard-hint {
   margin: 0;
   font-size: 0.9rem;
@@ -199,40 +193,82 @@ body {
 
 .leaderboard-grid {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
 }
 
-.leaderboard-group {
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(20, 0, 198, 0.1);
-  border-radius: 14px;
-  padding: 12px 14px;
+.leaderboard-column {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(20, 0, 198, 0.12);
+  box-shadow: 0 16px 32px rgba(15, 11, 43, 0.16);
+  backdrop-filter: blur(6px);
+  color: var(--text-main);
 }
 
-.leaderboard-group h3 {
-  margin: 0;
-  font-size: 1rem;
+.leaderboard-column-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.leaderboard-group ol {
+.level-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 2px 4px rgba(15, 11, 43, 0.2));
+}
+
+.level-badge {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.leaderboard-list {
+  list-style: none;
   margin: 0;
-  padding-left: 18px;
-  display: grid;
-  gap: 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 8px 18px rgba(15, 11, 43, 0.14);
+}
+
+.rank-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.95rem;
+  background: rgba(15, 11, 43, 0.12);
+  color: #0f0b2b;
 }
 
 .leaderboard-entry {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .leaderboard-entry strong {
-  font-weight: 700;
+  font-size: 1rem;
 }
 
 .leaderboard-meta {
@@ -240,16 +276,46 @@ body {
   color: var(--text-muted);
 }
 
-.leaderboard-empty {
-  margin: 0;
+.leaderboard-column-empty {
+  margin: 8px 0 0;
   font-size: 0.9rem;
   color: var(--text-muted);
-  text-align: center;
+  font-style: italic;
 }
 
 .leaderboard-refresh {
   align-self: flex-end;
-  margin-top: 8px;
+  margin-top: 4px;
+}
+
+.leaderboard-column.level-normal {
+  background: linear-gradient(135deg, rgba(110, 231, 183, 0.6), rgba(59, 130, 246, 0.45));
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.leaderboard-column.level-normal .rank-badge {
+  background: rgba(59, 130, 246, 0.25);
+  color: #0b2a3d;
+}
+
+.leaderboard-column.level-dificil {
+  background: linear-gradient(135deg, rgba(255, 173, 96, 0.62), rgba(252, 106, 132, 0.5));
+  border-color: rgba(252, 106, 132, 0.35);
+}
+
+.leaderboard-column.level-dificil .rank-badge {
+  background: rgba(252, 106, 132, 0.25);
+  color: #5b1a00;
+}
+
+.leaderboard-column.level-moltdificil {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.6), rgba(244, 114, 182, 0.5));
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.leaderboard-column.level-moltdificil .rank-badge {
+  background: rgba(167, 139, 250, 0.28);
+  color: #2d0f4b;
 }
 
 .streak-card {
@@ -704,6 +770,14 @@ body {
 
 .modal-header h2 {
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-title-icon {
+  font-size: 1.45rem;
+  filter: drop-shadow(0 3px 8px rgba(15, 11, 43, 0.25));
 }
 
 .close-btn {
@@ -824,14 +898,18 @@ body {
 }
 
 .modal-content.leaderboard-modal {
-  max-width: 560px;
-  gap: 16px;
+  max-width: 760px;
+  gap: 18px;
 }
 
 .modal-content.leaderboard-modal .modal-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: inset 0 0 0 1px rgba(20, 0, 198, 0.08);
 }
 
 .instructions-list {

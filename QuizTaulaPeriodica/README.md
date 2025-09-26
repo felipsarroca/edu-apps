@@ -5,7 +5,7 @@ Aplicació web per treballar el reconeixement dels elements químics a partir de
 ## Característiques principals
 - Interfície responsiva pensada per projector, pissarra digital o ordinador portàtil.
 - Cinc nivells de dificultat que controlen el temps disponible i el conjunt d'elements que poden aparèixer.
-- Icona d'ajuda (❓) amb les instruccions resumides del joc i icona de rànquing (🏆) per desplegar els tres millors temps per nivell.
+- Icona d'ajuda (❓) amb les instruccions resumides del joc i icona de rànquing (🏆) per desplegar els cinc millors resultats per nivell (Normal, Difícil i Molt difícil).
 - Rànquing automàtic alimentat des d'un full de càlcul de Google Sheets (lectura en temps real i memòria cau de 60 s).
 - Seguiment automàtic de la ratxa d'encerts, del temps total i possibilitat d'enviar el resultat final.
 
@@ -40,7 +40,7 @@ Aplicació web per treballar el reconeixement dels elements químics a partir de
 4. Prem "Comença el repte" i identifica l'element correcte cada vegada que aparegui un símbol destacat.
 5. Cal aconseguir 10 encerts seguits. Qualsevol error reinicia la ratxa.
 6. En finalitzar la partida en nivell normal, difícil o molt difícil, apareix una finestra modal per enviar (o no) el resultat.
-7. La icona `🏆` de la capçalera mostra el rànquing: tres millors temps per nivell, ordenats per puntuació, temps i data. Pots forçar una nova consulta amb el botó "Actualitza".
+7. La icona `🏆` de la capçalera mostra el rànquing: cinc millors resultats en els nivells Normal, Difícil i Molt difícil (ordenats per punts, temps i data). Pots forçar una nova consulta amb el botó "Actualitza".
 
 ## Configuració del full de resultats
 1. Crea un full de càlcul (pestanya `Resultats`, per exemple) amb les columnes `Nom`, `Puntuació`, `Nivell`, `Temps`, `Data`.

@@ -130,12 +130,10 @@ const BASE_POOLS = {
   ],
 };
 
-const LEADERBOARD_ORDER = [
-  "Molt difícil",
-  "Difícil",
-  "Normal",
-  "Fàcil",
-  "Molt fàcil",
+const LEADERBOARD_DISPLAY_LEVELS = [
+  { key: "normal", label: "Normal", className: "level-normal", icon: "🌟" },
+  { key: "dificil", label: "Difícil", className: "level-dificil", icon: "🔥" },
+  { key: "moltdificil", label: "Molt difícil", className: "level-moltdificil", icon: "🚀" },
 ];
 const LEADERBOARD_CACHE_MS = 60_000;
 const LEADERBOARD_DATE_FORMAT = new Intl.DateTimeFormat("ca-ES", {
@@ -705,7 +703,7 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
   if (!leaderboardGrid) return;
 
   if (!LEADERBOARD_FEED_URL) {
-    leaderboardGrid.innerHTML = "";
+    renderLeaderboard([]);
     if (leaderboardEmpty) {
       leaderboardEmpty.hidden = false;
       leaderboardEmpty.textContent = "Configura la graella de rànquing al fitxer config.js.";
@@ -759,6 +757,7 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
   } catch (error) {
     console.error("Error carregant el rànquing", error);
     leaderboardGrid.innerHTML = "";
+    renderLeaderboard([]);
     if (leaderboardEmpty) {
       leaderboardEmpty.hidden = false;
       leaderboardEmpty.textContent = `No s'ha pogut carregar el rànquing (${error?.message || error}).`;
@@ -834,106 +833,123 @@ function parseGvizDateCell(cell) {
   return null;
 }
 
+function normalizeLevelKey(value) {
+  if (!value) return '';
+  return value
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z]/g, '');
+}
+
 function renderLeaderboard(entries) {
   if (!leaderboardGrid) return;
 
   leaderboardGrid.innerHTML = "";
   let totalRendered = 0;
 
-  if (!Array.isArray(entries) || entries.length === 0) {
-    if (leaderboardEmpty) {
-      leaderboardEmpty.hidden = false;
-      leaderboardEmpty.textContent = "Encara no hi ha registres disponibles.";
+  const normalizedEntries = Array.isArray(entries)
+    ? entries.map((entry) => {
+        const level = (entry.level ?? entry.nivell ?? '').trim();
+        const name = (entry.name ?? entry.nom ?? '').trim() || 'Anònim';
+        let score = Number(entry.score ?? entry.puntuacio ?? entry.punts ?? 0);
+        if (!Number.isFinite(score)) score = 0;
+        const timeRaw = (entry.time ?? entry.temps ?? '').trim();
+        const time = timeRaw || '--:--';
+        const timeMs = parseLeaderboardTime(time);
+        const dateValue = entry.dataISO ?? entry.dateISO ?? entry.dataIso ?? entry.data ?? entry.date ?? null;
+        const parsedDateMs = dateValue ? Date.parse(dateValue) : Number.POSITIVE_INFINITY;
+        const dateMs = Number.isNaN(parsedDateMs) ? Number.POSITIVE_INFINITY : parsedDateMs;
+        return {
+          name,
+          score,
+          levelKey: normalizeLevelKey(level),
+          time,
+          timeMs,
+          dateText: formatLeaderboardDate(dateValue),
+          dateMs,
+        };
+      })
+    : [];
+
+  LEADERBOARD_DISPLAY_LEVELS.forEach(({ key, label, className, icon }) => {
+    const column = document.createElement('div');
+    column.className = `leaderboard-column ${className}`;
+
+    const header = document.createElement('div');
+    header.className = 'leaderboard-column-header';
+
+    const iconEl = document.createElement('span');
+    iconEl.className = 'level-icon';
+    iconEl.textContent = icon;
+    header.appendChild(iconEl);
+
+    const badge = document.createElement('span');
+    badge.className = 'level-badge';
+    badge.textContent = label;
+    header.appendChild(badge);
+
+    column.appendChild(header);
+
+    const levelEntries = normalizedEntries
+      .filter((entry) => entry.levelKey === key)
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
+        if (a.dateMs !== b.dateMs) return a.dateMs - b.dateMs;
+        return a.name.localeCompare(b.name, 'ca', { sensitivity: 'base' });
+      })
+      .slice(0, 5);
+
+    if (levelEntries.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'leaderboard-column-empty';
+      empty.textContent = 'Encara no hi ha registres en aquest nivell.';
+      column.appendChild(empty);
+    } else {
+      const listEl = document.createElement('ol');
+      listEl.className = 'leaderboard-list';
+
+      levelEntries.forEach((entry, index) => {
+        const item = document.createElement('li');
+        item.className = 'leaderboard-item';
+
+        const badgeEl = document.createElement('span');
+        badgeEl.className = 'rank-badge';
+        badgeEl.textContent = `#${index + 1}`;
+        item.appendChild(badgeEl);
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'leaderboard-entry';
+
+        const nameEl = document.createElement('strong');
+        nameEl.textContent = entry.name;
+        wrapper.appendChild(nameEl);
+
+        const meta = document.createElement('span');
+        meta.className = 'leaderboard-meta';
+        meta.textContent = `Temps: ${entry.time} · Punts: ${entry.score} · Data: ${entry.dateText}`;
+        wrapper.appendChild(meta);
+
+        item.appendChild(wrapper);
+        listEl.appendChild(item);
+      });
+
+      column.appendChild(listEl);
+      totalRendered += levelEntries.length;
     }
-    return;
-  }
 
-  const grouped = new Map();
-
-  entries.forEach((raw) => {
-    const name = String(raw?.nom ?? raw?.name ?? "").trim() || "Anònim";
-    const level = String(raw?.nivell ?? raw?.level ?? "").trim() || "Sense nivell";
-    const time = String(raw?.temps ?? raw?.time ?? "").trim() || "--:--";
-    const score = Number.parseInt(raw?.puntuacio ?? raw?.score ?? raw?.punts ?? 0, 10) || 0;
-    const dateValue = raw?.dataISO ?? raw?.dataIso ?? raw?.data ?? raw?.timestamp ?? raw?.date ?? null;
-    const dateMs = dateValue ? new Date(dateValue).getTime() : Number.POSITIVE_INFINITY;
-
-    const entry = {
-      name,
-      level,
-      score,
-      time,
-      timeMs: parseLeaderboardTime(time),
-      dateText: formatLeaderboardDate(dateValue),
-      dateMs: Number.isNaN(dateMs) ? Number.POSITIVE_INFINITY : dateMs,
-    };
-
-    if (!grouped.has(level)) {
-      grouped.set(level, []);
-    }
-    grouped.get(level).push(entry);
-  });
-
-  const sortedLevels = Array.from(grouped.keys()).sort((a, b) => {
-    const idxA = LEADERBOARD_ORDER.indexOf(a);
-    const idxB = LEADERBOARD_ORDER.indexOf(b);
-    if (idxA === -1 && idxB === -1) return a.localeCompare(b, "ca", { sensitivity: "base" });
-    if (idxA === -1) return 1;
-    if (idxB === -1) return -1;
-    return idxA - idxB;
-  });
-
-  sortedLevels.forEach((level) => {
-    const list = grouped.get(level);
-    if (!list || list.length === 0) return;
-
-    list.sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      if (a.timeMs !== b.timeMs) return a.timeMs - b.timeMs;
-      return a.dateMs - b.dateMs;
-    });
-
-    const topEntries = list.slice(0, 3);
-    if (topEntries.length === 0) return;
-
-    const groupEl = document.createElement("div");
-    groupEl.className = "leaderboard-group";
-
-    const heading = document.createElement("h3");
-    heading.textContent = level;
-    groupEl.appendChild(heading);
-
-    const listEl = document.createElement("ol");
-    topEntries.forEach((entry) => {
-      const item = document.createElement("li");
-      const wrapper = document.createElement("div");
-      wrapper.className = "leaderboard-entry";
-
-      const nameEl = document.createElement("strong");
-      nameEl.textContent = entry.name;
-      wrapper.appendChild(nameEl);
-
-      const meta = document.createElement("span");
-      meta.className = "leaderboard-meta";
-      meta.textContent = `Temps: ${entry.time} · Data: ${entry.dateText}`;
-      wrapper.appendChild(meta);
-
-      item.appendChild(wrapper);
-      listEl.appendChild(item);
-    });
-
-    groupEl.appendChild(listEl);
-    leaderboardGrid.appendChild(groupEl);
-    totalRendered += topEntries.length;
+    leaderboardGrid.appendChild(column);
   });
 
   if (leaderboardEmpty) {
     if (totalRendered === 0) {
       leaderboardEmpty.hidden = false;
-      leaderboardEmpty.textContent = "Encara no hi ha registres disponibles.";
+      leaderboardEmpty.textContent = 'Encara no hi ha registres disponibles.';
     } else {
       leaderboardEmpty.hidden = true;
-      leaderboardEmpty.textContent = "";
+      leaderboardEmpty.textContent = '';
     }
   }
 }
