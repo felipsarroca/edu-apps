@@ -151,8 +151,7 @@ const sanitizePool = (symbols) => [
   ...new Set(symbols.filter((symbol) => SYMBOL_CATALOG.has(symbol))),
 ];
 
-const leaderboardJsonpRequests = new Map();
-let leaderboardJsonpCounter = 0;
+const leaderboardJsonpQueue = [];
 let gvizSetResponseHooked = false;
 let previousGvizSetResponse = null;
 
@@ -164,11 +163,8 @@ function ensureGvizSetResponseHook() {
   const Query = (visualization.Query = visualization.Query || {});
   previousGvizSetResponse = Query.setResponse;
   Query.setResponse = function patchedSetResponse(response) {
-    const reqId = response?.reqId;
-    if (reqId && leaderboardJsonpRequests.has(reqId)) {
-      const pending = leaderboardJsonpRequests.get(reqId);
-      leaderboardJsonpRequests.delete(reqId);
-      pending.cleanup();
+    if (leaderboardJsonpQueue.length) {
+      const pending = leaderboardJsonpQueue.shift();
       try {
         const entries = extractLeaderboardEntries(response);
         pending.resolve(entries);
@@ -183,6 +179,28 @@ function ensureGvizSetResponseHook() {
   };
 }
 
+async function fetchLeaderboardEntries() {
+  if (GOOGLE_SCRIPT_URL) {
+    try {
+      const url = new URL(GOOGLE_SCRIPT_URL);
+      url.searchParams.set('action', 'leaderboard');
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        mode: 'cors',
+      });
+      if (response.ok) {
+        const payload = await response.json();
+        if (Array.isArray(payload?.entries)) {
+          return payload.entries;
+        }
+      }
+    } catch (error) {
+      console.warn("No s'ha pogut obtenir el rànquing via Apps Script", error);
+    }
+  }
+  return fetchLeaderboardEntriesJsonp();
+}
+
 function fetchLeaderboardEntriesJsonp() {
   return new Promise((resolve, reject) => {
     if (!LEADERBOARD_FEED_URL) {
@@ -192,41 +210,50 @@ function fetchLeaderboardEntriesJsonp() {
 
     ensureGvizSetResponseHook();
 
-    leaderboardJsonpCounter += 1;
-    const reqId = `lb_${Date.now()}_${leaderboardJsonpCounter}`;
     const separator = LEADERBOARD_FEED_URL.includes('?') ? '&' : '?';
-    const src = `${LEADERBOARD_FEED_URL}${separator}tqx=out:json&reqId=${encodeURIComponent(reqId)}`;
-
+    const src = `${LEADERBOARD_FEED_URL}${separator}tqx=out:json`;
     const script = document.createElement('script');
     script.src = src;
     script.async = true;
 
-    const timeoutId = window.setTimeout(() => {
-      if (!leaderboardJsonpRequests.has(reqId)) return;
-      const pending = leaderboardJsonpRequests.get(reqId);
-      leaderboardJsonpRequests.delete(reqId);
-      pending.cleanup();
-      pending.reject(new Error("La resposta del rànquing ha trigat massa."));
+    let timeoutId;
+    let request;
+    const cleanup = () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+        timeoutId = undefined;
+      }
+      script.remove();
+      const index = leaderboardJsonpQueue.indexOf(request);
+      if (index !== -1) {
+        leaderboardJsonpQueue.splice(index, 1);
+      }
+    };
+
+    request = {
+      resolve: (entries) => {
+        cleanup();
+        resolve(entries);
+      },
+      reject: (error) => {
+        cleanup();
+        reject(error);
+      },
+      cleanup,
+    };
+
+    timeoutId = window.setTimeout(() => {
+      request.reject(new Error("La resposta del rànquing ha trigat massa."));
     }, 8000);
 
-    const cleanup = () => {
-      window.clearTimeout(timeoutId);
-      script.remove();
-    };
-
     script.onerror = () => {
-      if (!leaderboardJsonpRequests.has(reqId)) return;
-      const pending = leaderboardJsonpRequests.get(reqId);
-      leaderboardJsonpRequests.delete(reqId);
-      cleanup();
-      pending.reject(new Error("No s'ha pogut carregar el rànquing des de Google Sheets."));
+      request.reject(new Error("No s'ha pogut carregar el rànquing des de Google Sheets."));
     };
 
-    leaderboardJsonpRequests.set(reqId, { resolve, reject, cleanup });
+    leaderboardJsonpQueue.push(request);
     document.body.appendChild(script);
   });
 }
-
 
 const DIFFICULTY_CONFIG = {
   "very-easy": {
@@ -779,7 +806,9 @@ function toggleLeaderboard(show) {
 async function loadLeaderboard({ silent = false, force = false } = {}) {
   if (!leaderboardGrid) return;
 
-  if (!LEADERBOARD_FEED_URL) {
+  const hasSheetSource = Boolean(LEADERBOARD_FEED_URL);
+  const hasScriptSource = Boolean(GOOGLE_SCRIPT_URL);
+  if (!hasSheetSource && !hasScriptSource) {
     renderLeaderboard([]);
     if (leaderboardEmpty) {
       leaderboardEmpty.hidden = false;
@@ -788,7 +817,7 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
     if (refreshLeaderboardBtn) {
       refreshLeaderboardBtn.disabled = true;
       refreshLeaderboardBtn.textContent = refreshLeaderboardDefaultLabel || "Actualitza";
-      refreshLeaderboardBtn.removeAttribute("aria-busy");
+      refreshLeaderboardBtn.removeAttribute('aria-busy');
     }
     return;
   }
@@ -802,7 +831,7 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
   if (refreshLeaderboardBtn) {
     refreshLeaderboardBtn.disabled = true;
     refreshLeaderboardBtn.textContent = "Actualitzant...";
-    refreshLeaderboardBtn.setAttribute("aria-busy", "true");
+    refreshLeaderboardBtn.setAttribute('aria-busy', 'true');
   }
 
   if (!silent) {
@@ -812,10 +841,10 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
       leaderboardEmpty.textContent = "Carregant rànquing...";
     }
   }
-  leaderboardGrid.setAttribute("aria-busy", "true");
+  leaderboardGrid.setAttribute('aria-busy', 'true');
 
   try {
-    const entries = await fetchLeaderboardEntriesJsonp();
+    const entries = await fetchLeaderboardEntries();
 
     state.leaderboard.entries = entries;
     state.leaderboard.lastFetched = now;
@@ -829,11 +858,11 @@ async function loadLeaderboard({ silent = false, force = false } = {}) {
       leaderboardEmpty.textContent = `No s'ha pogut carregar el rànquing (${error?.message || error}).`;
     }
   } finally {
-    leaderboardGrid.removeAttribute("aria-busy");
+    leaderboardGrid.removeAttribute('aria-busy');
     if (refreshLeaderboardBtn) {
       refreshLeaderboardBtn.disabled = false;
       refreshLeaderboardBtn.textContent = refreshLeaderboardDefaultLabel || "Actualitza";
-      refreshLeaderboardBtn.removeAttribute("aria-busy");
+      refreshLeaderboardBtn.removeAttribute('aria-busy');
     }
   }
 }
