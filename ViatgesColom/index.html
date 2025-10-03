@@ -1,0 +1,74 @@
+﻿<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Viatges de Cristòfor Colom</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha512-1w2L4MxwY5L0wSXAV2XpVZl8vGeOawxjUY8ailqXFz3vGN9VOGBeo5nYeqqbW3AV0LlwM651EmpwP0nwyv+log=="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <h1 class="top__title">Viatges de Cristòfor Colom</h1>
+      <p class="top__subtitle">
+        Explora els quatre viatges atlàntics de Colom amb una mirada integrada: mapes interactius, cronologia comparada i context per portar a l'aula o a projectes interdisciplinaris.
+      </p>
+    </header>
+
+    <p class="status" data-status></p>
+
+    <main class="layout">
+      <section class="selector">
+        <div class="selector__header">
+          <p class="selector__tag">Escull el viatge</p>
+          <h2>De la glòria al naufragi</h2>
+          <p class="selector__hint">
+            Tria un viatge per analitzar la ruta, les decisions estratègiques i les conseqüències. L'opció «Tots els viatges» superposa les expedicions per facilitar la comparativa.
+          </p>
+        </div>
+        <div class="selector__grid" data-selector-grid></div>
+      </section>
+
+      <section class="map-group">
+        <div class="map-card__header">
+          <div>
+            <p class="map-card__tag">Mapa interactiu</p>
+            <h2 data-map-title>Carregant dades...</h2>
+          </div>
+          <p class="map-card__hint" data-map-hint>
+            Clica els punts per descobrir què va passar a cada lloc. La ruta s'il·lumina quan avances per la cronologia.
+          </p>
+        </div>
+        <div class="map-card__container" id="map"></div>
+      </section>
+
+      <section class="timeline">
+        <header>
+          <p class="timeline__tag">Cronologia</p>
+          <h2 data-timeline-title>Selecciona un viatge</h2>
+          <p class="timeline__hint">
+            Cadascun dels esdeveniments clau inclou el context, els punts conflictius i les pistes per connectar-los amb continguts curriculars d'història, religió i economia.
+          </p>
+        </header>
+        <div class="timeline__list" data-timeline-list></div>
+      </section>
+
+      <aside class="info">
+        <div class="info__summary" data-info-summary></div>
+        <div class="info__episode" data-info-episode></div>
+      </aside>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha512-kZmm3AZ8Hs5N1sC3yRyvCb4s46HoPazTA/g3xPUN1N3lMMMzHOlF9pgwRb2vE466+vWXTfFRInbkIuPItGkWQw=="
+      crossorigin=""
+    ></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
