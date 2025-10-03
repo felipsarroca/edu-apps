@@ -14,51 +14,63 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="top">
-      <h1 class="top__title">Viatges de Cristòfor Colom</h1>
-      <p class="top__subtitle">
-        Explora els quatre viatges atlàntics de Colom amb una mirada integrada: mapes interactius, cronologia comparada i context per portar a l'aula o a projectes interdisciplinaris.
-      </p>
-    </header>
-    <p class="status" data-status></p>
-    <main class="layout">
-      <section class="selector">
-        <div class="selector__header">
-          <p class="selector__tag">Escull el viatge</p>
-          <h2>De la glòria al naufragi</h2>
-          <p class="selector__hint">
-            Tria un viatge per analitzar la ruta, les decisions estratègiques i les conseqüències. L'opció «Tots els viatges» superposa les expedicions per facilitar la comparativa.
-          </p>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="app-header__titles">
+          <p class="app-header__kicker">Exploració atlàntica</p>
+          <h1 class="app-header__title">Viatges de Cristòfor Colom</h1>
         </div>
+        <p class="app-header__credit">Aplicació creada per Felip Sarroca · Escola Ramon Pont (Terrassa)</p>
+        <div class="app-header__actions">
+          <button type="button" data-toggle-panel="selector">Viatges</button>
+          <button type="button" data-toggle-panel="timeline">Cronologia</button>
+          <button type="button" data-toggle-panel="info">Detalls</button>
+        </div>
+      </header>
+
+      <div id="map" class="map-stage" aria-label="Mapa dels viatges de Cristòfor Colom"></div>
+      <p class="map-hint" data-map-hint>Clica qualsevol punt per descobrir què va passar.</p>
+      <p class="app-status" data-status></p>
+
+      <section class="overlay-panel overlay-panel--narrow" data-panel="selector" hidden>
+        <header class="overlay-panel__header">
+          <div>
+            <p class="overlay-panel__tag">Selecció</p>
+            <h2>Escull el viatge</h2>
+          </div>
+          <button type="button" class="overlay-panel__close" aria-label="Tanca selector" data-close-panel="selector">✕</button>
+        </header>
+        <p class="overlay-panel__hint">Ressalta una expedició o activa la vista comparativa.</p>
         <div class="selector__grid" data-selector-grid></div>
       </section>
-      <section class="map-group">
-        <div class="map-card__header">
+
+      <section class="overlay-panel overlay-panel--wide" data-panel="timeline" hidden>
+        <header class="overlay-panel__header">
           <div>
-            <p class="map-card__tag">Mapa interactiu</p>
-            <h2 data-map-title>Carregant dades...</h2>
+            <p class="timeline__tag">Cronologia</p>
+            <h2 data-timeline-title>Selecciona un viatge</h2>
           </div>
-          <p class="map-card__hint" data-map-hint>
-            Clica els punts per descobrir què va passar a cada lloc. La ruta s'il·lumina quan avances per la cronologia.
-          </p>
-        </div>
-        <div class="map-card__container" id="map"></div>
-      </section>
-      <section class="timeline">
-        <header>
-          <p class="timeline__tag">Cronologia</p>
-          <h2 data-timeline-title>Selecciona un viatge</h2>
-          <p class="timeline__hint">
-            Cadascun dels esdeveniments clau inclou el context, els punts conflictius i les pistes per connectar-los amb continguts curriculars d'història, religió i economia.
-          </p>
+          <button type="button" class="overlay-panel__close" aria-label="Tanca cronologia" data-close-panel="timeline">✕</button>
         </header>
+        <p class="timeline__hint">Repassa els episodis clau i situa'ls al mapa en temps real.</p>
         <div class="timeline__list" data-timeline-list></div>
       </section>
-      <aside class="info">
-        <div class="info__summary" data-info-summary></div>
-        <div class="info__episode" data-info-episode></div>
-      </aside>
-    </main>
+
+      <section class="overlay-panel overlay-panel--wide" data-panel="info" hidden>
+        <header class="overlay-panel__header">
+          <div>
+            <p class="overlay-panel__tag">Detall</p>
+            <h2>Focus de l'expedició</h2>
+          </div>
+          <button type="button" class="overlay-panel__close" aria-label="Tanca detalls" data-close-panel="info">✕</button>
+        </header>
+        <div class="overlay-panel__content">
+          <div class="info__summary" data-info-summary></div>
+          <div class="info__episode" data-info-episode></div>
+        </div>
+      </section>
+    </div>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
       integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="

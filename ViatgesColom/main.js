@@ -25,8 +25,87 @@ const timelineTitleEl = document.querySelector('[data-timeline-title]')
 const timelineListEl = document.querySelector('[data-timeline-list]')
 const infoSummaryEl = document.querySelector('[data-info-summary]')
 const infoEpisodeEl = document.querySelector('[data-info-episode]')
-const mapTitleEl = document.querySelector('[data-map-title]')
 const mapHintEl = document.querySelector('[data-map-hint]')
+
+const panelElements = new Map(
+  Array.from(document.querySelectorAll('[data-panel]')).map((panel) => [panel.dataset.panel, panel]),
+)
+const panelToggleButtons = Array.from(document.querySelectorAll('[data-toggle-panel]'))
+const panelCloseButtons = Array.from(document.querySelectorAll('[data-close-panel]'))
+
+let activePanelId = null
+
+const openPanels = new Set()
+panelToggleButtons.forEach((button) => {
+  button.setAttribute('aria-pressed', 'false')
+})
+
+function refreshToggleButtons() {
+  panelToggleButtons.forEach((button) => {
+    const panelId = button.dataset.togglePanel
+    const isActive = openPanels.has(panelId)
+    button.setAttribute('aria-pressed', isActive ? 'true' : 'false')
+    button.classList.toggle('is-active', isActive)
+  })
+}
+
+function showPanel(panelId) {
+  const panel = panelElements.get(panelId)
+  if (!panel) {
+    return
+  }
+  panel.hidden = false
+  panel.setAttribute('data-panel-open', 'true')
+  openPanels.add(panelId)
+  activePanelId = panelId
+  refreshToggleButtons()
+}
+
+function hidePanel(panelId) {
+  const panel = panelElements.get(panelId)
+  if (!panel) {
+    return
+  }
+  panel.hidden = true
+  panel.removeAttribute('data-panel-open')
+  openPanels.delete(panelId)
+  if (activePanelId === panelId) {
+    activePanelId = Array.from(openPanels).pop() ?? null
+  }
+  refreshToggleButtons()
+}
+
+function togglePanel(panelId) {
+  if (openPanels.has(panelId)) {
+    hidePanel(panelId)
+  } else {
+    showPanel(panelId)
+  }
+}
+
+function ensurePanel(panelId) {
+  if (!openPanels.has(panelId)) {
+    showPanel(panelId)
+  }
+}
+
+panelToggleButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    togglePanel(button.dataset.togglePanel)
+  })
+})
+
+panelCloseButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    hidePanel(button.dataset.closePanel)
+  })
+})
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && activePanelId) {
+    hidePanel(activePanelId)
+  }
+})
 
 const map = L.map('map', {
   zoomControl: false,
@@ -135,6 +214,7 @@ function renderSelector() {
       } else {
         setState({ selectedId: card.id, showAll: false, activeEpisodeIndex: 0 })
       }
+      ensurePanel('info')
     })
 
     const badge = document.createElement('div')
@@ -201,8 +281,11 @@ function renderTimeline() {
 
     item.append(title, meta, description)
     item.addEventListener('click', () => {
+      ensurePanel('info')
       if (state.activeEpisodeIndex !== index) {
         setState({ activeEpisodeIndex: index })
+      } else {
+        renderInfo()
       }
     })
 
@@ -456,8 +539,13 @@ function updateMap() {
       }
 
       marker.on('click', () => {
-        if (isFocus && state.activeEpisodeIndex !== index) {
-          setState({ activeEpisodeIndex: index })
+        if (isFocus) {
+          ensurePanel('info')
+          if (state.activeEpisodeIndex !== index) {
+            setState({ activeEpisodeIndex: index })
+          } else {
+            renderInfo()
+          }
         }
       })
 
@@ -472,14 +560,10 @@ function updateMap() {
     map.setView([20, -40], 3)
   }
 
-  mapTitleEl.textContent = state.showAll
-    ? 'Comparativa de rutes (1492-1504)'
-    : focusVoyage.titol
-
   if (mapHintEl) {
     mapHintEl.textContent = state.showAll
-      ? 'Consulta la superposició per identificar patrons i zones de tensió compartides.'
-      : 'Clica els punts per descobrir què va passar a cada lloc. La ruta s\'il·lumina quan avances per la cronologia.'
+      ? 'Comparativa de rutes (1492-1504). Obre la cronologia per veure els episodis sincronitzats.'
+      : `${focusVoyage.titol} · ${focusVoyage.anys}. Obre els panells per aprofundir en la narració.`
   }
 }
 
