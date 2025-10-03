@@ -1,0 +1,12 @@
+# Ignora la carpeta node_modules, ja que s'instal·larà dins del contenidor
+node_modules
+
+# Ignora la sortida de la compilació
+dist
+
+# Ignora fitxers de desenvolupament local
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
