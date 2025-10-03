@@ -7,7 +7,7 @@
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha512-1w2L4MxwY5L0wSXAV2XpVZl8vGeOawxjUY8ailqXFz3vGN9VOGBeo5nYeqqbW3AV0LlwM651EmpwP0nwyv+log=="
+      integrity="sha256-sA+o1sPR9vuqfA1OJDYGyZBIHuBrBvN5zZRt1JBqFo8="
       crossorigin=""
     />
     <link rel="stylesheet" href="style.css" />
@@ -19,9 +19,7 @@
         Explora els quatre viatges atlàntics de Colom amb una mirada integrada: mapes interactius, cronologia comparada i context per portar a l'aula o a projectes interdisciplinaris.
       </p>
     </header>
-
     <p class="status" data-status></p>
-
     <main class="layout">
       <section class="selector">
         <div class="selector__header">
@@ -33,7 +31,6 @@
         </div>
         <div class="selector__grid" data-selector-grid></div>
       </section>
-
       <section class="map-group">
         <div class="map-card__header">
           <div>
@@ -46,7 +43,6 @@
         </div>
         <div class="map-card__container" id="map"></div>
       </section>
-
       <section class="timeline">
         <header>
           <p class="timeline__tag">Cronologia</p>
@@ -57,16 +53,14 @@
         </header>
         <div class="timeline__list" data-timeline-list></div>
       </section>
-
       <aside class="info">
         <div class="info__summary" data-info-summary></div>
         <div class="info__episode" data-info-episode></div>
       </aside>
     </main>
-
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha512-kZmm3AZ8Hs5N1sC3yRyvCb4s46HoPazTA/g3xPUN1N3lMMMzHOlF9pgwRb2vE466+vWXTfFRInbkIuPItGkWQw=="
+      integrity="sha256-o9N1j7kC3bSb6kO1J1It1Ki8A2+teGr1Zl28Mmtw7zY="
       crossorigin=""
     ></script>
     <script type="module" src="main.js"></script>
