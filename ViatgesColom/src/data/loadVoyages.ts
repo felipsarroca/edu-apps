@@ -44,12 +44,15 @@ const buildVoyage = (payload: RawVoyagePayload, descriptorIndex: number): Voyage
   };
 };
 
+const resolveDataUrl = (path: string) => new URL(path, import.meta.env.BASE_URL).toString();
+
 export const loadVoyages = async (): Promise<Voyage[]> => {
   const voyages = await Promise.all(
     VOYAGE_DESCRIPTORS.map(async (descriptor, index) => {
-      const response = await fetch(descriptor.dataPath);
+      const resourceUrl = resolveDataUrl(descriptor.dataPath);
+      const response = await fetch(resourceUrl);
       if (!response.ok) {
-        throw new Error(`No s'ha pogut carregar el fitxer ${descriptor.dataPath}`);
+        throw new Error(`No s'ha pogut carregar el fitxer ${resourceUrl}`);
       }
       const payload = (await response.json()) as RawVoyagePayload;
       return buildVoyage(payload, index);

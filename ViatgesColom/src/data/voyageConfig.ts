@@ -11,7 +11,7 @@ const descriptors: VoyageDescriptor[] = [
   {
     id: "viatge1",
     order: 1,
-    dataPath: "/data/1viatge.json",
+    dataPath: "data/1viatge.json",
     meta: {
       shortTitle: "1r viatge",
       summary: "De Palos a Guanahaní per trobar la ruta cap a l'Àsia.",
@@ -29,7 +29,7 @@ const descriptors: VoyageDescriptor[] = [
   {
     id: "viatge2",
     order: 2,
-    dataPath: "/data/2viatge.json",
+    dataPath: "data/2viatge.json",
     meta: {
       shortTitle: "2n viatge",
       summary: "La colonització de La Isabela i el xoc amb els taínos.",
@@ -47,7 +47,7 @@ const descriptors: VoyageDescriptor[] = [
   {
     id: "viatge3",
     order: 3,
-    dataPath: "/data/3viatge.json",
+    dataPath: "data/3viatge.json",
     meta: {
       shortTitle: "3r viatge",
       summary: "L'arribada al continent sud-americà i la crisi a Hispaniola.",
@@ -65,7 +65,7 @@ const descriptors: VoyageDescriptor[] = [
   {
     id: "viatge4",
     order: 4,
-    dataPath: "/data/4viatge.json",
+    dataPath: "data/4viatge.json",
     meta: {
       shortTitle: "4t viatge",
       summary: "La recerca impossible del pas asiàtic i els naufragis a Jamaica.",
