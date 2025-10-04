@@ -8,7 +8,7 @@ export default defineConfig({
   base,
   plugins: [react()],
   build: {
-    outDir: "docs",
+    outDir: "docs/ViatgesColom",
     emptyOutDir: true,
   },
 });
