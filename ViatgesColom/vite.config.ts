@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/edu-apps/ViatgesColom/',
   plugins: [react()],
   build: {
-    outDir: 'docs',
+    outDir: 'docs/ViatgesColom',
     emptyOutDir: true,
   },
 })
