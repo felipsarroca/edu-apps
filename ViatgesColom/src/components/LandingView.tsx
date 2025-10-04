@@ -1,10 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import type { FC } from "react";
 
+import heroImageUrl from "../assets/colon.avif";
 import { getIcon } from "./IconFactory";
 import type { Voyage, VoyageId } from "../types";
 
-const HERO_IMAGE = "/assets/colon.avif";
+const HERO_IMAGE = heroImageUrl;
 
 const CARD_TITLES: Record<VoyageId, string> = {
   viatge1: "Caravel·la",

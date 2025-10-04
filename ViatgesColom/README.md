@@ -1,33 +1,29 @@
-# Viatges de Cristòfor Colom
+ï»¿# Viatges de CristÃ²for Colom
 
-Aplicació interactiva creada amb React + Vite per explorar els quatre viatges de Cristòfor Colom. Ofereix mapes Leaflet, línia temporal i fitxes de context perquè l'alumnat treballi la dimensió històrica i geogràfica amb suport visual.
+AplicaciÃ³ interactiva creada amb React + Vite per explorar els quatre viatges de CristÃ²for Colom. Ofereix mapes Leaflet, lÃ­nia de temps i fitxes de context perquÃ¨ l'alumnat treballi la dimensiÃ³ histÃ²rica i geogrÃ fica amb suport visual.
 
 ## Requisits
 - Node.js 22 o superior
 - npm
 
 ## Scripts disponibles
-- \\
-pm install\\ instal·la les dependències.
-- \\
-pm run dev\\ arrenca l'entorn de desenvolupament.
-- \\
-pm run build\\ genera la versió de producció a la carpeta \\docs\\.
-- \\
-pm run preview\\ serveix la build localment.
+- `npm install` instalÂ·la les dependÃ¨ncies.
+- `npm run dev` arrenca l'entorn de desenvolupament.
+- `npm run build` genera la versiÃ³ de producciÃ³ a la carpeta `docs`.
+- `npm run preview` serveix la build localment.
 
 ## Desplegament a GitHub Pages
-La configuració de Vite defineix la base \\/edu-apps/ViatgesColom/\\ i escriu la build a \\docs\\. Fer commit de la carpeta \\docs\\ permet publicar l'aplicació des de https://<usuari>.github.io/edu-apps/ViatgesColom/.
+- La build queda a `docs`, l'Ãºnica carpeta que cal publicar.
+- Per defecte la base Ã©s relatiu (`./`), de manera que la pÃ gina funciona tant si es publica al root del domini com en un subdirectori.
+- Si cal forÃ§ar un altre prefix (p. ex. `/edu-apps/ViatgesColom/`), exporta `VITE_BASE_PATH=/edu-apps/ViatgesColom/` abans d'executar `npm run build`.
 
 ## Estructura principal
-- \\src\\: components React, dades i estils.
-- \\public\\: recursos estàtics accessibles durant el build.
-- \\docs\\: sortida generada per Vite; no editar manualment.
+- `src/`: components React, dades i estils.
+- `public/`: recursos estÃ tics servits tal qual (dades JSON).
+- `docs/`: sortida generada per Vite; no s'ha d'editar manualment.
 
 ## Manteniment futur
-1. Fer canvis a \\src\\ o a les dades.
-2. Executar \\
-pm run build\\ (a preferència en una ruta sense espais si hi ha problemes de Windows).
-3. Comprovar el resultat a \\docs\\.
-4. Actualitzar el repositori amb commit i push.
-
+1. Fer canvis a `src/` o a `public/`.
+2. Executar `npm run build` (en Windows, millor en una ruta sense espais si dona problemes).
+3. Revisar el resultat a `docs/` (es pot usar `npm run preview`).
+4. Fer commit i push.
