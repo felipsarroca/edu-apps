@@ -13,10 +13,9 @@ Aplicaci√≥ interactiva creada amb React + Vite per explorar els quatre viatges d
 - `npm run preview` serveix la build localment.
 
 ## Desplegament a GitHub Pages
-- El `npm run build` crea `docs/index.html` que redirigeix cap a `docs/ViatgesColom/`, on hi ha tota la build.
-- Per defecte la base Ès relativa (`./`), de manera que la p‡gina funciona tant si es publica al root del domini com en un subdirectori (`https://<usuari>.github.io/edu-apps/ViatgesColom/`).
-- Si cal forÁar un altre prefix (p. ex. `/edu-apps/ViatgesColom/`), exporta `VITE_BASE_PATH=/edu-apps/ViatgesColom/` abans d'executar `npm run build`.
-- NomÈs cal pujar la carpeta `docs/` al repositori (GitHub Pages configurat perquË apunti a `docs/`).
+- El `npm run build` crea `docs/index.html` (redirigeix cap a `docs/ViatgesColom/`) i tot el paquet dins `docs/ViatgesColom/`.
+- La base est√† fixada a `/edu-apps/ViatgesColom/`, aix√≠ que els recursos es resolen correctament des de `https://felipsarroca.github.io/edu-apps/ViatgesColom/`.
+- No cal cap configuraci√≥ addicional: nom√©s fer commit i push de la carpeta `docs/` al repositori `edu-apps` (GitHub Pages apuntant a `docs/`).
 
 ## Estructura principal
 - `src/`: components React, dades i estils.
