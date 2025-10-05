@@ -1,0 +1,141 @@
+{
+  "viatge": {
+    "titol": "Segon viatge de Cristòfor Colom",
+    "anys": "1493-1496",
+    "finalitat": "Colonitzar les noves terres, establir assentaments i buscar riqueses com l’or.",
+    "vaixells": [
+      { "nom": "17 naus", "tipus": "caravel·les, naus i galeres", "desti": "Algunes retornaren a Espanya, altres naufragaren o quedaren al Carib" }
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Cadis",
+        "lloc": {
+          "nom_modern": "Cadis, Espanya",
+          "nom_antic": "Cadis",
+          "coordenades": [36.5297, -6.2925]
+        },
+        "data": "25 de setembre de 1493",
+        "descripcio": "Una gran flota de 17 vaixells i uns 1.200 homes salpa de Cadis. El viatge tenia un caràcter clarament colonitzador: hi havia soldats, artesans, pagesos, cavalls i animals de granja.",
+        "curiositats": [
+          "Era la flota més gran que havia creuat mai l’Atlàntic fins aquell moment.",
+          "També hi viatjaven frares dominics i franciscans per evangelitzar."
+        ]
+      },
+      {
+        "ordre": 2,
+        "titol": "Primer contacte amb les Antilles Menors",
+        "lloc": {
+          "nom_modern": "Illes Dominica i Guadalupe",
+          "nom_antic": "Dominica i Guadalupe",
+          "coordenades": [15.3010, -61.3881]
+        },
+        "data": "novembre de 1493",
+        "descripcio": "Les naus arriben a Dominica i després a Guadalupe. Aquí tenen el primer contacte amb els caribs, que eren guerrers i caníbals segons les cròniques.",
+        "curiositats": [
+          "Es trobaren amb pobles que resistiren amb fletxes enverinades.",
+          "La visió d’ossos humans en cases caribs impactà profundament els europeus."
+        ]
+      },
+      {
+        "ordre": 3,
+        "titol": "Tragèdia al Fort de la Nativitat",
+        "lloc": {
+          "nom_modern": "Haití i República Dominicana",
+          "nom_antic": "La Española",
+          "coordenades": [18.7357, -70.1627]
+        },
+        "data": "novembre de 1493",
+        "descripcio": "Colom retroba el lloc on havia deixat els 39 homes al primer viatge. El fort havia estat destruït i tots els homes morts o desapareguts.",
+        "curiositats": [
+          "La causa principal van ser els conflictes amb els indígenes a causa dels abusos dels espanyols.",
+          "Aquest episodi marcà la fi del primer assentament europeu al Nou Món."
+        ],
+        "problemes": [
+          "Mort dels colons del primer assentament.",
+          "Hostilitat creixent amb els taïnos."
+        ]
+      },
+      {
+        "ordre": 4,
+        "titol": "Fundació de La Isabela",
+        "lloc": {
+          "nom_modern": "Nord d’Haití",
+          "nom_antic": "La Isabela",
+          "coordenades": [19.8876, -71.0645]
+        },
+        "data": "desembre de 1493",
+        "descripcio": "Es funda La Isabela, el primer poble europeu establert de manera oficial al Nou Món. Hi construeixen cases, un magatzem, una església i fortificacions.",
+        "curiositats": [
+          "El nom fou triat en honor a la reina Isabel de Castella.",
+          "Es portaren animals com cavalls, vaques i porcs, que canviaren per sempre l’ecosistema del Carib."
+        ],
+        "problemes": [
+          "Epidèmies i fam que afectaren els colons.",
+          "Conflictes interns i descontentament amb Colom."
+        ]
+      },
+      {
+        "ordre": 5,
+        "titol": "Exploració de Cuba i Jamaica",
+        "lloc": {
+          "nom_modern": "Cuba i Jamaica",
+          "nom_antic": "Juana i Santiago",
+          "coordenades": [18.1096, -77.2975]
+        },
+        "data": "1494",
+        "descripcio": "Colom explora les costes de Cuba i arriba a Jamaica, anomenada Santiago. Es reforça la idea equivocada que Cuba formava part del continent asiàtic.",
+        "curiositats": [
+          "Els indígenes mostraren un caràcter més hospitalari que a Guadalupe.",
+          "Van observar més usos del tabac i nous cultius desconeguts a Europa."
+        ]
+      },
+      {
+        "ordre": 6,
+        "titol": "Conflictes a Hispaniola",
+        "lloc": {
+          "nom_modern": "Hispaniola",
+          "nom_antic": "La Española",
+          "coordenades": [18.7357, -70.1627]
+        },
+        "data": "1495",
+        "descripcio": "Les tensions amb els indígenes taïnos augmenten. Colom organitza expedicions militars contra ells, establint els primers sistemes d’encomienda.",
+        "curiositats": [
+          "La violència i explotació provocaren la mort de milers d’indígenes.",
+          "Aquest model de colonització serví de precedent a tota Amèrica."
+        ],
+        "problemes": [
+          "Greus abusos contra els pobles indígenes.",
+          "Conflictes amb els propis colons descontents."
+        ]
+      },
+      {
+        "ordre": 7,
+        "titol": "Retorn a Espanya",
+        "lloc": {
+          "nom_modern": "Cadis, Espanya",
+          "nom_antic": "Cadis",
+          "coordenades": [36.5297, -6.2925]
+        },
+        "data": "1496",
+        "descripcio": "Després d’haver deixat a Hispaniola una colònia consolidada, Colom retorna a Espanya per explicar els resultats i demanar més suport.",
+        "curiositats": [
+          "El balanç fou agredolç: noves terres i assentaments, però també conflictes i descontentament.",
+          "Colom començava a veure qüestionada la seva gestió com a governador."
+        ]
+      }
+    ],
+    "problemes_generals": [
+      "Mort dels colons del Fort de la Nativitat.",
+      "Epidèmies i fam a La Isabela.",
+      "Conflictes violents amb els indígenes taïnos.",
+      "Malestar dels propis colons amb el lideratge de Colom."
+    ],
+    "resultats": [
+      "Creació del primer assentament europeu estable al Nou Món (La Isabela).",
+      "Introducció d’animals i plantes europees al Carib.",
+      "Consolidació de la colonització espanyola.",
+      "Inici de l’explotació i l’encomienda sobre els pobles indígenes."
+    ]
+  }
+}
