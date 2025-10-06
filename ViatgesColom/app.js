@@ -315,6 +315,7 @@ function enterExperience(ids) {
   setActiveVoyages(ids);
   dom.homeScreen.classList.remove('active');
   dom.experienceScreen.classList.add('active');
+  document.body.classList.add('map-active');
   setTimeout(() => {
     state.map.invalidateSize();
   }, 250);
@@ -324,6 +325,7 @@ function exitExperience() {
   stopAutoPlay();
   dom.experienceScreen.classList.remove('active');
   dom.homeScreen.classList.add('active');
+  document.body.classList.remove('map-active');
   state.activeVoyages.clear();
 }
 
