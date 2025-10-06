@@ -357,12 +357,7 @@ h3,
   font-size: 0.72rem;
   color: #0a2345;
   text-align: left;
-  backdrop-filter: blur(6px);
-  padding: 0.5rem 1.1rem;
-  border-radius: 12px;
-  background: rgba(244, 248, 255, 0.55);
-  border: 1px solid rgba(120, 158, 220, 0.2);
-  box-shadow: 0 10px 20px rgba(12, 26, 52, 0.16);
+
   max-width: 320px;
   line-height: 1.4;
   z-index: 10;
