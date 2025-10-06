@@ -360,11 +360,10 @@ h3,
   backdrop-filter: blur(6px);
   padding: 0.5rem 1.1rem;
   border-radius: 12px;
-  background: rgba(244, 248, 255, 0.275);
-  border: 1px solid rgba(120, 158, 220, 0.1);
-  box-shadow: 0 10px 20px rgba(12, 26, 52, 0.08);
-  max-width: 320px;
-  line-height: 1;
+  background: rgba(244, 248, 255, 0.1375);
+  border: 1px solid rgba(120, 158, 220, 0.05);
+  box-shadow: 0 10px 20px rgba(12, 26, 52, 0.04);
+  line-height: 1.4;
   z-index: 10;
 }
 #app-footer span { display: block; }
