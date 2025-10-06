@@ -778,11 +778,9 @@ details[open] > summary::before {
 
 
 
-.selector-grid button:focus-visible { outline: 2px solid rgba(64, 110, 190, 0.8); outline-offset: 3px; }
-
 .license-icon {
   display: inline-block;
   vertical-align: middle;
   height: 1.8em;
-  margin-left: 0.3rem;
+  margin-right: 0.3rem;
 }
