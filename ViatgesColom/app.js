@@ -85,9 +85,7 @@ const dom = {
   infoTabs: document.querySelectorAll('.info-tabs button'),
   infoPanel: document.querySelector('.panel.info'),
   infoContent: document.getElementById('info-content'),
-  curiosPanel: document.querySelector('.panel.curios'),
-  timelinePanel: document.querySelector('.panel.timeline'),
-  curiositatsBox: document.getElementById('curiositats'),
+
   timelineSlider: document.getElementById('timeline-slider'),
   timelineLabel: document.getElementById('timeline-label'),
   timelineLegend: document.getElementById('timeline-legend'),
@@ -301,7 +299,7 @@ function setupPanelEvents() {
 function refreshAll() {
   renderRoutes();
   updateInfoPanel();
-  updateCuriositats();
+
   updateTimelineLegend();
 }
 
@@ -731,9 +729,7 @@ function applyInfoTone(voyages) {
   if (dom.infoPanel) {
     dom.infoPanel.dataset.tone = tone;
   }
-  if (dom.curiosPanel) {
-    dom.curiosPanel.dataset.tone = tone;
-  }
+
   if (voyages.length === 1) {
     const color = voyages[0].color;
     const soft = hexToRgba(color, 0.26);
@@ -743,19 +739,14 @@ function applyInfoTone(voyages) {
     dom.infoPanel?.style.setProperty('--tone-color', color);
     dom.infoPanel?.style.setProperty('--tone-soft', soft);
     dom.infoPanel?.style.setProperty('--tone-softer', softer);
-    dom.curiosPanel?.style.setProperty('--panel-accent', color);
-    dom.curiosPanel?.style.setProperty('--panel-accent-soft', soft);
-    dom.curiosPanel?.style.setProperty('--tone-color', color);
-    dom.curiosPanel?.style.setProperty('--tone-soft', soft);
-    dom.curiosPanel?.style.setProperty('--tone-softer', softer);
+
     dom.infoContent.style.setProperty('--tone-color', color);
     dom.infoContent.style.setProperty('--tone-soft', soft);
     dom.infoContent.style.setProperty('--tone-softer', softer);
   } else {
     dom.infoPanel?.style.removeProperty('--panel-accent');
     dom.infoPanel?.style.removeProperty('--panel-accent-soft');
-    dom.curiosPanel?.style.removeProperty('--panel-accent');
-    dom.curiosPanel?.style.removeProperty('--panel-accent-soft');
+
     dom.infoContent.style.removeProperty('--tone-color');
     dom.infoContent.style.removeProperty('--tone-soft');
     dom.infoContent.style.removeProperty('--tone-softer');
@@ -766,29 +757,7 @@ function getShipDestination(ship) {
   return ship.desti || 'Destí no especificat';
 }
 
-function updateCuriositats() {
-  dom.curiositatsBox.innerHTML = '';
-  const activeVoyages = Array.from(state.activeVoyages)
-    .map(id => state.voyages.get(id))
-    .filter(Boolean);
 
-  const curiositats = activeVoyages.flatMap(v =>
-    v.episodis?.flatMap(e => e.curiositats || []) || []
-  );
-
-  if (curiositats.length > 0) {
-    const randomIndex = Math.floor(Math.random() * curiositats.length);
-    const randomCuriosity = curiositats[randomIndex];
-    dom.curiositatsBox.innerHTML = `
-      <div class="curios-item">
-        <p>${randomCuriosity}</p>
-      </div>`;
-    delete dom.curiositatsBox.dataset.state;
-  } else {
-    dom.curiositatsBox.dataset.state = 'empty';
-    dom.curiositatsBox.innerHTML = '<p class="curios-empty">No hi ha curiositats disponibles per a aquest viatge.</p>';
-  }
-}
 
 function playEpisodeAudio(voyageId, episodeIndex) {
   const voyage = state.voyages.get(voyageId);
