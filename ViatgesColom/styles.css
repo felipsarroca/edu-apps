@@ -1,4 +1,4 @@
-﻿.experience { background: radial-gradient(circle at 22% 20%, #152940, #050910 70%); }
+.experience { background: radial-gradient(circle at 22% 20%, #152940, #050910 70%); }
 #map { position: absolute; inset: 0; z-index: 0; filter: saturate(1.05) contrast(1.04); }
 .map-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 .map-gradient, .map-texture { position: absolute; inset: 0; }
@@ -371,6 +371,13 @@ h3,
 
 #app-footer a { color: #1f4f9a; text-decoration: none; font-weight: 600; }
 #app-footer a:hover { text-decoration: underline; }
+
+.license-icon {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.8em;
+  margin-left: 0.3rem;
+}
 
 .leaflet-container { background: #0b1726; }
 .leaflet-control-container { display: none; }
@@ -773,3 +780,9 @@ details[open] > summary::before {
 
 .selector-grid button:focus-visible { outline: 2px solid rgba(64, 110, 190, 0.8); outline-offset: 3px; }
 
+.license-icon {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.8em;
+  margin-left: 0.3rem;
+}
