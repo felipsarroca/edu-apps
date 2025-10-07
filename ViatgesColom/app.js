@@ -698,7 +698,7 @@ function renderComparativeInfo(voyages, section) {
       return `
         <article class="info-block">
           <div class="info-block__header">
-            <span class="info-icon info-icon--large">${SECTION_icons.overview}</span>
+            <span class="info-icon info-icon--large">${SECTION_ICONS.overview}</span>
             <div>
               <h3 ${colorStyle}>${voyage.label}</h3>
               <p class="info-meta">${voyage.anys}</p>
@@ -710,7 +710,7 @@ function renderComparativeInfo(voyages, section) {
     }
 
     if (section === 'ships') {
-      const items = (voyage.vaixells || []).map((ship) => `<strong>${ship.nom}</strong> · ${ship.tipus} · ${getShipDestination(ship)}`);
+      const items = (voyage.vaixells || []).slice(0, 1).map((ship) => `<strong>${ship.nom}</strong> · ${ship.tipus} · ${getShipDestination(ship)}`);
       const list = formatListItems(items, SECTION_ICONS.ships);
       return `
         <article class="info-block">
@@ -723,7 +723,7 @@ function renderComparativeInfo(voyages, section) {
     }
 
     if (section === 'issues') {
-      const list = formatListItems(voyage.problemes_generals || [], SECTION_ICONS.issues);
+      const list = formatListItems((voyage.problemes_generals || []).slice(0, 1), SECTION_ICONS.issues);
       return `
         <article class="info-block">
           <div class="info-block__header">
@@ -735,7 +735,7 @@ function renderComparativeInfo(voyages, section) {
     }
 
     if (section === 'outcome') {
-      const list = formatListItems(voyage.resultats || [], SECTION_ICONS.outcome);
+      const list = formatListItems((voyage.resultats || []).slice(0, 1), SECTION_ICONS.outcome);
       return `
         <article class="info-block">
           <div class="info-block__header">
