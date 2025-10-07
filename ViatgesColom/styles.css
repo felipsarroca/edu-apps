@@ -792,52 +792,41 @@ details[open] > summary::before {
   margin-right: 0.3rem;
 }
 
-/* Estils per a la casella de selecció (checkbox) */
+/* Estils per a la casella de selecció (checkbox) - Amb SVG */
 .toggle {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   user-select: none;
-  font-size: 0.8rem; /* Mida de font base per al text */
+}
+
+.toggle span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(16, 46, 90, 0.78);
 }
 
 .toggle input[type="checkbox"] {
-  /* Amaga la casella per defecte per poder estilitzar-la */
   -webkit-appearance: none;
   appearance: none;
   background-color: transparent;
   margin: 0;
-  font: inherit;
-  color: currentColor;
-  width: 1.15em;
-  height: 1.15em;
+  width: 1.2em;
+  height: 1.2em;
   border: 0.1em solid rgba(16, 46, 90, 0.78);
   border-radius: 0.25em;
-  transform: translateY(-0.075em);
-  display: grid;
-  place-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0;
 }
 
-.toggle input[type="checkbox"]::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--accent-2);
-  /* Afegeix el "check" amb transformacions */
-  transform-origin: bottom left;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-}
-
-.toggle input[type="checkbox"]:checked::before {
-  transform: scale(1);
-}
-
-.toggle span {
-  font-size: 0.7rem; /* Mida reduïda */
-  font-weight: 500;
-  color: rgba(16, 46, 90, 0.78);
+/* Mostra el check (SVG) i canvia el fons quan està marcat */
+.toggle input[type="checkbox"]:checked {
+  background-color: var(--accent-2);
+  border-color: var(--accent-2);
+  background-size: 0.8em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
 }
