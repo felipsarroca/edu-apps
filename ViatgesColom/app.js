@@ -617,7 +617,7 @@ function animateSegments(segments, color) {
 }
 
 function startAutoPlay() {
-  stopAutoPlay();
+  stopAutoPlay(false); // Atura el temporitzador anterior sense desmarcar la casella
   if (state.timelineData.length === 0) {
     dom.autoPlayToggle.checked = false;
     return;
@@ -625,7 +625,7 @@ function startAutoPlay() {
   state.autoPlayTimer = setInterval(() => {
     let next = state.timelineIndex + 1;
     if (next >= state.timelineData.length) {
-      stopAutoPlay();
+      stopAutoPlay(); // Atura i desmarca la casella al final
       return;
     }
     dom.timelineSlider.value = String(next);
@@ -633,12 +633,14 @@ function startAutoPlay() {
   }, 2800);
 }
 
-function stopAutoPlay() {
+function stopAutoPlay(updateToggle = true) {
   if (state.autoPlayTimer) {
     clearInterval(state.autoPlayTimer);
     state.autoPlayTimer = null;
   }
-  dom.autoPlayToggle.checked = false;
+  if (updateToggle) {
+    dom.autoPlayToggle.checked = false;
+  }
 }
 
 function updateInfoPanel() {
