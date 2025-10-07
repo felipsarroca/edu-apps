@@ -792,17 +792,24 @@ details[open] > summary::before {
   margin-right: 0.3rem;
 }
 
-/* Estils per a l'interruptor (toggle switch) - CORREGIT */
+/* Estils per a l'interruptor (toggle switch) */
 .toggle {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem; 
-  user-select: none; /* Evita la selecció de text */
-  position: relative; /* Context de posicionament */
+  user-select: none;
+  position: relative;
 }
 
-/* Amaga la casella de selecció real */
+/* El text no ha de capturar events de ratolí i té la mida reduïda */
+.toggle span {
+  pointer-events: none;
+  font-size: 0.7rem; /* Mida reduïda */
+  font-weight: 500;
+}
+
+/* Amaga la casella de selecció real, però la deixa funcional */
 .toggle input[type="checkbox"] {
   position: absolute;
   opacity: 0;
@@ -810,11 +817,12 @@ details[open] > summary::before {
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 1; /* El més important: posa la casella clicable per sobre de tot */
   cursor: pointer;
+  margin: 0;
+  z-index: 1; /* Assegura que estigui per sobre */
 }
 
-/* Dissenya el fons de l'interruptor */
+/* Dissenya el fons de l'interruptor (associat al span) */
 .toggle span::before {
   content: "";
   display: inline-block;
@@ -824,11 +832,11 @@ details[open] > summary::before {
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(120, 158, 220, 0.5);
   transition: background-color 0.3s ease, border-color 0.3s ease;
-  vertical-align: middle; /* Alinea amb el text */
-  margin-right: 0.6rem; /* Espai entre l'interruptor i el text */
+  vertical-align: middle;
+  margin-right: 0.6rem;
 }
 
-/* Dissenya el cercle de l'interruptor */
+/* Dissenya el cercle de l'interruptor (associat al span) */
 .toggle span::after {
   content: "";
   position: absolute;
