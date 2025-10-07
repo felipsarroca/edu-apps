@@ -386,11 +386,38 @@ function renderRoutes() {
       }).addTo(group);
       marker.setZIndexOffset(1000 - idx * 10);
       marker.bindPopup(createPopupContent(voyage, episode, idx));
+
+      // MODIFICACIÓ: Centrar el mapa amb desplaçament quan s'obre un pop-up
+      marker.on('popupopen', () => {
+        const targetLatLng = marker.getLatLng();
+        const currentZoom = state.map.getZoom();
+        
+        // Calculem l'offset. Volem el punt al 25% des de baix. El centre és el 50%.
+        // L'offset des del centre és 25% de l'alçada del mapa.
+        // Per moure el punt d'interès cap avall a la pantalla, hem de moure el centre del mapa cap amunt.
+        // Això correspon a un offset de píxels negatiu.
+        const mapHeight = state.map.getSize().y;
+        const yOffset = mapHeight * -0.25;
+
+        // Convertim el LatLng del marcador a coordenades de píxels
+        const targetPoint = state.map.project(targetLatLng, currentZoom);
+        // Afegim l'offset per trobar el nou punt central en píxels
+        const newCenterPoint = targetPoint.add([0, yOffset]);
+        // Convertim el nou punt central de nou a LatLng
+        const newCenterLatLng = state.map.unproject(newCenterPoint, currentZoom);
+
+        // Fem servir flyTo per a una animació suau cap al nou centre
+        state.map.flyTo(newCenterLatLng, currentZoom, {
+            animate: true,
+            duration: 0.8 // Durada de l'animació en segons
+        });
+      });
+
       marker.on('click', () => {
         const timelineIndex = state.timelineData.findIndex((entry) => entry.voyageId === id && entry.episodeIndex === idx);
         if (timelineIndex >= 0) {
           dom.timelineSlider.value = String(timelineIndex);
-          updateTimeline(timelineIndex, { focusMap: true });
+          updateTimeline(timelineIndex, { focusMap: false }); // Canviat a false per evitar el centrat automàtic de la línia de temps
         }
       });
       return marker;
