@@ -397,7 +397,7 @@ details > summary::before {
 }
 
 details[open] > summary::before {
-  content: 'ÃƒÂ¢Ã‹â€ Ã¢â‚¬â„¢';
+  content: 'â';
 }
 
 .home-subtitle {
@@ -792,4 +792,61 @@ details[open] > summary::before {
   vertical-align: middle;
   height: 1.8em;
   margin-right: 0.3rem;
+}
+
+/* Estils per a l'interruptor (toggle switch) */
+.toggle {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.toggle input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle span {
+  position: relative;
+  display: inline-block;
+  padding-left: 42px; /* Espai per a l'interruptor */
+  line-height: 22px; /* Alineació vertical */
+}
+
+.toggle span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(120, 158, 220, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.toggle span::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.toggle input[type="checkbox"]:checked + span::before {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+.toggle input[type="checkbox"]:checked + span::after {
+  transform: translateX(16px);
 }
