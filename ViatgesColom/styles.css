@@ -792,71 +792,52 @@ details[open] > summary::before {
   margin-right: 0.3rem;
 }
 
-/* Estils per a l'interruptor (toggle switch) */
+/* Estils per a la casella de selecció (checkbox) */
 .toggle {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem; 
+  gap: 0.6rem;
   user-select: none;
-  position: relative;
+  font-size: 0.8rem; /* Mida de font base per al text */
 }
 
-/* El text no ha de capturar events de ratolí i té la mida reduïda */
+.toggle input[type="checkbox"] {
+  /* Amaga la casella per defecte per poder estilitzar-la */
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.1em solid rgba(16, 46, 90, 0.78);
+  border-radius: 0.25em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.toggle input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--accent-2);
+  /* Afegeix el "check" amb transformacions */
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.toggle input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
 .toggle span {
-  pointer-events: none;
   font-size: 0.7rem; /* Mida reduïda */
   font-weight: 500;
-}
-
-/* Amaga la casella de selecció real, però la deixa funcional */
-.toggle input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-  margin: 0;
-  z-index: 1; /* Assegura que estigui per sobre */
-}
-
-/* Dissenya el fons de l'interruptor (associat al span) */
-.toggle span::before {
-  content: "";
-  display: inline-block;
-  width: 38px;
-  height: 22px;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(120, 158, 220, 0.5);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  vertical-align: middle;
-  margin-right: 0.6rem;
-}
-
-/* Dissenya el cercle de l'interruptor (associat al span) */
-.toggle span::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
-
-/* Canvia l'estil quan la casella està marcada */
-.toggle input[type="checkbox"]:checked + span::before {
-  background: var(--accent-2);
-  border-color: var(--accent-2);
-}
-
-.toggle input[type="checkbox"]:checked + span::after {
-  transform: translate(16px, -50%);
+  color: rgba(16, 46, 90, 0.78);
 }
