@@ -89,6 +89,34 @@ function renderInfoGroup(title, listHtml, emptyMessage) {
   return lines.join('\n').trim();
 }
 
+function renderSubjectTag(voyage) {
+  if (!voyage || !voyage.label) {
+    return '';
+  }
+  const color = voyage.color || '#405f9e';
+  return '<span class="info-subject-tag" style="--subject-color:' + color + ';">' + voyage.label + '</span>';
+}
+
+function renderPrimaryHeader(voyage) {
+  if (!voyage) {
+    return '';
+  }
+  const lines = ['<div class="info-primary">'];
+  const subjectTag = renderSubjectTag(voyage);
+  if (subjectTag) {
+    lines.push('  ' + subjectTag);
+  }
+  const heroName = voyage.personatge?.nom || voyage.label;
+  if (heroName) {
+    lines.push('  <h2 class="info-hero">' + heroName + '</h2>');
+  }
+  if (voyage.anys) {
+    lines.push('  <p class="info-meta">' + voyage.anys + '</p>');
+  }
+  lines.push('</div>');
+  return lines.join('\n');
+}
+
 function formatForceText(force) {
   if (!force) {
     return '';
@@ -839,84 +867,64 @@ function updateInfoPanel() {
   }
 
   applyInfoTone(voyages);
-  dom.infoContent.innerHTML = voyages.length === 1
-    ? renderSingleInfo(voyages[0], state.infoSection)
-    : renderComparativeInfo(voyages, state.infoSection);
+  if (voyages.length === 1) {
+    const voyage = voyages[0];
+    const header = renderPrimaryHeader(voyage);
+    const sectionHtml = renderSingleInfo(voyage, state.infoSection);
+    dom.infoContent.innerHTML = [header, sectionHtml].filter(Boolean).join('\n');
+    return;
+  }
+
+  dom.infoContent.innerHTML = renderComparativeInfo(voyages, state.infoSection);
 }
 
 
 function renderSingleInfo(voyage, section) {
   if (section === 'overview') {
-    const heroName = voyage.personatge?.nom || voyage.label;
     const highlight = voyage.resum || voyage.short || voyage.finalitat || '';
-    const purpose = voyage.finalitat ? `<p>${voyage.finalitat}</p>` : '';
+    const purpose = voyage.finalitat ? '<p>' + voyage.finalitat + '</p>' : '';
     const personInfo = renderPersonInfo(voyage.personatge);
-    return `
-      <article class="info-block">
-        <div class="info-block__header">
-          <span class="info-icon info-icon--large">${SECTION_ICONS.overview}</span>
-          <div>
-            <h3>${heroName}</h3>
-            ${voyage.anys ? `<p class="info-meta">${voyage.anys}</p>` : ''}
-          </div>
-        </div>
-        ${highlight ? `<p class="info-highlight">${highlight}</p>` : ''}
-        ${purpose}
-        ${personInfo}
-      </article>
-    `.trim();
+    const blocks = ['<article class="info-block info-block--overview">'];
+    if (highlight) { blocks.push('  <p class="info-highlight">' + highlight + '</p>'); }
+    if (purpose) { blocks.push('  ' + purpose); }
+    if (personInfo) { blocks.push('  ' + personInfo); }
+    blocks.push('</article>');
+    return blocks.join('\n');
   }
 
   if (section === 'forces') {
     const forcesList = formatIconList((voyage.forces || []).map((force) => ({ icon: SECTION_ICONS.forces, text: formatForceText(force) })));
     const alliesList = formatListItems(voyage.aliats || [], EXTRA_ICONS.allies);
     const strategiesList = formatListItems(voyage.estrategies || [], EXTRA_ICONS.strategies);
-    return `
-      <article class="info-block">
-        <div class="info-block__header">
-          <span class="info-icon info-icon--large">${SECTION_ICONS.forces}</span>
-          <div>
-            <h3>${voyage.label}</h3>
-            <p class="info-meta">Composició i aliances</p>
-          </div>
-        </div>
-        ${renderInfoGroup('Forces inicials', forcesList, 'Sense dades de forces logístiques.')}
-        ${renderInfoGroup('Aliats clau', alliesList, 'Sense aliats registrats.')}
-        ${renderInfoGroup('Estratègies utilitzades', strategiesList, 'No hi ha estratègies documentades.')}
-      </article>
-    `.trim();
+    const groups = [
+      renderInfoGroup('Forces inicials', forcesList, 'Sense dades de forces logístiques.'),
+      renderInfoGroup('Aliats clau', alliesList, 'Sense aliats registrats.'),
+      renderInfoGroup('Estratègies utilitzades', strategiesList, 'No hi ha estratègies documentades.')
+    ];
+    const blocks = ['<article class="info-block info-block--compact">'];
+    groups.forEach((group) => { blocks.push('  ' + group); });
+    blocks.push('</article>');
+    return blocks.join('\n');
   }
 
   if (section === 'challenges') {
     const issues = formatListItems(voyage.problemes_generals || [], SECTION_ICONS.challenges);
-    return `
-      <article class="info-block">
-        <div class="info-block__header">
-          <span class="info-icon info-icon--large">${SECTION_ICONS.challenges}</span>
-          <div>
-            <h3>${voyage.label}</h3>
-            <p class="info-meta">Dificultats principals</p>
-          </div>
-        </div>
-        ${renderInfoGroup('Obstacles destacats', issues, 'Sense incidències registrades.')}
-      </article>
-    `.trim();
+    const blocks = [
+      '<article class="info-block info-block--compact">',
+      '  ' + renderInfoGroup('Obstacles destacats', issues, 'Sense incidències registrades.'),
+      '</article>'
+    ];
+    return blocks.join('\n');
   }
 
   if (section === 'outcome') {
     const results = formatListItems(voyage.resultats || [], SECTION_ICONS.outcome);
-    return `
-      <article class="info-block">
-        <div class="info-block__header">
-          <span class="info-icon info-icon--large">${SECTION_ICONS.outcome}</span>
-          <div>
-            <h3>${voyage.label}</h3>
-            <p class="info-meta">Seqüeles i impacte</p>
-          </div>
-        </div>
-        ${renderInfoGroup('Resultats i conseqüències', results, 'Resultats encara per documentar.')}
-      </article>
-    `.trim();
+    const blocks = [
+      '<article class="info-block info-block--compact">',
+      '  ' + renderInfoGroup('Resultats i conseqüències', results, 'Resultats encara per documentar.'),
+      '</article>'
+    ];
+    return blocks.join('\n');
   }
 
   return '';
@@ -924,63 +932,64 @@ function renderSingleInfo(voyage, section) {
 
 function renderComparativeInfo(voyages, section) {
   return voyages.map((voyage) => {
-    const colorStyle = `style="color:${voyage.color}"`;
+    const subjectTag = renderSubjectTag(voyage);
     if (section === 'overview') {
       const summary = voyage.resum || voyage.short || voyage.finalitat || 'Sense resum disponible.';
-      return `
-        <article class="info-block">
-          <h3 ${colorStyle}>${voyage.label}</h3>
-          ${voyage.anys ? `<p class="info-meta">${voyage.anys}</p>` : ''}
-          <p>${summary}</p>
-        </article>
-      `.trim();
+      const blocks = [
+        '<article class="info-block info-block--compact">',
+        subjectTag ? '  ' + subjectTag : '',
+        voyage.anys ? '  <p class="info-meta">' + voyage.anys + '</p>' : '',
+        '  <p>' + summary + '</p>',
+        '</article>'
+      ].filter(Boolean);
+      return blocks.join('\n');
     }
 
     if (section === 'forces') {
       const entries = [];
       (voyage.forces || []).slice(0, 2).forEach((force) => {
         const text = formatForceText(force);
-        if (text) {
-          entries.push({ icon: SECTION_ICONS.forces, text });
-        }
+        if (text) { entries.push({ icon: SECTION_ICONS.forces, text }); }
       });
       (voyage.aliats || []).slice(0, 1).forEach((ally) => {
-        if (ally) {
-          entries.push({ icon: EXTRA_ICONS.allies, text: ally });
-        }
+        if (ally) { entries.push({ icon: EXTRA_ICONS.allies, text: ally }); }
       });
       const list = formatIconList(entries);
-      return `
-        <article class="info-block">
-          <h3 ${colorStyle}>${voyage.label}</h3>
-          ${renderInfoGroup('Forces i aliats', list, 'Sense dades disponibles.')}
-        </article>
-      `.trim();
+      const blocks = [
+        '<article class="info-block info-block--compact">',
+        subjectTag ? '  ' + subjectTag : '',
+        '  ' + renderInfoGroup('Forces i aliats', list, 'Sense dades disponibles.'),
+        '</article>'
+      ].filter(Boolean);
+      return blocks.join('\n');
     }
 
     if (section === 'challenges') {
       const list = formatListItems((voyage.problemes_generals || []).slice(0, 2), SECTION_ICONS.challenges);
-      return `
-        <article class="info-block">
-          <h3 ${colorStyle}>${voyage.label}</h3>
-          ${renderInfoGroup('Dificultats', list, 'Sense incidències registrades.')}
-        </article>
-      `.trim();
+      const blocks = [
+        '<article class="info-block info-block--compact">',
+        subjectTag ? '  ' + subjectTag : '',
+        '  ' + renderInfoGroup('Dificultats', list, 'Sense incidències registrades.'),
+        '</article>'
+      ].filter(Boolean);
+      return blocks.join('\n');
     }
 
     if (section === 'outcome') {
       const list = formatListItems((voyage.resultats || []).slice(0, 2), SECTION_ICONS.outcome);
-      return `
-        <article class="info-block">
-          <h3 ${colorStyle}>${voyage.label}</h3>
-          ${renderInfoGroup('Impacte', list, 'Sense resultats documentats.')}
-        </article>
-      `.trim();
+      const blocks = [
+        '<article class="info-block info-block--compact">',
+        subjectTag ? '  ' + subjectTag : '',
+        '  ' + renderInfoGroup('Impacte', list, 'Sense resultats documentats.'),
+        '</article>'
+      ].filter(Boolean);
+      return blocks.join('\n');
     }
 
     return '';
   }).join('');
 }
+
 
 function applyInfoTone(voyages) {
   const tone = voyages.length === 1 ? 'single' : voyages.length > 1 ? 'multi' : 'none';
