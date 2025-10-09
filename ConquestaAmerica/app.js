@@ -86,12 +86,10 @@ function renderInfoGroup(title, listHtml, emptyMessage) {
     '  ' + content,
     '</section>'
   ];
-  return lines.join('
-').trim();
+  return lines.join('\n').trim();
 }
 
 function formatForceText(force) {
-(force) {
   if (!force) {
     return '';
   }
@@ -134,8 +132,7 @@ function renderPersonInfo(person) {
     lines.push('  <dl class="info-meta-grid">' + detailLines.join('') + '</dl>');
   }
   lines.push('</section>');
-  return lines.join('
-').trim();
+  return lines.join('\n').trim();
 }
 
 function hexToRgba(hex, alpha = 1) {
@@ -157,12 +154,12 @@ const MONTH_KEYWORDS = [
 
 function extractOrderValue(voyage, episode, index) {
   const lowerData = (episode.data || '').toLowerCase();
-  const yearMatch = lowerData.match(/(1[45]d{2})/);
+  const yearMatch = lowerData.match(/(1[45]\d{2})/);
   let year;
   if (yearMatch) {
     year = Number(yearMatch[1]);
   } else {
-    const fallback = (voyage.anys || '').toLowerCase().match(/(1[45]d{2})/);
+    const fallback = (voyage.anys || '').toLowerCase().match(/(1[45]\d{2})/);
     year = fallback ? Number(fallback[1]) : 1400 + index;
   }
   let month = 6;
@@ -172,7 +169,7 @@ function extractOrderValue(voyage, episode, index) {
       break;
     }
   }
-  const dayMatch = lowerData.match(/(?:^|D)(d{1,2})(?!d)/);
+  const dayMatch = lowerData.match(/(?:^|\D)(\d{1,2})(?!\d)/);
   let day = 15;
   if (dayMatch) {
     const value = Number(dayMatch[1]);
@@ -233,7 +230,7 @@ function setHomeAlert(message = '', tone = 'info') {
 
 function showFileWarning() {
   const instructions = [
-    '<strong>Obre l'app des d'un servidor local</strong> per carregar mapes i dades.',
+    '<strong>Obre l\'app des d\'un servidor local</strong> per carregar mapes i dades.',
     "En una terminal, executa <code>npx serve</code> o <code>python -m http.server</code> dins la carpeta <code>ConquestaAmerica</code>.",
     "Accedeix a l'adreça que aparegui (per exemple <code>http://localhost:3000</code>)."
   ].join('<br>');
@@ -291,7 +288,7 @@ async function loadVoyages() {
   );
 }
 
-function enrichEpisodesfunction enrichEpisodes(list) {
+function enrichEpisodes(list) {
   const enriched = list.map((episode, index) => {
     const coords = Array.isArray(episode.lloc?.coordenades) && episode.lloc.coordenades.length === 2
       ? { lat: episode.lloc.coordenades[0], lng: episode.lloc.coordenades[1] }
@@ -365,7 +362,7 @@ function buildSelectorGrid() {
       '  <span>' + (data.anys || '') + '</span>',
       '</span>',
       '<span class="dot" style="background:' + config.color + ';"></span>'
-    ].join('n');
+    ].join('\n');
     button.addEventListener('click', () => setActiveVoyages([config.id]));
     dom.selectorGrid.appendChild(button);
   });
@@ -378,7 +375,7 @@ function buildSelectorGrid() {
     '  <span>Comparativa global</span>',
     '</span>',
     '<span class="dot" style="background:linear-gradient(135deg,#c95f3d,#0f7b6c,#f1a208,#405f9e,#7b3b8c);"></span>'
-  ].join('n');
+  ].join('\n');
   allButton.addEventListener('click', () => setActiveVoyages(EXPEDITION_CONFIG.map((v) => v.id)));
   dom.selectorGrid.appendChild(allButton);
 }
@@ -412,7 +409,7 @@ function renderHomeCards() {
       '  <span>' + summary + '</span>',
       data.anys ? '  <em>' + data.anys + '</em>' : '',
       '</span>'
-    ].join('n');
+    ].join('\n');
     dom.homeGrid.appendChild(card);
   });
 
@@ -427,7 +424,7 @@ function renderHomeCards() {
     '  <span>Posa en context rutes i lliçons dels cinc conqueridors.</span>',
     '  <em>Visió global</em>',
     '</span>'
-  ].join('n');
+  ].join('\n');
   dom.homeGrid.appendChild(compare);
 }
 
