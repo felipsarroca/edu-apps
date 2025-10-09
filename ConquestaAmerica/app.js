@@ -885,9 +885,7 @@ function updateInfoPanel() {
   applyInfoTone(voyages);
   if (voyages.length === 1) {
     const voyage = voyages[0];
-    const header = renderPrimaryHeader(voyage);
-    const sectionHtml = renderSingleInfo(voyage, state.infoSection);
-    dom.infoContent.innerHTML = [header, sectionHtml].filter(Boolean).join('\n');
+    dom.infoContent.innerHTML = renderSingleInfo(voyage, state.infoSection);
     return;
   }
 
