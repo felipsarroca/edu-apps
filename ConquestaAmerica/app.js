@@ -89,50 +89,6 @@ function renderInfoGroup(title, listHtml, emptyMessage) {
   return lines.filter(Boolean).join('\n').trim();
 }
 
-function renderInfoTile(title, text) {
-  if (!text) {
-    return '';
-  }
-  const value = Array.isArray(text) ? text.filter(Boolean).join(' ') : String(text).trim();
-  if (!value) {
-    return '';
-  }
-  const lines = [
-    '<div class="info-tile">',
-    title ? '  <h4>' + title + '</h4>' : '',
-    '  <p>' + value + '</p>',
-    '</div>'
-  ];
-  return lines.filter(Boolean).join('\n');
-}
-
-function renderSubjectTag(voyage) {
-  if (!voyage || !voyage.label) {
-    return '';
-  }
-  const color = voyage.color || '#405f9e';
-  const tagText = voyage.short || voyage.resum || '';
-  const ariaLabel = voyage.label;
-  const textContent = tagText ? '<span class="info-subject-text">' + tagText + '</span>' : '';
-  return '<span class="info-subject-tag" style="--subject-color:' + color + ';"' + (ariaLabel ? ' aria-label="' + ariaLabel + '"' : '') + '>' + textContent + '</span>';
-}
-
-function renderPrimaryHeader(voyage) {
-  if (!voyage) {
-    return '';
-  }
-  const lines = ['<div class="info-primary">'];
-  const subjectTag = renderSubjectTag(voyage);
-  if (subjectTag) {
-    lines.push('  ' + subjectTag);
-  }
-  if (voyage.anys) {
-    lines.push('  <p class="info-meta">' + voyage.anys + '</p>');
-  }
-  lines.push('</div>');
-  return lines.length > 2 ? lines.join('\n') : '';
-}
-
 function formatForceText(force) {
   if (!force) {
     return '';
@@ -895,17 +851,10 @@ function updateInfoPanel() {
 
 function renderSingleInfo(voyage, section) {
   if (section === 'overview') {
-    const tiles = [
-      renderInfoTile('Resum clau', voyage.resum || voyage.short || ''),
-      renderInfoTile('Objectiu declarat', voyage.finalitat || ''),
-      renderInfoTile('Període', voyage.anys || '')
-    ].filter(Boolean);
-    const personInfo = renderPersonInfo(voyage.personatge);
-    const sections = [
-      tiles.length ? '<div class="info-tiles">' + tiles.join('\n') + '</div>' : '',
-      personInfo ? '<div class="info-overview__person">' + personInfo + '</div>' : ''
-    ].filter(Boolean);
-    return sections.length ? '<div class="info-overview">' + sections.join('\n') + '</div>' : '';
+    const objective = voyage.finalitat ? String(voyage.finalitat).trim() : '';
+    return objective
+      ? '<p class="info-objective">' + objective + '</p>'
+      : '<p class="info-empty">Sense objectiu registrat.</p>';
   }
 
   if (section === 'forces') {

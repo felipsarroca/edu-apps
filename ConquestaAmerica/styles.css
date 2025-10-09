@@ -759,35 +759,8 @@ details[open] > summary::before {
   border: 1px solid rgba(160, 188, 240, 0.35);
   box-shadow: 0 8px 18px rgba(12, 26, 52, 0.18);
 }
-.info-block--overview {
-  gap: 0.65rem;
-  padding: 0.65rem 0.75rem;
-}
 .info-block--compact {
   gap: 0.45rem;
-}
-.info-primary {
-  display: grid;
-  gap: 0.35rem;
-}
-.info-subject-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  color: rgba(12, 42, 78, 0.72);
-}
-.info-subject-tag::before {
-  content: '';
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 999px;
-  background: var(--subject-color, rgba(12, 42, 78, 0.45));
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
-}
-.info-subject-text {
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 .info-block > p {
   margin: 0;
