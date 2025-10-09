@@ -89,6 +89,23 @@ function renderInfoGroup(title, listHtml, emptyMessage) {
   return lines.filter(Boolean).join('\n').trim();
 }
 
+function renderInfoTile(title, text) {
+  if (!text) {
+    return '';
+  }
+  const value = Array.isArray(text) ? text.filter(Boolean).join(' ') : String(text).trim();
+  if (!value) {
+    return '';
+  }
+  const lines = [
+    '<div class="info-tile">',
+    title ? '  <h4>' + title + '</h4>' : '',
+    '  <p>' + value + '</p>',
+    '</div>'
+  ];
+  return lines.filter(Boolean).join('\n');
+}
+
 function renderSubjectTag(voyage) {
   if (!voyage || !voyage.label) {
     return '';
@@ -880,22 +897,29 @@ function updateInfoPanel() {
 
 function renderSingleInfo(voyage, section) {
   if (section === 'overview') {
-    const highlight = voyage.resum || voyage.short || voyage.finalitat || '';
-    const purpose = voyage.finalitat ? '<p>' + voyage.finalitat + '</p>' : '';
+    const tiles = [
+      renderInfoTile('Resum clau', voyage.resum || voyage.short || ''),
+      renderInfoTile('Objectiu declarat', voyage.finalitat || ''),
+      renderInfoTile('Període', voyage.anys || '')
+    ].filter(Boolean);
     const personInfo = renderPersonInfo(voyage.personatge);
-    const pieces = [highlight ? '<p class="info-highlight">' + highlight + '</p>' : '', purpose || '', personInfo || '']
-      .filter(Boolean);
-    return pieces.join('\n');
+    const sections = [
+      tiles.length ? '<div class="info-tiles">' + tiles.join('\n') + '</div>' : '',
+      personInfo ? '<div class="info-overview__person">' + personInfo + '</div>' : ''
+    ].filter(Boolean);
+    return sections.length ? '<div class="info-overview">' + sections.join('\n') + '</div>' : '';
   }
 
   if (section === 'forces') {
     const forcesList = formatIconList((voyage.forces || []).map((force) => ({ icon: SECTION_ICONS.forces, text: formatForceText(force) })));
     const alliesList = formatListItems(voyage.aliats || [], EXTRA_ICONS.allies);
     const strategiesList = formatListItems(voyage.estrategies || [], EXTRA_ICONS.strategies);
-    const sections = [forcesList || '', alliesList || '', strategiesList || ''].filter(Boolean);
-    return sections.length
-      ? '<ul class="info-list">' + sections.map((item) => (item.startsWith('<li') ? item : '<li>' + item + '</li>')).join('') + '</ul>'
-      : '<p class="info-empty">Sense dades logístiques disponibles.</p>';
+    const groups = [
+      renderInfoGroup('Forces militars', forcesList, 'Sense dades logístiques disponibles.'),
+      renderInfoGroup('Aliances principals', alliesList, 'Sense aliances registrades.'),
+      renderInfoGroup('Estratègies aplicades', strategiesList, 'Sense estratègies documentades.')
+    ];
+    return '<div class="info-forces">' + groups.join('\n') + '</div>';
   }
 
   if (section === 'challenges') {

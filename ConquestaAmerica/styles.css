@@ -295,6 +295,47 @@ h3,
   font-size: 0.74rem;
   line-height: 1.38;
 }
+
+.info-overview {
+  display: grid;
+  gap: 0.75rem;
+}
+.info-tiles {
+  display: grid;
+  gap: 0.6rem;
+}
+.info-tiles .info-tile {
+  padding: 0.6rem 0.75rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), var(--tone-softer));
+  border: 1px solid rgba(160, 188, 240, 0.35);
+  box-shadow: 0 6px 16px rgba(12, 26, 52, 0.14);
+}
+.info-tile h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26, 54, 100, 0.68);
+}
+.info-tile p {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.46;
+  color: rgba(18, 40, 72, 0.86);
+}
+.info-overview__person .info-subsection {
+  margin-top: 0;
+}
+
+.info-forces {
+  display: grid;
+  gap: 0.6rem;
+}
+.info-forces .info-subsection {
+  margin-top: 0;
+}
+
 .info-highlight {
   margin: 0 0 0.8rem;
   font-family: 'Cormorant Garamond', serif;
