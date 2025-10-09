@@ -744,9 +744,6 @@ details[open] > summary::before {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: rgba(12, 42, 78, 0.72);
 }
 .info-subject-tag::before {
@@ -756,6 +753,11 @@ details[open] > summary::before {
   border-radius: 999px;
   background: var(--subject-color, rgba(12, 42, 78, 0.45));
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+.info-subject-text {
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .info-block > p {
   margin: 0;
