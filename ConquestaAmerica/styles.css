@@ -288,18 +288,7 @@ h3,
 .info-content[data-tone='4'] { --tone-color: rgba(91, 216, 91, 0.32); --tone-soft: rgba(91, 216, 91, 0.18); --tone-softer: rgba(91, 216, 91, 0.1); }
 .info-content[data-tone='multi'] { --tone-color: rgba(124, 92, 255, 0.28); --tone-soft: rgba(124, 92, 255, 0.18); --tone-softer: rgba(0, 194, 199, 0.12); }
 
-.info-content h2.info-hero {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.12rem;
-  font-weight: 600;
-  color: #0a2345;
-}
-.info-content h3 { margin: 0; font-size: 0.8rem; font-weight: 600; color: #0a2345; }
 .info-content p { margin: 0; font-size: 0.68rem; line-height: 1.5; color: rgba(30, 54, 96, 0.85); }
-.info-content article { margin-bottom: 0.3rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(160, 188, 240, 0.28); }
-.info-content article:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
 .info-list { display: grid; gap: 0.5rem; padding: 0; margin: 0; }
 .info-list li { list-style: none; display: grid; grid-template-columns: auto 1fr; align-items: flex-start; gap: 0.4rem; padding: 0.55rem 0.65rem; border-radius: 14px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), var(--tone-softer)); border: 1px solid rgba(160, 188, 240, 0.35); color: #1c345a; box-shadow: 0 6px 16px rgba(12, 26, 52, 0.12); }
 .info-list li span:last-child {
