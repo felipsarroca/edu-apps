@@ -448,6 +448,77 @@ function setupHomeInteractions() {
   dom.backHomeBtn.addEventListener('click', exitExperience);
 }
 
+function setupPanelEvents() {
+  dom.infoTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      dom.infoTabs.forEach((btn) => btn.classList.remove('active'));
+      tab.classList.add('active');
+      state.infoSection = tab.dataset.section;
+      updateInfoPanel();
+    });
+  });
+
+  dom.timelineSlider.addEventListener('input', (event) => {
+    const index = Number(event.target.value);
+    updateTimeline(index, { focusMap: true });
+  });
+
+  dom.autoPlayToggle.addEventListener('change', () => {
+    if (dom.autoPlayToggle.checked) {
+      startAutoPlay();
+    } else {
+      stopAutoPlay();
+    }
+  });
+
+  dom.resetViewBtn?.addEventListener('click', () => centerMapOnSelection());
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('.audio-btn');
+    if (!button) {
+      return;
+    }
+    const voyageId = button.dataset.voyage;
+    const episodeIndex = Number(button.dataset.episode);
+    playEpisodeAudio(voyageId, episodeIndex);
+  });
+}
+
+function refreshAll() {
+  renderRoutes();
+  updateInfoPanel();
+  updateTimelineLegend();
+}
+
+function enterExperience(ids) {
+  if (dom.homeScreen?.classList.contains('blocked')) {
+    setHomeAlert("Per activar l'experiència cal obrir l'app des d'un servidor local.", 'warning');
+    return;
+  }
+  if (state.voyages.size === 0) {
+    setHomeAlert("Encara no s'han carregat les dades. Torna-ho a provar.", 'error');
+    return;
+  }
+  setActiveVoyages(ids);
+  dom.homeScreen.classList.remove('active');
+  dom.experienceScreen.classList.add('active');
+  setTimeout(() => state.map?.invalidateSize(), 250);
+}
+
+function exitExperience() {
+  stopAutoPlay();
+  dom.experienceScreen.classList.remove('active');
+  dom.homeScreen.classList.add('active');
+  state.activeVoyages.clear();
+}
+
+function setActiveVoyages(ids) {
+  stopAutoPlay();
+  state.activeVoyages = new Set(ids);
+  updateSelectorHighlight();
+  refreshAll();
+}
+
 function updateSelectorHighlight() {
   const buttons = dom.selectorGrid.querySelectorAll('button');
   const allSelected = state.activeVoyages.size === EXPEDITION_CONFIG.length;
