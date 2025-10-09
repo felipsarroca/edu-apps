@@ -390,6 +390,7 @@ const state = {
     entries: [],
     lastFetched: null,
   },
+  answeredCorrectly: [],
 };
 
 tableOverlay.style.display = "flex";
@@ -608,6 +609,7 @@ function scheduleNextQuestion(delay = 1000) {
 }
 
 function loadNextQuestion() {
+  state.answeredCorrectly = [];
   if (state.currentPool.length === 0) {
     state.currentPool = [...state.poolSymbols];
   }
@@ -637,11 +639,15 @@ function handleElementClick(event) {
 }
 
 function processAnswer(selectedSymbol, button) {
+  if (state.answeredCorrectly.includes(selectedSymbol)) {
+    return; // Ja s'ha respost correctament, ignora clics posteriors
+  }
   clearTimers();
 
   const isCorrect = selectedSymbol === state.currentElement.symbol;
 
   if (isCorrect) {
+    state.answeredCorrectly.push(selectedSymbol); // Registra l'encert
     flashButton(button, "correct");
     state.streak += 1;
     updateStreakVisual();

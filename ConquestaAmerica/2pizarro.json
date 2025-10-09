@@ -1,0 +1,119 @@
+{
+  "expedicio": {
+    "id": "pizarro",
+    "titol": "Conquesta de l'Imperi inca per Francisco Pizarro",
+    "resum": "De Tumbes a Cuzco: captura d'Atahualpa i instauració del domini castellà.",
+    "anys": "1531-1535",
+    "finalitat": "Explotar les riqueses de l'Imperi inca, establir un govern fidel a Castella i obtenir governacions hereditàries per als caps de l'expedició.",
+    "personatge": {
+      "nom": "Francisco Pizarro",
+      "origen": "Trujillo (Extremadura)",
+      "rol": "Capità general i governador del Perú"
+    },
+    "forces": [
+      { "tipus": "soldats", "quantitat": 168, "descripcio": "62 cavallers i 106 infanteris amb espasa, arcabús i ballesta" },
+      { "tipus": "cavalleria", "quantitat": 27, "descripcio": "Cavalls clau per a la superioritat psicològica" },
+      { "tipus": "artilleria", "quantitat": 4, "descripcio": "Falconets transportats per intimidar" },
+      { "tipus": "aliats andins", "quantitat": 2000, "descripcio": "Huanca, Cañari i Chachapoya contraris a Cuzco" }
+    ],
+    "estrategies": [
+      "Capturar el Sapa Inca per desorganitzar el sistema polític",
+      "Exigir un rescat d'or i plata per finançar l'ocupació",
+      "Cooptar els rivals de Cusco i legitimar el govern amb Manco Inca"
+    ],
+    "aliats": [
+      "Huanca",
+      "Cañari",
+      "Chachapoya",
+      "Felipillo com a intèrpret"
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Arribada a la costa nord del Perú",
+        "lloc": {
+          "nom_modern": "Badia de San Mateo, Equador",
+          "coordenades": [0.79, -80.06]
+        },
+        "data": "gener de 1532",
+        "descripcio": "Després de navegar des de Panamà, l'expedició desembarca al nord i comprova la guerra civil entre Huáscar i Atahualpa."
+      },
+      {
+        "ordre": 2,
+        "titol": "Fundació de San Miguel de Piura",
+        "lloc": {
+          "nom_modern": "Piura, Perú",
+          "coordenades": [-5.178, -80.654]
+        },
+        "data": "26 de juliol de 1532",
+        "descripcio": "Pizarro funda la primera ciutat castellana al Perú per assegurar rereguarda i abastiment."
+      },
+      {
+        "ordre": 3,
+        "titol": "Emboscada de Cajamarca",
+        "lloc": {
+          "nom_modern": "Cajamarca, Perú",
+          "coordenades": [-7.16, -78.52]
+        },
+        "data": "16 de novembre de 1532",
+        "descripcio": "Atahualpa és convidat a Cajamarca i capturat en una emboscada amb artilleria i cavalleria, sense gaire baixa castellana."
+      },
+      {
+        "ordre": 4,
+        "titol": "La sala del rescat",
+        "lloc": {
+          "nom_modern": "Cajamarca, Perú",
+          "coordenades": [-7.16, -78.52]
+        },
+        "data": "novembre 1532 - juny 1533",
+        "descripcio": "Atahualpa promet omplir una sala d'or i dues de plata a canvi de la llibertat. El rescat finança el repartiment de riqueses."
+      },
+      {
+        "ordre": 5,
+        "titol": "Execució d'Atahualpa",
+        "lloc": {
+          "nom_modern": "Cajamarca, Perú",
+          "coordenades": [-7.16, -78.52]
+        },
+        "data": "26 de juliol de 1533",
+        "descripcio": "Malgrat el rescat, Atahualpa és jutjat per idolatria i executat. Els castellans col·loquen Manco Inca com a emperador titella.",
+        "problemes": [
+          "Divisió interna entre els socis de Pizarro",
+          "Riscos d'una revolta general a favor d'Atahualpa"
+        ]
+      },
+      {
+        "ordre": 6,
+        "titol": "Entrada a Cusco",
+        "lloc": {
+          "nom_modern": "Cusco, Perú",
+          "coordenades": [-13.52, -71.97]
+        },
+        "data": "15 de novembre de 1533",
+        "descripcio": "Amb el suport d'aliats andins, els castellans ocupen la capital sagrada i confisquen els magatzems reials."
+      },
+      {
+        "ordre": 7,
+        "titol": "Fundació de Lima",
+        "lloc": {
+          "nom_modern": "Lima, Perú",
+          "coordenades": [-12.046, -77.042]
+        },
+        "data": "18 de gener de 1535",
+        "descripcio": "Pizarro estableix la 'Ciutat dels Reis' a la costa per controlar el comerç marítim i la comunicació amb Castella."
+      }
+    ],
+    "problemes_generals": [
+      "Disputes constants entre els socis de l'expedició, especialment amb Diego de Almagro",
+      "Revoltes indígenes com la de Manco Inca el 1536",
+      "Dependència d'un nombre reduït de soldats europeus",
+      "Territori muntanyós i altitud que afectava la salut de la tropa"
+    ],
+    "resultats": [
+      "Col·lapse de l'estat inca i instauració del govern colonial",
+      "Creació del Virregnat del Perú com a centre del poder sud-americà",
+      "Expansió de les mines de plata i del sistema de mita",
+      "Conflictes civils entre conqueridors que culminen amb la mort de Pizarro"
+    ]
+  }
+}
