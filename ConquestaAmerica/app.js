@@ -76,6 +76,108 @@ function formatIconList(items) {
     .join('');
 }
 
+function orderVoyagesByConfig(voyages) {
+  const lookup = new Map(voyages.map((voyage) => [voyage.id, voyage]));
+  return EXPEDITION_CONFIG.map((config) => lookup.get(config.id)).filter(Boolean);
+}
+
+function pickFirstText(candidates = []) {
+  for (const candidate of candidates) {
+    if (candidate === null || candidate === undefined) {
+      continue;
+    }
+    const text = typeof candidate === 'string' ? candidate : String(candidate);
+    const trimmed = text.trim();
+    if (trimmed) {
+      return trimmed;
+    }
+  }
+  return '';
+}
+
+function renderSummaryLine(icon, label, text) {
+  if (!text) {
+    return '';
+  }
+  const parts = [
+    '<li>',
+    icon ? '  <span class="info-summary__icon" aria-hidden="true">' + icon + '</span>' : '',
+    '  <div class="info-summary__text">',
+    '    <p class="info-summary__label">' + label + '</p>',
+    '    <p class="info-summary__value">' + text + '</p>',
+    '  </div>',
+    '</li>'
+  ];
+  return parts.filter(Boolean).join('\n');
+}
+
+function getPrimaryForceText(voyage) {
+  if (!Array.isArray(voyage.forces)) {
+    return '';
+  }
+  for (const force of voyage.forces) {
+    const text = formatForceText(force);
+    if (text) {
+      return text;
+    }
+  }
+  return '';
+}
+
+function getPrimaryOutcomeText(voyage) {
+  if (!Array.isArray(voyage.resultats)) {
+    return '';
+  }
+  return pickFirstText(voyage.resultats);
+}
+
+function getPrimaryChallengeText(voyage) {
+  if (!Array.isArray(voyage.problemes_generals)) {
+    return '';
+  }
+  return pickFirstText(voyage.problemes_generals);
+}
+
+function renderAllVoyagesOverview(voyages) {
+  const cards = voyages.map((voyage) => {
+    const subjectTag = typeof renderSubjectTag === 'function' ? renderSubjectTag(voyage) : '';
+    const objective = pickFirstText([voyage.finalitat, voyage.resum, voyage.short]);
+    const primaryForce = getPrimaryForceText(voyage);
+    const support = pickFirstText([(voyage.aliats || [])[0], (voyage.estrategies || [])[0]]);
+    const outcome = getPrimaryOutcomeText(voyage);
+    const challenge = outcome ? '' : getPrimaryChallengeText(voyage);
+
+    const summaryEntries = [
+      renderSummaryLine(SECTION_ICONS.overview, 'Objectiu', objective),
+      primaryForce ? renderSummaryLine(SECTION_ICONS.forces, 'Forces clau', primaryForce) : '',
+      support ? renderSummaryLine(EXTRA_ICONS.allies, 'Aliances', support) : '',
+      outcome
+        ? renderSummaryLine(SECTION_ICONS.outcome, 'Conseqüència', outcome)
+        : renderSummaryLine(SECTION_ICONS.challenges, 'Dificultat', challenge)
+    ].filter(Boolean);
+
+    const content = summaryEntries.length
+      ? '<ul class="info-summary">' + summaryEntries.join('\n') + '</ul>'
+      : '<p class="info-empty">Sense dades principals disponibles.</p>';
+
+    const block = [
+      '<article class="info-block info-block--summary">',
+      subjectTag ? '  ' + subjectTag : '',
+      voyage.anys ? '  <p class="info-meta">' + voyage.anys + '</p>' : '',
+      '  ' + content,
+      '</article>'
+    ];
+    return block.filter(Boolean).join('\n');
+  });
+
+  return [
+    '<div class="info-overview info-overview--all">',
+    '  <p class="info-meta info-meta--lead">Comparativa dels cinc viatges</p>',
+    cards.join('\n'),
+    '</div>'
+  ].join('\n');
+}
+
 function renderInfoGroup(title, listHtml, emptyMessage) {
   const content = listHtml
     ? '<ul class="info-list">' + listHtml + '</ul>'
@@ -901,7 +1003,16 @@ function renderSingleInfo(voyage, section) {
 }
 
 function renderComparativeInfo(voyages, section) {
-  return voyages.map((voyage) => {
+  const ordered = orderVoyagesByConfig(voyages);
+  if (!ordered.length) {
+    return '';
+  }
+
+  if (section === 'overview' && ordered.length === EXPEDITION_CONFIG.length) {
+    return renderAllVoyagesOverview(ordered);
+  }
+
+  return ordered.map((voyage) => {
     const subjectTag = renderSubjectTag(voyage);
     if (section === 'overview') {
       const summary = voyage.resum || voyage.short || voyage.finalitat || 'Sense resum disponible.';
