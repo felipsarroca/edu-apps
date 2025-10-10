@@ -3,52 +3,656 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Gràfica Interactiva</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <title>Calculadora Gràfica de Funcions</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 350px;
+            background: linear-gradient(180deg, #f8f9ff 0%, #e8edff 100%);
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .main-area {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            list-style: none;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .info-box li:before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .functions-list {
+            margin-top: 20px;
+        }
+
+        .functions-list h3 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .function-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .function-item:hover {
+            transform: translateX(5px);
+        }
+
+        .color-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .function-text {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .delete-btn {
+            padding: 6px 12px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .delete-btn:hover {
+            background: #ff3838;
+        }
+
+        .canvas-container {
+            flex: 1;
+            background: #fafbfc;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .coordinates {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            pointer-events: none;
+        }
+
+        .controls-info {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .examples {
+            background: #fff8e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ffd54f;
+        }
+
+        .examples h4 {
+            color: #f57c00;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .examples p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .examples p:hover {
+            color: #f57c00;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            padding: 20px;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <div id="app-container">
-        <div id="input-panel">
-            <header>
-                <h1>Calculadora Gràfica</h1>
-                <p>Escriu una equació o inequació per començar</p>
-            </header>
-            <div id="equations-list">
-                <!-- Les files d'equacions s'afegiran aquí amb JavaScript -->
+    <div class="container">
+        <div class="sidebar">
+            <h1>📊 Calculadora Gràfica</h1>
+            <p class="subtitle">Visualitza funcions matemàtiques de manera interactiva i intuitiva</p>
+
+            <div class="info-box">
+                <h3>💡 Com utilitzar-la?</h3>
+                <ul>
+                    <li>Escriu una funció matemàtica</li>
+                    <li>Fes clic a "Dibuixar"</li>
+                    <li>Pots afegir múltiples funcions</li>
+                    <li>Usa la roda del ratolí per fer zoom</li>
+                    <li>Arrossega per moure el gràfic</li>
+                </ul>
             </div>
-            <button id="add-equation-btn" class="add-btn">+ Afegir Equació</button>
-            
-            <div id="math-keyboard">
-                <button class="key" data-symbol="x">x</button>
-                <button class="key" data-symbol="y">y</button>
-                <button class="key" data-symbol="^2">x²</button>
-                <button class="key" data-symbol="^3">x³</button>
-                <button class="key" data-symbol="=">=</button>
-                <button class="key" data-symbol="<"><</button>
-                <button class="key" data-symbol=">">></button>
-                <button class="key" data-symbol="<=">≤</button>
-                <button class="key" data-symbol=">=">≥</button>
-                <button class="key" data-symbol="+">+</button>
-                <button class="key" data-symbol="-">−</button>
-                <button class="key" data-symbol="*">×</button>
-                <button class="key" data-symbol="/">÷</button>
-                <button class="key" data-symbol="(">(</button>
-                <button class="key" data-symbol=")">)</button>
+
+            <div class="examples">
+                <h4>🌟 Exemples per provar:</h4>
+                <p onclick="setExample('x^2')">x^2 (paràbola)</p>
+                <p onclick="setExample('sin(x)')">sin(x) (ona sinusoïdal)</p>
+                <p onclick="setExample('cos(x)')">cos(x) (ona cosinusoïdal)</p>
+                <p onclick="setExample('2*x + 3')">2*x + 3 (línia recta)</p>
+                <p onclick="setExample('x^3 - 2*x')">x^3 - 2*x (cúbica)</p>
+                <p onclick="setExample('exp(x)')">exp(x) (exponencial)</p>
+                <p onclick="setExample('log(x)')">log(x) (logaritme)</p>
+            </div>
+
+            <div class="input-group">
+                <label for="functionInput">Introdueix la funció (y = ...):</label>
+                <input type="text" id="functionInput" placeholder="Exemple: x^2 - 4*x + 3" />
+            </div>
+
+            <div class="button-group">
+                <button onclick="addFunction()">➕ Dibuixar</button>
+                <button class="secondary-btn" onclick="clearAll()">🗑️ Netejar tot</button>
+            </div>
+
+            <div class="functions-list">
+                <h3>Funcions actives:</h3>
+                <div id="functionsList" class="empty-state">
+                    No hi ha funcions encara. Afegeix-ne una!
+                </div>
             </div>
         </div>
-        <div id="graph-panel">
-            <div id="graph-container"></div>
-            <div id="interpretation-panel">
-                <p>La solució es mostra al gràfic. Les àrees ombrejades representen les solucions de les inequacions.</p>
+
+        <div class="main-area">
+            <div class="canvas-container">
+                <canvas id="graphCanvas"></canvas>
+                <div class="coordinates" id="coordinates">x: 0.00, y: 0.00</div>
+                <div class="controls-info">
+                    🔍 Zoom: Roda del ratolí<br>
+                    🖐️ Moure: Arrossega amb el ratolí
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        // Variables globals
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        const functionInput = document.getElementById('functionInput');
+        const functionsList = document.getElementById('functionsList');
+        const coordinatesDisplay = document.getElementById('coordinates');
+
+        let functions = [];
+        let colors = ['#667eea', '#f093fb', '#4ecdc4', '#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff'];
+        let colorIndex = 0;
+
+        // Paràmetres del gràfic
+        let scale = 40; // píxels per unitat
+        let offsetX = 0;
+        let offsetY = 0;
+        let isDragging = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        // Inicialitzar canvas
+        function initCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            drawGraph();
+        }
+
+        // Dibuixar el gràfic complet
+        function drawGraph() {
+            const width = canvas.width / window.devicePixelRatio;
+            const height = canvas.height / window.devicePixelRatio;
+
+            // Fons
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            // Dibuixar quadrícula
+            drawGrid(width, height);
+
+            // Dibuixar eixos
+            drawAxes(width, height);
+
+            // Dibuixar funcions
+            functions.forEach(func => {
+                drawFunction(func, width, height);
+            });
+        }
+
+        // Dibuixar quadrícula
+        function drawGrid(width, height) {
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 1;
+
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+
+            // Línies verticals
+            for (let x = centerX % scale; x < width; x += scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+
+            // Línies horitzontals
+            for (let y = centerY % scale; y < height; y += scale) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+        }
+
+        // Dibuixar eixos
+        function drawAxes(width, height) {
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+
+            // Eix X
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.stroke();
+
+            // Eix Y
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, height);
+            ctx.stroke();
+
+            // Etiquetes
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+
+            // Etiquetes eix X
+            for (let i = -20; i <= 20; i++) {
+                if (i === 0) continue;
+                const x = centerX + i * scale;
+                if (x >= 0 && x <= width) {
+                    ctx.fillText(i.toString(), x, centerY + 15);
+                    ctx.fillRect(x - 1, centerY - 5, 2, 10);
+                }
+            }
+
+            // Etiquetes eix Y
+            ctx.textAlign = 'right';
+            for (let i = -20; i <= 20; i++) {
+                if (i === 0) continue;
+                const y = centerY - i * scale;
+                if (y >= 0 && y <= height) {
+                    ctx.fillText(i.toString(), centerX - 10, y + 4);
+                    ctx.fillRect(centerX - 5, y - 1, 10, 2);
+                }
+            }
+
+            // Origen
+            ctx.textAlign = 'right';
+            ctx.fillText('0', centerX - 10, centerY + 15);
+        }
+
+        // Dibuixar una funció
+        function drawFunction(func, width, height) {
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+
+            ctx.strokeStyle = func.color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            let firstPoint = true;
+            const step = 1; // píxels
+
+            for (let px = 0; px < width; px += step) {
+                const x = (px - centerX) / scale;
+                
+                try {
+                    const y = func.evaluate(x);
+                    
+                    if (isFinite(y)) {
+                        const py = centerY - y * scale;
+                        
+                        if (firstPoint) {
+                            ctx.moveTo(px, py);
+                            firstPoint = false;
+                        } else {
+                            ctx.lineTo(px, py);
+                        }
+                    } else {
+                        firstPoint = true;
+                    }
+                } catch (e) {
+                    firstPoint = true;
+                }
+            }
+
+            ctx.stroke();
+        }
+
+        // Afegir una funció
+        function addFunction() {
+            const expression = functionInput.value.trim();
+            
+            if (!expression) {
+                alert('Si us plau, introdueix una funció!');
+                return;
+            }
+
+            try {
+                // Compilar l'expressió amb math.js
+                const compiled = math.compile(expression);
+                
+                // Provar l'avaluació
+                const testValue = compiled.evaluate({ x: 1 });
+                
+                const func = {
+                    expression: expression,
+                    color: colors[colorIndex % colors.length],
+                    evaluate: (x) => compiled.evaluate({ x: x })
+                };
+
+                functions.push(func);
+                colorIndex++;
+
+                updateFunctionsList();
+                drawGraph();
+                functionInput.value = '';
+                
+            } catch (e) {
+                alert('Error en la funció! Comprova la sintaxis.\n\nExemples vàlids:\n- x^2\n- sin(x)\n- 2*x + 3\n- log(x)');
+            }
+        }
+
+        // Actualitzar la llista de funcions
+        function updateFunctionsList() {
+            if (functions.length === 0) {
+                functionsList.innerHTML = '<div class="empty-state">No hi ha funcions encara. Afegeix-ne una!</div>';
+                return;
+            }
+
+            functionsList.innerHTML = functions.map((func, index) => `
+                <div class="function-item">
+                    <div class="color-indicator" style="background: ${func.color};"></div>
+                    <div class="function-text">y = ${func.expression}</div>
+                    <button class="delete-btn" onclick="deleteFunction(${index})">✕</button>
+                </div>
+            `).join('');
+        }
+
+        // Eliminar una funció
+        function deleteFunction(index) {
+            functions.splice(index, 1);
+            updateFunctionsList();
+            drawGraph();
+        }
+
+        // Netejar tot
+        function clearAll() {
+            if (functions.length === 0) return;
+            
+            if (confirm('Segur que vols eliminar totes les funcions?')) {
+                functions = [];
+                updateFunctionsList();
+                drawGraph();
+            }
+        }
+
+        // Establir exemple
+        function setExample(expression) {
+            functionInput.value = expression;
+            functionInput.focus();
+        }
+
+        // Zoom amb roda del ratolí
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+            const newScale = scale * zoomFactor;
+            
+            if (newScale >= 5 && newScale <= 200) {
+                scale = newScale;
+                drawGraph();
+            }
+        });
+
+        // Panoràmica amb arrossegar
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+            canvas.style.cursor = 'grabbing';
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            // Mostrar coordenades
+            const rect = canvas.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+            
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            const x = (mouseX - centerX) / scale;
+            const y = -(mouseY - centerY) / scale;
+            
+            coordinatesDisplay.textContent = `x: ${x.toFixed(2)}, y: ${y.toFixed(2)}`;
+
+            // Arrossegar
+            if (isDragging) {
+                const dx = e.clientX - lastMouseX;
+                const dy = e.clientY - lastMouseY;
+                
+                offsetX += dx;
+                offsetY += dy;
+                
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                
+                drawGraph();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+            canvas.style.cursor = 'crosshair';
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+            canvas.style.cursor = 'crosshair';
+        });
+
+        // Enter per afegir funció
+        functionInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addFunction();
+            }
+        });
+
+        // Redimensionar canvas
+        window.addEventListener('resize', () => {
+            initCanvas();
+        });
+
+        // Inicialitzar
+        initCanvas();
+    </script>
 </body>
 </html>
