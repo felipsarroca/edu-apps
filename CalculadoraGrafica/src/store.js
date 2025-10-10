@@ -38,6 +38,12 @@ const recordRecent = (registry, mode, expression) => {
   }
 };
 
+const DEFAULT_SUMMARY = {
+  [MODE_IDS.FUNCTION]: 'Representació gràfica activa.',
+  [MODE_IDS.INEQUALITY]: 'Inequació preparada per a la representació gràfica.',
+  [MODE_IDS.SYSTEM]: 'Sistema pendent de resolució.',
+};
+
 export const store = {
   items: [],
   colorIndex: 0,
@@ -47,25 +53,35 @@ export const store = {
     [MODE_IDS.SYSTEM]: [],
   },
 
-  addEntry(expression, mode) {
+  addEntry(expression, mode, options = {}) {
     const color = COLORS[this.colorIndex % COLORS.length];
     this.colorIndex += 1;
+
+    const expressions = Array.isArray(options.expressions)
+      ? options.expressions.slice()
+      : [expression];
+
+    const metadata = {
+      ...(options.metadata ?? {}),
+    };
+
+    if (!metadata.summary) {
+      metadata.summary = DEFAULT_SUMMARY[mode] ?? '';
+    }
+
     const entry = {
       id: createId(),
       expression,
-      expressions: [expression],
+      expressions,
       color,
       mode,
-      label: formatLabel(mode, expression),
-      metadata: {
-        summary:
-          mode === MODE_IDS.FUNCTION
-            ? 'Representació gràfica activa.'
-            : null,
-      },
+      label: options.label ?? formatLabel(mode, expression),
+      metadata,
     };
+
     this.items.push(entry);
-    recordRecent(this.recentExpressions, mode, expression);
+    const historyValue = options.recentValue ?? options.label ?? expression;
+    recordRecent(this.recentExpressions, mode, historyValue);
     return entry;
   },
 

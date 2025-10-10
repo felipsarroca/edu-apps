@@ -1,11 +1,9 @@
 import { DEFAULT_RANGE, ZOOM_DEBOUNCE_MS } from './config.js';
 import { store } from './store.js';
 import {
-  appendDataset,
-  clearChart,
+  buildDatasets,
   createChart,
-  getVisibleRange,
-  refreshDatasets,
+  getVisibleBounds,
 } from './graph.js';
 import { renderFunctionsList } from './ui.js';
 import { initKeyboard } from './keyboard.js';
@@ -16,6 +14,9 @@ import {
   setMode,
   subscribeToModeChange,
 } from './modes.js';
+import { parseInequality } from './parser.js';
+
+const { math } = window;
 
 let chart;
 let elements;
@@ -24,37 +25,121 @@ let modeButtons = new Map();
 let unsubscribeModeChange = null;
 let keyboardController;
 
-const getCleanRange = (fallback) => ({ min: fallback.min, max: fallback.max });
-
-const scheduleRegeneration = () => {
-  if (store.isEmpty()) {
-    return;
-  }
-
-  clearTimeout(interactionTimeoutId);
-  interactionTimeoutId = setTimeout(() => {
-    const visibleRange = getVisibleRange(chart, DEFAULT_RANGE);
-    refreshDatasets(chart, store.items, visibleRange);
-  }, ZOOM_DEBOUNCE_MS);
-};
+const SUPPORTED_MODES = new Set([MODE_IDS.FUNCTION, MODE_IDS.INEQUALITY]);
 
 const updateList = () =>
   renderFunctionsList(elements.functionsList, store.items, handleDelete);
 
-const handleDelete = (index) => {
-  store.removeEntry(index);
-
-  if (store.isEmpty()) {
-    clearChart(chart);
-  } else {
-    const range = getVisibleRange(chart, DEFAULT_RANGE);
-    refreshDatasets(chart, store.items, range);
+const rebuildChartDatasets = (animate = true) => {
+  if (!chart) {
+    return;
   }
 
-  updateList();
+  const bounds = getVisibleBounds(chart, DEFAULT_RANGE);
+
+  if (store.isEmpty()) {
+    chart.data.datasets = [];
+    chart.update(animate ? undefined : 'none');
+    return;
+  }
+
+  const datasets = buildDatasets(store.items, bounds);
+  chart.data.datasets = datasets;
+  chart.update(animate ? undefined : 'none');
 };
 
-const ensureModeImplemented = (modeId) => modeId === MODE_IDS.FUNCTION;
+const scheduleRegeneration = () => {
+  clearTimeout(interactionTimeoutId);
+  interactionTimeoutId = setTimeout(() => {
+    rebuildChartDatasets(false);
+  }, ZOOM_DEBOUNCE_MS);
+};
+
+const finalizeAddition = (wasEmpty, modeConfig) => {
+  elements.expressionInput.value = '';
+  elements.expressionInput.focus();
+  updateList();
+  renderExamples(modeConfig);
+  rebuildChartDatasets(wasEmpty);
+};
+
+const addFunctionEntry = (expression, modeConfig) => {
+  try {
+    math.compile(expression).evaluate({ x: 1 });
+  } catch (error) {
+    window.alert(
+      "Error en l'expressió! Comprova la sintaxi.\n\nExemples vàlids:\n- x^2\n- sin(x)\n- 2*x + 3",
+    );
+    return;
+  }
+
+  const wasEmpty = store.isEmpty();
+  store.addEntry(expression, MODE_IDS.FUNCTION);
+  finalizeAddition(wasEmpty, modeConfig);
+};
+
+const addInequalityEntry = (rawExpression, modeConfig) => {
+  let parsed;
+  try {
+    parsed = parseInequality(rawExpression);
+  } catch (error) {
+    window.alert(error.message ?? 'Inequació no vàlida.');
+    return;
+  }
+
+  let compiled;
+  try {
+    compiled = math.compile(parsed.expression);
+    compiled.evaluate({ x: 0 });
+  } catch (error) {
+    window.alert(
+      'La inequació conté una expressió que no es pot interpretar. Revisa la sintaxi.',
+    );
+    return;
+  }
+
+  const wasEmpty = store.isEmpty();
+  const summary =
+    parsed.orientation === 'above'
+      ? 'Zona ressaltada per sobre de la corba.'
+      : 'Zona ressaltada per sota de la corba.';
+
+  const metadata = {
+    inequality: {
+      ...parsed,
+      compiled,
+    },
+    summary,
+    results: [
+      {
+        label: 'Zona',
+        description:
+          parsed.orientation === 'above'
+            ? 'Inclou tots els punts per sobre de la corba frontera.'
+            : 'Inclou tots els punts per sota de la corba frontera.',
+      },
+    ],
+  };
+
+  const entry = store.addEntry(parsed.expression, MODE_IDS.INEQUALITY, {
+    label: parsed.display,
+    metadata,
+    recentValue: parsed.display,
+  });
+
+  // Assegurar que la còpia retornada manté la referència al compiled
+  if (entry?.metadata?.inequality) {
+    entry.metadata.inequality.compiled = compiled;
+  }
+
+  finalizeAddition(wasEmpty, modeConfig);
+};
+
+const handleDelete = (index) => {
+  store.removeEntry(index);
+  rebuildChartDatasets(false);
+  updateList();
+};
 
 const handleAdd = () => {
   const expression = elements.expressionInput.value.trim();
@@ -65,34 +150,21 @@ const handleAdd = () => {
     return;
   }
 
-  if (!ensureModeImplemented(currentMode.id)) {
+  if (!SUPPORTED_MODES.has(currentMode.id)) {
     window.alert(
-      'Aquest mode encara està en desenvolupament. Aviat podràs representar inequacions i sistemes.',
+      'Aquest mode encara està en desenvolupament. Aviat podràs representar sistemes.',
     );
     return;
   }
 
-  try {
-    window.math.compile(expression).evaluate({ x: 1 });
-  } catch (error) {
-    window.alert(
-      "Error en l'expressió! Comprova la sintaxi.\n\nExemples vàlids:\n- x^2\n- sin(x)\n- 2*x + 3",
-    );
+  if (currentMode.id === MODE_IDS.FUNCTION) {
+    addFunctionEntry(expression, currentMode);
     return;
   }
 
-  const wasEmpty = store.isEmpty();
-  const entry = store.addEntry(expression, currentMode.id);
-  const range = wasEmpty
-    ? getCleanRange(DEFAULT_RANGE)
-    : getVisibleRange(chart, DEFAULT_RANGE);
-
-  appendDataset(chart, entry, range, wasEmpty);
-
-  elements.expressionInput.value = '';
-  elements.expressionInput.focus();
-  updateList();
-  renderExamples(currentMode);
+  if (currentMode.id === MODE_IDS.INEQUALITY) {
+    addInequalityEntry(expression, currentMode);
+  }
 };
 
 const handleClear = () => {
@@ -108,7 +180,7 @@ const handleClear = () => {
   }
 
   store.clear();
-  clearChart(chart);
+  rebuildChartDatasets(false);
   updateList();
   renderExamples(getCurrentMode());
 };
@@ -149,6 +221,15 @@ const attachExampleButtonHandlers = () => {
   });
 };
 
+const createExampleButton = (label, expression, isRecent = false) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'example-btn';
+  button.dataset.expression = expression;
+  button.textContent = isRecent ? `${expression}` : `${label} · ${expression}`;
+  return button;
+};
+
 const renderExamples = (mode) => {
   const fragment = document.createDocumentFragment();
 
@@ -171,15 +252,6 @@ const renderExamples = (mode) => {
   elements.examplesList.innerHTML = '';
   elements.examplesList.append(fragment);
   attachExampleButtonHandlers();
-};
-
-const createExampleButton = (label, expression, isRecent = false) => {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'example-btn';
-  button.dataset.expression = expression;
-  button.textContent = isRecent ? `${expression}` : `${label} · ${expression}`;
-  return button;
 };
 
 const renderModeSelector = () => {
