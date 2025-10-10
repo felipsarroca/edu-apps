@@ -18,11 +18,24 @@ const createId = () => {
   if (cryptoApi?.getRandomValues) {
     const buffer = new Uint32Array(4);
     cryptoApi.getRandomValues(buffer);
-    return Array.from(buffer, (value) =>
-      value.toString(16).padStart(8, '0'),
-    ).join('');
+    return Array.from(buffer, (value) => value.toString(16).padStart(8, '0')).join('');
   }
   return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
+
+const recordRecent = (registry, mode, expression) => {
+  if (!registry[mode]) {
+    registry[mode] = [];
+  }
+  const list = registry[mode];
+  const existingIndex = list.findIndex((item) => item === expression);
+  if (existingIndex !== -1) {
+    list.splice(existingIndex, 1);
+  }
+  list.unshift(expression);
+  if (list.length > MAX_RECENT) {
+    list.length = MAX_RECENT;
+  }
 };
 
 export const store = {
@@ -52,7 +65,7 @@ export const store = {
       },
     };
     this.items.push(entry);
-    this.#recordRecent(mode, expression);
+    recordRecent(this.recentExpressions, mode, expression);
     return entry;
   },
 
@@ -71,20 +84,5 @@ export const store = {
 
   getRecentExpressions(mode) {
     return this.recentExpressions[mode] ?? [];
-  },
-
-  #recordRecent(mode, expression) {
-    if (!this.recentExpressions[mode]) {
-      this.recentExpressions[mode] = [];
-    }
-    const list = this.recentExpressions[mode];
-    const existingIndex = list.findIndex((item) => item === expression);
-    if (existingIndex !== -1) {
-      list.splice(existingIndex, 1);
-    }
-    list.unshift(expression);
-    if (list.length > MAX_RECENT) {
-      list.length = MAX_RECENT;
-    }
   },
 };
