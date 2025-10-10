@@ -775,6 +775,18 @@ details[open] > summary::before {
   align-items: baseline;
 }
 
+.info-block__title {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.info-block__title strong {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(10, 35, 69, 0.88);
+}
+
 .info-icon--large {
   width: 1.8rem;
   height: 1.8rem;
@@ -782,6 +794,24 @@ details[open] > summary::before {
   background: var(--tone-color, rgba(90, 134, 210, 0.35));
   color: #ffffff;
   box-shadow: 0 6px 14px rgba(12, 26, 52, 0.2);
+}
+
+.info-block--objective {
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--tone-color, rgba(90, 134, 210, 0.55));
+}
+
+.info-objective {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), var(--tone-soft, rgba(160, 188, 240, 0.4)));
+  border: 1px solid rgba(160, 188, 240, 0.35);
+  font-size: 0.84rem;
+  line-height: 1.56;
+  color: rgba(10, 35, 69, 0.9);
+  box-shadow: 0 8px 18px rgba(12, 26, 52, 0.14);
 }
 
 .info-meta {

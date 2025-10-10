@@ -852,9 +852,23 @@ function updateInfoPanel() {
 function renderSingleInfo(voyage, section) {
   if (section === 'overview') {
     const objective = voyage.finalitat ? String(voyage.finalitat).trim() : '';
-    return objective
-      ? '<p class="info-objective">' + objective + '</p>'
-      : '<p class="info-empty">Sense objectiu registrat.</p>';
+    if (!objective) {
+      return '<p class="info-empty">Sense objectiu registrat.</p>';
+    }
+    const shortLabel = voyage.short ? String(voyage.short).trim() : '';
+    const lines = [
+      '<article class="info-block info-block--objective">',
+      '  <header class="info-block__header">',
+      '    <span class="info-icon info-icon--large" aria-hidden="true">' + SECTION_ICONS.overview + '</span>',
+      '    <div class="info-block__title">',
+      '      <p class="info-meta">Objectiu principal</p>',
+      shortLabel ? '      <strong>' + shortLabel + '</strong>' : '',
+      '    </div>',
+      '  </header>',
+      '  <p class="info-objective">' + objective + '</p>',
+      '</article>'
+    ];
+    return lines.filter(Boolean).join('\n');
   }
 
   if (section === 'forces') {
