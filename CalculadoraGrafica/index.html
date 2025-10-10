@@ -41,7 +41,13 @@
 
             <div class="input-group">
                 <label for="expressionInput">Introdueix l’expressió:</label>
-                <input type="text" id="expressionInput" placeholder="Exemple: y = 2*x + 3" />
+                <div id="singleInputWrapper" class="single-input-wrapper">
+                    <input type="text" id="expressionInput" placeholder="Exemple: y = 2*x + 3" />
+                </div>
+                <div id="systemInputs" class="system-inputs" hidden>
+                    <div id="systemInputsList" class="system-inputs-list"></div>
+                    <button type="button" id="addSystemRow" class="ghost-button ghost-button-small">➕ Afegeix expressió</button>
+                </div>
                 <div class="input-actions">
                     <button id="toggleKeyboard" type="button" class="ghost-button" aria-pressed="false">🎹 Mostra el teclat</button>
                 </div>
