@@ -854,6 +854,14 @@ details[open] > summary::before {
   text-transform: uppercase;
   color: rgba(26, 54, 100, 0.6);
 }
+.info-meta--subject {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: rgba(26, 54, 100, 0.82);
+}
 
 .info-summary {
   margin: 0;

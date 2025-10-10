@@ -352,6 +352,31 @@ function extractOrderValue(voyage, episode, index) {
   return year * 10000 + month * 100 + day + index / 100;
 }
 
+function getEpisodeOrderValue(voyage, episode) {
+  if (episode && episode.ordre !== undefined && episode.ordre !== null) {
+    const numericOrder = Number.parseFloat(episode.ordre);
+    if (Number.isFinite(numericOrder)) {
+      return numericOrder;
+    }
+  }
+  const tieBreaker = episode?.originalIndex ?? 0;
+  return extractOrderValue(voyage, episode, tieBreaker);
+}
+
+function sortEpisodesByOrder(episodes, voyage) {
+  const context = voyage || { anys: undefined };
+  return [...episodes].sort((a, b) => {
+    const valueA = getEpisodeOrderValue(context, a);
+    const valueB = getEpisodeOrderValue(context, b);
+    if (valueA !== valueB) {
+      return valueA - valueB;
+    }
+    const idxA = a?.originalIndex ?? 0;
+    const idxB = b?.originalIndex ?? 0;
+    return idxA - idxB;
+  });
+}
+
 const state = {
   map: null,
   voyages: new Map(),
@@ -471,7 +496,8 @@ function enrichEpisodes(list) {
     return {
       ...episode,
       ordre: episode.ordre ?? index + 1,
-      coords
+      coords,
+      originalIndex: index
     };
   });
 
