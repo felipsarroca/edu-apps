@@ -23,13 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     type: 'linear',
                     position: 'bottom',
                     grid: {
-                        color: '#f0f0f0'
+                        color: '#f0f0f0',
+                        borderColor: '#666', // Color de la línia de l'eix X
+                        borderWidth: 2      // Gruix de la línia de l'eix X
                     }
                 },
                 y: {
+                    type: 'linear', // Aquesta línia faltava i era la causa probable de l'error
                     position: 'left',
                     grid: {
-                        color: '#f0f0f0'
+                        color: '#f0f0f0',
+                        borderColor: '#666', // Color de la línia de l'eix Y
+                        borderWidth: 2      // Gruix de la línia de l'eix Y
                     }
                 }
             },
@@ -37,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 zoom: {
                     pan: {
                         enabled: true,
-                        mode: 'xy', // Habilita l'arrossegament en tots dos eixos
+                        mode: 'xy',
                     },
                     zoom: {
                         wheel: {
@@ -121,9 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
             graphChart.data.datasets.push(newFunctionDataset);
             
             if (isFirstFunction) {
-                graphChart.update(); // Actualització normal per a la primera funció
+                graphChart.update();
             } else {
-                graphChart.update('none'); // Actualització sense animació per a les següents
+                graphChart.update('none');
             }
 
             colorIndex++;
