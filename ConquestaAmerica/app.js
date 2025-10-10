@@ -514,20 +514,6 @@ function renderHomeCards() {
     ].join('\n');
     dom.homeGrid.appendChild(card);
   });
-
-  const compare = document.createElement('button');
-  compare.className = 'voyage-card voyage-card--all';
-  compare.dataset.voyage = 'all';
-  compare.style.setProperty('--card-accent', 'var(--accent-all)');
-  compare.innerHTML = [
-    '<span class="card-photo card-photo--blend"></span>',
-    '<span class="card-body">',
-    '  <strong>Totes les expedicions</strong>',
-    '  <span>Posa en context rutes i lliçons dels cinc conqueridors.</span>',
-    '  <em>Visió global</em>',
-    '</span>'
-  ].join('\n');
-  dom.homeGrid.appendChild(compare);
 }
 
 function setupHomeInteractions() {
@@ -537,14 +523,8 @@ function setupHomeInteractions() {
       return;
     }
     const id = card.dataset.voyage;
-    if (!id) {
-      return;
-    }
-    if (id === 'all') {
-      enterExperience(EXPEDITION_CONFIG.map((v) => v.id));
-    } else {
-      enterExperience([id]);
-    }
+    if (!id) { return; }
+    enterExperience([id]);
   });
 
   dom.backHomeBtn.addEventListener('click', exitExperience);
