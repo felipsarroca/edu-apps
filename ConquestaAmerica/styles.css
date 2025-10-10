@@ -26,11 +26,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: clamp(0.9rem, 1.4vw, 1.6rem);
+  gap: clamp(1.1rem, 1.8vw, 2rem);
   align-items: stretch;
   margin: 0 auto;
   width: 100%;
-  max-width: min(1040px, 86vw);
+  max-width: min(1220px, 92vw);
   padding: 0 0.5rem;
   z-index: 1;
   align-self: center;
@@ -105,8 +105,8 @@ h3,
 
 .home-content {
   position: relative;
-  width: min(1100px, 88vw);
-  padding: 3vh 6vw 3vh;
+  width: min(1260px, 94vw);
+  padding: 3.2vh 6.5vw 3.2vh;
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(12, 18, 30, 0.9), rgba(24, 40, 64, 0.7));
   border-radius: 34px;
@@ -754,7 +754,7 @@ details[open] > summary::before {
 @media (min-width: 1100px) {
   .home-grid {
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 }
 
@@ -918,8 +918,8 @@ details[open] > summary::before {
   align-items: center;
   text-align: center;
   gap: 1.1rem;
-  width: clamp(180px, 15vw, 196px);
-  padding: 1.35rem 1.1rem 1.15rem;
+  width: clamp(210px, 18vw, 242px);
+  padding: 1.55rem 1.25rem 1.3rem;
   border-radius: 26px;
   background: linear-gradient(150deg, rgba(16, 30, 46, 0.85), rgba(8, 18, 33, 0.78));
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -960,8 +960,8 @@ details[open] > summary::before {
 }
 .card-photo {
   position: relative;
-  width: clamp(124px, 11vw, 148px);
-  height: clamp(124px, 11vw, 148px);
+  width: clamp(138px, 12.5vw, 168px);
+  height: clamp(138px, 12.5vw, 168px);
   border-radius: 30px;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04));
@@ -1008,7 +1008,7 @@ details[open] > summary::before {
   font-size: 0.86rem;
   line-height: 1.5;
   color: rgba(236, 241, 255, 0.82);
-  max-width: 22ch;
+  max-width: 24ch;
 }
 .card-body em {
   font-style: normal;
