@@ -929,7 +929,7 @@ details[open] > summary::before {
   align-items: center;
   text-align: center;
   gap: 1.2rem;
-  width: clamp(178px, 15.4vw, 224px);
+  width: clamp(214px, 18.5vw, 269px);
   padding: 1.55rem 1.25rem 1.32rem;
   border-radius: 26px;
   background: linear-gradient(150deg, rgba(16, 30, 46, 0.85), rgba(8, 18, 33, 0.78));
