@@ -1,0 +1,5 @@
+Analitza aquesta aplicació. L'estètica que té m'agrada molt, però vull portar-la a un altre nivell a nivell de funcionalitats perquè pugui fer inequacions, sistemes d'equacions i inequacions, mostrar els resultats a
+  la gràfica de manera ben visible. També vull que es puguin escriure les equacions o inequacions de manera fàcil, tal vegada amb un teclat desplegable. Més endavant voldré que es puguin fer captures d'equacions o
+  inequacions (fotografies) i que les introdueixi automàticament. Per fer tot això tal vegada cal separar el codi en diversos fitxers html, css, js... Abans de fer canvis, proposa'm quines millores consideres que es
+  podrien aplicar i com ho faries per aplicar-les. Vull que l'alumnat que faci servir aquesta aplicació ho faci amb molt de gust perquè entengui els conceptes de manera visual i atractiva. Per tant, ha de ser didàctica
+   i posar-li les coses fàcils a l'alumne.

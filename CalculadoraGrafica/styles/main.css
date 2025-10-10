@@ -113,7 +113,7 @@
             margin-bottom: 20px;
         }
 
-        button {
+        .button-group button {
             flex: 1;
             padding: 12px 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -126,12 +126,12 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        button:hover {
+        .button-group button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        button:active {
+        .button-group button:active {
             transform: translateY(0);
         }
 
@@ -251,17 +251,27 @@
             font-size: 13px;
         }
 
-        .examples p {
+        .examples .example-btn {
+            display: block;
+            width: 100%;
+            padding: 6px 8px;
+            margin-bottom: 6px;
             font-size: 12px;
             color: #666;
-            margin-bottom: 6px;
             font-family: 'Courier New', monospace;
             cursor: pointer;
-            transition: color 0.2s;
+            background: transparent;
+            border: none;
+            text-align: left;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
         }
 
-        .examples p:hover {
+        .examples .example-btn:hover,
+        .examples .example-btn:focus-visible {
+            background: rgba(245, 124, 0, 0.1);
             color: #f57c00;
+            outline: none;
         }
 
         .empty-state {

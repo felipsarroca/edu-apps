@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <div class="container">
@@ -28,13 +28,13 @@
 
             <div class="examples">
                 <h4>🌟 Exemples per provar:</h4>
-                <p onclick="setExample('x^2')">x^2 (paràbola)</p>
-                <p onclick="setExample('sin(x)')">sin(x) (ona sinusoïdal)</p>
-                <p onclick="setExample('cos(x)')">cos(x) (ona cosinusoïdal)</p>
-                <p onclick="setExample('2*x + 3')">2*x + 3 (línia recta)</p>
-                <p onclick="setExample('x^3 - 2*x')">x^3 - 2*x (cúbica)</p>
-                <p onclick="setExample('exp(x)')">exp(x) (exponencial)</p>
-                <p onclick="setExample('log(x)')">log(x) (logaritme)</p>
+                <button type="button" class="example-btn" data-expression="x^2">x^2 (paràbola)</button>
+                <button type="button" class="example-btn" data-expression="sin(x)">sin(x) (ona sinusoïdal)</button>
+                <button type="button" class="example-btn" data-expression="cos(x)">cos(x) (ona cosinusoïdal)</button>
+                <button type="button" class="example-btn" data-expression="2*x + 3">2*x + 3 (línia recta)</button>
+                <button type="button" class="example-btn" data-expression="x^3 - 2*x">x^3 - 2*x (cúbica)</button>
+                <button type="button" class="example-btn" data-expression="exp(x)">exp(x) (exponencial)</button>
+                <button type="button" class="example-btn" data-expression="log(x)">log(x) (logaritme)</button>
             </div>
 
             <div class="input-group">
@@ -43,8 +43,8 @@
             </div>
 
             <div class="button-group">
-                <button onclick="addFunction()">➕ Dibuixar</button>
-                <button class="secondary-btn" onclick="clearAll()">🗑️ Netejar tot</button>
+                <button id="drawButton">➕ Dibuixar</button>
+                <button id="clearButton" class="secondary-btn">🗑️ Netejar tot</button>
             </div>
 
             <div class="functions-list">
@@ -67,6 +67,6 @@
         </div>
     </div>
 
-    <script src="script.js" defer></script>
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
