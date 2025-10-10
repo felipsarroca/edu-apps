@@ -441,7 +441,10 @@ async function loadVoyages() {
       if (!expedicio) {
         throw new Error(`El fitxer ${config.file} no conté la clau "expedicio".`);
       }
-      const episodis = enrichEpisodes(Array.isArray(expedicio.episodis) ? expedicio.episodis : []);
+      const episodis = sortEpisodesByOrder(
+        enrichEpisodes(Array.isArray(expedicio.episodis) ? expedicio.episodis : []),
+        expedicio
+      );
       const label = config.label ?? expedicio.personatge?.nom ?? expedicio.titol ?? config.id;
       const short = config.short ?? expedicio.resum ?? expedicio.finalitat ?? '';
       const portrait = config.portrait ?? expedicio.personatge?.imatge ?? null;
