@@ -652,13 +652,20 @@ const toggleInputInterface = (modeId) => {
     keyboardController?.setTargetInput?.(elements.expressionInput);
   }
 
-  if (isSystem) {
-    const firstInput = elements.systemInputsList?.querySelector(
-      '.system-row input[type="text"]',
-    );
-    keyboardController?.setTargetInput?.(firstInput ?? null);
-  } else {
-    keyboardController?.setTargetInput?.(elements.expressionInput);
+  if (elements.keyboardToggle) {
+    elements.keyboardToggle.disabled = false;
+    elements.keyboardToggle.classList.remove('is-disabled');
+    elements.keyboardToggle.removeAttribute('aria-disabled');
+    if (isSystem) {
+      elements.keyboardToggle.setAttribute('aria-pressed', 'false');
+      elements.keyboardToggle.textContent = '🎹 Mostra el teclat';
+    } else {
+      const visible = keyboardController?.isVisible?.() ?? false;
+      elements.keyboardToggle.setAttribute('aria-pressed', String(visible));
+      elements.keyboardToggle.textContent = visible
+        ? '🎹 Amaga el teclat'
+        : '🎹 Mostra el teclat';
+    }
   }
 };
 
@@ -826,6 +833,9 @@ const initElements = () => {
 const bindEvents = () => {
   elements.drawButton.addEventListener('click', handleAdd);
   elements.clearButton.addEventListener('click', handleClear);
+  elements.expressionInput.addEventListener('focus', () => {
+    keyboardController?.setTargetInput?.(elements.expressionInput);
+  });
   elements.expressionInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
       handleAdd();

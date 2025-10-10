@@ -42,27 +42,7 @@ const hexToRgba = (hex, alpha) => {
 };
 
 const lightenColor = (hex, amount = 0.2) => {
-const enhanceDataset = (entry, dataset, componentIndex = null) => {
-  dataset.entryId = entry.id ?? null;
-  dataset.componentIndex = componentIndex;
-
-  if (dataset.borderWidth !== undefined && dataset.baseBorderWidth === undefined) {
-    dataset.baseBorderWidth = dataset.borderWidth;
-    dataset.highlightBorderWidth =
-      dataset.borderWidth * 1.4 + (dataset.borderWidth <= 2 ? 1 : 0);
-  }
-
-  if (dataset.pointRadius !== undefined && dataset.basePointRadius === undefined) {
-    dataset.basePointRadius = dataset.pointRadius;
-    dataset.highlightPointRadius = Math.max(
-      dataset.pointRadius * 1.5,
-      dataset.pointRadius + 2,
-    );
-  }
-
-  if (dataset.borderColor && dataset.originalBorderColor === undefined) {
-    dataset.originalBorderColor = dataset.borderColor;
-    if (dataset.borderColor.startsWith(  if (!hex || typeof hex !== 'string') {
+  if (!hex || typeof hex !== 'string') {
     return '#667eea';
   }
   let normalized = hex.replace('#', '');
@@ -93,6 +73,51 @@ const enhanceDataset = (entry, dataset, componentIndex = null) => {
   return `#${lr.toString(16).padStart(2, '0')}${lg
     .toString(16)
     .padStart(2, '0')}${lb.toString(16).padStart(2, '0')}`;
+};
+
+const enhanceDataset = (entry, dataset, componentIndex = null) => {
+  dataset.entryId = entry.id ?? null;
+  dataset.componentIndex = componentIndex;
+
+  if (dataset.borderWidth !== undefined && dataset.baseBorderWidth === undefined) {
+    dataset.baseBorderWidth = dataset.borderWidth;
+    dataset.highlightBorderWidth =
+      dataset.borderWidth * 1.4 + (dataset.borderWidth <= 2 ? 1 : 0);
+  }
+
+  if (dataset.pointRadius !== undefined && dataset.basePointRadius === undefined) {
+    dataset.basePointRadius = dataset.pointRadius;
+    dataset.highlightPointRadius = Math.max(
+      dataset.pointRadius * 1.5,
+      dataset.pointRadius + 2,
+    );
+  }
+
+  if (dataset.borderColor && dataset.originalBorderColor === undefined) {
+    dataset.originalBorderColor = dataset.borderColor;
+    if (typeof dataset.borderColor === 'string' && dataset.borderColor.startsWith('#')) {
+      dataset.highlightBorderColor = lightenColor(dataset.borderColor, 0.2);
+    } else {
+      dataset.highlightBorderColor = dataset.borderColor;
+    }
+  }
+
+  if (dataset.pointBackgroundColor && dataset.originalPointBackgroundColor === undefined) {
+    dataset.originalPointBackgroundColor = dataset.pointBackgroundColor;
+    if (
+      typeof dataset.pointBackgroundColor === 'string' &&
+      dataset.pointBackgroundColor.startsWith('#')
+    ) {
+      dataset.highlightPointBackgroundColor = lightenColor(
+        dataset.pointBackgroundColor,
+        0.2,
+      );
+    } else {
+      dataset.highlightPointBackgroundColor = dataset.pointBackgroundColor;
+    }
+  }
+
+  return dataset;
 };
 
 export const createChart = (canvas, onInteraction) => {
