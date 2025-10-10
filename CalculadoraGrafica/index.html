@@ -18,29 +18,35 @@
             <div class="info-box">
                 <h3>💡 Com utilitzar-la?</h3>
                 <ul>
-                    <li>Escriu una funció matemàtica</li>
+                    <li>Escull el mode que necessitis</li>
+                    <li>Escriu una expressió matemàtica</li>
                     <li>Fes clic a "Dibuixar"</li>
-                    <li>Pots afegir múltiples funcions</li>
+                    <li>Pots afegir múltiples entrades</li>
                     <li>Usa la roda del ratolí per fer zoom</li>
                     <li>Arrossega per moure el gràfic</li>
                 </ul>
             </div>
 
+            <div class="mode-panel">
+                <h3 class="mode-panel-title">Selecciona el mode</h3>
+                <div id="modeSelector" class="mode-selector"></div>
+                <p id="modeDescription" class="mode-description">Tria un mode per començar.</p>
+            </div>
+
             <div class="examples">
                 <h4>🌟 Exemples per provar:</h4>
-                <button type="button" class="example-btn" data-expression="x^2">x^2 (paràbola)</button>
-                <button type="button" class="example-btn" data-expression="sin(x)">sin(x) (ona sinusoïdal)</button>
-                <button type="button" class="example-btn" data-expression="cos(x)">cos(x) (ona cosinusoïdal)</button>
-                <button type="button" class="example-btn" data-expression="2*x + 3">2*x + 3 (línia recta)</button>
-                <button type="button" class="example-btn" data-expression="x^3 - 2*x">x^3 - 2*x (cúbica)</button>
-                <button type="button" class="example-btn" data-expression="exp(x)">exp(x) (exponencial)</button>
-                <button type="button" class="example-btn" data-expression="log(x)">log(x) (logaritme)</button>
+                <div id="examplesList" class="examples-list"></div>
             </div>
 
             <div class="input-group">
-                <label for="functionInput">Introdueix la funció (y = ...):</label>
-                <input type="text" id="functionInput" placeholder="Exemple: x^2 - 4*x + 3" />
+                <label for="expressionInput">Introdueix l’expressió:</label>
+                <input type="text" id="expressionInput" placeholder="Exemple: y = 2*x + 3" />
+                <div class="input-actions">
+                    <button id="toggleKeyboard" type="button" class="ghost-button" aria-pressed="false">🎹 Mostra el teclat</button>
+                </div>
             </div>
+
+            <div id="keyboardContainer" class="virtual-keyboard" data-visible="false" aria-hidden="true"></div>
 
             <div class="button-group">
                 <button id="drawButton">➕ Dibuixar</button>
@@ -48,9 +54,9 @@
             </div>
 
             <div class="functions-list">
-                <h3>Funcions actives:</h3>
+                <h3>Entrades actives:</h3>
                 <div id="functionsList" class="empty-state">
-                    No hi ha funcions encara. Afegeix-ne una!
+                    No hi ha entrades encara. Afegeix-ne una!
                 </div>
             </div>
         </div>

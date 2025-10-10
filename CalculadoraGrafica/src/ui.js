@@ -1,5 +1,5 @@
 const EMPTY_STATE_TEMPLATE =
-  '<div class="empty-state">No hi ha funcions encara. Afegeix-ne una!</div>';
+  '<div class="empty-state">No hi ha entrades encara. Afegeix-ne una!</div>';
 
 export const renderFunctionsList = (container, items, onDelete) => {
   if (items.length === 0) {
@@ -12,13 +12,28 @@ export const renderFunctionsList = (container, items, onDelete) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'function-item';
 
+    const header = document.createElement('div');
+    header.className = 'function-header';
+
+    const infoGroup = document.createElement('div');
+    infoGroup.className = 'function-info';
+
+    const badge = document.createElement('span');
+    badge.className = 'mode-badge';
+    badge.textContent = getModeBadgeLabel(item.mode);
+
     const colorIndicator = document.createElement('div');
     colorIndicator.className = 'color-indicator';
     colorIndicator.style.background = item.color;
 
     const text = document.createElement('div');
     text.className = 'function-text';
-    text.textContent = `y = ${item.expression}`;
+    text.textContent = item.label ?? item.expression;
+
+    infoGroup.append(badge, colorIndicator, text);
+
+    const actions = document.createElement('div');
+    actions.className = 'function-actions';
 
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
@@ -26,7 +41,63 @@ export const renderFunctionsList = (container, items, onDelete) => {
     deleteButton.textContent = '✕';
     deleteButton.addEventListener('click', () => onDelete(index));
 
-    wrapper.append(colorIndicator, text, deleteButton);
+    actions.append(deleteButton);
+    header.append(infoGroup, actions);
+
+    const meta = document.createElement('div');
+    meta.className = 'function-meta';
+
+    const summary = item.metadata?.summary;
+    const results = Array.isArray(item.metadata?.results)
+      ? item.metadata.results
+      : [];
+
+    let hasContent = false;
+
+    if (summary) {
+      const summaryBlock = document.createElement('div');
+      summaryBlock.className = 'function-meta-summary';
+      summaryBlock.textContent = summary;
+      meta.append(summaryBlock);
+      hasContent = true;
+    }
+
+    if (results.length > 0) {
+      const list = document.createElement('ul');
+      list.className = 'function-meta-list';
+
+      results.forEach((result) => {
+        const itemElement = document.createElement('li');
+        if (result?.label) {
+          itemElement.textContent = `${result.label}: ${result.description ?? ''}`;
+        } else {
+          itemElement.textContent = result?.description ?? '';
+        }
+        list.append(itemElement);
+      });
+
+      meta.append(list);
+      hasContent = true;
+    }
+
+    if (!hasContent) {
+      meta.textContent = 'Resultats encara no disponibles.';
+      meta.classList.add('is-placeholder');
+    }
+
+    wrapper.append(header, meta);
     container.append(wrapper);
   });
+};
+
+const getModeBadgeLabel = (mode) => {
+  switch (mode) {
+    case 'inequality':
+      return 'Ineq';
+    case 'system':
+      return 'Sist';
+    case 'function':
+    default:
+      return 'Func';
+  }
 };

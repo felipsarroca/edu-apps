@@ -97,7 +97,7 @@ export const generateData = (expression, range) => {
 };
 
 const buildDataset = (entry, range) => ({
-  label: `y = ${entry.expression}`,
+  label: entry.label ?? entry.expression,
   data: generateData(entry.expression, range),
   borderColor: entry.color,
   borderWidth: 2.5,
