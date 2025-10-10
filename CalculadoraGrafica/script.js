@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let colors = ['#667eea', '#f093fb', '#4ecdc4', '#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff'];
     let colorIndex = 0;
 
-    // Configuració inicial de Chart.js
+    // Configuració de Chart.js amb les correccions
     const chartConfig = {
         type: 'line',
         data: {
@@ -22,21 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 x: {
                     type: 'linear',
                     position: 'bottom',
-                    title: {
-                        display: true,
-                        text: 'x'
-                    },
                     grid: {
                         color: '#f0f0f0'
                     }
                 },
                 y: {
-                    type: 'linear',
                     position: 'left',
-                    title: {
-                        display: true,
-                        text: 'y'
-                    },
                     grid: {
                         color: '#f0f0f0'
                     }
@@ -46,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 zoom: {
                     pan: {
                         enabled: true,
-                        mode: 'xy',
+                        mode: 'xy', // Habilita l'arrossegament en tots dos eixos
                     },
                     zoom: {
                         wheel: {
@@ -69,22 +60,19 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             elements: {
                 point: {
-                    radius: 0 // No mostrar punts per a cada valor
+                    radius: 0
                 }
             }
         }
     };
 
-    // Crear el gràfic
     const graphChart = new Chart(ctx, chartConfig);
 
-    // Funció per generar dades per a una expressió
-    function generateDataForExpression(expression) {
+    function generateDataForExpression(expression, range) {
         const compiled = math.compile(expression);
         const data = [];
-        // Obtenir el rang visible actual del gràfic
-        const { min, max } = graphChart.scales.x;
-        const step = (max - min) / 200; // 200 punts per a una línia suau
+        const { min, max } = range;
+        const step = (max - min) / 200;
 
         for (let x = min; x <= max; x += step) {
             try {
@@ -92,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isFinite(y)) {
                     data.push({ x: x, y: y });
                 } else {
-                    // Per a discontinuïtats, Chart.js pot gestionar 'null'
                     data.push({ x: x, y: null });
                 }
             } catch (e) {
@@ -102,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return data;
     }
 
-    // Afegir una funció
     window.addFunction = function() {
         const expression = functionInput.value.trim();
         if (!expression) {
@@ -111,21 +97,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // Prova de compilació
             math.compile(expression).evaluate({ x: 1 });
 
+            const isFirstFunction = functions.length === 0;
+            let range;
+
+            if (isFirstFunction) {
+                range = { min: -10, max: 10 };
+            } else {
+                range = { min: graphChart.scales.x.min, max: graphChart.scales.x.max };
+            }
+
             const newColor = colors[colorIndex % colors.length];
-            const newFunction = {
+            const newFunctionDataset = {
                 label: `y = ${expression}`,
-                data: generateDataForExpression(expression),
+                data: generateDataForExpression(expression, range),
                 borderColor: newColor,
                 borderWidth: 2.5,
                 tension: 0.1
             };
 
             functions.push({ expression: expression, color: newColor });
-            graphChart.data.datasets.push(newFunction);
-            graphChart.update('none'); // 'none' per a una actualització sense animació
+            graphChart.data.datasets.push(newFunctionDataset);
+            
+            if (isFirstFunction) {
+                graphChart.update(); // Actualització normal per a la primera funció
+            } else {
+                graphChart.update('none'); // Actualització sense animació per a les següents
+            }
 
             colorIndex++;
             updateFunctionsList();
@@ -136,13 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Actualitzar la llista de funcions a la UI
     function updateFunctionsList() {
         if (functions.length === 0) {
             functionsList.innerHTML = '<div class="empty-state">No hi ha funcions encara. Afegeix-ne una!</div>';
             return;
         }
-
         functionsList.innerHTML = functions.map((func, index) => `
             <div class="function-item">
                 <div class="color-indicator" style="background: ${func.color};
@@ -153,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // Eliminar una funció
     window.deleteFunction = function(index) {
         functions.splice(index, 1);
         graphChart.data.datasets.splice(index, 1);
@@ -161,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFunctionsList();
     }
 
-    // Netejar tot
     window.clearAll = function() {
         if (functions.length === 0) return;
         if (confirm('Segur que vols eliminar totes les funcions?')) {
@@ -173,30 +168,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Establir exemple
     window.setExample = function(expression) {
         functionInput.value = expression;
         functionInput.focus();
     }
 
-    // Enter per afegir funció
     functionInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             addFunction();
         }
     });
 
-    // Recalcular dades en fer zoom o pan
-    let timeout;
-    graphChart.options.plugins.zoom.zoom.onZoomComplete = () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            graphChart.data.datasets.forEach((dataset, index) => {
-                const expression = functions[index].expression;
-                dataset.data = generateDataForExpression(expression);
-            });
-            graphChart.update('none');
-        }, 250);
+    function regenerateAllDatasets() {
+        const range = { min: graphChart.scales.x.min, max: graphChart.scales.x.max };
+        graphChart.data.datasets.forEach((dataset, index) => {
+            const expression = functions[index].expression;
+            dataset.data = generateDataForExpression(expression, range);
+        });
+        graphChart.update('none');
+    }
+
+    let debounceTimeout;
+    const onZoomPanComplete = () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(regenerateAllDatasets, 250);
     };
-    graphChart.options.plugins.zoom.pan.onPanComplete = graphChart.options.plugins.zoom.zoom.onZoomComplete;
+
+    graphChart.options.plugins.zoom.zoom.onZoomComplete = onZoomPanComplete;
+    graphChart.options.plugins.zoom.pan.onPanComplete = onZoomPanComplete;
 });
