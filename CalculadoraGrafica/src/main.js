@@ -1,4 +1,4 @@
-import { DEFAULT_RANGE, ZOOM_DEBOUNCE_MS } from './config.js';
+﻿import { DEFAULT_RANGE, ZOOM_DEBOUNCE_MS } from './config.js';
 import { store } from './store.js';
 import {
   buildDatasets,
@@ -15,6 +15,11 @@ import {
   subscribeToModeChange,
 } from './modes.js';
 import { parseInequality } from './parser.js';
+import {
+  analyseSystem,
+  parseSystemEntry,
+  summarizeSystemEntries,
+} from './system.js';
 
 const { math } = window;
 const OPERATOR_SYMBOL = {
@@ -170,92 +175,6 @@ const collectFunctionInsights = (compiled) => {
   return insights;
 };
 
-const resetSystemEntries = () => {
-  systemEntries = ['', ''];
-};
-
-const renderSystemInputs = (focusLast = false) => {
-  if (!elements?.systemInputsList) {
-    return;
-  }
-
-  if (!Array.isArray(systemEntries) || systemEntries.length === 0) {
-    resetSystemEntries();
-  }
-
-  elements.systemInputsList.innerHTML = '';
-
-  systemEntries.forEach((value, index) => {
-    const row = document.createElement('div');
-    row.className = 'system-row';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = value;
-    input.placeholder = `Expressió ${index + 1}`;
-    input.addEventListener('input', (event) => {
-      systemEntries[index] = event.target.value;
-    });
-    input.addEventListener('keypress', (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        handleAdd();
-      }
-    });
-
-    row.append(input);
-
-    if (systemEntries.length > 1) {
-      const removeButton = document.createElement('button');
-      removeButton.type = 'button';
-      removeButton.className = 'system-remove';
-      removeButton.textContent = '✕';
-      removeButton.addEventListener('click', () => {
-        systemEntries.splice(index, 1);
-        if (systemEntries.length === 0) {
-          resetSystemEntries();
-        }
-        renderSystemInputs(true);
-      });
-      row.append(removeButton);
-    }
-
-    elements.systemInputsList.append(row);
-  });
-
-  if (focusLast) {
-    const lastInput = elements.systemInputsList.querySelector(
-      '.system-row:last-child input[type="text"]',
-    );
-    lastInput?.focus();
-  }
-};
-
-const toggleInputInterface = (modeId) => {
-  const isSystem = modeId === MODE_IDS.SYSTEM;
-  if (elements.singleInputWrapper) {
-    elements.singleInputWrapper.hidden = isSystem;
-  }
-  if (elements.systemInputsWrapper) {
-    elements.systemInputsWrapper.hidden = !isSystem;
-  }
-
-  if (isSystem) {
-    renderSystemInputs();
-    keyboardController?.hide?.();
-  }
-
-  if (elements.keyboardToggle) {
-    elements.keyboardToggle.disabled = isSystem;
-    elements.keyboardToggle.classList.toggle('is-disabled', isSystem);
-    elements.keyboardToggle.setAttribute('aria-disabled', String(isSystem));
-    if (isSystem) {
-      elements.keyboardToggle.setAttribute('aria-pressed', 'false');
-      elements.keyboardToggle.textContent = '🎹 Mostra el teclat';
-    }
-  }
-};
-
 let chart;
 let elements;
 let interactionTimeoutId;
@@ -263,11 +182,151 @@ let modeButtons = new Map();
 let unsubscribeModeChange = null;
 let keyboardController;
 let systemEntries = ['', ''];
+let systemErrors = [null, null];
+let highlightedEntryId = null;
 
-const SUPPORTED_MODES = new Set([MODE_IDS.FUNCTION, MODE_IDS.INEQUALITY]);
+const applyChartHighlight = (shouldUpdate = true) => {
+  if (!chart) {
+    return;
+  }
 
-const updateList = () =>
+  chart.data.datasets.forEach((dataset) => {
+    const isHighlighted =
+      highlightedEntryId !== null && dataset.entryId === highlightedEntryId;
+
+    if (
+      dataset.baseBorderWidth === undefined &&
+      dataset.borderWidth !== undefined
+    ) {
+      dataset.baseBorderWidth = dataset.borderWidth;
+    }
+    if (
+      dataset.highlightBorderWidth === undefined &&
+      dataset.baseBorderWidth !== undefined
+    ) {
+      dataset.highlightBorderWidth =
+        dataset.baseBorderWidth * 1.4 + (dataset.baseBorderWidth <= 2 ? 1 : 0);
+    }
+
+    if (
+      dataset.basePointRadius === undefined &&
+      dataset.pointRadius !== undefined
+    ) {
+      dataset.basePointRadius = dataset.pointRadius;
+    }
+    if (
+      dataset.highlightPointRadius === undefined &&
+      dataset.basePointRadius !== undefined
+    ) {
+      dataset.highlightPointRadius = Math.max(
+        dataset.basePointRadius * 1.5,
+        dataset.basePointRadius + 2,
+      );
+    }
+
+    if (dataset.baseBorderWidth !== undefined && dataset.borderWidth !== undefined) {
+      dataset.borderWidth = isHighlighted
+        ? dataset.highlightBorderWidth ?? dataset.baseBorderWidth
+        : dataset.baseBorderWidth;
+    }
+
+    if (dataset.basePointRadius !== undefined && dataset.pointRadius !== undefined) {
+      dataset.pointRadius = isHighlighted
+        ? dataset.highlightPointRadius ?? dataset.basePointRadius
+        : dataset.basePointRadius;
+    }
+
+    if (dataset.originalBorderColor) {
+      dataset.borderColor = isHighlighted
+        ? dataset.highlightBorderColor ?? dataset.originalBorderColor
+        : dataset.originalBorderColor;
+    }
+
+    if (dataset.originalPointBackgroundColor) {
+      dataset.pointBackgroundColor = isHighlighted
+        ? dataset.highlightPointBackgroundColor ??
+          dataset.originalPointBackgroundColor
+        : dataset.originalPointBackgroundColor;
+    }
+  });
+
+  if (shouldUpdate) {
+    chart.update('none');
+  }
+};
+
+const highlightEntryById = (entryId) => {
+  if (!entryId) {
+    if (highlightedEntryId !== null) {
+      highlightedEntryId = null;
+      applyChartHighlight();
+    }
+    return;
+  }
+  if (highlightedEntryId === entryId) {
+    return;
+  }
+  highlightedEntryId = entryId;
+  applyChartHighlight();
+};
+
+const clearEntryHighlight = () => {
+  if (highlightedEntryId === null) {
+    return;
+  }
+  highlightedEntryId = null;
+  applyChartHighlight();
+};
+
+const SUPPORTED_MODES = new Set([
+  MODE_IDS.FUNCTION,
+  MODE_IDS.INEQUALITY,
+  MODE_IDS.SYSTEM,
+]);
+
+const attachListHoverHandlers = () => {
+  if (!elements?.functionsList) {
+    clearEntryHighlight();
+    return;
+  }
+
+  const items = elements.functionsList.querySelectorAll(
+    '.function-item[data-entry-id]',
+  );
+
+  if (!items.length) {
+    clearEntryHighlight();
+    return;
+  }
+
+  items.forEach((item) => {
+    const entryId = item.dataset.entryId;
+    if (!entryId) {
+      item.addEventListener('mouseenter', clearEntryHighlight);
+      item.addEventListener('mouseleave', clearEntryHighlight);
+      item.addEventListener('focusin', clearEntryHighlight);
+      item.addEventListener('focusout', clearEntryHighlight);
+      return;
+    }
+
+    const handleEnter = () => highlightEntryById(entryId);
+    const handleLeave = () => clearEntryHighlight();
+
+    item.addEventListener('mouseenter', handleEnter);
+    item.addEventListener('focusin', handleEnter);
+    item.addEventListener('mouseleave', handleLeave);
+    item.addEventListener('focusout', (event) => {
+      if (!item.contains(event.relatedTarget)) {
+        handleLeave();
+      }
+    });
+  });
+};
+
+const updateList = () => {
   renderFunctionsList(elements.functionsList, store.items, handleDelete);
+  attachListHoverHandlers();
+};
 
 const rebuildChartDatasets = (animate = true) => {
   if (!chart) {
@@ -282,12 +341,15 @@ const rebuildChartDatasets = (animate = true) => {
     return;
   }
 
-  const datasets = buildDatasets(store.items, bounds);
-  chart.data.datasets = datasets;
+  chart.data.datasets = buildDatasets(store.items, bounds);
+  applyChartHighlight(false);
   chart.update(animate ? undefined : 'none');
 };
 
 const scheduleRegeneration = () => {
+  if (store.isEmpty()) {
+    return;
+  }
   clearTimeout(interactionTimeoutId);
   interactionTimeoutId = setTimeout(() => {
     rebuildChartDatasets(false);
@@ -379,7 +441,6 @@ const addInequalityEntry = (rawExpression, modeConfig) => {
         parsed.expression
       } (${parsed.inclusive ? 'inclòs' : 'no inclòs'})`,
     });
-
     metadata.results.push(
       ...collectFunctionInsights(compiled).map((insight) => ({
         label: `${insight.label} (frontera)`,
@@ -459,17 +520,237 @@ const addInequalityEntry = (rawExpression, modeConfig) => {
   finalizeAddition(wasEmpty, modeConfig);
 };
 
+const resetSystemState = () => {
+  systemEntries = ['', ''];
+  systemErrors = [null, null];
+};
+
+const focusSystemRow = (index) => {
+  if (!elements?.systemInputsList) {
+    return;
+  }
+  const target = elements.systemInputsList.querySelector(
+    `.system-row[data-index="${index}"] input[type="text"]`,
+  );
+  target?.focus();
+};
+
+const renderSystemInputs = (focusLast = false) => {
+  if (!elements?.systemInputsList) {
+    return;
+  }
+
+  if (!Array.isArray(systemEntries) || systemEntries.length === 0) {
+    resetSystemState();
+  }
+
+  while (systemErrors.length < systemEntries.length) {
+    systemErrors.push(null);
+  }
+  if (systemErrors.length > systemEntries.length) {
+    systemErrors.length = systemEntries.length;
+  }
+
+  elements.systemInputsList.innerHTML = '';
+
+  systemEntries.forEach((value, index) => {
+    const row = document.createElement('div');
+    row.className = 'system-row';
+    row.dataset.index = String(index);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = value;
+    input.placeholder = `Expressió ${index + 1}`;
+    input.addEventListener('input', (event) => {
+      systemEntries[index] = event.target.value;
+      systemErrors[index] = null;
+    });
+    input.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleAdd();
+      }
+    });
+    input.addEventListener('focus', () => {
+      keyboardController?.setTargetInput?.(input);
+    });
+
+    row.append(input);
+
+    const errorMessage = systemErrors[index];
+    if (errorMessage) {
+      row.classList.add('has-error');
+    }
+
+    if (systemEntries.length > 1) {
+      const removeButton = document.createElement('button');
+      removeButton.type = 'button';
+      removeButton.className = 'system-remove';
+      removeButton.textContent = '✕';
+      removeButton.addEventListener('click', () => {
+        systemEntries.splice(index, 1);
+        systemErrors.splice(index, 1);
+        if (systemEntries.length === 0) {
+          resetSystemState();
+        }
+        renderSystemInputs(true);
+      });
+      row.append(removeButton);
+    }
+
+    if (errorMessage) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'system-error';
+      errorDiv.textContent = errorMessage;
+      row.append(errorDiv);
+    }
+
+    elements.systemInputsList.append(row);
+  });
+
+  const firstInput = elements.systemInputsList.querySelector(
+    '.system-row input[type="text"]',
+  );
+  if (firstInput) {
+    keyboardController?.setTargetInput?.(firstInput);
+  } else {
+    keyboardController?.setTargetInput?.(null);
+  }
+
+  if (focusLast) {
+    const lastInput = elements.systemInputsList.querySelector(
+      '.system-row:last-child input[type="text"]',
+    );
+    if (lastInput) {
+      lastInput.focus();
+      keyboardController?.setTargetInput?.(lastInput);
+    }
+  }
+};
+
+const toggleInputInterface = (modeId) => {
+  const isSystem = modeId === MODE_IDS.SYSTEM;
+  clearEntryHighlight();
+
+  if (elements.singleInputWrapper) {
+    elements.singleInputWrapper.hidden = isSystem;
+  }
+  if (elements.systemInputsWrapper) {
+    elements.systemInputsWrapper.hidden = !isSystem;
+  }
+  if (elements.addSystemRowButton) {
+    elements.addSystemRowButton.hidden = !isSystem;
+  }
+
+  if (isSystem) {
+    resetSystemState();
+    renderSystemInputs();
+    keyboardController?.hide?.();
+  } else {
+    resetSystemState();
+    keyboardController?.setTargetInput?.(elements.expressionInput);
+  }
+
+  if (isSystem) {
+    const firstInput = elements.systemInputsList?.querySelector(
+      '.system-row input[type="text"]',
+    );
+    keyboardController?.setTargetInput?.(firstInput ?? null);
+  } else {
+    keyboardController?.setTargetInput?.(elements.expressionInput);
+  }
+};
+
+const addSystemEntry = (modeConfig) => {
+  const activeRows = [];
+  let firstErrorIndex = null;
+
+  systemEntries.forEach((rawValue, index) => {
+    const expression = rawValue.trim();
+    if (!expression) {
+      systemErrors[index] = 'Cal una expressió';
+      if (firstErrorIndex === null) {
+        firstErrorIndex = index;
+      }
+      return;
+    }
+    systemErrors[index] = null;
+    activeRows.push({ index, expression });
+  });
+
+  if (activeRows.length < 2) {
+    if (firstErrorIndex === null) {
+      const index = activeRows.length ? activeRows[0].index : 0;
+      systemErrors[index] = 'Calen com a mínim dues expressions';
+      firstErrorIndex = index;
+    }
+    renderSystemInputs();
+    focusSystemRow(firstErrorIndex ?? 0);
+    return;
+  }
+
+  const parsedEntries = [];
+  activeRows.forEach((row) => {
+    try {
+      parsedEntries.push(parseSystemEntry(row.expression));
+      systemErrors[row.index] = null;
+    } catch (error) {
+      systemErrors[row.index] =
+        error.message ?? 'No s’ha pogut interpretar aquesta expressió.';
+      if (firstErrorIndex === null) {
+        firstErrorIndex = row.index;
+      }
+    }
+  });
+
+  if (firstErrorIndex !== null) {
+    renderSystemInputs();
+    focusSystemRow(firstErrorIndex);
+    return;
+  }
+
+  const analysis = analyseSystem(parsedEntries);
+
+  const metadata = {
+    summary: analysis.summary,
+    results: analysis.results,
+    system: {
+      mode: analysis.mode,
+      solution: analysis.solution ?? null,
+      entries: summarizeSystemEntries(parsedEntries),
+    },
+  };
+
+  const expressionsForStore = activeRows.map((row) => row.expression);
+  const wasEmpty = store.isEmpty();
+
+  store.addEntry('SYSTEM', MODE_IDS.SYSTEM, {
+    label: `Sistema (${expressionsForStore.length} expressions)`,
+    expressions: expressionsForStore,
+    metadata,
+    recentValue: `{ ${expressionsForStore.join(' ; ')} }`,
+  });
+
+  resetSystemState();
+  renderSystemInputs();
+  updateList();
+  renderExamples(modeConfig);
+  rebuildChartDatasets(wasEmpty);
+};
+
 const handleDelete = (index) => {
   store.removeEntry(index);
   rebuildChartDatasets(false);
+  clearEntryHighlight();
   updateList();
 };
 
 const handleAdd = () => {
-  const expression = elements.expressionInput.value.trim();
   const currentMode = getCurrentMode();
+  const expression = elements.expressionInput.value.trim();
 
-  if (!expression) {
+  if (currentMode.id !== MODE_IDS.SYSTEM && !expression) {
     window.alert('Si us plau, introdueix una expressió!');
     return;
   }
@@ -488,6 +769,11 @@ const handleAdd = () => {
 
   if (currentMode.id === MODE_IDS.INEQUALITY) {
     addInequalityEntry(expression, currentMode);
+    return;
+  }
+
+  if (currentMode.id === MODE_IDS.SYSTEM) {
+    addSystemEntry(currentMode);
   }
 };
 
@@ -505,10 +791,13 @@ const handleClear = () => {
 
   store.clear();
   rebuildChartDatasets(false);
+  clearEntryHighlight();
+
   if (getCurrentMode().id === MODE_IDS.SYSTEM) {
-    resetSystemEntries();
+    resetSystemState();
     renderSystemInputs();
   }
+
   updateList();
   renderExamples(getCurrentMode());
 };
@@ -546,6 +835,7 @@ const bindEvents = () => {
   if (elements.addSystemRowButton) {
     elements.addSystemRowButton.addEventListener('click', () => {
       systemEntries.push('');
+      systemErrors.push(null);
       renderSystemInputs(true);
     });
   }
@@ -557,6 +847,7 @@ const attachExampleButtonHandlers = () => {
     button.addEventListener('click', () => {
       const { expression } = button.dataset;
       const currentMode = getCurrentMode();
+
       if (currentMode.id === MODE_IDS.SYSTEM) {
         if (expression) {
           const cleaned = expression.replace(/[{}]/g, '');
@@ -568,14 +859,12 @@ const attachExampleButtonHandlers = () => {
           if (systemEntries.length === 1) {
             systemEntries.push('');
           }
+          systemErrors = new Array(systemEntries.length).fill(null);
         } else {
-          resetSystemEntries();
+          resetSystemState();
         }
         renderSystemInputs();
-        const firstInput = elements.systemInputsList?.querySelector(
-          '.system-row input[type="text"]',
-        );
-        firstInput?.focus();
+        focusSystemRow(0);
       } else {
         elements.expressionInput.value = expression ?? '';
         elements.expressionInput.focus();
@@ -701,6 +990,7 @@ const initKeyboardModule = () => {
         : '🎹 Mostra el teclat';
     },
   });
+  keyboardController.setTargetInput?.(elements.expressionInput);
 };
 
 const initModeSubscription = () => {

@@ -5,6 +5,7 @@ const { Chart, math } = window;
 
 const SHADE_X_STEPS = 60;
 const SHADE_Y_STEPS = 20;
+const LINE_TOL = 1e-6;
 
 const ensureRange = (range) => {
   if (!range || !Number.isFinite(range.min) || !Number.isFinite(range.max)) {
@@ -38,6 +39,60 @@ const hexToRgba = (hex, alpha) => {
   const g = (value >> 8) & 255;
   const b = value & 255;
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+const lightenColor = (hex, amount = 0.2) => {
+const enhanceDataset = (entry, dataset, componentIndex = null) => {
+  dataset.entryId = entry.id ?? null;
+  dataset.componentIndex = componentIndex;
+
+  if (dataset.borderWidth !== undefined && dataset.baseBorderWidth === undefined) {
+    dataset.baseBorderWidth = dataset.borderWidth;
+    dataset.highlightBorderWidth =
+      dataset.borderWidth * 1.4 + (dataset.borderWidth <= 2 ? 1 : 0);
+  }
+
+  if (dataset.pointRadius !== undefined && dataset.basePointRadius === undefined) {
+    dataset.basePointRadius = dataset.pointRadius;
+    dataset.highlightPointRadius = Math.max(
+      dataset.pointRadius * 1.5,
+      dataset.pointRadius + 2,
+    );
+  }
+
+  if (dataset.borderColor && dataset.originalBorderColor === undefined) {
+    dataset.originalBorderColor = dataset.borderColor;
+    if (dataset.borderColor.startsWith(  if (!hex || typeof hex !== 'string') {
+    return '#667eea';
+  }
+  let normalized = hex.replace('#', '');
+  if (normalized.length === 3) {
+    normalized = normalized
+      .split('')
+      .map((char) => char + char)
+      .join('');
+  }
+  if (normalized.length !== 6) {
+    return '#667eea';
+  }
+  const value = parseInt(normalized, 16);
+  const r = (value >> 16) & 255;
+  const g = (value >> 8) & 255;
+  const b = value & 255;
+
+  const lightenChannel = (channel) =>
+    Math.max(
+      0,
+      Math.min(255, Math.round(channel + (255 - channel) * amount)),
+    );
+
+  const lr = lightenChannel(r);
+  const lg = lightenChannel(g);
+  const lb = lightenChannel(b);
+
+  return `#${lr.toString(16).padStart(2, '0')}${lg
+    .toString(16)
+    .padStart(2, '0')}${lb.toString(16).padStart(2, '0')}`;
 };
 
 export const createChart = (canvas, onInteraction) => {
@@ -139,17 +194,20 @@ export const generateData = (expression, range, compiledExpression) => {
 const buildFunctionDatasets = (entry, bounds) => {
   const data = generateData(entry.expression, bounds.x);
   return [
-    {
-      type: 'line',
-      label: entry.label ?? entry.expression,
-      data,
-      borderColor: entry.color,
-      borderWidth: 2.5,
-      tension: 0.1,
-      pointRadius: 0,
-      fill: false,
-      order: 1,
-    },
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: entry.label ?? entry.expression,
+        data,
+        borderColor: entry.color,
+        borderWidth: 2.5,
+        tension: 0.1,
+        pointRadius: 0,
+        fill: false,
+        order: 1,
+      },
+    ),
   ];
 };
 
@@ -329,49 +387,69 @@ const createVerticalBandPoints = (lowerValue, upperValue, bounds) => {
   return points;
 };
 
-const buildSingleYDatasets = (entry, bounds, inequality) => {
+const buildSingleYDatasets = (entry, bounds, colorOverride) => {
+  const inequality = entry.metadata?.inequality;
+  if (!inequality) {
+    return [];
+  }
+
   const boundaryData = generateData(
     inequality.expression,
     bounds.x,
     inequality.compiled,
   );
   const shadingPoints = createGradientPointsY(inequality, bounds);
-  const shadingColor = hexToRgba(entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
 
   const datasets = [];
 
   if (shadingPoints.length > 0) {
-    datasets.push({
-      type: 'scatter',
-      label: `${entry.label} — zona`,
-      data: shadingPoints,
-      pointRadius: 1.4,
-      pointBackgroundColor: shadingColor,
-      pointBorderColor: shadingColor,
-      pointHoverRadius: 0,
-      pointHitRadius: 0,
-      showLine: false,
-      order: 0,
-    });
+    datasets.push(
+      enhanceDataset(
+        entry,
+        {
+          type: 'scatter',
+          label: `${entry.label} — zona`,
+          data: shadingPoints,
+          pointRadius: 1.4,
+          pointBackgroundColor: shadingColor,
+          pointBorderColor: shadingColor,
+          pointHoverRadius: 0,
+          pointHitRadius: 0,
+          showLine: false,
+          order: 0,
+        },
+      ),
+    );
   }
 
-  datasets.push({
-    type: 'line',
-    label: entry.label,
-    data: boundaryData,
-    borderColor: entry.color,
-    borderWidth: 2.5,
-    tension: 0.1,
-    pointRadius: 0,
-    fill: false,
-    order: 1,
-    borderDash: inequality.inclusive ? [] : [6, 6],
-  });
+  datasets.push(
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: entry.label,
+        data: boundaryData,
+        borderColor: colorOverride ?? entry.color,
+        borderWidth: 2.5,
+        tension: 0.1,
+        pointRadius: 0,
+        fill: false,
+        order: 1,
+        borderDash: inequality.inclusive ? [] : [6, 6],
+      },
+    ),
+  );
 
   return datasets;
 };
 
-const buildDoubleYDatasets = (entry, bounds, inequality) => {
+const buildDoubleYDatasets = (entry, bounds, colorOverride) => {
+  const inequality = entry.metadata?.inequality;
+  if (!inequality) {
+    return [];
+  }
+
   const lower = inequality.range?.lower;
   const upper = inequality.range?.upper;
   if (!lower || !upper) {
@@ -383,105 +461,140 @@ const buildDoubleYDatasets = (entry, bounds, inequality) => {
     upper.value,
     bounds,
   );
-  const shadingColor = hexToRgba(entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
 
   const datasets = [];
 
   if (shadingPoints.length > 0) {
-    datasets.push({
-      type: 'scatter',
-      label: `${entry.label} — zona`,
-      data: shadingPoints,
-      pointRadius: 1.4,
-      pointBackgroundColor: shadingColor,
-      pointBorderColor: shadingColor,
-      pointHoverRadius: 0,
-      pointHitRadius: 0,
-      showLine: false,
-      order: 0,
-    });
+    datasets.push(
+      enhanceDataset(
+        entry,
+        {
+          type: 'scatter',
+          label: `${entry.label} — zona`,
+          data: shadingPoints,
+          pointRadius: 1.4,
+          pointBackgroundColor: shadingColor,
+          pointBorderColor: shadingColor,
+          pointHoverRadius: 0,
+          pointHitRadius: 0,
+          showLine: false,
+          order: 0,
+        },
+      ),
+    );
   }
 
   const xRange = ensureRange(bounds.x);
 
-  datasets.push({
-    type: 'line',
-    label: `${entry.label} — límit superior`,
-    data: [
-      { x: xRange.min, y: upper.value },
-      { x: xRange.max, y: upper.value },
-    ],
-    borderColor: entry.color,
-    borderWidth: 2,
-    tension: 0,
-    pointRadius: 0,
-    borderDash: upper.inclusive ? [] : [6, 6],
-    order: 1,
-  });
+  datasets.push(
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: `${entry.label} — límit superior`,
+        data: [
+          { x: xRange.min, y: upper.value },
+          { x: xRange.max, y: upper.value },
+        ],
+        borderColor: colorOverride ?? entry.color,
+        borderWidth: 2,
+        tension: 0,
+        pointRadius: 0,
+        borderDash: upper.inclusive ? [] : [6, 6],
+        order: 1,
+      },
+    ),
+  );
 
-  datasets.push({
-    type: 'line',
-    label: `${entry.label} — límit inferior`,
-    data: [
-      { x: xRange.min, y: lower.value },
-      { x: xRange.max, y: lower.value },
-    ],
-    borderColor: entry.color,
-    borderWidth: 2,
-    tension: 0,
-    pointRadius: 0,
-    borderDash: lower.inclusive ? [] : [6, 6],
-    order: 1,
-  });
+  datasets.push(
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: `${entry.label} — límit inferior`,
+        data: [
+          { x: xRange.min, y: lower.value },
+          { x: xRange.max, y: lower.value },
+        ],
+        borderColor: colorOverride ?? entry.color,
+        borderWidth: 2,
+        tension: 0,
+        pointRadius: 0,
+        borderDash: lower.inclusive ? [] : [6, 6],
+        order: 1,
+      },
+    ),
+  );
 
   return datasets;
 };
 
-const buildSingleXDatasets = (entry, bounds, inequality) => {
+const buildSingleXDatasets = (entry, bounds, colorOverride) => {
+  const inequality = entry.metadata?.inequality;
+  if (!inequality) {
+    return [];
+  }
+
   const shadingPoints = createVerticalHalfPlanePoints(
     inequality.value,
     inequality.orientation,
     bounds,
   );
-  const shadingColor = hexToRgba(entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
   const yRange = ensureRange(bounds.y);
 
   const datasets = [];
 
   if (shadingPoints.length > 0) {
-    datasets.push({
-      type: 'scatter',
-      label: `${entry.label} — zona`,
-      data: shadingPoints,
-      pointRadius: 1.4,
-      pointBackgroundColor: shadingColor,
-      pointBorderColor: shadingColor,
-      pointHoverRadius: 0,
-      pointHitRadius: 0,
-      showLine: false,
-      order: 0,
-    });
+    datasets.push(
+      enhanceDataset(
+        entry,
+        {
+          type: 'scatter',
+          label: `${entry.label} — zona`,
+          data: shadingPoints,
+          pointRadius: 1.4,
+          pointBackgroundColor: shadingColor,
+          pointBorderColor: shadingColor,
+          pointHoverRadius: 0,
+          pointHitRadius: 0,
+          showLine: false,
+          order: 0,
+        },
+      ),
+    );
   }
 
-  datasets.push({
-    type: 'line',
-    label: entry.label,
-    data: [
-      { x: inequality.value, y: yRange.min },
-      { x: inequality.value, y: yRange.max },
-    ],
-    borderColor: entry.color,
-    borderWidth: 2.5,
-    tension: 0,
-    pointRadius: 0,
-    borderDash: inequality.inclusive ? [] : [6, 6],
-    order: 1,
-  });
+  datasets.push(
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: entry.label,
+        data: [
+          { x: inequality.value, y: yRange.min },
+          { x: inequality.value, y: yRange.max },
+        ],
+        borderColor: colorOverride ?? entry.color,
+        borderWidth: 2.5,
+        tension: 0,
+        pointRadius: 0,
+        borderDash: inequality.inclusive ? [] : [6, 6],
+        order: 1,
+      },
+    ),
+  );
 
   return datasets;
 };
 
-const buildDoubleXDatasets = (entry, bounds, inequality) => {
+const buildDoubleXDatasets = (entry, bounds, colorOverride) => {
+  const inequality = entry.metadata?.inequality;
+  if (!inequality) {
+    return [];
+  }
+
   const lower = inequality.range?.lower;
   const upper = inequality.range?.upper;
   if (!lower || !upper) {
@@ -493,80 +606,328 @@ const buildDoubleXDatasets = (entry, bounds, inequality) => {
     upper.value,
     bounds,
   );
-  const shadingColor = hexToRgba(entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
   const yRange = ensureRange(bounds.y);
 
   const datasets = [];
 
   if (shadingPoints.length > 0) {
-    datasets.push({
-      type: 'scatter',
-      label: `${entry.label} — zona`,
-      data: shadingPoints,
-      pointRadius: 1.4,
-      pointBackgroundColor: shadingColor,
-      pointBorderColor: shadingColor,
-      pointHoverRadius: 0,
-      pointHitRadius: 0,
-      showLine: false,
-      order: 0,
-    });
+    datasets.push(
+      enhanceDataset(
+        entry,
+        {
+          type: 'scatter',
+          label: `${entry.label} — zona`,
+          data: shadingPoints,
+          pointRadius: 1.4,
+          pointBackgroundColor: shadingColor,
+          pointBorderColor: shadingColor,
+          pointHoverRadius: 0,
+          pointHitRadius: 0,
+          showLine: false,
+          order: 0,
+        },
+      ),
+    );
   }
 
-  datasets.push({
-    type: 'line',
-    label: `${entry.label} — límit dret`,
-    data: [
-      { x: upper.value, y: yRange.min },
-      { x: upper.value, y: yRange.max },
-    ],
-    borderColor: entry.color,
-    borderWidth: 2,
-    tension: 0,
-    pointRadius: 0,
-    borderDash: upper.inclusive ? [] : [6, 6],
-    order: 1,
-  });
+  datasets.push(
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: `${entry.label} — límit dret`,
+        data: [
+          { x: upper.value, y: yRange.min },
+          { x: upper.value, y: yRange.max },
+        ],
+        borderColor: colorOverride ?? entry.color,
+        borderWidth: 2,
+        tension: 0,
+        pointRadius: 0,
+        borderDash: upper.inclusive ? [] : [6, 6],
+        order: 1,
+      },
+    ),
+  );
 
-  datasets.push({
-    type: 'line',
-    label: `${entry.label} — límit esquerre`,
-    data: [
-      { x: lower.value, y: yRange.min },
-      { x: lower.value, y: yRange.max },
-    ],
-    borderColor: entry.color,
-    borderWidth: 2,
-    tension: 0,
-    pointRadius: 0,
-    borderDash: lower.inclusive ? [] : [6, 6],
-    order: 1,
-  });
+  datasets.push(
+    enhanceDataset(
+      entry,
+      {
+        type: 'line',
+        label: `${entry.label} — límit esquerre`,
+        data: [
+          { x: lower.value, y: yRange.min },
+          { x: lower.value, y: yRange.max },
+        ],
+        borderColor: colorOverride ?? entry.color,
+        borderWidth: 2,
+        tension: 0,
+        pointRadius: 0,
+        borderDash: lower.inclusive ? [] : [6, 6],
+        order: 1,
+      },
+    ),
+  );
 
   return datasets;
 };
 
-const buildInequalityDatasets = (entry, bounds) => {
+const buildLinearEquationDataset = (entry, component, bounds, color, label, componentIndex) => {
+  const coeff = component.coefficients;
+  if (!coeff) {
+    return [];
+  }
+
+  const { a, b, c } = coeff;
+  if (Math.abs(a) < LINE_TOL && Math.abs(b) < LINE_TOL) {
+    return [];
+  }
+
+  const yRange = ensureRange(bounds.y);
+  const xRange = ensureRange(bounds.x);
+
+  if (Math.abs(b) > LINE_TOL) {
+    const points = [
+      { x: xRange.min, y: (-a * xRange.min - c) / b },
+      { x: xRange.max, y: (-a * xRange.max - c) / b },
+    ];
+    return [
+      enhanceDataset(
+        entry,
+        {
+          type: 'line',
+          label,
+          data: points,
+          borderColor: color,
+          borderWidth: 2.5,
+          tension: 0,
+          pointRadius: 0,
+          fill: false,
+          order: 1,
+        },
+        componentIndex,
+      ),
+    ];
+  }
+
+  if (Math.abs(a) > LINE_TOL) {
+    const xValue = -c / a;
+    const points = [
+      { x: xValue, y: yRange.min },
+      { x: xValue, y: yRange.max },
+    ];
+    return [
+      enhanceDataset(
+        entry,
+        {
+          type: 'line',
+          label,
+          data: points,
+          borderColor: color,
+          borderWidth: 2.5,
+          tension: 0,
+          pointRadius: 0,
+          fill: false,
+          order: 1,
+        },
+        componentIndex,
+      ),
+    ];
+  }
+
+  return [];
+};
+
+const buildExplicitEquationDataset = (entry, expression, bounds, color, label, componentIndex) => {
+  if (!expression || typeof expression !== 'string') {
+    return [];
+  }
+
+  const trimmed = expression.trim();
+  const yMatch = trimmed.match(/^y\s*=\s*(.+)$/i);
+  if (yMatch) {
+    try {
+      const compiled = math.compile(yMatch[1]);
+      const data = generateData(yMatch[1], bounds.x, compiled);
+      return [
+        enhanceDataset(
+          entry,
+          {
+            type: 'line',
+            label,
+            data,
+            borderColor: color,
+            borderWidth: 2.5,
+            tension: 0.1,
+            pointRadius: 0,
+            fill: false,
+            order: 1,
+          },
+          componentIndex,
+        ),
+      ];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  const xMatch = trimmed.match(/^x\s*=\s*(.+)$/i);
+  if (xMatch) {
+    try {
+      const value = math.evaluate(xMatch[1]);
+      if (!Number.isFinite(value)) {
+        return [];
+      }
+      const yRange = ensureRange(bounds.y);
+      return [
+        enhanceDataset(
+          entry,
+          {
+            type: 'line',
+            label,
+            data: [
+              { x: value, y: yRange.min },
+              { x: value, y: yRange.max },
+            ],
+            borderColor: color,
+            borderWidth: 2.5,
+            tension: 0,
+            pointRadius: 0,
+            fill: false,
+            order: 1,
+          },
+          componentIndex,
+        ),
+      ];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  return [];
+};
+
+const buildInequalityDatasets = (entry, bounds, colorOverride) => {
   const inequality = entry.metadata?.inequality;
   if (!inequality) {
-    return buildFunctionDatasets(entry, bounds);
+    return [];
   }
 
   if (inequality.variable === 'y') {
     if (inequality.type === 'double') {
-      return buildDoubleYDatasets(entry, bounds, inequality);
+      return buildDoubleYDatasets(entry, bounds, colorOverride);
     }
-    return buildSingleYDatasets(entry, bounds, inequality);
+    return buildSingleYDatasets(entry, bounds, colorOverride);
   }
 
   if (inequality.variable === 'x') {
     if (inequality.type === 'double') {
-      return buildDoubleXDatasets(entry, bounds, inequality);
+      return buildDoubleXDatasets(entry, bounds, colorOverride);
     }
-    return buildSingleXDatasets(entry, bounds, inequality);
+    return buildSingleXDatasets(entry, bounds, colorOverride);
   }
 
-  return buildFunctionDatasets(entry, bounds);
+  return [];
+};
+
+const buildSystemDatasets = (entry, bounds) => {
+  const system = entry.metadata?.system;
+  if (!system) {
+    return [];
+  }
+
+  const components = system.entries ?? [];
+  const baseColor = entry.color ?? '#667eea';
+  const datasets = [];
+
+  components.forEach((component, index) => {
+    const componentColor = lightenColor(baseColor, Math.min(0.45, 0.18 * index));
+    const labelSuffix = component.display ? ` — ${component.display}` : '';
+    const label = `${entry.label}${labelSuffix}`;
+
+    if (component.type === 'equation') {
+      if (component.isLinear && component.coefficients) {
+        datasets.push(
+          ...buildLinearEquationDataset(
+            entry,
+            component,
+            bounds,
+            componentColor,
+            label,
+            index,
+          ),
+        );
+        return;
+      }
+
+      const rawExpression =
+        entry.expressions && entry.expressions[index]
+          ? entry.expressions[index]
+          : component.display;
+      datasets.push(
+        ...buildExplicitEquationDataset(
+          entry,
+          rawExpression,
+          bounds,
+          componentColor,
+          label,
+          index,
+        ),
+      );
+      return;
+    }
+
+    if (component.type === 'inequality' && component.inequality) {
+      const inequality = { ...component.inequality };
+      if (inequality.variable === 'y' && inequality.type === 'single') {
+        try {
+          inequality.compiled = math.compile(inequality.expression);
+        } catch (error) {
+          return;
+        }
+      }
+      const pseudoEntry = {
+        id: entry.id,
+        label,
+        color: componentColor,
+        metadata: { inequality },
+      };
+      datasets.push(
+        ...buildInequalityDatasets(pseudoEntry, bounds, componentColor),
+      );
+    }
+  });
+
+  if (
+    system.mode === 'linear-equations' &&
+    system.solution &&
+    Number.isFinite(system.solution.x) &&
+    Number.isFinite(system.solution.y)
+  ) {
+    datasets.push(
+      enhanceDataset(
+        entry,
+        {
+          type: 'scatter',
+          label: `${entry.label} — Solució`,
+          data: [
+            { x: system.solution.x, y: system.solution.y },
+          ],
+          pointRadius: 5,
+          pointBackgroundColor: lightenColor(baseColor, 0.05),
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          showLine: false,
+          order: -1,
+        },
+        'solution',
+      ),
+    );
+  }
+
+  return datasets;
 };
 
 export const buildDatasets = (entries, bounds) => {
@@ -576,6 +937,9 @@ export const buildDatasets = (entries, bounds) => {
   };
 
   return entries.flatMap((entry) => {
+    if (entry.mode === MODE_IDS.SYSTEM) {
+      return buildSystemDatasets(entry, safeBounds);
+    }
     if (entry.mode === MODE_IDS.INEQUALITY) {
       return buildInequalityDatasets(entry, safeBounds);
     }
@@ -600,7 +964,7 @@ export const getVisibleBounds = (chart, fallbackRange = DEFAULT_RANGE) => {
   return { x: xBounds, y: yBounds };
 };
 
-export const clearChart = (chart) => {
-  chart.data.datasets = [];
-  chart.update('none');
+export const clearChart = (chartInstance) => {
+  chartInstance.data.datasets = [];
+  chartInstance.update('none');
 };

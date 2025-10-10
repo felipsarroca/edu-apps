@@ -40,7 +40,8 @@ const recordRecent = (registry, mode, expression) => {
 
 const DEFAULT_SUMMARY = {
   [MODE_IDS.FUNCTION]: 'Representació gràfica activa.',
-  [MODE_IDS.INEQUALITY]: 'Inequació preparada per a la representació gràfica.',
+  [MODE_IDS.INEQUALITY]:
+    'Inequació preparada per a la representació gràfica.',
   [MODE_IDS.SYSTEM]: 'Sistema pendent de resolució.',
 };
 

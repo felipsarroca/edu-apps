@@ -1,3 +1,5 @@
+import { MODE_IDS } from './modes.js';
+
 const EMPTY_STATE_TEMPLATE =
   '<div class="empty-state">No hi ha entrades encara. Afegeix-ne una!</div>';
 
@@ -11,6 +13,10 @@ export const renderFunctionsList = (container, items, onDelete) => {
   items.forEach((item, index) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'function-item';
+    if (item?.id) {
+      wrapper.dataset.entryId = item.id;
+    }
+    wrapper.tabIndex = 0;
 
     const header = document.createElement('div');
     header.className = 'function-header';
@@ -83,6 +89,32 @@ export const renderFunctionsList = (container, items, onDelete) => {
     if (!hasContent) {
       meta.textContent = 'Resultats encara no disponibles.';
       meta.classList.add('is-placeholder');
+    }
+
+    if (
+      item.mode === MODE_IDS.SYSTEM ||
+      item.mode === 'system' ||
+      (Array.isArray(item.expressions) && item.expressions.length > 0)
+    ) {
+      const expressions = Array.isArray(item.expressions)
+        ? item.expressions.filter(Boolean)
+        : [];
+      if (expressions.length > 0) {
+        const expressionsHeader = document.createElement('div');
+        expressionsHeader.className = 'function-meta-subtitle';
+        expressionsHeader.textContent = 'Expressions del sistema:';
+
+        const exprList = document.createElement('ul');
+        exprList.className = 'function-meta-list';
+
+        expressions.forEach((expression, exprIndex) => {
+          const expressionElement = document.createElement('li');
+          expressionElement.textContent = `${exprIndex + 1}. ${expression}`;
+          exprList.append(expressionElement);
+        });
+
+        meta.append(expressionsHeader, exprList);
+      }
     }
 
     wrapper.append(header, meta);

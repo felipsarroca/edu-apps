@@ -203,6 +203,18 @@
             background: #ff5252;
         }
 
+        .system-row.has-error input[type="text"] {
+            border-color: #ff6b6b;
+            background: #fff5f5;
+        }
+
+        .system-error {
+            font-size: 11px;
+            color: #ff6b6b;
+            margin-top: 4px;
+            flex-basis: 100%;
+        }
+
         .input-actions {
             margin-top: 8px;
             display: flex;
@@ -228,6 +240,11 @@
             color: #3949ab;
             border-color: #3949ab;
             outline: none;
+        }
+
+        .ghost-button.is-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .ghost-button-small {
@@ -482,6 +499,13 @@
             color: #888;
             font-style: italic;
             background: rgba(102, 126, 234, 0.04);
+        }
+
+        .function-meta-subtitle {
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a4a4a;
         }
 
         .canvas-container {

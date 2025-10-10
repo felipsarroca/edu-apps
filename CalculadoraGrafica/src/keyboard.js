@@ -65,18 +65,20 @@ export const initKeyboard = ({
   onVisibilityChange,
   layout = DEFAULT_LAYOUT,
 } = {}) => {
-  if (!container || !inputElement) {
+  if (!container) {
     return {
       show: () => {},
       hide: () => {},
       toggle: () => {},
       isVisible: () => false,
       setLayout: () => {},
+      setTargetInput: () => {},
     };
   }
 
   let isVisible = false;
   let currentLayout = layout;
+  let targetInput = inputElement ?? null;
 
   container.setAttribute('data-visible', 'false');
   container.setAttribute('role', 'group');
@@ -113,21 +115,30 @@ export const initKeyboard = ({
   }
 
   const triggerInput = () => {
-    inputElement.dispatchEvent(createEvent(inputElement));
+    if (!targetInput) {
+      return;
+    }
+    targetInput.dispatchEvent(createEvent(targetInput));
   };
 
   const focusInput = () => {
-    inputElement.focus({ preventScroll: true });
+    targetInput?.focus({ preventScroll: true });
   };
 
   const setSelection = (start, end = start) => {
-    inputElement.setSelectionRange(start, end);
+    if (!targetInput || typeof targetInput.setSelectionRange !== 'function') {
+      return;
+    }
+    targetInput.setSelectionRange(start, end);
   };
 
   const insertContent = (content, cursorOffset = content.length, selectionLength = 0) => {
-    const start = inputElement.selectionStart ?? inputElement.value.length;
-    const end = inputElement.selectionEnd ?? inputElement.value.length;
-    inputElement.setRangeText(content, start, end, 'end');
+    if (!targetInput || typeof targetInput.setRangeText !== 'function') {
+      return;
+    }
+    const start = targetInput.selectionStart ?? targetInput.value.length;
+    const end = targetInput.selectionEnd ?? targetInput.value.length;
+    targetInput.setRangeText(content, start, end, 'end');
     const cursorPosition = start + cursorOffset;
     setSelection(cursorPosition, cursorPosition + selectionLength);
     triggerInput();
@@ -148,13 +159,16 @@ export const initKeyboard = ({
   };
 
   const handleBackspace = () => {
-    const start = inputElement.selectionStart ?? 0;
-    const end = inputElement.selectionEnd ?? 0;
+    if (!targetInput) {
+      return;
+    }
+    const start = targetInput.selectionStart ?? 0;
+    const end = targetInput.selectionEnd ?? 0;
     if (start === end && start > 0) {
-      inputElement.setRangeText('', start - 1, end, 'end');
+      targetInput.setRangeText('', start - 1, end, 'end');
       setSelection(start - 1);
     } else if (start !== end) {
-      inputElement.setRangeText('', start, end, 'end');
+      targetInput.setRangeText('', start, end, 'end');
       setSelection(start);
     }
     triggerInput();
@@ -230,5 +244,8 @@ export const initKeyboard = ({
     toggle,
     isVisible: () => isVisible,
     setLayout,
+    setTargetInput: (nextTarget) => {
+      targetInput = nextTarget ?? null;
+    },
   };
 };
