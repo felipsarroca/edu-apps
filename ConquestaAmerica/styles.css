@@ -26,12 +26,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: clamp(1rem, 1.8vw, 2.4rem);
+  gap: clamp(0.9rem, 1.4vw, 1.6rem);
   align-items: stretch;
   margin: 0 auto;
-  max-width: min(1180px, 94vw);
+  width: 100%;
+  max-width: min(1040px, 86vw);
   padding: 0 0.5rem;
   z-index: 1;
+  align-self: center;
 }
 
 * { box-sizing: border-box; }
@@ -86,7 +88,7 @@ h3,
 
 .home { display: flex; align-items: center; justify-content: center; }
 
-.home-background { position: absolute; inset: 0; background: url('./colonportada.avif') center/cover no-repeat; filter: saturate(110%) brightness(0.7); }
+.home-background { position: absolute; inset: 0; background: url('./conquestaamericaportada.webp') center/cover no-repeat; filter: saturate(106%) brightness(0.74); }
 .home-background::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(8, 15, 25, 0.85), rgba(8, 18, 32, 0.38)); }
 
 .home-ornaments { position: absolute; inset: 0; pointer-events: none; }
@@ -112,6 +114,7 @@ h3,
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: clamp(1.8rem, 3vh, 2.6rem);
 }
 .home-content::before,
@@ -751,7 +754,7 @@ details[open] > summary::before {
 @media (min-width: 1100px) {
   .home-grid {
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: center;
   }
 }
 
@@ -915,8 +918,8 @@ details[open] > summary::before {
   align-items: center;
   text-align: center;
   gap: 1.1rem;
-  width: clamp(190px, 17vw, 220px);
-  padding: 1.45rem 1.2rem 1.2rem;
+  width: clamp(180px, 15vw, 196px);
+  padding: 1.35rem 1.1rem 1.15rem;
   border-radius: 26px;
   background: linear-gradient(150deg, rgba(16, 30, 46, 0.85), rgba(8, 18, 33, 0.78));
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -957,8 +960,8 @@ details[open] > summary::before {
 }
 .card-photo {
   position: relative;
-  width: clamp(128px, 12vw, 152px);
-  height: clamp(128px, 12vw, 152px);
+  width: clamp(124px, 11vw, 148px);
+  height: clamp(124px, 11vw, 148px);
   border-radius: 30px;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04));
