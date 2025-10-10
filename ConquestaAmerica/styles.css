@@ -26,16 +26,15 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  gap: clamp(1.2rem, 2vw, 2.4rem);
+  gap: clamp(1rem, 1.6vw, 2rem);
   align-items: stretch;
   margin: 0 auto;
   width: 100%;
-  max-width: min(1630px, 100vw);
-  padding: 0 1.2rem;
+  max-width: min(1720px, 92vw);
+  padding: 0 clamp(1.4rem, 2.2vw, 2.8rem);
   z-index: 1;
   align-self: center;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  overflow-x: hidden;
 }
 
 * { box-sizing: border-box; }
@@ -107,8 +106,8 @@ h3,
 
 .home-content {
   position: relative;
-  width: min(1630px, 100vw);
-  padding: 4.1vh 8.1vw 4.1vh;
+  width: min(1950px, 98vw);
+  padding: clamp(2.2rem, 3.4vh, 3rem) clamp(3rem, 5.4vw, 6.6rem);
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(12, 18, 30, 0.9), rgba(24, 40, 64, 0.7));
   border-radius: 34px;
