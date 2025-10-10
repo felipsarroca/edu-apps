@@ -3,8 +3,8 @@ import { MODE_IDS } from './modes.js';
 
 const { Chart, math } = window;
 
-const SHADE_X_STEPS = 60;
-const SHADE_Y_STEPS = 20;
+const SHADE_X_STEPS = 120;
+const SHADE_Y_STEPS = 80;
 const LINE_TOL = 1e-6;
 
 const ensureRange = (range) => {
@@ -135,6 +135,8 @@ export const createChart = (canvas, onInteraction) => {
         x: {
           type: 'linear',
           position: 'bottom',
+          min: DEFAULT_RANGE.min,
+          max: DEFAULT_RANGE.max,
           grid: {
             color: '#f0f0f0',
             borderColor: '#666',
@@ -144,8 +146,8 @@ export const createChart = (canvas, onInteraction) => {
         y: {
           type: 'linear',
           position: 'left',
-          suggestedMin: DEFAULT_RANGE.min,
-          suggestedMax: DEFAULT_RANGE.max,
+          min: DEFAULT_RANGE.min,
+          max: DEFAULT_RANGE.max,
           grid: {
             color: '#f0f0f0',
             borderColor: '#666',
@@ -155,18 +157,25 @@ export const createChart = (canvas, onInteraction) => {
       },
       plugins: {
         zoom: {
-          pan: {
-            enabled: true,
-            mode: 'xy',
-          },
           zoom: {
             wheel: {
               enabled: true,
+              modifierKey: 'ctrl',
             },
             pinch: {
               enabled: true,
             },
             mode: 'xy',
+            onZoomComplete: onInteraction,
+          },
+          pan: {
+            enabled: true,
+            mode: 'xy',
+            onPanComplete: onInteraction,
+          },
+          limits: {
+            x: { min: 'original', max: 'original' },
+            y: { min: 'original', max: 'original' },
           },
         },
         legend: {
@@ -424,7 +433,7 @@ const buildSingleYDatasets = (entry, bounds, colorOverride) => {
     inequality.compiled,
   );
   const shadingPoints = createGradientPointsY(inequality, bounds);
-  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.35);
 
   const datasets = [];
 
@@ -436,7 +445,7 @@ const buildSingleYDatasets = (entry, bounds, colorOverride) => {
           type: 'scatter',
           label: `${entry.label} — zona`,
           data: shadingPoints,
-          pointRadius: 1.4,
+          pointRadius: 2.8,
           pointBackgroundColor: shadingColor,
           pointBorderColor: shadingColor,
           pointHoverRadius: 0,
@@ -486,7 +495,7 @@ const buildDoubleYDatasets = (entry, bounds, colorOverride) => {
     upper.value,
     bounds,
   );
-  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.35);
 
   const datasets = [];
 
@@ -498,7 +507,7 @@ const buildDoubleYDatasets = (entry, bounds, colorOverride) => {
           type: 'scatter',
           label: `${entry.label} — zona`,
           data: shadingPoints,
-          pointRadius: 1.4,
+          pointRadius: 2.8,
           pointBackgroundColor: shadingColor,
           pointBorderColor: shadingColor,
           pointHoverRadius: 0,
@@ -566,7 +575,7 @@ const buildSingleXDatasets = (entry, bounds, colorOverride) => {
     inequality.orientation,
     bounds,
   );
-  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.35);
   const yRange = ensureRange(bounds.y);
 
   const datasets = [];
@@ -579,7 +588,7 @@ const buildSingleXDatasets = (entry, bounds, colorOverride) => {
           type: 'scatter',
           label: `${entry.label} — zona`,
           data: shadingPoints,
-          pointRadius: 1.4,
+          pointRadius: 2.8,
           pointBackgroundColor: shadingColor,
           pointBorderColor: shadingColor,
           pointHoverRadius: 0,
@@ -631,7 +640,7 @@ const buildDoubleXDatasets = (entry, bounds, colorOverride) => {
     upper.value,
     bounds,
   );
-  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.2);
+  const shadingColor = hexToRgba(colorOverride ?? entry.color, 0.35);
   const yRange = ensureRange(bounds.y);
 
   const datasets = [];
@@ -644,7 +653,7 @@ const buildDoubleXDatasets = (entry, bounds, colorOverride) => {
           type: 'scatter',
           label: `${entry.label} — zona`,
           data: shadingPoints,
-          pointRadius: 1.4,
+          pointRadius: 2.8,
           pointBackgroundColor: shadingColor,
           pointBorderColor: shadingColor,
           pointHoverRadius: 0,
