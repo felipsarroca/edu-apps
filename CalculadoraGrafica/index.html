@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Gràfica Interactiva</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <div id="input-panel">
+            <header>
+                <h1>Calculadora Gràfica</h1>
+                <p>Escriu una equació o inequació per començar</p>
+            </header>
+            <div id="equations-list">
+                <!-- Les files d'equacions s'afegiran aquí amb JavaScript -->
+            </div>
+            <button id="add-equation-btn" class="add-btn">+ Afegir Equació</button>
+            
+            <div id="math-keyboard">
+                <button class="key" data-symbol="x">x</button>
+                <button class="key" data-symbol="y">y</button>
+                <button class="key" data-symbol="^2">x²</button>
+                <button class="key" data-symbol="^3">x³</button>
+                <button class="key" data-symbol="=">=</button>
+                <button class="key" data-symbol="<"><</button>
+                <button class="key" data-symbol=">">></button>
+                <button class="key" data-symbol="<=">≤</button>
+                <button class="key" data-symbol=">=">≥</button>
+                <button class="key" data-symbol="+">+</button>
+                <button class="key" data-symbol="-">−</button>
+                <button class="key" data-symbol="*">×</button>
+                <button class="key" data-symbol="/">÷</button>
+                <button class="key" data-symbol="(">(</button>
+                <button class="key" data-symbol=")">)</button>
+            </div>
+        </div>
+        <div id="graph-panel">
+            <div id="graph-container"></div>
+            <div id="interpretation-panel">
+                <p>La solució es mostra al gràfic. Les àrees ombrejades representen les solucions de les inequacions.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
