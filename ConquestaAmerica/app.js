@@ -50,7 +50,8 @@ const SECTION_ICONS = {
 
 const EXTRA_ICONS = {
   allies: '&#x1F91D;',
-  strategies: '&#x1F9ED;'
+  strategies: '&#x1F9ED;',
+  timeline: '&#x23F2;&#xFE0F;'
 };
 
 function formatListItems(items, icon) {
@@ -138,27 +139,93 @@ function getPrimaryChallengeText(voyage) {
   return pickFirstText(voyage.problemes_generals);
 }
 
-function renderAllVoyagesOverview(voyages) {
+function getPrimaryObjectiveText(voyage) {
+  return pickFirstText([voyage.finalitat, voyage.resum, voyage.short]);
+}
+
+function getPrimaryAllyText(voyage) {
+  return pickFirstText(voyage.aliats || []);
+}
+
+function getPrimaryStrategyText(voyage) {
+  return pickFirstText(voyage.estrategies || []);
+}
+
+function getVoyageYears(voyage) {
+  return pickFirstText([voyage.anys]);
+}
+
+const SECTION_SUMMARY_HEADING = {
+  overview: 'Objectius principals dels cinc viatges',
+  forces: 'Forces i suports destacats',
+  challenges: 'Dificultats principals identificades',
+  outcome: 'Resultats i conseqüències clau'
+};
+
+const SECTION_EMPTY_MESSAGES = {
+  overview: 'Sense objectiu registrat.',
+  forces: 'Sense dades logístiques disponibles.',
+  challenges: 'Sense incidències registrades.',
+  outcome: 'Sense resultats registrats.'
+};
+
+function buildSummaryEntries(voyage, section) {
+  const entries = [];
+  if (section === 'overview') {
+    const objective = getPrimaryObjectiveText(voyage);
+    const years = getVoyageYears(voyage);
+    if (objective) {
+      entries.push({ icon: SECTION_ICONS.overview, label: 'Objectiu', text: objective });
+    }
+    if (years) {
+      entries.push({ icon: EXTRA_ICONS.timeline, label: 'Període', text: years });
+    }
+    return entries;
+  }
+
+  if (section === 'forces') {
+    const primaryForce = getPrimaryForceText(voyage);
+    const allies = getPrimaryAllyText(voyage);
+    const strategy = getPrimaryStrategyText(voyage);
+    if (primaryForce) {
+      entries.push({ icon: SECTION_ICONS.forces, label: 'Força destacada', text: primaryForce });
+    }
+    if (allies) {
+      entries.push({ icon: EXTRA_ICONS.allies, label: 'Aliances', text: allies });
+    }
+    if (strategy) {
+      entries.push({ icon: EXTRA_ICONS.strategies, label: 'Estratègia', text: strategy });
+    }
+    return entries;
+  }
+
+  if (section === 'challenges') {
+    const challenge = getPrimaryChallengeText(voyage);
+    if (challenge) {
+      entries.push({ icon: SECTION_ICONS.challenges, label: 'Risc destacat', text: challenge });
+    }
+    return entries;
+  }
+
+  if (section === 'outcome') {
+    const outcome = getPrimaryOutcomeText(voyage);
+    if (outcome) {
+      entries.push({ icon: SECTION_ICONS.outcome, label: 'Resultat', text: outcome });
+    }
+    return entries;
+  }
+
+  return entries;
+}
+
+function renderAllVoyagesSection(voyages, section) {
   const cards = voyages.map((voyage) => {
     const subjectTag = typeof renderSubjectTag === 'function' ? renderSubjectTag(voyage) : '';
-    const objective = pickFirstText([voyage.finalitat, voyage.resum, voyage.short]);
-    const primaryForce = getPrimaryForceText(voyage);
-    const support = pickFirstText([(voyage.aliats || [])[0], (voyage.estrategies || [])[0]]);
-    const outcome = getPrimaryOutcomeText(voyage);
-    const challenge = outcome ? '' : getPrimaryChallengeText(voyage);
-
-    const summaryEntries = [
-      renderSummaryLine(SECTION_ICONS.overview, 'Objectiu', objective),
-      primaryForce ? renderSummaryLine(SECTION_ICONS.forces, 'Forces clau', primaryForce) : '',
-      support ? renderSummaryLine(EXTRA_ICONS.allies, 'Aliances', support) : '',
-      outcome
-        ? renderSummaryLine(SECTION_ICONS.outcome, 'Conseqüència', outcome)
-        : renderSummaryLine(SECTION_ICONS.challenges, 'Dificultat', challenge)
-    ].filter(Boolean);
-
+    const summaryEntries = buildSummaryEntries(voyage, section).map((entry) => renderSummaryLine(entry.icon, entry.label, entry.text)).filter(Boolean);
+    const emptyMessage = SECTION_EMPTY_MESSAGES[section] || 'Sense dades disponibles.';
     const content = summaryEntries.length
       ? '<ul class="info-summary">' + summaryEntries.join('\n') + '</ul>'
-      : '<p class="info-empty">Sense dades principals disponibles.</p>';
+      : '<p class="info-empty">' + emptyMessage + '</p>';
 
     const block = [
       '<article class="info-block info-block--summary">',
@@ -170,9 +237,11 @@ function renderAllVoyagesOverview(voyages) {
     return block.filter(Boolean).join('\n');
   });
 
+  const heading = SECTION_SUMMARY_HEADING[section] || 'Comparativa dels cinc viatges';
+
   return [
-    '<div class="info-overview info-overview--all">',
-    '  <p class="info-meta info-meta--lead">Comparativa dels cinc viatges</p>',
+    '<div class="info-overview info-overview--all info-overview--' + section + '">',
+    '  <p class="info-meta info-meta--lead">' + heading + '</p>',
     cards.join('\n'),
     '</div>'
   ].join('\n');
@@ -988,8 +1057,9 @@ function renderComparativeInfo(voyages, section) {
     return '';
   }
 
-  if (section === 'overview' && ordered.length === EXPEDITION_CONFIG.length) {
-    return renderAllVoyagesOverview(ordered);
+  const summarySections = ['overview', 'forces', 'challenges', 'outcome'];
+  if (ordered.length === EXPEDITION_CONFIG.length && summarySections.includes(section)) {
+    return renderAllVoyagesSection(ordered, section);
   }
 
   return ordered.map((voyage) => {
