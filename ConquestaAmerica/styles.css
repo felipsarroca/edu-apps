@@ -930,6 +930,7 @@ details[open] > summary::before {
   text-align: center;
   gap: 1.2rem;
   width: clamp(310px, 26.6vw, 389px);
+  flex: 0 0 clamp(310px, 26.6vw, 389px);
   padding: 1.55rem 1.25rem 1.32rem;
   border-radius: 26px;
   background: linear-gradient(150deg, rgba(16, 30, 46, 0.85), rgba(8, 18, 33, 0.78));
