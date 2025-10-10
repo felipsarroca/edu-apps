@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graficadora+ - Explora i visualitza les teves equacions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Main Graph Area (80% of screen) -->
+        <div class="graph-container">
+            <canvas id="graphCanvas"></canvas>
+            <div class="controls-overlay">
+                <button id="addEquationBtn" class="btn-primary">Afegir Equació</button>
+                <div class="zoom-controls">
+                    <button id="zoomInBtn" class="btn-icon">+</button>
+                    <button id="zoomOutBtn" class="btn-icon">-</button>
+                    <button id="resetViewBtn" class="btn-icon">↺</button>
+                </div>
+                <div class="theme-toggle">
+                    <button id="themeToggle" class="btn-icon">☀️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar (20% of screen) -->
+        <div class="sidebar">
+            <h2>Equacions</h2>
+            <ul id="equationList"></ul>
+        </div>
+    </div>
+
+    <!-- Add Equation Modal -->
+    <div id="addEquationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Afegir Nova Equació</h3>
+            
+            <div class="equation-type-selector">
+                <label>
+                    <input type="radio" name="equationType" value="equation" checked> Equació
+                </label>
+                <label>
+                    <input type="radio" name="equationType" value="inequality"> Inequació
+                </label>
+                <label>
+                    <input type="radio" name="equationType" value="system"> Sistema
+                </label>
+            </div>
+            
+            <div class="input-container">
+                <input type="text" id="equationInput" placeholder="Introdueix la teva equació (ex: y = x^2 + 2x - 1)" autocomplete="off">
+                <div class="preview">Previsualització: <span id="equationPreview"></span></div>
+            </div>
+            
+            <div class="math-keyboard">
+                <!-- Row 1 -->
+                <div class="keyboard-row">
+                    <button class="math-btn" data-value="x">x</button>
+                    <button class="math-btn" data-value="y">y</button>
+                    <button class="math-btn" data-value="^">x^y</button>
+                    <button class="math-btn" data-value="√">√</button>
+                    <button class="math-btn" data-value="π">π</button>
+                    <button class="math-btn" data-value="e">e</button>
+                    <button class="math-btn" data-value="|">|x|</button>
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="keyboard-row">
+                    <button class="math-btn" data-value="sin">sin</button>
+                    <button class="math-btn" data-value="cos">cos</button>
+                    <button class="math-btn" data-value="tan">tan</button>
+                    <button class="math-btn" data-value="log">log</button>
+                    <button class="math-btn" data-value="ln">ln</button>
+                    <button class="math-btn" data-value="()">( )</button>
+                    <button class="math-btn" data-value="≤">≤</button>
+                </div>
+                
+                <!-- Row 3 -->
+                <div class="keyboard-row">
+                    <button class="math-btn" data-value="0">0</button>
+                    <button class="math-btn" data-value="1">1</button>
+                    <button class="math-btn" data-value="2">2</button>
+                    <button class="math-btn" data-value="3">3</button>
+                    <button class="math-btn" data-value="4">4</button>
+                    <button class="math-btn" data-value="5">5</button>
+                    <button class="math-btn" data-value="≤">≥</button>
+                </div>
+                
+                <!-- Row 4 -->
+                <div class="keyboard-row">
+                    <button class="math-btn" data-value="6">6</button>
+                    <button class="math-btn" data-value="7">7</button>
+                    <button class="math-btn" data-value="8">8</button>
+                    <button class="math-btn" data-value="9">9</button>
+                    <button class="math-btn" data-value="+">+</button>
+                    <button class="math-btn" data-value="-">-</button>
+                    <button class="math-btn" data-value="×">×</button>
+                </div>
+                
+                <!-- Row 5 -->
+                <div class="keyboard-row">
+                    <button class="math-btn" data-value="/">/</button>
+                    <button class="math-btn" data-value=".">.</button>
+                    <button class="math-btn" data-value="=">=</button>
+                    <button class="math-btn" data-value=" ">Espai</button>
+                    <button class="math-btn" data-value="⌫">⌫</button>
+                    <button class="math-btn" data-value="C">C</button>
+                    <button class="math-btn" data-value="⌫">←</button>
+                </div>
+            </div>
+            
+            <button id="addEquationSubmit" class="btn-primary">Afegir a la gràfica</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
