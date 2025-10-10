@@ -792,6 +792,9 @@ function renderRoutes() {
     state.layers.set(id, { group, markers, segments });
     animateSegments(segments, voyage.color);
 
+    const configIndex = EXPEDITION_CONFIG.findIndex((cfg) => cfg.id === id);
+    const baseOrder = configIndex >= 0 ? configIndex * 1000 : state.timelineData.length * 1000;
+
     voyage.episodis.forEach((episode, idx) => {
       const boundsData = state.routeBounds.get(id);
       const partial = boundsData?.partial?.[idx];
@@ -806,7 +809,7 @@ function renderRoutes() {
         marker: markers[idx],
         bounds: partial ? partial.pad(0.08) : boundsData?.full,
         label: `${voyage.label} · ${episode.titol}`,
-        orderValue: extractOrderValue(voyage, episode, idx)
+        orderValue: baseOrder + idx
       });
     });
   });
