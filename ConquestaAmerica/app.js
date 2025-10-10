@@ -104,7 +104,7 @@ function renderSummaryLine(icon, label, text) {
     '<li>',
     icon ? '  <span class="info-summary__icon" aria-hidden="true">' + icon + '</span>' : '',
     '  <div class="info-summary__text">',
-    '    <p class="info-summary__label">' + label + '</p>',
+    label ? '    <p class="info-summary__label">' + label + '</p>' : '',
     '    <p class="info-summary__value">' + text + '</p>',
     '  </div>',
     '</li>'
@@ -202,7 +202,7 @@ function buildSummaryEntries(voyage, section) {
   if (section === 'challenges') {
     const challenge = getPrimaryChallengeText(voyage);
     if (challenge) {
-      entries.push({ icon: SECTION_ICONS.challenges, label: 'Risc destacat', text: challenge });
+      entries.push({ icon: SECTION_ICONS.challenges, label: '', text: challenge });
     }
     return entries;
   }
@@ -210,7 +210,7 @@ function buildSummaryEntries(voyage, section) {
   if (section === 'outcome') {
     const outcome = getPrimaryOutcomeText(voyage);
     if (outcome) {
-      entries.push({ icon: SECTION_ICONS.outcome, label: 'Resultat', text: outcome });
+      entries.push({ icon: SECTION_ICONS.outcome, label: '', text: outcome });
     }
     return entries;
   }
@@ -221,6 +221,7 @@ function buildSummaryEntries(voyage, section) {
 function renderAllVoyagesSection(voyages, section) {
   const cards = voyages.map((voyage) => {
     const subjectTag = typeof renderSubjectTag === 'function' ? renderSubjectTag(voyage) : '';
+    const subjectName = pickFirstText([voyage.personatge?.nom, voyage.label]);
     const summaryEntries = buildSummaryEntries(voyage, section).map((entry) => renderSummaryLine(entry.icon, entry.label, entry.text)).filter(Boolean);
     const emptyMessage = SECTION_EMPTY_MESSAGES[section] || 'Sense dades disponibles.';
     const content = summaryEntries.length
@@ -230,7 +231,7 @@ function renderAllVoyagesSection(voyages, section) {
     const block = [
       '<article class="info-block info-block--summary">',
       subjectTag ? '  ' + subjectTag : '',
-      voyage.anys ? '  <p class="info-meta">' + voyage.anys + '</p>' : '',
+      subjectName ? '  <p class="info-meta info-meta--subject">' + subjectName + '</p>' : '',
       '  ' + content,
       '</article>'
     ];
