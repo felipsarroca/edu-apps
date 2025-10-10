@@ -20,6 +20,7 @@
   --text-muted: rgba(220, 229, 248, 0.65);
   --shadow-lg: 0 26px 60px rgba(3, 7, 18, 0.55);
   --shadow-md: 0 18px 34px rgba(6, 12, 24, 0.38);
+  --home-shell-padding: clamp(1.8rem, 2.6vw, 3rem);
 }
 .home-grid {
   position: relative;
@@ -30,8 +31,8 @@
   align-items: stretch;
   margin: 0 auto;
   width: 100%;
-  max-width: min(1720px, 92vw);
-  padding: 0 clamp(1.4rem, 2.2vw, 2.8rem);
+  max-width: 100%;
+  padding: 0;
   z-index: 1;
   align-self: center;
   overflow-x: hidden;
@@ -106,8 +107,8 @@ h3,
 
 .home-content {
   position: relative;
-  width: min(1950px, 98vw);
-  padding: clamp(2.2rem, 3.4vh, 3rem) clamp(3rem, 5.4vw, 6.6rem);
+  width: min(1720px, 94vw);
+  padding: clamp(2rem, 3vh, 2.8rem) var(--home-shell-padding);
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(12, 18, 30, 0.9), rgba(24, 40, 64, 0.7));
   border-radius: 34px;
@@ -125,8 +126,9 @@ h3,
 
 .home-header {
   width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   text-align: left;
   display: grid;
   gap: 0.85rem;
@@ -928,8 +930,8 @@ details[open] > summary::before {
   align-items: center;
   text-align: center;
   gap: 1.2rem;
-  width: clamp(176px, 14.9vw, 219px);
-  flex: 0 0 clamp(176px, 14.9vw, 219px);
+  width: clamp(158px, 13.4vw, 197px);
+  flex: 0 0 clamp(158px, 13.4vw, 197px);
   padding: 1.55rem 1.25rem 1.32rem;
   border-radius: 26px;
   background: linear-gradient(150deg, rgba(16, 30, 46, 0.85), rgba(8, 18, 33, 0.78));
