@@ -1,79 +1,61 @@
-# Graficadora+ - Explora i visualitza les teves equacions
+## Graficadora+
 
-Graficadora+ és una aplicació web interactiva per representar gràficament equacions i inequacions matemàtiques de manera molt visual, intuïtiva i atractiva.
+Aplicació React (Vite + TypeScript) per representar funcions, inequacions i sistemes. Inclou:
+- Edició d'expressions amb teclat matemàtic i previsualització MathJax.
+- Representació en temps real amb diferents temes i opcions de visualització.
+- Exportació del gràfic en format imatge i anàlisi bàsica del domini.
 
-## Característiques principals
+### Requisits previs
 
-- **Visualització interactiva**: Gràfica interactiva amb coordenades cartesianes
-- **Zoom i panoràmica**: Zoom amb rodet del ratolí i moviment arrossegant
-- **Modes clar/fosc**: Comptabilitat amb tema de colors clars i foscos
-- **Inequacions**: Visualització de regions de solució amb ombrejat
-- **Sistemes d'equacions**: Capacitat per mostrar múltiples equacions
-- **Teclat matemàtic**: Integrat per facilitar la introducció d'expressions
-- **Exportació**: Capacitat per exportar gràfiques en format PNG
+- Node.js 18 o superior.
+- Un token per a `GEMINI_API_KEY` si es volen fer servir els serveis que en depenen (pots deixar-ho buit per executar la graficadora localment).
 
-## Funcionalitats
+### Com posar-la en marxa
 
-- Afegir equacions, inequacions i sistemes
-- Amagar o mostrar equacions individualment
-- Canviar de tema (clar/fosc)
-- Zoom i panoràmica per explorar detalls
-- Visualització de coordenades en temps real
-- Previsualització d'equacions abans d'afegir-les
-- Historial d'equacions i capacitat per desfer accions
+1. Instal·la les dependències:
+   ```bash
+   npm install
+   ```
+2. Crea el fitxer d'entorn:
+   ```bash
+   cp .env.example .env.local
+   ```
+3. Edita `.env.local` i, si cal, afegeix el teu valor per `GEMINI_API_KEY`.
+4. Executa el servidor de desenvolupament:
+   ```bash
+   npm run dev
+   ```
+5. Obre el navegador a l’adreça que indica la consola (per defecte `http://localhost:3000`).
 
-## Modes d'ús
+### Construir la versió de producció
 
-### Equacions
-- Introdueix equacions en format `y = f(x)` (ex: `y = x^2 + 2x - 1`)
+```bash
+npm run build
+```
 
-### Inequacions
-- Introdueix inequacions com `y < 2x + 3` o `y ≥ x^2`
+El resultat quedarà a la carpeta `dist/`. Pots fer una previsualització local amb:
+```bash
+npm run preview
+```
 
-### Sistemes
-- Pots afegir múltiples equacions/inequacions per veure interseccions
+### Estructura principal
 
-## Símbols matemàtics suportats
+```
+graficadora/
+├── index.html
+├── package.json
+├── src/
+│   ├── App.tsx
+│   ├── components/
+│   ├── services/
+│   ├── constants.ts
+│   ├── types.ts
+│   └── main.tsx
+└── tsconfig.json
+```
 
-- `x`, `y` (variables)
-- `+`, `-`, `*`, `/` (operacions)
-- `^` (potències, ex: `x^2`)
-- `()` (grups)
-- `√` (arrels quadrades, ex: `sqrt(x)`)
-- `sin`, `cos`, `tan` (funcions trigonomètriques)
-- `log`, `ln` (funcions logarítmiques)
-- `π`, `e` (constants)
-- `|x|` (valors absoluts)
+### Notes
 
-## Com desplegar a GitHub Pages
-
-1. Puja tots els fitxers a un repositori de GitHub
-2. Ves a la pestanya "Settings" del teu repositori
-3. Fes scroll cap avall fins a "Pages"
-4. Selecciona "Deploy from a branch"
-5. Tria "main" com a branch i "/" com a folder
-6. Fes clic a "Save"
-
-L'aplicació estarà disponible a `https://TU_USUARI.github.io/NOM_REPOSITORI`
-
-## Com utilitzar localment
-
-Només cal obrir el fitxer `index.html` en qualsevol navegador modern.
-
-## Compatibilitat
-
-- Chrome, Firefox, Safari, Edge (versions recents)
-- Ordinadors, tauletes i mòbils
-- Compatible amb pantalles tàctils
-
-## Exemple d'ús
-
-1. Fes clic al botó "Afegir Equació"
-2. Tria el tipus d'equació (equació, inequació, sistema)
-3. Introdueix la teva expressió utilitzant el teclat matemàtic
-4. Observa la previsualització
-5. Fes clic a "Afegir a la gràfica"
-
-## Desenvolupat per
-
-Projecte educatiu per a l'ensenyament de matemàtiques amb tecnologia.
+- La carpeta `src/components` agrupa tota la interfície: el gràfic, els controls laterals i els modals.
+- `src/services/mathService.ts` conté la lògica de parseig i anàlisi de les expressions.
+- TailwindCSS i Font Awesome s'incorporen via CDN des de `index.html`; no cal cap configuració addicional.
