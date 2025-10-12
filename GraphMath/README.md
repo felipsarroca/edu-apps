@@ -6,12 +6,12 @@ GraphMath és una aplicació web dissenyada per representar gràficament funcion
 
 Pots utilitzar l'aplicació en directe a través del següent enllaç:
 
-**[Obrir GraphMath](https://felip-sarroca.github.io/edu-apps/GraphMath/)**
+**[Obrir GraphMath](https://felipsarroca.github.io/edu-apps/GraphMath/)**
 
 <!-- 
 Recomanació: Fes una captura de pantalla de l'aplicació en funcionament, desa-la al repositori (per exemple, com a `screenshot.png`) i substitueix la línia de sota per la teva imatge.
 -->
-![Captura de pantalla de GraphMath](photoapp.png)
+![Captura de pantalla de GraphMath](photoapp.PNG)
 
 ## ✨ Característiques principals
 
