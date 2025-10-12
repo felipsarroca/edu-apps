@@ -3,22 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>edu-apps · Catàleg d'aplicacions</title>
+    <title>edu-apps · Accés ràpid</title>
     <style>
       :root {
-        --bg: #0b1f3a;
-        --bg-alt: #11294a;
-        --surface: #162f56;
-        --surface-alt: #1d3a69;
-        --text: #f3f6fb;
-        --text-muted: #c5d3eb;
-        --primary: #57c4e5;
-        --primary-dark: #39a7c6;
-        --accent: #ffc857;
-        --success: #7bd389;
-        --alert: #ff7a7a;
-        --radius: 18px;
-        font-family: "Segoe UI", "Inter", "Roboto", -apple-system, BlinkMacSystemFont, sans-serif;
+        --bg: #0f1d33;
+        --surface: #172740;
+        --surface-alt: #1f3252;
+        --text: #f1f5ff;
+        --muted: #c5cee3;
+        --accent: #7dd3fc;
+        font-family: "Segoe UI", "Inter", sans-serif;
       }
 
       * {
@@ -28,592 +22,236 @@
       }
 
       body {
-        background: radial-gradient(circle at top, rgba(87, 196, 229, 0.12), transparent 55%),
-          radial-gradient(circle at 20% 80%, rgba(255, 200, 87, 0.08), transparent 60%), var(--bg);
+        background: var(--bg);
         color: var(--text);
-        line-height: 1.6;
-        padding: 0 1.5rem 3rem;
+        line-height: 1.5;
+        padding: 2.5rem 1.5rem 3rem;
       }
 
-      header.hero {
-        max-width: 1080px;
-        margin: 3.5rem auto 2.5rem;
+      header {
+        max-width: 900px;
+        margin: 0 auto 2.5rem;
         text-align: center;
-        padding: 3rem 2rem;
-        background: linear-gradient(140deg, rgba(22, 47, 86, 0.95), rgba(17, 41, 74, 0.85));
-        border-radius: 28px;
-        box-shadow: 0 35px 60px -25px rgba(12, 24, 46, 0.8);
-        position: relative;
-        overflow: hidden;
       }
 
-      header.hero::after {
-        content: "";
-        position: absolute;
-        inset: -60% 30% 40% -40%;
-        background: radial-gradient(circle, rgba(87, 196, 229, 0.35), transparent 60%);
-        transform: rotate(12deg);
-        opacity: 0.8;
-      }
-
-      header.hero h1 {
-        font-size: clamp(2.4rem, 4vw, 3.1rem);
+      header h1 {
+        font-size: clamp(2.1rem, 4vw, 2.6rem);
         font-weight: 700;
-        position: relative;
-        z-index: 1;
+        margin-bottom: 0.8rem;
       }
 
-      header.hero p {
-        margin: 1.1rem auto 2rem;
-        max-width: 680px;
-        font-size: 1.08rem;
-        color: var(--text-muted);
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero-actions {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-      }
-
-      .btn {
-        padding: 0.9rem 1.6rem;
-        border-radius: 999px;
-        text-decoration: none;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        color: var(--bg);
-        background: var(--primary);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        box-shadow: 0 12px 30px rgba(87, 196, 229, 0.4);
-      }
-
-      .btn:hover {
-        transform: translateY(-3px);
-        background: var(--primary-dark);
-        box-shadow: 0 16px 40px rgba(68, 164, 193, 0.55);
-      }
-
-      .btn-secondary {
-        color: var(--primary);
-        background: transparent;
-        border: 1px solid rgba(87, 196, 229, 0.5);
-        box-shadow: none;
-      }
-
-      .btn-secondary:hover {
-        background: rgba(87, 196, 229, 0.1);
-        color: var(--text);
+      header p {
+        color: var(--muted);
+        font-size: 1rem;
       }
 
       main {
-        max-width: 1240px;
+        max-width: 1100px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
       }
 
-      section.category {
-        margin-bottom: 2.8rem;
-      }
-
-      section.category h2 {
-        font-size: 1.9rem;
-        margin-bottom: 1rem;
-        display: inline-flex;
+      section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.1rem;
+        display: flex;
+        gap: 0.6rem;
         align-items: center;
-        gap: 0.65rem;
       }
 
-      section.category h2 span {
-        font-size: 1.4rem;
+      section h2 span {
+        font-size: 1.3rem;
       }
 
-      section.category > p {
-        color: var(--text-muted);
-        margin-bottom: 1.6rem;
-        max-width: 720px;
-      }
-
-      .card-grid {
+      .grid {
         display: grid;
-        gap: 1.6rem;
-        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.2rem;
       }
 
-      .card {
-        background: linear-gradient(145deg, rgba(22, 47, 86, 0.96), rgba(17, 41, 74, 0.92));
-        border-radius: var(--radius);
-        padding: 1.9rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 22px 45px -28px rgba(0, 0, 0, 0.7);
-        border: 1px solid rgba(87, 196, 229, 0.08);
-        transition: transform 0.2s ease, box-shadow 0.25s ease;
+      article {
+        background: linear-gradient(135deg, var(--surface), var(--surface-alt));
+        border-radius: 16px;
+        padding: 1.4rem;
+        display: grid;
+        gap: 0.8rem;
+        border: 1px solid rgba(125, 211, 252, 0.08);
       }
 
-      .card::before {
-        content: "";
-        position: absolute;
-        inset: -60% 60% 50% -50%;
-        background: radial-gradient(circle, rgba(255, 200, 87, 0.25), transparent 60%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 32px 50px -28px rgba(0, 0, 0, 0.8);
-      }
-
-      .card:hover::before {
-        opacity: 1;
-      }
-
-      .card-header {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-      }
-
-      .card-header h3 {
-        font-size: 1.35rem;
+      article h3 {
+        font-size: 1.2rem;
         font-weight: 700;
       }
 
-      .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
+      article p {
+        color: var(--muted);
+        font-size: 0.95rem;
       }
 
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.28rem 0.75rem;
-        border-radius: 999px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.01em;
-        background: rgba(87, 196, 229, 0.16);
-        color: var(--primary);
-        border: 1px solid rgba(87, 196, 229, 0.35);
-      }
-
-      .badge-alt {
-        background: rgba(255, 200, 87, 0.18);
-        color: var(--accent);
-        border-color: rgba(255, 200, 87, 0.35);
-      }
-
-      .badge-success {
-        background: rgba(123, 211, 137, 0.18);
-        color: var(--success);
-        border-color: rgba(123, 211, 137, 0.35);
-      }
-
-      .badge-alert {
-        background: rgba(255, 122, 122, 0.2);
-        color: var(--alert);
-        border-color: rgba(255, 122, 122, 0.4);
-      }
-
-      .card p {
-        color: var(--text-muted);
-        font-size: 0.98rem;
-      }
-
-      .details {
-        list-style: none;
-        display: grid;
-        gap: 0.45rem;
-        font-size: 0.92rem;
-        color: var(--text-muted);
-      }
-
-      .details strong {
-        color: var(--text);
-        font-weight: 600;
-      }
-
-      .actions {
-        margin-top: auto;
+      .links {
         display: flex;
         flex-wrap: wrap;
         gap: 0.6rem;
       }
 
-      .actions a {
+      .links a {
         text-decoration: none;
+        color: var(--accent);
         font-weight: 600;
-        font-size: 0.94rem;
+        font-size: 0.92rem;
+        background: rgba(125, 211, 252, 0.12);
+        padding: 0.45rem 0.9rem;
         border-radius: 12px;
-        padding: 0.6rem 1rem;
-        border: 1px solid rgba(87, 196, 229, 0.35);
-        color: var(--primary);
-        transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+        transition: background 0.2s ease;
       }
 
-      .actions a.primary {
-        background: rgba(87, 196, 229, 0.18);
-        color: var(--text);
-        border-color: rgba(87, 196, 229, 0.5);
-      }
-
-      .actions a.primary:hover {
-        background: rgba(87, 196, 229, 0.32);
-      }
-
-      .actions a:hover {
-        background: rgba(87, 196, 229, 0.1);
-        color: var(--text);
+      .links a:hover {
+        background: rgba(125, 211, 252, 0.22);
       }
 
       footer {
-        margin: 4rem auto 0;
-        max-width: 960px;
+        max-width: 900px;
+        margin: 3.5rem auto 0;
         text-align: center;
-        color: var(--text-muted);
+        color: var(--muted);
         font-size: 0.9rem;
       }
 
-      footer a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      footer a:hover {
-        text-decoration: underline;
-      }
-
-      @media (max-width: 720px) {
+      @media (max-width: 600px) {
         body {
-          padding: 0 1.1rem 2.5rem;
+          padding: 2rem 1.1rem 2.5rem;
         }
-        header.hero {
-          padding: 2.6rem 1.4rem;
-          margin-top: 2.4rem;
-        }
-        .card {
-          padding: 1.6rem;
-        }
-        section.category h2 {
-          font-size: 1.65rem;
+        section h2 {
+          font-size: 1.35rem;
         }
       }
     </style>
   </head>
   <body>
-    <header class="hero">
-      <h1>Catàleg d'aplicacions edu-apps</h1>
-      <p>
-        Recull d’eines interactives per treballar història, ciències, matemàtiques i competència digital a l’aula.
-        Cada proposta inclou textos en català, pensada per a contextos d’ESO i batxillerat amb alumnat divers.
-      </p>
-      <div class="hero-actions">
-        <a class="btn" href="#catalog">Explora el catàleg</a>
-        <a class="btn btn-secondary" href="./README.md">Guia ràpida del repositori</a>
-      </div>
+    <header>
+      <h1>Aplicacions edu-apps</h1>
+      <p>Tria la temàtica i entra directament a l’eina. Tots els projectes estan en català i pensats per a l’ESO i el batxillerat.</p>
     </header>
 
-    <main id="catalog">
-      <section class="category" id="historia">
+    <main>
+      <section>
         <h2><span>📜</span>Història i cultura</h2>
-        <p>Experiències immersives per contextualitzar expedicions, patrimoni i relats clàssics amb mapes i narratives multimèdia.</p>
-        <div class="card-grid">
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">Cicle superior · ESO</span>
-                <span class="badge-alt">Història local</span>
-              </div>
-              <h3>ScapeRoomErmita</h3>
-            </div>
-            <p>
-              Escape room digital ambientat a l’ermita romànica de Ca n’Anglada amb 12 enigmes, pistes i control de temps i errors.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> patrimoni, treball cooperatiu, resolució d’enigmes.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./ScapeRoomErmita/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./ScapeRoomErmita/README.md" target="_blank" rel="noopener">Documentació</a>
+        <div class="grid">
+          <article>
+            <h3>ScapeRoomErmita</h3>
+            <p>Escape room sobre l’ermita romànica de Ca n’Anglada amb 12 reptes, pistes i comptador d’errors.</p>
+            <div class="links">
+              <a href="./ScapeRoomErmita/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./ScapeRoomErmita/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO · Batxillerat</span>
-                <span class="badge-alt">Història moderna</span>
-              </div>
-              <h3>voltaalmon</h3>
-            </div>
-            <p>
-              Mapa interactiu amb 27 etapes de la primera volta al món, cronologia visual i fitxes amb anàlisi de l’expedició Magallanes-Elcano.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> pensament històric, geografia, interpretació de fonts.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript, Leaflet.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./voltaalmon/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./voltaalmon/README.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>voltaalmon</h3>
+            <p>Mapa interactiu de l’expedició Magallanes-Elcano amb 27 etapes i context històric.</p>
+            <div class="links">
+              <a href="./voltaalmon/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./voltaalmon/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO</span>
-                <span class="badge-alt">Cultura clàssica</span>
-              </div>
-              <h3>Ulisses</h3>
-            </div>
-            <p>
-              Viatge d’Ulisses amb catorze parades, cites homèriques i reflexions filosòfiques sobre els grans temes de l’Odissea.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> cultura clàssica, lectura crítica, arts del llenguatge.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript, Leaflet.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./Ulisses/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./Ulisses/readme.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>Ulisses</h3>
+            <p>Ruta d’Ulisses (Odissea) amb mapa Leaflet, cites i reflexions per a cultura clàssica.</p>
+            <div class="links">
+              <a href="./Ulisses/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./Ulisses/readme.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO</span>
-                <span class="badge-alt">Exploracions atlàntiques</span>
-                <span class="badge-alert">Cal servidor local</span>
-              </div>
-              <h3>ViatgesColom</h3>
-            </div>
-            <p>
-              Reconstrucció de les quatre expedicions de Colom amb mapa animat, línia de temps sincronitzada, pestanyes temàtiques i narració amb veu.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> anàlisi de fonts, interpretació cartogràfica, debat històric.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript, Leaflet, Web Speech API.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./ViatgesColom/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./ViatgesColom/README.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>ViatgesColom</h3>
+            <p>Quatre viatges de Colom amb línia de temps i locució. Requereix servidor local.</p>
+            <div class="links">
+              <a href="./ViatgesColom/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./ViatgesColom/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO · Batxillerat</span>
-                <span class="badge-alt">Història moderna</span>
-                <span class="badge-alert">Cal servidor local</span>
-              </div>
-              <h3>ConquestaAmerica</h3>
-            </div>
-            <p>
-              Cinc conquestes castellanes amb targetes biogràfiques, mapes dinàmics, comparativa d’objectius i dificultats i locució dels episodis.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> pensament crític, anàlisi de conseqüències, interdisciplinarietat.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript, Leaflet, Web Speech API.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./ConquestaAmerica/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./ConquestaAmerica/README.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>ConquestaAmerica</h3>
+            <p>Cinc conquestes castellanes amb mapes, comparatives i narració. Requereix servidor local.</p>
+            <div class="links">
+              <a href="./ConquestaAmerica/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./ConquestaAmerica/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="category" id="cientifiques">
-        <h2><span>🔬</span>Ciències, tecnologia i matemàtiques</h2>
-        <p>Simuladors i recursos visuals per reforçar la comprensió de la taula periòdica, les configuracions electròniques i la representació de funcions.</p>
-        <div class="card-grid">
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO · Batxillerat</span>
-                <span class="badge-success">Física i química</span>
-              </div>
-              <h3>TaulaPeriodicaDinamica</h3>
-            </div>
-            <p>
-              Taula periòdica interactiva amb modes de color per famílies, blocs, electronegativitat, valència i estat físic, ideal per activitats guiades.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> classificació, interpretació de propietats, ús de dades.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./TaulaPeriodicaDinamica/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./TaulaPeriodicaDinamica/README.md" target="_blank" rel="noopener">Documentació</a>
+      <section>
+        <h2><span>🔬</span>Ciències i matemàtiques</h2>
+        <div class="grid">
+          <article>
+            <h3>TaulaPeriodicaDinamica</h3>
+            <p>Modes de color per comprendre la taula periòdica. Ideal per introduir classificacions.</p>
+            <div class="links">
+              <a href="./TaulaPeriodicaDinamica/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./TaulaPeriodicaDinamica/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">3r-4t ESO · Batxillerat</span>
-                <span class="badge-success">Física i química</span>
-              </div>
-              <h3>ConfiguracioElectronica2</h3>
-            </div>
-            <p>
-              Simulador d’ompliment d’orbitals amb feedback visual, valències, representacions circulars i connexió directa amb la taula periòdica.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> modelització, llenguatge científic, interpretació de diagrames.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./ConfiguracioElectronica2/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./ConfiguracioElectronica2/README.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>ConfiguracioElectronica2</h3>
+            <p>Simulador d’orbitals amb valències i representacions visuals per explicar l’ordre d’emplenament.</p>
+            <div class="links">
+              <a href="./ConfiguracioElectronica2/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./ConfiguracioElectronica2/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO · Batxillerat</span>
-                <span class="badge-success">Física i química</span>
-              </div>
-              <h3>ConfiguracioElectronica</h3>
-            </div>
-            <p>
-              Visualitzador amb React i TypeScript per mostrar configuracions electròniques i taula periòdica interactiva amb disseny adaptatiu.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> interpretació de models, ús de representacions, alfabetització digital.</li>
-              <li><strong>Tecnologies:</strong> React, TypeScript, Vite.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./ConfiguracioElectronica/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./ConfiguracioElectronica/README.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>ConfiguracioElectronica</h3>
+            <p>Versió React de la configuració electrònica amb disseny responsiu i taula interactiva.</p>
+            <div class="links">
+              <a href="./ConfiguracioElectronica/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./ConfiguracioElectronica/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO</span>
-                <span class="badge-success">Física i química</span>
-                <span class="badge-alt">Gamificació</span>
-              </div>
-              <h3>QuizTaulaPeriodica</h3>
-            </div>
-            <p>
-              Repte de 10 encerts consecutius sobre símbols químics amb nivells de dificultat, cronòmetre i integració opcional amb Google Sheets.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> memorització activa, gestió del temps, autoavaluació.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./QuizTaulaPeriodica/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./QuizTaulaPeriodica/README.md" target="_blank" rel="noopener">Documentació</a>
+          <article>
+            <h3>QuizTaulaPeriodica</h3>
+            <p>Repte de 10 encerts seguits amb nivells i cronòmetre. Opció de rànquing amb Google Sheets.</p>
+            <div class="links">
+              <a href="./QuizTaulaPeriodica/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./QuizTaulaPeriodica/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO · Batxillerat</span>
-                <span class="badge-success">Matemàtiques</span>
-              </div>
-              <h3>GraphMath</h3>
-            </div>
-            <p>
-              Representació de funcions matemàtiques amb D3.js, zoom, pan i múltiples gràfiques simultànies per comparar comportaments.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> raonament matemàtic, visualització, competència digital.</li>
-              <li><strong>Tecnologies:</strong> HTML, Tailwind CSS, JavaScript, D3.js.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./GraphMath/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
+          <article>
+            <h3>GraphMath</h3>
+            <p>Representació de funcions amb D3.js i controls de zoom. Perfecte per visualitzar tendències.</p>
+            <div class="links">
+              <a href="./GraphMath/index.html" target="_blank" rel="noopener">Obrir</a>
               <a href="https://felipsarroca.github.io/edu-apps/GraphMath/" target="_blank" rel="noopener">Versió publicada</a>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="category" id="competencia-digital">
-        <h2><span>🤖</span>Competència digital, IA i emprenedoria</h2>
-        <p>Jocs i simuladors per comprendre l’ús ètic de la IA, fomentar el pensament computacional i treballar l’economia social i solidària.</p>
-        <div class="card-grid">
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO</span>
-                <span class="badge-alt">Intel·ligència artificial</span>
-              </div>
-              <h3>Joc-Marc-IA</h3>
-            </div>
-            <p>
-              Classificador d’escenaris en els sis nivells d’integració humà-IA amb feedback explicatiu per treballar l’ús responsable de la tecnologia.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> ciutadania digital, anàlisi de situacions, ètica aplicada.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./Joc-Marc-IA/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./Joc-Marc-IA/README.md" target="_blank" rel="noopener">Documentació</a>
+      <section>
+        <h2><span>🤖</span>Competència digital i emprenedoria</h2>
+        <div class="grid">
+          <article>
+            <h3>Joc-Marc-IA</h3>
+            <p>Classifica escenaris segons els sis nivells d’ús de la IA i reflexiona sobre l’ètica digital.</p>
+            <div class="links">
+              <a href="./Joc-Marc-IA/index.html" target="_blank" rel="noopener">Obrir</a>
+              <a href="./Joc-Marc-IA/README.md" target="_blank" rel="noopener">Fitxa</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">ESO</span>
-                <span class="badge-alt">Pensament computacional</span>
-              </div>
-              <h3>4x15-Joc-IA</h3>
-            </div>
-            <p>
-              Joc “4 x 15” amb preguntes sobre IA, temporitzador, marcatge de progrés i pantalles de victòria o final per dinamitzar les sessions.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> cultura digital, estratègia, presa de decisions ràpida.</li>
-              <li><strong>Tecnologies:</strong> HTML, CSS, JavaScript.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./4x15-Joc-IA/index.html" target="_blank" rel="noopener">Obrir aplicació</a>
-              <a href="./4x15-Joc-IA/index.html" target="_blank" rel="noopener">Inicia la partida</a>
+          <article>
+            <h3>4x15-Joc-IA</h3>
+            <p>Partida ràpida de preguntes sobre intel·ligència artificial amb temporitzador i marcador.</p>
+            <div class="links">
+              <a href="./4x15-Joc-IA/index.html" target="_blank" rel="noopener">Obrir</a>
             </div>
           </article>
-
-          <article class="card">
-            <div class="card-header">
-              <div class="tags">
-                <span class="badge">4t ESO</span>
-                <span class="badge-alt">Economia social</span>
-                <span class="badge-alert">Cal Vite (`npm run dev`)</span>
-              </div>
-              <h3>Joc-Cooperatives</h3>
-            </div>
-            <p>
-              Avaluació gamificada amb 19 preguntes variades, sistema de pistes, cronometratge i puntuació sobre economia social i solidària.
-            </p>
-            <ul class="details">
-              <li><strong>Competències:</strong> emprenedoria social, cooperació, resolució de problemes.</li>
-              <li><strong>Tecnologies:</strong> React, TypeScript, Vite, shadcn/ui, React Query.</li>
-            </ul>
-            <div class="actions">
-              <a class="primary" href="./Joc-Cooperatives/README.md" target="_blank" rel="noopener">Instruccions d'execució</a>
-              <a href="./Joc-Cooperatives/index.html" target="_blank" rel="noopener">Estructura del projecte</a>
+          <article>
+            <h3>Joc-Cooperatives</h3>
+            <p>Qüestionari gamificat sobre economia social. Cal executar-lo amb Vite (`npm run dev`).</p>
+            <div class="links">
+              <a href="./Joc-Cooperatives/README.md" target="_blank" rel="noopener">Guia d’execució</a>
+              <a href="./Joc-Cooperatives/index.html" target="_blank" rel="noopener">Projecte</a>
             </div>
           </article>
         </div>
@@ -621,8 +259,7 @@
     </main>
 
     <footer>
-      Per adaptar cada aplicació, revisa els fitxers de dades (`*.json`, `config.js`) i controla les claus API abans de publicar. Comparteix el catàleg a
-      <a href="https://classroom.google.com/" target="_blank" rel="noopener">Google Classroom</a> o al teu espai web preferit.
+      Nota: per als projectes amb dades `fetch` serveix la carpeta amb un servidor local (p. ex. `python -m http.server`) abans d’obrir-los.
     </footer>
   </body>
 </html>
