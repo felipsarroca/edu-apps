@@ -2,57 +2,49 @@
 
 GraphMath és una aplicació web dissenyada per representar gràficament funcions matemàtiques. És una eina educativa ideal per a estudiants i professors que volen visualitzar conceptes matemàtics de manera interactiva i senzilla.
 
-<!-- Recomanació: Fes una captura de pantalla de l'aplicació i substitueix l'URL de sota per la imatge. -->
-![Captura de pantalla de GraphMath](https://via.placeholder.com/600x300.png?text=Gràfic+de+f(x)=x%5E2)
+## 🚀 Accés a l'aplicació
 
-## Característiques principals
+Pots utilitzar l'aplicació en directe a través del següent enllaç:
+
+**[Obrir GraphMath](https://felip-sarroca.github.io/edu-apps/GraphMath/)**
+
+<!-- 
+Recomanació: Fes una captura de pantalla de l'aplicació en funcionament, desa-la al repositori (per exemple, com a `screenshot.png`) i substitueix la línia de sota per la teva imatge.
+-->
+![Captura de pantalla de GraphMath](photoapp.png)
+
+## ✨ Característiques principals
 
 *   **Representació de funcions:** Introdueix qualsevol funció matemàtica (p. ex., `x^2`, `sin(x)`, `log(x)`) i visualitza'n el gràfic a l'instant.
 *   **Interfície interactiva:** Fes zoom i desplaça't pel gràfic per explorar la funció amb detall.
 *   **Visualització múltiple:** Representa diverses funcions simultàniament per comparar-les.
 *   **Disseny adaptable:** L'eina funciona correctament tant en ordinadors d'escriptori com en dispositius mòbils.
 
-## Tecnologies utilitzades
+## 🛠️ Tecnologies utilitzades
 
-Aquesta aplicació està construïda amb tecnologies web estàndard:
+Aquesta aplicació està construïda amb tecnologies web modernes:
 
 *   **HTML5:** Per a l'estructura bàsica de la pàgina.
-*   **CSS3:** Per a l'estil i el disseny visual.
-*   **JavaScript:** Per a la lògica de l'aplicació, el càlcul de les funcions i la interactivitat.
+*   **Tailwind CSS:** Per a un disseny ràpid i adaptable.
+*   **JavaScript:** Per a tota la lògica de l'aplicació.
+*   **D3.js:** Per a la creació i manipulació de les visualitzacions gràfiques.
+*   **MathJax:** Per a la representació correcta de fórmules matemàtiques en format LaTeX.
 
-El projecte està empaquetat per a producció, probablement fent ús d'eines modernes com **Vite** o **Webpack**, que optimitzen els fitxers per a un rendiment ràpid.
+El projecte està compilat per a producció, probablement amb una eina com **Vite**, que optimitza els fitxers per a un rendiment màxim.
 
-## Com utilitzar l'aplicació
+## 💻 Com utilitzar en local
 
-Com que aquest repositori conté els fitxers de producció, no necessites instal·lar res.
+Si prefereixes executar l'aplicació en local:
 
 1.  Clona o descarrega aquest repositori al teu ordinador.
 2.  Obre el fitxer `index.html` directament al teu navegador web (com Chrome, Firefox o Edge).
 
-I ja està! L'aplicació es carregarà i estarà llesta per ser utilitzada.
+L'aplicació es carregarà i estarà llesta per ser utilitzada sense necessitat d'instal·lar res.
 
-## Instruccions per a desenvolupadors
-
-Si vols modificar o contribuir al projecte, necessitaràs accés al codi font original (abans de ser compilat). Els passos habituals serien:
-
-1.  **Instal·lar les dependències:**
-    ```bash
-    npm install
-    ```
-2.  **Executar el servidor de desenvolupament:**
-    ```bash
-    npm run dev
-    ```
-3.  **Compilar per a producció:**
-    ```bash
-    npm run build
-    ```
-    Aquesta darrera comanda generaria els fitxers que actualment es troben en aquest repositori.
-
-## Llicència
+## 📄 Llicència
 
 Aquest projecte està sota la llicència MIT.
 
-## Autor
+## 👨‍💻 Autor
 
 *   **Felip Sarroca**
