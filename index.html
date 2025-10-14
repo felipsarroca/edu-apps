@@ -1,298 +1,33 @@
 <!DOCTYPE html>
 <html lang="ca">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>edu-apps · Accés ràpid</title>
-    <style>
-      :root {
-        --bg: #0f1d33;
-        --surface: #172740;
-        --surface-alt: #1f3252;
-        --text: #f1f5ff;
-        --muted: #c5cee3;
-        --accent: #7dd3fc;
-        font-family: "Segoe UI", "Inter", sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.5;
-        padding: 2.5rem 1.5rem 3rem;
-      }
-
-      header {
-        max-width: 900px;
-        margin: 0 auto 2.5rem;
-        text-align: center;
-      }
-
-      header .meta {
-        color: var(--muted);
-        font-size: 0.95rem;
-        margin-bottom: 0.5rem;
-      }
-
-      header h1 {
-        font-size: clamp(2.1rem, 4vw, 2.6rem);
-        font-weight: 700;
-        margin-bottom: 0.8rem;
-      }
-
-      header p {
-        color: var(--muted);
-        font-size: 1rem;
-      }
-
-      .license {
-        margin-top: 1.1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.6rem;
-        flex-wrap: wrap;
-      }
-
-      .license a {
-        color: var(--accent);
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .license img {
-        max-height: 38px;
-      }
-
-      main {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 2.5rem;
-      }
-
-      section h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.1rem;
-        display: flex;
-        gap: 0.6rem;
-        align-items: center;
-      }
-
-      section h2 span {
-        font-size: 1.3rem;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.2rem;
-      }
-
-      article {
-        background: linear-gradient(135deg, var(--surface), var(--surface-alt));
-        border-radius: 16px;
-        padding: 1.4rem;
-        display: grid;
-        gap: 0.8rem;
-        border: 1px solid rgba(125, 211, 252, 0.08);
-      }
-
-      article h3 {
-        font-size: 1.2rem;
-        font-weight: 700;
-      }
-
-      article p {
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-      }
-
-      .links a {
-        text-decoration: none;
-        color: var(--accent);
-        font-weight: 600;
-        font-size: 0.92rem;
-        background: rgba(125, 211, 252, 0.12);
-        padding: 0.45rem 0.9rem;
-        border-radius: 12px;
-        transition: background 0.2s ease;
-      }
-
-      .links a:hover {
-        background: rgba(125, 211, 252, 0.22);
-      }
-
-      footer {
-        max-width: 900px;
-        margin: 3.5rem auto 0;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
-
-      @media (max-width: 600px) {
-        body {
-          padding: 2rem 1.1rem 2.5rem;
-        }
-        section h2 {
-          font-size: 1.35rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <p class="meta">Aplicacions creades per Felip Sarroca amb l’assistència de ChatGPT, Gemini, Google AI Studio, Qwen, Lovable i Claude.</p>
-      <h1>Aplicacions edu-apps</h1>
-      <p>Tria la temàtica i entra directament a l’eina. Tots els projectes estan en català i pensats per a l’ESO i el batxillerat.</p>
-      <div class="license">
-        <span>Llicència</span>
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">
-          <img src="https://github.com/felipsarroca/imatges/blob/main/CC_BY-NC-SA.svg?raw=1" alt="Logotip CC BY-NC-SA 4.0" />
-        </a>
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu-Apps de Felip Sarroca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body>
+    <header class="container text-center my-5">
+        <h1>Les meves aplicacions educatives</h1>
+        <p class="lead">Una col·lecció d'eines i jocs interactius classificats per matèries.</p>
     </header>
 
-    <main>
-      <section>
-        <h2><span>📜</span>Història i cultura</h2>
-        <div class="grid">
-          <article>
-            <h3>ScapeRoomErmita</h3>
-            <p>Escape room sobre l’ermita romànica de Ca n’Anglada amb 12 reptes, pistes i comptador d’errors.</p>
-            <div class="links">
-              <a href="./ScapeRoomErmita/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./ScapeRoomErmita/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>voltaalmon</h3>
-            <p>Mapa interactiu de l’expedició Magallanes-Elcano amb 27 etapes i context històric.</p>
-            <div class="links">
-              <a href="./voltaalmon/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./voltaalmon/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>Ulisses</h3>
-            <p>Ruta d’Ulisses (Odissea) amb mapa Leaflet, cites i reflexions per a cultura clàssica.</p>
-            <div class="links">
-              <a href="./Ulisses/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./Ulisses/readme.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>ViatgesColom</h3>
-            <p>Quatre viatges de Colom amb línia de temps i locució. Requereix servidor local.</p>
-            <div class="links">
-              <a href="./ViatgesColom/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./ViatgesColom/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>ConquestaAmerica</h3>
-            <p>Cinc conquestes castellanes amb mapes, comparatives i narració. Requereix servidor local.</p>
-            <div class="links">
-              <a href="./ConquestaAmerica/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./ConquestaAmerica/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section>
-        <h2><span>🔬</span>Ciències i matemàtiques</h2>
-        <div class="grid">
-          <article>
-            <h3>TaulaPeriodicaDinamica</h3>
-            <p>Modes de color per comprendre la taula periòdica. Ideal per introduir classificacions.</p>
-            <div class="links">
-              <a href="./TaulaPeriodicaDinamica/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./TaulaPeriodicaDinamica/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>ConfiguracioElectronica2</h3>
-            <p>Simulador d’orbitals amb valències i representacions visuals per explicar l’ordre d’emplenament.</p>
-            <div class="links">
-              <a href="./ConfiguracioElectronica2/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./ConfiguracioElectronica2/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>ConfiguracioElectronica</h3>
-            <p>Versió React de la configuració electrònica amb disseny responsiu i taula interactiva.</p>
-            <div class="links">
-              <a href="./ConfiguracioElectronica/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./ConfiguracioElectronica/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>QuizTaulaPeriodica</h3>
-            <p>Repte de 10 encerts seguits amb nivells i cronòmetre. Opció de rànquing amb Google Sheets.</p>
-            <div class="links">
-              <a href="./QuizTaulaPeriodica/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./QuizTaulaPeriodica/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>GraphMath</h3>
-            <p>Representació de funcions amb D3.js i controls de zoom. Perfecte per visualitzar tendències.</p>
-            <div class="links">
-              <a href="./GraphMath/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="https://felipsarroca.github.io/edu-apps/GraphMath/" target="_blank" rel="noopener">Versió publicada</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section>
-        <h2><span>🤖</span>Competència digital i emprenedoria</h2>
-        <div class="grid">
-          <article>
-            <h3>Joc-Marc-IA</h3>
-            <p>Classifica escenaris segons els sis nivells d’ús de la IA i reflexiona sobre l’ètica digital.</p>
-            <div class="links">
-              <a href="./Joc-Marc-IA/index.html" target="_blank" rel="noopener">Obrir</a>
-              <a href="./Joc-Marc-IA/README.md" target="_blank" rel="noopener">Fitxa</a>
-            </div>
-          </article>
-          <article>
-            <h3>4x15-Joc-IA</h3>
-            <p>Partida ràpida de preguntes sobre intel·ligència artificial amb temporitzador i marcador.</p>
-            <div class="links">
-              <a href="./4x15-Joc-IA/index.html" target="_blank" rel="noopener">Obrir</a>
-            </div>
-          </article>
-          <article>
-            <h3>Joc-Cooperatives</h3>
-            <p>Qüestionari gamificat sobre economia social. Cal executar-lo amb Vite (`npm run dev`).</p>
-            <div class="links">
-              <a href="./Joc-Cooperatives/README.md" target="_blank" rel="noopener">Guia d’execució</a>
-              <a href="./Joc-Cooperatives/index.html" target="_blank" rel="noopener">Projecte</a>
-            </div>
-          </article>
-        </div>
-      </section>
+    <main id="apps-container" class="container">
+        <!-- Les seccions i targetes de les apps es generaran aquí amb JavaScript -->
     </main>
 
-    <footer>
-      Nota: per als projectes amb dades `fetch` serveix la carpeta amb un servidor local (p. ex. `python -m http.server`) abans d’obrir-los.
+    <footer class="container text-center py-4 mt-5 border-top">
+        <p class="mb-1">Aplicacions creades per Felip Sarroca amb l'assistència de la IA</p>
+        <p>
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-muted">
+                <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="Llicència Creative Commons" class="license-icon">
+                Obres sota llicència CC BY-NC-SA 4.0
+            </a>
+        </p>
     </footer>
-  </body>
+
+    <script src="script.js"></script>
+</body>
 </html>
