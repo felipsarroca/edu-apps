@@ -2,90 +2,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const apps = [
         // Història
         { 
-            name: 'La Conquesta d'Amèrica', 
+            name: "La Conquesta d'Amèrica", 
             path: 'ConquestaAmerica/', 
             category: 'Història', 
-            description: 'Un recorregut interactiu per les expedicions dels conqueridors.' 
+            description: "Un recorregut interactiu per les expedicions dels conqueridors." 
         },
         { 
-            name: 'Els Viatges de Colom', 
+            name: "Els Viatges de Colom", 
             path: 'ViatgesColom/', 
             category: 'Història', 
-            description: 'Explora els quatre viatges de Cristòfor Colom al Nou Món.' 
+            description: "Explora els quatre viatges de Cristòfor Colom al Nou Món." 
         },
         { 
-            name: 'El Viatge d'Ulisses', 
+            name: "El Viatge d'Ulisses", 
             path: 'Ulisses/', 
             category: 'Història', 
-            description: 'Una adaptació senzilla de l'Odissea d'Homer.' 
+            description: "Una adaptació senzilla de l'Odissea d'Homer." 
         },
         { 
-            name: 'La Volta al Món', 
+            name: "La Volta al Món", 
             path: 'voltaalmon/', 
             category: 'Història', 
-            description: 'Segueix la primera circumnavegació de la història.' 
+            description: "Segueix la primera circumnavegació de la història." 
         },
 
         // Química
         { 
-            name: 'Configuració Electrònica', 
+            name: "Configuració Electrònica", 
             path: 'ConfiguracioElectronica/', 
             category: 'Química', 
-            description: 'Aprèn a distribuir els electrons en els orbitals atòmics.' 
+            description: "Aprèn a distribuir els electrons en els orbitals atòmics." 
         },
         { 
-            name: 'Configuració Electrònica 2', 
+            name: "Configuració Electrònica 2", 
             path: 'ConfiguracioElectronica2/', 
             category: 'Química', 
-            description: 'Versió millorada per practicar la configuració electrònica.' 
+            description: "Versió millorada per practicar la configuració electrònica." 
         },
         { 
-            name: 'Quiz de la Taula Periòdica', 
+            name: "Quiz de la Taula Periòdica", 
             path: 'QuizTaulaPeriodica/', 
             category: 'Química', 
-            description: 'Posa a prova els teus coneixements sobre els elements.' 
+            description: "Posa a prova els teus coneixements sobre els elements." 
         },
         { 
-            name: 'Taula Periòdica Dinàmica', 
+            name: "Taula Periòdica Dinàmica", 
             path: 'TaulaPeriodicaDinamica/', 
             category: 'Química', 
-            description: 'Una taula periòdica interactiva amb múltiples visualitzacions.' 
+            description: "Una taula periòdica interactiva amb múltiples visualitzacions." 
         },
 
         // Matemàtiques
         { 
-            name: 'GraphMath', 
+            name: "GraphMath", 
             path: 'GraphMath/', 
             category: 'Matemàtiques', 
-            description: 'Eina per a representar gràficament funcions matemàtiques.' 
+            description: "Eina per a representar gràficament funcions matemàtiques." 
         },
 
         // Economia i Emprenedoria
         { 
-            name: 'Joc de Cooperatives', 
+            name: "Joc de Cooperatives", 
             path: 'Joc-Cooperatives/', 
             category: 'Economia i Emprenedoria', 
-            description: 'Un joc per entendre el funcionament de les cooperatives.' 
+            description: "Un joc per entendre el funcionament de les cooperatives." 
         },
 
         // Altres
         { 
-            name: 'Joc 4x15 amb IA', 
+            name: "Joc 4x15 amb IA", 
             path: '4x15-Joc-IA/', 
             category: 'Altres', 
-            description: 'Joc de preguntes i respostes amb un component d'IA.' 
+            description: "Joc de preguntes i respostes amb un component d'IA." 
         },
         { 
-            name: 'Aventura Gràfica (IA)', 
+            name: "Aventura Gràfica (IA)", 
             path: 'Joc-Marc-IA/', 
             category: 'Altres', 
-            description: 'Una petita aventura conversacional assistida per IA.' 
+            description: "Una petita aventura conversacional assistida per IA." 
         },
         { 
-            name: 'Scape Room: L'Ermita', 
+            name: "Scape Room: L'Ermita", 
             path: 'ScapeRoomErmita/', 
             category: 'Altres', 
-            description: 'Resol els enigmes per escapar de l'ermita.' 
+            description: "Resol els enigmes per escapar de l'ermita." 
         }
     ];
 
