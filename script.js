@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Joc de preguntes i respostes amb un component d'IA." 
         },
         { 
-            name: "Aventura Gràfica (IA)", 
+            name: "Joc dels Marcs d'integració de la IA a l'aula", 
             path: 'Joc-Marc-IA/', 
             category: 'Altres', 
-            description: "Una petita aventura conversacional assistida per IA." 
+            description: "Joc amb situacions per esbrinar el grau d'ús que es fa de la IA en diferents activitats escolars" 
         },
         { 
-            name: "Scape Room: L'Ermita", 
+            name: "Scape Room a l'ermita de Ca n'Anglada", 
             path: 'ScapeRoomErmita/', 
             category: 'Altres', 
             description: "Resol els enigmes per escapar de l'ermita." 
