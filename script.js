@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Scape Room a l'ermita de Ca n'Anglada", 
             path: 'ScapeRoomErmita/', 
             category: 'Altres', 
-            description: "Resol els enigmes per escapar de l'ermita." 
+            description: "Resol els enigmes per trobar la relíquia amagada." 
         }
     ];
 
