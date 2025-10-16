@@ -63,10 +63,34 @@
           </div>
 
           <div class="grids">
-            <div class="selection-grid">
-              <h3>Selecció de factors</h3>
-              <div id="selection-panel-free" class="selection"></div>
-            </div>
+            <section class="breakdown-grid">
+              <h3>Descomposició</h3>
+              <div id="breakdown-free" class="breakdown"></div>
+            </section>
+            <section class="builder-grid">
+              <h3>Ara calculem el MCD i el mcm</h3>
+              <p class="builder-hint">Arrossega els factors des de la descomposició o la botonera. Repeteix un factor per indicar quadrat, cub, etc.</p>
+              <div class="builder-panels">
+                <article class="result-drop" data-kind="mcd">
+                  <div class="drop-row">
+                    <span class="drop-label">MCD =</span>
+                    <div class="drop-strip" id="mcd-drop-free" data-target="mcd"></div>
+                    <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcd">Factors comuns amb el mínim exponent. (Han d’aparèixer a tots els nombres.)</p>
+                  <p class="drop-expression" id="mcd-expression-free"></p>
+                </article>
+                <article class="result-drop" data-kind="mcm">
+                  <div class="drop-row">
+                    <span class="drop-label">mcm =</span>
+                    <div class="drop-strip" id="mcm-drop-free" data-target="mcm"></div>
+                    <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcm">Factors comuns i no comuns amb el màxim exponent. (Inclou tots els factors necessaris.)</p>
+                  <p class="drop-expression" id="mcm-expression-free"></p>
+                </article>
+              </div>
+            </section>
           </div>
 
           <div class="bottom-actions">
@@ -125,10 +149,34 @@
           </div>
 
           <div class="grids">
-            <div class="selection-grid">
-              <h3>Selecció de factors</h3>
-              <div id="selection-panel-practice" class="selection"></div>
-            </div>
+            <section class="breakdown-grid">
+              <h3>Descomposició</h3>
+              <div id="breakdown-practice" class="breakdown"></div>
+            </section>
+            <section class="builder-grid">
+              <h3>Ara calculem el MCD i el mcm</h3>
+              <p class="builder-hint">Arrossega els factors que necessites. Repeteix-los per indicar quadrats, cubes o altres exponents.</p>
+              <div class="builder-panels">
+                <article class="result-drop" data-kind="mcd">
+                  <div class="drop-row">
+                    <span class="drop-label">MCD =</span>
+                    <div class="drop-strip" id="mcd-drop-practice" data-target="mcd"></div>
+                    <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcd">Selecciona els factors comuns de tots els nombres amb l’exponent més petit.</p>
+                  <p class="drop-expression" id="mcd-expression-practice"></p>
+                </article>
+                <article class="result-drop" data-kind="mcm">
+                  <div class="drop-row">
+                    <span class="drop-label">mcm =</span>
+                    <div class="drop-strip" id="mcm-drop-practice" data-target="mcm"></div>
+                    <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcm">Inclou els factors comuns i no comuns amb l’exponent més gran.</p>
+                  <p class="drop-expression" id="mcm-expression-practice"></p>
+                </article>
+              </div>
+            </section>
           </div>
 
           <div class="bottom-actions">
@@ -180,10 +228,34 @@
           </div>
 
           <div class="grids">
-            <div class="selection-grid">
-              <h3>Selecció de factors</h3>
-              <div id="selection-panel-problem" class="selection"></div>
-            </div>
+            <section class="breakdown-grid">
+              <h3>Descomposició</h3>
+              <div id="breakdown-problem" class="breakdown"></div>
+            </section>
+            <section class="builder-grid">
+              <h3>Ara calculem el MCD i el mcm</h3>
+              <p class="builder-hint">Arrossega els factors segons el que demana el problema. Repeteix-los per representar exponents.</p>
+              <div class="builder-panels">
+                <article class="result-drop" data-kind="mcd">
+                  <div class="drop-row">
+                    <span class="drop-label">MCD =</span>
+                    <div class="drop-strip" id="mcd-drop-problem" data-target="mcd"></div>
+                    <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcd">Factors comuns amb l’exponent mínim (els que apareixen a tots els nombres).</p>
+                  <p class="drop-expression" id="mcd-expression-problem"></p>
+                </article>
+                <article class="result-drop" data-kind="mcm">
+                  <div class="drop-row">
+                    <span class="drop-label">mcm =</span>
+                    <div class="drop-strip" id="mcm-drop-problem" data-target="mcm"></div>
+                    <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcm">Factors comuns i no comuns amb l’exponent màxim (perquè tots els nombres quedin coberts).</p>
+                  <p class="drop-expression" id="mcm-expression-problem"></p>
+                </article>
+              </div>
+            </section>
           </div>
 
           <div class="bottom-actions">

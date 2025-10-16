@@ -10,6 +10,62 @@ const scopeFromMode = (mode) => {
   }
 };
 
+const modeFromScope = {
+  free: 'lliure',
+  practice: 'practica',
+  problem: 'problemes',
+};
+
+const SUPER = {
+  0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
+  5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹',
+  '-': '⁻',
+};
+
+const toSuperscript = (value) => String(value).split('').map((digit) => SUPER[digit] ?? '').join('');
+
+const formatExponent = (prime, power) => (power > 1 ? `${prime}${toSuperscript(power)}` : String(prime));
+
+const formatProduct = (map) => {
+  const entries = Object.entries(map)
+    .map(([prime, power]) => ({ prime: Number(prime), power }))
+    .filter(({ power }) => power > 0)
+    .sort((a, b) => a.prime - b.prime);
+  if (!entries.length) return '1';
+  return entries.map(({ prime, power }) => formatExponent(prime, power)).join(' · ');
+};
+
+const aggregateFactors = (list) => {
+  const collected = {};
+  list.forEach(({ prime, power }) => {
+    const p = Number(prime);
+    const e = Number(power) || 1;
+    collected[p] = (collected[p] || 0) + e;
+  });
+  return collected;
+};
+
+const parseFactorData = (event) => {
+  const raw = event.dataTransfer?.getData('application/x-factor');
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.prime) {
+        return {
+          prime: Number(parsed.prime),
+          power: Number(parsed.power) || 1,
+        };
+      }
+    } catch {
+      // Ignore malformed payloads
+    }
+  }
+  const text = event.dataTransfer?.getData('text/plain');
+  const prime = Number(text);
+  if (!Number.isFinite(prime) || prime < 2) return null;
+  return { prime, power: 1 };
+};
+
 const toast = (message) => {
   const node = $('#toast');
   if (!node) return;
@@ -26,7 +82,10 @@ const state = {
   residues: [],
   exponents: [],
   primes: [],
-  selection: {},
+  results: {
+    mcd: [],
+    mcm: [],
+  },
   data: {
     easy: null,
     medium: null,
@@ -36,126 +95,16 @@ const state = {
   currentProblem: null,
 };
 
+const resetResults = () => {
+  state.results.mcd = [];
+  state.results.mcm = [];
+};
+
 const resetWorkspace = () => {
   state.residues = state.numbers.slice();
   state.exponents = state.numbers.map(() => ({}));
   state.primes = [];
-  state.selection = {};
-};
-
-const recomputePrimeSet = () => {
-  const set = new Set();
-  state.exponents.forEach((row) => {
-    Object.keys(row).forEach((p) => set.add(Number(p)));
-  });
-  state.primes = Array.from(set).sort((a, b) => a - b);
-  // If some selection exceeds the new range, reset it.
-  const ranges = exponentRanges();
-  Object.keys(state.selection).forEach((key) => {
-    const p = Number(key);
-    const range = ranges[p];
-    if (!range) {
-      delete state.selection[p];
-      return;
-    }
-    const allowed = state.goal === 'mcd' ? range.min : range.max;
-    if (state.selection[p] > allowed) delete state.selection[p];
-  });
-};
-
-const smallestPrimeDivisor = (n) => {
-  if (n < 2) return null;
-  if (n % 2 === 0) return 2;
-  let p = 3;
-  while (p * p <= n) {
-    if (n % p === 0) return p;
-    p += 2;
-  }
-  return n;
-};
-
-const exponentRanges = () => {
-  const ranges = {};
-  state.primes.forEach((p) => {
-    let min = Infinity;
-    let max = 0;
-    state.exponents.forEach((row) => {
-      const value = row[p] ?? 0;
-      if (value < min) min = value;
-      if (value > max) max = value;
-    });
-    ranges[p] = { min, max };
-  });
-  return ranges;
-};
-
-const requiredPrimes = () => {
-  const ranges = exponentRanges();
-  const list = [];
-  Object.keys(ranges).forEach((key) => {
-    const p = Number(key);
-    if (state.goal === 'mcd' && ranges[p].min > 0) list.push(p);
-    if (state.goal === 'mcm' && ranges[p].max > 0) list.push(p);
-  });
-  return list;
-};
-
-const selectionComplete = () => {
-  const needed = requiredPrimes();
-  return needed.every((p) => state.selection[p] != null);
-};
-
-const validateSelection = () => {
-  if (!selectionComplete()) {
-    toast('Falta completar la selecció de factors.');
-    return null;
-  }
-  const ranges = exponentRanges();
-  let correct = true;
-  let result = 1;
-  Object.entries(state.selection).forEach(([primeStr, exponent]) => {
-    const prime = Number(primeStr);
-    const target = state.goal === 'mcd' ? ranges[prime].min : ranges[prime].max;
-    if (exponent !== target) correct = false;
-    result *= Math.pow(prime, exponent);
-  });
-  return { correct, result };
-};
-
-const primePalette = () => {
-  if (!primePalette.cache) primePalette.cache = new Map();
-  return primePalette.cache;
-};
-
-const primeColor = (p) => {
-  const cache = primePalette();
-  if (cache.has(p)) return cache.get(p);
-  const hue = (cache.size * 37) % 360;
-  const color = `hsl(${hue}deg 80% 65%)`;
-  cache.set(p, color);
-  return color;
-};
-
-const primesUpTo = (limitValue) => {
-  const limit = Math.max(2, Math.floor(limitValue));
-  const sieve = new Uint8Array(limit + 1);
-  const out = [];
-  for (let i = 2; i <= limit; i += 1) {
-    if (!sieve[i]) {
-      out.push(i);
-      for (let j = i * i; j <= limit; j += i) sieve[j] = 1;
-    }
-  }
-  return out;
-};
-
-const currentScope = () => scopeFromMode(state.mode);
-
-const syncPanels = () => {
-  const panels = $$('.panel');
-  panels.forEach((panel) => panel.classList.remove('visible'));
-  const activePanel = $(`#panel-${state.mode}`);
-  if (activePanel) activePanel.classList.add('visible');
+  resetResults();
 };
 
 const syncModeButtons = () => {
@@ -164,8 +113,14 @@ const syncModeButtons = () => {
   });
 };
 
+const syncPanels = () => {
+  $$('.panel').forEach((panel) => panel.classList.remove('visible'));
+  const active = $(`#panel-${state.mode}`);
+  if (active) active.classList.add('visible');
+};
+
 const syncGoalButtons = () => {
-  $$('.toggle.goal').forEach((button) => {
+  $$('.goal').forEach((button) => {
     button.classList.toggle('selected', button.dataset.goal === state.goal);
   });
 };
@@ -174,48 +129,74 @@ const setMode = (mode) => {
   state.mode = mode;
   syncModeButtons();
   syncPanels();
+  highlightDrops(scopeFromMode(mode));
 };
 
 const setGoal = (goal) => {
   state.goal = goal;
   syncGoalButtons();
-  state.selection = {};
-  const scope = currentScope();
-  renderSelectionPanel(scope);
-  const resultNode = $(`#result-${scope}`);
-  if (resultNode) resultNode.textContent = '';
+  highlightDrops(scopeFromMode(state.mode));
 };
+
+const recomputePrimeSet = () => {
+  const set = new Set();
+  state.exponents.forEach((row) => {
+    Object.keys(row).forEach((prime) => set.add(Number(prime)));
+  });
+  state.primes = Array.from(set).sort((a, b) => a - b);
+};
+
+const exponentRanges = () => {
+  const ranges = {};
+  state.primes.forEach((prime) => {
+    let min = Infinity;
+    let max = 0;
+    state.exponents.forEach((row) => {
+      const e = row[prime] ?? 0;
+      if (e < min) min = e;
+      if (e > max) max = e;
+    });
+    ranges[prime] = { min, max };
+  });
+  return ranges;
+};
+
+const smallestPrimeDivisor = (value) => {
+  if (value < 2) return null;
+  if (value % 2 === 0) return 2;
+  let candidate = 3;
+  while (candidate * candidate <= value) {
+    if (value % candidate === 0) return candidate;
+    candidate += 2;
+  }
+  return value;
+};
+
+const modePanel = (scope) => $(`#panel-${modeFromScope[scope]}`);
+
+const highlightDrops = (scope) => {
+  const panel = modePanel(scope);
+  if (!panel) return;
+  panel.querySelectorAll('.result-drop').forEach((drop) => {
+    drop.classList.toggle('focused', drop.dataset.kind === state.goal);
+  });
+};
+
+const createFactorPayload = (prime, power = 1) => JSON.stringify({ prime, power });
 
 const makeUsedPrimeChip = (prime) => {
   const chip = document.createElement('span');
   chip.className = 'used-prime';
   chip.textContent = String(prime);
-  chip.style.background = primeColor(prime);
+  chip.draggable = true;
+  chip.addEventListener('dragstart', (event) => {
+    event.dataTransfer?.setData('text/plain', String(prime));
+    event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, 1));
+  });
   return chip;
 };
 
-const renderPrimePalette = (scope) => {
-  const container = $(`#prime-palette-${scope}`);
-  if (!container) return;
-  container.innerHTML = '';
-  if (state.numbers.length === 0) return;
-  const maxNumber = Math.max(...state.numbers);
-  const primes = primesUpTo(maxNumber);
-  primes.forEach((prime) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'prime-chip';
-    button.textContent = String(prime);
-    button.style.background = primeColor(prime);
-    button.draggable = true;
-    button.addEventListener('dragstart', (event) => {
-      event.dataTransfer?.setData('text/plain', String(prime));
-    });
-    container.appendChild(button);
-  });
-};
-
-const attachDropzone = (zone, scope, rowIndex) => {
+const attachLaneDrop = (zone, scope, rowIndex) => {
   zone.addEventListener('dragover', (event) => {
     event.preventDefault();
     zone.classList.add('over');
@@ -224,19 +205,19 @@ const attachDropzone = (zone, scope, rowIndex) => {
   zone.addEventListener('drop', (event) => {
     event.preventDefault();
     zone.classList.remove('over');
-    const data = event.dataTransfer?.getData('text/plain');
-    if (!data) return;
-    const prime = Number(data);
+    const factor = parseFactorData(event);
+    if (!factor) return;
+    const { prime } = factor;
     const current = state.residues[rowIndex];
-    if (current <= 1) {
+    if (!current || current <= 1) {
       toast('Aquest nombre ja està completat.');
       return;
     }
     const required = smallestPrimeDivisor(current);
     if (prime !== required) {
-      toast('Has d’arrossegar el menor factor primer.');
+      toast('Has d’arrossegar el factor primer més petit disponible.');
       zone.classList.add('wiggle');
-      setTimeout(() => zone.classList.remove('wiggle'), 280);
+      setTimeout(() => zone.classList.remove('wiggle'), 250);
       return;
     }
     if (current % prime !== 0) {
@@ -244,46 +225,45 @@ const attachDropzone = (zone, scope, rowIndex) => {
       return;
     }
     state.residues[rowIndex] = current / prime;
-    state.exponents[rowIndex][prime] = (state.exponents[rowIndex][prime] ?? 0) + 1;
+    state.exponents[rowIndex][prime] = (state.exponents[rowIndex][prime] || 0) + 1;
     recomputePrimeSet();
+    const scopeName = scope;
+    const cleared = clearResultSelections(scopeName);
+    if (cleared) toast('S’han buidat les seleccions de factors per mantenir la coherència.');
     zone.replaceChildren(makeUsedPrimeChip(prime));
-    const stepsContainer = zone.closest('.steps');
-    if (stepsContainer) {
-      stepsContainer.appendChild(makeStepRow(scope, rowIndex, state.residues[rowIndex]));
+    const steps = zone.closest('.steps');
+    if (steps) {
+      steps.appendChild(makeStepRow(scopeName, rowIndex, state.residues[rowIndex]));
     }
-    renderSelectionPanel(scope);
-    renderFactorColumns(scope);
+    renderFactorColumns(scopeName);
+    renderBreakdown(scopeName);
+    renderResultDrop(scopeName, 'mcd');
+    renderResultDrop(scopeName, 'mcm');
   });
 };
 
 const makeStepRow = (scope, rowIndex, value) => {
   const row = document.createElement('div');
   row.className = 'step-row';
-
   const valueNode = document.createElement('div');
   valueNode.className = 'value';
   valueNode.textContent = String(value);
-
   const divider = document.createElement('div');
   divider.className = 'divider';
-
   const slot = document.createElement('div');
   slot.className = 'slot';
-
   if (value > 1) {
     const dropzone = document.createElement('div');
     dropzone.className = 'dropzone';
     dropzone.textContent = 'Arrossega el mínim primer';
-    attachDropzone(dropzone, scope, rowIndex);
+    attachLaneDrop(dropzone, scope, rowIndex);
     slot.appendChild(dropzone);
   } else {
     const done = document.createElement('span');
     done.className = 'chip-mini done-chip';
     done.textContent = '1';
-    done.style.background = 'rgba(123, 255, 202, 0.35)';
     slot.appendChild(done);
   }
-
   row.appendChild(valueNode);
   row.appendChild(divider);
   row.appendChild(slot);
@@ -309,108 +289,123 @@ const renderLanes = (scope) => {
   });
 };
 
-const renderSelectionPanel = (scope) => {
-  const container = $(`#selection-panel-${scope}`);
+const makeFactorChip = (prime, power) => {
+  const chip = document.createElement('button');
+  chip.type = 'button';
+  chip.className = 'factor-chip';
+  chip.textContent = formatExponent(prime, power);
+  chip.title = power > 1 ? `${prime} elevat a ${power}` : `Factor ${prime}`;
+  chip.draggable = true;
+  chip.addEventListener('dragstart', (event) => {
+    event.dataTransfer?.setData('text/plain', String(prime));
+    event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, power));
+  });
+  return chip;
+};
+
+const renderBreakdown = (scope) => {
+  const container = $(`#breakdown-${scope}`);
   if (!container) return;
   container.innerHTML = '';
-  const primesNeeded = requiredPrimes();
-  if (primesNeeded.length === 0) {
+  if (!state.numbers.length) {
     const hint = document.createElement('p');
     hint.className = 'hint';
-    hint.textContent = 'Descompon els nombres per poder escollir els factors finals.';
+    hint.textContent = 'Introdueix o carrega nombres per mostrar-ne la descomposició.';
     container.appendChild(hint);
     return;
   }
-  const ranges = exponentRanges();
-  primesNeeded.forEach((prime) => {
-    const row = document.createElement('div');
-    row.className = 'factor-row';
-    const label = document.createElement('div');
-    label.className = 'name';
-    const chip = document.createElement('span');
-    chip.className = 'chip-mini';
-    chip.textContent = String(prime);
-    chip.style.background = primeColor(prime);
-    label.appendChild(chip);
-    const rangeArea = document.createElement('div');
-    rangeArea.className = 'range';
-    const input = document.createElement('input');
-    const minAllowed = 0;
-    const maxAllowed = state.goal === 'mcd' ? ranges[prime].min : ranges[prime].max;
-    input.type = 'number';
-    input.min = String(minAllowed);
-    input.max = String(maxAllowed);
-    input.value = state.selection[prime] ?? '';
-    input.placeholder = `0..${maxAllowed}`;
-    input.addEventListener('input', () => {
-      const value = Number(input.value);
-      if (Number.isNaN(value)) {
-        delete state.selection[prime];
-        return;
-      }
-      if (value < minAllowed || value > maxAllowed) {
-        toast('Valor fora de l’interval permès.');
-        input.classList.add('wiggle');
-        setTimeout(() => input.classList.remove('wiggle'), 280);
-        delete state.selection[prime];
-        return;
-      }
-      state.selection[prime] = value;
-    });
-    const hint = document.createElement('span');
-    hint.className = 'hint';
-    hint.textContent = state.goal === 'mcd'
-      ? 'Escull l’exponent mínim dels factors comuns.'
-      : 'Escull l’exponent màxim dels factors comuns i no comuns.';
-    rangeArea.appendChild(input);
-    rangeArea.appendChild(hint);
-    row.appendChild(label);
-    row.appendChild(rangeArea);
-    container.appendChild(row);
+  state.numbers.forEach((original, index) => {
+    const card = document.createElement('article');
+    card.className = 'breakdown-card';
+    const eq = document.createElement('div');
+    eq.className = 'breakdown-eq';
+    const numberNode = document.createElement('span');
+    numberNode.className = 'breakdown-number';
+    numberNode.textContent = String(original);
+    const equal = document.createElement('span');
+    equal.textContent = '=';
+    const factors = document.createElement('span');
+    factors.className = 'breakdown-factors';
+    const row = state.exponents[index];
+    const remainder = state.residues[index];
+    let expression = formatProduct(row);
+    if (expression === '1') {
+      expression = remainder > 1 ? '...' : '1';
+    } else if (remainder > 1) {
+      expression = `${expression} · ...`;
+    }
+    factors.textContent = expression;
+    eq.appendChild(numberNode);
+    eq.appendChild(equal);
+    eq.appendChild(factors);
+    card.appendChild(eq);
+    if (remainder > 1) {
+      const pending = document.createElement('p');
+      pending.className = 'hint';
+      pending.textContent = `Encara falta descompondre: ${remainder}`;
+      card.appendChild(pending);
+    }
+    const chips = document.createElement('div');
+    chips.className = 'breakdown-chips';
+    const primes = Object.keys(row).map(Number).sort((a, b) => a - b);
+    if (!primes.length) {
+      const placeholder = document.createElement('span');
+      placeholder.className = 'drop-placeholder';
+      placeholder.textContent = 'Cap factor registrat encara.';
+      chips.appendChild(placeholder);
+    } else {
+      primes.forEach((prime) => {
+        chips.appendChild(makeFactorChip(prime, row[prime]));
+      });
+    }
+    card.appendChild(chips);
+    container.appendChild(card);
   });
 };
 
 const renderFactorColumns = (scope) => {
-  const container = $(`#factor-columns-${scope}`);
+  const container = document.getElementById(`factor-columns-${scope}`);
   if (!container) return;
   container.innerHTML = '';
-  if (state.primes.length === 0) {
+  if (!state.primes.length) {
     const hint = document.createElement('p');
     hint.className = 'hint';
-    hint.textContent = 'Quan vagis descomponent, veuràs aquí els factors alineats per columnes.';
+    hint.textContent = 'Quan descomponguis, aquí veureu els factors ordenats per columnes.';
     container.appendChild(hint);
     return;
   }
   const grid = document.createElement('div');
   grid.className = 'factor-grid';
-  const templateColumns = ['minmax(4.5rem, auto)', ...state.primes.map(() => 'minmax(3.2rem, 1fr)')].join(' ');
-  grid.style.gridTemplateColumns = templateColumns;
-
-  const blankHeader = document.createElement('div');
-  blankHeader.className = 'header';
-  blankHeader.textContent = '';
-  grid.appendChild(blankHeader);
+  const template = ['minmax(4.5rem, auto)', ...state.primes.map(() => 'minmax(3.2rem, 1fr)')].join(' ');
+  grid.style.gridTemplateColumns = template;
+  const empty = document.createElement('div');
+  empty.className = 'header';
+  grid.appendChild(empty);
   state.primes.forEach((prime) => {
     const header = document.createElement('div');
     header.className = 'header';
     header.textContent = String(prime);
     grid.appendChild(header);
   });
-
   state.numbers.forEach((number, rowIndex) => {
     const numCell = document.createElement('div');
     numCell.className = 'numcell';
     numCell.textContent = String(number);
     grid.appendChild(numCell);
+    const row = state.exponents[rowIndex];
     state.primes.forEach((prime) => {
       const cell = document.createElement('div');
       cell.className = 'cell';
-      const exponent = state.exponents[rowIndex][prime] ?? 0;
+      const exponent = row[prime] ?? 0;
       for (let i = 0; i < exponent; i += 1) {
         const chip = document.createElement('span');
         chip.className = 'chip-mini';
         chip.textContent = String(prime);
-        chip.style.background = primeColor(prime);
+        chip.draggable = true;
+        chip.addEventListener('dragstart', (event) => {
+          event.dataTransfer?.setData('text/plain', String(prime));
+          event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, 1));
+        });
         cell.appendChild(chip);
       }
       grid.appendChild(cell);
@@ -419,19 +414,198 @@ const renderFactorColumns = (scope) => {
   container.appendChild(grid);
 };
 
+const clearResultSelections = (scope) => {
+  let cleared = false;
+  ['mcd', 'mcm'].forEach((type) => {
+    if (state.results[type].length) {
+      state.results[type] = [];
+      renderResultDrop(scope, type);
+      cleared = true;
+    }
+  });
+  const output = document.getElementById(`result-${scope}`);
+  if (output) output.textContent = '';
+  return cleared;
+};
+
+const ensureResultDrop = (scope, type) => {
+  const strip = document.getElementById(`${type}-drop-${scope}`);
+  if (!strip || strip.dataset.wired) return;
+  strip.dataset.wired = 'true';
+  strip.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    strip.classList.add('over');
+  });
+  strip.addEventListener('dragleave', () => strip.classList.remove('over'));
+  strip.addEventListener('drop', (event) => {
+    event.preventDefault();
+    strip.classList.remove('over');
+    const factor = parseFactorData(event);
+    if (!factor) return;
+    state.results[type].push(factor);
+    renderResultDrop(scope, type);
+  });
+};
+
+const ensureClearButton = (scope, type) => {
+  const panel = modePanel(scope);
+  if (!panel) return;
+  const button = panel.querySelector(`.clear-drop[data-target="${type}"]`);
+  if (!button || button.dataset.bound) return;
+  button.dataset.bound = 'true';
+  button.addEventListener('click', () => {
+    state.results[type] = [];
+    renderResultDrop(scope, type);
+    const output = document.getElementById(`result-${scope}`);
+    if (output) output.textContent = '';
+  });
+};
+
+const renderResultDrop = (scope, type) => {
+  ensureResultDrop(scope, type);
+  ensureClearButton(scope, type);
+  const strip = document.getElementById(`${type}-drop-${scope}`);
+  const expressionNode = document.getElementById(`${type}-expression-${scope}`);
+  const dropCard = modePanel(scope)?.querySelector(`.result-drop[data-kind="${type}"]`);
+  if (!strip || !expressionNode) return;
+  strip.innerHTML = '';
+  if (dropCard) dropCard.classList.remove('ok', 'error');
+  const list = state.results[type];
+  if (!list.length) {
+    const placeholder = document.createElement('span');
+    placeholder.className = 'drop-placeholder';
+    placeholder.textContent = 'Arrossega factors aquí';
+    strip.appendChild(placeholder);
+    expressionNode.textContent = '';
+    return;
+  }
+  list.forEach((item, index) => {
+    const chip = document.createElement('span');
+    chip.className = 'result-chip';
+    chip.textContent = formatExponent(item.prime, item.power);
+    chip.dataset.type = type;
+    chip.dataset.index = String(index);
+    chip.title = 'Clica per retirar aquest factor';
+    chip.addEventListener('click', () => {
+      state.results[type].splice(index, 1);
+      renderResultDrop(scope, type);
+    });
+    strip.appendChild(chip);
+  });
+  const aggregated = aggregateFactors(list);
+  expressionNode.textContent = `Factors triats: ${formatProduct(aggregated)}`;
+};
+
+const evaluateResult = (type, ranges) => {
+  const aggregated = aggregateFactors(state.results[type]);
+  let ok = true;
+  let expectedHasContent = false;
+  Object.entries(ranges).forEach(([primeStr, range]) => {
+    const prime = Number(primeStr);
+    const expected = type === 'mcd' ? range.min : range.max;
+    const provided = aggregated[prime] ?? 0;
+    if (expected > 0) expectedHasContent = true;
+    if (expected !== provided) ok = false;
+  });
+  Object.keys(aggregated).forEach((primeStr) => {
+    const prime = Number(primeStr);
+    if (!ranges[prime]) ok = false;
+  });
+  const value = Object.entries(aggregated)
+    .reduce((acc, [primeStr, power]) => acc * Math.pow(Number(primeStr), power), 1);
+  return {
+    ok: ok && (expectedHasContent ? true : true),
+    value: value || 1,
+    expression: formatProduct(aggregated),
+    expectedHasContent,
+  };
+};
+
+const computeResults = (scope) => {
+  if (!state.primes.length) {
+    toast('Primer cal completar la descomposició en factors primers.');
+    return;
+  }
+  const ranges = exponentRanges();
+  const evaluations = {
+    mcd: evaluateResult('mcd', ranges),
+    mcm: evaluateResult('mcm', ranges),
+  };
+  const output = document.getElementById(`result-${scope}`);
+  const parts = [];
+  ['mcd', 'mcm'].forEach((type) => {
+    const dropCard = modePanel(scope)?.querySelector(`.result-drop[data-kind="${type}"]`);
+    const evaluation = evaluations[type];
+    const hasSelection = state.results[type].length > 0;
+    if (dropCard) {
+      dropCard.classList.remove('ok', 'error');
+      if (hasSelection) {
+        dropCard.classList.add(evaluation.ok ? 'ok' : 'error');
+      } else if (evaluation.expectedHasContent) {
+        dropCard.classList.add('error');
+      }
+    }
+    const label = type === 'mcd' ? 'MCD' : 'mcm';
+    parts.push(`${label} = ${evaluation.value}${evaluation.ok ? ' ✔' : ' ✱'}`);
+  });
+  if (output) output.textContent = parts.join('   ');
+  const allCorrect = evaluations.mcd.ok && evaluations.mcm.ok;
+  const anySelection = state.results.mcd.length || state.results.mcm.length;
+  if (!anySelection) {
+    toast('Arrossega factors a la zona del MCD o del mcm abans de calcular.');
+    return;
+  }
+  toast(allCorrect ? 'Càlcul correcte!' : 'Revisa les seleccions marcades.');
+};
+
+const renderPrimePalette = (scope) => {
+  const container = $(`#prime-palette-${scope}`);
+  if (!container) return;
+  container.innerHTML = '';
+  if (!state.numbers.length) return;
+  const maxNumber = Math.max(...state.numbers);
+  const primes = (() => {
+    const limit = Math.max(2, Math.floor(maxNumber));
+    const sieve = new Uint8Array(limit + 1);
+    const out = [];
+    for (let i = 2; i <= limit; i += 1) {
+      if (!sieve[i]) {
+        out.push(i);
+        for (let j = i * i; j <= limit; j += i) sieve[j] = 1;
+      }
+    }
+    return out;
+  })();
+  primes.forEach((prime) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'prime-chip';
+    button.textContent = String(prime);
+    button.draggable = true;
+    button.addEventListener('dragstart', (event) => {
+      event.dataTransfer?.setData('text/plain', String(prime));
+      event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, 1));
+    });
+    container.appendChild(button);
+  });
+};
+
 const renderWorkspace = (scope) => {
   renderPrimePalette(scope);
   renderLanes(scope);
-  renderSelectionPanel(scope);
   renderFactorColumns(scope);
-  const resultNode = $(`#result-${scope}`);
-  if (resultNode) resultNode.textContent = '';
+  renderBreakdown(scope);
+  renderResultDrop(scope, 'mcd');
+  renderResultDrop(scope, 'mcm');
+  highlightDrops(scope);
+  const output = document.getElementById(`result-${scope}`);
+  if (output) output.textContent = '';
 };
 
 const loadJSON = async (url) => {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Error carregant ${url}`);
-  return response.json();
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Error carregant ${url}`);
+  return res.json();
 };
 
 const ensureData = async () => {
@@ -441,7 +615,7 @@ const ensureData = async () => {
   if (!state.data.problems) state.data.problems = await loadJSON('data/problems.json');
 };
 
-const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
+const pickRandom = (items) => items[Math.floor(Math.random() * items.length)];
 
 const startFree = (numbers) => {
   state.numbers = numbers.slice();
@@ -464,8 +638,8 @@ const startProblem = (problem) => {
   state.currentProblem = problem;
   state.numbers = problem.numbers.slice();
   state.goal = problem.type === 'mcm' ? 'mcm' : 'mcd';
-  syncGoalButtons();
   resetWorkspace();
+  syncGoalButtons();
   $('#problem-workspace').hidden = false;
   $('#problem-text').textContent = problem.text;
   $('#problem-numbers').textContent = `[ ${problem.numbers.join(', ')} ]`;
@@ -479,6 +653,7 @@ const startProblem = (problem) => {
     button.textContent = state.goal.toUpperCase();
     toggle.appendChild(button);
   }
+  setupGoalToggles();
   renderWorkspace('problem');
 };
 
@@ -529,8 +704,8 @@ const setupPracticeMode = () => {
       setMode('practica');
       startPractice(set);
     } catch (error) {
-      toast('No s’ha pogut carregar el conjunt.');
       console.error(error);
+      toast('No s’ha pogut carregar el conjunt.');
     }
   });
 };
@@ -544,56 +719,54 @@ const setupProblemsMode = () => {
       setMode('problemes');
       startProblem(problem);
     } catch (error) {
-      toast('No s’ha pogut carregar el problema.');
       console.error(error);
+      toast('No s’ha pogut carregar el problema.');
     }
   });
 };
 
 const wireCommon = (scope) => {
-  $(`#compute-${scope}`)?.addEventListener('click', () => {
-    const result = validateSelection();
-    if (!result) return;
-    const output = $(`#result-${scope}`);
-    if (!output) return;
-    output.textContent = `${state.goal.toUpperCase()} = ${result.result}`;
-    toast(result.correct ? 'Correcte! Bona feina.' : 'Revisa la selecció de factors.');
-  });
+  $(`#compute-${scope}`)?.addEventListener('click', () => computeResults(scope));
   $(`#reset-${scope}`)?.addEventListener('click', () => {
     resetWorkspace();
+    const mode = modeFromScope[scope];
+    state.mode = mode;
+    syncModeButtons();
+    syncPanels();
+    syncGoalButtons();
     renderWorkspace(scope);
   });
 };
 
 const setupGoalToggles = () => {
   $$('.goal').forEach((button) => {
-    if (button.closest('#problem-goal-toggle')) return;
-    button.addEventListener('click', () => {
-      setGoal(button.dataset.goal);
-    });
+    if (button.dataset.bound) return;
+    button.dataset.bound = 'true';
+    button.addEventListener('click', () => setGoal(button.dataset.goal));
   });
 };
 
 const setupModeNav = () => {
   $$('.mode').forEach((button) => {
-    button.addEventListener('click', () => {
-      setMode(button.dataset.mode);
-    });
+    if (button.dataset.bound) return;
+    button.dataset.bound = 'true';
+    button.addEventListener('click', () => setMode(button.dataset.mode));
   });
 };
 
 const init = () => {
   setupModeNav();
+  setupGoalToggles();
   setupFreeMode();
   setupPracticeMode();
   setupProblemsMode();
-  setupGoalToggles();
   wireCommon('free');
   wireCommon('practice');
   wireCommon('problem');
   syncModeButtons();
   syncPanels();
   syncGoalButtons();
+  highlightDrops('free');
 };
 
 document.addEventListener('DOMContentLoaded', init);
