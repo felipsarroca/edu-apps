@@ -137,7 +137,7 @@ a {
 
 .number-list {
   display: flex;
-  gap: 18px;
+  gap: 14px;
   flex-wrap: wrap;
   align-items: stretch;
 }
@@ -147,17 +147,17 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: clamp(100px, 22vw, 140px);
+  width: clamp(88px, 18vw, 118px);
   aspect-ratio: 1;
-  border-radius: 20px;
-  border: 2px solid rgba(65, 109, 255, 0.18);
-  background: rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  border: 2px solid rgba(65, 109, 255, 0.16);
+  background: rgba(255, 255, 255, 0.92);
   box-shadow: var(--shadow);
 }
 
 .number-slot:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(65, 109, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(65, 109, 255, 0.18);
 }
 
 .number-input {
@@ -166,14 +166,24 @@ a {
   border: 0;
   background: transparent;
   color: var(--text);
-  font-size: clamp(2.3rem, 5.2vw, 3.1rem);
+  font-size: clamp(1.9rem, 4.6vw, 2.6rem);
   font-weight: 700;
   text-align: center;
   outline: none;
 }
 
 .number-input::placeholder {
-  color: rgba(31, 37, 80, 0.24);
+  color: rgba(31, 37, 80, 0.28);
+}
+
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 button,
@@ -747,39 +757,40 @@ output {
 
 .app-footer {
   margin-top: auto;
-  padding: 22px 28px 32px;
-  border-top: 1px solid rgba(65, 109, 255, 0.18);
+  padding: 20px 26px 28px;
+  border-top: 1px solid rgba(65, 109, 255, 0.16);
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
   color: var(--muted);
-  font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.92);
+  font-size: 0.78rem;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .cc {
-  height: 28px;
-  opacity: 0.9;
+  height: 24px;
+  opacity: 0.85;
 }
 
 .cc-footer {
-  height: 42px;
+  height: 32px;
 }
 
 .footer-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .footer-line {
   margin: 0;
+  font-size: 0.78rem;
 }
 
 .footer-license a {
   color: var(--primary);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .footer-license a:hover {
@@ -826,4 +837,10 @@ output {
   100% {
     transform: translateX(0);
   }
+}
+.actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 18px;
 }

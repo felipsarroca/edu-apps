@@ -753,7 +753,7 @@ const setupFreeMode = () => {
     addField();
   });
   $('#start-free')?.addEventListener('click', () => {
-    const values = $('.number-input', list)
+    const values = $$('.number-input', list)
       .map((input) => Number(input.value))
       .filter((value) => Number.isInteger(value) && value > 0);
     if (values.length < 2 || values.length > 4) {

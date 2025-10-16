@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ca">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCD · mcm – Guia visual</title>
+    <title>MCD &middot; mcm &ndash; Guia visual</title>
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="preload" href="assets/logo.svg" as="image">
     <link rel="stylesheet" href="style.css">
@@ -12,14 +12,14 @@
     <header class="app-header">
       <img class="logo" src="assets/logo.svg" alt="Logo MCD mcm">
       <div class="titles">
-        <h1>MCD · mcm</h1>
+        <h1>MCD &middot; mcm</h1>
         <p class="subtitle">Guia interactiva per descompondre i calcular</p>
       </div>
     </header>
 
     <nav class="mode-switch" aria-label="Canvia de mode de treball">
       <button type="button" data-mode="lliure" class="mode active">Mode lliure</button>
-      <button type="button" data-mode="practica" class="mode">Pràctica</button>
+      <button type="button" data-mode="practica" class="mode">Pr&agrave;ctica</button>
       <button type="button" data-mode="problemes" class="mode">Problemes</button>
     </nav>
 
@@ -31,13 +31,13 @@
           <div class="number-list" id="free-number-list"></div>
           <div class="actions">
             <button type="button" id="add-number">+ Afegeix nombre</button>
-            <button type="button" id="start-free" class="primary">Comença</button>
+            <button type="button" id="start-free" class="primary">Comen&ccedil;a</button>
           </div>
         </div>
 
         <div class="card factor-area" id="free-workspace" hidden>
           <div class="workspace-top">
-            <div class="goal-toggle" role="group" aria-label="Selecciona càlcul">
+            <div class="goal-toggle" role="group" aria-label="Selecciona c&agrave;lcul">
               <button type="button" class="toggle goal selected" data-goal="mcd">MCD</button>
               <button type="button" class="toggle goal" data-goal="mcm">mcm</button>
             </div>
@@ -64,12 +64,12 @@
 
           <div class="grids">
             <section class="breakdown-grid">
-              <h3>Descomposició</h3>
+              <h3>DescomposiciÃ³</h3>
               <div id="breakdown-free" class="breakdown"></div>
             </section>
             <section class="builder-grid">
               <h3>Ara calculem el MCD i el mcm</h3>
-              <p class="builder-hint">Arrossega els factors des de la descomposició o la botonera. Repeteix un factor per indicar quadrat, cub, etc.</p>
+              <p class="builder-hint">Arrossega els factors des de la descomposiciÃ³ o la botonera. Repeteix un factor per indicar quadrat, cub, etc.</p>
               <div class="builder-panels">
                 <article class="result-drop" data-kind="mcd">
                   <div class="drop-row">
@@ -77,7 +77,7 @@
                     <div class="drop-strip" id="mcd-drop-free" data-target="mcd"></div>
                     <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
                   </div>
-                  <p class="rule rule-mcd">Factors comuns amb el mínim exponent. (Han d’aparèixer a tots els nombres.)</p>
+                  <p class="rule rule-mcd">Factors comuns amb el mÃ­nim exponent. (Han dâ€™aparÃ¨ixer a tots els nombres.)</p>
                   <p class="drop-expression" id="mcd-expression-free"></p>
                 </article>
                 <article class="result-drop" data-kind="mcm">
@@ -86,7 +86,7 @@
                     <div class="drop-strip" id="mcm-drop-free" data-target="mcm"></div>
                     <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
                   </div>
-                  <p class="rule rule-mcm">Factors comuns i no comuns amb el màxim exponent. (Inclou tots els factors necessaris.)</p>
+                  <p class="rule rule-mcm">Factors comuns i no comuns amb el mÃ xim exponent. (Inclou tots els factors necessaris.)</p>
                   <p class="drop-expression" id="mcm-expression-free"></p>
                 </article>
               </div>
@@ -104,14 +104,14 @@
       </section>
 
       <section id="panel-practica" class="panel" aria-labelledby="practica">
-        <h2 id="practica">Mode pràctica</h2>
+        <h2 id="practica">Mode pr&agrave;ctica</h2>
         <div class="card inputs">
           <div class="row">
             <label for="difficulty">Dificultat</label>
             <select id="difficulty">
-              <option value="easy">Fàcil</option>
+              <option value="easy">F&agrave;cil</option>
               <option value="medium">Mitjana</option>
-              <option value="hard">Difícil</option>
+              <option value="hard">Dif&iacute;cil</option>
             </select>
             <button type="button" id="next-set" class="primary">Nou conjunt</button>
           </div>
@@ -123,7 +123,7 @@
 
         <div class="card factor-area" id="practice-workspace" hidden>
           <div class="workspace-top">
-            <div class="goal-toggle" role="group" aria-label="Selecciona càlcul">
+            <div class="goal-toggle" role="group" aria-label="Selecciona c&agrave;lcul">
               <button type="button" class="toggle goal selected" data-goal="mcd">MCD</button>
               <button type="button" class="toggle goal" data-goal="mcm">mcm</button>
             </div>
@@ -150,7 +150,7 @@
 
           <div class="grids">
             <section class="breakdown-grid">
-              <h3>Descomposició</h3>
+              <h3>DescomposiciÃ³</h3>
               <div id="breakdown-practice" class="breakdown"></div>
             </section>
             <section class="builder-grid">
@@ -163,7 +163,7 @@
                     <div class="drop-strip" id="mcd-drop-practice" data-target="mcd"></div>
                     <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
                   </div>
-                  <p class="rule rule-mcd">Selecciona els factors comuns de tots els nombres amb l’exponent més petit.</p>
+                  <p class="rule rule-mcd">Selecciona els factors comuns de tots els nombres amb lâ€™exponent mÃ©s petit.</p>
                   <p class="drop-expression" id="mcd-expression-practice"></p>
                 </article>
                 <article class="result-drop" data-kind="mcm">
@@ -172,7 +172,7 @@
                     <div class="drop-strip" id="mcm-drop-practice" data-target="mcm"></div>
                     <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
                   </div>
-                  <p class="rule rule-mcm">Inclou els factors comuns i no comuns amb l’exponent més gran.</p>
+                  <p class="rule rule-mcm">Inclou els factors comuns i no comuns amb lâ€™exponent mÃ©s gran.</p>
                   <p class="drop-expression" id="mcm-expression-practice"></p>
                 </article>
               </div>
@@ -205,7 +205,7 @@
 
         <div class="card factor-area" id="problem-workspace" hidden>
           <div class="workspace-top">
-            <div class="goal-toggle" id="problem-goal-toggle" role="group" aria-label="Tipus de càlcul"></div>
+            <div class="goal-toggle" id="problem-goal-toggle" role="group" aria-label="Tipus de c&agrave;lcul"></div>
           </div>
 
           <div class="workspace-body">
@@ -229,7 +229,7 @@
 
           <div class="grids">
             <section class="breakdown-grid">
-              <h3>Descomposició</h3>
+              <h3>DescomposiciÃ³</h3>
               <div id="breakdown-problem" class="breakdown"></div>
             </section>
             <section class="builder-grid">
@@ -242,7 +242,7 @@
                     <div class="drop-strip" id="mcd-drop-problem" data-target="mcd"></div>
                     <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
                   </div>
-                  <p class="rule rule-mcd">Factors comuns amb l’exponent mínim (els que apareixen a tots els nombres).</p>
+                  <p class="rule rule-mcd">Factors comuns amb lâ€™exponent mÃ­nim (els que apareixen a tots els nombres).</p>
                   <p class="drop-expression" id="mcd-expression-problem"></p>
                 </article>
                 <article class="result-drop" data-kind="mcm">
@@ -251,7 +251,7 @@
                     <div class="drop-strip" id="mcm-drop-problem" data-target="mcm"></div>
                     <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
                   </div>
-                  <p class="rule rule-mcm">Factors comuns i no comuns amb l’exponent màxim (perquè tots els nombres quedin coberts).</p>
+                  <p class="rule rule-mcm">Factors comuns i no comuns amb lâ€™exponent mÃ xim (perquÃ¨ tots els nombres quedin coberts).</p>
                   <p class="drop-expression" id="mcm-expression-problem"></p>
                 </article>
               </div>
@@ -284,5 +284,16 @@
     <script type="module" src="script.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
