@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MCD · mcm — Guia Visual</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/logo.svg" as="image" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <img class="logo" src="assets/logo.svg" alt="Logo MCD mcm" />
+      <div class="titles">
+        <h1>MCD · mcm</h1>
+        <p class="subtitle">Guia interactiva per descompondre i calcular</p>
+      </div>
+    </header>
+
+    <nav class="mode-switch">
+      <button data-mode="lliure" class="mode active">Mode lliure</button>
+      <button data-mode="practica" class="mode">Pràctica</button>
+      <button data-mode="problemes" class="mode">Problemes</button>
+    </nav>
+
+    <main class="app">
+      <section id="panel-lliure" class="panel visible" aria-labelledby="lliure">
+        <h2 id="lliure">Mode lliure</h2>
+        <div class="card inputs">
+          <p>Introdueix 2, 3 o 4 nombres enters positius.</p>
+          <div class="number-list" id="free-number-list"></div>
+          <div class="actions">
+            <button id="add-number">+ Afegeix nombre</button>
+            <button id="start-free" class="primary">Comença</button>
+          </div>
+        </div>
+
+        <div class="card factor-area" id="free-workspace" hidden>
+          <div class="workspace-top">
+            <div class="prime-input">
+              <label for="prime-input-free">Factor primer</label>
+              <input id="prime-input-free" type="number" min="2" placeholder="2, 3, 5…" />
+              <button id="apply-prime-free" class="accent">Aplica</button>
+            </div>
+            <div class="goal-toggle">
+              <button class="toggle goal selected" data-goal="mcd">MCD</button>
+              <button class="toggle goal" data-goal="mcm">mcm</button>
+            </div>
+          </div>
+          <div class="grids">
+            <div class="numbers-grid">
+              <h3>Nombres i descomposició</h3>
+              <div id="numbers-table-free" class="table"></div>
+            </div>
+            <div class="selection-grid">
+              <h3>Selecció de factors</h3>
+              <div id="selection-panel-free" class="selection"></div>
+            </div>
+          </div>
+          <div class="bottom-actions">
+            <button id="reset-free" class="ghost">Reinicia</button>
+            <div class="result">
+              <button id="compute-free" class="primary">Comprova i calcula</button>
+              <output id="result-free" aria-live="polite"></output>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-practica" class="panel" aria-labelledby="practica">
+        <h2 id="practica">Mode pràctica</h2>
+        <div class="card inputs">
+          <div class="row">
+            <label for="difficulty">Dificultat</label>
+            <select id="difficulty">
+              <option value="easy">Fàcil</option>
+              <option value="medium">Mitjana</option>
+              <option value="hard">Difícil</option>
+            </select>
+            <button id="next-set" class="primary">Nou conjunt</button>
+          </div>
+          <div class="row sticky">
+            <span>Conjunt actual:</span>
+            <span id="practice-set" class="badge"></span>
+          </div>
+        </div>
+
+        <div class="card factor-area" id="practice-workspace" hidden>
+          <div class="workspace-top">
+            <div class="prime-input">
+              <label for="prime-input-practice">Factor primer</label>
+              <input id="prime-input-practice" type="number" min="2" placeholder="2, 3, 5…" />
+              <button id="apply-prime-practice" class="accent">Aplica</button>
+            </div>
+            <div class="goal-toggle">
+              <button class="toggle goal selected" data-goal="mcd">MCD</button>
+              <button class="toggle goal" data-goal="mcm">mcm</button>
+            </div>
+          </div>
+          <div class="grids">
+            <div class="numbers-grid">
+              <h3>Nombres i descomposició</h3>
+              <div id="numbers-table-practice" class="table"></div>
+            </div>
+            <div class="selection-grid">
+              <h3>Selecció de factors</h3>
+              <div id="selection-panel-practice" class="selection"></div>
+            </div>
+          </div>
+          <div class="bottom-actions">
+            <button id="reset-practice" class="ghost">Reinicia</button>
+            <div class="result">
+              <button id="compute-practice" class="primary">Comprova i calcula</button>
+              <output id="result-practice" aria-live="polite"></output>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-problemes" class="panel" aria-labelledby="problemes">
+        <h2 id="problemes">Mode problemes</h2>
+        <div class="card inputs">
+          <div class="row space-between">
+            <button id="next-problem" class="primary">Nou problema</button>
+            <span id="problem-type" class="pill"></span>
+          </div>
+          <p id="problem-text" class="problem-text"></p>
+          <div class="row sticky"><span>Nombres:</span> <span id="problem-numbers" class="badge"></span></div>
+        </div>
+
+        <div class="card factor-area" id="problem-workspace" hidden>
+          <div class="workspace-top">
+            <div class="prime-input">
+              <label for="prime-input-problem">Factor primer</label>
+              <input id="prime-input-problem" type="number" min="2" placeholder="2, 3, 5…" />
+              <button id="apply-prime-problem" class="accent">Aplica</button>
+            </div>
+            <div class="goal-toggle" id="problem-goal-toggle"></div>
+          </div>
+          <div class="grids">
+            <div class="numbers-grid">
+              <h3>Nombres i descomposició</h3>
+              <div id="numbers-table-problem" class="table"></div>
+            </div>
+            <div class="selection-grid">
+              <h3>Selecció de factors</h3>
+              <div id="selection-panel-problem" class="selection"></div>
+            </div>
+          </div>
+          <div class="bottom-actions">
+            <button id="reset-problem" class="ghost">Reinicia</button>
+            <div class="result">
+              <button id="compute-problem" class="primary">Comprova i calcula</button>
+              <output id="result-problem" aria-live="polite"></output>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="credits">
+        <span>Aplicació creada per Felip Sarroca amb l’assistència de la IA</span>
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      </div>
+      <img class="cc" src="assets/cc-by-nc-sa.svg" alt="Llicència CC BY-NC-SA" />
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+  </html>
+
