@@ -100,9 +100,11 @@ output{min-width:220px; display:inline-block; padding:8px 10px; border-radius:12
 .problem-text{margin:8px 0 0; line-height:1.5}
 
 .app-footer{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 24px; border-top:1px solid rgba(255,255,255,.08)}
-.app-footer .credits{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
-.app-footer a{color:var(--chip-1); text-decoration:none; font-weight:700}
-.app-footer .cc{height:28px; opacity:.9}
+.app-footer .credits{display:flex; gap:12px; align-items:center; flex-wrap:wrap; color:var(--muted); font-size:13px}
+.app-footer .license{display:flex; gap:10px; align-items:center; color:var(--muted); font-size:12px}
+.app-footer .license a{color:var(--muted); text-decoration:none}
+.app-footer .license a:hover{color:var(--text)}
+.app-footer .cc{height:22px; opacity:.8}
 
 #toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:rgba(20,22,55,.85); border:1px solid rgba(255,255,255,.2); color:var(--text); padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:.25s opacity }
 #toast.show{opacity:1}
@@ -129,3 +131,12 @@ output{min-width:220px; display:inline-block; padding:8px 10px; border-radius:12
 .dropzone{width:100%; min-height:40px; border:2px dashed rgba(255,255,255,.25); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--muted); background:rgba(255,255,255,.02)}
 .dropzone.over{border-color:var(--chip-1); background:rgba(123,255,202,.1)}
 .used-prime{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-weight:800; color:#0a0e25}
+
+/* Factor columns view */
+.factor-columns-wrap{margin-top:8px}
+.factor-columns{display:grid; gap:6px}
+.factor-grid{display:grid; gap:6px}
+.factor-grid .header{font-size:12px; color:var(--muted); font-weight:700; text-align:center}
+.factor-grid .numcell{font-weight:800; text-align:right; padding-right:8px; color:var(--text)}
+.factor-grid .cell{min-height:28px; display:flex; align-items:center; gap:4px; justify-content:center}
+.factor-grid .chip-mini{font-size:12px; padding:4px 8px; border-radius:999px; color:#0a0e25; font-weight:800}

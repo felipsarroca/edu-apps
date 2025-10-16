@@ -55,7 +55,8 @@ function setGoal(g){
   state.goal = g;
   $$('.goal').forEach(b => b.classList.toggle('selected', b.dataset.goal === g));
   renderSelectionPanel();
-}
+    renderFactorColumns();
+  }
 
 function recomputePrimeSet(){
   const set = new Set();
@@ -192,8 +193,8 @@ function attachDropzone(el){
     const p = Number(pStr);
     // validar mÃ­nim primer
     const minp = smallestPrimeDivisor(current);
-    if (!minp){ toast('Aquest nombre ja estÃ  descompost.'); return; }
-    if (p !== minp){ toast(`Cal utilitzar primer el ${minp}.`); el.classList.add('wiggle'); setTimeout(()=>el.classList.remove('wiggle'), 250); return; }
+    if (!minp){ toast('Aquest nombre ja està descompost.'); return; }
+    if (p !== minp){ toast(`No és el factor primer mínim.`); el.classList.add('wiggle'); setTimeout(()=>el.classList.remove('wiggle'), 250); return; }
     if (current % p !== 0){ toast('Aquest factor no divideix el nombre actual.'); return; }
 
     // aplicar un pas de divisiÃ³
@@ -209,7 +210,8 @@ function attachDropzone(el){
     }
 
     renderSelectionPanel();
-  });
+      renderFactorColumns();
+    });
 }
 
 function makeUsedPrimeChip(p){
@@ -282,8 +284,7 @@ function wireCommon(goalScope){
   });
   $(`#reset-${scope}`).addEventListener('click', () => {
     resetWorkspace();
-    renderLanes();
-    renderSelectionPanel();
+    renderLanes();();();
     $(`#result-${scope}`).textContent = '';
   });
 }
@@ -306,9 +307,9 @@ function startFree(numbers){
   resetWorkspace();
   $('#free-workspace').hidden = false;
   buildPalette('free');
-  renderLanes();
-  renderSelectionPanel();
-}
+  renderLanes();();();
+    renderFactorColumns();
+  }
 
 function pickRandom(arr){
   return arr[Math.floor(Math.random()*arr.length)];
@@ -320,9 +321,9 @@ function startPractice(set){
   $('#practice-workspace').hidden = false;
   $('#practice-set').textContent = `[ ${state.numbers.join(', ')} ]`;
   buildPalette('practice');
-  renderLanes();
-  renderSelectionPanel();
-}
+  renderLanes();();();
+    renderFactorColumns();
+  }
 
 function startProblem(problem){
   state.currentProblem = problem;
@@ -341,9 +342,9 @@ function startProblem(problem){
   b.textContent = state.goal.toUpperCase();
   goalToggle.appendChild(b);
   buildPalette('problem');
-  renderLanes();
-  renderSelectionPanel();
-}
+  renderLanes();();();
+    renderFactorColumns();
+  }
 
 function setupFreeMode(){
   const list = $('#free-number-list');
@@ -442,3 +443,45 @@ function init(){
 }
 
 init();
+
+
+
+
+
+function renderFactorColumns(){
+  const scope = state.mode === 'lliure' ? 'free' : (state.mode === 'practica' ? 'practice' : 'problem');
+  const container = document.querySelector(#factor-columns-);
+  if (!container) return;
+  container.innerHTML = '';
+
+  const primes = state.primes.slice();
+  if (primes.length === 0){
+    const p = document.createElement('p'); p.className = 'hint';
+    p.textContent = 'A mesura que descomponguis, els factors s’alinearan per columnes aquí.';
+    container.appendChild(p);
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'factor-grid';
+  grid.style.gridTemplateColumns = 80px ;
+
+  const hNum = document.createElement('div'); hNum.className = 'header'; hNum.textContent = '';
+  grid.appendChild(hNum);
+  primes.forEach(pv => { const h = document.createElement('div'); h.className = 'header'; h.textContent = String(pv); grid.appendChild(h); });
+
+  state.numbers.forEach((n, i) => {
+    const nc = document.createElement('div'); nc.className = 'numcell'; nc.textContent = String(n); grid.appendChild(nc);
+    const row = state.exponents[i];
+    primes.forEach(pv => {
+      const cell = document.createElement('div'); cell.className = 'cell';
+      const e = row[pv] || 0;
+      for (let k=0;k<e;k++){
+        const chip = document.createElement('span'); chip.className = 'chip-mini'; chip.textContent = String(pv); chip.style.background = primeColor(pv); cell.appendChild(chip);
+      }
+      grid.appendChild(cell);
+    });
+  });
+
+  container.appendChild(grid);
+}
