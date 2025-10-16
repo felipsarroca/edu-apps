@@ -111,3 +111,21 @@ output{min-width:220px; display:inline-block; padding:8px 10px; border-radius:12
 .wiggle{ animation: wig .18s linear 2 }
 @keyframes wig{ 0%{transform:translateX(0)} 25%{transform:translateX(-2px)} 50%{transform:translateX(2px)} 75%{transform:translateX(-2px)} 100%{transform:translateX(0)} }
 
+/* Prime palette and lanes */
+.palette-wrap{margin:8px 0 14px}
+.prime-palette{display:flex; flex-wrap:wrap; gap:8px}
+.prime-chip{cursor:grab; user-select:none; border:0; color:#0a0e25; font-weight:800; padding:8px 12px; border-radius:999px; box-shadow:var(--shadow)}
+.prime-chip:active{cursor:grabbing}
+
+.lanes-wrap{margin-top:8px}
+.lanes{display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap}
+.lane{flex:0 0 auto; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; box-shadow:var(--shadow); padding:10px}
+.lane-title{font-weight:800; text-align:center; margin:0 0 8px}
+.steps{display:flex; flex-direction:column; gap:6px}
+.step-row{display:grid; grid-template-columns: 1fr auto 140px; align-items:center; gap:8px}
+.value{background:rgba(255,255,255,.06); padding:8px 10px; border-radius:10px; text-align:center; font-weight:700}
+.divider{width:6px; height:100%; background:linear-gradient(180deg, var(--chip-4), var(--chip-3)); border-radius:3px}
+.slot{min-height:40px; display:flex; align-items:center; justify-content:center}
+.dropzone{width:100%; min-height:40px; border:2px dashed rgba(255,255,255,.25); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--muted); background:rgba(255,255,255,.02)}
+.dropzone.over{border-color:var(--chip-1); background:rgba(123,255,202,.1)}
+.used-prime{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-weight:800; color:#0a0e25}

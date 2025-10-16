@@ -29,7 +29,7 @@ const state = {
   numbers: [],
   residues: [],
   exponents: [], // [{p->e}]
-  primes: [],
+  primes: [], // set derivat dels exponents
   selection: {}, // p->e
   data: {
     easy: null, medium: null, hard: null, problems: null
@@ -57,32 +57,23 @@ function setGoal(g){
   renderSelectionPanel();
 }
 
-function addPrimeToSet(p){
-  if (!state.primes.includes(p)){
-    state.primes.push(p);
-    state.primes.sort((a,b)=>a-b);
+function recomputePrimeSet(){
+  const set = new Set();
+  for (const row of state.exponents){
+    for (const k of Object.keys(row)) set.add(Number(k));
   }
+  state.primes = Array.from(set).sort((a,b)=>a-b);
 }
 
-function applyPrime(prime){
-  const p = Number(prime);
-  if (!isPrime(p)) { toast('Introdueix un nombre primer vàlid.'); return; }
-  // divisible per almenys un residu
-  const anyDiv = state.residues.some(r => r % p === 0);
-  if (!anyDiv) { toast('Cap nombre és divisible per aquest factor ara.'); return; }
-
-  addPrimeToSet(p);
-  state.residues = state.residues.map((r, idx) => {
-    let e = 0;
-    while (r % p === 0) { r = r / p; e++; }
-    if (e > 0) {
-      state.exponents[idx][p] = (state.exponents[idx][p] || 0) + e;
-    }
-    return r;
-  });
-
-  renderNumbersTable();
-  renderSelectionPanel();
+function smallestPrimeDivisor(n){
+  if (n < 2) return null;
+  if (n % 2 === 0) return 2;
+  let p = 3;
+  while (p * p <= n){
+    if (n % p === 0) return p;
+    p += 2;
+  }
+  return n; // n és primer
 }
 
 function expRanges(){
@@ -143,35 +134,90 @@ function primeColorClass(p){
   return ['p1','p2','p3','p4'][idx % 4];
 }
 
-function renderNumbersTable(){
-  const targetId = state.mode === 'lliure' ? 'free' : (state.mode === 'practica' ? 'practice' : 'problem');
-  const container = $(`#numbers-table-${targetId}`);
+function renderLanes(){
+  const scope = state.mode === 'lliure' ? 'free' : (state.mode === 'practica' ? 'practice' : 'problem');
+  const container = $(`#lanes-${scope}`);
   if (!container) return;
-
-  const primes = state.primes;
-
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  const trh = document.createElement('tr');
-  trh.innerHTML = `<th>#</th><th>Residu</th>${primes.map(p=>`<th><span class="chip ${primeColorClass(p)}">${p}</span></th>`).join('')}`;
-  thead.appendChild(trh);
-  table.appendChild(thead);
-
-  const tbody = document.createElement('tbody');
-  state.numbers.forEach((n, i) => {
-    const tr = document.createElement('tr');
-    const exps = state.exponents[i];
-    tr.innerHTML = `
-      <td><strong>${n}</strong></td>
-      <td>${state.residues[i]}</td>
-      ${primes.map(p => `<td>${exps[p] || 0}</td>`).join('')}
-    `;
-    tbody.appendChild(tr);
-  });
-  table.appendChild(tbody);
-
   container.innerHTML = '';
-  container.appendChild(table);
+
+  state.numbers.forEach((n, idx) => {
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    const title = document.createElement('div');
+    title.className = 'lane-title';
+    title.textContent = String(n);
+    const steps = document.createElement('div');
+    steps.className = 'steps';
+    // inicial step
+    steps.appendChild(makeStepRow(idx, state.numbers[idx], true));
+    lane.appendChild(title);
+    lane.appendChild(steps);
+    container.appendChild(lane);
+  });
+}
+
+function makeStepRow(idx, value, withDrop){
+  const row = document.createElement('div');
+  row.className = 'step-row';
+  const val = document.createElement('div');
+  val.className = 'value';
+  val.textContent = String(value);
+  const div = document.createElement('div');
+  div.className = 'divider';
+  const slot = document.createElement('div');
+  slot.className = 'slot';
+  if (withDrop && value > 1){
+    const dz = document.createElement('div');
+    dz.className = 'dropzone';
+    dz.textContent = 'Arrossega el mínim primer';
+    dz.dataset.idx = String(idx);
+    attachDropzone(dz);
+    slot.appendChild(dz);
+  }
+  row.appendChild(val);
+  row.appendChild(div);
+  row.appendChild(slot);
+  return row;
+}
+
+function attachDropzone(el){
+  el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('over'); });
+  el.addEventListener('dragleave', () => el.classList.remove('over'));
+  el.addEventListener('drop', (e) => {
+    e.preventDefault(); el.classList.remove('over');
+    const pStr = e.dataTransfer?.getData('text/plain');
+    const idx = Number(el.dataset.idx);
+    const current = state.residues[idx];
+    if (!pStr) return;
+    const p = Number(pStr);
+    // validar mínim primer
+    const minp = smallestPrimeDivisor(current);
+    if (!minp){ toast('Aquest nombre ja està descompost.'); return; }
+    if (p !== minp){ toast(`Cal utilitzar primer el ${minp}.`); el.classList.add('wiggle'); setTimeout(()=>el.classList.remove('wiggle'), 250); return; }
+    if (current % p !== 0){ toast('Aquest factor no divideix el nombre actual.'); return; }
+
+    // aplicar un pas de divisió
+    state.residues[idx] = current / p;
+    state.exponents[idx][p] = (state.exponents[idx][p] || 0) + 1;
+    recomputePrimeSet();
+
+    // convertir dropzone en primer utilitzat i afegir nova fila
+    el.replaceChildren(makeUsedPrimeChip(p));
+    const steps = el.closest('.steps');
+    if (steps){
+      steps.appendChild(makeStepRow(idx, state.residues[idx], true));
+    }
+
+    renderSelectionPanel();
+  });
+}
+
+function makeUsedPrimeChip(p){
+  const chip = document.createElement('span');
+  chip.className = 'used-prime';
+  chip.textContent = String(p);
+  chip.style.background = primeColor(p);
+  return chip;
 }
 
 function renderSelectionPanel(){
@@ -226,12 +272,6 @@ function renderSelectionPanel(){
 
 function wireCommon(goalScope){
   const scope = goalScope; // 'free' | 'practice' | 'problem'
-  $(`#apply-prime-${scope}`).addEventListener('click', () => {
-    const inp = $(`#prime-input-${scope}`);
-    applyPrime(inp.value);
-    inp.value = '';
-    inp.focus();
-  });
   $$(".goal").forEach(b => b.addEventListener('click', () => setGoal(b.dataset.goal)));
   $(`#compute-${scope}`).addEventListener('click', () => {
     const res = validateAndCompute();
@@ -242,7 +282,7 @@ function wireCommon(goalScope){
   });
   $(`#reset-${scope}`).addEventListener('click', () => {
     resetWorkspace();
-    renderNumbersTable();
+    renderLanes();
     renderSelectionPanel();
     $(`#result-${scope}`).textContent = '';
   });
@@ -265,7 +305,8 @@ function startFree(numbers){
   state.numbers = numbers;
   resetWorkspace();
   $('#free-workspace').hidden = false;
-  renderNumbersTable();
+  buildPalette('free');
+  renderLanes();
   renderSelectionPanel();
 }
 
@@ -278,7 +319,8 @@ function startPractice(set){
   resetWorkspace();
   $('#practice-workspace').hidden = false;
   $('#practice-set').textContent = `[ ${state.numbers.join(', ')} ]`;
-  renderNumbersTable();
+  buildPalette('practice');
+  renderLanes();
   renderSelectionPanel();
 }
 
@@ -298,7 +340,8 @@ function startProblem(problem){
   b.dataset.goal = state.goal;
   b.textContent = state.goal.toUpperCase();
   goalToggle.appendChild(b);
-  renderNumbersTable();
+  buildPalette('problem');
+  renderLanes();
   renderSelectionPanel();
 }
 
@@ -349,6 +392,45 @@ function setupModeNav(){
   $$('.mode').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
 }
 
+function primesUpTo(n){
+  const limit = Math.max(2, Math.floor(n));
+  const sieve = new Uint8Array(limit+1);
+  const out = [];
+  for (let i=2;i<=limit;i++) if (!sieve[i]){ out.push(i); for (let j=i*i;j<=limit;j+=i) sieve[j]=1; }
+  return out;
+}
+
+function primeColor(p){
+  // Color en anell HSL segons índex dins paleta
+  if (!primeColor.map){ primeColor.map = new Map(); }
+  if (!primeColor.palette){ primeColor.palette = []; }
+  if (!primeColor.map.has(p)){
+    const idx = primeColor.map.size;
+    const hue = (idx * 37) % 360;
+    const col = `hsl(${hue}deg 80% 65%)`;
+    primeColor.map.set(p, col);
+  }
+  return primeColor.map.get(p);
+}
+
+function buildPalette(scope){
+  const container = $(`#prime-palette-${scope}`);
+  container.innerHTML = '';
+  const maxN = Math.max(...state.numbers);
+  const primes = primesUpTo(maxN);
+  primes.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'prime-chip';
+    btn.textContent = String(p);
+    btn.draggable = true;
+    btn.style.background = primeColor(p);
+    btn.addEventListener('dragstart', (e) => {
+      e.dataTransfer?.setData('text/plain', String(p));
+    });
+    container.appendChild(btn);
+  });
+}
+
 function init(){
   setupModeNav();
   setupFreeMode();
@@ -360,4 +442,3 @@ function init(){
 }
 
 init();
-

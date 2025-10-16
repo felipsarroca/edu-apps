@@ -37,21 +37,20 @@
 
         <div class="card factor-area" id="free-workspace" hidden>
           <div class="workspace-top">
-            <div class="prime-input">
-              <label for="prime-input-free">Factor primer</label>
-              <input id="prime-input-free" type="number" min="2" placeholder="2, 3, 5…" />
-              <button id="apply-prime-free" class="accent">Aplica</button>
-            </div>
             <div class="goal-toggle">
               <button class="toggle goal selected" data-goal="mcd">MCD</button>
               <button class="toggle goal" data-goal="mcm">mcm</button>
             </div>
           </div>
+          <div class="palette-wrap">
+            <h3>Botonera de nombres primers</h3>
+            <div id="prime-palette-free" class="prime-palette"></div>
+          </div>
+          <div class="lanes-wrap">
+            <h3>Nombres a descompondre</h3>
+            <div id="lanes-free" class="lanes"></div>
+          </div>
           <div class="grids">
-            <div class="numbers-grid">
-              <h3>Nombres i descomposició</h3>
-              <div id="numbers-table-free" class="table"></div>
-            </div>
             <div class="selection-grid">
               <h3>Selecció de factors</h3>
               <div id="selection-panel-free" class="selection"></div>
@@ -87,21 +86,20 @@
 
         <div class="card factor-area" id="practice-workspace" hidden>
           <div class="workspace-top">
-            <div class="prime-input">
-              <label for="prime-input-practice">Factor primer</label>
-              <input id="prime-input-practice" type="number" min="2" placeholder="2, 3, 5…" />
-              <button id="apply-prime-practice" class="accent">Aplica</button>
-            </div>
             <div class="goal-toggle">
               <button class="toggle goal selected" data-goal="mcd">MCD</button>
               <button class="toggle goal" data-goal="mcm">mcm</button>
             </div>
           </div>
+          <div class="palette-wrap">
+            <h3>Botonera de nombres primers</h3>
+            <div id="prime-palette-practice" class="prime-palette"></div>
+          </div>
+          <div class="lanes-wrap">
+            <h3>Nombres a descompondre</h3>
+            <div id="lanes-practice" class="lanes"></div>
+          </div>
           <div class="grids">
-            <div class="numbers-grid">
-              <h3>Nombres i descomposició</h3>
-              <div id="numbers-table-practice" class="table"></div>
-            </div>
             <div class="selection-grid">
               <h3>Selecció de factors</h3>
               <div id="selection-panel-practice" class="selection"></div>
@@ -130,18 +128,17 @@
 
         <div class="card factor-area" id="problem-workspace" hidden>
           <div class="workspace-top">
-            <div class="prime-input">
-              <label for="prime-input-problem">Factor primer</label>
-              <input id="prime-input-problem" type="number" min="2" placeholder="2, 3, 5…" />
-              <button id="apply-prime-problem" class="accent">Aplica</button>
-            </div>
             <div class="goal-toggle" id="problem-goal-toggle"></div>
           </div>
+          <div class="palette-wrap">
+            <h3>Botonera de nombres primers</h3>
+            <div id="prime-palette-problem" class="prime-palette"></div>
+          </div>
+          <div class="lanes-wrap">
+            <h3>Nombres a descompondre</h3>
+            <div id="lanes-problem" class="lanes"></div>
+          </div>
           <div class="grids">
-            <div class="numbers-grid">
-              <h3>Nombres i descomposició</h3>
-              <div id="numbers-table-problem" class="table"></div>
-            </div>
             <div class="selection-grid">
               <h3>Selecció de factors</h3>
               <div id="selection-panel-problem" class="selection"></div>
@@ -171,4 +168,3 @@
     <script type="module" src="script.js"></script>
   </body>
   </html>
-
