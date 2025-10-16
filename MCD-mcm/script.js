@@ -1,487 +1,599 @@
-// MCD · mcm — Guia Visual (HTML/CSS/JS pur)
-// Segueix l'estructura i modes descrits a MCD-mcm/Instruccions.md
+const $ = (selector, parent = document) => parent.querySelector(selector);
+const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
 
-const $ = (s, el = document) => el.querySelector(s);
-const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const scopeFromMode = (mode) => {
+  switch (mode) {
+    case 'lliure': return 'free';
+    case 'practica': return 'practice';
+    case 'problemes': return 'problem';
+    default: return 'free';
+  }
+};
 
-const toast = (msg) => {
-  const t = $('#toast');
-  t.textContent = msg;
-  t.classList.add('show');
+const toast = (message) => {
+  const node = $('#toast');
+  if (!node) return;
+  node.textContent = message;
+  node.classList.add('show');
   clearTimeout(toast._id);
-  toast._id = setTimeout(() => t.classList.remove('show'), 2300);
+  toast._id = setTimeout(() => node.classList.remove('show'), 2400);
 };
 
-const isPrime = (n) => {
-  n = Number(n);
-  if (!Number.isInteger(n) || n < 2) return false;
-  if (n % 2 === 0) return n === 2;
-  for (let i = 3; i * i <= n; i += 2) if (n % i === 0) return false;
-  return true;
-};
-
-function deepClone(obj){ return JSON.parse(JSON.stringify(obj)); }
-
-// State central
 const state = {
   mode: 'lliure',
   goal: 'mcd',
   numbers: [],
   residues: [],
-  exponents: [], // [{p->e}]
-  primes: [], // set derivat dels exponents
-  selection: {}, // p->e
+  exponents: [],
+  primes: [],
+  selection: {},
   data: {
-    easy: null, medium: null, hard: null, problems: null
+    easy: null,
+    medium: null,
+    hard: null,
+    problems: null,
   },
   currentProblem: null,
 };
 
-function resetWorkspace() {
+const resetWorkspace = () => {
   state.residues = state.numbers.slice();
   state.exponents = state.numbers.map(() => ({}));
   state.primes = [];
   state.selection = {};
-}
+};
 
-function setMode(m){
-  state.mode = m;
-  $$('.mode').forEach(b => b.classList.toggle('active', b.dataset.mode === m));
-  $$('.panel').forEach(p => p.classList.remove('visible'));
-  $(`#panel-${m}`).classList.add('visible');
-}
-
-function setGoal(g){
-  state.goal = g;
-  $$('.goal').forEach(b => b.classList.toggle('selected', b.dataset.goal === g));
-  renderSelectionPanel();
-    renderFactorColumns();
-  }
-
-function recomputePrimeSet(){
+const recomputePrimeSet = () => {
   const set = new Set();
-  for (const row of state.exponents){
-    for (const k of Object.keys(row)) set.add(Number(k));
-  }
-  state.primes = Array.from(set).sort((a,b)=>a-b);
-}
+  state.exponents.forEach((row) => {
+    Object.keys(row).forEach((p) => set.add(Number(p)));
+  });
+  state.primes = Array.from(set).sort((a, b) => a - b);
+  // If some selection exceeds the new range, reset it.
+  const ranges = exponentRanges();
+  Object.keys(state.selection).forEach((key) => {
+    const p = Number(key);
+    const range = ranges[p];
+    if (!range) {
+      delete state.selection[p];
+      return;
+    }
+    const allowed = state.goal === 'mcd' ? range.min : range.max;
+    if (state.selection[p] > allowed) delete state.selection[p];
+  });
+};
 
-function smallestPrimeDivisor(n){
+const smallestPrimeDivisor = (n) => {
   if (n < 2) return null;
   if (n % 2 === 0) return 2;
   let p = 3;
-  while (p * p <= n){
+  while (p * p <= n) {
     if (n % p === 0) return p;
     p += 2;
   }
-  return n; // n és primer
-}
+  return n;
+};
 
-function expRanges(){
-  // retorna { p: {min, max} }
+const exponentRanges = () => {
   const ranges = {};
-  for (const p of state.primes){
-    let min = Infinity, max = 0;
-    for (const row of state.exponents){
-      const e = row[p] || 0;
-      if (e < min) min = e;
-      if (e > max) max = e;
-    }
+  state.primes.forEach((p) => {
+    let min = Infinity;
+    let max = 0;
+    state.exponents.forEach((row) => {
+      const value = row[p] ?? 0;
+      if (value < min) min = value;
+      if (value > max) max = value;
+    });
     ranges[p] = { min, max };
-  }
+  });
   return ranges;
-}
+};
 
-function requiredPrimes(){
-  const ranges = expRanges();
-  if (state.goal === 'mcd'){
-    return Object.entries(ranges)
-      .filter(([p, r]) => r.min > 0)
-      .map(([p]) => Number(p));
-  } else {
-    return Object.entries(ranges)
-      .filter(([p, r]) => r.max > 0)
-      .map(([p]) => Number(p));
-  }
-}
+const requiredPrimes = () => {
+  const ranges = exponentRanges();
+  const list = [];
+  Object.keys(ranges).forEach((key) => {
+    const p = Number(key);
+    if (state.goal === 'mcd' && ranges[p].min > 0) list.push(p);
+    if (state.goal === 'mcm' && ranges[p].max > 0) list.push(p);
+  });
+  return list;
+};
 
-function selectionComplete(){
-  const req = requiredPrimes();
-  return req.every(p => state.selection[p] != null);
-}
+const selectionComplete = () => {
+  const needed = requiredPrimes();
+  return needed.every((p) => state.selection[p] != null);
+};
 
-function validateAndCompute(){
-  if (!selectionComplete()){
+const validateSelection = () => {
+  if (!selectionComplete()) {
     toast('Falta completar la selecció de factors.');
-    return;
+    return null;
   }
-  const ranges = expRanges();
-  let ok = true;
+  const ranges = exponentRanges();
+  let correct = true;
   let result = 1;
-  for (const [sp, sel] of Object.entries(state.selection)){
-    const p = Number(sp);
-    if (state.goal === 'mcd'){
-      if (sel !== ranges[p].min) ok = false;
-    } else {
-      if (sel !== ranges[p].max) ok = false;
+  Object.entries(state.selection).forEach(([primeStr, exponent]) => {
+    const prime = Number(primeStr);
+    const target = state.goal === 'mcd' ? ranges[prime].min : ranges[prime].max;
+    if (exponent !== target) correct = false;
+    result *= Math.pow(prime, exponent);
+  });
+  return { correct, result };
+};
+
+const primePalette = () => {
+  if (!primePalette.cache) primePalette.cache = new Map();
+  return primePalette.cache;
+};
+
+const primeColor = (p) => {
+  const cache = primePalette();
+  if (cache.has(p)) return cache.get(p);
+  const hue = (cache.size * 37) % 360;
+  const color = `hsl(${hue}deg 80% 65%)`;
+  cache.set(p, color);
+  return color;
+};
+
+const primesUpTo = (limitValue) => {
+  const limit = Math.max(2, Math.floor(limitValue));
+  const sieve = new Uint8Array(limit + 1);
+  const out = [];
+  for (let i = 2; i <= limit; i += 1) {
+    if (!sieve[i]) {
+      out.push(i);
+      for (let j = i * i; j <= limit; j += i) sieve[j] = 1;
     }
-    result *= Math.pow(p, sel);
   }
-  return { ok, result };
-}
+  return out;
+};
 
-function primeColorClass(p){
-  const idx = state.primes.indexOf(Number(p));
-  return ['p1','p2','p3','p4'][idx % 4];
-}
+const currentScope = () => scopeFromMode(state.mode);
 
-function renderLanes(){
-  const scope = state.mode === 'lliure' ? 'free' : (state.mode === 'practica' ? 'practice' : 'problem');
+const syncPanels = () => {
+  const panels = $$('.panel');
+  panels.forEach((panel) => panel.classList.remove('visible'));
+  const activePanel = $(`#panel-${state.mode}`);
+  if (activePanel) activePanel.classList.add('visible');
+};
+
+const syncModeButtons = () => {
+  $$('.mode').forEach((button) => {
+    button.classList.toggle('active', button.dataset.mode === state.mode);
+  });
+};
+
+const syncGoalButtons = () => {
+  $$('.toggle.goal').forEach((button) => {
+    button.classList.toggle('selected', button.dataset.goal === state.goal);
+  });
+};
+
+const setMode = (mode) => {
+  state.mode = mode;
+  syncModeButtons();
+  syncPanels();
+};
+
+const setGoal = (goal) => {
+  state.goal = goal;
+  syncGoalButtons();
+  state.selection = {};
+  const scope = currentScope();
+  renderSelectionPanel(scope);
+  const resultNode = $(`#result-${scope}`);
+  if (resultNode) resultNode.textContent = '';
+};
+
+const makeUsedPrimeChip = (prime) => {
+  const chip = document.createElement('span');
+  chip.className = 'used-prime';
+  chip.textContent = String(prime);
+  chip.style.background = primeColor(prime);
+  return chip;
+};
+
+const renderPrimePalette = (scope) => {
+  const container = $(`#prime-palette-${scope}`);
+  if (!container) return;
+  container.innerHTML = '';
+  if (state.numbers.length === 0) return;
+  const maxNumber = Math.max(...state.numbers);
+  const primes = primesUpTo(maxNumber);
+  primes.forEach((prime) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'prime-chip';
+    button.textContent = String(prime);
+    button.style.background = primeColor(prime);
+    button.draggable = true;
+    button.addEventListener('dragstart', (event) => {
+      event.dataTransfer?.setData('text/plain', String(prime));
+    });
+    container.appendChild(button);
+  });
+};
+
+const attachDropzone = (zone, scope, rowIndex) => {
+  zone.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    zone.classList.add('over');
+  });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', (event) => {
+    event.preventDefault();
+    zone.classList.remove('over');
+    const data = event.dataTransfer?.getData('text/plain');
+    if (!data) return;
+    const prime = Number(data);
+    const current = state.residues[rowIndex];
+    if (current <= 1) {
+      toast('Aquest nombre ja està completat.');
+      return;
+    }
+    const required = smallestPrimeDivisor(current);
+    if (prime !== required) {
+      toast('Has d’arrossegar el menor factor primer.');
+      zone.classList.add('wiggle');
+      setTimeout(() => zone.classList.remove('wiggle'), 280);
+      return;
+    }
+    if (current % prime !== 0) {
+      toast('Aquest factor no divideix el nombre actual.');
+      return;
+    }
+    state.residues[rowIndex] = current / prime;
+    state.exponents[rowIndex][prime] = (state.exponents[rowIndex][prime] ?? 0) + 1;
+    recomputePrimeSet();
+    zone.replaceChildren(makeUsedPrimeChip(prime));
+    const stepsContainer = zone.closest('.steps');
+    if (stepsContainer) {
+      stepsContainer.appendChild(makeStepRow(scope, rowIndex, state.residues[rowIndex]));
+    }
+    renderSelectionPanel(scope);
+    renderFactorColumns(scope);
+  });
+};
+
+const makeStepRow = (scope, rowIndex, value) => {
+  const row = document.createElement('div');
+  row.className = 'step-row';
+
+  const valueNode = document.createElement('div');
+  valueNode.className = 'value';
+  valueNode.textContent = String(value);
+
+  const divider = document.createElement('div');
+  divider.className = 'divider';
+
+  const slot = document.createElement('div');
+  slot.className = 'slot';
+
+  if (value > 1) {
+    const dropzone = document.createElement('div');
+    dropzone.className = 'dropzone';
+    dropzone.textContent = 'Arrossega el mínim primer';
+    attachDropzone(dropzone, scope, rowIndex);
+    slot.appendChild(dropzone);
+  } else {
+    const done = document.createElement('span');
+    done.className = 'chip-mini done-chip';
+    done.textContent = '1';
+    done.style.background = 'rgba(123, 255, 202, 0.35)';
+    slot.appendChild(done);
+  }
+
+  row.appendChild(valueNode);
+  row.appendChild(divider);
+  row.appendChild(slot);
+  return row;
+};
+
+const renderLanes = (scope) => {
   const container = $(`#lanes-${scope}`);
   if (!container) return;
   container.innerHTML = '';
-
-  state.numbers.forEach((n, idx) => {
+  state.numbers.forEach((number, index) => {
     const lane = document.createElement('div');
     lane.className = 'lane';
     const title = document.createElement('div');
     title.className = 'lane-title';
-    title.textContent = String(n);
+    title.textContent = String(number);
     const steps = document.createElement('div');
     steps.className = 'steps';
-    // inicial step
-    steps.appendChild(makeStepRow(idx, state.numbers[idx], true));
+    steps.appendChild(makeStepRow(scope, index, number));
     lane.appendChild(title);
     lane.appendChild(steps);
     container.appendChild(lane);
   });
-}
+};
 
-function makeStepRow(idx, value, withDrop){
-  const row = document.createElement('div');
-  row.className = 'step-row';
-  const val = document.createElement('div');
-  val.className = 'value';
-  val.textContent = String(value);
-  const div = document.createElement('div');
-  div.className = 'divider';
-  const slot = document.createElement('div');
-  slot.className = 'slot';
-  if (withDrop && value > 1){
-    const dz = document.createElement('div');
-    dz.className = 'dropzone';
-    dz.textContent = 'Arrossega el mínim primer';
-    dz.dataset.idx = String(idx);
-    attachDropzone(dz);
-    slot.appendChild(dz);
-  }
-  row.appendChild(val);
-  row.appendChild(div);
-  row.appendChild(slot);
-  return row;
-}
-
-function attachDropzone(el){
-  el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('over'); });
-  el.addEventListener('dragleave', () => el.classList.remove('over'));
-  el.addEventListener('drop', (e) => {
-    e.preventDefault(); el.classList.remove('over');
-    const pStr = e.dataTransfer?.getData('text/plain');
-    const idx = Number(el.dataset.idx);
-    const current = state.residues[idx];
-    if (!pStr) return;
-    const p = Number(pStr);
-    // validar mínim primer
-    const minp = smallestPrimeDivisor(current);
-    if (!minp){ toast('Aquest nombre ja est� descompost.'); return; }
-    if (p !== minp){ toast(`No �s el factor primer m�nim.`); el.classList.add('wiggle'); setTimeout(()=>el.classList.remove('wiggle'), 250); return; }
-    if (current % p !== 0){ toast('Aquest factor no divideix el nombre actual.'); return; }
-
-    // aplicar un pas de divisió
-    state.residues[idx] = current / p;
-    state.exponents[idx][p] = (state.exponents[idx][p] || 0) + 1;
-    recomputePrimeSet();
-
-    // convertir dropzone en primer utilitzat i afegir nova fila
-    el.replaceChildren(makeUsedPrimeChip(p));
-    const steps = el.closest('.steps');
-    if (steps){
-      steps.appendChild(makeStepRow(idx, state.residues[idx], true));
-    }
-
-    renderSelectionPanel();
-      renderFactorColumns();
-    });
-}
-
-function makeUsedPrimeChip(p){
-  const chip = document.createElement('span');
-  chip.className = 'used-prime';
-  chip.textContent = String(p);
-  chip.style.background = primeColor(p);
-  return chip;
-}
-
-function renderSelectionPanel(){
-  const targetId = state.mode === 'lliure' ? 'free' : (state.mode === 'practica' ? 'practice' : 'problem');
-  const container = $(`#selection-panel-${targetId}`);
+const renderSelectionPanel = (scope) => {
+  const container = $(`#selection-panel-${scope}`);
   if (!container) return;
   container.innerHTML = '';
-
-  const ranges = expRanges();
-  const req = requiredPrimes();
-  if (req.length === 0){
-    const p = document.createElement('p');
-    p.className = 'hint';
-    p.textContent = 'Descompon els nombres en factors primers per poder triar els factors del resultat.';
-    container.appendChild(p);
+  const primesNeeded = requiredPrimes();
+  if (primesNeeded.length === 0) {
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'Descompon els nombres per poder escollir els factors finals.';
+    container.appendChild(hint);
     return;
   }
-
-  req.forEach(p => {
+  const ranges = exponentRanges();
+  primesNeeded.forEach((prime) => {
     const row = document.createElement('div');
     row.className = 'factor-row';
     const label = document.createElement('div');
     label.className = 'name';
-    label.innerHTML = `<span class="chip ${primeColorClass(p)}">${p}</span>`;
+    const chip = document.createElement('span');
+    chip.className = 'chip-mini';
+    chip.textContent = String(prime);
+    chip.style.background = primeColor(prime);
+    label.appendChild(chip);
     const rangeArea = document.createElement('div');
     rangeArea.className = 'range';
-    const min = ranges[p].min;
-    const max = ranges[p].max;
-    const goalRange = state.goal === 'mcd' ? {min: 0, max: min} : {min: 0, max: max};
     const input = document.createElement('input');
-    input.type = 'number'; input.min = String(goalRange.min); input.max = String(goalRange.max);
-    input.value = state.selection[p] ?? '';
-    input.placeholder = `0..${goalRange.max}`;
+    const minAllowed = 0;
+    const maxAllowed = state.goal === 'mcd' ? ranges[prime].min : ranges[prime].max;
+    input.type = 'number';
+    input.min = String(minAllowed);
+    input.max = String(maxAllowed);
+    input.value = state.selection[prime] ?? '';
+    input.placeholder = `0..${maxAllowed}`;
     input.addEventListener('input', () => {
-      const v = Number(input.value);
-      if (Number.isNaN(v)) { delete state.selection[p]; return; }
-      if (v < goalRange.min || v > goalRange.max){ input.classList.add('wiggle'); setTimeout(()=>input.classList.remove('wiggle'), 250); return; }
-      state.selection[p] = v;
+      const value = Number(input.value);
+      if (Number.isNaN(value)) {
+        delete state.selection[prime];
+        return;
+      }
+      if (value < minAllowed || value > maxAllowed) {
+        toast('Valor fora de l’interval permès.');
+        input.classList.add('wiggle');
+        setTimeout(() => input.classList.remove('wiggle'), 280);
+        delete state.selection[prime];
+        return;
+      }
+      state.selection[prime] = value;
     });
-
     const hint = document.createElement('span');
     hint.className = 'hint';
-    hint.textContent = state.goal === 'mcd' ? 'Comú (mínim exponent)' : 'Comú i no comú (màxim exponent)';
-
+    hint.textContent = state.goal === 'mcd'
+      ? 'Escull l’exponent mínim dels factors comuns.'
+      : 'Escull l’exponent màxim dels factors comuns i no comuns.';
     rangeArea.appendChild(input);
     rangeArea.appendChild(hint);
     row.appendChild(label);
     row.appendChild(rangeArea);
     container.appendChild(row);
   });
-}
+};
 
-function wireCommon(goalScope){
-  const scope = goalScope; // 'free' | 'practice' | 'problem'
-  $$(".goal").forEach(b => b.addEventListener('click', () => setGoal(b.dataset.goal)));
-  $(`#compute-${scope}`).addEventListener('click', () => {
-    const res = validateAndCompute();
-    if (!res) return;
-    const out = $(`#result-${scope}`);
-    out.textContent = `${state.goal.toUpperCase()} = ${res.result}`;
-    toast(res.ok ? 'Correcte! 👏' : 'Revisa la selecció de factors.');
-  });
-  $(`#reset-${scope}`).addEventListener('click', () => {
-    resetWorkspace();
-    renderLanes();();();
-    $(`#result-${scope}`).textContent = '';
-  });
-}
-
-async function loadJSON(url){
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Error carregant ' + url);
-  return res.json();
-}
-
-async function ensureData(){
-  if (!state.data.easy) state.data.easy = await loadJSON('data/easy.json');
-  if (!state.data.medium) state.data.medium = await loadJSON('data/medium.json');
-  if (!state.data.hard) state.data.hard = await loadJSON('data/hard.json');
-  if (!state.data.problems) state.data.problems = await loadJSON('data/problems.json');
-}
-
-function startFree(numbers){
-  state.numbers = numbers;
-  resetWorkspace();
-  $('#free-workspace').hidden = false;
-  buildPalette('free');
-  renderLanes();();();
-    renderFactorColumns();
-  }
-
-function pickRandom(arr){
-  return arr[Math.floor(Math.random()*arr.length)];
-}
-
-function startPractice(set){
-  state.numbers = set.numbers ? set.numbers : set; // support both formats
-  resetWorkspace();
-  $('#practice-workspace').hidden = false;
-  $('#practice-set').textContent = `[ ${state.numbers.join(', ')} ]`;
-  buildPalette('practice');
-  renderLanes();();();
-    renderFactorColumns();
-  }
-
-function startProblem(problem){
-  state.currentProblem = problem;
-  state.numbers = problem.numbers.slice();
-  resetWorkspace();
-  $('#problem-workspace').hidden = false;
-  $('#problem-text').textContent = problem.text;
-  $('#problem-numbers').textContent = `[ ${problem.numbers.join(', ')} ]`;
-  // Fix goal to the problem type
-  state.goal = problem.type === 'mcd' ? 'mcd' : 'mcm';
-  const goalToggle = $('#problem-goal-toggle');
-  goalToggle.innerHTML = '';
-  const b = document.createElement('button');
-  b.className = 'toggle goal selected';
-  b.dataset.goal = state.goal;
-  b.textContent = state.goal.toUpperCase();
-  goalToggle.appendChild(b);
-  buildPalette('problem');
-  renderLanes();();();
-    renderFactorColumns();
-  }
-
-function setupFreeMode(){
-  const list = $('#free-number-list');
-  const addField = (value='') => {
-    const input = document.createElement('input');
-    input.type = 'number'; input.min = '1'; input.placeholder = 'nombre';
-    input.value = value;
-    list.appendChild(input);
-  };
-  list.innerHTML = '';
-  addField(); addField();
-  $('#add-number').addEventListener('click', () => {
-    if (list.children.length >= 4){ toast('Màxim 4 nombres.'); return; }
-    addField();
-  });
-  $('#start-free').addEventListener('click', () => {
-    const vals = $$('#free-number-list input').map(el => Number(el.value)).filter(v => Number.isInteger(v) && v > 0);
-    if (vals.length < 2 || vals.length > 4){ toast('Calen 2, 3 o 4 nombres vàlids.'); return; }
-    startFree(vals);
-  });
-}
-
-function setupPracticeMode(){
-  $('#next-set').addEventListener('click', async () => {
-    try{
-      await ensureData();
-      const d = $('#difficulty').value;
-      const set = pickRandom(state.data[d]);
-      startPractice(set);
-    }catch(e){ toast('No s’ha pogut carregar el conjunt.'); }
-  });
-}
-
-function setupProblemsMode(){
-  $('#next-problem').addEventListener('click', async () => {
-    try{
-      await ensureData();
-      const p = pickRandom(state.data.problems);
-      $('#problem-type').textContent = p.type.toUpperCase();
-      startProblem(p);
-    }catch(e){ toast('No s’ha pogut carregar el problema.'); }
-  });
-}
-
-function setupModeNav(){
-  $$('.mode').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
-}
-
-function primesUpTo(n){
-  const limit = Math.max(2, Math.floor(n));
-  const sieve = new Uint8Array(limit+1);
-  const out = [];
-  for (let i=2;i<=limit;i++) if (!sieve[i]){ out.push(i); for (let j=i*i;j<=limit;j+=i) sieve[j]=1; }
-  return out;
-}
-
-function primeColor(p){
-  // Color en anell HSL segons índex dins paleta
-  if (!primeColor.map){ primeColor.map = new Map(); }
-  if (!primeColor.palette){ primeColor.palette = []; }
-  if (!primeColor.map.has(p)){
-    const idx = primeColor.map.size;
-    const hue = (idx * 37) % 360;
-    const col = `hsl(${hue}deg 80% 65%)`;
-    primeColor.map.set(p, col);
-  }
-  return primeColor.map.get(p);
-}
-
-function buildPalette(scope){
-  const container = $(`#prime-palette-${scope}`);
-  container.innerHTML = '';
-  const maxN = Math.max(...state.numbers);
-  const primes = primesUpTo(maxN);
-  primes.forEach(p => {
-    const btn = document.createElement('button');
-    btn.className = 'prime-chip';
-    btn.textContent = String(p);
-    btn.draggable = true;
-    btn.style.background = primeColor(p);
-    btn.addEventListener('dragstart', (e) => {
-      e.dataTransfer?.setData('text/plain', String(p));
-    });
-    container.appendChild(btn);
-  });
-}
-
-function init(){
-  setupModeNav();
-  setupFreeMode();
-  setupPracticeMode();
-  setupProblemsMode();
-  wireCommon('free');
-  wireCommon('practice');
-  wireCommon('problem');
-}
-
-init();
-
-
-
-
-
-function renderFactorColumns(){
-  const scope = state.mode === 'lliure' ? 'free' : (state.mode === 'practica' ? 'practice' : 'problem');
-  const container = document.querySelector(#factor-columns-);
+const renderFactorColumns = (scope) => {
+  const container = $(`#factor-columns-${scope}`);
   if (!container) return;
   container.innerHTML = '';
-
-  const primes = state.primes.slice();
-  if (primes.length === 0){
-    const p = document.createElement('p'); p.className = 'hint';
-    p.textContent = 'A mesura que descomponguis, els factors s�alinearan per columnes aqu�.';
-    container.appendChild(p);
+  if (state.primes.length === 0) {
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'Quan vagis descomponent, veuràs aquí els factors alineats per columnes.';
+    container.appendChild(hint);
     return;
   }
-
   const grid = document.createElement('div');
   grid.className = 'factor-grid';
-  grid.style.gridTemplateColumns = 80px ;
+  const templateColumns = ['minmax(4.5rem, auto)', ...state.primes.map(() => 'minmax(3.2rem, 1fr)')].join(' ');
+  grid.style.gridTemplateColumns = templateColumns;
 
-  const hNum = document.createElement('div'); hNum.className = 'header'; hNum.textContent = '';
-  grid.appendChild(hNum);
-  primes.forEach(pv => { const h = document.createElement('div'); h.className = 'header'; h.textContent = String(pv); grid.appendChild(h); });
+  const blankHeader = document.createElement('div');
+  blankHeader.className = 'header';
+  blankHeader.textContent = '';
+  grid.appendChild(blankHeader);
+  state.primes.forEach((prime) => {
+    const header = document.createElement('div');
+    header.className = 'header';
+    header.textContent = String(prime);
+    grid.appendChild(header);
+  });
 
-  state.numbers.forEach((n, i) => {
-    const nc = document.createElement('div'); nc.className = 'numcell'; nc.textContent = String(n); grid.appendChild(nc);
-    const row = state.exponents[i];
-    primes.forEach(pv => {
-      const cell = document.createElement('div'); cell.className = 'cell';
-      const e = row[pv] || 0;
-      for (let k=0;k<e;k++){
-        const chip = document.createElement('span'); chip.className = 'chip-mini'; chip.textContent = String(pv); chip.style.background = primeColor(pv); cell.appendChild(chip);
+  state.numbers.forEach((number, rowIndex) => {
+    const numCell = document.createElement('div');
+    numCell.className = 'numcell';
+    numCell.textContent = String(number);
+    grid.appendChild(numCell);
+    state.primes.forEach((prime) => {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const exponent = state.exponents[rowIndex][prime] ?? 0;
+      for (let i = 0; i < exponent; i += 1) {
+        const chip = document.createElement('span');
+        chip.className = 'chip-mini';
+        chip.textContent = String(prime);
+        chip.style.background = primeColor(prime);
+        cell.appendChild(chip);
       }
       grid.appendChild(cell);
     });
   });
-
   container.appendChild(grid);
-}
+};
+
+const renderWorkspace = (scope) => {
+  renderPrimePalette(scope);
+  renderLanes(scope);
+  renderSelectionPanel(scope);
+  renderFactorColumns(scope);
+  const resultNode = $(`#result-${scope}`);
+  if (resultNode) resultNode.textContent = '';
+};
+
+const loadJSON = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Error carregant ${url}`);
+  return response.json();
+};
+
+const ensureData = async () => {
+  if (!state.data.easy) state.data.easy = await loadJSON('data/easy.json');
+  if (!state.data.medium) state.data.medium = await loadJSON('data/medium.json');
+  if (!state.data.hard) state.data.hard = await loadJSON('data/hard.json');
+  if (!state.data.problems) state.data.problems = await loadJSON('data/problems.json');
+};
+
+const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
+
+const startFree = (numbers) => {
+  state.numbers = numbers.slice();
+  resetWorkspace();
+  $('#free-workspace').hidden = false;
+  renderWorkspace('free');
+};
+
+const startPractice = (set) => {
+  const numbers = Array.isArray(set) ? set : set.numbers;
+  if (!numbers) return;
+  state.numbers = numbers.slice();
+  resetWorkspace();
+  $('#practice-workspace').hidden = false;
+  $('#practice-set').textContent = `[ ${state.numbers.join(', ')} ]`;
+  renderWorkspace('practice');
+};
+
+const startProblem = (problem) => {
+  state.currentProblem = problem;
+  state.numbers = problem.numbers.slice();
+  state.goal = problem.type === 'mcm' ? 'mcm' : 'mcd';
+  syncGoalButtons();
+  resetWorkspace();
+  $('#problem-workspace').hidden = false;
+  $('#problem-text').textContent = problem.text;
+  $('#problem-numbers').textContent = `[ ${problem.numbers.join(', ')} ]`;
+  const toggle = $('#problem-goal-toggle');
+  if (toggle) {
+    toggle.innerHTML = '';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'toggle goal selected';
+    button.dataset.goal = state.goal;
+    button.textContent = state.goal.toUpperCase();
+    toggle.appendChild(button);
+  }
+  renderWorkspace('problem');
+};
+
+const setupFreeMode = () => {
+  const list = $('#free-number-list');
+  if (!list) return;
+  const addField = (value = '') => {
+    const slot = document.createElement('label');
+    slot.className = 'number-slot';
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.min = '1';
+    input.placeholder = '0';
+    input.value = value;
+    input.className = 'number-input';
+    slot.appendChild(input);
+    list.appendChild(slot);
+  };
+  list.innerHTML = '';
+  addField();
+  addField();
+  $('#add-number')?.addEventListener('click', () => {
+    if (list.children.length >= 4) {
+      toast('Òptim: màxim quatre nombres.');
+      return;
+    }
+    addField();
+  });
+  $('#start-free')?.addEventListener('click', () => {
+    const values = $$('.number-input', list)
+      .map((input) => Number(input.value))
+      .filter((value) => Number.isInteger(value) && value > 0);
+    if (values.length < 2 || values.length > 4) {
+      toast('Calen 2, 3 o 4 nombres vàlids.');
+      return;
+    }
+    setMode('lliure');
+    startFree(values);
+  });
+};
+
+const setupPracticeMode = () => {
+  $('#next-set')?.addEventListener('click', async () => {
+    try {
+      await ensureData();
+      const difficulty = $('#difficulty')?.value ?? 'easy';
+      const set = pickRandom(state.data[difficulty]);
+      setMode('practica');
+      startPractice(set);
+    } catch (error) {
+      toast('No s’ha pogut carregar el conjunt.');
+      console.error(error);
+    }
+  });
+};
+
+const setupProblemsMode = () => {
+  $('#next-problem')?.addEventListener('click', async () => {
+    try {
+      await ensureData();
+      const problem = pickRandom(state.data.problems);
+      $('#problem-type').textContent = problem.type.toUpperCase();
+      setMode('problemes');
+      startProblem(problem);
+    } catch (error) {
+      toast('No s’ha pogut carregar el problema.');
+      console.error(error);
+    }
+  });
+};
+
+const wireCommon = (scope) => {
+  $(`#compute-${scope}`)?.addEventListener('click', () => {
+    const result = validateSelection();
+    if (!result) return;
+    const output = $(`#result-${scope}`);
+    if (!output) return;
+    output.textContent = `${state.goal.toUpperCase()} = ${result.result}`;
+    toast(result.correct ? 'Correcte! Bona feina.' : 'Revisa la selecció de factors.');
+  });
+  $(`#reset-${scope}`)?.addEventListener('click', () => {
+    resetWorkspace();
+    renderWorkspace(scope);
+  });
+};
+
+const setupGoalToggles = () => {
+  $$('.goal').forEach((button) => {
+    if (button.closest('#problem-goal-toggle')) return;
+    button.addEventListener('click', () => {
+      setGoal(button.dataset.goal);
+    });
+  });
+};
+
+const setupModeNav = () => {
+  $$('.mode').forEach((button) => {
+    button.addEventListener('click', () => {
+      setMode(button.dataset.mode);
+    });
+  });
+};
+
+const init = () => {
+  setupModeNav();
+  setupFreeMode();
+  setupPracticeMode();
+  setupProblemsMode();
+  setupGoalToggles();
+  wireCommon('free');
+  wireCommon('practice');
+  wireCommon('problem');
+  syncModeButtons();
+  syncPanels();
+  syncGoalButtons();
+};
+
+document.addEventListener('DOMContentLoaded', init);

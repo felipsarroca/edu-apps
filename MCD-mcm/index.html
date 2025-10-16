@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html lang="ca">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MCD · mcm — Guia Visual</title>
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
-    <link rel="preload" href="assets/logo.svg" as="image" />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCD · mcm – Guia visual</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="preload" href="assets/logo.svg" as="image">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header class="app-header">
-      <img class="logo" src="assets/logo.svg" alt="Logo MCD mcm" />
+      <img class="logo" src="assets/logo.svg" alt="Logo MCD mcm">
       <div class="titles">
         <h1>MCD · mcm</h1>
         <p class="subtitle">Guia interactiva per descompondre i calcular</p>
       </div>
     </header>
 
-    <nav class="mode-switch">
-      <button data-mode="lliure" class="mode active">Mode lliure</button>
-      <button data-mode="practica" class="mode">Pràctica</button>
-      <button data-mode="problemes" class="mode">Problemes</button>
+    <nav class="mode-switch" aria-label="Canvia de mode de treball">
+      <button type="button" data-mode="lliure" class="mode active">Mode lliure</button>
+      <button type="button" data-mode="practica" class="mode">Pràctica</button>
+      <button type="button" data-mode="problemes" class="mode">Problemes</button>
     </nav>
 
-    <main class="app">
+    <main class="app" id="main-content">
       <section id="panel-lliure" class="panel visible" aria-labelledby="lliure">
         <h2 id="lliure">Mode lliure</h2>
         <div class="card inputs">
           <p>Introdueix 2, 3 o 4 nombres enters positius.</p>
           <div class="number-list" id="free-number-list"></div>
           <div class="actions">
-            <button id="add-number">+ Afegeix nombre</button>
-            <button id="start-free" class="primary">Comença</button>
+            <button type="button" id="add-number">+ Afegeix nombre</button>
+            <button type="button" id="start-free" class="primary">Comença</button>
           </div>
         </div>
 
         <div class="card factor-area" id="free-workspace" hidden>
           <div class="workspace-top">
-            <div class="goal-toggle">
-              <button class="toggle goal selected" data-goal="mcd">MCD</button>
-              <button class="toggle goal" data-goal="mcm">mcm</button>
+            <div class="goal-toggle" role="group" aria-label="Selecciona càlcul">
+              <button type="button" class="toggle goal selected" data-goal="mcd">MCD</button>
+              <button type="button" class="toggle goal" data-goal="mcm">mcm</button>
             </div>
           </div>
-          <div class="palette-wrap">
-            <h3>Botonera de nombres primers</h3>
-            <div id="prime-palette-free" class="prime-palette"></div>
+
+          <div class="workspace-body">
+            <aside class="palette-wrap">
+              <h3>Botonera de nombres primers</h3>
+              <p class="palette-hint">Arrossega el nombre primer a la casella corresponent.</p>
+              <div id="prime-palette-free" class="prime-palette"></div>
+            </aside>
+
+            <section class="lanes-zone">
+              <div class="lanes-wrap">
+                <h3>Nombres a descompondre</h3>
+                <div id="lanes-free" class="lanes" aria-live="polite"></div>
+              </div>
+              <div class="factor-columns-wrap">
+                <h3>Factors (columnes)</h3>
+                <div id="factor-columns-free" class="factor-columns"></div>
+              </div>
+            </section>
           </div>
-          <div class="lanes-wrap">
-            <h3>Nombres a descompondre</h3>
-            <div id="lanes-free" class="lanes"></div>
-          </div>
-          <div class="factor-columns-wrap">
-            <h3>Factors (columnes)</h3>
-            <div id="factor-columns-free" class="factor-columns"></div>
-          </div>
+
           <div class="grids">
             <div class="selection-grid">
               <h3>Selecció de factors</h3>
               <div id="selection-panel-free" class="selection"></div>
             </div>
           </div>
+
           <div class="bottom-actions">
-            <button id="reset-free" class="ghost">Reinicia</button>
+            <button type="button" id="reset-free" class="ghost">Reinicia</button>
             <div class="result">
-              <button id="compute-free" class="primary">Comprova i calcula</button>
+              <button type="button" id="compute-free" class="primary">Comprova i calcula</button>
               <output id="result-free" aria-live="polite"></output>
             </div>
           </div>
@@ -80,7 +89,7 @@
               <option value="medium">Mitjana</option>
               <option value="hard">Difícil</option>
             </select>
-            <button id="next-set" class="primary">Nou conjunt</button>
+            <button type="button" id="next-set" class="primary">Nou conjunt</button>
           </div>
           <div class="row sticky">
             <span>Conjunt actual:</span>
@@ -90,33 +99,42 @@
 
         <div class="card factor-area" id="practice-workspace" hidden>
           <div class="workspace-top">
-            <div class="goal-toggle">
-              <button class="toggle goal selected" data-goal="mcd">MCD</button>
-              <button class="toggle goal" data-goal="mcm">mcm</button>
+            <div class="goal-toggle" role="group" aria-label="Selecciona càlcul">
+              <button type="button" class="toggle goal selected" data-goal="mcd">MCD</button>
+              <button type="button" class="toggle goal" data-goal="mcm">mcm</button>
             </div>
           </div>
-          <div class="palette-wrap">
-            <h3>Botonera de nombres primers</h3>
-            <div id="prime-palette-practice" class="prime-palette"></div>
+
+          <div class="workspace-body">
+            <aside class="palette-wrap">
+              <h3>Botonera de nombres primers</h3>
+              <p class="palette-hint">Arrossega el nombre primer a la casella corresponent.</p>
+              <div id="prime-palette-practice" class="prime-palette"></div>
+            </aside>
+
+            <section class="lanes-zone">
+              <div class="lanes-wrap">
+                <h3>Nombres a descompondre</h3>
+                <div id="lanes-practice" class="lanes" aria-live="polite"></div>
+              </div>
+              <div class="factor-columns-wrap">
+                <h3>Factors (columnes)</h3>
+                <div id="factor-columns-practice" class="factor-columns"></div>
+              </div>
+            </section>
           </div>
-          <div class="lanes-wrap">
-            <h3>Nombres a descompondre</h3>
-            <div id="lanes-practice" class="lanes"></div>
-          </div>
-          <div class="factor-columns-wrap">
-            <h3>Factors (columnes)</h3>
-            <div id="factor-columns-practice" class="factor-columns"></div>
-          </div>
+
           <div class="grids">
             <div class="selection-grid">
               <h3>Selecció de factors</h3>
               <div id="selection-panel-practice" class="selection"></div>
             </div>
           </div>
+
           <div class="bottom-actions">
-            <button id="reset-practice" class="ghost">Reinicia</button>
+            <button type="button" id="reset-practice" class="ghost">Reinicia</button>
             <div class="result">
-              <button id="compute-practice" class="primary">Comprova i calcula</button>
+              <button type="button" id="compute-practice" class="primary">Comprova i calcula</button>
               <output id="result-practice" aria-live="polite"></output>
             </div>
           </div>
@@ -127,39 +145,51 @@
         <h2 id="problemes">Mode problemes</h2>
         <div class="card inputs">
           <div class="row space-between">
-            <button id="next-problem" class="primary">Nou problema</button>
+            <button type="button" id="next-problem" class="primary">Nou problema</button>
             <span id="problem-type" class="pill"></span>
           </div>
           <p id="problem-text" class="problem-text"></p>
-          <div class="row sticky"><span>Nombres:</span> <span id="problem-numbers" class="badge"></span></div>
+          <div class="row sticky">
+            <span>Nombres:</span>
+            <span id="problem-numbers" class="badge"></span>
+          </div>
         </div>
 
         <div class="card factor-area" id="problem-workspace" hidden>
           <div class="workspace-top">
-            <div class="goal-toggle" id="problem-goal-toggle"></div>
+            <div class="goal-toggle" id="problem-goal-toggle" role="group" aria-label="Tipus de càlcul"></div>
           </div>
-          <div class="palette-wrap">
-            <h3>Botonera de nombres primers</h3>
-            <div id="prime-palette-problem" class="prime-palette"></div>
+
+          <div class="workspace-body">
+            <aside class="palette-wrap">
+              <h3>Botonera de nombres primers</h3>
+              <p class="palette-hint">Arrossega el nombre primer a la casella corresponent.</p>
+              <div id="prime-palette-problem" class="prime-palette"></div>
+            </aside>
+
+            <section class="lanes-zone">
+              <div class="lanes-wrap">
+                <h3>Nombres a descompondre</h3>
+                <div id="lanes-problem" class="lanes" aria-live="polite"></div>
+              </div>
+              <div class="factor-columns-wrap">
+                <h3>Factors (columnes)</h3>
+                <div id="factor-columns-problem" class="factor-columns"></div>
+              </div>
+            </section>
           </div>
-          <div class="lanes-wrap">
-            <h3>Nombres a descompondre</h3>
-            <div id="lanes-problem" class="lanes"></div>
-          </div>
-          <div class="factor-columns-wrap">
-            <h3>Factors (columnes)</h3>
-            <div id="factor-columns-problem" class="factor-columns"></div>
-          </div>
+
           <div class="grids">
             <div class="selection-grid">
               <h3>Selecció de factors</h3>
               <div id="selection-panel-problem" class="selection"></div>
             </div>
           </div>
+
           <div class="bottom-actions">
-            <button id="reset-problem" class="ghost">Reinicia</button>
+            <button type="button" id="reset-problem" class="ghost">Reinicia</button>
             <div class="result">
-              <button id="compute-problem" class="primary">Comprova i calcula</button>
+              <button type="button" id="compute-problem" class="primary">Comprova i calcula</button>
               <output id="result-problem" aria-live="polite"></output>
             </div>
           </div>
@@ -168,17 +198,15 @@
     </main>
 
     <footer class="app-footer">
-      <div class="credits">
-        <span>Aplicació creada per Felip Sarroca amb l’assistència de la IA</span>
-      </div>
-      <div class="license">
-        <img class="cc" src="assets/cc-by-nc-sa.svg" alt="Llicència CC BY-NC-SA" />
+      <p class="footer-line">Aplicació creada per Felip Sarroca amb l'assistència de la IA</p>
+      <p class="footer-line footer-license">
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">Obra sota llicència CC BY-NC-SA 4.0</a>
-      </div>
+        <img class="cc" src="assets/cc-by-nc-sa.svg" alt="Llicència CC BY-NC-SA">
+      </p>
     </footer>
 
     <div id="toast" role="status" aria-live="polite"></div>
 
     <script type="module" src="script.js"></script>
   </body>
-  </html>
+</html>
