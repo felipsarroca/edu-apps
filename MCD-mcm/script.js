@@ -17,13 +17,12 @@ const modeFromScope = {
 };
 
 const SUPER = {
-  0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
-  5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹',
-  '-': '⁻',
+  0: '\u2070', 1: '\u00B9', 2: '\u00B2', 3: '\u00B3', 4: '\u2074',
+  5: '\u2075', 6: '\u2076', 7: '\u2077', 8: '\u2078', 9: '\u2079',
+  '-': '\u207B',
 };
 
 const toSuperscript = (value) => String(value).split('').map((digit) => SUPER[digit] ?? '').join('');
-
 const formatExponent = (prime, power) => (power > 1 ? `${prime}${toSuperscript(power)}` : String(prime));
 
 const formatProduct = (map) => {
@@ -32,7 +31,7 @@ const formatProduct = (map) => {
     .filter(({ power }) => power > 0)
     .sort((a, b) => a.prime - b.prime);
   if (!entries.length) return '1';
-  return entries.map(({ prime, power }) => formatExponent(prime, power)).join(' · ');
+  return entries.map(({ prime, power }) => formatExponent(prime, power)).join(' \u00B7 ');
 };
 
 const aggregateFactors = (list) => {
@@ -43,6 +42,22 @@ const aggregateFactors = (list) => {
     collected[p] = (collected[p] || 0) + e;
   });
   return collected;
+};
+
+const primeColor = (prime) => {
+  if (!primeColor.cache) {
+    primeColor.cache = new Map();
+    primeColor.palette = [
+      '#6ec3ff', '#ffd66e', '#ff9fe6', '#90f2ae',
+      '#ffadad', '#a5d8ff', '#ffe066', '#c4f0c2',
+      '#ffcabd', '#b5c7ff'
+    ];
+  }
+  if (primeColor.cache.has(prime)) return primeColor.cache.get(prime);
+  const palette = primeColor.palette;
+  const color = palette[primeColor.cache.size % palette.length];
+  primeColor.cache.set(prime, color);
+  return color;
 };
 
 const parseFactorData = (event) => {
@@ -188,7 +203,9 @@ const makeUsedPrimeChip = (prime) => {
   const chip = document.createElement('span');
   chip.className = 'used-prime';
   chip.textContent = String(prime);
-  chip.draggable = true;
+        chip.style.backgroundColor = primeColor(prime);
+        chip.style.color = '#102143';
+        chip.draggable = true;
   chip.addEventListener('dragstart', (event) => {
     event.dataTransfer?.setData('text/plain', String(prime));
     event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, 1));
@@ -210,12 +227,12 @@ const attachLaneDrop = (zone, scope, rowIndex) => {
     const { prime } = factor;
     const current = state.residues[rowIndex];
     if (!current || current <= 1) {
-      toast('Aquest nombre ja està completat.');
+      toast('Aquest nombre ja est\u00e0 completat.');
       return;
     }
     const required = smallestPrimeDivisor(current);
     if (prime !== required) {
-      toast('Has d’arrossegar el factor primer més petit disponible.');
+      toast('Has d\'arrossegar el factor primer m\u00e9s petit disponible.');
       zone.classList.add('wiggle');
       setTimeout(() => zone.classList.remove('wiggle'), 250);
       return;
@@ -229,7 +246,7 @@ const attachLaneDrop = (zone, scope, rowIndex) => {
     recomputePrimeSet();
     const scopeName = scope;
     const cleared = clearResultSelections(scopeName);
-    if (cleared) toast('S’han buidat les seleccions de factors per mantenir la coherència.');
+    if (cleared) toast('S\'han buidat les seleccions de factors per mantenir la coher\u00e8ncia.');
     zone.replaceChildren(makeUsedPrimeChip(prime));
     const steps = zone.closest('.steps');
     if (steps) {
@@ -255,7 +272,7 @@ const makeStepRow = (scope, rowIndex, value) => {
   if (value > 1) {
     const dropzone = document.createElement('div');
     dropzone.className = 'dropzone';
-    dropzone.textContent = 'Arrossega el mínim primer';
+    dropzone.textContent = 'Arrossega el m\u00ednim primer';
     attachLaneDrop(dropzone, scope, rowIndex);
     slot.appendChild(dropzone);
   } else {
@@ -294,6 +311,8 @@ const makeFactorChip = (prime, power) => {
   chip.type = 'button';
   chip.className = 'factor-chip';
   chip.textContent = formatExponent(prime, power);
+  chip.style.backgroundColor = primeColor(prime);
+  chip.style.color = '#102143';
   chip.title = power > 1 ? `${prime} elevat a ${power}` : `Factor ${prime}`;
   chip.draggable = true;
   chip.addEventListener('dragstart', (event) => {
@@ -310,55 +329,96 @@ const renderBreakdown = (scope) => {
   if (!state.numbers.length) {
     const hint = document.createElement('p');
     hint.className = 'hint';
-    hint.textContent = 'Introdueix o carrega nombres per mostrar-ne la descomposició.';
+    hint.textContent = 'Introdueix o carrega nombres per mostrar-ne la descomposici\u00f3.';
     container.appendChild(hint);
     return;
   }
+
   state.numbers.forEach((original, index) => {
     const card = document.createElement('article');
     card.className = 'breakdown-card';
+
     const eq = document.createElement('div');
     eq.className = 'breakdown-eq';
+
     const numberNode = document.createElement('span');
     numberNode.className = 'breakdown-number';
     numberNode.textContent = String(original);
+
     const equal = document.createElement('span');
     equal.textContent = '=';
+
     const factors = document.createElement('span');
     factors.className = 'breakdown-factors';
+
     const row = state.exponents[index];
     const remainder = state.residues[index];
     let expression = formatProduct(row);
     if (expression === '1') {
-      expression = remainder > 1 ? '...' : '1';
+      expression = remainder > 1 ? '\u2026' : '1';
     } else if (remainder > 1) {
-      expression = `${expression} · ...`;
+      expression = `${expression} \u00B7 \u2026`;
     }
     factors.textContent = expression;
+
     eq.appendChild(numberNode);
     eq.appendChild(equal);
     eq.appendChild(factors);
     card.appendChild(eq);
+
     if (remainder > 1) {
       const pending = document.createElement('p');
       pending.className = 'hint';
       pending.textContent = `Encara falta descompondre: ${remainder}`;
       card.appendChild(pending);
     }
-    const chips = document.createElement('div');
-    chips.className = 'breakdown-chips';
+
     const primes = Object.keys(row).map(Number).sort((a, b) => a - b);
-    if (!primes.length) {
+
+    const columns = document.createElement('div');
+    columns.className = 'breakdown-columns';
+    if (primes.length) {
+      primes.forEach((prime) => {
+        const column = document.createElement('div');
+        column.className = 'factor-column';
+        const color = primeColor(prime);
+        column.style.backgroundColor = `${color}33`;
+        column.style.border = `1px solid ${color}66`;
+
+        const primeSpan = document.createElement('span');
+        primeSpan.className = 'prime';
+        primeSpan.textContent = formatExponent(prime, row[prime]);
+
+        const powerSpan = document.createElement('span');
+        powerSpan.className = 'power';
+        powerSpan.textContent = row[prime] > 1 ? `exponent ${row[prime]}` : 'exponent 1';
+
+        column.appendChild(primeSpan);
+        column.appendChild(powerSpan);
+        columns.appendChild(column);
+      });
+    } else {
       const placeholder = document.createElement('span');
       placeholder.className = 'drop-placeholder';
-      placeholder.textContent = 'Cap factor registrat encara.';
-      chips.appendChild(placeholder);
-    } else {
+      placeholder.textContent = 'Encara no hi ha factors.';
+      columns.appendChild(placeholder);
+    }
+    card.appendChild(columns);
+
+    const chips = document.createElement('div');
+    chips.className = 'breakdown-chips';
+    if (primes.length) {
       primes.forEach((prime) => {
         chips.appendChild(makeFactorChip(prime, row[prime]));
       });
+    } else {
+      const placeholder = document.createElement('span');
+      placeholder.className = 'drop-placeholder';
+      placeholder.textContent = 'Pendents de trobar factors.';
+      chips.appendChild(placeholder);
     }
     card.appendChild(chips);
+
     container.appendChild(card);
   });
 };
@@ -370,7 +430,7 @@ const renderFactorColumns = (scope) => {
   if (!state.primes.length) {
     const hint = document.createElement('p');
     hint.className = 'hint';
-    hint.textContent = 'Quan descomponguis, aquí veureu els factors ordenats per columnes.';
+    hint.textContent = 'Quan descomponguis, aqu\u00ed veureu els factors ordenats per columnes.';
     container.appendChild(hint);
     return;
   }
@@ -401,6 +461,8 @@ const renderFactorColumns = (scope) => {
         const chip = document.createElement('span');
         chip.className = 'chip-mini';
         chip.textContent = String(prime);
+        chip.style.backgroundColor = primeColor(prime);
+        chip.style.color = '#102143';
         chip.draggable = true;
         chip.addEventListener('dragstart', (event) => {
           event.dataTransfer?.setData('text/plain', String(prime));
@@ -474,7 +536,7 @@ const renderResultDrop = (scope, type) => {
   if (!list.length) {
     const placeholder = document.createElement('span');
     placeholder.className = 'drop-placeholder';
-    placeholder.textContent = 'Arrossega factors aquí';
+    placeholder.textContent = 'Arrossega factors aqu\u00ed';
     strip.appendChild(placeholder);
     expressionNode.textContent = '';
     return;
@@ -483,6 +545,8 @@ const renderResultDrop = (scope, type) => {
     const chip = document.createElement('span');
     chip.className = 'result-chip';
     chip.textContent = formatExponent(item.prime, item.power);
+    chip.style.backgroundColor = primeColor(item.prime);
+    chip.style.color = '#102143';
     chip.dataset.type = type;
     chip.dataset.index = String(index);
     chip.title = 'Clica per retirar aquest factor';
@@ -523,7 +587,7 @@ const evaluateResult = (type, ranges) => {
 
 const computeResults = (scope) => {
   if (!state.primes.length) {
-    toast('Primer cal completar la descomposició en factors primers.');
+    toast('Primer cal completar la descomposici\u00f3 en factors primers.');
     return;
   }
   const ranges = exponentRanges();
@@ -533,6 +597,7 @@ const computeResults = (scope) => {
   };
   const output = document.getElementById(`result-${scope}`);
   const parts = [];
+
   ['mcd', 'mcm'].forEach((type) => {
     const dropCard = modePanel(scope)?.querySelector(`.result-drop[data-kind="${type}"]`);
     const evaluation = evaluations[type];
@@ -546,16 +611,19 @@ const computeResults = (scope) => {
       }
     }
     const label = type === 'mcd' ? 'MCD' : 'mcm';
-    parts.push(`${label} = ${evaluation.value}${evaluation.ok ? ' ✔' : ' ✱'}`);
+    parts.push(`${label} = ${evaluation.value}${evaluation.ok ? ' \u2714' : ' \u2731'}`);
   });
+
   if (output) output.textContent = parts.join('   ');
-  const allCorrect = evaluations.mcd.ok && evaluations.mcm.ok;
+
   const anySelection = state.results.mcd.length || state.results.mcm.length;
   if (!anySelection) {
     toast('Arrossega factors a la zona del MCD o del mcm abans de calcular.');
     return;
   }
-  toast(allCorrect ? 'Càlcul correcte!' : 'Revisa les seleccions marcades.');
+
+  const allCorrect = evaluations.mcd.ok && evaluations.mcm.ok;
+  toast(allCorrect ? 'C\u00e0lcul correcte!' : 'Revisa les seleccions marcades.');
 };
 
 const renderPrimePalette = (scope) => {
@@ -581,6 +649,8 @@ const renderPrimePalette = (scope) => {
     button.type = 'button';
     button.className = 'prime-chip';
     button.textContent = String(prime);
+    button.style.backgroundColor = primeColor(prime);
+    button.style.color = '#102143';
     button.draggable = true;
     button.addEventListener('dragstart', (event) => {
       event.dataTransfer?.setData('text/plain', String(prime));
@@ -677,17 +747,17 @@ const setupFreeMode = () => {
   addField();
   $('#add-number')?.addEventListener('click', () => {
     if (list.children.length >= 4) {
-      toast('Òptim: màxim quatre nombres.');
+      toast('\u00d2ptim: m\u00e0xim quatre nombres.');
       return;
     }
     addField();
   });
   $('#start-free')?.addEventListener('click', () => {
-    const values = $$('.number-input', list)
+    const values = $('.number-input', list)
       .map((input) => Number(input.value))
       .filter((value) => Number.isInteger(value) && value > 0);
     if (values.length < 2 || values.length > 4) {
-      toast('Calen 2, 3 o 4 nombres vàlids.');
+      toast('Calen 2, 3 o 4 nombres v\u00e0lids.');
       return;
     }
     setMode('lliure');
@@ -705,7 +775,7 @@ const setupPracticeMode = () => {
       startPractice(set);
     } catch (error) {
       console.error(error);
-      toast('No s’ha pogut carregar el conjunt.');
+      toast('No s\'ha pogut carregar el conjunt.');
     }
   });
 };
@@ -720,7 +790,7 @@ const setupProblemsMode = () => {
       startProblem(problem);
     } catch (error) {
       console.error(error);
-      toast('No s’ha pogut carregar el problema.');
+      toast('No s\'ha pogut carregar el problema.');
     }
   });
 };
@@ -770,3 +840,35 @@ const init = () => {
 };
 
 document.addEventListener('DOMContentLoaded', init);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
