@@ -915,7 +915,7 @@ function renderFactorColumns(scope) {
 
 
 
-    label.textContent = `${number} = ${rhs}`;
+    label.innerHTML = `${number} = ${rhs}`;
 
 
 
@@ -1243,7 +1243,7 @@ const renderResultDrop = (scope, type) => {
 
   
 
-    expressionNode.textContent = `Factors triats: ${formatProduct(aggregated)}`;
+    expressionNode.innerHTML = `Factors triats: ${formatProduct(aggregated)}`;
 
 };
 
