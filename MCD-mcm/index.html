@@ -56,7 +56,7 @@
 
           <div class="grids">
             <section class="builder-grid">
-              <h3>Ara calculem el MCD i el mcm</h3>
+              <h3>Ara calculem el resultat</h3>
               <p class="builder-hint">Arrossega els factors des de la zona de Factors o la botonera. Repeteix un factor per indicar quadrat, cub, etc.</p>
               <div class="builder-panels">
                 <article class="result-drop" data-kind="mcd">
@@ -131,7 +131,7 @@
 
           <div class="grids">
             <section class="builder-grid">
-              <h3>Ara calculem el MCD i el mcm</h3>
+              <h3>Ara calculem el resultat</h3>
               <p class="builder-hint">Arrossega els factors que necessites. Repeteix-los per indicar quadrats, cubes o altres exponents.</p>
               <div class="builder-panels">
                 <article class="result-drop" data-kind="mcd">
@@ -171,12 +171,34 @@
         <div class="card inputs">
           <div class="row space-between">
             <button type="button" id="next-problem" class="primary">Nou problema</button>
-            <span id="problem-type" class="pill"></span>
+            <span id="problem-status" class="pill" aria-live="polite"></span>
           </div>
           <p id="problem-text" class="problem-text"></p>
-          <div class="row sticky">
-            <span>Nombres:</span>
-            <span id="problem-numbers" class="badge"></span>
+          <div class="problem-form" id="problem-form">
+            <div class="problem-section">
+              <p class="problem-label">Quins nombres cal descompondre?</p>
+              <div class="number-list" id="problem-number-list"></div>
+              <div class="actions">
+                <button type="button" id="problem-add-number" class="ghost">+ Afegeix nombre</button>
+              </div>
+            </div>
+            <div class="problem-section">
+              <p class="problem-label">Quin càlcul vols fer?</p>
+              <div class="goal-options" id="problem-goal-options">
+                <label class="goal-option">
+                  <input type="radio" name="problem-goal" value="mcd">
+                  <span>MCD</span>
+                </label>
+                <label class="goal-option">
+                  <input type="radio" name="problem-goal" value="mcm">
+                  <span>mcm</span>
+                </label>
+              </div>
+            </div>
+            <p id="problem-feedback" class="problem-feedback"></p>
+            <div class="actions">
+              <button type="button" id="problem-begin" class="primary">Comença la resolució</button>
+            </div>
           </div>
         </div>
 
@@ -202,8 +224,8 @@
 
           <div class="grids">
             <section class="builder-grid">
-              <h3>Ara calculem el MCD i el mcm</h3>
-              <p class="builder-hint">Arrossega els factors segons el que demana el problema. Repeteix-los per representar exponents.</p>
+              <h3>Ara calculem el resultat</h3>
+              <p class="builder-hint">Arrossega els factors que toquen i repeteix-los per indicar exponents.</p>
               <div class="builder-panels">
                 <article class="result-drop" data-kind="mcd">
                   <div class="drop-row">

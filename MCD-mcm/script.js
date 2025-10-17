@@ -4,6 +4,60 @@ const $$ = (selector, parent = document) => Array.from(parent.querySelectorAll(s
 
 
 
+const createNumberSlot = (value = '') => {
+
+  const slot = document.createElement('label');
+
+  slot.className = 'number-slot';
+
+  const input = document.createElement('input');
+
+  input.type = 'number';
+
+  input.min = '1';
+
+  input.placeholder = '0';
+
+  input.value = value;
+
+  input.className = 'number-input';
+
+  slot.appendChild(input);
+
+  return slot;
+
+};
+
+
+
+const problemUI = {
+
+  form: null,
+
+  list: null,
+
+  status: null,
+
+  feedback: null,
+
+  addButton: null,
+
+  beginButton: null,
+
+  goalOptions: [],
+
+  workspace: null,
+
+  resetForm: () => {},
+
+  lockForm: () => {},
+
+  syncGoalClasses: () => {},
+
+};
+
+
+
 const scopeFromMode = (mode) => {
 
   switch (mode) {
@@ -244,6 +298,8 @@ const state = {
 
   plans: [],
 
+  quotientNodes: [],
+
   results: {
 
     mcd: [],
@@ -436,9 +492,30 @@ const highlightDrops = (scope) => {
 
   if (!panel) return;
 
-  panel.querySelectorAll('.result-drop').forEach((drop) => drop.classList.remove('focused'));
+  panel.querySelectorAll('.result-drop').forEach((drop) => {
+
+    drop.classList.remove('focused');
+
+    if (scope === 'problem') {
+
+      const shouldShow = drop.dataset.kind === state.goal;
+
+      drop.hidden = !shouldShow;
+
+    } else {
+
+      drop.hidden = false;
+
+    }
+
+  });
+
+  const target = panel.querySelector(`.result-drop[data-kind="${state.goal}"]`);
+
+  if (target) target.classList.add('focused');
 
 };
+
 
 
 
@@ -572,9 +649,21 @@ const attachLaneDrop = (zone, scope, rowIndex, stepIndex) => {
 
     zone.setAttribute('aria-disabled', 'true');
 
-    const valueNode = zone.closest('.lane-row')?.querySelector('.lane-value');
+    const nodes = state.quotientNodes[rowIndex] || [];
 
-    if (valueNode) valueNode.textContent = String(state.residues[rowIndex]);
+    const currentNode = nodes[stepIndex];
+
+    const nextNode = nodes[stepIndex + 1];
+
+    if (currentNode) currentNode.classList.add('filled');
+
+    if (nextNode) {
+
+      nextNode.textContent = String(state.residues[rowIndex]);
+
+      nextNode.classList.add('filled');
+
+    }
 
     renderFactorColumns(scopeName);
 
@@ -597,6 +686,8 @@ const renderLanes = (scope) => {
   if (!container) return;
 
   container.innerHTML = '';
+
+  state.quotientNodes = state.numbers.map(() => []);
 
   state.numbers.forEach((number, index) => {
 
@@ -622,21 +713,35 @@ const renderLanes = (scope) => {
 
 
 
-    const valueNode = document.createElement('div');
+    const columns = document.createElement('div');
 
-    valueNode.className = 'lane-value';
+    columns.className = 'lane-columns';
 
-    valueNode.textContent = String(number);
 
-    row.appendChild(valueNode);
+
+    const quotientColumn = document.createElement('div');
+
+    quotientColumn.className = 'lane-quotients';
+
+
+
+    const nodes = [];
+
+    const first = document.createElement('div');
+
+    first.className = 'lane-quotient filled';
+
+    first.textContent = String(number);
+
+    quotientColumn.appendChild(first);
+
+    nodes.push(first);
 
 
 
     const divider = document.createElement('div');
 
     divider.className = 'divider';
-
-    row.appendChild(divider);
 
 
 
@@ -652,11 +757,23 @@ const renderLanes = (scope) => {
 
     for (let step = 0; step < slots; step += 1) {
 
+      const nextNode = document.createElement('div');
+
+      nextNode.className = 'lane-quotient';
+
+      quotientColumn.appendChild(nextNode);
+
+      nodes.push(nextNode);
+
+
+
       const dropzone = document.createElement('div');
 
       dropzone.className = 'dropzone';
 
       dropzone.textContent = '···';
+
+      dropzone.setAttribute('aria-label', 'Arrossega el factor primer');
 
       attachLaneDrop(dropzone, scope, index, step);
 
@@ -666,7 +783,15 @@ const renderLanes = (scope) => {
 
 
 
-    row.appendChild(track);
+    state.quotientNodes[index] = nodes;
+
+    columns.appendChild(quotientColumn);
+
+    columns.appendChild(divider);
+
+    columns.appendChild(track);
+
+    row.appendChild(columns);
 
     lane.appendChild(row);
 
@@ -675,8 +800,6 @@ const renderLanes = (scope) => {
   });
 
 };
-
-
 
 
 
@@ -1016,11 +1139,13 @@ const computeResults = (scope) => {
 
   };
 
+  const targets = scope === 'problem' ? [state.goal] : ['mcd', 'mcm'];
+
   const output = document.getElementById(`result-${scope}`);
 
   const parts = [];
 
-
+  let anySelection = false;
 
   ['mcd', 'mcm'].forEach((type) => {
 
@@ -1038,7 +1163,7 @@ const computeResults = (scope) => {
 
         dropCard.classList.add(evaluation.ok ? 'ok' : 'error');
 
-      } else if (evaluation.expectedHasContent) {
+      } else if (evaluation.expectedHasContent && targets.includes(type)) {
 
         dropCard.classList.add('error');
 
@@ -1046,19 +1171,25 @@ const computeResults = (scope) => {
 
     }
 
-    const label = type === 'mcd' ? 'MCD' : 'mcm';
+    if (targets.includes(type)) {
 
-    parts.push(`${label} = ${evaluation.value}${evaluation.ok ? ' ✅' : ' ❌'}`);
+      const label = type === 'mcd' ? 'MCD' : 'mcm';
+
+      const suffix = scope === 'problem' && targets.length === 1 ? '' : (evaluation.ok ? ' ✅' : ' ❌');
+
+      parts.push(`${label} = ${evaluation.value}${suffix}`);
+
+      if (hasSelection) anySelection = true;
+
+    }
 
   });
 
+  if (output && !(scope === 'problem' && targets.length === 1)) {
 
+    output.textContent = parts.join('   ');
 
-  if (output) output.textContent = parts.join('   ');
-
-
-
-  const anySelection = state.results.mcd.length || state.results.mcm.length;
+  }
 
   if (!anySelection) {
 
@@ -1068,11 +1199,29 @@ const computeResults = (scope) => {
 
   }
 
-
-
-  const allCorrect = evaluations.mcd.ok && evaluations.mcm.ok;
+  const allCorrect = targets.every((type) => evaluations[type].ok);
 
   toast(allCorrect ? 'Càlcul correcte!' : 'Revisa les seleccions marcades.');
+
+  if (scope === 'problem') {
+
+    const outputNode = document.getElementById('result-problem');
+
+    if (allCorrect && state.currentProblem?.answer) {
+
+      if (outputNode) outputNode.textContent = state.currentProblem.answer;
+
+      if (problemUI.status) problemUI.status.textContent = 'Problema resolt!';
+
+      if (problemUI.feedback) problemUI.feedback.textContent = '';
+
+    } else if (outputNode) {
+
+      outputNode.textContent = parts.join('   ');
+
+    }
+
+  }
 
 };
 
@@ -1236,45 +1385,114 @@ const startProblem = (problem) => {
 
   state.currentProblem = problem;
 
-  state.numbers = problem.numbers.slice();
+  state.numbers = [];
 
-  state.goal = problem.type === 'mcm' ? 'mcm' : 'mcd';
+  state.goal = 'mcd';
 
-  resetWorkspace();
+  state.residues = [];
+
+  state.exponents = [];
+
+  state.primes = [];
+
+  state.plans = [];
+
+  state.quotientNodes = [];
+
+  resetResults();
+
+  const textNode = $('#problem-text');
+
+  if (textNode) textNode.textContent = problem.text;
+
+  $('#prime-palette-problem')?.replaceChildren();
+
+  $('#lanes-problem')?.replaceChildren();
+
+  $('#factor-columns-problem')?.replaceChildren();
+
+  $('#mcd-drop-problem')?.replaceChildren();
+
+  $('#mcm-drop-problem')?.replaceChildren();
+
+  $('#mcd-expression-problem')?.replaceChildren();
+
+  $('#mcm-expression-problem')?.replaceChildren();
+
+  const output = $('#result-problem');
+
+  if (output) output.textContent = '';
+
+  const workspace = $('#problem-workspace');
+
+  if (workspace) workspace.hidden = true;
+
+  if (typeof problemUI.resetForm === 'function') problemUI.resetForm();
 
   syncGoalButtons();
 
-  $('#problem-workspace').hidden = false;
+  highlightDrops('problem');
 
-  $('#problem-text').textContent = problem.text;
+};
 
-  $('#problem-numbers').textContent = `[ ${problem.numbers.join(', ')} ]`;
 
-  const toggle = $('#problem-goal-toggle');
 
-  if (toggle) {
+const resetProblemFlow = () => {
 
-    toggle.innerHTML = '';
+  if (!state.currentProblem) {
 
-    const button = document.createElement('button');
+    if (typeof problemUI.resetForm === 'function') problemUI.resetForm();
 
-    button.type = 'button';
-
-    button.className = 'toggle goal selected';
-
-    button.dataset.goal = state.goal;
-
-    button.textContent = state.goal.toUpperCase();
-
-    toggle.appendChild(button);
+    return;
 
   }
 
-  setupGoalToggles();
+  state.numbers = [];
 
-  renderWorkspace('problem');
+  state.goal = 'mcd';
+
+  state.residues = [];
+
+  state.exponents = [];
+
+  state.primes = [];
+
+  state.plans = [];
+
+  state.quotientNodes = [];
+
+  resetResults();
+
+  $('#prime-palette-problem')?.replaceChildren();
+
+  $('#lanes-problem')?.replaceChildren();
+
+  $('#factor-columns-problem')?.replaceChildren();
+
+  $('#mcd-drop-problem')?.replaceChildren();
+
+  $('#mcm-drop-problem')?.replaceChildren();
+
+  $('#mcd-expression-problem')?.replaceChildren();
+
+  $('#mcm-expression-problem')?.replaceChildren();
+
+  const workspace = $('#problem-workspace');
+
+  if (workspace) workspace.hidden = true;
+
+  const output = $('#result-problem');
+
+  if (output) output.textContent = '';
+
+  if (typeof problemUI.resetForm === 'function') problemUI.resetForm();
+
+  syncGoalButtons();
+
+  highlightDrops('problem');
 
 };
+
 
 
 
@@ -1286,25 +1504,7 @@ const setupFreeMode = () => {
 
   const addField = (value = '') => {
 
-    const slot = document.createElement('label');
-
-    slot.className = 'number-slot';
-
-    const input = document.createElement('input');
-
-    input.type = 'number';
-
-    input.min = '1';
-
-    input.placeholder = '0';
-
-    input.value = value;
-
-    input.className = 'number-input';
-
-    slot.appendChild(input);
-
-    list.appendChild(slot);
+    list.appendChild(createNumberSlot(value));
 
   };
 
@@ -1385,6 +1585,278 @@ const setupPracticeMode = () => {
 
 const setupProblemsMode = () => {
 
+  const form = $('#problem-form');
+
+  const list = $('#problem-number-list');
+
+  const addButton = $('#problem-add-number');
+
+  const beginButton = $('#problem-begin');
+
+  const status = $('#problem-status');
+
+  const feedback = $('#problem-feedback');
+
+  const workspace = $('#problem-workspace');
+
+  const goalContainer = $('#problem-goal-options');
+
+  const goalOptions = Array.from(goalContainer ? goalContainer.querySelectorAll('.goal-option') : []);
+
+  const goalInputs = () => Array.from(document.querySelectorAll('input[name="problem-goal"]'));
+
+  const syncGoalOptionClasses = () => {
+
+    goalOptions.forEach((option) => {
+
+      const input = option.querySelector('input');
+
+      if (!input) return;
+
+      option.classList.toggle('selected', input.checked);
+
+    });
+
+  };
+
+  goalInputs().forEach((input) => {
+
+    if (input.dataset.bound) return;
+
+    input.dataset.bound = 'true';
+
+    input.addEventListener('change', syncGoalOptionClasses);
+
+  });
+
+  if (status) status.textContent = 'Prem "Nou problema" per començar';
+
+  problemUI.form = form;
+
+  problemUI.list = list;
+
+  problemUI.status = status;
+
+  problemUI.feedback = feedback;
+
+  problemUI.addButton = addButton;
+
+  problemUI.beginButton = beginButton;
+
+  problemUI.goalOptions = goalOptions;
+
+  problemUI.workspace = workspace;
+
+  problemUI.syncGoalClasses = syncGoalOptionClasses;
+
+  problemUI.resetForm = () => {
+
+    if (!form || !list) return;
+
+    form.classList.remove('locked');
+
+    if (!state.currentProblem) {
+
+      if (status) status.textContent = 'Prem "Nou problema" per començar';
+
+    } else if (status) {
+
+      status.textContent = 'Introdueix les respostes';
+
+    }
+
+    if (feedback) feedback.textContent = state.currentProblem ? 'Introdueix els nombres i decideix si cal MCD o mcm.' : '';
+
+    if (workspace) workspace.hidden = true;
+
+    list.innerHTML = '';
+
+    const initialFields = 2;
+
+    for (let i = 0; i < initialFields; i += 1) {
+
+      list.appendChild(createNumberSlot());
+
+    }
+
+    goalInputs().forEach((input) => {
+
+      input.checked = false;
+
+      input.disabled = false;
+
+    });
+
+    syncGoalOptionClasses();
+
+    list.querySelectorAll('input').forEach((input) => {
+
+      input.value = '';
+
+      input.disabled = false;
+
+    });
+
+    if (addButton) addButton.disabled = false;
+
+    if (beginButton) beginButton.disabled = false;
+
+    const output = $('#result-problem');
+
+    if (output) output.textContent = '';
+
+    highlightDrops('problem');
+
+  };
+
+  problemUI.lockForm = () => {
+
+    if (!form || !list) return;
+
+    form.classList.add('locked');
+
+    list.querySelectorAll('input').forEach((input) => { input.disabled = true; });
+
+    goalInputs().forEach((input) => { input.disabled = true; });
+
+    if (addButton) addButton.disabled = true;
+
+    if (beginButton) beginButton.disabled = true;
+
+    syncGoalOptionClasses();
+
+  };
+
+  const gatherNumbers = () => {
+
+    if (!list) return [];
+
+    return Array.from(list.querySelectorAll('.number-input'), (input) => Number(input.value))
+
+      .filter((value) => Number.isInteger(value) && value > 0);
+
+  };
+
+  const ensureGoalChoice = () => {
+
+    const input = goalInputs().find((node) => node.checked);
+
+    return input ? input.value : null;
+
+  };
+
+  addButton?.addEventListener('click', () => {
+
+    if (!list) return;
+
+    const fields = list.querySelectorAll('.number-slot').length;
+
+    if (fields >= 4) {
+
+      toast('Òptim: màxim quatre nombres.');
+
+      return;
+
+    }
+
+    list.appendChild(createNumberSlot());
+
+  });
+
+  const handleProblemBegin = () => {
+
+    if (!state.currentProblem) {
+
+      toast('Primer demana un problema.');
+
+      return;
+
+    }
+
+    const numbers = gatherNumbers();
+
+    if (numbers.length < 2 || numbers.length > 4) {
+
+      if (feedback) feedback.textContent = 'Cal indicar entre dos i quatre nombres positius.';
+
+      toast('Cal indicar entre dos i quatre nombres.');
+
+      return;
+
+    }
+
+    const expected = state.currentProblem.numbers.slice().sort((a, b) => a - b);
+
+    const provided = numbers.slice().sort((a, b) => a - b);
+
+    if (expected.length !== provided.length || expected.some((value, index) => value !== provided[index])) {
+
+      if (feedback) feedback.textContent = 'Revisa els nombres: no coincideixen amb l\'enunciat.';
+
+      toast('Els nombres no coincideixen amb el problema.');
+
+      return;
+
+    }
+
+    const selectedGoal = ensureGoalChoice();
+
+    if (!selectedGoal) {
+
+      if (feedback) feedback.textContent = 'Tria si cal calcular el MCD o el mcm.';
+
+      toast('Cal decidir si vols el MCD o el mcm.');
+
+      return;
+
+    }
+
+    if (selectedGoal !== state.currentProblem.type) {
+
+      if (feedback) feedback.textContent = 'Pensa bé si el problema demana el MCD o el mcm.';
+
+      toast('Revisa si cal MCD o mcm.');
+
+      return;
+
+    }
+
+    state.numbers = numbers;
+
+    state.goal = selectedGoal;
+
+    resetWorkspace();
+
+    syncGoalButtons();
+
+    problemUI.lockForm();
+
+    if (status) status.textContent = 'Resol el problema';
+
+    if (feedback) feedback.textContent = 'Descompon els nombres i arrossega els factors per obtenir el resultat.';
+
+    if (workspace) workspace.hidden = false;
+
+    renderWorkspace('problem');
+
+    highlightDrops('problem');
+
+    renderFactorColumns('problem');
+
+    renderResultDrop('problem', 'mcd');
+
+    renderResultDrop('problem', 'mcm');
+
+    const output = $('#result-problem');
+
+    if (output) output.textContent = '';
+
+    toast('Ara descompon els nombres i calcula.');
+
+  };
+
+  beginButton?.addEventListener('click', handleProblemBegin);
+
   $('#next-problem')?.addEventListener('click', async () => {
 
     try {
@@ -1392,8 +1864,6 @@ const setupProblemsMode = () => {
       await ensureData();
 
       const problem = pickRandom(state.data.problems);
-
-      $('#problem-type').textContent = problem.type.toUpperCase();
 
       setMode('problemes');
 
@@ -1409,7 +1879,10 @@ const setupProblemsMode = () => {
 
   });
 
+  if (typeof problemUI.resetForm === 'function') problemUI.resetForm();
+
 };
+
 
 
 
@@ -1418,6 +1891,14 @@ const wireCommon = (scope) => {
   $(`#compute-${scope}`)?.addEventListener('click', () => computeResults(scope));
 
   $(`#reset-${scope}`)?.addEventListener('click', () => {
+
+    if (scope === 'problem') {
+
+      resetProblemFlow();
+
+      return;
+
+    }
 
     resetWorkspace();
 
