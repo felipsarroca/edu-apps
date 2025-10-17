@@ -1,4 +1,0 @@
-A la carpeta hi ha una molt bona aplicació que has fet tu. Cal, però, una petita
-  amb forma de potència quan calgui. De passada, a la descomposició factorial,
-  ajusta una mica l'altura dels espais on s'introdueixen els nombres primers
-  perquè estiguin sempre aliniats amb els seus correlatius de la seva esquerra.

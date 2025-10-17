@@ -86,19 +86,7 @@ const modeFromScope = {
 
 };
 
-
-
-const SUPER = {
-  0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
-  5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹',
-  '-': '⁻',
-};
-
-
-
-const toSuperscript = (value) => String(value).split('').map((digit) => SUPER[digit] ?? '').join('');
-
-const formatExponent = (prime, power) => (power > 1 ? `${prime}<sup>${toSuperscript(power)}</sup>` : String(prime));
+const formatExponent = (prime, power) => (power > 1 ? `${prime}<sup>${power}</sup>` : String(prime));
 
 
 
