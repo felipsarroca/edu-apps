@@ -220,7 +220,7 @@
     "type": "mcd",
     "solution": 16,
     "answer": "Podran repartir els cromos entre 16 amics amb el mateix nombre per a cadascú.",
-    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+    "hint": "Calcula el mcd per repartir o agrupar sinse que sobri res."
   },
   {
     "id": 19,
