@@ -903,9 +903,17 @@ output {
 }
 
 sup {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.8em;
   vertical-align: super;
+  padding: 0.1em 0.3em;
+  border-radius: 6px;
+  background: rgba(65, 109, 255, 0.15);
+  margin-left: 2px;
+  display: inline-block;
+  line-height: 1;
+  position: relative;
+  top: -2px;
 }
 
 
