@@ -481,12 +481,17 @@ button:active {
   color: var(--text);
 }
 
+.dropzone.filled {
+  padding: 0;
+  border: 0;
+}
+
 .used-prime {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 100%;
+  height: 100%;
   padding: 8px 10px;
   border-radius: 14px;
   font-weight: 800;
@@ -899,8 +904,7 @@ output {
 
 sup {
   font-weight: 700;
-  font-size: 0.7em;
-  color: var(--primary);
+  font-size: 0.8em;
   vertical-align: super;
 }
 
