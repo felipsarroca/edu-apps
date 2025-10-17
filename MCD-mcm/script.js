@@ -855,39 +855,119 @@ function renderFactorColumns(scope) {
 
 
 
-    const chipsWrap = document.createElement('div');
-
-    chipsWrap.className = 'factor-summary-chips';
+        const chipsWrap = document.createElement('div');
 
 
 
-    const primes = Object.keys(row).map(Number).sort((a, b) => a - b);
+        chipsWrap.className = 'factor-summary-chips';
 
-    if (primes.length) {
 
-      primes.forEach((prime) => {
 
-        const count = row[prime];
+    
 
-        for (let i = 0; i < count; i += 1) {
 
-          chipsWrap.appendChild(makeSummaryChip(prime));
+
+        const primes = Object.keys(row).map(Number).sort((a, b) => a - b);
+
+
+
+        if (primes.length) {
+
+
+
+          primes.forEach((prime) => {
+
+
+
+            const count = row[prime];
+
+
+
+            if (count < 1) return;
+
+
+
+    
+
+
+
+            const chip = document.createElement('span');
+
+
+
+            chip.className = 'summary-chip';
+
+
+
+            chip.textContent = formatExponent(prime, count);
+
+
+
+            chip.style.backgroundColor = primeColor(prime);
+
+
+
+            chip.draggable = true;
+
+
+
+            chip.addEventListener('dragstart', (event) => {
+
+
+
+              event.dataTransfer?.setData('text/plain', String(prime));
+
+
+
+              event.dataTransfer?.setData(
+
+
+
+                'application/x-factor',
+
+
+
+                createFactorPayload(prime, 1)
+
+
+
+              );
+
+
+
+            });
+
+
+
+            chipsWrap.appendChild(chip);
+
+
+
+          });
+
+
+
+        } else {
+
+
+
+          const placeholder = document.createElement('span');
+
+
+
+          placeholder.className = 'drop-placeholder';
+
+
+
+          placeholder.textContent = 'Encara no hi ha factors.';
+
+
+
+          chipsWrap.appendChild(placeholder);
+
+
 
         }
-
-      });
-
-    } else {
-
-      const placeholder = document.createElement('span');
-
-      placeholder.className = 'drop-placeholder';
-
-      placeholder.textContent = 'Encara no hi ha factors.';
-
-      chipsWrap.appendChild(placeholder);
-
-    }
 
 
 
