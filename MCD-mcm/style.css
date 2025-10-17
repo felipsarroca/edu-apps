@@ -908,6 +908,16 @@ sup {
   line-height: 1;
   font-weight: 400;
   margin-left: 2px;
+  display: inline-block;
+}
+
+.prime-chip sup,
+.used-prime sup,
+.summary-chip sup,
+.factor-chip sup,
+.result-chip sup {
+  top: -0.25em;
+  position: relative;
 }
 
 
