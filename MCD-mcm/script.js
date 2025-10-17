@@ -541,9 +541,13 @@ const makeUsedPrimeChip = (prime) => {
 
     event.dataTransfer?.setData('text/plain', String(prime));
 
-    event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, 1));
+              event.dataTransfer?.setData(
 
-  });
+                'application/x-factor',
+
+                createFactorPayload(prime, count)
+
+              );
 
   return chip;
 
@@ -805,177 +809,263 @@ const renderLanes = (scope) => {
 
 function renderFactorColumns(scope) {
 
+
+
   const container = document.getElementById(`factor-columns-${scope}`);
 
+
+
   if (!container) return;
+
+
+
+
+
+
+
+  recomputePrimeSet();
+
+
+
+  const allPrimes = state.primes.slice().sort((a, b) => a - b);
+
+
+
+  container.style.gridTemplateColumns = `auto repeat(${allPrimes.length || 1}, minmax(4rem, auto))`;
+
+
 
   container.innerHTML = '';
 
 
 
+
+
+
+
   state.numbers.forEach((number, rowIndex) => {
 
+
+
     const summary = document.createElement('div');
+
+
 
     summary.className = 'factor-summary';
 
 
 
-    const expression = document.createElement('span');
+    container.appendChild(summary); 
 
-    expression.className = 'factor-expression';
 
-    const row = state.exponents[rowIndex];
+
+
+
+
+
+    const rowExponents = state.exponents[rowIndex];
+
+
 
     const plan = state.plans[rowIndex] || [];
 
+
+
     const assigned = assignedSteps(rowIndex);
+
+
 
     const complete = plan.length > 0 ? assigned >= plan.length : assigned > 0;
 
-    const baseProduct = formatProduct(row);
+
+
+    const baseProduct = formatProduct(rowExponents);
+
+
+
+
 
 
 
     let rhs;
 
+
+
     if (!assigned) {
+
+
+
       rhs = '…';
+
+
+
     } else if (!complete) {
+
+
+
       rhs = baseProduct === '1' ? '…' : `${baseProduct} × …`;
+
+
+
     } else {
+
+
+
       rhs = baseProduct;
+
+
+
     }
 
 
 
-    expression.textContent = `${number} = ${rhs}`;
 
-    summary.appendChild(expression);
 
 
 
-        const chipsWrap = document.createElement('div');
+    const label = document.createElement('span');
 
 
 
-        chipsWrap.className = 'factor-summary-chips';
+    label.className = 'factor-summary-label';
 
 
 
-    
+    label.textContent = `${number} = ${rhs}`;
 
 
 
-        const primes = Object.keys(row).map(Number).sort((a, b) => a - b);
+    summary.appendChild(label);
 
 
 
-        if (primes.length) {
 
 
 
-          primes.forEach((prime) => {
 
+    if (allPrimes.length === 0) {
 
 
-            const count = row[prime];
 
+        const placeholder = document.createElement('div');
 
 
-            if (count < 1) return;
 
+        placeholder.className = 'factor-placeholder';
 
 
-    
 
+        summary.appendChild(placeholder);
 
 
-            const chip = document.createElement('span');
 
+        return;
 
 
-            chip.className = 'summary-chip';
 
+    }
 
 
-            chip.textContent = formatExponent(prime, count);
 
 
 
-            chip.style.backgroundColor = primeColor(prime);
 
 
+    allPrimes.forEach((prime) => {
 
-            chip.draggable = true;
 
 
+      const count = rowExponents[prime];
 
-            chip.addEventListener('dragstart', (event) => {
 
 
+      if (count > 0) {
 
-              event.dataTransfer?.setData('text/plain', String(prime));
 
 
+        const chip = document.createElement('button');
 
-              event.dataTransfer?.setData(
 
 
+        chip.type = 'button';
 
-                'application/x-factor',
 
 
+        chip.className = 'summary-chip';
 
-                createFactorPayload(prime, 1)
 
 
+        chip.textContent = formatExponent(prime, count);
 
-              );
 
 
+        chip.style.backgroundColor = primeColor(prime);
 
-            });
 
 
+        chip.draggable = true;
 
-            chipsWrap.appendChild(chip);
 
 
+        chip.addEventListener('dragstart', (event) => {
 
-          });
 
 
+          event.dataTransfer?.setData('text/plain', String(prime));
 
-        } else {
 
 
+          event.dataTransfer?.setData(
 
-          const placeholder = document.createElement('span');
 
 
+            'application/x-factor',
 
-          placeholder.className = 'drop-placeholder';
 
 
+            createFactorPayload(prime, count)
 
-          placeholder.textContent = 'Encara no hi ha factors.';
 
 
+          );
 
-          chipsWrap.appendChild(placeholder);
 
 
+        });
 
-        }
 
 
+        summary.appendChild(chip);
 
-    summary.appendChild(chipsWrap);
 
-    container.appendChild(summary);
+
+      } else {
+
+
+
+        const placeholder = document.createElement('div');
+
+
+
+        placeholder.className = 'factor-placeholder';
+
+
+
+        summary.appendChild(placeholder);
+
+
+
+      }
+
+
+
+    });
+
+
 
   });
+
+
 
 }
 
