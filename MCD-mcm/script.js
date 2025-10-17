@@ -524,33 +524,17 @@ const createFactorPayload = (prime, power = 1) => JSON.stringify({ prime, power 
 
 
 const makeUsedPrimeChip = (prime) => {
-
   const chip = document.createElement('span');
-
   chip.className = 'used-prime';
-
   chip.textContent = String(prime);
-
   chip.style.backgroundColor = primeColor(prime);
-
   chip.style.color = '#102143';
-
   chip.draggable = true;
-
   chip.addEventListener('dragstart', (event) => {
-
     event.dataTransfer?.setData('text/plain', String(prime));
-
-              event.dataTransfer?.setData(
-
-                'application/x-factor',
-
-                createFactorPayload(prime, count)
-
-              );
-
+    event.dataTransfer?.setData('application/x-factor', createFactorPayload(prime, 1));
+  });
   return chip;
-
 };
 
 
