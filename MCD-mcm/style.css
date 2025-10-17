@@ -902,4 +902,11 @@ output {
   margin-top: 20px;
 }
 
+sup {
+  font-weight: 700;
+  font-size: 0.7em;
+  color: var(--primary);
+  vertical-align: super;
+}
+
 

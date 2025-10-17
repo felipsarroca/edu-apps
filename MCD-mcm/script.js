@@ -1443,7 +1443,7 @@ const renderPrimePalette = (scope) => {
 
   const primes = (() => {
 
-    const limit = Math.max(2, Math.floor(maxNumber));
+    const limit = Math.max(53, Math.floor(Math.sqrt(maxNumber)));
 
     const sieve = new Uint8Array(limit + 1);
 
