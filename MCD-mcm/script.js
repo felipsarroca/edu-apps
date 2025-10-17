@@ -98,7 +98,7 @@ const SUPER = {
 
 const toSuperscript = (value) => String(value).split('').map((digit) => SUPER[digit] ?? '').join('');
 
-const formatExponent = (prime, power) => (power > 1 ? `${prime}${toSuperscript(power)}` : String(prime));
+const formatExponent = (prime, power) => (power > 1 ? `${prime}<sup>${toSuperscript(power)}</sup>` : String(prime));
 
 
 
@@ -979,7 +979,7 @@ function renderFactorColumns(scope) {
 
 
 
-        chip.textContent = formatExponent(prime, count);
+        chip.innerHTML = formatExponent(prime, count);
 
 
 
@@ -1191,7 +1191,7 @@ const renderResultDrop = (scope, type) => {
 
     chip.className = 'result-chip';
 
-    chip.textContent = formatExponent(item.prime, item.power);
+    chip.innerHTML = formatExponent(item.prime, item.power);
 
     chip.style.backgroundColor = primeColor(item.prime);
 

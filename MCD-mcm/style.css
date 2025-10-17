@@ -442,6 +442,11 @@ button:active {
   padding: 4px 0;
 }
 
+.lane-track .dropzone,
+.lane-track .used-prime {
+  height: 2.7rem;
+}
+
 .lane-track::before {
   content: "";
   position: absolute;
