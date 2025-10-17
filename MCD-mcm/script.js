@@ -1215,9 +1215,35 @@ const renderResultDrop = (scope, type) => {
 
   });
 
-  const aggregated = aggregateFactors(list);
+    const aggregated = aggregateFactors(list);
 
-  expressionNode.textContent = `Factors triats: ${formatProduct(aggregated)}`;
+    const product = Object.entries(aggregated)
+
+      .reduce((acc, [prime, power]) => acc * Math.pow(prime, power), 1);
+
+  
+
+    const provisionalResultNode = strip.parentElement.querySelector('.provisional-result');
+
+    if (provisionalResultNode) {
+
+      provisionalResultNode.textContent = list.length > 0 ? `= ${product}` : '';
+
+    }
+
+  
+
+    const feedbackIconNode = strip.parentElement.querySelector('.feedback-icon');
+
+    if (feedbackIconNode) {
+
+      feedbackIconNode.textContent = '';
+
+    }
+
+  
+
+    expressionNode.textContent = `Factors triats: ${formatProduct(aggregated)}`;
 
 };
 
@@ -1301,43 +1327,65 @@ const computeResults = (scope) => {
 
   let anySelection = false;
 
-  ['mcd', 'mcm'].forEach((type) => {
+    ['mcd', 'mcm'].forEach((type) => {
 
-    const dropCard = modePanel(scope)?.querySelector(`.result-drop[data-kind="${type}"]`);
+      const dropCard = modePanel(scope)?.querySelector(`.result-drop[data-kind="${type}"]`);
 
-    const evaluation = evaluations[type];
+      const evaluation = evaluations[type];
 
-    const hasSelection = state.results[type].length > 0;
+      const hasSelection = state.results[type].length > 0;
 
-    if (dropCard) {
+      const feedbackIconNode = dropCard?.querySelector('.feedback-icon');
 
-      dropCard.classList.remove('ok', 'error');
+  
 
-      if (hasSelection) {
+      if (dropCard) {
 
-        dropCard.classList.add(evaluation.ok ? 'ok' : 'error');
+        dropCard.classList.remove('ok', 'error');
 
-      } else if (evaluation.expectedHasContent && targets.includes(type)) {
+        if (feedbackIconNode) feedbackIconNode.textContent = '';
 
-        dropCard.classList.add('error');
+  
+
+        if (hasSelection) {
+
+          dropCard.classList.add(evaluation.ok ? 'ok' : 'error');
+
+          if (feedbackIconNode) {
+
+            feedbackIconNode.textContent = evaluation.ok ? '✅' : '❌';
+
+          }
+
+        } else if (evaluation.expectedHasContent && targets.includes(type)) {
+
+          dropCard.classList.add('error');
+
+          if (feedbackIconNode) {
+
+            feedbackIconNode.textContent = '❌';
+
+          }
+
+        }
 
       }
 
-    }
+  
 
-    if (targets.includes(type)) {
+      if (targets.includes(type)) {
 
-      const label = type === 'mcd' ? 'MCD' : 'mcm';
+        const label = type === 'mcd' ? 'MCD' : 'mcm';
 
-      const suffix = scope === 'problem' && targets.length === 1 ? '' : (evaluation.ok ? ' ✅' : ' ❌');
+        const suffix = scope === 'problem' && targets.length === 1 ? '' : (evaluation.ok ? ' ✅' : ' ❌');
 
-      parts.push(`${label} = ${evaluation.value}${suffix}`);
+        parts.push(`${label} = ${evaluation.value}${suffix}`);
 
-      if (hasSelection) anySelection = true;
+        if (hasSelection) anySelection = true;
 
-    }
+      }
 
-  });
+    });
 
   if (output && !(scope === 'problem' && targets.length === 1)) {
 
