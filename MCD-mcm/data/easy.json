@@ -213,5 +213,60 @@
       "mcd": 3,
       "mcm": 30
     }
+  },
+  {
+    "numbers": [
+      8,
+      9
+    ],
+    "solution": {
+      "mcd": 1,
+      "mcm": 72
+    }
+  },
+  {
+    "numbers": [
+      6,
+      10,
+      15
+    ],
+    "solution": {
+      "mcd": 1,
+      "mcm": 30
+    }
+  },
+  {
+    "numbers": [
+      4,
+      10,
+      25
+    ],
+    "solution": {
+      "mcd": 1,
+      "mcm": 100
+    }
+  },
+  {
+    "numbers": [
+      9,
+      12,
+      27
+    ],
+    "solution": {
+      "mcd": 3,
+      "mcm": 108
+    }
+  },
+  {
+    "numbers": [
+      4,
+      6,
+      8,
+      10
+    ],
+    "solution": {
+      "mcd": 2,
+      "mcm": 120
+    }
   }
 ]

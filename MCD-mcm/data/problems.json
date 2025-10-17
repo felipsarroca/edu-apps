@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "text": "A l'estació de Terrassa, tres línies d'autobús (L1, L3 i L9) inicien la seva ruta a les 8:00 del matí. La L1 triga 12 minuts a completar el seu recorregut, la L3 necessita 18 minuts i la L9, 30 minuts. Quant de temps haurà de passar perquè els tres autobusos tornin a coincidir a la parada inicial?",
+    "text": "A l'estaciÃ³ de Terrassa, tres lÃ­nies d'autobÃºs (L1, L3 i L9) inicien la seva ruta a les 8:00 del matÃ­. La L1 triga 12 minuts a completar el seu recorregut, la L3 necessita 18 minuts i la L9, 30 minuts. Quant de temps haurÃ  de passar perquÃ¨ els tres autobusos tornin a coincidir a la parada inicial?",
     "numbers": [
       12,
       18,
@@ -9,11 +9,12 @@
     ],
     "type": "mcm",
     "solution": 180,
-    "answer": "Els autobusos L1, L3 i L9 tornaran a coincidir a la parada al cap de 180 minuts (3 hores)."
+    "answer": "Els autobusos L1, L3 i L9 tornaran a coincidir a la parada al cap de 180 minuts (3 hores).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 2,
-    "text": "En una instal·lació artística, una llum vermella parpelleja cada 20 segons, una llum blava ho fa cada 25 segons i una verda, cada 40. Si les tres s'encenen alhora al principi, quants segons passaran fins que tornin a brillar les tres al mateix instant?",
+    "text": "En una instalÂ·laciÃ³ artÃ­stica, una llum vermella parpelleja cada 20 segons, una llum blava ho fa cada 25 segons i una verda, cada 40. Si les tres s'encenen alhora al principi, quants segons passaran fins que tornin a brillar les tres al mateix instant?",
     "numbers": [
       20,
       25,
@@ -21,11 +22,12 @@
     ],
     "type": "mcm",
     "solution": 200,
-    "answer": "Les tres llums s'encendran plegades de nou als 200 segons."
+    "answer": "Les tres llums s'encendran plegades de nou als 200 segons.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 3,
-    "text": "La Font Màgica de Montjuïc té un espectacle on tres sortidors d'aigua actuen a intervals regulars. Un llança aigua cada 6 segons, un altre cada 10 segons i el tercer cada 15. Cada quants segons els tres sortidors llancen aigua simultàniament?",
+    "text": "La Font MÃ gica de MontjuÃ¯c tÃ© un espectacle on tres sortidors d'aigua actuen a intervals regulars. Un llanÃ§a aigua cada 6 segons, un altre cada 10 segons i el tercer cada 15. Cada quants segons els tres sortidors llancen aigua simultÃ niament?",
     "numbers": [
       6,
       10,
@@ -33,11 +35,12 @@
     ],
     "type": "mcm",
     "solution": 30,
-    "answer": "Els tres sortidors de la Font Màgica coincidiran cada 30 segons."
+    "answer": "Els tres sortidors de la Font MÃ gica coincidiran cada 30 segons.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 4,
-    "text": "En un taller de fabricació digital, un braç robòtic s'activa cada 8 minuts, una impressora 3D comença un cicle cada 12 minuts i una talladora làser opera cada 20 minuts. Si totes les màquines comencen a treballar alhora, quan tornaran a iniciar un cicle totes tres exactament al mateix temps?",
+    "text": "En un taller de fabricaciÃ³ digital, un braÃ§ robÃ²tic s'activa cada 8 minuts, una impressora 3D comenÃ§a un cicle cada 12 minuts i una talladora lÃ ser opera cada 20 minuts. Si totes les mÃ quines comencen a treballar alhora, quan tornaran a iniciar un cicle totes tres exactament al mateix temps?",
     "numbers": [
       8,
       12,
@@ -45,11 +48,12 @@
     ],
     "type": "mcm",
     "solution": 120,
-    "answer": "Les màquines del taller tornaran a iniciar un cicle totes juntes cada 120 minuts (2 hores)."
+    "answer": "Les mÃ quines del taller tornaran a iniciar un cicle totes juntes cada 120 minuts (2 hores).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 5,
-    "text": "Tres satèl·lits de comunicacions passen per sobre de la mateixa estació terrestre. Un completa la seva òrbita cada 24 hores, un altre cada 36 hores i el tercer cada 48 hores. Quantes hores han de passar perquè els tres satèl·lits tornin a alinear-se sobre l'estació?",
+    "text": "Tres satÃ¨lÂ·lits de comunicacions passen per sobre de la mateixa estaciÃ³ terrestre. Un completa la seva Ã²rbita cada 24 hores, un altre cada 36 hores i el tercer cada 48 hores. Quantes hores han de passar perquÃ¨ els tres satÃ¨lÂ·lits tornin a alinear-se sobre l'estaciÃ³?",
     "numbers": [
       24,
       36,
@@ -57,33 +61,36 @@
     ],
     "type": "mcm",
     "solution": 144,
-    "answer": "Els tres satèl·lits s'alinearan de nou després de 144 hores (6 dies)."
+    "answer": "Els tres satÃ¨lÂ·lits s'alinearan de nou desprÃ©s de 144 hores (6 dies).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 6,
-    "text": "El campanar de l'església del poble té dos rellotges. Un toca les hores cada 45 minuts i l'altre, més antic, ho fa cada 75 minuts. Si tots dos han sonat junts ara mateix, quants minuts han de passar perquè tornin a sonar alhora?",
+    "text": "El campanar de l'esglÃ©sia del poble tÃ© dos rellotges. Un toca les hores cada 45 minuts i l'altre, mÃ©s antic, ho fa cada 75 minuts. Si tots dos han sonat junts ara mateix, quants minuts han de passar perquÃ¨ tornin a sonar alhora?",
     "numbers": [
       45,
       75
     ],
     "type": "mcm",
     "solution": 225,
-    "answer": "Els rellotges del campanar sonaran junts d'aquí a 225 minuts (3 h i 45 min)."
+    "answer": "Els rellotges del campanar sonaran junts d'aquÃ­ a 225 minuts (3 h i 45 min).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 7,
-    "text": "En una fleca, el forn de pa s'engega automàticament cada 14 minuts per mantenir la temperatura, mentre que el forn de brioixeria ho fa cada 21 minuts. Si tots dos s'han engegat a la vegada, quan tornaran a coincidir?",
+    "text": "En una fleca, el forn de pa s'engega automÃ ticament cada 14 minuts per mantenir la temperatura, mentre que el forn de brioixeria ho fa cada 21 minuts. Si tots dos s'han engegat a la vegada, quan tornaran a coincidir?",
     "numbers": [
       14,
       21
     ],
     "type": "mcm",
     "solution": 42,
-    "answer": "Els dos forns tornaran a engegar-se alhora cada 42 minuts."
+    "answer": "Els dos forns tornaran a engegar-se alhora cada 42 minuts.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 8,
-    "text": "Per seguretat, tres servidors d'una empresa fan còpies de seguretat automàtiques. El primer fa la còpia cada 12 hores, el segon cada 18 hores i el tercer cada 24 hores. Cada quant de temps s'inicien les tres còpies de seguretat simultàniament?",
+    "text": "Per seguretat, tres servidors d'una empresa fan cÃ²pies de seguretat automÃ tiques. El primer fa la cÃ²pia cada 12 hores, el segon cada 18 hores i el tercer cada 24 hores. Cada quant de temps s'inicien les tres cÃ²pies de seguretat simultÃ niament?",
     "numbers": [
       12,
       18,
@@ -91,22 +98,24 @@
     ],
     "type": "mcm",
     "solution": 72,
-    "answer": "Els tres servidors faran la còpia de seguretat al mateix temps cada 72 hores (3 dies)."
+    "answer": "Els tres servidors faran la cÃ²pia de seguretat al mateix temps cada 72 hores (3 dies).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 9,
-    "text": "Dos amics, el Roger i el Bernat, comencen a córrer en una pista d'atletisme. El Roger fa una volta cada 40 segons i el Bernat, que és més ràpid, la fa cada 50 segons. Si surten junts, quants segons trigaran a creuar-se de nou a la línia de sortida?",
+    "text": "Dos amics, el Roger i el Bernat, comencen a cÃ³rrer en una pista d'atletisme. El Roger fa una volta cada 40 segons i el Bernat, que Ã©s mÃ©s rÃ pid, la fa cada 50 segons. Si surten junts, quants segons trigaran a creuar-se de nou a la lÃ­nia de sortida?",
     "numbers": [
       40,
       50
     ],
     "type": "mcm",
     "solution": 200,
-    "answer": "El Roger i el Bernat es trobaran de nou a la línia de sortida cada 200 segons."
+    "answer": "El Roger i el Bernat es trobaran de nou a la lÃ­nia de sortida cada 200 segons.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 10,
-    "text": "En un circuit de karts, tres amics competeixen. L'Arnau fa una volta en 6 minuts, la Berta en 8 minuts i en Carles en 12 minuts. Si han començat la cursa alhora des de la línia de meta, quants minuts passaran fins que es tornin a trobar tots tres al punt de partida?",
+    "text": "En un circuit de karts, tres amics competeixen. L'Arnau fa una volta en 6 minuts, la Berta en 8 minuts i en Carles en 12 minuts. Si han comenÃ§at la cursa alhora des de la lÃ­nia de meta, quants minuts passaran fins que es tornin a trobar tots tres al punt de partida?",
     "numbers": [
       6,
       8,
@@ -114,121 +123,132 @@
     ],
     "type": "mcm",
     "solution": 24,
-    "answer": "L'Arnau, la Berta i en Carles coincidiran a la meta cada 24 minuts."
+    "answer": "L'Arnau, la Berta i en Carles coincidiran a la meta cada 24 minuts.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 11,
-    "text": "Per a la festa de l'escola Ramon Pont, es volen preparar bosses de llaminadures. Tenim 48 caramels de maduixa i 60 de llimona. Totes les bosses han de ser idèntiques i no ha de sobrar cap caramel. Quin és el nombre màxim de bosses que es poden preparar?",
+    "text": "Per a la festa de l'escola Ramon Pont, es volen preparar bosses de llaminadures. Tenim 48 caramels de maduixa i 60 de llimona. Totes les bosses han de ser idÃ¨ntiques i no ha de sobrar cap caramel. Quin Ã©s el nombre mÃ xim de bosses que es poden preparar?",
     "numbers": [
       48,
       60
     ],
     "type": "mcd",
     "solution": 12,
-    "answer": "Es poden preparar 12 bosses de llaminadures iguals sense sobrar cap caramel."
+    "answer": "Es poden preparar 12 bosses de llaminadures iguals sense sobrar cap caramel.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 12,
-    "text": "Un mestre d'educació física vol fer equips per a un torneig. Té una classe amb 36 nois i una altra amb 54 noies. Si vol que tots els equips tinguin el mateix nombre de nois i el mateix nombre de noies, quin és el nombre màxim d'equips que pot formar?",
+    "text": "Un mestre d'educaciÃ³ fÃ­sica vol fer equips per a un torneig. TÃ© una classe amb 36 nois i una altra amb 54 noies. Si vol que tots els equips tinguin el mateix nombre de nois i el mateix nombre de noies, quin Ã©s el nombre mÃ xim d'equips que pot formar?",
     "numbers": [
       36,
       54
     ],
     "type": "mcd",
     "solution": 18,
-    "answer": "Es poden formar 18 equips idèntics amb el mateix nombre de nois i de noies."
+    "answer": "Es poden formar 18 equips idÃ¨ntics amb el mateix nombre de nois i de noies.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 13,
-    "text": "Una pagesa ha collit 40 pomes i 60 peres. Vol vendre-les en cistelles de fruita, totes amb la mateixa composició de pomes i peres, i sense que li sobri cap peça de fruita. Quantes cistelles idèntiques podrà omplir com a màxim?",
+    "text": "Una pagesa ha collit 40 pomes i 60 peres. Vol vendre-les en cistelles de fruita, totes amb la mateixa composiciÃ³ de pomes i peres, i sense que li sobri cap peÃ§a de fruita. Quantes cistelles idÃ¨ntiques podrÃ  omplir com a mÃ xim?",
     "numbers": [
       40,
       60
     ],
     "type": "mcd",
     "solution": 20,
-    "answer": "La pagesa pot omplir 20 cistelles iguals sense que sobri fruita."
+    "answer": "La pagesa pot omplir 20 cistelles iguals sense que sobri fruita.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 14,
-    "text": "Un jardiner del Parc de Vallparadís està dissenyant parterres de flors. Té 84 tulipes i 96 roses. Vol plantar-les de manera que cada parterre tingui la mateixa quantitat de tulipes i la mateixa de roses. Quin és el nombre màxim de parterres idèntics que pot crear?",
+    "text": "Un jardiner del Parc de VallparadÃ­s estÃ  dissenyant parterres de flors. TÃ© 84 tulipes i 96 roses. Vol plantar-les de manera que cada parterre tingui la mateixa quantitat de tulipes i la mateixa de roses. Quin Ã©s el nombre mÃ xim de parterres idÃ¨ntics que pot crear?",
     "numbers": [
       84,
       96
     ],
     "type": "mcd",
     "solution": 12,
-    "answer": "El jardiner pot dissenyar 12 parterres idèntics amb les tulipes i les roses."
+    "answer": "El jardiner pot dissenyar 12 parterres idÃ¨ntics amb les tulipes i les roses.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 15,
-    "text": "Una empresa de material d'oficina vol crear paquets promocionals. Disposa de 72 bolígrafs i 90 llibretes. Si cada paquet ha de ser igual i no pot sobrar material, quin és el nombre màxim de paquets que es poden fer?",
+    "text": "Una empresa de material d'oficina vol crear paquets promocionals. Disposa de 72 bolÃ­grafs i 90 llibretes. Si cada paquet ha de ser igual i no pot sobrar material, quin Ã©s el nombre mÃ xim de paquets que es poden fer?",
     "numbers": [
       72,
       90
     ],
     "type": "mcd",
     "solution": 18,
-    "answer": "Es poden muntar 18 paquets promocionals tots iguals."
+    "answer": "Es poden muntar 18 paquets promocionals tots iguals.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 16,
-    "text": "Tenim dos dipòsits, un amb 120 litres d'aigua i un altre amb 150 litres de suc de taronja. Volem envasar tot el líquid en garrafes que tinguin la mateixa capacitat i que siguin el més grans possible, sense barrejar els líquids. Quina haurà de ser la capacitat de cada garrafa?",
+    "text": "Tenim dos dipÃ²sits, un amb 120 litres d'aigua i un altre amb 150 litres de suc de taronja. Volem envasar tot el lÃ­quid en garrafes que tinguin la mateixa capacitat i que siguin el mÃ©s grans possible, sense barrejar els lÃ­quids. Quina haurÃ  de ser la capacitat de cada garrafa?",
     "numbers": [
       120,
       150
     ],
     "type": "mcd",
     "solution": 30,
-    "answer": "Cal envasar en garrafes de 30 litres per aprofitar tot el líquid."
+    "answer": "Cal envasar en garrafes de 30 litres per aprofitar tot el lÃ­quid.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 17,
-    "text": "En un hort urbà, es volen plantar 84 tomaqueres i 126 enciams en fileres. Totes les fileres han de contenir el mateix nombre de tomaqueres i el mateix nombre d'enciams. Quin és el nombre màxim de fileres que es poden plantar?",
+    "text": "En un hort urbÃ , es volen plantar 84 tomaqueres i 126 enciams en fileres. Totes les fileres han de contenir el mateix nombre de tomaqueres i el mateix nombre d'enciams. Quin Ã©s el nombre mÃ xim de fileres que es poden plantar?",
     "numbers": [
       84,
       126
     ],
     "type": "mcd",
     "solution": 42,
-    "answer": "Es poden plantar 42 fileres idèntiques amb tomaqueres i enciams."
+    "answer": "Es poden plantar 42 fileres idÃ¨ntiques amb tomaqueres i enciams.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 18,
-    "text": "Dos germans col·leccionen cromos de futbol. L'un en té 64 i l'altre 80. Volen repartir-los entre els seus amics en munts que tinguin el mateix nombre de cromos de cada germà. Quin és el nombre màxim d'amics als qui podran donar cromos?",
+    "text": "Dos germans colÂ·leccionen cromos de futbol. L'un en tÃ© 64 i l'altre 80. Volen repartir-los entre els seus amics en munts que tinguin el mateix nombre de cromos de cada germÃ . Quin Ã©s el nombre mÃ xim d'amics als qui podran donar cromos?",
     "numbers": [
       64,
       80
     ],
     "type": "mcd",
     "solution": 16,
-    "answer": "Podran repartir els cromos entre 16 amics amb el mateix nombre per a cadascú."
+    "answer": "Podran repartir els cromos entre 16 amics amb el mateix nombre per a cadascÃº.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 19,
-    "text": "En un joc de construcció, tenim 144 peces blaves i 180 peces vermelles. Volem construir torres idèntiques, utilitzant totes les peces. Quin és el nombre màxim de torres que podrem construir?",
+    "text": "En un joc de construcciÃ³, tenim 144 peces blaves i 180 peces vermelles. Volem construir torres idÃ¨ntiques, utilitzant totes les peces. Quin Ã©s el nombre mÃ xim de torres que podrem construir?",
     "numbers": [
       144,
       180
     ],
     "type": "mcd",
     "solution": 36,
-    "answer": "Es poden construir 36 torres idèntiques amb totes les peces."
+    "answer": "Es poden construir 36 torres idÃ¨ntiques amb totes les peces.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 20,
-    "text": "El director d'una orquestra té 168 partitures de violí i 210 de flauta. Per a un concert, vol agrupar-les en carpetes. Totes les carpetes han de tenir el mateix nombre de partitures de cada instrument. Quin és el nombre màxim de carpetes que podrà preparar?",
+    "text": "El director d'una orquestra tÃ© 168 partitures de violÃ­ i 210 de flauta. Per a un concert, vol agrupar-les en carpetes. Totes les carpetes han de tenir el mateix nombre de partitures de cada instrument. Quin Ã©s el nombre mÃ xim de carpetes que podrÃ  preparar?",
     "numbers": [
       168,
       210
     ],
     "type": "mcd",
     "solution": 42,
-    "answer": "Es poden preparar 42 carpetes amb la mateixa combinació de partitures."
+    "answer": "Es poden preparar 42 carpetes amb la mateixa combinaciÃ³ de partitures.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 21,
-    "text": "Al rebost de casa, trobo 100 llaunes de tonyina, 75 de blat de moro i 30 d'olives. Vull fer lots d'emergència per a la família, de manera que cada lot sigui idèntic i contingui el mateix nombre de llaunes de cada producte. Quants lots podré formar com a màxim?",
+    "text": "Al rebost de casa, trobo 100 llaunes de tonyina, 75 de blat de moro i 30 d'olives. Vull fer lots d'emergÃ¨ncia per a la famÃ­lia, de manera que cada lot sigui idÃ¨ntic i contingui el mateix nombre de llaunes de cada producte. Quants lots podrÃ© formar com a mÃ xim?",
     "numbers": [
       100,
       75,
@@ -236,11 +256,12 @@
     ],
     "type": "mcd",
     "solution": 5,
-    "answer": "Es poden fer 5 lots d'emergència iguals sense que sobri cap llauna."
+    "answer": "Es poden fer 5 lots d'emergÃ¨ncia iguals sense que sobri cap llauna.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 22,
-    "text": "Un treballador autònom cobra per tres vies diferents: cada 8 dies rep el pagament d'un projecte, cada 20 dies rep ingressos per publicitat i cada 45 dies rep una comissió. Si avui ha rebut els tres pagaments, quants dies passaran fins que torni a cobrar les tres coses el mateix dia?",
+    "text": "Un treballador autÃ²nom cobra per tres vies diferents: cada 8 dies rep el pagament d'un projecte, cada 20 dies rep ingressos per publicitat i cada 45 dies rep una comissiÃ³. Si avui ha rebut els tres pagaments, quants dies passaran fins que torni a cobrar les tres coses el mateix dia?",
     "numbers": [
       8,
       20,
@@ -248,11 +269,12 @@
     ],
     "type": "mcm",
     "solution": 360,
-    "answer": "Els tres pagaments tornaran a coincidir d'aquí a 360 dies."
+    "answer": "Els tres pagaments tornaran a coincidir d'aquÃ­ a 360 dies.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 23,
-    "text": "Una companyia de transport té tres rutes de llarga distància que surten de Barcelona. La primera ruta triga 24 hores a fer el viatge d'anada i tornada, la segona triga 30 hores i la tercera, 48 hores. Si els tres autocars surten avui alhora, d'aquí a quantes hores tornaran a coincidir a l'estació?",
+    "text": "Una companyia de transport tÃ© tres rutes de llarga distÃ ncia que surten de Barcelona. La primera ruta triga 24 hores a fer el viatge d'anada i tornada, la segona triga 30 hores i la tercera, 48 hores. Si els tres autocars surten avui alhora, d'aquÃ­ a quantes hores tornaran a coincidir a l'estaciÃ³?",
     "numbers": [
       24,
       30,
@@ -260,11 +282,12 @@
     ],
     "type": "mcm",
     "solution": 240,
-    "answer": "Els autocars coincidiran a l'estació de nou al cap de 240 hores (10 dies)."
+    "answer": "Els autocars coincidiran a l'estaciÃ³ de nou al cap de 240 hores (10 dies).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 24,
-    "text": "Per a un debat, s'han de formar grups de discussió amb polítics de tres partits diferents. Hi ha 30 representants del partit A, 18 del partit B i 42 del partit C. Es vol que tots els grups siguin iguals en composició. Quin és el nombre màxim de grups que es poden formar?",
+    "text": "Per a un debat, s'han de formar grups de discussiÃ³ amb polÃ­tics de tres partits diferents. Hi ha 30 representants del partit A, 18 del partit B i 42 del partit C. Es vol que tots els grups siguin iguals en composiciÃ³. Quin Ã©s el nombre mÃ xim de grups que es poden formar?",
     "numbers": [
       30,
       18,
@@ -272,22 +295,24 @@
     ],
     "type": "mcd",
     "solution": 6,
-    "answer": "Es poden formar 6 grups de debat iguals amb els tres partits."
+    "answer": "Es poden formar 6 grups de debat iguals amb els tres partits.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 25,
-    "text": "Es vol enrajolar una habitació rectangular de 108 cm de llarg per 8 cm d'ample amb rajoles quadrades. Si volem utilitzar les rajoles més grans possibles i no en volem tallar cap, quina ha de ser la mida del costat de cada rajola?",
+    "text": "Es vol enrajolar una habitaciÃ³ rectangular de 108 cm de llarg per 8 cm d'ample amb rajoles quadrades. Si volem utilitzar les rajoles mÃ©s grans possibles i no en volem tallar cap, quina ha de ser la mida del costat de cada rajola?",
     "numbers": [
       108,
       8
     ],
     "type": "mcd",
     "solution": 4,
-    "answer": "La rajola òptima ha de ser quadrada de 4 cm de costat."
+    "answer": "La rajola Ã²ptima ha de ser quadrada de 4 cm de costat.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 26,
-    "text": "Tinc una col·lecció de monedes: 80 monedes d'1€, 36 de 0,50€ i 100 de 0,20€. Vull organitzar-les en munts idèntics, de manera que cada munt tingui el mateix nombre de monedes de cada valor. Quin és el nombre màxim de munts que podré fer?",
+    "text": "Tinc una colÂ·lecciÃ³ de monedes: 80 monedes d'1â‚¬, 36 de 0,50â‚¬ i 100 de 0,20â‚¬. Vull organitzar-les en munts idÃ¨ntics, de manera que cada munt tingui el mateix nombre de monedes de cada valor. Quin Ã©s el nombre mÃ xim de munts que podrÃ© fer?",
     "numbers": [
       80,
       36,
@@ -295,23 +320,25 @@
     ],
     "type": "mcd",
     "solution": 4,
-    "answer": "Es poden fer 4 munts idèntics de monedes de cada valor."
+    "answer": "Es poden fer 4 munts idÃ¨ntics de monedes de cada valor.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 27,
-    "text": "L'any de Mercuri dura 88 dies terrestres, el de Venus 225 i el de Mart 687. Si avui els tres planetes estan alineats amb el Sol, quants dies han de passar perquè tornin a coincidir en la mateixa posició? (Nota: el número 293 era incorrecte, l'any marcià dura 687 dies)",
+    "text": "L'any de Mercuri dura 88 dies terrestres, el de Venus 225 i el de Mart 687. Si avui els tres planetes estan alineats amb el Sol, quants dies han de passar perquÃ¨ tornin a coincidir en la mateixa posiciÃ³? (Nota: el nÃºmero 293 era incorrecte, l'any marciÃ  dura 687 dies)",
     "numbers": [
       88,
       225,
       687
     ],
     "type": "mcm",
-    "solution": 13543200,
-    "answer": "La triple alineació tornarà d'aquí a 13.543.200 dies (més de 37.000 anys)."
+    "solution": 4534200,
+    "answer": "La triple alineació tornarà d'aquí a 4.534.200 dies (prop de 12.400 anys).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 28,
-    "text": "Tenim tres rotllos de cable que fan 110, 90 i 75 metres respectivament. Volem tallar-los en trossos que siguin tots de la mateixa longitud, però la més llarga possible, sense malgastar gens de cable. Quina serà la longitud de cada tros?",
+    "text": "Tenim tres rotllos de cable que fan 110, 90 i 75 metres respectivament. Volem tallar-los en trossos que siguin tots de la mateixa longitud, perÃ² la mÃ©s llarga possible, sense malgastar gens de cable. Quina serÃ  la longitud de cada tros?",
     "numbers": [
       110,
       90,
@@ -319,11 +346,12 @@
     ],
     "type": "mcd",
     "solution": 5,
-    "answer": "Cada tros de cable pot fer 5 metres per no malgastar material."
+    "answer": "Cada tros de cable pot fer 5 metres per no malgastar material.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
   },
   {
     "id": 29,
-    "text": "Tres ciclistes entrenen en un velòdrom. El primer completa una volta en 48 segons, el segon en 56 segons i el tercer en 60 segons. Si tots tres surten alhora, cada quants segons es tornaran a trobar tots tres a la línia de sortida?",
+    "text": "Tres ciclistes entrenen en un velÃ²drom. El primer completa una volta en 48 segons, el segon en 56 segons i el tercer en 60 segons. Si tots tres surten alhora, cada quants segons es tornaran a trobar tots tres a la lÃ­nia de sortida?",
     "numbers": [
       48,
       56,
@@ -331,11 +359,12 @@
     ],
     "type": "mcm",
     "solution": 1680,
-    "answer": "Els ciclistes es retrobaran a la línia de sortida cada 1.680 segons (28 minuts)."
+    "answer": "Els ciclistes es retrobaran a la lÃ­nia de sortida cada 1.680 segons (28 minuts).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   },
   {
     "id": 30,
-    "text": "Tres línies de metro nocturn inicien el seu servei a mitjanit. La primera té una freqüència de pas de 8 minuts, la segona de 12 minuts i la tercera de 15 minuts. A quina hora tornaran a coincidir les tres línies a la parada inicial?",
+    "text": "Tres lÃ­nies de metro nocturn inicien el seu servei a mitjanit. La primera tÃ© una freqÃ¼Ã¨ncia de pas de 8 minuts, la segona de 12 minuts i la tercera de 15 minuts. A quina hora tornaran a coincidir les tres lÃ­nies a la parada inicial?",
     "numbers": [
       8,
       12,
@@ -343,6 +372,59 @@
     ],
     "type": "mcm",
     "solution": 120,
-    "answer": "Les tres línies de metro coincidiran a la parada cada 120 minuts (2 hores)."
+    "answer": "Les tres lÃ­nies de metro coincidiran a la parada cada 120 minuts (2 hores).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 31,
+    "text": "A l'hort escolar de Ca n'Anglada, l'alumnat ha collit 84 cebes, 140 tomàquets i 196 enciams. Volen preparar cistelles totes iguals per repartir-les entre les famílies, sense que en sobri cap. Quantes cistelles complertes poden fer com a màxim?",
+    "numbers": [
+      84,
+      140,
+      196
+    ],
+    "type": "mcd",
+    "solution": 28,
+    "answer": "Poden preparar 28 cistelles iguals, cadascuna amb 3 cebes, 5 tomàquets i 7 enciams.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 32,
+    "text": "En un edifici de la Rambla d'Anglada, tres equips de neteja revisen les plantes. El primer necessita 18 minuts per planta, el segon 24 i el tercer 40. Si comencen a la vegada, al cap de quant temps tornaran a coincidir tots tres a l'entrada?",
+    "numbers": [
+      18,
+      24,
+      40
+    ],
+    "type": "mcm",
+    "solution": 360,
+    "answer": "Coincidiran de nou al cap de 360 minuts, és a dir, 6 hores.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 33,
+    "text": "Per preparar lots solidaris, el centre disposa de 96 llapis, 120 retoladors i 156 llibretes. Es volen fer paquets idèntics sense que en sobri res. Quants paquets complerts es poden muntar?",
+    "numbers": [
+      96,
+      120,
+      156
+    ],
+    "type": "mcd",
+    "solution": 12,
+    "answer": "Es poden fer 12 paquets iguals, cadascun amb 8 llapis, 10 retoladors i 13 llibretes.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 34,
+    "text": "Al taller de robòtica, tres sensors envien lectures cada 14, 20 i 35 segons. Si s'activen alhora, cada quant temps informaran tots alhora al microcontrolador?",
+    "numbers": [
+      14,
+      20,
+      35
+    ],
+    "type": "mcm",
+    "solution": 140,
+    "answer": "Els sensors coincidiran cada 140 segons enviant el paquet complet de dades.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   }
 ]
