@@ -420,7 +420,7 @@ button:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  height: 42px;
   padding: 8px 12px;
   border-radius: 12px;
   background: rgba(65, 109, 255, 0.1);
@@ -442,10 +442,6 @@ button:active {
   padding: 4px 0;
 }
 
-.lane-track .dropzone,
-.lane-track .used-prime {
-  height: 2.7rem;
-}
 
 .lane-track::before {
   content: "";
@@ -465,9 +461,8 @@ button:active {
 }
 
 .dropzone {
-  width: 2.7rem;
-  height: 2.7rem;
-  min-height: 2.7rem;
+  width: 42px;
+  height: 42px;
   padding: 4px 6px;
   border: 2px dashed rgba(65, 109, 255, 0.35);
   border-radius: 14px;
@@ -490,10 +485,10 @@ button:active {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 42px;
+  height: 42px;
   padding: 8px 10px;
-  border-radius: 999px;
+  border-radius: 14px;
   font-weight: 800;
   color: #102143;
   font-size: 1rem;
