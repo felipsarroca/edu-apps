@@ -59,6 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'Matemàtiques', 
             description: "Eina per a representar gràficament funcions matemàtiques." 
         },
+        { 
+            name: "Calculadora de MCD i mcm", 
+            path: 'MCD-mcm/', 
+            category: 'Matemàtiques', 
+            description: "Calcula el MCD i mcm de forma guiada, amb exercicis i problemes.",
+            icon: 'MCD-mcm/assets/logo.svg'
+        },
 
         // Economia i Emprenedoria
         { 
@@ -126,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             col.className = 'col d-flex';
             
             // Intenta trobar un favicon, si no, mostra una inicial
-            const faviconSrc = `${app.path}favicon.svg`;
+            const faviconSrc = app.icon || `${app.path}favicon.svg`;
             const fallbackIcon = `https://via.placeholder.com/64/3498db/ffffff?text=${app.name.charAt(0)}`;
 
             col.innerHTML = `
