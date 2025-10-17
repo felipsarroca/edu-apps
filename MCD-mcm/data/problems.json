@@ -426,5 +426,288 @@
     "solution": 140,
     "answer": "Els sensors coincidiran cada 140 segons enviant el paquet complet de dades.",
     "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 35,
+    "text": "En una joieria tenen 96 brillants vermells i 144 de verds. Volen fer collarets d'un sol color amb el màxim de pedres possible i sense que en sobri cap. Quants brillants ha de portar cada collaret?",
+    "numbers": [
+      96,
+      144
+    ],
+    "type": "mcd",
+    "solution": 48,
+    "answer": "Cada collaret ha de portar 48 brillants del mateix color.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 36,
+    "text": "En una gimcana hi participen 21 adults i 15 joves. Es volen formar equips sense barrejar edats i aprofitant tothom. Quantes persones ha de tenir cada equip perquè tots quedin repartits?",
+    "numbers": [
+      21,
+      15
+    ],
+    "type": "mcd",
+    "solution": 3,
+    "answer": "Cada equip ha de tenir 3 participants.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 37,
+    "text": "En un establiment s'han de preparar lots amb 30 vaixelles, 18 jocs de coberts i 54 jocs de taula. Quin és el nombre màxim d'unitats de cada producte que pot tenir cada lot sense que en sobri cap?",
+    "numbers": [
+      30,
+      18,
+      54
+    ],
+    "type": "mcd",
+    "solution": 6,
+    "answer": "Cada lot pot contenir 6 vaixelles, 6 jocs de coberts i 6 jocs de taula.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 38,
+    "text": "En una parada coincideixen dues línies d'autobusos: una passa cada 30 minuts i l'altra cada 24. Si avui han coincidit a les 12.00 h, cada quant temps tornaran a arribar alhora?",
+    "numbers": [
+      30,
+      24
+    ],
+    "type": "mcm",
+    "solution": 120,
+    "answer": "Tornaran a coincidir al cap de 120 minuts, és a dir, a les 14.00 h.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 39,
+    "text": "L'Albert es talla els cabells cada 42 dies i en Màrius cada 56. Si avui, 1 de març, han coincidit a la perruqueria, quant de temps passarà fins que hi tornin el mateix dia?",
+    "numbers": [
+      42,
+      56
+    ],
+    "type": "mcm",
+    "solution": 168,
+    "answer": "Hi tornaran a coincidir al cap de 168 dies, el 16 d'agost.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 40,
+    "text": "A la fira hi ha tres atraccions que arrenquen alhora. La roda dura 10 minuts, els cotxes elèctrics 12 i el tren de la bruixa 18. Si comencen plegades a les 17.45 h, quan tornaran a iniciar-se simultàniament?",
+    "numbers": [
+      10,
+      12,
+      18
+    ],
+    "type": "mcm",
+    "solution": 180,
+    "answer": "Tornaran a començar totes tres al cap de 180 minuts, a les 20.45 h.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 41,
+    "text": "El Jordi tarda 35 segons a fer una volta a la pista de l'escola i en Ricard en tarda 40. Si surten alhora, quant temps ha de passar perquè tornin a coincidir al punt de sortida?",
+    "numbers": [
+      35,
+      40
+    ],
+    "type": "mcm",
+    "solution": 280,
+    "answer": "Es retrobaran al cap de 280 segons, és a dir, 4 minuts i 40 segons.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 42,
+    "text": "En un carrer hi ha un fanal cada 20 metres i un contenidor cada 55 metres. Partint d'un punt on coincideixen, quina distància cal recórrer per tornar-los a trobar junts?",
+    "numbers": [
+      20,
+      55
+    ],
+    "type": "mcm",
+    "solution": 220,
+    "answer": "Caldrà caminar 220 metres per retrobar un fanal i un contenidor al mateix punt.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 43,
+    "text": "L'Ajuntament vol col·locar papereres a banda i banda d'un carrer de 360 metres a l'esquerra i 420 metres a la dreta, mantenint el mateix espai entre papereres. Quina és la distància màxima possible entre papereres?",
+    "numbers": [
+      360,
+      420
+    ],
+    "type": "mcd",
+    "solution": 60,
+    "answer": "La separació màxima és de 60 metres entre papereres als dos costats.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 44,
+    "text": "A classe de Dibuix han de fer una quadrícula sobre un full DIN A4 (210 mm × 297 mm) amb quadrats tan grans com sigui possible. Quina mida ha de tenir el costat de cada quadrat?",
+    "numbers": [
+      210,
+      297
+    ],
+    "type": "mcd",
+    "solution": 3,
+    "answer": "Els quadrats han de ser de 3 mm de costat.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 45,
+    "text": "Un quiosc rep 150 exemplars del Diari A i 200 del Diari B. Vol rebre'ls en paquets amb el mateix nombre de diaris i sense barrejar cap títol. Quants diaris ha de contenir cada paquet?",
+    "numbers": [
+      150,
+      200
+    ],
+    "type": "mcd",
+    "solution": 50,
+    "answer": "Cada paquet ha de contenir 50 diaris del mateix diari.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 46,
+    "text": "Un fuster té una planxa de fusta de 256 cm de llarg i 96 cm d'ample i la vol tallar en quadrats tan grans com sigui possible. Quina longitud ha de tenir el costat de cada quadrat?",
+    "numbers": [
+      256,
+      96
+    ],
+    "type": "mcd",
+    "solution": 32,
+    "answer": "Cada quadrat ha de ser de 32 cm de costat.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 47,
+    "text": "En una botiga hi ha bosses amb 24 botons i d'altres amb 20. El nombre total de botons de les dues caixes és el mateix. Quin és el nombre mínim de botons que pot contenir cada caixa?",
+    "numbers": [
+      24,
+      20
+    ],
+    "type": "mcm",
+    "solution": 120,
+    "answer": "Cada caixa ha de contenir com a mínim 120 botons.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 48,
+    "text": "L'Ana i la Raquel tenen 25 boles blanques, 15 de blaves i 90 de vermelles. Volen fer el màxim nombre de collarets iguals sense que en sobri cap. Quants collarets poden preparar?",
+    "numbers": [
+      25,
+      15,
+      90
+    ],
+    "type": "mcd",
+    "solution": 5,
+    "answer": "Poden fer 5 collarets idèntics sense que sobri cap bola.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 49,
+    "text": "En Luís apila cubs blaus de 55 mm i cubs vermells de 45 mm per formar dues columnes de la mateixa alçada. Quina és l'alçada mínima que han de tenir perquè coincideixin?",
+    "numbers": [
+      55,
+      45
+    ],
+    "type": "mcm",
+    "solution": 495,
+    "answer": "Les columnes coincidiran a 495 mm d'alçada (9 cubs blaus i 11 de vermells).",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 50,
+    "text": "Un camp rectangular fa 360 metres de llarg i 150 metres d'ample. Es vol dividir en parcel·les quadrades tan grans com sigui possible. Quina longitud ha de tenir el costat de cada parcel·la?",
+    "numbers": [
+      360,
+      150
+    ],
+    "type": "mcd",
+    "solution": 30,
+    "answer": "Cada parcel·la quadrada ha de tenir 30 metres de costat.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 51,
+    "text": "Tres fars es fan visibles cada 12 segons, cada 18 i cada 60 respectivament. Si a les 18.30 h s'encenen alhora, cada quant temps tornaran a coincidir?",
+    "numbers": [
+      12,
+      18,
+      60
+    ],
+    "type": "mcm",
+    "solution": 180,
+    "answer": "Coincidiran cada 180 segons, és a dir, cada 3 minuts.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 52,
+    "text": "Un comerciant vol posar en caixes 12.028 pomes i 12.772 taronges, de manera que cada caixa contingui el mateix nombre de peces de fruita i sigui el màxim possible. Quantes peces hi haurà a cada caixa?",
+    "numbers": [
+      12028,
+      12772
+    ],
+    "type": "mcd",
+    "solution": 124,
+    "answer": "Cada caixa haurà de contenir 124 peces de fruita.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 53,
+    "text": "En una pista circular tres cavalls fan la volta completa en 10, 11 i 12 segons respectivament. Al cap de quant temps tornaran a passar plegats per la línia de sortida?",
+    "numbers": [
+      10,
+      11,
+      12
+    ],
+    "type": "mcm",
+    "solution": 660,
+    "answer": "Tornaran a coincidir al cap de 660 segons, és a dir, 11 minuts.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 54,
+    "text": "Es disposa de 216 litres i 360 litres de vi en dos dipòsits. Es volen omplir recipients iguals amb la màxima capacitat possible sense barrejar vins. Quants litres ha de contenir cada recipient?",
+    "numbers": [
+      216,
+      360
+    ],
+    "type": "mcd",
+    "solution": 72,
+    "answer": "Cada recipient ha de tenir una capacitat de 72 litres.",
+    "hint": "Calcula el mcd per repartir o agrupar sense que sobri res."
+  },
+  {
+    "id": 55,
+    "text": "En una carretera hi ha fites cada hectòmetre i pals elèctrics cada 36 metres. Si en un punt coincideixen, a quina distància es tornaran a trobar junts?",
+    "numbers": [
+      100,
+      36
+    ],
+    "type": "mcm",
+    "solution": 900,
+    "answer": "Tornaran a coincidir al cap de 900 metres.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 56,
+    "text": "Volem determinar la capacitat mínima d'un tonel perquè es pugui omplir exactament amb ampolles de 60 cl, 90 cl, 1 litre i 2 litres. Quina capacitat ha de tenir el tonel?",
+    "numbers": [
+      60,
+      90,
+      100,
+      200
+    ],
+    "type": "mcm",
+    "solution": 1800,
+    "answer": "El tonel ha de tenir una capacitat mínima de 18 litres.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
+  },
+  {
+    "id": 57,
+    "text": "Un empleat treballa 5 dies seguits i descansa el sisè. Si comença dilluns, quants dies han de passar perquè el seu dia de descans torni a ser en diumenge?",
+    "numbers": [
+      6,
+      7
+    ],
+    "type": "mcm",
+    "solution": 42,
+    "answer": "Han de passar 42 dies perquè torni a descansar en diumenge.",
+    "hint": "Pensa en el mcm dels intervals per saber quan es tornaran a sincronitzar."
   }
 ]
