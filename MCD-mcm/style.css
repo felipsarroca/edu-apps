@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #f7f9ff;
   --panel: #ffffff;
   --panel-2: #edf0ff;
@@ -681,14 +681,6 @@ button:active {
   box-shadow: var(--shadow);
 }
 
-.result-chip::after {
-  content: "×";
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-left: 6px;
-  opacity: 0.6;
-}
-
 .clear-drop {
   font-size: 0.82rem;
   color: var(--muted);
@@ -903,11 +895,11 @@ output {
 }
 
 sup {
-  font-size: 0.75em;
-  vertical-align: super;
+  font-size: 0.65em;
+  vertical-align: top;
   line-height: 1;
   font-weight: inherit;
-  margin-left: 2px;
+  margin-left: 1px;
   display: inline-block;
 }
 
@@ -920,4 +912,8 @@ sup {
   position: relative;
 }
 
-
+.multiplier {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--muted);
+}

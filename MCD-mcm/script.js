@@ -1201,6 +1201,12 @@ const renderResultDrop = (scope, type) => {
 
     strip.appendChild(chip);
 
+    if (index < list.length - 1) {
+      const multiplier = document.createElement('span');
+      multiplier.className = 'multiplier';
+      multiplier.textContent = '×';
+      strip.appendChild(multiplier);
+    }
   });
 
     const aggregated = aggregateFactors(list);
