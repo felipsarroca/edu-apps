@@ -1,0 +1,102 @@
+[
+  {
+    "id": "eq001",
+    "reactius": ["H2", "O2"],
+    "productes": ["H2O"],
+    "coeficients": [2, 1, 2],
+    "metode": ["inspeccio"],
+    "tipus": "combustio",
+    "nivell": 1,
+    "explicacio": "La formacio d'aigua necessita dues molecules d'hidrogen per cada molecula d'oxigen."
+  },
+  {
+    "id": "eq002",
+    "reactius": ["Fe", "O2"],
+    "productes": ["Fe2O3"],
+    "coeficients": [4, 3, 2],
+    "metode": ["inspeccio"],
+    "tipus": "oxidacio",
+    "nivell": 1,
+    "explicacio": "Per formar oxid de ferro(III) calen quatre atoms de ferro i tres de dioxigen."
+  },
+  {
+    "id": "eq003",
+    "reactius": ["C3H8", "O2"],
+    "productes": ["CO2", "H2O"],
+    "coeficients": [1, 5, 3, 4],
+    "metode": ["inspeccio"],
+    "tipus": "combustio",
+    "nivell": 1,
+    "explicacio": "Una combustio completa del propa produeix dioxid de carboni i aigua."
+  },
+  {
+    "id": "eq004",
+    "reactius": ["Na", "Cl2"],
+    "productes": ["NaCl"],
+    "coeficients": [2, 1, 2],
+    "metode": ["inspeccio"],
+    "tipus": "sintesi",
+    "nivell": 1,
+    "explicacio": "Dos atoms de sodi reaccionen amb una molecula de clor per formar clorur de sodi."
+  },
+  {
+    "id": "eq005",
+    "reactius": ["CaCO3"],
+    "productes": ["CaO", "CO2"],
+    "coeficients": [1, 1, 1],
+    "metode": ["inspeccio"],
+    "tipus": "descomposicio",
+    "nivell": 1,
+    "explicacio": "El carbonat de calci es descompon en oxid de calci i dioxid de carboni."
+  },
+  {
+    "id": "eq006",
+    "reactius": ["Al", "HCl"],
+    "productes": ["AlCl3", "H2"],
+    "coeficients": [2, 6, 2, 3],
+    "metode": ["inspeccio"],
+    "tipus": "desplacament_simple",
+    "nivell": 1,
+    "explicacio": "L'alumini desplaa l'hidrogen de l'acid clorhidric i forma clorur d'alumini."
+  },
+  {
+    "id": "eq007",
+    "reactius": ["KClO3"],
+    "productes": ["KCl", "O2"],
+    "coeficients": [2, 2, 3],
+    "metode": ["inspeccio"],
+    "tipus": "descomposicio",
+    "nivell": 1,
+    "explicacio": "El clorat de potassi es descompon en clorur de potassi i dioxigen."
+  },
+  {
+    "id": "eq008",
+    "reactius": ["N2", "H2"],
+    "productes": ["NH3"],
+    "coeficients": [1, 3, 2],
+    "metode": ["inspeccio"],
+    "tipus": "sintesi",
+    "nivell": 1,
+    "explicacio": "El proces Haber-Bosch combina nitrogen i hidrogen per formar amoniac."
+  },
+  {
+    "id": "eq009",
+    "reactius": ["AgNO3", "NaCl"],
+    "productes": ["AgCl", "NaNO3"],
+    "coeficients": [1, 1, 1, 1],
+    "metode": ["inspeccio"],
+    "tipus": "desplacament_doble",
+    "nivell": 1,
+    "explicacio": "Es produeix un intercanvi d'ions que genera el precipitat de clorur de plata."
+  },
+  {
+    "id": "eq010",
+    "reactius": ["H2SO4", "NaOH"],
+    "productes": ["Na2SO4", "H2O"],
+    "coeficients": [1, 2, 1, 2],
+    "metode": ["inspeccio"],
+    "tipus": "neutralitzacio",
+    "nivell": 1,
+    "explicacio": "Una neutralitzacio entre un acid fort i una base forta dona sal i aigua."
+  }
+]
