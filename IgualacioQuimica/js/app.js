@@ -5,30 +5,61 @@ const state = {
   filteredEquations: [],
   currentEquation: null,
   currentCoefficients: [],
+  attempts: 0,
+  correct: 0,
+  streak: 0,
+  showAtoms: true,
+  hintsEnabled: true,
 };
+
+
+
+
+
+
 
 const elements = {
   typeSelect: document.getElementById("reactionType"),
   newEquationBtn: document.getElementById("newEquationBtn"),
   equationContainer: document.getElementById("equationContainer"),
   equationTitle: document.getElementById("equationTitle"),
+  equationDisplay: document.getElementById("equationDisplay"),
   checkBtn: document.getElementById("checkBtn"),
   hintBtn: document.getElementById("hintBtn"),
   solutionBtn: document.getElementById("solutionBtn"),
   resetBtn: document.getElementById("resetBtn"),
   feedback: document.getElementById("feedback"),
+  atomPanel: document.getElementById("atomPanel"),
   atomTable: document.getElementById("atomTable"),
+  toggleAtoms: document.getElementById("toggleAtoms"),
+  toggleHints: document.getElementById("toggleHints"),
+  balanceStatus: document.getElementById("balanceStatus"),
+  attemptCount: document.getElementById("attemptCount"),
+  correctCount: document.getElementById("correctCount"),
+  streakCount: document.getElementById("streakCount"),
 };
 
+
+
+
+
+
+
 const TYPE_LABELS = {
-  combustio: "Combustió",
-  oxidacio: "Oxidació",
-  neutralitzacio: "Neutralització",
-  descomposicio: "Descomposició",
-  sintesi: "Síntesi",
-  desplacament_simple: "Desplaçament simple",
-  desplacament_doble: "Desplaçament doble",
+  combustio: "Combusti\u00f3",
+  oxidacio: "Oxidaci\u00f3",
+  neutralitzacio: "Neutralitzaci\u00f3",
+  descomposicio: "Descomposici\u00f3",
+  sintesi: "S\u00edntesi",
+  desplacament_simple: "Despla\u00e7ament simple",
+  desplacament_doble: "Despla\u00e7ament doble",
 };
+
+
+
+
+
+
 
 async function loadEquations() {
   const response = await fetch(DATA_URL);
@@ -74,7 +105,6 @@ function pickRandomEquation() {
   state.currentEquation = state.filteredEquations[index];
   state.currentCoefficients = buildDefaultCoefficients(state.currentEquation);
   renderEquation();
-  updateAtomTable();
   clearFeedback();
 }
 
@@ -85,39 +115,52 @@ function buildDefaultCoefficients(equation) {
 }
 
 function renderEquation() {
+  if (!state.currentEquation) {
+    elements.equationContainer.innerHTML = "";
+    elements.equationDisplay.innerHTML = "";
+    elements.equationTitle.textContent = "";
+    updateBalanceIndicator(false);
+    return;
+  }
   const { reactius, productes, tipus, explicacio } = state.currentEquation;
   elements.equationContainer.innerHTML = "";
-  renderSide(reactius, "reactant", 0);
-  const arrow = document.createElement("span");
-  arrow.textContent = "→";
-  arrow.className = "text-2xl font-semibold text-emerald-400";
-  elements.equationContainer.appendChild(arrow);
-  renderSide(productes, "producte", reactius.length);
+
+  const reactantSide = buildEquationSide(reactius, "reactants", 0);
+  const arrowColumn = document.createElement("div");
+  arrowColumn.className = "equation-arrow";
+  arrowColumn.textContent = "\u2192";
+  const productSide = buildEquationSide(productes, "products", reactius.length);
+
+  elements.equationContainer.append(reactantSide, arrowColumn, productSide);
+
   elements.equationTitle.textContent = [
     formatTypeLabel(tipus),
     explicacio || "",
   ]
     .filter(Boolean)
-    .join(" · ");
+    .join(" - ");
+
+  updateEquationDisplay();
+  updateAtomTable();
   typesetFormulas();
 }
 
-function renderSide(compounds, side, offset) {
+function buildEquationSide(compounds, role, offset) {
   const sideWrapper = document.createElement("div");
-  sideWrapper.className =
-    "flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto";
+  sideWrapper.className = `equation-side ${role}`;
 
   compounds.forEach((compound, idx) => {
     const globalIndex = offset + idx;
-    const block = document.createElement("div");
-    block.className =
-      "flex items-center gap-2 bg-slate-900/70 rounded-lg px-3 py-2";
+    const card = document.createElement("div");
+    card.className = "compound-card";
+
+    const controls = document.createElement("div");
+    controls.className = "flex flex-col items-center gap-2";
 
     const decrementBtn = document.createElement("button");
     decrementBtn.type = "button";
-    decrementBtn.className =
-      "w-8 h-8 rounded-md bg-slate-800 hover:bg-slate-700 text-lg leading-none";
-    decrementBtn.textContent = "−";
+    decrementBtn.className = "coef-btn";
+    decrementBtn.textContent = "-";
     decrementBtn.addEventListener("click", () => {
       updateCoefficient(globalIndex, Math.max(0, getCoefficient(globalIndex) - 1));
     });
@@ -135,32 +178,50 @@ function renderSide(compounds, side, offset) {
 
     const incrementBtn = document.createElement("button");
     incrementBtn.type = "button";
-    incrementBtn.className =
-      "w-8 h-8 rounded-md bg-slate-800 hover:bg-slate-700 text-lg leading-none";
+    incrementBtn.className = "coef-btn";
     incrementBtn.textContent = "+";
     incrementBtn.addEventListener("click", () => {
       updateCoefficient(globalIndex, getCoefficient(globalIndex) + 1);
     });
 
+    controls.append(decrementBtn, input, incrementBtn);
+
     const formulaSpan = document.createElement("span");
-    formulaSpan.className = "formula text-lg";
+    formulaSpan.className = "compound-formula";
     formulaSpan.innerHTML = formatFormulaHTML(compound);
 
-    if (idx > 0) {
-      const plus = document.createElement("span");
-      plus.textContent = "+";
-      plus.className = "mx-2 text-emerald-300 font-semibold";
-      sideWrapper.appendChild(plus);
-    }
-
-    block.appendChild(decrementBtn);
-    block.appendChild(input);
-    block.appendChild(incrementBtn);
-    block.appendChild(formulaSpan);
-    sideWrapper.appendChild(block);
+    card.append(controls, formulaSpan);
+    sideWrapper.appendChild(card);
   });
 
-  elements.equationContainer.appendChild(sideWrapper);
+  return sideWrapper;
+}
+
+function updateEquationDisplay() {
+  if (!state.currentEquation) {
+    elements.equationDisplay.innerHTML = "";
+    return;
+  }
+  const { reactius, productes } = state.currentEquation;
+  const coefficients = state.currentCoefficients;
+  const reactantTerms = reactius.map((compound, idx) =>
+    buildEquationTerm(coefficients[idx], compound)
+  );
+  const productTerms = productes.map((compound, idx) =>
+    buildEquationTerm(coefficients[reactius.length + idx], compound)
+  );
+  elements.equationDisplay.innerHTML = `${reactantTerms.join(
+    " + "
+  )} &rarr; ${productTerms.join(" + ")}`;
+}
+
+function buildEquationTerm(coefficient, formula) {
+  const value = Number.isFinite(coefficient) ? Math.max(coefficient, 0) : 0;
+  const prefix =
+    value === 0 ? "0" : value === 1 ? "" : String(Math.trunc(value));
+  return `<span class="equation-term">${prefix}${formatFormulaHTML(
+    formula
+  )}</span>`;
 }
 
 function getCoefficient(index) {
@@ -175,6 +236,7 @@ function updateCoefficient(index, newValue) {
   if (input) {
     input.value = state.currentCoefficients[index];
   }
+  updateEquationDisplay();
   updateAtomTable();
   clearFeedback();
 }
@@ -182,8 +244,10 @@ function updateCoefficient(index, newValue) {
 function updateAtomTable() {
   if (!state.currentEquation) {
     elements.atomTable.innerHTML = "";
+    updateBalanceIndicator(false);
     return;
   }
+  applyAtomPanelVisibility();
   const { reactius, productes } = state.currentEquation;
   const { leftCounts, rightCounts } = calculateAtomBalance(
     reactius,
@@ -215,6 +279,9 @@ function updateAtomTable() {
     `);
   });
   elements.atomTable.innerHTML = rows.join("");
+  const hasPositive = state.currentCoefficients.some((value) => value > 0);
+  const balanced = hasPositive && areCountsBalanced(leftCounts, rightCounts);
+  updateBalanceIndicator(balanced);
 }
 
 function calculateAtomBalance(reactants, products, coefficients) {
@@ -242,7 +309,7 @@ function parseFormula(formula) {
   const sanitized = formula
     .trim()
     .replace(/\s+/g, "")
-    .replace(/[·]/g, ".")
+    .replace(/[\u00b7]/g, ".")
     .replace(/\((aq|s|l|g)\)$/i, "");
 
   const parts = sanitized.split(".");
@@ -313,7 +380,7 @@ function parseSingleFormulaPart(part) {
       const amount = readNumber();
       const target = currentTarget();
       target[element] = (target[element] ?? 0) + (amount || 1);
-    } else if (char === "+" || char === "-" || char === "·" || char === "−") {
+    } else if (char === "+" || char === "-" || char === "\u00b7" || char === "\u2212") {
       index += 1;
     } else if (char === "^" || char === "{" || char === "}") {
       index += 1;
@@ -363,6 +430,19 @@ function formatDifference(diff) {
   return diff > 0 ? `+${diff}` : `${diff}`;
 }
 
+function areCountsBalanced(leftCounts, rightCounts) {
+  const allElements = new Set([
+    ...Object.keys(leftCounts),
+    ...Object.keys(rightCounts),
+  ]);
+  for (const element of allElements) {
+    if ((leftCounts[element] ?? 0) !== (rightCounts[element] ?? 0)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function typesetFormulas() {
   if (window.MathJax && window.MathJax.typesetPromise) {
     window.MathJax.typesetPromise();
@@ -374,14 +454,15 @@ function clearFeedback() {
 }
 
 function setFeedback(message, level) {
-  const classes = {
-    neutral: "text-slate-300",
-    success: "text-emerald-300",
-    error: "text-rose-300",
-    hint: "text-sky-300",
+  const variantClasses = {
+    neutral: "neutral",
+    success: "success",
+    error: "error",
+    hint: "hint",
   };
   elements.feedback.textContent = message;
-  elements.feedback.className = `text-base font-medium ${classes[level] ?? classes.neutral}`;
+  const variant = variantClasses[level] ?? variantClasses.neutral;
+  elements.feedback.className = `feedback-msg min-h-[1.5rem] ${variant}`;
 }
 
 function collectUserCoefficients() {
@@ -411,6 +492,13 @@ function isBalanced() {
 }
 
 function showHint() {
+  if (!state.hintsEnabled) {
+    setFeedback(
+      "Les pistes estan desactivades. Activa-les al panell lateral.",
+      "neutral"
+    );
+    return;
+  }
   const { reactius, productes } = state.currentEquation;
   const userCoefficients = collectUserCoefficients();
   const { leftCounts, rightCounts } = calculateAtomBalance(
@@ -447,7 +535,10 @@ function showSolution() {
   const solution = state.currentEquation.coeficients || [];
   solution.forEach((value, index) => updateCoefficient(index, value));
   updateAtomTable();
-  setFeedback("Coeficients corregits segons la solució de referència.", "success");
+  setFeedback(
+    "Coeficients corregits segons la soluci\u00f3 de refer\u00e8ncia.",
+    "success"
+  );
 }
 
 function resetCoefficients() {
@@ -464,19 +555,29 @@ function resetCoefficients() {
 }
 
 function handleCheck() {
-  if (isBalanced()) {
-    setFeedback("Perfecte! Has equilibrat correctament l'equació.", "success");
-  } else {
+  const balanced = isBalanced();
+  state.attempts += 1;
+  if (balanced) {
+    state.correct += 1;
+    state.streak += 1;
     setFeedback(
-      "Encara hi ha diferències entre reactius i productes. Mira la taula d'àtoms.",
+      "Perfecte! Has equilibrat correctament l'equaci\u00f3.",
+      "success"
+    );
+  } else {
+    state.streak = 0;
+    setFeedback(
+      "Encara hi ha difer\u00e8ncies entre reactius i productes. Mira la taula d'\u00e0toms.",
       "error"
     );
   }
+  updateScoreboard();
+  updateBalanceIndicator(balanced);
 }
 
 function formatTypeLabel(type) {
   if (!type) {
-    return "Sense classificació";
+    return "Sense classificaci\u00f3";
   }
   if (TYPE_LABELS[type]) {
     return TYPE_LABELS[type];
@@ -489,20 +590,81 @@ function formatTypeLabel(type) {
     .join(" ");
 }
 
+function updateBalanceIndicator(isBalanced) {
+  if (!elements.balanceStatus) {
+    return;
+  }
+  elements.balanceStatus.textContent = isBalanced
+    ? "Equilibrada"
+    : "No equilibrada";
+  elements.balanceStatus.classList.toggle("balanced", isBalanced);
+  elements.balanceStatus.classList.toggle("not-balanced", !isBalanced);
+}
+
+function updateScoreboard() {
+  if (elements.attemptCount) {
+    elements.attemptCount.textContent = String(state.attempts);
+  }
+  if (elements.correctCount) {
+    elements.correctCount.textContent = String(state.correct);
+  }
+  if (elements.streakCount) {
+    elements.streakCount.textContent = String(state.streak);
+  }
+}
+
+function applyAtomPanelVisibility() {
+  if (!elements.atomPanel) {
+    return;
+  }
+  if (state.showAtoms) {
+    elements.atomPanel.classList.remove("hidden-panel");
+  } else {
+    elements.atomPanel.classList.add("hidden-panel");
+  }
+}
+
 function attachEventHandlers() {
-  elements.typeSelect.addEventListener("change", () => {
-    applyTypeFilter();
-    pickRandomEquation();
+  if (elements.typeSelect) {
+    elements.typeSelect.addEventListener("change", () => {
+      applyTypeFilter();
+      pickRandomEquation();
+    });
+  }
+  elements.newEquationBtn?.addEventListener("click", pickRandomEquation);
+  elements.checkBtn?.addEventListener("click", handleCheck);
+  elements.hintBtn?.addEventListener("click", showHint);
+  elements.solutionBtn?.addEventListener("click", showSolution);
+  elements.resetBtn?.addEventListener("click", resetCoefficients);
+
+  elements.toggleAtoms?.addEventListener("change", (event) => {
+    state.showAtoms = Boolean(event.target.checked);
+    applyAtomPanelVisibility();
   });
-  elements.newEquationBtn.addEventListener("click", pickRandomEquation);
-  elements.checkBtn.addEventListener("click", handleCheck);
-  elements.hintBtn.addEventListener("click", showHint);
-  elements.solutionBtn.addEventListener("click", showSolution);
-  elements.resetBtn.addEventListener("click", resetCoefficients);
+  elements.toggleHints?.addEventListener("change", (event) => {
+    state.hintsEnabled = Boolean(event.target.checked);
+    if (!state.hintsEnabled) {
+      setFeedback(
+        "Les pistes estan desactivades. Activa-les al panell lateral.",
+        "neutral"
+      );
+    } else {
+      clearFeedback();
+    }
+  });
 }
 
 function init() {
   attachEventHandlers();
+  if (elements.toggleAtoms) {
+    elements.toggleAtoms.checked = state.showAtoms;
+  }
+  if (elements.toggleHints) {
+    elements.toggleHints.checked = state.hintsEnabled;
+  }
+  applyAtomPanelVisibility();
+  updateScoreboard();
+  updateBalanceIndicator(false);
   loadEquations().catch((error) => {
     console.error(error);
     setFeedback(error.message, "error");

@@ -2,6 +2,218 @@
   color-scheme: dark;
 }
 
+.mode-tab {
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.mode-tab:hover:not(.disabled) {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+.mode-tab[aria-pressed="true"] {
+  background: rgba(16, 185, 129, 0.9);
+  color: #0f172a;
+  border-color: rgba(16, 185, 129, 0.95);
+}
+
+.mode-tab.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.score-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.2), rgba(56, 189, 248, 0.08));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  min-width: 4.5rem;
+}
+
+.score-pill .label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.score-pill .value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.panel {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 18px 35px rgba(2, 6, 23, 0.45);
+}
+
+.panel-title {
+  font-weight: 600;
+  color: #f8fafc;
+  letter-spacing: 0.02em;
+}
+
+.control-input {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(71, 85, 105, 0.7);
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  color: #e2e8f0;
+}
+
+.control-input:focus {
+  outline: none;
+  border-color: rgba(14, 165, 233, 0.8);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  padding: 0.65rem 0.9rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(59, 130, 246, 0.85));
+  color: #0f172a;
+  border-radius: 0.75rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: none;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 25px rgba(59, 130, 246, 0.25);
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.board {
+  background: rgba(15, 23, 42, 0.92);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(71, 85, 105, 0.55);
+  padding: 1.75rem;
+  box-shadow: 0 25px 45px rgba(2, 6, 23, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.board-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.board-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.board-surface {
+  background: radial-gradient(circle at top center, rgba(148, 163, 184, 0.12), rgba(30, 41, 59, 0.4));
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.equation-display {
+  text-align: center;
+  color: #f8fafc;
+}
+
+.equation-term {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  margin: 0 0.35rem;
+  font-weight: 600;
+}
+
+.equation-term:first-child {
+  margin-left: 0;
+}
+
+.equation-term:last-child {
+  margin-right: 0;
+}
+
+.equation-zone {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.equation-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.equation-side.reactants {
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.3);
+}
+
+.equation-side.products {
+  box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.3);
+}
+
+.equation-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(16, 185, 129, 0.9);
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.compound-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.compound-formula {
+  font-family: 'Fira Code', 'Source Code Pro', Consolas, monospace;
+  font-size: 1.15rem;
+  color: #f8fafc;
+}
+
 input[type="number"] {
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(71, 85, 105, 0.7);
@@ -21,4 +233,110 @@ input[type="number"]:focus {
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.coef-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #f8fafc;
+  transition: background 0.2s ease;
+}
+
+.coef-btn:hover {
+  background: rgba(51, 65, 85, 0.95);
+}
+
+.board-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  border-radius: 0.85rem;
+  padding: 0.65rem 1.1rem;
+  font-weight: 600;
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-btn.accent {
+  background: rgba(16, 185, 129, 0.9);
+  color: #022c22;
+}
+
+.action-btn.warn {
+  background: rgba(248, 113, 113, 0.92);
+  color: #2f0a0a;
+}
+
+.action-btn.neutral {
+  background: rgba(51, 65, 85, 0.85);
+  color: #e2e8f0;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.45);
+}
+
+.feedback-msg {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.feedback-msg.neutral {
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.feedback-msg.success {
+  color: #bbf7d0;
+}
+
+.feedback-msg.error {
+  color: #fecaca;
+}
+
+.feedback-msg.hint {
+  color: #bae6fd;
+}
+
+.balance-chip {
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid transparent;
+}
+
+.balance-chip.not-balanced {
+  background: rgba(248, 113, 113, 0.18);
+  border-color: rgba(248, 113, 113, 0.35);
+  color: #fecaca;
+}
+
+.balance-chip.balanced {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #bbf7d0;
+}
+
+.hidden-panel {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .equation-zone {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .equation-arrow {
+    transform: rotate(90deg);
+  }
 }
