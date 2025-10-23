@@ -1,5 +1,46 @@
 const DATA_URL = "data/eq_inspeccio.json";
 
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+const ELEMENT_COLORS = {
+  H: "#fde047",
+  O: "#f87171",
+  N: "#60a5fa",
+  C: "#a5b4fc",
+  Na: "#38bdf8",
+  Cl: "#fbbf24",
+  Ca: "#f59e0b",
+  Fe: "#fb923c",
+  Al: "#facc15",
+  K: "#a855f7",
+  S: "#facc15",
+  Ag: "#d6d3d1",
+  Mn: "#2dd4bf",
+  default: "#94a3b8",
+};
+
+const ELEMENT_RADII = {
+  H: 12,
+  O: 16,
+  N: 16,
+  C: 16,
+  Na: 18,
+  Cl: 17,
+  Ca: 19,
+  Fe: 19,
+  Al: 18,
+  K: 19,
+  S: 18,
+  Ag: 19,
+  default: 16,
+};
+
+const STATUS_COPY = {
+  balanced: "Fant&agrave;stic! L'equaci&oacute; est&agrave; equilibrada.",
+  working:
+    "Ajusta els coeficients fins que el nombre d'&agrave;toms coincideixi als dos costats.",
+};
+
 const state = {
   equations: [],
   filteredEquations: [],
@@ -34,9 +75,13 @@ const elements = {
   toggleAtoms: document.getElementById("toggleAtoms"),
   toggleHints: document.getElementById("toggleHints"),
   balanceStatus: document.getElementById("balanceStatus"),
+  balanceCaption: document.getElementById("balanceCaption"),
+  moodBadge: document.getElementById("moodBadge"),
   attemptCount: document.getElementById("attemptCount"),
   correctCount: document.getElementById("correctCount"),
   streakCount: document.getElementById("streakCount"),
+  reactantStage: document.getElementById("reactantStage"),
+  productStage: document.getElementById("productStage"),
 };
 
 
@@ -54,6 +99,374 @@ const TYPE_LABELS = {
   desplacament_simple: "Despla\u00e7ament simple",
   desplacament_doble: "Despla\u00e7ament doble",
 };
+
+const MOLECULE_LIBRARY = {
+  H2: createDiatomic("H"),
+  O2: createDiatomic("O"),
+  N2: createDiatomic("N"),
+  Cl2: createDiatomic("Cl"),
+  HCl: createDiatomic("H", "Cl"),
+  KCl: createDiatomic("K", "Cl"),
+  CaO: createDiatomic("Ca", "O"),
+  AgCl: createDiatomic("Ag", "Cl"),
+  Fe: createSingle("Fe"),
+  Na: createSingle("Na"),
+  Al: createSingle("Al"),
+  H2O: createWater(),
+  CO2: createCarbonDioxide(),
+  NH3: createAmmonia(),
+  C3H8: createPropane(),
+  NaCl: createLattice("Na", "Cl"),
+  KClO3: createPotassiumChlorate(),
+  NaOH: createSodiumHydroxide(),
+  H2SO4: createSulfuricAcid(),
+  Na2SO4: createSodiumSulfate(),
+  NaNO3: createSodiumNitrate(),
+  AgNO3: createSilverNitrate(),
+  Fe2O3: createIronOxide(),
+  CaCO3: createCalciumCarbonate(),
+  AlCl3: createAluminiumChloride(),
+};
+
+function makeAtom(element, x, y) {
+  return { element, x, y };
+}
+
+function createMolecule(atoms, bonds = []) {
+  return { atoms, bonds };
+}
+
+function createSingle(element) {
+  return createMolecule([makeAtom(element, 50, 40)]);
+}
+
+function createDiatomic(leftElement, rightElement = leftElement) {
+  return createMolecule(
+    [makeAtom(leftElement, 30, 40), makeAtom(rightElement, 70, 40)],
+    [[0, 1]]
+  );
+}
+
+function createWater() {
+  return createMolecule(
+    [makeAtom("O", 50, 48), makeAtom("H", 32, 25), makeAtom("H", 68, 25)],
+    [
+      [0, 1],
+      [0, 2],
+    ]
+  );
+}
+
+function createCarbonDioxide() {
+  return createMolecule(
+    [makeAtom("O", 20, 40), makeAtom("C", 50, 40), makeAtom("O", 80, 40)],
+    [
+      [0, 1],
+      [1, 2],
+    ]
+  );
+}
+
+function createAmmonia() {
+  return createMolecule(
+    [
+      makeAtom("N", 50, 32),
+      makeAtom("H", 30, 60),
+      makeAtom("H", 50, 68),
+      makeAtom("H", 70, 60),
+    ],
+    [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+    ]
+  );
+}
+
+function createPropane() {
+  return createMolecule(
+    [
+      makeAtom("C", 25, 45),
+      makeAtom("C", 50, 45),
+      makeAtom("C", 75, 45),
+      makeAtom("H", 10, 30),
+      makeAtom("H", 10, 60),
+      makeAtom("H", 25, 20),
+      makeAtom("H", 38, 25),
+      makeAtom("H", 50, 70),
+      makeAtom("H", 75, 20),
+      makeAtom("H", 90, 32),
+      makeAtom("H", 90, 60),
+    ],
+    [
+      [0, 1],
+      [1, 2],
+      [0, 3],
+      [0, 4],
+      [0, 5],
+      [1, 6],
+      [1, 7],
+      [2, 8],
+      [2, 9],
+      [2, 10],
+    ]
+  );
+}
+
+function createLattice(primary, secondary) {
+  return createMolecule(
+    [
+      makeAtom(primary, 30, 30),
+      makeAtom(secondary, 30, 60),
+      makeAtom(secondary, 70, 30),
+      makeAtom(primary, 70, 60),
+    ],
+    [
+      [0, 1],
+      [0, 2],
+      [1, 3],
+      [2, 3],
+    ]
+  );
+}
+
+function createPotassiumChlorate() {
+  return createMolecule(
+    [
+      makeAtom("Cl", 50, 40),
+      makeAtom("O", 30, 18),
+      makeAtom("O", 70, 18),
+      makeAtom("O", 50, 65),
+      makeAtom("K", 82, 55),
+    ],
+    [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+    ]
+  );
+}
+
+function createSodiumHydroxide() {
+  return createMolecule(
+    [makeAtom("Na", 25, 50), makeAtom("O", 55, 38), makeAtom("H", 75, 55)],
+    [
+      [0, 1],
+      [1, 2],
+    ]
+  );
+}
+
+function createSulfuricAcid() {
+  return createMolecule(
+    [
+      makeAtom("S", 50, 35),
+      makeAtom("O", 30, 18),
+      makeAtom("O", 70, 18),
+      makeAtom("O", 32, 62),
+      makeAtom("O", 68, 62),
+      makeAtom("H", 30, 78),
+      makeAtom("H", 70, 78),
+    ],
+    [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [0, 4],
+      [3, 5],
+      [4, 6],
+    ]
+  );
+}
+
+function createSodiumSulfate() {
+  return createMolecule(
+    [
+      makeAtom("S", 50, 35),
+      makeAtom("O", 30, 18),
+      makeAtom("O", 70, 18),
+      makeAtom("O", 32, 62),
+      makeAtom("O", 68, 62),
+      makeAtom("Na", 20, 45),
+      makeAtom("Na", 80, 45),
+    ],
+    [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [0, 4],
+      [3, 5],
+      [4, 6],
+    ]
+  );
+}
+
+function createSilverNitrate() {
+  return createMolecule(
+    [
+      makeAtom("Ag", 82, 45),
+      makeAtom("N", 50, 35),
+      makeAtom("O", 30, 20),
+      makeAtom("O", 50, 65),
+      makeAtom("O", 70, 20),
+    ],
+    [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [0, 1],
+    ]
+  );
+}
+
+function createSodiumNitrate() {
+  return createMolecule(
+    [
+      makeAtom("Na", 18, 45),
+      makeAtom("N", 50, 35),
+      makeAtom("O", 30, 20),
+      makeAtom("O", 50, 65),
+      makeAtom("O", 70, 20),
+    ],
+    [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [0, 1],
+    ]
+  );
+}
+
+function createIronOxide() {
+  return createMolecule(
+    [
+      makeAtom("Fe", 30, 45),
+      makeAtom("Fe", 70, 45),
+      makeAtom("O", 20, 20),
+      makeAtom("O", 80, 20),
+      makeAtom("O", 50, 70),
+    ],
+    [
+      [0, 2],
+      [0, 4],
+      [1, 3],
+      [1, 4],
+    ]
+  );
+}
+
+function createCalciumCarbonate() {
+  return createMolecule(
+    [
+      makeAtom("Ca", 50, 50),
+      makeAtom("C", 50, 30),
+      makeAtom("O", 30, 20),
+      makeAtom("O", 70, 20),
+      makeAtom("O", 50, 70),
+    ],
+    [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [0, 1],
+    ]
+  );
+}
+
+function createAluminiumChloride() {
+  return createMolecule(
+    [
+      makeAtom("Al", 50, 32),
+      makeAtom("Cl", 25, 65),
+      makeAtom("Cl", 50, 70),
+      makeAtom("Cl", 75, 65),
+    ],
+    [
+      [0, 1],
+      [0, 2],
+      [0, 3],
+    ]
+  );
+}
+
+function getElementColor(element) {
+  if (!element) {
+    return ELEMENT_COLORS.default;
+  }
+  const clean = element.replace(/[^A-Za-z]/g, "");
+  return ELEMENT_COLORS[clean] || ELEMENT_COLORS.default;
+}
+
+function getAtomRadius(element) {
+  if (!element) {
+    return ELEMENT_RADII.default;
+  }
+  const clean = element.replace(/[^A-Za-z]/g, "");
+  return ELEMENT_RADII[clean] || ELEMENT_RADII.default;
+}
+
+function buildGenericMolecule(formula) {
+  const counts = parseFormula(formula);
+  const entries = Object.entries(counts);
+  if (!entries.length) {
+    return createSingle(formula);
+  }
+  const totalAtoms = entries.reduce((total, [, count]) => total + count, 0);
+  if (totalAtoms === 0) {
+    return createSingle(formula);
+  }
+  const atoms = [];
+  const radius = totalAtoms <= 3 ? 22 : 28;
+  let currentIndex = 0;
+  entries.forEach(([element, count]) => {
+    for (let i = 0; i < count; i += 1) {
+      const angle = (currentIndex / totalAtoms) * Math.PI * 2;
+      const x = 50 + radius * Math.cos(angle);
+      const y = 40 + radius * Math.sin(angle) * 0.75;
+      atoms.push(makeAtom(element, x, y));
+      currentIndex += 1;
+    }
+  });
+  const bonds = [];
+  for (let i = 0; i < atoms.length - 1; i += 1) {
+    bonds.push([i, i + 1]);
+  }
+  return createMolecule(atoms, bonds);
+}
+
+function createMoleculeSprite(formula) {
+  const template = MOLECULE_LIBRARY[formula] || buildGenericMolecule(formula);
+  const sprite = document.createElement("div");
+  sprite.className = "molecule-sprite";
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("viewBox", "0 0 100 80");
+  svg.setAttribute("aria-hidden", "true");
+  (template.bonds || []).forEach(([from, to]) => {
+    const atomA = template.atoms[from];
+    const atomB = template.atoms[to];
+    if (!atomA || !atomB) {
+      return;
+    }
+    const line = document.createElementNS(SVG_NS, "line");
+    line.setAttribute("x1", atomA.x);
+    line.setAttribute("y1", atomA.y);
+    line.setAttribute("x2", atomB.x);
+    line.setAttribute("y2", atomB.y);
+    line.setAttribute("class", "bond-line");
+    svg.appendChild(line);
+  });
+  (template.atoms || []).forEach((atom) => {
+    const circle = document.createElementNS(SVG_NS, "circle");
+    circle.setAttribute("cx", atom.x);
+    circle.setAttribute("cy", atom.y);
+    circle.setAttribute("r", atom.radius ?? getAtomRadius(atom.element));
+    circle.setAttribute("fill", atom.color || getElementColor(atom.element));
+    circle.setAttribute("class", "atom-dot");
+    svg.appendChild(circle);
+  });
+  sprite.appendChild(svg);
+  return sprite;
+}
 
 
 
@@ -119,6 +532,12 @@ function renderEquation() {
     elements.equationContainer.innerHTML = "";
     elements.equationDisplay.innerHTML = "";
     elements.equationTitle.textContent = "";
+    if (elements.reactantStage) {
+      elements.reactantStage.innerHTML = "";
+    }
+    if (elements.productStage) {
+      elements.productStage.innerHTML = "";
+    }
     updateBalanceIndicator(false);
     return;
   }
@@ -140,6 +559,7 @@ function renderEquation() {
     .filter(Boolean)
     .join(" - ");
 
+  renderStages();
   updateEquationDisplay();
   updateAtomTable();
   typesetFormulas();
@@ -148,6 +568,10 @@ function renderEquation() {
 function buildEquationSide(compounds, role, offset) {
   const sideWrapper = document.createElement("div");
   sideWrapper.className = `equation-side ${role}`;
+  sideWrapper.setAttribute(
+    "data-title",
+    role === "reactants" ? "Reactius" : "Productes"
+  );
 
   compounds.forEach((compound, idx) => {
     const globalIndex = offset + idx;
@@ -197,6 +621,60 @@ function buildEquationSide(compounds, role, offset) {
   return sideWrapper;
 }
 
+function renderStages() {
+  if (!elements.reactantStage || !elements.productStage) {
+    return;
+  }
+  if (!state.currentEquation) {
+    elements.reactantStage.innerHTML = "";
+    elements.productStage.innerHTML = "";
+    return;
+  }
+  const { reactius, productes } = state.currentEquation;
+  renderStage(elements.reactantStage, reactius, 0);
+  renderStage(elements.productStage, productes, reactius.length);
+}
+
+function renderStage(container, compounds, offset) {
+  container.innerHTML = "";
+  compounds.forEach((compound, idx) => {
+    const globalIndex = offset + idx;
+    const coefficient = state.currentCoefficients[globalIndex] ?? 0;
+    const group = document.createElement("div");
+    group.className = "molecule-group";
+
+    const bucket = document.createElement("div");
+    bucket.className = "molecule-bucket";
+
+    if (coefficient <= 0) {
+      const sprite = createMoleculeSprite(compound);
+      sprite.classList.add("ghost");
+      bucket.appendChild(sprite);
+    } else {
+      const visible = Math.min(coefficient, 6);
+      for (let i = 0; i < visible; i += 1) {
+        bucket.appendChild(createMoleculeSprite(compound));
+      }
+    }
+
+    if (coefficient !== 1) {
+      const countBadge = document.createElement("div");
+      countBadge.className = `molecule-count-badge${
+        coefficient <= 0 ? " ghost" : ""
+      }`;
+      countBadge.textContent = `\u00d7${coefficient}`;
+      bucket.appendChild(countBadge);
+    }
+
+    const label = document.createElement("span");
+    label.className = "molecule-label";
+    label.innerHTML = formatFormulaHTML(compound);
+
+    group.append(bucket, label);
+    container.appendChild(group);
+  });
+}
+
 function updateEquationDisplay() {
   if (!state.currentEquation) {
     elements.equationDisplay.innerHTML = "";
@@ -229,13 +707,15 @@ function getCoefficient(index) {
 }
 
 function updateCoefficient(index, newValue) {
-  state.currentCoefficients[index] = Math.max(newValue, 0);
+  const safeValue = Number.isFinite(newValue) ? newValue : 0;
+  state.currentCoefficients[index] = Math.max(safeValue, 0);
   const input = elements.equationContainer.querySelector(
     `input[data-index="${index}"]`
   );
   if (input) {
     input.value = state.currentCoefficients[index];
   }
+  renderStages();
   updateEquationDisplay();
   updateAtomTable();
   clearFeedback();
@@ -462,7 +942,7 @@ function setFeedback(message, level) {
   };
   elements.feedback.textContent = message;
   const variant = variantClasses[level] ?? variantClasses.neutral;
-  elements.feedback.className = `feedback-msg min-h-[1.5rem] ${variant}`;
+  elements.feedback.className = `feedback-msg ${variant}`;
 }
 
 function collectUserCoefficients() {
@@ -599,6 +1079,17 @@ function updateBalanceIndicator(isBalanced) {
     : "No equilibrada";
   elements.balanceStatus.classList.toggle("balanced", isBalanced);
   elements.balanceStatus.classList.toggle("not-balanced", !isBalanced);
+
+  if (elements.moodBadge) {
+    elements.moodBadge.textContent = isBalanced ? "\u{1F60A}" : "\u{1F914}";
+    elements.moodBadge.classList.toggle("balanced", isBalanced);
+    elements.moodBadge.classList.toggle("not-balanced", !isBalanced);
+  }
+  if (elements.balanceCaption) {
+    elements.balanceCaption.innerHTML = isBalanced
+      ? STATUS_COPY.balanced
+      : STATUS_COPY.working;
+  }
 }
 
 function updateScoreboard() {

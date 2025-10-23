@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Igualació d'equacions químiques</title>
+    <title>Igualaci&oacute; d'equacions qu&iacute;miques</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
     <script
@@ -12,150 +12,132 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
   </head>
-  <body class="bg-slate-950 text-slate-100 min-h-screen">
-    <div class="min-h-screen flex flex-col">
-      <header class="bg-slate-900/80 border-b border-slate-800 backdrop-blur">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-          <div class="flex flex-wrap items-center gap-6">
-            <h1 class="text-2xl font-semibold tracking-tight">
-              Laboratori d'igualaci&oacute; d'equacions
-            </h1>
-            <nav class="flex items-center gap-2">
-              <button
-                id="modeIntro"
-                type="button"
-                class="mode-tab"
-                aria-pressed="true"
-              >
-                Introducci&oacute;
-              </button>
-              <button
-                type="button"
-                class="mode-tab disabled"
-                disabled
-                aria-label="Mode repte (pr&ograve;ximament)"
-              >
-                Repte
-              </button>
-              <button
-                type="button"
-                class="mode-tab disabled"
-                disabled
-                aria-label="Mode laboratori (pr&ograve;ximament)"
-              >
-                Laboratori
-              </button>
-            </nav>
+  <body class="app-body">
+    <div class="app-wrapper">
+      <header class="app-header">
+        <div class="status-block">
+          <div id="moodBadge" class="mood-badge not-balanced">&#128578;</div>
+          <div class="status-text">
+            <p id="balanceStatus" class="status-title not-balanced">
+              No equilibrada
+            </p>
+            <p id="balanceCaption" class="status-caption">
+              Ajusta els coeficients fins que l'equaci&oacute; quedi compensada.
+            </p>
           </div>
-          <div class="flex items-center gap-6 text-sm">
-            <div class="score-pill">
-              <span class="label">Intents</span>
-              <span id="attemptCount" class="value">0</span>
-            </div>
-            <div class="score-pill">
-              <span class="label">Encerts</span>
-              <span id="correctCount" class="value">0</span>
-            </div>
-            <div class="score-pill">
-              <span class="label">R&agrave;ting</span>
-              <span id="streakCount" class="value">0</span>
-            </div>
-          </div>
+        </div>
+        <div class="view-control">
+          <span class="view-label">Vista</span>
+          <button type="button" class="view-toggle" id="viewModeBtn">
+            <span class="view-icon">&#9883;&#65039;</span>
+            <span class="view-text">Mol&egrave;cules</span>
+          </button>
         </div>
       </header>
 
-      <main class="flex-1">
-        <div class="max-w-6xl mx-auto px-6 py-8 grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)]">
-          <aside class="panel space-y-6">
-            <section class="space-y-3">
-              <h2 class="panel-title">Selecci&oacute; d'equacions</h2>
-              <label class="flex flex-col gap-1 text-sm text-slate-300">
-                Tipus de reacci&oacute;
-                <select
-                  id="reactionType"
-                  class="control-input"
-                >
-                  <option value="tots">Tots els tipus</option>
-                </select>
-              </label>
-              <button
-                id="newEquationBtn"
-                class="primary-btn w-full"
-              >
-                Nova equaci&oacute;
-              </button>
-            </section>
-
-            <section class="space-y-3">
-              <h2 class="panel-title">Assistents</h2>
-              <label class="toggle-row">
-                <input type="checkbox" id="toggleAtoms" checked />
-                <span>Mostra el recompte d'&agrave;toms</span>
-              </label>
-              <label class="toggle-row">
-                <input type="checkbox" id="toggleHints" checked />
-                <span>Activa les pistes guiades</span>
-              </label>
-            </section>
-
-            <section class="space-y-2 text-sm text-slate-300">
-              <h2 class="panel-title">Recorda</h2>
-              <ul class="space-y-1">
-                <li>Treballa amb coeficients sencers.</li>
-                <li>No canvi&iuml;s els sub&iacute;ndexs dels compostos.</li>
-                <li>Comen&ccedil;a pels elements que apareixen menys vegades.</li>
-              </ul>
-            </section>
-          </aside>
-
-          <section class="space-y-6">
-            <div class="board">
-              <div class="board-header">
-                <div>
-                  <h2 class="board-title">Laboratori visual</h2>
-                  <p id="equationTitle" class="board-subtitle text-sm text-slate-300"></p>
-                </div>
-                <div id="balanceStatus" class="balance-chip not-balanced">
-                  No equilibrada
-                </div>
-              </div>
-
-              <div class="board-surface">
-                <div id="equationDisplay" class="equation-display font-mono text-2xl"></div>
-                <div
-                  id="equationContainer"
-                  class="equation-zone"
-                ></div>
-              </div>
-
-              <div class="board-actions">
-                <button id="checkBtn" class="action-btn accent">Comprova</button>
-                <button id="hintBtn" class="action-btn neutral">Mostra pista</button>
-                <button id="solutionBtn" class="action-btn warn">Mostra soluci&oacute;</button>
-                <button id="resetBtn" class="action-btn neutral">Reinicia coeficients</button>
-              </div>
-
-              <p id="feedback" class="feedback-msg min-h-[1.5rem]"></p>
-            </div>
-
-            <div id="atomPanel" class="panel">
-              <h2 class="panel-title">Taula d'&agrave;toms</h2>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm border border-slate-800 rounded-lg overflow-hidden">
-                  <thead class="bg-slate-900 text-slate-300 uppercase tracking-wide text-xs">
-                    <tr>
-                      <th class="px-3 py-2">Element</th>
-                      <th class="px-3 py-2">Reactius</th>
-                      <th class="px-3 py-2">Productes</th>
-                      <th class="px-3 py-2">Difer&egrave;ncia</th>
-                    </tr>
-                  </thead>
-                  <tbody id="atomTable" class="divide-y divide-slate-800"></tbody>
-                </table>
-              </div>
-            </div>
+      <main class="app-main">
+        <aside class="control-panel">
+          <section class="panel-section">
+            <h2 class="panel-title">Selecci&oacute; d'equacions</h2>
+            <label class="panel-label">
+              Tipus de reacci&oacute;
+              <select id="reactionType" class="control-input">
+                <option value="tots">Tots els tipus</option>
+              </select>
+            </label>
+            <button id="newEquationBtn" class="primary-btn w-full">
+              Nova equaci&oacute;
+            </button>
           </section>
-        </div>
+
+          <section class="panel-section">
+            <h2 class="panel-title">Assistents</h2>
+            <label class="toggle-row">
+              <input type="checkbox" id="toggleAtoms" checked />
+              <span>Mostra el recompte d'&agrave;toms</span>
+            </label>
+            <label class="toggle-row">
+              <input type="checkbox" id="toggleHints" checked />
+              <span>Activa les pistes guiades</span>
+            </label>
+          </section>
+
+          <section class="panel-section small-print">
+            <h2 class="panel-title">Consells r&agrave;pids</h2>
+            <ul class="bullet-list">
+              <li>Treballa amb coeficients sencers.</li>
+              <li>No canvi&iuml;s els sub&iacute;ndexs dels compostos.</li>
+              <li>Comen&ccedil;a pels elements que apareixen menys vegades.</li>
+            </ul>
+          </section>
+        </aside>
+
+        <section class="lab-section">
+          <div class="lab-header">
+            <h1 class="lab-title">Laboratori d'igualaci&oacute; d'equacions</h1>
+            <p id="equationTitle" class="lab-subtitle"></p>
+          </div>
+
+          <div class="lab-stage">
+            <div class="stage-card">
+              <div class="stage-header reactant">Reactius</div>
+              <div id="reactantStage" class="stage-board"></div>
+            </div>
+            <div class="stage-connector">
+              <div class="stage-arrow">&rArr;</div>
+            </div>
+            <div class="stage-card">
+              <div class="stage-header product">Productes</div>
+              <div id="productStage" class="stage-board"></div>
+            </div>
+          </div>
+
+          <div class="equation-panel">
+            <div id="equationDisplay" class="equation-display"></div>
+            <div id="equationContainer" class="equation-zone"></div>
+          </div>
+
+          <div class="action-row">
+            <button id="checkBtn" class="action-btn accent">Comprova</button>
+            <button id="hintBtn" class="action-btn neutral">Mostra pista</button>
+            <button id="solutionBtn" class="action-btn warn">Mostra soluci&oacute;</button>
+            <button id="resetBtn" class="action-btn neutral">Reinicia coeficients</button>
+          </div>
+
+          <p id="feedback" class="feedback-msg neutral"></p>
+
+          <div class="scoreboard">
+            <div class="score-card">
+              <span class="score-label">Intents</span>
+              <span id="attemptCount" class="score-value">0</span>
+            </div>
+            <div class="score-card">
+              <span class="score-label">Encerts</span>
+              <span id="correctCount" class="score-value">0</span>
+            </div>
+            <div class="score-card">
+              <span class="score-label">R&agrave;ting</span>
+              <span id="streakCount" class="score-value">0</span>
+            </div>
+          </div>
+
+          <div id="atomPanel" class="table-panel">
+            <h2 class="panel-title">Taula d'&agrave;toms</h2>
+            <div class="table-wrapper">
+              <table class="atom-table">
+                <thead>
+                  <tr>
+                    <th>Element</th>
+                    <th>Reactius</th>
+                    <th>Productes</th>
+                    <th>Difer&egrave;ncia</th>
+                  </tr>
+                </thead>
+                <tbody id="atomTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
