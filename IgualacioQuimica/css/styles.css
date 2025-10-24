@@ -41,7 +41,7 @@ body {
 }
 .hero-inner { display: flex; align-items: center; gap: 0.9rem; }
 .hero-logo { width: 64px; height: 64px; border-radius: 0.8rem; box-shadow: 0 10px 24px rgba(37,99,235,0.25); }
-.hero-title { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: .01em; }
+.hero-title { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: .02em; font-family: "Montserrat", "Poppins", "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif; background: linear-gradient(135deg, #0f172a, #1e40af); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 1px 0 rgba(255,255,255,0.35); }
 
 .app-header {
   background: var(--panel-bg);
@@ -1063,6 +1063,7 @@ button:disabled {
 }
 .hero-inner { display: flex; align-items: center; gap: 0.9rem; }
 .hero-logo { width: 64px; height: 64px; border-radius: 0.8rem; box-shadow: 0 10px 24px rgba(37,99,235,0.25); }
-.hero-title { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: .01em; }
+.hero-title { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 800; letter-spacing: .02em; font-family: "Montserrat", "Poppins", "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif; background: linear-gradient(135deg, #0f172a, #1e40af); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 1px 0 rgba(255,255,255,0.35); }
+
 
 

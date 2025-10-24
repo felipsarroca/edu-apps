@@ -1484,7 +1484,7 @@ init();
           input.value = String(lvl);
           input.checked = true;
           const span = document.createElement('span');
-          span.innerHTML = `<span class="level-chip l${lvl}">${lvl===1?"Fàcil (1)":lvl===2?"Mitjà (2)":"Avançat (3)"}</span>`;
+          span.innerHTML = `<span class="level-chip l${lvl}">${lvl===1?"Nivell fàcil":(lvl===2?"Nivell intermedi":"Nivell avançat")}</span>`;
           label.append(input, span);
           levelBox.appendChild(label);
         });
@@ -1521,7 +1521,7 @@ init();
         if (!eq || !elements.equationTitle) return;
         const titleType = `<span class="type-chip">${escapeHTML(formatTypeLabel(eq.tipus))}</span>`;
         const lvl = Number.isFinite(eq.nivell) ? eq.nivell : 1;
-        const titleLevel = `<span class="level-chip l${lvl}">Nivell ${lvl}</span>`;
+        const titleLevel = `<span class="level-chip l${lvl}">${lvl===1?"Nivell fàcil":(lvl===2?"Nivell intermedi":"Nivell avançat")}</span>`;
         const titleDesc = eq.explicacio ? `<span class="reaction-desc">${escapeHTML(maybeFixMojibake(eq.explicacio))}</span>` : '';
         elements.equationTitle.innerHTML = `${titleType}${titleDesc ? ' \u2013 ' + titleDesc : ''}<br>${titleLevel}`;
       } catch {}
@@ -1564,5 +1564,6 @@ init();
     }
   });
 })();
+
 
 
