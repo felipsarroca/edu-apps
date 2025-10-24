@@ -579,11 +579,15 @@ function buildEquationSide(compounds, role, offset) {
     card.className = "compound-card";
 
     const controls = document.createElement("div");
-    controls.className = "flex flex-col items-center gap-2";
+    controls.className = "coef-panel";
 
     const decrementBtn = document.createElement("button");
     decrementBtn.type = "button";
-    decrementBtn.className = "coef-btn";
+    decrementBtn.className = "coef-button minus";
+    decrementBtn.setAttribute(
+      "aria-label",
+      `Disminueix el coeficient de ${compound}`
+    );
     decrementBtn.textContent = "-";
     decrementBtn.addEventListener("click", () => {
       updateCoefficient(globalIndex, Math.max(0, getCoefficient(globalIndex) - 1));
@@ -595,6 +599,7 @@ function buildEquationSide(compounds, role, offset) {
     input.step = "1";
     input.value = getCoefficient(globalIndex);
     input.dataset.index = String(globalIndex);
+    input.className = "coef-input";
     input.addEventListener("input", () => {
       const value = Number.parseInt(input.value, 10);
       updateCoefficient(globalIndex, Number.isFinite(value) ? value : 0);
@@ -602,7 +607,11 @@ function buildEquationSide(compounds, role, offset) {
 
     const incrementBtn = document.createElement("button");
     incrementBtn.type = "button";
-    incrementBtn.className = "coef-btn";
+    incrementBtn.className = "coef-button plus";
+    incrementBtn.setAttribute(
+      "aria-label",
+      `Augmenta el coeficient de ${compound}`
+    );
     incrementBtn.textContent = "+";
     incrementBtn.addEventListener("click", () => {
       updateCoefficient(globalIndex, getCoefficient(globalIndex) + 1);
