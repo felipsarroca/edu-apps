@@ -207,5 +207,122 @@
     "type": "sintesi",
     "level": 1,
     "explanation": "L'hidrogen i el clor formen Ã cid clorhÃ­dric."
+  },
+  {
+    "id": "eq036",
+    "reactants": ["HgO"],
+    "products": ["Hg", "O2"],
+    "coefficients": [2, 2, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "L'Ã²xid de mercuri(II) es descompon en mercuri i dioxigen."
+  },
+  {
+    "id": "eq037",
+    "reactants": ["Ca(OH)2"],
+    "products": ["CaO", "H2O"],
+    "coefficients": [1, 1, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "L'hidrÃ²xid de calci es descompon en Ã²xid de calci i aigua."
+  },
+  {
+    "id": "eq038",
+    "reactants": ["CuCO3"],
+    "products": ["CuO", "CO2"],
+    "coefficients": [1, 1, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "El carbonat de coure(II) es descompon en Ã²xid de coure(II) i diÃ²xid de carboni."
+  },
+  {
+    "id": "eq039",
+    "reactants": ["Fe", "HCl"],
+    "products": ["FeCl2", "H2"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El ferro reacciona amb HCl formant clorur ferrÃ³s i hidrogen."
+  },
+  {
+    "id": "eq040",
+    "reactants": ["Mg", "H2O"],
+    "products": ["Mg(OH)2", "H2"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El magnesi desplaÃ§a l'hidrogen de l'aigua produint hidrÃ²xid de magnesi."
+  },
+  {
+    "id": "eq041",
+    "reactants": ["HNO3", "KOH"],
+    "products": ["KNO3", "H2O"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "NeutralitzaciÃ³ entre Ã cid nitrÃ­c i hidrÃ²xid de potassi."
+  },
+  {
+    "id": "eq042",
+    "reactants": ["CH3COOH", "NaOH"],
+    "products": ["CH3COONa", "H2O"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "NeutralitzaciÃ³ d'un Ã cid feble amb una base forta."
+  },
+  {
+    "id": "eq043",
+    "reactants": ["Cu", "O2"],
+    "products": ["CuO"],
+    "coefficients": [2, 1, 2],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "OxidaciÃ³ del coure a Ã²xid de coure(II)."
+  },
+  {
+    "id": "eq044",
+    "reactants": ["S", "O2"],
+    "products": ["SO2"],
+    "coefficients": [1, 1, 1],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "FormaciÃ³ de diÃ²xid de sofre per oxidaciÃ³ del sofre."
+  },
+  {
+    "id": "eq045",
+    "reactants": ["C", "O2"],
+    "products": ["CO2"],
+    "coefficients": [1, 1, 1],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "OxidaciÃ³ del carboni a diÃ²xid de carboni."
+  },
+  {
+    "id": "eq046",
+    "reactants": ["CaO", "CO2"],
+    "products": ["CaCO3"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "FormaciÃ³ de carbonat de calci a partir d'Ã²xid de calci i CO2."
+  },
+  {
+    "id": "eq047",
+    "reactants": ["Fe", "Cl2"],
+    "products": ["FeCl3"],
+    "coefficients": [2, 3, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El ferro reacciona amb clor formant clorur de ferro(III)."
+  },
+  {
+    "id": "eq048",
+    "reactants": ["AgNO3", "KBr"],
+    "products": ["AgBr", "KNO3"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "desplacament_doble",
+    "level": 1,
+    "explanation": "Intercanvi d'ions amb precipitaciÃ³ de bromur de plata."
   }
 ]

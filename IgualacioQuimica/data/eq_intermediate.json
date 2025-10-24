@@ -202,5 +202,176 @@
     "type": "combustio",
     "level": 2,
     "explanation": "OxidaciÃ³ de la glucosa amb coeficients equilibrats."
+  },
+  {
+    "id": "eq049",
+    "reactants": ["NaHCO3"],
+    "products": ["Na2CO3", "CO2", "H2O"],
+    "coefficients": [2, 1, 1, 1],
+    "type": "descomposicio",
+    "level": 2,
+    "explanation": "DescomposiciÃ³ del bicarbonat de sodi amb alliberament de CO2."
+  },
+  {
+    "id": "eq050",
+    "reactants": ["KNO3"],
+    "products": ["KNO2", "O2"],
+    "coefficients": [2, 2, 1],
+    "type": "descomposicio",
+    "level": 2,
+    "explanation": "DescomposiciÃ³ del nitrat de potassi a nitrit i oxigen."
+  },
+  {
+    "id": "eq051",
+    "reactants": ["(NH4)2CO3"],
+    "products": ["NH3", "CO2", "H2O"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "descomposicio",
+    "level": 2,
+    "explanation": "DescomposiciÃ³ del carbonat d'amoni a amonÃ­ac, CO2 i aigua."
+  },
+  {
+    "id": "eq052",
+    "reactants": ["Ag2O"],
+    "products": ["Ag", "O2"],
+    "coefficients": [2, 4, 1],
+    "type": "descomposicio",
+    "level": 2,
+    "explanation": "L'Ã²xid de plata es descompon a plata metÃ lÂ·lica i oxigen."
+  },
+  {
+    "id": "eq053",
+    "reactants": ["Ba(NO3)2", "Na2SO4"],
+    "products": ["BaSO4", "NaNO3"],
+    "coefficients": [1, 1, 1, 2],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "PrecipitaciÃ³ de sulfat de bari."
+  },
+  {
+    "id": "eq054",
+    "reactants": ["Pb(NO3)2", "Na2SO4"],
+    "products": ["PbSO4", "NaNO3"],
+    "coefficients": [1, 1, 1, 2],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "PrecipitaciÃ³ de sulfat de plom(II)."
+  },
+  {
+    "id": "eq056",
+    "reactants": ["FeCl3", "NaOH"],
+    "products": ["Fe(OH)3", "NaCl"],
+    "coefficients": [1, 3, 1, 3],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "FormaciÃ³ d'hidrÃ²xid de ferro(III) per intercanvi d'ions."
+  },
+  {
+    "id": "eq057",
+    "reactants": ["CaCl2", "Na3PO4"],
+    "products": ["Ca3(PO4)2", "NaCl"],
+    "coefficients": [3, 2, 1, 6],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "PrecipitaciÃ³ de fosfat de calci."
+  },
+  {
+    "id": "eq058",
+    "reactants": ["Zn", "CuSO4"],
+    "products": ["ZnSO4", "Cu"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "desplacament_simple",
+    "level": 2,
+    "explanation": "El zinc desplaÃ§a el coure del sulfat de coure(II)."
+  },
+  {
+    "id": "eq059",
+    "reactants": ["Cu", "AgNO3"],
+    "products": ["Cu(NO3)2", "Ag"],
+    "coefficients": [1, 2, 1, 2],
+    "type": "desplacament_simple",
+    "level": 2,
+    "explanation": "El coure desplaÃ§a la plata d'AgNO3 formant Cu(NO3)2."
+  },
+  {
+    "id": "eq060",
+    "reactants": ["Cl2", "NaBr"],
+    "products": ["NaCl", "Br2"],
+    "coefficients": [1, 2, 2, 1],
+    "type": "desplacament_simple",
+    "level": 2,
+    "explanation": "El clor oxida el bromur a brom."
+  },
+  {
+    "id": "eq061",
+    "reactants": ["HNO3", "Ca(OH)2"],
+    "products": ["Ca(NO3)2", "H2O"],
+    "coefficients": [2, 1, 1, 2],
+    "type": "neutralitzacio",
+    "level": 2,
+    "explanation": "NeutralitzaciÃ³ de Ca(OH)2 amb Ã cid nitrÃ­c."
+  },
+  {
+    "id": "eq062",
+    "reactants": ["H2CO3", "NaOH"],
+    "products": ["Na2CO3", "H2O"],
+    "coefficients": [1, 2, 1, 2],
+    "type": "neutralitzacio",
+    "level": 2,
+    "explanation": "NeutralitzaciÃ³ d'Ã cid carbÃ²nic amb base forta."
+  },
+  {
+    "id": "eq063",
+    "reactants": ["Al", "O2"],
+    "products": ["Al2O3"],
+    "coefficients": [4, 3, 2],
+    "type": "oxidacio",
+    "level": 2,
+    "explanation": "OxidaciÃ³ de l'alumini a \u00f2xid d'alumini."
+  },
+  {
+    "id": "eq064",
+    "reactants": ["Na", "O2"],
+    "products": ["Na2O"],
+    "coefficients": [4, 1, 2],
+    "type": "oxidacio",
+    "level": 2,
+    "explanation": "OxidaciÃ³ del sodi a \u00f2xid de sodi."
+  },
+  {
+    "id": "eq065",
+    "reactants": ["Fe", "O2"],
+    "products": ["FeO"],
+    "coefficients": [2, 1, 2],
+    "type": "oxidacio",
+    "level": 2,
+    "explanation": "FormaciÃ³ d'\u00f2xid de ferro(II)."
+  },
+  {
+    "id": "eq066",
+    "reactants": ["S", "O2"],
+    "products": ["SO3"],
+    "coefficients": [2, 3, 2],
+    "type": "oxidacio",
+    "level": 2,
+    "explanation": "OxidaciÃ³ del sofre a triÃ²xid de sofre."
+  },
+  {
+    "id": "eq067",
+    "reactants": ["P", "O2"],
+    "products": ["P2O5"],
+    "coefficients": [4, 5, 2],
+    "type": "oxidacio",
+    "level": 2,
+    "explanation": "OxidaciÃ³ del fÃ²sfor blanc a diÃ²xid de difÃ²sfor."
+  },
+  {
+    "id": "eq068",
+    "reactants": ["Zn", "O2"],
+    "products": ["ZnO"],
+    "coefficients": [2, 1, 2],
+    "type": "oxidacio",
+    "level": 2,
+    "explanation": "OxidaciÃ³ del zinc a \u00f2xid de zinc."
   }
 ]
