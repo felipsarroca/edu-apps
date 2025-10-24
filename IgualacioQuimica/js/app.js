@@ -532,7 +532,7 @@ async function loadEquations() {
 
   state.typeLabels = Array.isArray(typeData)
     ? Object.fromEntries(
-        typeData.map((entry) => [entry.id, entry.name || entry.id])
+        typeData.map((entry) => [entry.id, maybeFixMojibake(entry.name || entry.id)])
       )
     : {};
 
@@ -572,6 +572,28 @@ function populateTypeOptions() {
     });
 }
 
+function escapeHTML(s) {
+  if (!s && s !== 0) return "";
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function maybeFixMojibake(str) {
+  if (typeof str !== "string") return str ?? "";
+  if (!/[ÃÂ]/.test(str)) return str;
+  try {
+    const bytes = Uint8Array.from([...str].map((c) => c.charCodeAt(0) & 0xff));
+    const decoded = new TextDecoder("utf-8").decode(bytes);
+    return decoded;
+  } catch {
+    return str;
+  }
+}
+
 function normalizeEquation(entry) {
   if (!entry || typeof entry !== "object") {
     return {
@@ -600,7 +622,7 @@ function normalizeEquation(entry) {
     ? entry.coeficients.map((value) => Number.parseInt(value, 10))
     : [];
   const type = entry.type || entry.tipus || "sense_tipus";
-  const explanation = entry.explanation || entry.explicacio || "";
+  const explanation = maybeFixMojibake(entry.explanation || entry.explicacio || "");
   const level = Number.parseInt(entry.level ?? entry.nivell ?? 1, 10);
   return {
     ...entry,
@@ -688,12 +710,9 @@ function renderEquation() {
 
   elements.equationContainer.append(reactantColumn, arrow, productColumn);
 
-  elements.equationTitle.textContent = [
-    formatTypeLabel(tipus),
-    explicacio || "",
-  ]
-    .filter(Boolean)
-    .join(" - ");
+  const titleType = `<span class="type-chip">${escapeHTML(formatTypeLabel(tipus))}</span>`;
+  const titleDesc = explicacio ? `<span class="reaction-desc">${escapeHTML(maybeFixMojibake(explicacio))}</span>` : "";
+  elements.equationTitle.innerHTML = [titleType, titleDesc].filter(Boolean).join(" \u2013 ");
 
   renderStages();
   updateEquationDisplay();
@@ -881,8 +900,8 @@ function buildEquationTerm(coefficient, formula) {
   const formulaTeX = renderFormulaTeX(formula);
 
   const styledCoefficient = `\\color{blue}{\\mathbf{${displayValue}}}`;
-
-  return `${styledCoefficient} ${formulaTeX}`;
+  const smallerFormula = `\\style{font-size:80%}{${formulaTeX}}`;
+  return `${styledCoefficient}\\, ${smallerFormula}`;
 
 }
 
@@ -1296,7 +1315,7 @@ function formatTypeLabel(type) {
     return "Sense classificaci\u00f3";
   }
   if (state.typeLabels[type]) {
-    return state.typeLabels[type];
+    return maybeFixMojibake(state.typeLabels[type]);
   }
   return type
     .split("_")
