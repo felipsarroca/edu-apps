@@ -771,11 +771,18 @@ function renderStage(container, compounds, offset) {
       countBadge.textContent = "\u00d70";
       bucket.appendChild(countBadge);
     } else {
-      const visible = Math.min(coefficient, 6);
+      const visible = Math.min(coefficient, 12);
       for (let i = 0; i < visible; i += 1) {
-        bucket.appendChild(createMoleculeSprite(compound));
+        const sprite = createMoleculeSprite(compound);
+        if (visible > 6 && i >= 6) {
+          sprite.classList.add("is-compact");
+        }
+        if (visible > 9 && i >= 9) {
+          sprite.classList.add("is-mini");
+        }
+        bucket.appendChild(sprite);
       }
-      if (coefficient > 6) {
+      if (coefficient > visible) {
         const countBadge = document.createElement("div");
         countBadge.className = "molecule-count-badge";
         countBadge.textContent = `\u00d7${coefficient}`;
