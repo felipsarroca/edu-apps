@@ -828,11 +828,9 @@ function buildEquationTerm(coefficient, formula) {
 
   const displayValue = Math.trunc(value);
 
-  const needsCoefficient = displayValue !== 1;
-
   const formulaTeX = formatFormulaTeX(formula);
 
-  return `${needsCoefficient ? displayValue : ""} ${formulaTeX}`;
+  return `${displayValue} ${formulaTeX}`;
 
 }
 
