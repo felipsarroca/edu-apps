@@ -766,20 +766,21 @@ function renderStage(container, compounds, offset) {
       const sprite = createMoleculeSprite(compound);
       sprite.classList.add("ghost");
       bucket.appendChild(sprite);
-    } else {
-      bucket.appendChild(createMoleculeSprite(compound));
-    }
-
-    if (coefficient > 1) {
-      const countBadge = document.createElement("div");
-      countBadge.className = "molecule-count-badge";
-      countBadge.textContent = `\u00d7${coefficient}`;
-      bucket.appendChild(countBadge);
-    } else if (coefficient <= 0) {
       const countBadge = document.createElement("div");
       countBadge.className = "molecule-count-badge ghost";
       countBadge.textContent = "\u00d70";
       bucket.appendChild(countBadge);
+    } else {
+      const visible = Math.min(coefficient, 6);
+      for (let i = 0; i < visible; i += 1) {
+        bucket.appendChild(createMoleculeSprite(compound));
+      }
+      if (coefficient > 6) {
+        const countBadge = document.createElement("div");
+        countBadge.className = "molecule-count-badge";
+        countBadge.textContent = `\u00d7${coefficient}`;
+        bucket.appendChild(countBadge);
+      }
     }
 
     const label = document.createElement("span");
