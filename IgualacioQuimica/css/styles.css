@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   color-scheme: light;
   --bg-primary: #cde4ff;
   --bg-secondary: #f5f9ff;
@@ -136,7 +136,7 @@ body {
   display: grid;
   grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
   gap: 2rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .control-panel {
@@ -271,7 +271,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Tipus destacat i descripció corregida */
+/* Tipus destacat i descripciÃ³ corregida */
 .type-chip {
   font-weight: 800;
   color: #059669; /* verd intens */
@@ -281,7 +281,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Estat compacte a la capçalera */
+/* Estat compacte a la capÃ§alera */
 .status-block.compact {
   display: flex;
   align-items: center;
@@ -303,7 +303,7 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: 1rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .stage-card {
@@ -345,7 +345,7 @@ body {
   justify-items: center;
   gap: 0.7rem;
   position: relative;
-  /* alçada adaptativa al contingut */
+  /* alÃ§ada adaptativa al contingut */
 }
 
 .stage-board::after {
@@ -361,6 +361,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: stretch;
 }
 
 .stage-arrow {
@@ -393,7 +394,7 @@ body {
 }
 
 .molecule-label {
-  font-size: 1.25rem; /* més gran i visible sota la representació */
+  font-size: 1.25rem; /* mÃ©s gran i visible sota la representaciÃ³ */
   font-weight: 700;
   color: var(--text-muted);
   text-align: center;
@@ -546,7 +547,7 @@ body {
 }
 
 .equation-display {
-  font-size: clamp(0.9rem, 3.8vw, 1.8rem); /* fórmula una mica més petita */
+  font-size: clamp(0.9rem, 3.8vw, 1.8rem); /* fÃ³rmula una mica mÃ©s petita */
   line-height: 1.3;
   text-align: center;
   color: var(--text-main);
@@ -571,8 +572,12 @@ body {
   padding-top: 0.4rem;
 }
 
-.workspace-actions .action-btn {
-  min-width: 140px;
+
+
+.action-btn .btn-icon {
+  margin-right: 0.4rem;
+  font-size: 1.1em;
+  line-height: 1;
 }
 
 .compound-card {
@@ -588,7 +593,7 @@ body {
 
 .compound-formula {
   font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
-  font-size: 1.5rem; /* més gran i visible a l'apartat d'ajust */
+  font-size: 1.5rem; /* mÃ©s gran i visible a l'apartat d'ajust */
   font-weight: 700;
   color: var(--text-main);
   display: flex;
@@ -815,7 +820,7 @@ button:disabled {
 
 .atom-table tbody td:first-child {
   font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
-  text-align: center; /* centrat i més gran */
+  text-align: center; /* centrat i mÃ©s gran */
   font-size: 1.3rem;
   font-weight: 800;
 }
@@ -874,8 +879,11 @@ button:disabled {
   }
 
   .stage-connector {
-    display: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
 
   .equation-zone {
     flex-direction: column;
@@ -902,17 +910,8 @@ button:disabled {
   }
 }
 
-/* Peu de pàgina */
-.site-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--border-light);
-  border-radius: 1rem;
-  padding: 0.75rem 1rem;
-}
+/* Peu de pÃ gina */
+.footer-panel .footer-content { display: flex; align-items: center; gap: 0.8rem; }
 
 .footer-left {
   display: flex;
@@ -935,3 +934,31 @@ button:disabled {
   width: auto;
   display: block;
 }
+
+
+.footer-texts { display: flex; flex-direction: column; gap: 0.15rem; }
+.footer-line { font-size: 0.8rem; color: var(--text-muted); }
+.license-link { color: #2563eb; text-decoration: underline; }
+.license-icon { height: 28px; width: auto; display: block; }
+
+/* Icona per al títol de consells */
+.panel-section.small-print .panel-title::before {
+  content: '💡';
+  margin-right: 0.4rem;
+}
+.panel-section.small-print .panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.panel-section.small-print .bullet-list li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.2rem;
+}
+.panel-section.small-print .bullet-list li::before {
+  content: '✅';
+  position: absolute;
+  left: 0;
+}
+
