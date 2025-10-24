@@ -649,15 +649,16 @@ function renderEquation() {
   reactantColumn.className = "equation-column";
   reactantColumn.appendChild(reactantSide);
 
-  const arrowColumn = document.createElement("div");
-  arrowColumn.className = "equation-arrow";
-  arrowColumn.textContent = "\u2192";
+  const arrow = document.createElement("div");
+  arrow.className = "equation-arrow";
+  arrow.innerHTML = "&rarr;";
+
   const productSide = buildEquationSide(productes, "products", reactius.length);
   const productColumn = document.createElement("div");
   productColumn.className = "equation-column";
   productColumn.appendChild(productSide);
 
-  elements.equationContainer.append(reactantColumn, arrowColumn, productColumn);
+  elements.equationContainer.append(reactantColumn, arrow, productColumn);
 
   elements.equationTitle.textContent = [
     formatTypeLabel(tipus),
@@ -669,7 +670,6 @@ function renderEquation() {
   renderStages();
   updateEquationDisplay();
   updateAtomTable();
-  typesetFormulas();
 }
 
 function buildEquationSide(compounds, role, offset) {
@@ -812,25 +812,27 @@ function updateEquationDisplay() {
   const productTerms = productes.map((compound, idx) =>
     buildEquationTerm(coefficients[reactius.length + idx], compound)
   );
-  const plus = '<span class="equation-plus">+</span>';
-  const arrow = '<span class="equation-arrow-display">&rArr;</span>';
-  const reactantHTML =
-    reactantTerms.join(plus) || '<span class="equation-term">—</span>';
-  const productHTML =
-    productTerms.join(plus) || '<span class="equation-term">—</span>';
-  elements.equationDisplay.innerHTML = `${reactantHTML} ${arrow} ${productHTML}`;
+
+  const reactantString = reactantTerms.join(" + ");
+  const productString = productTerms.join(" + ");
+  const equationString = `$$${reactantString} \rightarrow ${productString}$$`;
+
+  elements.equationDisplay.textContent = equationString;
+  typesetFormulas();
 }
 
 function buildEquationTerm(coefficient, formula) {
+
   const value = Number.isFinite(coefficient) ? Math.max(coefficient, 0) : 0;
-  const displayValue = String(Math.trunc(value));
-  const needsCoefficient = value !== 1;
-  const coefficientClass = value === 0 ? "equation-coef zero" : "equation-coef";
-  const coefficientHTML = `<span class="${coefficientClass}">${displayValue}</span>`;
-  const formulaHTML = formatFormulaHTML(formula);
-  return `<span class="equation-term">${
-    needsCoefficient ? coefficientHTML : ""
-  }${needsCoefficient ? " " : ""}${formulaHTML}</span>`;
+
+  const displayValue = Math.trunc(value);
+
+  const needsCoefficient = displayValue !== 1;
+
+  const formulaTeX = formatFormulaHTML(formula);
+
+  return `${needsCoefficient ? displayValue : ""} ${formulaTeX}`;
+
 }
 
 function getCoefficient(index) {
@@ -1030,7 +1032,7 @@ function mergeCounts(target, source) {
 
 function formatFormulaHTML(formula) {
   return formula.replace(/([A-Z][a-z]?)(\d+)/g, (_, element, digits) => {
-    return `${element}<sub>${digits}</sub>`;
+    return `${element}_{${digits}}`;
   });
 }
 
