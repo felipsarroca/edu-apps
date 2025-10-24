@@ -462,15 +462,15 @@ body {
 }
 
 .atom-dot {
-  stroke: rgba(15, 23, 42, 0.18);
+  stroke: rgba(15, 23, 42, 0.22);
   stroke-width: 3;
 }
 
 .bond-line {
-  stroke: rgba(15, 23, 42, 0.35);
-  stroke-width: 4;
+  stroke: rgba(15, 23, 42, 0.28);
+  stroke-width: 3.5;
   stroke-linecap: round;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
 .molecule-count-badge {

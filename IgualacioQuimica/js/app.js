@@ -7,22 +7,39 @@ const TYPES_URL = "data/reaction_types.json";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
+// Paleta més intensa i variada per diferenciar clarament els elements
 const ELEMENT_COLORS = {
-  H: "#fde047",
-  O: "#f87171",
-  N: "#60a5fa",
-  C: "#a5b4fc",
-  Na: "#38bdf8",
-  Cl: "#fbbf24",
-  Ca: "#f59e0b",
-  Fe: "#fb923c",
-  Al: "#facc15",
-  K: "#a855f7",
-  S: "#facc15",
-  Ag: "#d6d3d1",
-  Mn: "#2dd4bf",
-  default: "#94a3b8",
+  H: "#f59e0b",   // ambre viu
+  O: "#ef4444",   // vermell intens
+  N: "#3b82f6",   // blau saturat
+  C: "#6366f1",   // indi blau
+  Na: "#06b6d4",  // cian
+  Cl: "#84cc16",  // llima
+  Ca: "#22c55e",  // verd
+  Fe: "#f97316",  // taronja
+  Al: "#14b8a6",  // turquesa
+  K: "#a855f7",   // porpra
+  S: "#eab308",   // groc
+  Ag: "#9ca3af",  // gris
+  Mn: "#f43f5e",  // rosa fort
+  P: "#e11d48",
+  Cu: "#d97706",
+  Mg: "#16a34a",
+  Zn: "#0ea5e9",
+  Pb: "#4b5563",
+  Ba: "#9333ea",
+  Hg: "#71717a",
+  Br: "#fb7185",
+  I: "#8b5cf6",
+  Co: "#3f6212",
+  Ni: "#059669",
+  Cr: "#15803d",
+  Sn: "#a3e635",
+  default: "#64748b", // lleugerament més intens que abans
 };
+
+// Factor de separació per escalar les posicions dels àtoms (més espai en molècules grans)
+const ATOM_SPACING = { x: 1.3, y: 1.15 };
 
 const ELEMENT_RADII = {
   H: 12,
@@ -429,7 +446,17 @@ function getElementColor(element) {
     return ELEMENT_COLORS.default;
   }
   const clean = element.replace(/[^A-Za-z]/g, "");
-  return ELEMENT_COLORS[clean] || ELEMENT_COLORS.default;
+  const known = ELEMENT_COLORS[clean];
+  if (known) return known;
+  // Genera un color HSL vibrant determinístic per a elements no definits
+  let hash = 0;
+  for (let i = 0; i < clean.length; i += 1) {
+    hash = (hash * 31 + clean.charCodeAt(i)) >>> 0;
+  }
+  const hue = hash % 360;
+  const sat = 75; // saturació alta
+  const light = 55; // lluminositat mitjana
+  return `hsl(${hue}deg ${sat}% ${light}%)`;
 }
 
 function getAtomRadius(element) {
@@ -451,7 +478,7 @@ function buildGenericMolecule(formula) {
     return createSingle(formula);
   }
   const atoms = [];
-  const radius = totalAtoms <= 3 ? 22 : 28;
+  const radius = totalAtoms <= 3 ? 26 : 36;
   let currentIndex = 0;
   entries.forEach(([element, count]) => {
     for (let i = 0; i < count; i += 1) {
@@ -476,6 +503,11 @@ function createMoleculeSprite(formula) {
   const svg = document.createElementNS(SVG_NS, "svg");
   svg.setAttribute("viewBox", "0 0 100 80");
   svg.setAttribute("aria-hidden", "true");
+  const cx = 50;
+  const cy = 40;
+  const sx = (x) => cx + (x - cx) * ATOM_SPACING.x;
+  const sy = (y) => cy + (y - cy) * ATOM_SPACING.y;
+
   (template.bonds || []).forEach(([from, to]) => {
     const atomA = template.atoms[from];
     const atomB = template.atoms[to];
@@ -483,17 +515,17 @@ function createMoleculeSprite(formula) {
       return;
     }
     const line = document.createElementNS(SVG_NS, "line");
-    line.setAttribute("x1", atomA.x);
-    line.setAttribute("y1", atomA.y);
-    line.setAttribute("x2", atomB.x);
-    line.setAttribute("y2", atomB.y);
+    line.setAttribute("x1", sx(atomA.x));
+    line.setAttribute("y1", sy(atomA.y));
+    line.setAttribute("x2", sx(atomB.x));
+    line.setAttribute("y2", sy(atomB.y));
     line.setAttribute("class", "bond-line");
     svg.appendChild(line);
   });
   (template.atoms || []).forEach((atom) => {
     const circle = document.createElementNS(SVG_NS, "circle");
-    circle.setAttribute("cx", atom.x);
-    circle.setAttribute("cy", atom.y);
+    circle.setAttribute("cx", sx(atom.x));
+    circle.setAttribute("cy", sy(atom.y));
     circle.setAttribute("r", atom.radius ?? getAtomRadius(atom.element));
     circle.setAttribute("fill", atom.color || getElementColor(atom.element));
     circle.setAttribute("class", "atom-dot");
