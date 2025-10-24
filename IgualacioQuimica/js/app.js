@@ -1,4 +1,4 @@
-const DATA_FILES = [
+﻿const DATA_FILES = [
   "data/eq_basic.json",
   "data/eq_intermediate.json",
   "data/eq_advanced.json",
@@ -102,7 +102,9 @@ function saveStatsToStorage() {
 
 const elements = {
   typeSelect: document.getElementById("reactionType"),
+  typeFilters: document.getElementById("typeFilters"),
   difficultyLevel: document.getElementById("difficultyLevel"),
+  levelFilters: document.getElementById("levelFilters"),
   newEquationBtn: document.getElementById("newEquationBtn"),
   equationContainer: document.getElementById("equationContainer"),
   equationTitle: document.getElementById("equationTitle"),
@@ -516,7 +518,7 @@ async function fetchJSON(url) {
 
 async function loadEquations() {
   const typePromise = fetchJSON(TYPES_URL).catch((error) => {
-    console.warn("No s'ha pogut carregar el catàleg de tipus.", error);
+    console.warn("No s'ha pogut carregar el catÃ leg de tipus.", error);
     return [];
   });
   const equationPromises = DATA_FILES.map((url) =>
@@ -588,7 +590,7 @@ function escapeHTML(s) {
 
 function maybeFixMojibake(str) {
   if (typeof str !== "string") return str ?? "";
-  if (!/[ÃÂ]/.test(str)) return str;
+  if (!/[ÃƒÃ‚]/.test(str)) return str;
   try {
     const bytes = Uint8Array.from([...str].map((c) => c.charCodeAt(0) & 0xff));
     const decoded = new TextDecoder("utf-8").decode(bytes);
@@ -1432,3 +1434,96 @@ function init() {
 }
 
 init();
+
+
+// UI enhancements: multi-select filters and level under type
+(function enhanceUI() {
+  function ensureFilterGroup(id, afterNode) {
+    let node = document.getElementById(id);
+    if (!node) {
+      node = document.createElement('div');
+      node.id = id;
+      node.className = 'filter-group';
+      const parent = afterNode?.parentElement;
+      if (parent) parent.insertAdjacentElement('afterend', node);
+    }
+    return node;
+  }
+
+  const originalPopulate = populateTypeOptions;
+  if (typeof originalPopulate === 'function') {
+    populateTypeOptions = function patchedPopulateTypeOptions() {
+      originalPopulate();
+      try {
+        const types = Array.from(new Set(state.equations.map((eq) => eq.tipus)))
+          .sort((a, b) => formatTypeLabel(a).localeCompare(formatTypeLabel(b)));
+        const typeBox = ensureFilterGroup('typeFilters', elements.typeSelect);
+        typeBox.innerHTML = '';
+        types.forEach((type) => {
+          const label = document.createElement('label');
+          label.className = 'filter-check';
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.value = type;
+          input.checked = true;
+          const span = document.createElement('span');
+          span.textContent = formatTypeLabel(type);
+          label.append(input, span);
+          typeBox.appendChild(label);
+        });
+        typeBox.addEventListener('change', () => { applyTypeFilter(); pickRandomEquation(); });
+      } catch {}
+      try {
+        const levelBox = ensureFilterGroup('levelFilters', elements.difficultyLevel);
+        levelBox.innerHTML = '';
+        [1, 2, 3].forEach((lvl) => {
+          const label = document.createElement('label');
+          label.className = 'filter-check';
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.value = String(lvl);
+          input.checked = true;
+          const span = document.createElement('span');
+          span.textContent = (lvl === 1 ? 'Fàcil (1)' : (lvl === 2 ? 'Mitjà (2)' : 'Avançat (3)'));
+          label.append(input, span);
+          levelBox.appendChild(label);
+        });
+        levelBox.addEventListener('change', () => { applyTypeFilter(); pickRandomEquation(); });
+      } catch {}
+    };
+  }
+
+  const originalApply = applyTypeFilter;
+  if (typeof originalApply === 'function') {
+    applyTypeFilter = function patchedApplyTypeFilter() {
+      const typeChecks = document.querySelectorAll('#typeFilters input[type="checkbox"]:checked');
+      const levelChecks = document.querySelectorAll('#levelFilters input[type="checkbox"]:checked');
+      if (!typeChecks.length && !levelChecks.length) {
+        return originalApply();
+      }
+      const selectedTypes = Array.from(typeChecks).map((i) => i.value);
+      const selectedLevels = Array.from(levelChecks).map((i) => String(i.value));
+      state.filteredEquations = state.equations.filter((eq) => {
+        const okType = !selectedTypes.length || selectedTypes.includes(eq.tipus);
+        const okLevel = !selectedLevels.length || selectedLevels.includes(String(eq.nivell));
+        return okType && okLevel;
+      });
+      state.filteredEquations.sort((a, b) => (a.nivell !== b.nivell ? a.nivell - b.nivell : a.id.localeCompare(b.id)));
+    };
+  }
+
+  const originalRender = renderEquation;
+  if (typeof originalRender === 'function') {
+    renderEquation = function patchedRenderEquation() {
+      originalRender();
+      try {
+        const eq = state.currentEquation;
+        if (!eq || !elements.equationTitle) return;
+        const titleType = `<span class="type-chip">${escapeHTML(formatTypeLabel(eq.tipus))}</span>`;
+        const titleLevel = `<span class="level-chip">Nivell ${Number.isFinite(eq.nivell) ? eq.nivell : 1}</span>`;
+        const titleDesc = eq.explicacio ? `<span class="reaction-desc">${escapeHTML(maybeFixMojibake(eq.explicacio))}</span>` : '';
+        elements.equationTitle.innerHTML = `${titleType}<br>${titleLevel}${titleDesc ? ' \u2013 ' + titleDesc : ''}`;
+      } catch {}
+    };
+  }
+})();
