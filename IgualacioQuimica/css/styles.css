@@ -996,7 +996,7 @@ button:disabled {
 
 
 \.footer-panel { grid-column: 2; display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 1rem; }
-.filter-group { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; margin: 0.25rem 0; }
+.filter-group { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; margin: 0.25rem 0; flex-wrap: nowrap; width: 100%; }
 
 .filter-check { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.1rem 0; background: transparent; border: none; border-radius: 0; font-size: 0.95rem; color: var(--text-main); }
 
@@ -1005,7 +1005,7 @@ button:disabled {
   height: 1rem;
 }
 
-.level-chip { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.05rem 0; font-style: italic; font-weight: 600; } .level-chip.l1 { color: #166534; } .level-chip.l2 { color: #9a3412; } .level-chip.l3 { color: #7f1d1d; }
+.level-chip { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.05rem 0; font-style: italic; font-weight: 600; } .level-chip.l1 { color: #166534; } .level-chip.l2 { color: #b45309; } .level-chip.l3 { color: #7f1d1d; }
 
 /* Multi-select dropdown with checkboxes */
 .hidden-select { display: none; }
