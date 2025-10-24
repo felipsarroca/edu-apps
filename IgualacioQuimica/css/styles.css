@@ -941,6 +941,11 @@ button:disabled {
 
 /* Peu de pÃ gina */
 .footer-panel .footer-content { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+/* Col·loca la targeta de llicència a la columna dreta i fes-la coincidir amb l'amplada de les targetes superiors */
+.footer-panel { grid-column: 2; }
+@media (max-width: 1100px) {
+  .footer-panel { grid-column: 1; }
+}
 
 .footer-left {
   display: flex;
