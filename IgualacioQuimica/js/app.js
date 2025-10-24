@@ -102,6 +102,7 @@ function saveStatsToStorage() {
 
 const elements = {
   typeSelect: document.getElementById("reactionType"),
+  difficultyLevel: document.getElementById("difficultyLevel"),
   newEquationBtn: document.getElementById("newEquationBtn"),
   equationContainer: document.getElementById("equationContainer"),
   equationTitle: document.getElementById("equationTitle"),
@@ -549,6 +550,9 @@ async function loadEquations() {
 
   elements.typeSelect.disabled = false;
   elements.typeSelect.value = "tots";
+  if (elements.difficultyLevel) {
+    elements.difficultyLevel.value = "tots";
+  }
 
   populateTypeOptions();
   applyTypeFilter();
@@ -643,11 +647,13 @@ function normalizeEquation(entry) {
 }
 
 function applyTypeFilter() {
-  const selected = elements.typeSelect.value;
-  state.filteredEquations =
-    selected === "tots"
-      ? [...state.equations]
-      : state.equations.filter((eq) => eq.tipus === selected);
+  const selectedType = elements.typeSelect.value;
+  const selectedLevel = elements.difficultyLevel?.value || "tots";
+  state.filteredEquations = state.equations.filter((eq) => {
+    const okType = selectedType === "tots" || eq.tipus === selectedType;
+    const okLevel = selectedLevel === "tots" || String(eq.nivell) === String(selectedLevel);
+    return okType && okLevel;
+  });
   state.filteredEquations.sort((a, b) => {
     if (a.nivell !== b.nivell) {
       return a.nivell - b.nivell;
@@ -1374,6 +1380,12 @@ function applyAtomPanelVisibility() {
 function attachEventHandlers() {
   if (elements.typeSelect) {
     elements.typeSelect.addEventListener("change", () => {
+      applyTypeFilter();
+      pickRandomEquation();
+    });
+  }
+  if (elements.difficultyLevel) {
+    elements.difficultyLevel.addEventListener("change", () => {
       applyTypeFilter();
       pickRandomEquation();
     });

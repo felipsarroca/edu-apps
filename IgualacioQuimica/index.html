@@ -56,6 +56,15 @@
                 <option value="tots">Tots els tipus</option>
               </select>
             </label>
+            <label class="panel-label">
+              Grau de dificultat
+              <select id="difficultyLevel" class="control-input">
+                <option value="tots">Tots els nivells</option>
+                <option value="1">F&agrave;cil (nivell 1)</option>
+                <option value="2">Mitj&agrave; (nivell 2)</option>
+                <option value="3">Avan&ccedil;at (nivell 3)</option>
+              </select>
+            </label>
             <button id="newEquationBtn" class="primary-btn w-full">
               Nova equaci&oacute;
             </button>
@@ -85,9 +94,12 @@
 
         <section class="lab-section">
           <div class="lab-header">
-            <div class="lab-heading">
-              <h1 class="lab-title">Laboratori d'igualaci&oacute; d'equacions</h1>
-              <p id="equationTitle" class="lab-subtitle"></p>
+            <div class="lab-branding">
+              <img src="favicon.svg" class="lab-logo" alt="" aria-hidden="true" />
+              <div class="lab-heading">
+                <h1 class="lab-title">Laboratori d'igualaci&oacute; d'equacions</h1>
+                <p id="equationTitle" class="lab-subtitle"></p>
+              </div>
             </div>
             <div class="status-block compact">
               <div id="moodBadge" class="mood-badge not-balanced">&#128578;</div>
