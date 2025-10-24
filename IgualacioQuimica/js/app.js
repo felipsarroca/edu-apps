@@ -854,7 +854,7 @@ function buildEquationTerm(coefficient, formula) {
 
   const formulaTeX = renderFormulaTeX(formula);
 
-  const styledCoefficient = `\\mathbf{${displayValue}}`;
+  const styledCoefficient = `\\color{blue}{\\mathbf{${displayValue}}}`;
 
   return `${styledCoefficient} ${formulaTeX}`;
 
