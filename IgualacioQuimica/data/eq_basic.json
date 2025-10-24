@@ -15,7 +15,7 @@
     ],
     "type": "combustio",
     "level": 1,
-    "explanation": "La formació d'aigua necessita dues molècules d'hidrogen per cada molècula d'oxigen."
+    "explanation": "La formaciÃ³ d'aigua necessita dues molÃ¨cules d'hidrogen per cada molÃ¨cula d'oxigen."
   },
   {
     "id": "eq002",
@@ -33,7 +33,7 @@
     ],
     "type": "oxidacio",
     "level": 1,
-    "explanation": "Per formar òxid de ferro(III) calen quatre àtoms de ferro i tres de dioxigen."
+    "explanation": "Per formar Ã²xid de ferro(III) calen quatre Ã toms de ferro i tres de dioxigen."
   },
   {
     "id": "eq003",
@@ -53,7 +53,7 @@
     ],
     "type": "combustio",
     "level": 1,
-    "explanation": "Una combustió completa del propà produeix diòxid de carboni i aigua."
+    "explanation": "Una combustiÃ³ completa del propÃ  produeix diÃ²xid de carboni i aigua."
   },
   {
     "id": "eq004",
@@ -71,7 +71,7 @@
     ],
     "type": "sintesi",
     "level": 1,
-    "explanation": "Dos àtoms de sodi reaccionen amb una molècula de clor per formar clorur de sodi."
+    "explanation": "Dos Ã toms de sodi reaccionen amb una molÃ¨cula de clor per formar clorur de sodi."
   },
   {
     "id": "eq005",
@@ -89,6 +89,123 @@
     ],
     "type": "descomposicio",
     "level": 1,
-    "explanation": "El carbonat de calci es descompon en òxid de calci i diòxid de carboni."
+    "explanation": "El carbonat de calci es descompon en Ã²xid de calci i diÃ²xid de carboni."
+  },
+  {
+    "id": "eq011",
+    "reactants": ["CH4", "O2"],
+    "products": ["CO2", "H2O"],
+    "coefficients": [1, 2, 1, 2],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "La combustiÃ³ del metà produeix diÃ²xid de carboni i aigua."
+  },
+  {
+    "id": "eq012",
+    "reactants": ["Mg", "O2"],
+    "products": ["MgO"],
+    "coefficients": [2, 1, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El magnesi reacciona amb el dioxigen formant Ã²xid de magnesi."
+  },
+  {
+    "id": "eq013",
+    "reactants": ["Ca", "Cl2"],
+    "products": ["CaCl2"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El calci i el clor formen clorur de calci."
+  },
+  {
+    "id": "eq014",
+    "reactants": ["H2O2"],
+    "products": ["H2O", "O2"],
+    "coefficients": [2, 2, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "El peròxid d'hidrogen es descompon en aigua i dioxigen."
+  },
+  {
+    "id": "eq015",
+    "reactants": ["Zn", "HCl"],
+    "products": ["ZnCl2", "H2"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El zinc desplaÃ§a l'hidrogen de l'Ã cid clorhÃ­dric."
+  },
+  {
+    "id": "eq016",
+    "reactants": ["Na", "H2O"],
+    "products": ["NaOH", "H2"],
+    "coefficients": [2, 2, 2, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El sodi reacciona amb l'aigua formant hidrÃ²xid de sodi i hidrogen."
+  },
+  {
+    "id": "eq017",
+    "reactants": ["K", "Cl2"],
+    "products": ["KCl"],
+    "coefficients": [2, 1, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El potassi i el clor formen clorur de potassi."
+  },
+  {
+    "id": "eq018",
+    "reactants": ["CaO", "H2O"],
+    "products": ["Ca(OH)2"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "L'Ã²xid de calci reacciona amb aigua per donar hidrÃ²xid de calci."
+  },
+  {
+    "id": "eq019",
+    "reactants": ["HCl", "NaOH"],
+    "products": ["NaCl", "H2O"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "NeutralitzaciÃ³ Ã cid-base entre HCl i NaOH."
+  },
+  {
+    "id": "eq020",
+    "reactants": ["BaCl2", "Na2SO4"],
+    "products": ["BaSO4", "NaCl"],
+    "coefficients": [1, 1, 1, 2],
+    "type": "desplacament_doble",
+    "level": 1,
+    "explanation": "Intercanvi d'ions amb precipitaciÃ³ de sulfat de bari."
+  },
+  {
+    "id": "eq021",
+    "reactants": ["NH3", "HCl"],
+    "products": ["NH4Cl"],
+    "coefficients": [1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "L'amonÃ­ac gasÃ³s reacciona amb HCl formant clorur d'amoni."
+  },
+  {
+    "id": "eq022",
+    "reactants": ["CO", "O2"],
+    "products": ["CO2"],
+    "coefficients": [2, 1, 2],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "OxidaciÃ³ del monÃ²xid de carboni a diÃ²xid de carboni."
+  },
+  {
+    "id": "eq023",
+    "reactants": ["H2", "Cl2"],
+    "products": ["HCl"],
+    "coefficients": [1, 1, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "L'hidrogen i el clor formen Ã cid clorhÃ­dric."
   }
 ]

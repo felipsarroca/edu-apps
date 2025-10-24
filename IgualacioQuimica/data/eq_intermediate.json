@@ -17,7 +17,7 @@
     ],
     "type": "desplacament_simple",
     "level": 2,
-    "explanation": "L'alumini desplaça l'hidrogen de l'àcid clorhídric i forma clorur d'alumini."
+    "explanation": "L'alumini desplaÃ§a l'hidrogen de l'Ã cid clorhÃ­dric i forma clorur d'alumini."
   },
   {
     "id": "eq007",
@@ -53,7 +53,7 @@
     ],
     "type": "sintesi",
     "level": 2,
-    "explanation": "El procés Haber-Bosch combina nitrogen i hidrogen per formar amoníac."
+    "explanation": "El procÃ©s Haber-Bosch combina nitrogen i hidrogen per formar amonÃ­ac."
   },
   {
     "id": "eq009",
@@ -93,6 +93,114 @@
     ],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "Una neutralització entre un àcid fort i una base forta dona sal i aigua."
+    "explanation": "Una neutralitzaciÃ³ entre un Ã cid fort i una base forta dona sal i aigua."
+  },
+  {
+    "id": "eq024",
+    "reactants": ["C2H5OH", "O2"],
+    "products": ["CO2", "H2O"],
+    "coefficients": [1, 3, 2, 3],
+    "type": "combustio",
+    "level": 2,
+    "explanation": "La combustiÃ³ de l'etanol produeix CO2 i H2O."
+  },
+  {
+    "id": "eq025",
+    "reactants": ["C2H6", "O2"],
+    "products": ["CO2", "H2O"],
+    "coefficients": [2, 7, 4, 6],
+    "type": "combustio",
+    "level": 2,
+    "explanation": "CombustiÃ³ de l'etÃ  amb coeficients enters mÃ­nims."
+  },
+  {
+    "id": "eq026",
+    "reactants": ["Na2CO3", "CaCl2"],
+    "products": ["CaCO3", "NaCl"],
+    "coefficients": [1, 1, 1, 2],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "FormaciÃ³ de carbonat de calci insoluble per intercanvi d'ions."
+  },
+  {
+    "id": "eq027",
+    "reactants": ["Pb(NO3)2", "KI"],
+    "products": ["PbI2", "KNO3"],
+    "coefficients": [1, 2, 1, 2],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "PrecipitaciÃ³ de I2 de plom(II) en una reacciÃ³ d'intercanvi."
+  },
+  {
+    "id": "eq028",
+    "reactants": ["Fe", "CuSO4"],
+    "products": ["FeSO4", "Cu"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "desplacament_simple",
+    "level": 2,
+    "explanation": "El ferro desplaÃ§a el coure del seu sulfat."
+  },
+  {
+    "id": "eq029",
+    "reactants": ["Cl2", "KI"],
+    "products": ["KCl", "I2"],
+    "coefficients": [1, 2, 2, 1],
+    "type": "desplacament_simple",
+    "level": 2,
+    "explanation": "El clor oxida l'iodur a iode elemental."
+  },
+  {
+    "id": "eq030",
+    "reactants": ["H3PO4", "NaOH"],
+    "products": ["Na3PO4", "H2O"],
+    "coefficients": [1, 3, 1, 3],
+    "type": "neutralitzacio",
+    "level": 2,
+    "explanation": "NeutralitzaciÃ³ d'un Ã cid triprÃ²tic amb una base forta."
+  },
+  {
+    "id": "eq031",
+    "reactants": ["SO3", "H2O"],
+    "products": ["H2SO4"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 2,
+    "explanation": "FormaciÃ³ d'Ã cid sulfÃºric a partir de triÃ²xid de sofre."
+  },
+  {
+    "id": "eq032",
+    "reactants": ["Ca(OH)2", "H2SO4"],
+    "products": ["CaSO4", "H2O"],
+    "coefficients": [1, 1, 1, 2],
+    "type": "neutralitzacio",
+    "level": 2,
+    "explanation": "NeutralitzaciÃ³ d'una base forta amb un Ã cid fort."
+  },
+  {
+    "id": "eq033",
+    "reactants": ["Al2O3", "HCl"],
+    "products": ["AlCl3", "H2O"],
+    "coefficients": [1, 6, 2, 3],
+    "type": "neutralitzacio",
+    "level": 2,
+    "explanation": "ReacciÃ³ Ã cid-Ã²xid bÃ sic entre Al2O3 i HCl."
+  },
+  {
+    "id": "eq034",
+    "reactants": ["CaCO3", "HCl"],
+    "products": ["CaCl2", "CO2", "H2O"],
+    "coefficients": [1, 2, 1, 1, 1],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "El carbonat reacciona amb HCl alliberant CO2."
+  },
+  {
+    "id": "eq035",
+    "reactants": ["C6H12O6", "O2"],
+    "products": ["CO2", "H2O"],
+    "coefficients": [1, 6, 6, 6],
+    "type": "combustio",
+    "level": 2,
+    "explanation": "OxidaciÃ³ de la glucosa amb coeficients equilibrats."
   }
 ]
