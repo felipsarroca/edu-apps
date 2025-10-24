@@ -51,6 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'Química', 
             description: "Una taula periòdica interactiva amb múltiples visualitzacions." 
         },
+        { 
+            name: "Igualació d'Equacions Químiques", 
+            path: 'IgualacioQuimica/', 
+            category: 'Química', 
+            description: "Una eina per igualar equacions químiques pas a pas." 
+        },
 
         // Matemàtiques
         { 

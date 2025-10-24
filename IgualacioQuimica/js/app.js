@@ -68,9 +68,7 @@ const state = {
   hintsEnabled: true,
 };
 
-const STORAGE_KEYS = {
-  stats: "iq_stats_v1",
-};
+const STORAGE_KEYS = {\n  stats: "iq_stats_v1",\n  filters: "iq_filters_v1",\n};
 
 function loadStatsFromStorage() {
   try {
@@ -1567,3 +1565,23 @@ init();
 
 
 
+
+
+function saveFiltersToStorage(types, levels) {
+  try {
+    const payload = { types: Array.from(new Set(types || [])), levels: Array.from(new Set(levels || [])) };
+    localStorage.setItem(STORAGE_KEYS.filters, JSON.stringify(payload));
+  } catch {}
+}
+
+function loadFiltersFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.filters);
+    if (!raw) return { types: [], levels: [] };
+    const data = JSON.parse(raw);
+    return {
+      types: Array.isArray(data?.types) ? data.types : [],
+      levels: Array.isArray(data?.levels) ? data.levels : [],
+    };
+  } catch { return { types: [], levels: [] }; }
+}
