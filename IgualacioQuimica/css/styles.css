@@ -248,8 +248,15 @@ body {
 
 .lab-header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lab-heading {
+  display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .lab-title {
@@ -262,6 +269,24 @@ body {
   margin: 0;
   font-size: 0.95rem;
   color: var(--text-muted);
+}
+
+/* Estat compacte a la capçalera */
+.status-block.compact {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lab-header .mood-badge {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.4rem;
+}
+
+.lab-header .status-title {
+  font-size: 1rem;
+  margin: 0;
 }
 
 .lab-stage {

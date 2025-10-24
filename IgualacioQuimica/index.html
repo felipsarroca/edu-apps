@@ -44,26 +44,7 @@
   </head>
   <body class="app-body">
     <div class="app-wrapper">
-      <header class="app-header">
-        <div class="status-block">
-          <div id="moodBadge" class="mood-badge not-balanced">&#128578;</div>
-          <div class="status-text">
-            <p id="balanceStatus" class="status-title not-balanced">
-              No equilibrada
-            </p>
-            <p id="balanceCaption" class="status-caption">
-              Ajusta els coeficients fins que l'equaci&oacute; quedi compensada.
-            </p>
-          </div>
-        </div>
-        <div class="view-control">
-          <span class="view-label">Vista</span>
-          <button type="button" class="view-toggle" id="viewModeBtn">
-            <span class="view-icon">&#9883;&#65039;</span>
-            <span class="view-text">Mol&egrave;cules</span>
-          </button>
-        </div>
-      </header>
+      <!-- Eliminat el panell superior; l'estat es mou al costat del títol -->
 
       <main class="app-main">
         <aside class="control-panel">
@@ -104,8 +85,14 @@
 
         <section class="lab-section">
           <div class="lab-header">
-            <h1 class="lab-title">Laboratori d'igualaci&oacute; d'equacions</h1>
-            <p id="equationTitle" class="lab-subtitle"></p>
+            <div class="lab-heading">
+              <h1 class="lab-title">Laboratori d'igualaci&oacute; d'equacions</h1>
+              <p id="equationTitle" class="lab-subtitle"></p>
+            </div>
+            <div class="status-block compact">
+              <div id="moodBadge" class="mood-badge not-balanced">&#128578;</div>
+              <p id="balanceStatus" class="status-title not-balanced">No equilibrada</p>
+            </div>
           </div>
 
           <!-- 1) FÓRMULA CENTRAL -->
