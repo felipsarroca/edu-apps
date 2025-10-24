@@ -455,6 +455,7 @@ body {
   text-transform: uppercase;
   border-radius: 9999px;
   border: 1px solid rgba(37, 99, 235, 0.25);
+  z-index: 1;
 }
 
 .equation-zone {
@@ -515,13 +516,10 @@ body {
   font-size: 1.8rem;
   text-align: center;
   color: var(--text-main);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(37, 99, 235, 0.25);
   border-radius: 1.25rem;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   box-shadow: 0 18px 35px rgba(37, 99, 235, 0.12);
   min-height: 90px;
 }
