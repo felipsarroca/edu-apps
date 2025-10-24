@@ -1,0 +1,222 @@
+[
+  {
+    "id": "eq001",
+    "reactants": [
+      "H2",
+      "O2"
+    ],
+    "products": [
+      "H2O"
+    ],
+    "coefficients": [
+      2,
+      1,
+      2
+    ],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "La formació d'aigua necessita dues molècules d'hidrogen per cada molècula d'oxigen."
+  },
+  {
+    "id": "eq002",
+    "reactants": [
+      "Fe",
+      "O2"
+    ],
+    "products": [
+      "Fe2O3"
+    ],
+    "coefficients": [
+      4,
+      3,
+      2
+    ],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "Per formar òxid de ferro(III) calen quatre àtoms de ferro i tres de dioxigen."
+  },
+  {
+    "id": "eq003",
+    "reactants": [
+      "C3H8",
+      "O2"
+    ],
+    "products": [
+      "CO2",
+      "H2O"
+    ],
+    "coefficients": [
+      1,
+      5,
+      3,
+      4
+    ],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "Una combustió completa del propà produeix diòxid de carboni i aigua."
+  },
+  {
+    "id": "eq004",
+    "reactants": [
+      "Na",
+      "Cl2"
+    ],
+    "products": [
+      "NaCl"
+    ],
+    "coefficients": [
+      2,
+      1,
+      2
+    ],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "Dos àtoms de sodi reaccionen amb una molècula de clor per formar clorur de sodi."
+  },
+  {
+    "id": "eq005",
+    "reactants": [
+      "CaCO3"
+    ],
+    "products": [
+      "CaO",
+      "CO2"
+    ],
+    "coefficients": [
+      1,
+      1,
+      1
+    ],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "El carbonat de calci es descompon en òxid de calci i diòxid de carboni."
+  },
+  {
+    "id": "eq006",
+    "reactants": [
+      "Al",
+      "HCl"
+    ],
+    "products": [
+      "AlCl3",
+      "H2"
+    ],
+    "coefficients": [
+      2,
+      6,
+      2,
+      3
+    ],
+    "type": "desplacament_simple",
+    "level": 2,
+    "explanation": "L'alumini desplaça l'hidrogen de l'àcid clorhídric i forma clorur d'alumini."
+  },
+  {
+    "id": "eq007",
+    "reactants": [
+      "KClO3"
+    ],
+    "products": [
+      "KCl",
+      "O2"
+    ],
+    "coefficients": [
+      2,
+      2,
+      3
+    ],
+    "type": "descomposicio",
+    "level": 2,
+    "explanation": "El clorat de potassi es descompon en clorur de potassi i dioxigen."
+  },
+  {
+    "id": "eq008",
+    "reactants": [
+      "N2",
+      "H2"
+    ],
+    "products": [
+      "NH3"
+    ],
+    "coefficients": [
+      1,
+      3,
+      2
+    ],
+    "type": "sintesi",
+    "level": 2,
+    "explanation": "El procés Haber-Bosch combina nitrogen i hidrogen per formar amoníac."
+  },
+  {
+    "id": "eq009",
+    "reactants": [
+      "AgNO3",
+      "NaCl"
+    ],
+    "products": [
+      "AgCl",
+      "NaNO3"
+    ],
+    "coefficients": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "type": "desplacament_doble",
+    "level": 2,
+    "explanation": "Es produeix un intercanvi d'ions que genera el precipitat de clorur de plata."
+  },
+  {
+    "id": "eq010",
+    "reactants": [
+      "H2SO4",
+      "NaOH"
+    ],
+    "products": [
+      "Na2SO4",
+      "H2O"
+    ],
+    "coefficients": [
+      1,
+      2,
+      1,
+      2
+    ],
+    "type": "neutralitzacio",
+    "level": 2,
+    "explanation": "Una neutralització entre un àcid fort i una base forta dona sal i aigua."
+  },
+  {
+    "id": "eq102",
+    "reactants": [
+      "Fe2+",
+      "MnO4-",
+      "H+"
+    ],
+    "products": [
+      "Fe3+",
+      "Mn2+",
+      "H2O"
+    ],
+    "coefficients": [
+      5,
+      1,
+      8,
+      5,
+      1,
+      4
+    ],
+    "type": "oxidacio-reduccio",
+    "level": 3,
+    "explanation": "El Fe(II) s'oxida a Fe(III) i el Mn(VII) es redueix a Mn(II).",
+    "details": {
+      "method": "redox",
+      "agents": {
+        "oxidant": "MnO4-",
+        "reductor": "Fe2+"
+      },
+      "electrons": 5
+    }
+  }
+]

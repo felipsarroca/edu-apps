@@ -1,4 +1,9 @@
-const DATA_URL = "data/eq_inspeccio.json";
+const DATA_FILES = [
+  "data/eq_basic.json",
+  "data/eq_intermediate.json",
+  "data/eq_advanced.json",
+];
+const TYPES_URL = "data/reaction_types.json";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -41,11 +46,19 @@ const STATUS_COPY = {
     "Ajusta els coeficients fins que el nombre d'&agrave;toms coincideixi als dos costats.",
 };
 
+function createId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return createId();
+  }
+  return `eq_${Math.random().toString(36).slice(2, 10)}`;
+}
+
 const state = {
   equations: [],
   filteredEquations: [],
   currentEquation: null,
   currentCoefficients: [],
+  typeLabels: {},
   attempts: 0,
   correct: 0,
   streak: 0,
@@ -89,16 +102,6 @@ const elements = {
 
 
 
-
-const TYPE_LABELS = {
-  combustio: "Combusti\u00f3",
-  oxidacio: "Oxidaci\u00f3",
-  neutralitzacio: "Neutralitzaci\u00f3",
-  descomposicio: "Descomposici\u00f3",
-  sintesi: "S\u00edntesi",
-  desplacament_simple: "Despla\u00e7ament simple",
-  desplacament_doble: "Despla\u00e7ament doble",
-};
 
 const MOLECULE_LIBRARY = {
   H2: createDiatomic("H"),
@@ -474,22 +477,65 @@ function createMoleculeSprite(formula) {
 
 
 
-async function loadEquations() {
-  const response = await fetch(DATA_URL);
+async function fetchJSON(url) {
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error("No s'ha pogut carregar la base de dades d'equacions.");
+    throw new Error(`No s'ha pogut carregar el recurs: ${url}`);
   }
-  state.equations = await response.json();
+  return response.json();
+}
+
+async function loadEquations() {
+  const typePromise = fetchJSON(TYPES_URL).catch((error) => {
+    console.warn("No s'ha pogut carregar el catàleg de tipus.", error);
+    return [];
+  });
+  const equationPromises = DATA_FILES.map((url) =>
+    fetchJSON(url).catch((error) => {
+      console.warn(`No s'ha pogut carregar ${url}`, error);
+      return [];
+    })
+  );
+
+  const [typeData, ...equationLists] = await Promise.all([
+    typePromise,
+    ...equationPromises,
+  ]);
+
+  state.typeLabels = Array.isArray(typeData)
+    ? Object.fromEntries(
+        typeData.map((entry) => [entry.id, entry.name || entry.id])
+      )
+    : {};
+
+  state.equations = equationLists
+    .flat()
+    .map((rawEquation) => normalizeEquation(rawEquation))
+    .filter((equation) => equation.reactius.length && equation.productes.length);
+
+  if (!state.equations.length) {
+    elements.typeSelect.disabled = true;
+    setFeedback("No hi ha equacions disponibles. Revisa els arxius de dades.", "error");
+    return;
+  }
+
+  elements.typeSelect.disabled = false;
+  elements.typeSelect.value = "tots";
+
   populateTypeOptions();
   applyTypeFilter();
   pickRandomEquation();
 }
 
 function populateTypeOptions() {
+  if (!state.equations.length) {
+    elements.typeSelect.innerHTML = '<option value="tots">Sense dades</option>';
+    return;
+  }
   const types = new Set(state.equations.map((eq) => eq.tipus));
   elements.typeSelect.innerHTML = '<option value="tots">Tots els tipus</option>';
   Array.from(types)
-    .sort()
+    .sort((a, b) => formatTypeLabel(a).localeCompare(formatTypeLabel(b)))
     .forEach((type) => {
       const option = document.createElement("option");
       option.value = type;
@@ -498,12 +544,66 @@ function populateTypeOptions() {
     });
 }
 
+function normalizeEquation(entry) {
+  if (!entry || typeof entry !== "object") {
+    return {
+      id: createId(),
+      reactius: [],
+      productes: [],
+      coeficients: [],
+      tipus: "sense_tipus",
+      explicacio: "",
+      nivell: 1,
+    };
+  }
+  const reactants = Array.isArray(entry.reactants)
+    ? entry.reactants
+    : Array.isArray(entry.reactius)
+    ? entry.reactius
+    : [];
+  const products = Array.isArray(entry.products)
+    ? entry.products
+    : Array.isArray(entry.productes)
+    ? entry.productes
+    : [];
+  const coefficients = Array.isArray(entry.coefficients)
+    ? entry.coefficients.map((value) => Number.parseInt(value, 10))
+    : Array.isArray(entry.coeficients)
+    ? entry.coeficients.map((value) => Number.parseInt(value, 10))
+    : [];
+  const type = entry.type || entry.tipus || "sense_tipus";
+  const explanation = entry.explanation || entry.explicacio || "";
+  const level = Number.parseInt(entry.level ?? entry.nivell ?? 1, 10);
+  return {
+    ...entry,
+    id: entry.id || createId(),
+    reactants,
+    reactius: reactants,
+    products,
+    productes: products,
+    coefficients,
+    coeficients: coefficients,
+    type,
+    tipus: type,
+    explanation,
+    explicacio: explanation,
+    level,
+    nivell: level,
+  };
+}
+
 function applyTypeFilter() {
   const selected = elements.typeSelect.value;
   state.filteredEquations =
     selected === "tots"
       ? [...state.equations]
       : state.equations.filter((eq) => eq.tipus === selected);
+  state.filteredEquations.sort((a, b) => {
+    if (a.nivell !== b.nivell) {
+      return a.nivell - b.nivell;
+    }
+    return a.id.localeCompare(b.id);
+  });
 }
 
 function pickRandomEquation() {
@@ -667,18 +767,18 @@ function renderStage(container, compounds, offset) {
       sprite.classList.add("ghost");
       bucket.appendChild(sprite);
     } else {
-      const visible = Math.min(coefficient, 6);
-      for (let i = 0; i < visible; i += 1) {
-        bucket.appendChild(createMoleculeSprite(compound));
-      }
+      bucket.appendChild(createMoleculeSprite(compound));
     }
 
-    if (coefficient !== 1) {
+    if (coefficient > 1) {
       const countBadge = document.createElement("div");
-      countBadge.className = `molecule-count-badge${
-        coefficient <= 0 ? " ghost" : ""
-      }`;
+      countBadge.className = "molecule-count-badge";
       countBadge.textContent = `\u00d7${coefficient}`;
+      bucket.appendChild(countBadge);
+    } else if (coefficient <= 0) {
+      const countBadge = document.createElement("div");
+      countBadge.className = "molecule-count-badge ghost";
+      countBadge.textContent = "\u00d70";
       bucket.appendChild(countBadge);
     }
 
@@ -704,18 +804,25 @@ function updateEquationDisplay() {
   const productTerms = productes.map((compound, idx) =>
     buildEquationTerm(coefficients[reactius.length + idx], compound)
   );
-  elements.equationDisplay.innerHTML = `${reactantTerms.join(
-    " + "
-  )} &rarr; ${productTerms.join(" + ")}`;
+  const plus = '<span class="equation-plus">+</span>';
+  const arrow = '<span class="equation-arrow-display">&rArr;</span>';
+  const reactantHTML =
+    reactantTerms.join(plus) || '<span class="equation-term">—</span>';
+  const productHTML =
+    productTerms.join(plus) || '<span class="equation-term">—</span>';
+  elements.equationDisplay.innerHTML = `${reactantHTML} ${arrow} ${productHTML}`;
 }
 
 function buildEquationTerm(coefficient, formula) {
   const value = Number.isFinite(coefficient) ? Math.max(coefficient, 0) : 0;
-  const prefix =
-    value === 0 ? "0" : value === 1 ? "" : String(Math.trunc(value));
-  return `<span class="equation-term">${prefix}${formatFormulaHTML(
-    formula
-  )}</span>`;
+  const displayValue = String(Math.trunc(value));
+  const needsCoefficient = value !== 1;
+  const coefficientClass = value === 0 ? "equation-coef zero" : "equation-coef";
+  const coefficientHTML = `<span class="${coefficientClass}">${displayValue}</span>`;
+  const formulaHTML = formatFormulaHTML(formula);
+  return `<span class="equation-term">${
+    needsCoefficient ? coefficientHTML : ""
+  }${needsCoefficient ? " " : ""}${formulaHTML}</span>`;
 }
 
 function getCoefficient(index) {
@@ -1075,8 +1182,8 @@ function formatTypeLabel(type) {
   if (!type) {
     return "Sense classificaci\u00f3";
   }
-  if (TYPE_LABELS[type]) {
-    return TYPE_LABELS[type];
+  if (state.typeLabels[type]) {
+    return state.typeLabels[type];
   }
   return type
     .split("_")

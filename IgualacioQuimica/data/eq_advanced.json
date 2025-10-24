@@ -1,0 +1,34 @@
+[
+  {
+    "id": "eq102",
+    "reactants": [
+      "Fe2+",
+      "MnO4-",
+      "H+"
+    ],
+    "products": [
+      "Fe3+",
+      "Mn2+",
+      "H2O"
+    ],
+    "coefficients": [
+      5,
+      1,
+      8,
+      5,
+      1,
+      4
+    ],
+    "type": "oxidacio-reduccio",
+    "level": 3,
+    "explanation": "El Fe(II) s'oxida a Fe(III) i el Mn(VII) es redueix a Mn(II).",
+    "details": {
+      "method": "redox",
+      "agents": {
+        "oxidant": "MnO4-",
+        "reductor": "Fe2+"
+      },
+      "electrons": 5
+    }
+  }
+]
