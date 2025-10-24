@@ -727,34 +727,35 @@ button:disabled {
 }
 
 .scoreboard {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
   gap: 1rem;
 }
 
 .score-card {
-  flex: 1;
-  min-width: 140px;
   background: rgba(37, 99, 235, 0.08);
   border-radius: 1rem;
   border: 1px solid rgba(37, 99, 235, 0.2);
   padding: 0.85rem 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
 }
 
 .score-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: rgba(37, 99, 235, 0.7);
 }
 
 .score-value {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1e3a8a;
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  line-height: 1;
+  font-weight: 800;
+  color: #0f172a;
 }
 
 .table-panel {
@@ -789,8 +790,22 @@ button:disabled {
 .atom-table th,
 .atom-table td {
   padding: 0.6rem 0.75rem;
-  text-align: left;
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.atom-table th:not(:first-child),
+.atom-table td:not(:first-child) {
+  text-align: center;
+}
+
+.atom-table tbody td:not(:first-child) {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.atom-table tbody td:first-child {
+  font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
+  text-align: left;
 }
 
 .atom-table tbody tr:last-child td {

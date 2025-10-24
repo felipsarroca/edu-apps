@@ -68,6 +68,32 @@ const state = {
   hintsEnabled: true,
 };
 
+const STORAGE_KEYS = {
+  stats: "iq_stats_v1",
+};
+
+function loadStatsFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.stats);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (typeof data?.attempts === "number") state.attempts = data.attempts;
+    if (typeof data?.correct === "number") state.correct = data.correct;
+    if (typeof data?.streak === "number") state.streak = data.streak;
+  } catch {}
+}
+
+function saveStatsToStorage() {
+  try {
+    const payload = {
+      attempts: state.attempts,
+      correct: state.correct,
+      streak: state.streak,
+    };
+    localStorage.setItem(STORAGE_KEYS.stats, JSON.stringify(payload));
+  } catch {}
+}
+
 
 
 
@@ -1312,6 +1338,7 @@ function updateScoreboard() {
   if (elements.streakCount) {
     elements.streakCount.textContent = String(state.streak);
   }
+  saveStatsToStorage();
 }
 
 function applyAtomPanelVisibility() {
@@ -1357,6 +1384,7 @@ function attachEventHandlers() {
 
 function init() {
   attachEventHandlers();
+  loadStatsFromStorage();
   if (elements.toggleAtoms) {
     elements.toggleAtoms.checked = state.showAtoms;
   }
