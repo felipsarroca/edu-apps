@@ -6,6 +6,22 @@
     <title>Igualaci&oacute; d'equacions qu&iacute;miques</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      // Configuració de MathJax abans de carregar el script
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)']
+          ],
+          packages: { '[+]': ['color'] },
+          color: {
+            options: { colorSpace: 'HTML' }
+          }
+        },
+        startup: { typeset: false }
+      };
+    </script>
     <script
       id="MathJax-script"
       async

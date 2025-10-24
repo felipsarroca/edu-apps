@@ -47,9 +47,11 @@ const STATUS_COPY = {
 };
 
 function createId() {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-    return createId();
-  }
+  try {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID();
+    }
+  } catch {}
   return `eq_${Math.random().toString(36).slice(2, 10)}`;
 }
 
@@ -729,7 +731,7 @@ function buildEquationSide(compounds, role, offset) {
 
     const formulaSpan = document.createElement("span");
     formulaSpan.className = "compound-formula";
-    formulaSpan.innerHTML = formatFormulaHTML(compound);
+    formulaSpan.innerHTML = renderFormulaHTML(compound);
 
     card.append(controls, formulaSpan);
     sideWrapper.appendChild(card);
@@ -793,7 +795,7 @@ function renderStage(container, compounds, offset) {
 
     const label = document.createElement("span");
     label.className = "molecule-label";
-    label.innerHTML = formatFormulaHTML(compound);
+    label.innerHTML = renderFormulaHTML(compound);
 
     group.append(bucket, label);
     container.appendChild(group);
@@ -850,7 +852,7 @@ function buildEquationTerm(coefficient, formula) {
 
   const displayValue = Math.trunc(value);
 
-  const formulaTeX = formatFormulaTeX(formula);
+  const formulaTeX = renderFormulaTeX(formula);
 
   const styledCoefficient = `{\bf\color{#2563eb}{${displayValue}}}`;
 
@@ -1054,6 +1056,41 @@ function mergeCounts(target, source) {
   });
 }
 
+// Enhanced formula rendering helpers (HTML and TeX)
+function renderFormulaHTML(formula) {
+  if (!formula) return "";
+  let f = String(formula);
+  // Caret charge notation like ^2- or ^+
+  f = f.replace(/\^([0-9]*[+-])/g, '<sup>$1</sup>');
+  // Element subscripts: H2 -> H<sub>2</sub>
+  f = f.replace(/([A-Z][a-z]?)(\d+)/g, (_, element, digits) => `${element}<sub>${digits}</sub>`);
+  // Group subscripts: (OH)2 -> (OH)<sub>2</sub>
+  f = f.replace(/\)(\d+)/g, ')<sub>$1</sub>');
+  // Trailing charge like Fe2+ or + at end
+  const chargeMatch = f.match(/(?:\d+[+-]|[+-])$/);
+  if (chargeMatch) {
+    f = f.slice(0, -chargeMatch[0].length) + `<sup>${chargeMatch[0]}</sup>`;
+  }
+  return f;
+}
+
+function renderFormulaTeX(formula) {
+  if (!formula) return "";
+  let f = String(formula);
+  // Caret charge: ^2-  -> ^{2-}, ^+ -> ^{+}
+  f = f.replace(/\^([0-9]*[+-])/g, '^{$1}');
+  // Element subscripts: H2 -> H_{2}
+  f = f.replace(/([A-Z][a-z]?)(\d+)/g, '$1_{$2}');
+  // Group subscripts: (OH)2 -> (OH)_{2}
+  f = f.replace(/\)(\d+)/g, ')_{$1}');
+  // Trailing charge at end
+  const chargeMatch = f.match(/(?:\d+[+-]|[+-])$/);
+  if (chargeMatch) {
+    f = f.slice(0, -chargeMatch[0].length) + `^{${chargeMatch[0]}}`;
+  }
+  return f;
+}
+
 function formatFormulaHTML(formula) {
   return formula.replace(/([A-Z][a-z]?)(\d+)/g, (_, element, digits) => {
     return `${element}<sub>${digits}</sub>`;
@@ -1086,9 +1123,15 @@ function areCountsBalanced(leftCounts, rightCounts) {
   return true;
 }
 
+let __typesetAttempts = 0;
 function typesetFormulas() {
-  if (window.MathJax && window.MathJax.typesetPromise) {
-    window.MathJax.typesetPromise();
+  const mj = window.MathJax;
+  if (mj && typeof mj.typesetPromise === "function") {
+    __typesetAttempts = 0;
+    mj.typesetPromise();
+  } else if (__typesetAttempts < 20) {
+    __typesetAttempts += 1;
+    setTimeout(typesetFormulas, 100);
   }
 }
 
