@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "id": "eq006",
     "reactants": [
@@ -17,7 +17,7 @@
     ],
     "type": "desplacament_simple",
     "level": 2,
-    "explanation": "L'alumini desplaÃ§a l'hidrogen de l'Ã cid clorhÃ­dric i forma clorur d'alumini."
+    "explanation": "L'alumini desplaça l'hidrogen de l'àcid clorhídric i forma clorur d'alumini."
   },
   {
     "id": "eq007",
@@ -53,7 +53,7 @@
     ],
     "type": "sintesi",
     "level": 2,
-    "explanation": "El procÃ©s Haber-Bosch combina nitrogen i hidrogen per formar amonÃ­ac."
+    "explanation": "El proc©s Haber-Bosch combina nitrogen i hidrogen per formar amoníac."
   },
   {
     "id": "eq009",
@@ -93,7 +93,7 @@
     ],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "Una neutralitzaciÃ³ entre un Ã cid fort i una base forta dona sal i aigua."
+    "explanation": "Una neutralització entre un àcid fort i una base forta dona sal i aigua."
   },
   {
     "id": "eq024",
@@ -102,7 +102,7 @@
     "coefficients": [1, 3, 2, 3],
     "type": "combustio",
     "level": 2,
-    "explanation": "La combustiÃ³ de l'etanol produeix CO2 i H2O."
+    "explanation": "La combustió de l'etanol produeix CO2 i H2O."
   },
   {
     "id": "eq025",
@@ -111,7 +111,7 @@
     "coefficients": [2, 7, 4, 6],
     "type": "combustio",
     "level": 2,
-    "explanation": "CombustiÃ³ de l'etÃ  amb coeficients enters mÃ­nims."
+    "explanation": "Combustió de l'età amb coeficients enters mínims."
   },
   {
     "id": "eq026",
@@ -120,7 +120,7 @@
     "coefficients": [1, 1, 1, 2],
     "type": "desplacament_doble",
     "level": 2,
-    "explanation": "FormaciÃ³ de carbonat de calci insoluble per intercanvi d'ions."
+    "explanation": "Formació de carbonat de calci insoluble per intercanvi d'ions."
   },
   {
     "id": "eq027",
@@ -129,7 +129,7 @@
     "coefficients": [1, 2, 1, 2],
     "type": "desplacament_doble",
     "level": 2,
-    "explanation": "PrecipitaciÃ³ de I2 de plom(II) en una reacciÃ³ d'intercanvi."
+    "explanation": "Precipitació de I2 de plom(II) en una reacció d'intercanvi."
   },
   {
     "id": "eq028",
@@ -138,7 +138,7 @@
     "coefficients": [1, 1, 1, 1],
     "type": "desplacament_simple",
     "level": 2,
-    "explanation": "El ferro desplaÃ§a el coure del seu sulfat."
+    "explanation": "El ferro desplaça el coure del seu sulfat."
   },
   {
     "id": "eq029",
@@ -156,7 +156,7 @@
     "coefficients": [1, 3, 1, 3],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "NeutralitzaciÃ³ d'un Ã cid triprÃ²tic amb una base forta."
+    "explanation": "Neutralització d'un àcid tripròtic amb una base forta."
   },
   {
     "id": "eq031",
@@ -165,7 +165,7 @@
     "coefficients": [1, 1, 1],
     "type": "sintesi",
     "level": 2,
-    "explanation": "FormaciÃ³ d'Ã cid sulfÃºric a partir de triÃ²xid de sofre."
+    "explanation": "Formació d'àcid sulfúric a partir de triòxid de sofre."
   },
   {
     "id": "eq032",
@@ -174,7 +174,7 @@
     "coefficients": [1, 1, 1, 2],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "NeutralitzaciÃ³ d'una base forta amb un Ã cid fort."
+    "explanation": "Neutralització d'una base forta amb un àcid fort."
   },
   {
     "id": "eq033",
@@ -183,7 +183,7 @@
     "coefficients": [1, 6, 2, 3],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "ReacciÃ³ Ã cid-Ã²xid bÃ sic entre Al2O3 i HCl."
+    "explanation": "Reacció àcid-òxid bàsic entre Al2O3 i HCl."
   },
   {
     "id": "eq034",
@@ -201,7 +201,7 @@
     "coefficients": [1, 6, 6, 6],
     "type": "combustio",
     "level": 2,
-    "explanation": "OxidaciÃ³ de la glucosa amb coeficients equilibrats."
+    "explanation": "Oxidació de la glucosa amb coeficients equilibrats."
   },
   {
     "id": "eq049",
@@ -210,7 +210,7 @@
     "coefficients": [2, 1, 1, 1],
     "type": "descomposicio",
     "level": 2,
-    "explanation": "DescomposiciÃ³ del bicarbonat de sodi amb alliberament de CO2."
+    "explanation": "Descomposició del bicarbonat de sodi amb alliberament de CO2."
   },
   {
     "id": "eq050",
@@ -219,7 +219,7 @@
     "coefficients": [2, 2, 1],
     "type": "descomposicio",
     "level": 2,
-    "explanation": "DescomposiciÃ³ del nitrat de potassi a nitrit i oxigen."
+    "explanation": "Descomposició del nitrat de potassi a nitrit i oxigen."
   },
   {
     "id": "eq051",
@@ -228,7 +228,7 @@
     "coefficients": [1, 2, 1, 1],
     "type": "descomposicio",
     "level": 2,
-    "explanation": "DescomposiciÃ³ del carbonat d'amoni a amonÃ­ac, CO2 i aigua."
+    "explanation": "Descomposició del carbonat d'amoni a amoníac, CO2 i aigua."
   },
   {
     "id": "eq052",
@@ -237,7 +237,7 @@
     "coefficients": [2, 4, 1],
     "type": "descomposicio",
     "level": 2,
-    "explanation": "L'Ã²xid de plata es descompon a plata metÃ lÂ·lica i oxigen."
+    "explanation": "L'òxid de plata es descompon a plata metàl·lica i oxigen."
   },
   {
     "id": "eq053",
@@ -246,7 +246,7 @@
     "coefficients": [1, 1, 1, 2],
     "type": "desplacament_doble",
     "level": 2,
-    "explanation": "PrecipitaciÃ³ de sulfat de bari."
+    "explanation": "Precipitació de sulfat de bari."
   },
   {
     "id": "eq054",
@@ -255,7 +255,7 @@
     "coefficients": [1, 1, 1, 2],
     "type": "desplacament_doble",
     "level": 2,
-    "explanation": "PrecipitaciÃ³ de sulfat de plom(II)."
+    "explanation": "Precipitació de sulfat de plom(II)."
   },
   {
     "id": "eq056",
@@ -264,7 +264,7 @@
     "coefficients": [1, 3, 1, 3],
     "type": "desplacament_doble",
     "level": 2,
-    "explanation": "FormaciÃ³ d'hidrÃ²xid de ferro(III) per intercanvi d'ions."
+    "explanation": "Formació d'hidròxid de ferro(III) per intercanvi d'ions."
   },
   {
     "id": "eq057",
@@ -273,7 +273,7 @@
     "coefficients": [3, 2, 1, 6],
     "type": "desplacament_doble",
     "level": 2,
-    "explanation": "PrecipitaciÃ³ de fosfat de calci."
+    "explanation": "Precipitació de fosfat de calci."
   },
   {
     "id": "eq058",
@@ -282,7 +282,7 @@
     "coefficients": [1, 1, 1, 1],
     "type": "desplacament_simple",
     "level": 2,
-    "explanation": "El zinc desplaÃ§a el coure del sulfat de coure(II)."
+    "explanation": "El zinc desplaça el coure del sulfat de coure(II)."
   },
   {
     "id": "eq059",
@@ -291,7 +291,7 @@
     "coefficients": [1, 2, 1, 2],
     "type": "desplacament_simple",
     "level": 2,
-    "explanation": "El coure desplaÃ§a la plata d'AgNO3 formant Cu(NO3)2."
+    "explanation": "El coure desplaça la plata d'AgNO3 formant Cu(NO3)2."
   },
   {
     "id": "eq060",
@@ -309,7 +309,7 @@
     "coefficients": [2, 1, 1, 2],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "NeutralitzaciÃ³ de Ca(OH)2 amb Ã cid nitrÃ­c."
+    "explanation": "Neutralització de Ca(OH)2 amb àcid nitríc."
   },
   {
     "id": "eq062",
@@ -318,7 +318,7 @@
     "coefficients": [1, 2, 1, 2],
     "type": "neutralitzacio",
     "level": 2,
-    "explanation": "NeutralitzaciÃ³ d'Ã cid carbÃ²nic amb base forta."
+    "explanation": "Neutralització d'àcid carbònic amb base forta."
   },
   {
     "id": "eq063",
@@ -327,7 +327,7 @@
     "coefficients": [4, 3, 2],
     "type": "oxidacio",
     "level": 2,
-    "explanation": "OxidaciÃ³ de l'alumini a \u00f2xid d'alumini."
+    "explanation": "Oxidació de l'alumini a \u00f2xid d'alumini."
   },
   {
     "id": "eq064",
@@ -336,7 +336,7 @@
     "coefficients": [4, 1, 2],
     "type": "oxidacio",
     "level": 2,
-    "explanation": "OxidaciÃ³ del sodi a \u00f2xid de sodi."
+    "explanation": "Oxidació del sodi a \u00f2xid de sodi."
   },
   {
     "id": "eq065",
@@ -345,7 +345,7 @@
     "coefficients": [2, 1, 2],
     "type": "oxidacio",
     "level": 2,
-    "explanation": "FormaciÃ³ d'\u00f2xid de ferro(II)."
+    "explanation": "Formació d'\u00f2xid de ferro(II)."
   },
   {
     "id": "eq066",
@@ -354,7 +354,7 @@
     "coefficients": [2, 3, 2],
     "type": "oxidacio",
     "level": 2,
-    "explanation": "OxidaciÃ³ del sofre a triÃ²xid de sofre."
+    "explanation": "Oxidació del sofre a triòxid de sofre."
   },
   {
     "id": "eq067",
@@ -363,7 +363,7 @@
     "coefficients": [4, 5, 2],
     "type": "oxidacio",
     "level": 2,
-    "explanation": "OxidaciÃ³ del fÃ²sfor blanc a diÃ²xid de difÃ²sfor."
+    "explanation": "Oxidació del fòsfor blanc a diòxid de difòsfor."
   },
   {
     "id": "eq068",
@@ -372,6 +372,11 @@
     "coefficients": [2, 1, 2],
     "type": "oxidacio",
     "level": 2,
-    "explanation": "OxidaciÃ³ del zinc a \u00f2xid de zinc."
+    "explanation": "Oxidació del zinc a \u00f2xid de zinc."
   }
 ]
+
+
+
+
+

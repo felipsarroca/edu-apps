@@ -15,7 +15,7 @@
                          ],
         "type":  "combustio",
         "level":  1,
-        "explanation":  "La formaciÃƒÂ³ d\u0027aigua necessita dues molÃƒÂ¨cules d\u0027hidrogen per cada molÃƒÂ¨cula d\u0027oxigen."
+        "explanation":  "La formació d\u0027aigua necessita dues molècules d\u0027hidrogen per cada molècula d\u0027oxigen."
     },
     {
         "id":  "eq002",
@@ -33,7 +33,7 @@
                          ],
         "type":  "oxidacio",
         "level":  1,
-        "explanation":  "Per formar ÃƒÂ²xid de ferro(III) calen quatre ÃƒÂ toms de ferro i tres de dioxigen."
+        "explanation":  "Per formar òxid de ferro(III) calen quatre àtoms de ferro i tres de dioxigen."
     },
     {
         "id":  "eq003",
@@ -53,7 +53,7 @@
                          ],
         "type":  "combustio",
         "level":  1,
-        "explanation":  "Una combustiÃƒÂ³ completa del propÃƒÂ  produeix diÃƒÂ²xid de carboni i aigua."
+        "explanation":  "Una combustió completa del propà produeix diòxid de carboni i aigua."
     },
     {
         "id":  "eq004",
@@ -71,7 +71,7 @@
                          ],
         "type":  "sintesi",
         "level":  1,
-        "explanation":  "Dos ÃƒÂ toms de sodi reaccionen amb una molÃƒÂ¨cula de clor per formar clorur de sodi."
+        "explanation":  "Dos àtoms de sodi reaccionen amb una molècula de clor per formar clorur de sodi."
     },
     {
         "id":  "eq005",
@@ -89,7 +89,7 @@
                          ],
         "type":  "descomposicio",
         "level":  1,
-        "explanation":  "El carbonat de calci es descompon en ÃƒÂ²xid de calci i diÃƒÂ²xid de carboni."
+        "explanation":  "El carbonat de calci es descompon en òxid de calci i diòxid de carboni."
     },
     {
         "id":  "eq011",
@@ -109,7 +109,7 @@
                          ],
         "type":  "combustio",
         "level":  1,
-        "explanation":  "La combustiÃƒÂ³ del metÃ  produeix diÃƒÂ²xid de carboni i aigua."
+        "explanation":  "La combustió del metà produeix diòxid de carboni i aigua."
     },
     {
         "id":  "eq012",
@@ -127,7 +127,7 @@
                          ],
         "type":  "sintesi",
         "level":  1,
-        "explanation":  "El magnesi reacciona amb el dioxigen formant ÃƒÂ²xid de magnesi."
+        "explanation":  "El magnesi reacciona amb el dioxigen formant òxid de magnesi."
     },
     {
         "id":  "eq013",
@@ -163,7 +163,7 @@
                          ],
         "type":  "descomposicio",
         "level":  1,
-        "explanation":  "El perÃ²xid d\u0027hidrogen es descompon en aigua i dioxigen."
+        "explanation":  "El peròxid d\u0027hidrogen es descompon en aigua i dioxigen."
     },
     {
         "id":  "eq015",
@@ -183,7 +183,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  1,
-        "explanation":  "El zinc desplaÃƒÂ§a l\u0027hidrogen de l\u0027ÃƒÂ cid clorhÃƒÂ­dric."
+        "explanation":  "El zinc desplaça l\u0027hidrogen de l\u0027àcid clorhídric."
     },
     {
         "id":  "eq016",
@@ -203,7 +203,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  1,
-        "explanation":  "El sodi reacciona amb l\u0027aigua formant hidrÃƒÂ²xid de sodi i hidrogen."
+        "explanation":  "El sodi reacciona amb l\u0027aigua formant hidròxid de sodi i hidrogen."
     },
     {
         "id":  "eq017",
@@ -239,7 +239,7 @@
                          ],
         "type":  "sintesi",
         "level":  1,
-        "explanation":  "L\u0027ÃƒÂ²xid de calci reacciona amb aigua per donar hidrÃƒÂ²xid de calci."
+        "explanation":  "L\u0027òxid de calci reacciona amb aigua per donar hidròxid de calci."
     },
     {
         "id":  "eq019",
@@ -259,7 +259,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  1,
-        "explanation":  "NeutralitzaciÃƒÂ³ ÃƒÂ cid-base entre HCl i NaOH."
+        "explanation":  "Neutralització àcid-base entre HCl i NaOH."
     },
     {
         "id":  "eq020",
@@ -279,7 +279,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  1,
-        "explanation":  "Intercanvi d\u0027ions amb precipitaciÃƒÂ³ de sulfat de bari."
+        "explanation":  "Intercanvi d\u0027ions amb precipitació de sulfat de bari."
     },
     {
         "id":  "eq021",
@@ -297,7 +297,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  1,
-        "explanation":  "L\u0027amonÃƒÂ­ac gasÃƒÂ³s reacciona amb HCl formant clorur d\u0027amoni."
+        "explanation":  "L\u0027amoníac gasós reacciona amb HCl formant clorur d\u0027amoni."
     },
     {
         "id":  "eq022",
@@ -315,7 +315,7 @@
                          ],
         "type":  "combustio",
         "level":  1,
-        "explanation":  "OxidaciÃƒÂ³ del monÃƒÂ²xid de carboni a diÃƒÂ²xid de carboni."
+        "explanation":  "Oxidació del monòxid de carboni a diòxid de carboni."
     },
     {
         "id":  "eq023",
@@ -333,7 +333,7 @@
                          ],
         "type":  "sintesi",
         "level":  1,
-        "explanation":  "L\u0027hidrogen i el clor formen ÃƒÂ cid clorhÃƒÂ­dric."
+        "explanation":  "L\u0027hidrogen i el clor formen àcid clorhídric."
     },
     {
         "id":  "eq036",
@@ -351,7 +351,7 @@
                          ],
         "type":  "descomposicio",
         "level":  1,
-        "explanation":  "L\u0027ÃƒÂ²xid de mercuri(II) es descompon en mercuri i dioxigen."
+        "explanation":  "L\u0027òxid de mercuri(II) es descompon en mercuri i dioxigen."
     },
     {
         "id":  "eq037",
@@ -369,7 +369,7 @@
                          ],
         "type":  "descomposicio",
         "level":  1,
-        "explanation":  "L\u0027hidrÃƒÂ²xid de calci es descompon en ÃƒÂ²xid de calci i aigua."
+        "explanation":  "L\u0027hidròxid de calci es descompon en òxid de calci i aigua."
     },
     {
         "id":  "eq038",
@@ -387,7 +387,7 @@
                          ],
         "type":  "descomposicio",
         "level":  1,
-        "explanation":  "El carbonat de coure(II) es descompon en ÃƒÂ²xid de coure(II) i diÃƒÂ²xid de carboni."
+        "explanation":  "El carbonat de coure(II) es descompon en òxid de coure(II) i diòxid de carboni."
     },
     {
         "id":  "eq039",
@@ -407,7 +407,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  1,
-        "explanation":  "El ferro reacciona amb HCl formant clorur ferrÃƒÂ³s i hidrogen."
+        "explanation":  "El ferro reacciona amb HCl formant clorur ferrós i hidrogen."
     },
     {
         "id":  "eq040",
@@ -427,7 +427,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  1,
-        "explanation":  "El magnesi desplaÃƒÂ§a l\u0027hidrogen de l\u0027aigua produint hidrÃƒÂ²xid de magnesi."
+        "explanation":  "El magnesi desplaça l\u0027hidrogen de l\u0027aigua produint hidròxid de magnesi."
     },
     {
         "id":  "eq041",
@@ -447,7 +447,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  1,
-        "explanation":  "NeutralitzaciÃƒÂ³ entre ÃƒÂ cid nitrÃƒÂ­c i hidrÃƒÂ²xid de potassi."
+        "explanation":  "Neutralització entre àcid nitríc i hidròxid de potassi."
     },
     {
         "id":  "eq042",
@@ -467,7 +467,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  1,
-        "explanation":  "NeutralitzaciÃƒÂ³ d\u0027un ÃƒÂ cid feble amb una base forta."
+        "explanation":  "Neutralització d\u0027un àcid feble amb una base forta."
     },
     {
         "id":  "eq043",
@@ -485,7 +485,7 @@
                          ],
         "type":  "oxidacio",
         "level":  1,
-        "explanation":  "OxidaciÃƒÂ³ del coure a ÃƒÂ²xid de coure(II)."
+        "explanation":  "Oxidació del coure a òxid de coure(II)."
     },
     {
         "id":  "eq044",
@@ -503,7 +503,7 @@
                          ],
         "type":  "oxidacio",
         "level":  1,
-        "explanation":  "FormaciÃƒÂ³ de diÃƒÂ²xid de sofre per oxidaciÃƒÂ³ del sofre."
+        "explanation":  "Formació de diòxid de sofre per oxidació del sofre."
     },
     {
         "id":  "eq045",
@@ -521,7 +521,7 @@
                          ],
         "type":  "oxidacio",
         "level":  1,
-        "explanation":  "OxidaciÃƒÂ³ del carboni a diÃƒÂ²xid de carboni."
+        "explanation":  "Oxidació del carboni a diòxid de carboni."
     },
     {
         "id":  "eq046",
@@ -539,7 +539,7 @@
                          ],
         "type":  "sintesi",
         "level":  1,
-        "explanation":  "FormaciÃƒÂ³ de carbonat de calci a partir d\u0027ÃƒÂ²xid de calci i CO2."
+        "explanation":  "Formació de carbonat de calci a partir d\u0027òxid de calci i CO2."
     },
     {
         "id":  "eq047",
@@ -577,7 +577,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  1,
-        "explanation":  "Intercanvi d\u0027ions amb precipitaciÃƒÂ³ de bromur de plata."
+        "explanation":  "Intercanvi d\u0027ions amb precipitació de bromur de plata."
     },
     {
         "id":  "eq006",
@@ -597,7 +597,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  2,
-        "explanation":  "L\u0027alumini desplaÃƒÂ§a l\u0027hidrogen de l\u0027ÃƒÂ cid clorhÃƒÂ­dric i forma clorur d\u0027alumini."
+        "explanation":  "L\u0027alumini desplaça l\u0027hidrogen de l\u0027àcid clorhídric i forma clorur d\u0027alumini."
     },
     {
         "id":  "eq007",
@@ -633,7 +633,7 @@
                          ],
         "type":  "sintesi",
         "level":  2,
-        "explanation":  "El procÃƒÂ©s Haber-Bosch combina nitrogen i hidrogen per formar amonÃƒÂ­ac."
+        "explanation":  "El proc©s Haber-Bosch combina nitrogen i hidrogen per formar amoníac."
     },
     {
         "id":  "eq009",
@@ -673,7 +673,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  2,
-        "explanation":  "Una neutralitzaciÃƒÂ³ entre un ÃƒÂ cid fort i una base forta dona sal i aigua."
+        "explanation":  "Una neutralització entre un àcid fort i una base forta dona sal i aigua."
     },
     {
         "id":  "eq024",
@@ -693,7 +693,7 @@
                          ],
         "type":  "combustio",
         "level":  2,
-        "explanation":  "La combustiÃƒÂ³ de l\u0027etanol produeix CO2 i H2O."
+        "explanation":  "La combustió de l\u0027etanol produeix CO2 i H2O."
     },
     {
         "id":  "eq025",
@@ -713,7 +713,7 @@
                          ],
         "type":  "combustio",
         "level":  2,
-        "explanation":  "CombustiÃƒÂ³ de l\u0027etÃƒÂ  amb coeficients enters mÃƒÂ­nims."
+        "explanation":  "Combustió de l\u0027età amb coeficients enters mínims."
     },
     {
         "id":  "eq026",
@@ -733,7 +733,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  2,
-        "explanation":  "FormaciÃƒÂ³ de carbonat de calci insoluble per intercanvi d\u0027ions."
+        "explanation":  "Formació de carbonat de calci insoluble per intercanvi d\u0027ions."
     },
     {
         "id":  "eq027",
@@ -753,7 +753,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  2,
-        "explanation":  "PrecipitaciÃƒÂ³ de I2 de plom(II) en una reacciÃƒÂ³ d\u0027intercanvi."
+        "explanation":  "Precipitació de I2 de plom(II) en una reacció d\u0027intercanvi."
     },
     {
         "id":  "eq028",
@@ -773,7 +773,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  2,
-        "explanation":  "El ferro desplaÃƒÂ§a el coure del seu sulfat."
+        "explanation":  "El ferro desplaça el coure del seu sulfat."
     },
     {
         "id":  "eq029",
@@ -813,7 +813,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  2,
-        "explanation":  "NeutralitzaciÃƒÂ³ d\u0027un ÃƒÂ cid triprÃƒÂ²tic amb una base forta."
+        "explanation":  "Neutralització d\u0027un àcid tripròtic amb una base forta."
     },
     {
         "id":  "eq031",
@@ -831,7 +831,7 @@
                          ],
         "type":  "sintesi",
         "level":  2,
-        "explanation":  "FormaciÃƒÂ³ d\u0027ÃƒÂ cid sulfÃƒÂºric a partir de triÃƒÂ²xid de sofre."
+        "explanation":  "Formació d\u0027àcid sulfúric a partir de triòxid de sofre."
     },
     {
         "id":  "eq032",
@@ -851,7 +851,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  2,
-        "explanation":  "NeutralitzaciÃƒÂ³ d\u0027una base forta amb un ÃƒÂ cid fort."
+        "explanation":  "Neutralització d\u0027una base forta amb un àcid fort."
     },
     {
         "id":  "eq033",
@@ -871,7 +871,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  2,
-        "explanation":  "ReacciÃƒÂ³ ÃƒÂ cid-ÃƒÂ²xid bÃƒÂ sic entre Al2O3 i HCl."
+        "explanation":  "Reacció àcid-òxid bàsic entre Al2O3 i HCl."
     },
     {
         "id":  "eq034",
@@ -913,7 +913,7 @@
                          ],
         "type":  "combustio",
         "level":  2,
-        "explanation":  "OxidaciÃƒÂ³ de la glucosa amb coeficients equilibrats."
+        "explanation":  "Oxidació de la glucosa amb coeficients equilibrats."
     },
     {
         "id":  "eq049",
@@ -933,7 +933,7 @@
                          ],
         "type":  "descomposicio",
         "level":  2,
-        "explanation":  "DescomposiciÃƒÂ³ del bicarbonat de sodi amb alliberament de CO2."
+        "explanation":  "Descomposició del bicarbonat de sodi amb alliberament de CO2."
     },
     {
         "id":  "eq050",
@@ -951,7 +951,7 @@
                          ],
         "type":  "descomposicio",
         "level":  2,
-        "explanation":  "DescomposiciÃƒÂ³ del nitrat de potassi a nitrit i oxigen."
+        "explanation":  "Descomposició del nitrat de potassi a nitrit i oxigen."
     },
     {
         "id":  "eq051",
@@ -971,7 +971,7 @@
                          ],
         "type":  "descomposicio",
         "level":  2,
-        "explanation":  "DescomposiciÃƒÂ³ del carbonat d\u0027amoni a amonÃƒÂ­ac, CO2 i aigua."
+        "explanation":  "Descomposició del carbonat d\u0027amoni a amoníac, CO2 i aigua."
     },
     {
         "id":  "eq052",
@@ -989,7 +989,7 @@
                          ],
         "type":  "descomposicio",
         "level":  2,
-        "explanation":  "L\u0027ÃƒÂ²xid de plata es descompon a plata metÃƒÂ lÃ‚Â·lica i oxigen."
+        "explanation":  "L\u0027òxid de plata es descompon a plata metàl·lica i oxigen."
     },
     {
         "id":  "eq053",
@@ -1009,7 +1009,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  2,
-        "explanation":  "PrecipitaciÃƒÂ³ de sulfat de bari."
+        "explanation":  "Precipitació de sulfat de bari."
     },
     {
         "id":  "eq054",
@@ -1029,7 +1029,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  2,
-        "explanation":  "PrecipitaciÃƒÂ³ de sulfat de plom(II)."
+        "explanation":  "Precipitació de sulfat de plom(II)."
     },
     {
         "id":  "eq056",
@@ -1049,7 +1049,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  2,
-        "explanation":  "FormaciÃƒÂ³ d\u0027hidrÃƒÂ²xid de ferro(III) per intercanvi d\u0027ions."
+        "explanation":  "Formació d\u0027hidròxid de ferro(III) per intercanvi d\u0027ions."
     },
     {
         "id":  "eq057",
@@ -1069,7 +1069,7 @@
                          ],
         "type":  "desplacament_doble",
         "level":  2,
-        "explanation":  "PrecipitaciÃƒÂ³ de fosfat de calci."
+        "explanation":  "Precipitació de fosfat de calci."
     },
     {
         "id":  "eq058",
@@ -1089,7 +1089,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  2,
-        "explanation":  "El zinc desplaÃƒÂ§a el coure del sulfat de coure(II)."
+        "explanation":  "El zinc desplaça el coure del sulfat de coure(II)."
     },
     {
         "id":  "eq059",
@@ -1109,7 +1109,7 @@
                          ],
         "type":  "desplacament_simple",
         "level":  2,
-        "explanation":  "El coure desplaÃƒÂ§a la plata d\u0027AgNO3 formant Cu(NO3)2."
+        "explanation":  "El coure desplaça la plata d\u0027AgNO3 formant Cu(NO3)2."
     },
     {
         "id":  "eq060",
@@ -1149,7 +1149,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  2,
-        "explanation":  "NeutralitzaciÃƒÂ³ de Ca(OH)2 amb ÃƒÂ cid nitrÃƒÂ­c."
+        "explanation":  "Neutralització de Ca(OH)2 amb àcid nitríc."
     },
     {
         "id":  "eq062",
@@ -1169,7 +1169,7 @@
                          ],
         "type":  "neutralitzacio",
         "level":  2,
-        "explanation":  "NeutralitzaciÃƒÂ³ d\u0027ÃƒÂ cid carbÃƒÂ²nic amb base forta."
+        "explanation":  "Neutralització d\u0027àcid carbònic amb base forta."
     },
     {
         "id":  "eq063",
@@ -1187,7 +1187,7 @@
                          ],
         "type":  "oxidacio",
         "level":  2,
-        "explanation":  "OxidaciÃƒÂ³ de l\u0027alumini a òxid d\u0027alumini."
+        "explanation":  "Oxidació de l\u0027alumini a òxid d\u0027alumini."
     },
     {
         "id":  "eq064",
@@ -1205,7 +1205,7 @@
                          ],
         "type":  "oxidacio",
         "level":  2,
-        "explanation":  "OxidaciÃƒÂ³ del sodi a òxid de sodi."
+        "explanation":  "Oxidació del sodi a òxid de sodi."
     },
     {
         "id":  "eq065",
@@ -1223,7 +1223,7 @@
                          ],
         "type":  "oxidacio",
         "level":  2,
-        "explanation":  "FormaciÃƒÂ³ d\u0027òxid de ferro(II)."
+        "explanation":  "Formació d\u0027òxid de ferro(II)."
     },
     {
         "id":  "eq066",
@@ -1241,7 +1241,7 @@
                          ],
         "type":  "oxidacio",
         "level":  2,
-        "explanation":  "OxidaciÃƒÂ³ del sofre a triÃƒÂ²xid de sofre."
+        "explanation":  "Oxidació del sofre a triòxid de sofre."
     },
     {
         "id":  "eq067",
@@ -1259,7 +1259,7 @@
                          ],
         "type":  "oxidacio",
         "level":  2,
-        "explanation":  "OxidaciÃƒÂ³ del fÃƒÂ²sfor blanc a diÃƒÂ²xid de difÃƒÂ²sfor."
+        "explanation":  "Oxidació del fòsfor blanc a diòxid de difòsfor."
     },
     {
         "id":  "eq068",
@@ -1277,7 +1277,7 @@
                          ],
         "type":  "oxidacio",
         "level":  2,
-        "explanation":  "OxidaciÃƒÂ³ del zinc a òxid de zinc."
+        "explanation":  "Oxidació del zinc a òxid de zinc."
     },
     {
         "id":  "eq102",
@@ -1333,7 +1333,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "El dicromat oxida Fe(II) a Fe(III) en medi ÃƒÂ cid."
+        "explanation":  "El dicromat oxida Fe(II) a Fe(III) en medi àcid."
     },
     {
         "id":  "eq104",
@@ -1357,7 +1357,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "El permanganat oxida l\u0027oxalat a CO2 en medi ÃƒÂ cid."
+        "explanation":  "El permanganat oxida l\u0027oxalat a CO2 en medi àcid."
     },
     {
         "id":  "eq105",
@@ -1379,7 +1379,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "DisproporcionaciÃƒÂ³ del clor en medi bÃƒÂ sic."
+        "explanation":  "Disproporcionació del clor en medi bàsic."
     },
     {
         "id":  "eq106",
@@ -1403,7 +1403,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "El permanganat oxida l\u0027iodur a iode en medi bÃƒÂ sic."
+        "explanation":  "El permanganat oxida l\u0027iodur a iode en medi bàsic."
     },
     {
         "id":  "eq107",
@@ -1423,7 +1423,7 @@
                          ],
         "type":  "combustio",
         "level":  3,
-        "explanation":  "CombustiÃƒÂ³ del butÃƒÂ  amb coeficients elevats."
+        "explanation":  "Combustió del butà amb coeficients elevats."
     },
     {
         "id":  "eq108",
@@ -1443,7 +1443,7 @@
                          ],
         "type":  "combustio",
         "level":  3,
-        "explanation":  "CombustiÃƒÂ³ del benzÃƒÂ¨ amb requeriment alt d\u0027oxigen."
+        "explanation":  "Combustió del benzè amb requeriment alt d\u0027oxigen."
     },
     {
         "id":  "eq109",
@@ -1463,7 +1463,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "TitulaciÃƒÂ³ iodomÃƒÂ¨trica: l\u0027iod reacciona amb tiosulfat."
+        "explanation":  "Titulació iodomètrica: l\u0027iod reacciona amb tiosulfat."
     },
     {
         "id":  "eq110",
@@ -1487,7 +1487,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "El dicromat en medi ÃƒÂ cid genera clor i sals corresponents."
+        "explanation":  "El dicromat en medi àcid genera clor i sals corresponents."
     },
     {
         "id":  "eq111",
@@ -1511,7 +1511,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "El tiosulfat amb HCl produeix SO2 i sofre colÃ‚Â·loidal."
+        "explanation":  "El tiosulfat amb HCl produeix SO2 i sofre col·loidal."
     },
     {
         "id":  "eq112",
@@ -1533,7 +1533,7 @@
                          ],
         "type":  "oxidacio-reduccio",
         "level":  3,
-        "explanation":  "L\u0027ÃƒÂ cid nitrÃƒÂ­c concentra oxida H2S a sofre."
+        "explanation":  "L\u0027àcid nitríc concentra oxida H2S a sofre."
     },
     {
         "id":  "eq069",
@@ -1553,7 +1553,7 @@
                          ],
         "type":  "combustio",
         "level":  3,
-        "explanation":  "CombustiÃƒÂ³ de l\u0027heptÃƒÂ  amb coeficients grans."
+        "explanation":  "Combustió de l\u0027heptà amb coeficients grans."
     },
     {
         "id":  "eq070",
@@ -1576,3 +1576,8 @@
         "explanation":  "Redox entre ferro(III)/ferro(II) i estany(II)/estany(IV)."
     }
 ]
+
+
+
+
+
