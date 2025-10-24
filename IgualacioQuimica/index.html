@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ca">
   <head>
     <meta charset="utf-8" />
@@ -7,16 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
     <script>
-      // Configuració de MathJax abans de carregar el script
+      // ConfiguraciÃ³ de MathJax abans de carregar el script
       window.MathJax = {
-        loader: { load: ['[tex]/colorv2'] },
+        loader: { load: ['[tex]/colorv2','[tex]/html'] },
         tex: {
           inlineMath: [
             ['$', '$'],
             ['\\(', '\\)']
           ],
           // Usem colorv2 per permetre \color[HTML]{...}
-          packages: { '[+]': ['colorv2'] }
+          packages: { '[+]': ['colorv2','html'] }
         },
         startup: { typeset: false }
       };
@@ -29,7 +29,7 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
     <script>
-      // Tipus de lletra per a la primera tipusació un cop carregat MathJax
+      // Tipus de lletra per a la primera tipusaciÃ³ un cop carregat MathJax
       if (window.MathJax) {
         MathJax.startup?.promise?.then(() => {
           if (window.updateEquationDisplay) {
@@ -44,7 +44,7 @@
   </head>
   <body class="app-body">
     <div class="app-wrapper">
-      <!-- Eliminat el panell superior; l'estat es mou al costat del títol -->
+      <!-- Eliminat el panell superior; l'estat es mou al costat del tÃ­tol -->
 
       <main class="app-main">
         <aside class="control-panel">
@@ -95,7 +95,7 @@
             </div>
           </div>
 
-          <!-- 1) FÓRMULA CENTRAL -->
+          <!-- 1) FÃ“RMULA CENTRAL -->
           <div id="equationDisplay" class="equation-display"></div>
 
           <!-- 2) AJUSTAMENT DE COEFICIENTS -->
@@ -103,7 +103,7 @@
             <div id="equationContainer" class="equation-zone"></div>
           </div>
 
-          <!-- 3) REPRESENTACIÓ DE REACTIUS I PRODUCTES -->
+          <!-- 3) REPRESENTACIÃ“ DE REACTIUS I PRODUCTES -->
           <div class="lab-stage">
             <div class="stage-card">
               <div class="stage-header reactant">Reactius</div>
@@ -177,3 +177,5 @@
     <script type="module" src="js/app.js"></script>
   </body>
 </html>
+
+
