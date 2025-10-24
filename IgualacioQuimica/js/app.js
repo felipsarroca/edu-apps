@@ -1484,7 +1484,7 @@ init();
           input.value = String(lvl);
           input.checked = true;
           const span = document.createElement('span');
-          span.textContent = (lvl === 1 ? 'Fàcil (1)' : (lvl === 2 ? 'Mitjà (2)' : 'Avançat (3)'));
+          span.innerHTML = `<span class="level-chip l${lvl}">${lvl===1?"Fàcil (1)":lvl===2?"Mitjà (2)":"Avançat (3)"}</span>`;
           label.append(input, span);
           levelBox.appendChild(label);
         });
@@ -1520,10 +1520,48 @@ init();
         const eq = state.currentEquation;
         if (!eq || !elements.equationTitle) return;
         const titleType = `<span class="type-chip">${escapeHTML(formatTypeLabel(eq.tipus))}</span>`;
-        const titleLevel = `<span class="level-chip">Nivell ${Number.isFinite(eq.nivell) ? eq.nivell : 1}</span>`;
+        const lvl = Number.isFinite(eq.nivell) ? eq.nivell : 1;
+        const titleLevel = `<span class="level-chip l${lvl}">Nivell ${lvl}</span>`;
         const titleDesc = eq.explicacio ? `<span class="reaction-desc">${escapeHTML(maybeFixMojibake(eq.explicacio))}</span>` : '';
-        elements.equationTitle.innerHTML = `${titleType}<br>${titleLevel}${titleDesc ? ' \u2013 ' + titleDesc : ''}`;
+        elements.equationTitle.innerHTML = `${titleType}${titleDesc ? ' \u2013 ' + titleDesc : ''}<br>${titleLevel}`;
       } catch {}
     };
   }
 })();
+
+// Dropdown toggles for multi-selects
+(function setupMultiSelects(){
+  function setup(idBtn, idBox){
+    const btn = document.getElementById(idBtn);
+    const wrap = document.getElementById(idBox)?.closest('.multi-select');
+    if(!btn || !wrap) return;
+    btn.addEventListener('click', ()=>{
+      wrap.classList.toggle('open');
+    });
+    document.addEventListener('click', (e)=>{
+      if(!wrap.contains(e.target)) wrap.classList.remove('open');
+    });
+  }
+  setup('typeDropdownBtn','typeFilters');
+  setup('levelDropdownBtn','levelFilters');
+})();
+
+// Update dropdown labels with current selection
+(function labelUpdates(){
+  function updateLabel(containerId, btnId, allText){
+    const box = document.getElementById(containerId);
+    const btn = document.getElementById(btnId);
+    if(!box || !btn) return;
+    const checked = box.querySelectorAll("input[type='checkbox']:checked");
+    if(!checked.length){ btn.textContent = allText; return; }
+    if(checked.length > 3){ btn.textContent = `${checked.length} seleccionats`; return; }
+    btn.textContent = Array.from(checked).map(i=>i.nextElementSibling?.textContent||i.value).join(', ');
+  }
+  document.addEventListener('change', (e)=>{
+    if(e.target && e.target.matches('#typeFilters input[type="checkbox"], #levelFilters input[type="checkbox"]')){
+      updateLabel('typeFilters','typeDropdownBtn','Tots els tipus');
+      updateLabel('levelFilters','levelDropdownBtn','Tots els nivells');
+    }
+  });
+})();
+
