@@ -545,12 +545,19 @@ function renderEquation() {
   elements.equationContainer.innerHTML = "";
 
   const reactantSide = buildEquationSide(reactius, "reactants", 0);
+  const reactantColumn = document.createElement("div");
+  reactantColumn.className = "equation-column";
+  reactantColumn.appendChild(reactantSide);
+
   const arrowColumn = document.createElement("div");
   arrowColumn.className = "equation-arrow";
   arrowColumn.textContent = "\u2192";
   const productSide = buildEquationSide(productes, "products", reactius.length);
+  const productColumn = document.createElement("div");
+  productColumn.className = "equation-column";
+  productColumn.appendChild(productSide);
 
-  elements.equationContainer.append(reactantSide, arrowColumn, productSide);
+  elements.equationContainer.append(reactantColumn, arrowColumn, productColumn);
 
   elements.equationTitle.textContent = [
     formatTypeLabel(tipus),
