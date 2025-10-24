@@ -44,7 +44,12 @@
   </head>
   <body class="app-body">
     <div class="app-wrapper">
-      <!-- Eliminat el panell superior; l'estat es mou al costat del tÃ­tol -->
+      <header class="hero-card">
+        <div class="hero-inner">
+          <img src="favicon.svg" alt="" aria-hidden="true" class="hero-logo" />
+          <h1 class="hero-title">Laboratori d'igualaci&oacute; d'equacions</h1>
+        </div>
+      </header>
 
       <main class="app-main">
         <aside class="control-panel">
@@ -55,6 +60,10 @@
               <select id="reactionType" class="control-input hidden-select">
                 <option value="tots">Tots els tipus</option>
               </select>
+              <div class="multi-select" id="typeMulti">
+                <button type="button" id="typeDropdownBtn" class="multi-trigger">Tots els tipus</button>
+                <div class="multi-menu" id="typeFilters"></div>
+              </div>
             </label>
             <label class="panel-label">
               Grau de dificultat
@@ -64,6 +73,10 @@
                 <option value="2">Mitj&agrave; (nivell 2)</option>
                 <option value="3">Avan&ccedil;at (nivell 3)</option>
               </select>
+              <div class="multi-select" id="levelMulti">
+                <button type="button" id="levelDropdownBtn" class="multi-trigger">Tots els nivells</button>
+                <div class="multi-menu" id="levelFilters"></div>
+              </div>
             </label>
             <button id="newEquationBtn" class="primary-btn w-full">
               Nova equaci&oacute;
