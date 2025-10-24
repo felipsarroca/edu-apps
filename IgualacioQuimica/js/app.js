@@ -70,6 +70,7 @@ const state = {
 
 const STORAGE_KEYS = {
   stats: "iq_stats_v1",
+  filters: "iq_filters_v1",
 };
 
 function loadStatsFromStorage() {
@@ -662,6 +663,47 @@ function applyTypeFilter() {
     }
     return a.id.localeCompare(b.id);
   });
+}
+// Preferències: recorda tipus i nivells seleccionats
+function loadFiltersFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.filters);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (Array.isArray(data?.types)) state.savedTypes = data.types;
+    if (Array.isArray(data?.levels)) state.savedLevels = data.levels;
+    if (typeof data?.singleType === 'string' && elements.typeSelect) {
+      elements.typeSelect.value = data.singleType;
+    }
+    if (typeof data?.singleLevel === 'string' && elements.difficultyLevel) {
+      elements.difficultyLevel.value = data.singleLevel;
+    }
+  } catch {}
+}
+
+function saveFiltersToStorage() {
+  try {
+    // Multi-select (si existeix)
+    const typeChecks = document.querySelectorAll('#typeFilters input[type="checkbox"]:checked');
+    const levelChecks = document.querySelectorAll('#levelFilters input[type="checkbox"]:checked');
+    const selectedTypes = Array.from(typeChecks).map((i) => i.value);
+    const selectedLevels = Array.from(levelChecks).map((i) => String(i.value));
+
+    // Select simple (per compatibilitat)
+    const singleType = elements.typeSelect?.value ?? 'tots';
+    const singleLevel = elements.difficultyLevel?.value ?? 'tots';
+
+    const payload = {
+      types: selectedTypes,
+      levels: selectedLevels,
+      singleType,
+      singleLevel,
+    };
+    localStorage.setItem(STORAGE_KEYS.filters, JSON.stringify(payload));
+    // Desa també al state per a ús immediat
+    state.savedTypes = selectedTypes;
+    state.savedLevels = selectedLevels;
+  } catch {}
 }
 
 function pickRandomEquation() {
@@ -1384,12 +1426,14 @@ function attachEventHandlers() {
     elements.typeSelect.addEventListener("change", () => {
       applyTypeFilter();
       pickRandomEquation();
+      saveFiltersToStorage();
     });
   }
   if (elements.difficultyLevel) {
     elements.difficultyLevel.addEventListener("change", () => {
       applyTypeFilter();
       pickRandomEquation();
+      saveFiltersToStorage();
     });
   }
   elements.newEquationBtn?.addEventListener("click", pickRandomEquation);
@@ -1418,6 +1462,7 @@ function attachEventHandlers() {
 function init() {
   attachEventHandlers();
   loadStatsFromStorage();
+  loadFiltersFromStorage();
   if (elements.toggleAtoms) {
     elements.toggleAtoms.checked = state.showAtoms;
   }
@@ -1465,13 +1510,18 @@ init();
           const input = document.createElement('input');
           input.type = 'checkbox';
           input.value = type;
-          input.checked = true;
+          // Marca segons preferències prèvies (per defecte: totes)
+          if (Array.isArray(state.savedTypes) && state.savedTypes.length) {
+            input.checked = state.savedTypes.includes(type);
+          } else {
+            input.checked = true;
+          }
           const span = document.createElement('span');
           span.textContent = formatTypeLabel(type);
           label.append(input, span);
           typeBox.appendChild(label);
         });
-        typeBox.addEventListener('change', () => { applyTypeFilter(); pickRandomEquation(); });
+        typeBox.addEventListener('change', () => { applyTypeFilter(); pickRandomEquation(); saveFiltersToStorage(); });
       } catch {}
       try {
         const levelBox = ensureFilterGroup('levelFilters', elements.difficultyLevel);
@@ -1482,13 +1532,38 @@ init();
           const input = document.createElement('input');
           input.type = 'checkbox';
           input.value = String(lvl);
-          input.checked = true;
+          // Marca segons preferències prèvies (per defecte: totes)
+          if (Array.isArray(state.savedLevels) && state.savedLevels.length) {
+            input.checked = state.savedLevels.includes(String(lvl));
+          } else {
+            input.checked = true;
+          }
           const span = document.createElement('span');
           span.innerHTML = `<span class="level-chip l${lvl}">${lvl===1?"Nivell fàcil":(lvl===2?"Nivell intermedi":"Nivell avançat")}</span>`;
           label.append(input, span);
           levelBox.appendChild(label);
         });
-        levelBox.addEventListener('change', () => { applyTypeFilter(); pickRandomEquation(); });
+        levelBox.addEventListener('change', () => { applyTypeFilter(); pickRandomEquation(); saveFiltersToStorage(); });
+        // Després de construir, actualitza etiquetes i filtre segons estat desat
+        try {
+          // Actualitza textos dels botons desplegables
+          const typeInputs = typeBox.querySelectorAll("input[type='checkbox']");
+          const tChecked = Array.from(typeInputs).filter(i=>i.checked);
+          const typeBtn = document.getElementById('typeDropdownBtn');
+          if (typeBtn) {
+            if(!tChecked.length) typeBtn.textContent = 'Tots els tipus';
+            else if(tChecked.length>3) typeBtn.textContent = `${tChecked.length} seleccionats`;
+            else typeBtn.textContent = Array.from(tChecked).map(i=>i.nextElementSibling?.textContent||i.value).join(', ');
+          }
+          const levelInputs = levelBox.querySelectorAll("input[type='checkbox']");
+          const lChecked = Array.from(levelInputs).filter(i=>i.checked);
+          const levelBtn = document.getElementById('levelDropdownBtn');
+          if (levelBtn) {
+            if(!lChecked.length) levelBtn.textContent = 'Tots els nivells';
+            else if(lChecked.length>3) levelBtn.textContent = `${lChecked.length} seleccionats`;
+            else levelBtn.textContent = Array.from(lChecked).map(i=>i.nextElementSibling?.textContent||i.value).join(', ');
+          }
+        } catch {}
       } catch {}
     };
   }
