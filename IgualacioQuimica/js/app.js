@@ -670,6 +670,7 @@ function renderEquation() {
   renderStages();
   updateEquationDisplay();
   updateAtomTable();
+  typesetFormulas();
 }
 
 function buildEquationSide(compounds, role, offset) {
@@ -829,7 +830,7 @@ function buildEquationTerm(coefficient, formula) {
 
   const needsCoefficient = displayValue !== 1;
 
-  const formulaTeX = formatFormulaHTML(formula);
+  const formulaTeX = formatFormulaTeX(formula);
 
   return `${needsCoefficient ? displayValue : ""} ${formulaTeX}`;
 
@@ -852,6 +853,7 @@ function updateCoefficient(index, newValue) {
   updateEquationDisplay();
   updateAtomTable();
   clearFeedback();
+  typesetFormulas();
 }
 
 function updateAtomTable() {
@@ -1031,6 +1033,12 @@ function mergeCounts(target, source) {
 }
 
 function formatFormulaHTML(formula) {
+  return formula.replace(/([A-Z][a-z]?)(\d+)/g, (_, element, digits) => {
+    return `${element}<sub>${digits}</sub>`;
+  });
+}
+
+function formatFormulaTeX(formula) {
   return formula.replace(/([A-Z][a-z]?)(\d+)/g, (_, element, digits) => {
     return `${element}_{${digits}}`;
   });
