@@ -501,13 +501,54 @@ function createMoleculeSprite(formula) {
   const sprite = document.createElement("div");
   sprite.className = "molecule-sprite";
   const svg = document.createElementNS(SVG_NS, "svg");
-  svg.setAttribute("viewBox", "0 0 100 80");
   svg.setAttribute("aria-hidden", "true");
+
   const cx = 50;
   const cy = 40;
   const sx = (x) => cx + (x - cx) * ATOM_SPACING.x;
   const sy = (y) => cy + (y - cy) * ATOM_SPACING.y;
 
+  // Calcula posicions escalades i ràdios per determinar un viewBox que no retalli res
+  const placedAtoms = (template.atoms || []).map((atom) => {
+    const x = sx(atom.x);
+    const y = sy(atom.y);
+    const r = atom.radius ?? getAtomRadius(atom.element);
+    const color = atom.color || getElementColor(atom.element);
+    return { x, y, r, color };
+  });
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  placedAtoms.forEach((a) => {
+    minX = Math.min(minX, a.x - a.r);
+    maxX = Math.max(maxX, a.x + a.r);
+    minY = Math.min(minY, a.y - a.r);
+    maxY = Math.max(maxY, a.y + a.r);
+  });
+  (template.bonds || []).forEach(([from, to]) => {
+    const a = template.atoms[from];
+    const b = template.atoms[to];
+    if (!a || !b) return;
+    const ax = sx(a.x), ay = sy(a.y);
+    const bx = sx(b.x), by = sy(b.y);
+    minX = Math.min(minX, ax, bx);
+    maxX = Math.max(maxX, ax, bx);
+    minY = Math.min(minY, ay, by);
+    maxY = Math.max(maxY, ay, by);
+  });
+  const pad = 5; // marge per assegurar que no es talli el traç
+  if (!Number.isFinite(minX)) { // en cas de molècula buida
+    minX = 0; minY = 0; maxX = 100; maxY = 80;
+  }
+  const vbX = Math.floor(minX - pad);
+  const vbY = Math.floor(minY - pad);
+  const vbW = Math.ceil((maxX - minX) + pad * 2);
+  const vbH = Math.ceil((maxY - minY) + pad * 2);
+  svg.setAttribute("viewBox", `${vbX} ${vbY} ${vbW} ${vbH}`);
+
+  // Dibuixa enllaços
   (template.bonds || []).forEach(([from, to]) => {
     const atomA = template.atoms[from];
     const atomB = template.atoms[to];
@@ -522,15 +563,17 @@ function createMoleculeSprite(formula) {
     line.setAttribute("class", "bond-line");
     svg.appendChild(line);
   });
-  (template.atoms || []).forEach((atom) => {
+  // Dibuixa àtoms
+  placedAtoms.forEach((a) => {
     const circle = document.createElementNS(SVG_NS, "circle");
-    circle.setAttribute("cx", sx(atom.x));
-    circle.setAttribute("cy", sy(atom.y));
-    circle.setAttribute("r", atom.radius ?? getAtomRadius(atom.element));
-    circle.setAttribute("fill", atom.color || getElementColor(atom.element));
+    circle.setAttribute("cx", a.x);
+    circle.setAttribute("cy", a.y);
+    circle.setAttribute("r", a.r);
+    circle.setAttribute("fill", a.color);
     circle.setAttribute("class", "atom-dot");
     svg.appendChild(circle);
   });
+
   sprite.appendChild(svg);
   return sprite;
 }
