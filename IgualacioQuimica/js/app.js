@@ -801,26 +801,48 @@ function renderStage(container, compounds, offset) {
 }
 
 function updateEquationDisplay() {
+
   if (!state.currentEquation) {
+
     elements.equationDisplay.innerHTML = "";
+
     return;
+
   }
+
   const { reactius, productes } = state.currentEquation;
+
   const coefficients = state.currentCoefficients;
+
   const reactantTerms = reactius.map((compound, idx) =>
+
     buildEquationTerm(coefficients[idx], compound)
+
   );
+
   const productTerms = productes.map((compound, idx) =>
+
     buildEquationTerm(coefficients[reactius.length + idx], compound)
+
   );
+
+
 
   const reactantString = reactantTerms.join(" + ");
+
   const productString = productTerms.join(" + ");
-  const equationString = `$$${reactantString} \rightarrow ${productString}$$`;
+
+  const equationString = `$${reactantString} \\rightarrow ${productString}$`;
+
+
 
   elements.equationDisplay.textContent = equationString;
+
   typesetFormulas();
+
 }
+
+
 
 function buildEquationTerm(coefficient, formula) {
 
@@ -830,7 +852,9 @@ function buildEquationTerm(coefficient, formula) {
 
   const formulaTeX = formatFormulaTeX(formula);
 
-  return `${displayValue} ${formulaTeX}`;
+  const styledCoefficient = `{\bf\color{#2563eb}{${displayValue}}}`;
+
+  return `${styledCoefficient} ${formulaTeX}`;
 
 }
 
