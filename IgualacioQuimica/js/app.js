@@ -854,7 +854,7 @@ function buildEquationTerm(coefficient, formula) {
 
   const formulaTeX = renderFormulaTeX(formula);
 
-  const styledCoefficient = `{\bf\color[HTML]{2563eb}{${displayValue}}}`;
+  const styledCoefficient = `\\color[HTML]{2563eb}{\\mathbf{${displayValue}}}`;
 
   return `${styledCoefficient} ${formulaTeX}`;
 
@@ -1060,6 +1060,8 @@ function mergeCounts(target, source) {
 function renderFormulaHTML(formula) {
   if (!formula) return "";
   let f = String(formula);
+  // Prepass: trailing charge without caret (e.g., Fe2+ -> Fe^2+)
+  f = f.replace(/([A-Za-z\)\]]+)(\d+[+-])$/g, '$1^$2');
   // Caret charge notation like ^2- or ^+
   f = f.replace(/\^([0-9]*[+-])/g, '<sup>$1</sup>');
   // Element subscripts: H2 -> H<sub>2</sub>
@@ -1077,6 +1079,8 @@ function renderFormulaHTML(formula) {
 function renderFormulaTeX(formula) {
   if (!formula) return "";
   let f = String(formula);
+  // Prepass: trailing charge without caret (e.g., Fe2+ -> Fe^2+)
+  f = f.replace(/([A-Za-z\)\]]+)(\d+[+-])$/g, '$1^$2');
   // Caret charge: ^2-  -> ^{2-}, ^+ -> ^{+}
   f = f.replace(/\^([0-9]*[+-])/g, '^{$1}');
   // Element subscripts: H2 -> H_{2}
