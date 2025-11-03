@@ -1,4 +1,4 @@
-﻿import { SERIES_COLORS, seriesColor, withAlpha } from './theme.js';
+import { SERIES_COLORS, seriesColor, withAlpha } from './theme.js';
 
 const ZOOM_FACTOR = 1.4;
 
@@ -98,7 +98,7 @@ function creaSerie({ nom, valors, color, unitat, senseMarcador, ample, estil = '
         const numeric = Number(value);
         if (Number.isFinite(numeric)) {
           const decimals = Math.abs(numeric) < 10 ? 3 : 2;
-          const text = numeric.toFixed(decimals).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+          const text = numeric.toFixed(decimals).replace(/\u002E0+$/, '').replace(/(\u002E\d*?)0+$/, '$1');
           return `${text} ${unitat}`;
         }
         return `${value} ${unitat}`;
@@ -130,7 +130,7 @@ function construeixSeries(series, mode) {
           area: withAlpha(baseColor, 0.08)
         }),
         creaSerie({
-          nom: `${serie.nom} · vₓ`,
+          nom: `${serie.nom} · v_x`,
           valors: serie.velocitatX,
           color: withAlpha(baseColor, 0.75),
           unitat,
@@ -139,7 +139,7 @@ function construeixSeries(series, mode) {
           estil: 'dashed'
         }),
         creaSerie({
-          nom: `${serie.nom} · vᵧ`,
+          nom: `${serie.nom} · v_y`,
           valors: serie.velocitatY,
           color: withAlpha(baseColor, 0.6),
           unitat,
