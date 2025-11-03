@@ -146,11 +146,11 @@ async function gestionaAnalisi() {
     reiniciaZoom();
     estableixDisponibilitatExport(true);
 
-    const titol = estat.exempleSeleccionat?.titol ?? "enunciat introdu't";
+    const titol = estat.exempleSeleccionat?.titol ?? "enunciat introduït";
     actualitzaMissatge(`Resultats generats a partir de "${titol}".`, "info");
   } catch (error) {
     console.error("[app.js] Error durant l'an\u00E0lisi", error);
-    actualitzaMissatge("S'ha produ't un problema inesperat en processar l'enunciat.", "error");
+    actualitzaMissatge("S'ha produït un problema inesperat en processar l'enunciat.", "error");
   } finally {
     setAnalitzaDeshabilitat(false);
   }
@@ -172,5 +172,6 @@ async function obtenirResultatTemporal(enunciat) {
 }
 
 document.addEventListener('DOMContentLoaded', arrencaAplicacio);
+
 
 
