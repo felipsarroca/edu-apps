@@ -110,7 +110,7 @@ function creaSerie({ nom, valors, color, unitat, senseMarcador, ample, estil = '
 
 function construeixSeries(series, mode) {
   const clau = mode === 'position' ? 'posicions' : mode === 'velocity' ? 'velocitats' : 'acceleracions';
-  const unitat = mode === 'position' ? 'm' : mode === 'velocity' ? 'm/s' : 'm/s\u00c2\u00b2';
+  const unitat = mode === 'position' ? 'm' : mode === 'velocity' ? 'm/s' : 'm/s\u00B2';
   const resultat = [];
 
   series.forEach((serie, index) => {
@@ -121,7 +121,7 @@ function construeixSeries(series, mode) {
     if (mode === 'velocity' && Array.isArray(serie.velocitatX) && Array.isArray(serie.velocitatY)) {
       resultat.push(
         creaSerie({
-          nom: `${serie.nom} \u00c2\u00b7 |v|`,
+          nom: `${serie.nom} \u00B7 |v|`,
           valors,
           color: baseColor,
           unitat,
@@ -130,7 +130,7 @@ function construeixSeries(series, mode) {
           area: withAlpha(baseColor, 0.08)
         }),
         creaSerie({
-          nom: `${serie.nom} \u00c2\u00b7 v_x`,
+          nom: `${serie.nom} \u00B7 v_x`,
           valors: serie.velocitatX,
           color: withAlpha(baseColor, 0.75),
           unitat,
@@ -139,7 +139,7 @@ function construeixSeries(series, mode) {
           estil: 'dashed'
         }),
         creaSerie({
-          nom: `${serie.nom} \u00c2\u00b7 v_y`,
+          nom: `${serie.nom} \u00B7 v_y`,
           valors: serie.velocitatY,
           color: withAlpha(baseColor, 0.6),
           unitat,
@@ -214,7 +214,7 @@ function renderitzaChart(mode = currentMode) {
       ? 'Posici\u00F3 (m)'
       : mode === 'velocity'
       ? 'Velocitat (m/s)'
-      : 'Acceleraci\u00F3 (m/s\u00c2\u00b2)';
+      : 'Acceleraci\u00F3 (m/s\u00B2)';
 
   const opcions = creaOpcioBase(titol);
   opcions.xAxis.data = cronologiaActual.temps;

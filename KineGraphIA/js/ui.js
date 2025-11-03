@@ -1,4 +1,4 @@
-\u00ef\u00bb\u00bfimport { normalitzaMobil, calculaPosicio, calculaVelocitat, calculaAcceleracio } from './physics.js';
+import { normalitzaMobil, calculaPosicio, calculaVelocitat, calculaAcceleracio } from './physics.js';
 import { seriesColor, createCardStyles } from './theme.js';
 
 const elements = {
@@ -23,7 +23,7 @@ const ETIQUETES = {
   x0: creaEtiquetaEscalar('x', '0'),
   xf: creaEtiquetaEscalar('x', 'f'),
   t: creaEtiquetaEscalar('t'),
-  angle: creaEtiquetaEscalar('\u00ce\u00b8')
+  angle: creaEtiquetaEscalar('\u03B8')
 };
 
 export function inicialitzaUI() {
@@ -177,7 +177,7 @@ function preparaMagnituds(dades) {
   const llista = [
     { clau: 'v0', valor: formatUnitat(dades.v0, 'm/s') },
     { clau: 'vf', valor: formatUnitat(velocitatFinal, 'm/s') },
-    { clau: 'a', valor: formatUnitat(acceleracio, 'm/s\u00c2\u00b2') },
+    { clau: 'a', valor: formatUnitat(acceleracio, 'm/s\u00B2') },
     { clau: 'x0', valor: formatUnitat(dades.s0, 'm') },
     { clau: 'xf', valor: formatUnitat(posicioFinal, 'm') },
     { clau: 't', valor: formatUnitat(dades.t, 's') }

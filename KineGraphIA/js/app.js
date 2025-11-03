@@ -1,4 +1,4 @@
-\u00ef\u00bb\u00bfimport {
+import {
   inicialitzaUI,
   ompleSelectorExemples,
   onAnalitza,

@@ -1,4 +1,4 @@
-\u00ef\u00bb\u00bfimport { obtenirBotonsExport, actualitzaMissatge } from './ui.js';
+import { obtenirBotonsExport, actualitzaMissatge } from './ui.js';
 import { obtenirCharts } from './draw.js';
 
 let botoExport = null;
