@@ -3,26 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KineGraphIA · Interpreta i visualitza cinemàtica</title>
+  <title>KineGraphIA - Interpreta i visualitza cinematica</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js" crossorigin="anonymous"></script>
   <script type="module" src="js/app.js" defer></script>
 </head>
 <body>
   <header class="hero">
     <div class="hero__content">
       <h1 class="hero__title">KineGraphIA</h1>
-      <p class="hero__subtitle">La cinemàtica, explicada per la intel·ligència artificial</p>
+            <p class="hero__subtitle">La cinematica explicada per la intel.ligencia artificial</p>
     </div>
   </header>
 
   <main class="layout">
     <section class="panel panel--input" aria-labelledby="enunciat-heading">
       <div class="panel__header">
-        <h2 id="enunciat-heading">Introdueix l’enunciat</h2>
+        <h2 id="enunciat-heading">Introdueix l'enunciat</h2>
         <div class="panel__actions">
           <label class="select">
-            <span class="select__label">Exemple ràpid</span>
+            <span class="select__label">Exemple rapid</span>
             <select id="sample-selector" class="select__control">
               <option value="">Cap exemple carregat</option>
             </select>
@@ -30,12 +32,12 @@
         </div>
       </div>
       <div class="panel__body">
-        <textarea id="input-enunciat" rows="8" placeholder="Escriu aquí l’enunciat del problema..."></textarea>
+        <textarea id="input-enunciat" rows="8" placeholder="Escriu aqui l'enunciat del problema..."></textarea>
         <div class="action-row">
           <button id="btn-analitza" class="btn btn--primary">Analitza amb IA</button>
           <button id="btn-restableix" class="btn btn--ghost">Neteja</button>
         </div>
-        <p id="status-missatge" class="status status--info" role="status">Escriu un enunciat per començar.</p>
+        <p id="status-missatge" class="status status--info" role="status">Escriu un enunciat per comencar.</p>
       </div>
     </section>
 
@@ -54,48 +56,66 @@
         <h2 id="resultats-heading">Resultats interpretats</h2>
       </div>
       <div class="panel__body" id="resultats-container">
-        <p class="placeholder">Aquí veuràs les dades dels mòbils un cop l’IA analitzi l’enunciat.</p>
+        <p class="placeholder">Aqui veuras les dades dels mobils un cop la IA analitzi l'enunciat.</p>
       </div>
     </section>
 
-    <section class="panel panel--charts" aria-labelledby="gràfiques-heading">
+    <section class="panel panel--charts" aria-labelledby="grafiques-heading">
       <div class="panel__header">
-        <h2 id="gràfiques-heading">Gràfiques de moviment</h2>
+        <h2 id="grafiques-heading">Grafiques de moviment</h2>
         <div class="panel__actions">
-          <button id="btn-exporta-position" class="btn btn--ghost" disabled>Descarrega s–t</button>
-          <button id="btn-exporta-velocity" class="btn btn--ghost" disabled>Descarrega v–t</button>
+          <button id="btn-exporta-position" class="btn btn--ghost" disabled>Descarrega s-t</button>
+          <button id="btn-exporta-velocity" class="btn btn--ghost" disabled>Descarrega v-t</button>
         </div>
       </div>
       <div class="panel__body charts">
         <div class="chart-card">
-          <h3 class="chart-card__title">Posició en funció del temps</h3>
-          <canvas id="chart-position" width="640" height="360" aria-label="Gràfica posició temps"></canvas>
+          <div class="chart-card__header">
+            <h3 class="chart-card__title">Posicio en funcio del temps</h3>
+            <div class="chart-card__controls" role="group" aria-label="Controls de zoom posicio">
+              <button id="zoom-out-position" class="btn btn--icon" type="button" aria-label="Redueix zoom posicio">-</button>
+              <button id="zoom-in-position" class="btn btn--icon" type="button" aria-label="Augmenta zoom posicio">+</button>
+              <button id="zoom-reset-position" class="btn btn--icon" type="button" aria-label="Restableix zoom posicio">R</button>
+            </div>
+          </div>
+          <div class="chart-card__canvas">
+            <canvas id="chart-position" width="640" height="360" aria-label="Grafica posicio temps"></canvas>
+          </div>
         </div>
         <div class="chart-card">
-          <h3 class="chart-card__title">Velocitat en funció del temps</h3>
-          <canvas id="chart-velocity" width="640" height="360" aria-label="Gràfica velocitat temps"></canvas>
+          <div class="chart-card__header">
+            <h3 class="chart-card__title">Velocitat en funcio del temps</h3>
+            <div class="chart-card__controls" role="group" aria-label="Controls de zoom velocitat">
+              <button id="zoom-out-velocity" class="btn btn--icon" type="button" aria-label="Redueix zoom velocitat">-</button>
+              <button id="zoom-in-velocity" class="btn btn--icon" type="button" aria-label="Augmenta zoom velocitat">+</button>
+              <button id="zoom-reset-velocity" class="btn btn--icon" type="button" aria-label="Restableix zoom velocitat">R</button>
+            </div>
+          </div>
+          <div class="chart-card__canvas">
+            <canvas id="chart-velocity" width="640" height="360" aria-label="Grafica velocitat temps"></canvas>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="panel panel--animation" aria-labelledby="animacio-heading">
       <div class="panel__header">
-        <h2 id="animacio-heading">Animació del moviment</h2>
+        <h2 id="animacio-heading">Animacio del moviment</h2>
       </div>
       <div class="panel__body animacio">
-        <div id="animacio-escenari" class="animacio__viewport" role="img" aria-label="Representació visual del moviment">
-          <p class="placeholder">L’animació apareixerà aquí quan calculis un problema.</p>
+        <div id="animacio-escenari" class="animacio__viewport" role="img" aria-label="Representacio visual del moviment">
+          <p class="placeholder">L'animacio apareixera aqui quan calculis un problema.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer" aria-label="Informació de llicència">
+  <footer class="footer" aria-label="Informacio de llicencia">
     <div class="footer__license">
-      <img src="assets/CC_BY-NC-SA.svg" alt="Llicència Creative Commons BY-NC-SA" class="footer__license-logo">
+      <img src="assets/CC_BY-NC-SA.svg" alt="Llicencia Creative Commons BY-NC-SA" class="footer__license-logo">
       <div class="footer__license-text">
-        <p>Aplicació creada per <a href="https://ja.cat/edu-apps" target="_blank" rel="noopener">Felip Sarroca</a> amb l’assistència de la IA</p>
-        <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-SA-NC 4.0</a></p>
+        <p>Aplicacio creada per <a href="https://ja.cat/edu-apps" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assistencia de la IA</p>
+        <p>Obra sota llicencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-SA-NC 4.0</a></p>
       </div>
     </div>
   </footer>
