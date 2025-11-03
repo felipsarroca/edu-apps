@@ -88,6 +88,7 @@ const PROBLEMES_DISPONIBLES =
 if (PROBLEMES_DISPONIBLES === FALLBACK_PROBLEMS) {
   console.warn('[app.js] No s\\'ha pogut carregar data/sampleProblems.js; s\\'utilitzen exemples per defecte.');
 }
+console.log('[app.js] Exemples disponibles:', PROBLEMES_DISPONIBLES);
 
 const estat = {
   exempleSeleccionat: null

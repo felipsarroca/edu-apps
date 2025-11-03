@@ -42,6 +42,8 @@ export function ompleSelectorExemples(exemples, onSeleccio) {
   if (!elements.sampleSelector) return;
   elements.sampleSelector.innerHTML = '<option value="">Tria un exemple</option>';
 
+  console.log('[ui.js] Carregant exemples al selector:', exemples);
+
   exemples.forEach((exemple, index) => {
     const opcio = document.createElement('option');
     opcio.value = String(index);
