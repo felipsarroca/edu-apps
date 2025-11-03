@@ -149,7 +149,7 @@ export function guardaSessio(enunciat, resposta) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(actualitzades));
     renderitzaSessions();
   } catch (error) {
-    console.warn('[ui.js] No s'ha pogut guardar la sessió', error);
+    console.warn("[ui.js] No s'ha pogut guardar la sessió", error);
   }
 }
 
@@ -166,7 +166,7 @@ function llegeixSessions() {
     const sessions = JSON.parse(cru);
     return Array.isArray(sessions) ? sessions : [];
   } catch (error) {
-    console.warn('[ui.js] Error llegint sessions guardades', error);
+    console.warn("[ui.js] Error llegint sessions guardades", error);
     return [];
   }
 }
