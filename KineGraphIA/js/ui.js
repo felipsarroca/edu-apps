@@ -14,6 +14,8 @@ const elements = {
 };
 
 const restableixCallbacks = [];
+const STORAGE_KEY = 'kinegraphia:sessions';
+const MAX_SESSIONS = 10;
 const MAGNITUDS_VECTORIALS = new Set(['v0', 'vf', 'a']);
 
 const ETIQUETES = {
@@ -48,6 +50,7 @@ export function inicialitzaUI() {
   });
 
   actualitzaMissatge('Cap enunciat carregat.', 'info');
+  renderitzaSessions();
 }
 
 export function ompleSelectorExemples(exemples, onSeleccio) {
@@ -130,6 +133,121 @@ export function netejaResultats() {
 
 export function obtenirBotonsExport() {
   return elements.exportChartBtn;
+}
+
+export function guardaSessio(enunciat, resposta) {
+  try {
+    const actuals = llegeixSessions();
+    const nova = {
+      id: Date.now(),
+      enunciat,
+      resposta,
+      timestamp: new Date().toISOString()
+    };
+    const actualitzades = [nova, ...actuals].slice(0, MAX_SESSIONS);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(actualitzades));
+    renderitzaSessions();
+  } catch (error) {
+    console.warn('[ui.js] No s\'ha pogut guardar la sessió', error);
+  }
+}
+
+function llegeixSessions() {
+  try {
+    const cru = localStorage.getItem(STORAGE_KEY);
+    if (!cru) return [];
+    const sessions = JSON.parse(cru);
+    return Array.isArray(sessions) ? sessions : [];
+  } catch (error) {
+    console.warn('[ui.js] Error llegint sessions guardades', error);
+    return [];
+  }
+}
+
+function renderitzaSessions() {
+  if (!elements.sessionsList || !elements.sessionsPlaceholder) return;
+  const sessions = llegeixSessions();
+
+  if (!sessions.length) {
+    elements.sessionsPlaceholder.hidden = false;
+    elements.sessionsList.innerHTML = '';
+    return;
+  }
+
+  elements.sessionsPlaceholder.hidden = true;
+  elements.sessionsList.innerHTML = sessions
+    .map((sessio) => creaElementSessio(sessio))
+    .join('');
+
+  const enllaços = elements.sessionsList.querySelectorAll('[data-carrega-sessio]');
+  enllaços.forEach((enllac) => {
+    enllac.addEventListener('click', (event) => {
+      event.preventDefault();
+      const id = Number(enllac.dataset.id);
+      const sessio = sessions.find((item) => item.id === id);
+      if (sessio) {
+        elements.textarea.value = sessio.enunciat;
+        mostraResultats(sessio.resposta.mobils);
+        actualitzaMissatge(`Sessió del ${formatData(sessio.timestamp)} carregada.`, 'info');
+      }
+    });
+  });
+
+  const esborra = elements.sessionsList.querySelectorAll('[data-esborra-sessio]');
+  esborra.forEach((botó) => {
+    botó.addEventListener('click', (event) => {
+      event.preventDefault();
+      const id = Number(botó.dataset.id);
+      eliminaSessio(id);
+    });
+  });
+}
+
+function creaElementSessio(sessio) {
+  const dataFormatejada = formatData(sessio.timestamp);
+  const resum = resumSessio(sessio.resposta.mobils);
+
+  return `
+    <li class="session-item">
+      <div class="session-item__content">
+        <strong>${dataFormatejada}</strong>
+        <p>${resum}</p>
+      </div>
+      <div class="session-item__actions">
+        <button class="btn btn--ghost" data-carrega-sessio data-id="${sessio.id}">Carrega</button>
+        <button class="btn btn--icon" data-esborra-sessio data-id="${sessio.id}" aria-label="Esborra">×</button>
+      </div>
+    </li>
+  `;
+}
+
+function formatData(timestamp) {
+  try {
+    const data = new Date(timestamp);
+    return data.toLocaleString('ca-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  } catch (error) {
+    return 'Sessió';
+  }
+}
+
+function eliminaSessio(id) {
+  const actuals = llegeixSessions();
+  const filtrades = actuals.filter((sessio) => sessio.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtrades));
+  renderitzaSessions();
+  actualitzaMissatge('Sessió eliminada.', 'info');
+}
+
+function resumSessio(mobils = []) {
+  if (!Array.isArray(mobils) || mobils.length === 0) return 'Sense dades guardades';
+  const llista = mobils.map((mobil) => mobil.nom ?? 'Mòbil').join(', ');
+  return `Mòbils: ${llista}`;
 }
 
 function creaTargetaMobil(mobil, index) {
