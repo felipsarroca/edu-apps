@@ -260,10 +260,51 @@ textarea#input-enunciat:focus {
 }
 
 .footer {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   padding-bottom: 2.5rem;
   color: rgba(15, 23, 42, 0.6);
-  font-size: 0.95rem;
+}
+
+.footer__license {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer__license-logo {
+  height: calc(0.85rem * 2.4);
+  width: auto;
+  flex-shrink: 0;
+}
+
+.footer__license-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.footer__license-text a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer__license-text a:hover,
+.footer__license-text a:focus {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .footer__license {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 720px) {
