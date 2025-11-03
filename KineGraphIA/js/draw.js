@@ -83,10 +83,34 @@ function creaOpcioBase(titolY) {
   };
 }
 
+function creaSerie({ nom, valors, color, unitat, senseMarcador, ample, estil = 'solid', area }) {
+  return {
+    name: nom,
+    type: 'line',
+    smooth: true,
+    symbol: senseMarcador ? 'none' : 'circle',
+    symbolSize: 6,
+    lineStyle: { width: ample, color, type: estil },
+    areaStyle: area ? { color: area } : undefined,
+    emphasis: { focus: 'series' },
+    tooltip: {
+      valueFormatter: (value) => {
+        const numeric = Number(value);
+        if (Number.isFinite(numeric)) {
+          const decimals = Math.abs(numeric) < 10 ? 3 : 2;
+          const text = numeric.toFixed(decimals).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+          return `${text} ${unitat}`;
+        }
+        return `${value} ${unitat}`;
+      }
+    },
+    data: Array.isArray(valors) ? valors : []
+  };
+}
+
 function construeixSeries(series, mode) {
-  const clau =
-    mode === "position" ? "posicions" : mode === "velocity" ? "velocitats" : "acceleracions";
-  const unitat = mode === "position" ? "m" : mode === "velocity" ? "m/s" : "m/s²";
+  const clau = mode === 'position' ? 'posicions' : mode === 'velocity' ? 'velocitats' : 'acceleracions';
+  const unitat = mode === 'position' ? 'm' : mode === 'velocity' ? 'm/s' : 'm/s²';
   const resultat = [];
 
   series.forEach((serie, index) => {
@@ -94,7 +118,7 @@ function construeixSeries(series, mode) {
     const valors = Array.isArray(serie[clau]) ? serie[clau] : [];
     const senseMarcador = valors.length > 140;
 
-    if (mode === "velocity" && Array.isArray(serie.velocitatX) && Array.isArray(serie.velocitatY)) {
+    if (mode === 'velocity' && Array.isArray(serie.velocitatX) && Array.isArray(serie.velocitatY)) {
       resultat.push(
         creaSerie({
           nom: `${serie.nom} · |v|`,
@@ -112,16 +136,16 @@ function construeixSeries(series, mode) {
           unitat,
           senseMarcador,
           ample: 2,
-          estil: "dashed"
+          estil: 'dashed'
         }),
         creaSerie({
-          nom: `${serie.nom} · v_y`,
+          nom: `${serie.nom} · vᵧ`,
           valors: serie.velocitatY,
           color: withAlpha(baseColor, 0.6),
           unitat,
           senseMarcador,
           ample: 2,
-          estil: "dotted"
+          estil: 'dotted'
         })
       );
     } else {
@@ -174,13 +198,11 @@ function ajustaZoom(accio) {
     nouStart = 0;
   }
   if (nouEnd > 100) {
-    const exces = nouEnd - 100;
-    nouStart -= exces;
+    const excedent = nouEnd - 100;
+    nouStart -= excedent;
     nouEnd = 100;
   }
-  nouStart = Math.max(0, nouStart);
-  nouEnd = Math.min(100, nouEnd);
-  assignaZoom(nouStart, nouEnd);
+  assignaZoom(Math.max(0, nouStart), Math.min(100, nouEnd));
 }
 
 function renderitzaChart(mode = currentMode) {
@@ -189,12 +211,16 @@ function renderitzaChart(mode = currentMode) {
 
   const titol =
     mode === 'position'
-      ? 'Posicià (m)'
+      ? 'Posició (m)'
       : mode === 'velocity'
       ? 'Velocitat (m/s)'
-      : 'Acceleracià (m/sà)';
+      : 'Acceleració (m/s²)';
 
-  const opcions = creaOpcioBase(titol);`r`n  opcions.xAxis.data = cronologiaActual.temps;`r`n  const llistatSeries = construeixSeries(cronologiaActual.series, mode);`r`n  opcions.legend.data = llistatSeries.map((s) => s.name);`r`n  opcions.series = llistatSeries;
+  const opcions = creaOpcioBase(titol);
+  opcions.xAxis.data = cronologiaActual.temps;
+  const llistat = construeixSeries(cronologiaActual.series, mode);
+  opcions.legend.data = llistat.map((s) => s.name);
+  opcions.series = llistat;
 
   chartPrincipal.setOption(opcions, true);
   document
@@ -279,41 +305,4 @@ export function reiniciaZoom() {
   assignaZoom(0, 100);
 }
 
-function creaSerie({ nom, valors, color, unitat, senseMarcador, ample, estil = 'solid', area }) {
-  return {
-    name: nom,
-    type: 'line',
-    smooth: true,
-    symbol: senseMarcador ? 'none' : 'circle',
-    symbolSize: 6,
-    lineStyle: { width: ample, color, type: estil },
-    areaStyle: area ? { color: area } : undefined,
-    emphasis: { focus: 'series' },
-    tooltip: {
-      valueFormatter: (value) => {
-        const numeric = Number(value);
-        if (Number.isFinite(numeric)) {
-          const decimals = Math.abs(numeric) < 10 ? 3 : 2;
-          const text = numeric.toFixed(decimals).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
-          return `${text} ${unitat}`;
-        }
-        return `${value} ${unitat}`;
-      }
-    },
-    data: Array.isArray(valors) ? valors : []
-  };
-}
 console.log('[draw.js] carregat');
-
-
-
-
-
-
-
-
-
-
-
-
-
