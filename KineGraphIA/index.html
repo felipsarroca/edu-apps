@@ -11,26 +11,22 @@
 </head>
 <body>
   <header class="hero">
-    <div class="hero__content">
-      <h1 class="hero__title">KineGraphIA</h1>
-            <p class="hero__subtitle">La cinematica explicada per la intel.ligencia artificial</p>
-    </div>
+    <h1 class="hero__title">KineGraphIA</h1>
+    <p class="hero__subtitle">La cinematica explicada per la intel.ligencia artificial</p>
   </header>
 
   <main class="layout">
-    <section class="panel panel--input" aria-labelledby="enunciat-heading">
-      <div class="panel__header">
+    <section class="block block--input" aria-labelledby="enunciat-heading">
+      <header class="block__head">
         <h2 id="enunciat-heading">Introdueix l'enunciat</h2>
-        <div class="panel__actions">
-          <label class="select">
-            <span class="select__label">Exemple rapid</span>
-            <select id="sample-selector" class="select__control">
-              <option value="">Cap exemple carregat</option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <div class="panel__body">
+        <label class="select">
+          <span class="select__label">Exemple rapid</span>
+          <select id="sample-selector" class="select__control">
+            <option value="">Cap exemple carregat</option>
+          </select>
+        </label>
+      </header>
+      <div class="block__body">
         <textarea id="input-enunciat" rows="8" placeholder="Escriu aqui l'enunciat del problema..."></textarea>
         <div class="action-row">
           <button id="btn-analitza" class="btn btn--primary">Analitza amb IA</button>
@@ -40,64 +36,65 @@
       </div>
     </section>
 
-    <section class="panel panel--sessions" aria-labelledby="sessions-heading">
-      <div class="panel__header">
-        <h2 id="sessions-heading">Sessions guardades</h2>
-      </div>
-      <div class="panel__body">
-        <p id="sessions-buit" class="placeholder">Encara no tens sessions guardades.</p>
-        <ul id="sessions-llista" class="sessions"></ul>
-      </div>
-    </section>
-
-    <section class="panel panel--results" aria-labelledby="resultats-heading">
-      <div class="panel__header">
+    <section class="block block--results" aria-labelledby="resultats-heading">
+      <header class="block__head">
         <h2 id="resultats-heading">Resultats interpretats</h2>
-      </div>
-      <div class="panel__body" id="resultats-container">
+      </header>
+      <div class="block__body" id="resultats-container">
         <p class="placeholder">Aqui veuras les dades dels mobils un cop la IA analitzi l'enunciat.</p>
       </div>
     </section>
 
-    <section class="panel panel--charts" aria-labelledby="grafiques-heading">
-      <div class="panel__header">
+    <section class="block block--charts" aria-labelledby="grafiques-heading">
+      <header class="block__head block__head--split">
         <h2 id="grafiques-heading">Grafiques de moviment</h2>
-        <div class="panel__actions">
+        <div class="chart-actions">
           <button id="btn-exporta-position" class="btn btn--ghost" disabled>Descarrega s-t</button>
           <button id="btn-exporta-velocity" class="btn btn--ghost" disabled>Descarrega v-t</button>
         </div>
-      </div>
-      <div class="panel__body charts">
-        <div class="chart-card">
-          <div class="chart-card__header">
+      </header>
+      <div class="charts-grid">
+        <article class="chart-card">
+          <header class="chart-card__header">
             <h3 class="chart-card__title">Posicio en funcio del temps</h3>
             <div class="chart-card__controls" role="group" aria-label="Controls de zoom posicio">
               <button id="zoom-out-position" class="btn btn--icon" type="button" aria-label="Redueix zoom posicio">-</button>
               <button id="zoom-in-position" class="btn btn--icon" type="button" aria-label="Augmenta zoom posicio">+</button>
               <button id="zoom-reset-position" class="btn btn--icon" type="button" aria-label="Restableix zoom posicio">R</button>
             </div>
-          </div>
+          </header>
           <div id="chart-position" class="chart-card__canvas" role="img" aria-label="Grafica posicio temps"></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-card__header">
+        </article>
+
+        <article class="chart-card">
+          <header class="chart-card__header">
             <h3 class="chart-card__title">Velocitat en funcio del temps</h3>
             <div class="chart-card__controls" role="group" aria-label="Controls de zoom velocitat">
               <button id="zoom-out-velocity" class="btn btn--icon" type="button" aria-label="Redueix zoom velocitat">-</button>
               <button id="zoom-in-velocity" class="btn btn--icon" type="button" aria-label="Augmenta zoom velocitat">+</button>
               <button id="zoom-reset-velocity" class="btn btn--icon" type="button" aria-label="Restableix zoom velocitat">R</button>
             </div>
-          </div>
+          </header>
           <div id="chart-velocity" class="chart-card__canvas" role="img" aria-label="Grafica velocitat temps"></div>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section class="panel panel--animation" aria-labelledby="animacio-heading">
-      <div class="panel__header">
-        <h2 id="animacio-heading">Animacio del moviment</h2>
+    <section class="block block--sessions" aria-labelledby="sessions-heading">
+      <header class="block__head">
+        <h2 id="sessions-heading">Sessions guardades</h2>
+      </header>
+      <div class="block__body">
+        <p id="sessions-buit" class="placeholder">Encara no tens sessions guardades.</p>
+        <ul id="sessions-llista" class="sessions"></ul>
       </div>
-      <div class="panel__body animacio">
+    </section>
+
+    <section class="block block--animation" aria-labelledby="animacio-heading">
+      <header class="block__head">
+        <h2 id="animacio-heading">Animacio del moviment</h2>
+      </header>
+      <div class="block__body">
         <div id="animacio-escenari" class="animacio__viewport" role="img" aria-label="Representacio visual del moviment">
           <p class="placeholder">L'animacio apareixera aqui quan calculis un problema.</p>
         </div>
