@@ -14,6 +14,7 @@ const elements = {
 };
 
 const restableixCallbacks = [];
+const sessioCallbacks = [];
 const STORAGE_KEY = 'kinegraphia:sessions';
 const MAX_SESSIONS = 10;
 const MAGNITUDS_VECTORIALS = new Set(['v0', 'vf', 'a']);
@@ -148,7 +149,13 @@ export function guardaSessio(enunciat, resposta) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(actualitzades));
     renderitzaSessions();
   } catch (error) {
-    console.warn('[ui.js] No s\'ha pogut guardar la sessió', error);
+    console.warn('[ui.js] No s'ha pogut guardar la sessió', error);
+  }
+}
+
+export function onSessioCarregada(callback) {
+  if (typeof callback === 'function') {
+    sessioCallbacks.push(callback);
   }
 }
 
@@ -180,15 +187,16 @@ function renderitzaSessions() {
     .join('');
 
   const enllaços = elements.sessionsList.querySelectorAll('[data-carrega-sessio]');
-  enllaços.forEach((enllac) => {
-    enllac.addEventListener('click', (event) => {
+  enllaços.forEach((enllaç) => {
+    enllaç.addEventListener('click', (event) => {
       event.preventDefault();
-      const id = Number(enllac.dataset.id);
+      const id = Number(enllaç.dataset.id);
       const sessio = sessions.find((item) => item.id === id);
       if (sessio) {
-        elements.textarea.value = sessio.enunciat;
-        mostraResultats(sessio.resposta.mobils);
-        actualitzaMissatge(`Sessió del ${formatData(sessio.timestamp)} carregada.`, 'info');
+        if (elements.textarea) {
+          elements.textarea.value = sessio.enunciat;
+        }
+        sessioCallbacks.forEach((fn) => fn?.(sessio));
       }
     });
   });

@@ -7,7 +7,9 @@ import {
   setAnalitzaDeshabilitat,
   mostraResultats,
   netejaResultats,
-  onRestableix
+  onRestableix,
+  guardaSessio,
+  onSessioCarregada
 } from './ui.js';
 import { calculaCronologia } from './physics.js';
 import {
@@ -118,6 +120,8 @@ function arrencaAplicacio() {
     actualitzaMissatge("Cap enunciat carregat.", "info");
   });
 
+  onSessioCarregada(gestionaCarregaSessio);
+
   console.log("[app.js] aplicaci\u00F3 inicialitzada");
 }
 async function gestionaAnalisi() {
@@ -140,11 +144,13 @@ async function gestionaAnalisi() {
       return;
     }
 
-    mostraResultats(resposta.mobils);
+    estat.exempleSeleccionat = null;
+  mostraResultats(resposta.mobils);
     const cronologia = calculaCronologia(resposta.mobils);
     actualitzaCharts(cronologia);
     reiniciaZoom();
     estableixDisponibilitatExport(true);
+    guardaSessio(enunciat, resposta);
 
     const titol = estat.exempleSeleccionat?.titol ?? "enunciat introdu\u00EFt";
     actualitzaMissatge(`Resultats generats a partir de "${titol}".`, "info");
@@ -153,6 +159,35 @@ async function gestionaAnalisi() {
     actualitzaMissatge("S'ha produ\u00EFt un problema inesperat en processar l'enunciat.", "error");
   } finally {
     setAnalitzaDeshabilitat(false);
+  }
+}
+
+function gestionaCarregaSessio(sessio) {
+  const resposta = sessio?.resposta;
+  if (!resposta || !Array.isArray(resposta.mobils)) return;
+
+  estat.exempleSeleccionat = null;
+  mostraResultats(resposta.mobils);
+  const cronologia = calculaCronologia(resposta.mobils);
+  actualitzaCharts(cronologia);
+  reiniciaZoom();
+  estableixDisponibilitatExport(true);
+
+  const missatge = formatTemporal(sessio?.timestamp);
+  actualitzaMissatge(`Sessió recuperada (${missatge}).`, 'info');
+}
+
+function formatTemporal(timestamp) {
+  try {
+    return new Date(timestamp).toLocaleString('ca-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  } catch (error) {
+    return 'sessió guardada';
   }
 }
 async function obtenirResultatTemporal(enunciat) {
