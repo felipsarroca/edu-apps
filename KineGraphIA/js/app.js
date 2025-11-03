@@ -21,7 +21,7 @@ import {
 } from './draw.js';
 import { configuraExportacions, estableixDisponibilitatExport } from './export.js';
 import './storage.js';
-import './api.js';
+import { analitzaAmbIA } from './api.js';
 import { SAMPLE_PROBLEMS } from '../data/sampleProblems.js';
 
 const FALLBACK_PROBLEMS = [
@@ -135,18 +135,36 @@ async function gestionaAnalisi() {
   actualitzaMissatge("Processant l'enunciat. Preparant resultats...", "info");
 
   try {
-    const resposta = await obtenirResultatTemporal(enunciat);
+    let resposta = null;
+    const net = enunciat.toLowerCase();
+    const esExempleSeleccionat =
+      estat.exempleSeleccionat &&
+      estat.exempleSeleccionat.enunciat.trim().toLowerCase() === net;
+
+    if (esExempleSeleccionat) {
+      resposta = estat.exempleSeleccionat.resposta;
+    } else {
+      estat.exempleSeleccionat = null;
+      resposta = await analitzaAmbIA(enunciat);
+    }
+
     if (!resposta) {
-      actualitzaMissatge("Encara no hi ha IA activa. Selecciona un dels exemples per veure el funcionament.", "error");
+      resposta = await obtenirResultatTemporal(enunciat);
+    }
+
+    if (!resposta) {
+      actualitzaMissatge(
+        "No s'ha pogut obtenir una resposta de la IA. Prova amb un exemple ràpid.",
+        "error"
+      );
       netejaResultats();
       reiniciaZoom();
       estableixDisponibilitatExport(false);
       return;
     }
 
-    estat.exempleSeleccionat = null;
-  mostraResultats(resposta.mobils);
-    const cronologia = calculaCronologia(resposta.mobils);
+    mostraResultats(resposta.mobils ?? []);
+    const cronologia = calculaCronologia(resposta.mobils ?? []);
     actualitzaCharts(cronologia);
     reiniciaZoom();
     estableixDisponibilitatExport(true);
