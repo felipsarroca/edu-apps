@@ -74,7 +74,7 @@ body {
 .workspace {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(260px, 35%) minmax(320px, 65%);
   gap: 1.6rem;
   align-items: stretch;
 }
