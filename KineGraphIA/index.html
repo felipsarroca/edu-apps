@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KineGraphIA · Interpreta i visualitza cinemàtica</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1 class="hero__title">KineGraphIA</h1>
+      <p class="hero__subtitle">La cinemàtica, explicada per la intel·ligència artificial</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel panel--input" aria-labelledby="enunciat-heading">
+      <div class="panel__header">
+        <h2 id="enunciat-heading">Introdueix l’enunciat</h2>
+        <div class="panel__actions">
+          <label class="select">
+            <span class="select__label">Exemple ràpid</span>
+            <select id="sample-selector" class="select__control">
+              <option value="">Cap exemple carregat</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="panel__body">
+        <textarea id="input-enunciat" rows="8" placeholder="Escriu aquí l’enunciat del problema..."></textarea>
+        <div class="action-row">
+          <button id="btn-analitza" class="btn btn--primary">Analitza amb IA</button>
+          <button id="btn-restableix" class="btn btn--ghost">Neteja</button>
+        </div>
+        <p id="status-missatge" class="status status--info" role="status">Escriu un enunciat per començar.</p>
+      </div>
+    </section>
+
+    <section class="panel panel--sessions" aria-labelledby="sessions-heading">
+      <div class="panel__header">
+        <h2 id="sessions-heading">Sessions guardades</h2>
+      </div>
+      <div class="panel__body">
+        <p id="sessions-buit" class="placeholder">Encara no tens sessions guardades.</p>
+        <ul id="sessions-llista" class="sessions"></ul>
+      </div>
+    </section>
+
+    <section class="panel panel--results" aria-labelledby="resultats-heading">
+      <div class="panel__header">
+        <h2 id="resultats-heading">Resultats interpretats</h2>
+      </div>
+      <div class="panel__body" id="resultats-container">
+        <p class="placeholder">Aquí veuràs les dades dels mòbils un cop l’IA analitzi l’enunciat.</p>
+      </div>
+    </section>
+
+    <section class="panel panel--charts" aria-labelledby="gràfiques-heading">
+      <div class="panel__header">
+        <h2 id="gràfiques-heading">Gràfiques de moviment</h2>
+        <div class="panel__actions">
+          <button id="btn-exporta-position" class="btn btn--ghost" disabled>Descarrega s–t</button>
+          <button id="btn-exporta-velocity" class="btn btn--ghost" disabled>Descarrega v–t</button>
+        </div>
+      </div>
+      <div class="panel__body charts">
+        <div class="chart-card">
+          <h3 class="chart-card__title">Posició en funció del temps</h3>
+          <canvas id="chart-position" width="640" height="360" aria-label="Gràfica posició temps"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-card__title">Velocitat en funció del temps</h3>
+          <canvas id="chart-velocity" width="640" height="360" aria-label="Gràfica velocitat temps"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel panel--animation" aria-labelledby="animacio-heading">
+      <div class="panel__header">
+        <h2 id="animacio-heading">Animació del moviment</h2>
+      </div>
+      <div class="panel__body animacio">
+        <div id="animacio-escenari" class="animacio__viewport" role="img" aria-label="Representació visual del moviment">
+          <p class="placeholder">L’animació apareixerà aquí quan calculis un problema.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>KineGraphIA · Projecte educatiu en desenvolupament · Terrassa</p>
+  </footer>
+</body>
+</html>
