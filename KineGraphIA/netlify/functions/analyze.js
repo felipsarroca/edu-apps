@@ -1,3 +1,4 @@
+const fetch = globalThis.fetch ?? ((...args) => import('node-fetch').then(({ default: fetchFn }) => fetchFn(...args)));
 const GEMINI_ENDPOINT =
   'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent';
 
@@ -144,6 +145,7 @@ function extreuJSON(text) {
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type'
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
   };
 }

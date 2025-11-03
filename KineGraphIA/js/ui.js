@@ -7,15 +7,15 @@ const elements = {
   restableixBtn: null,
   status: null,
   sampleSelector: null,
-  sessionsList: null,
-  sessionsPlaceholder: null,
+  sessiónsList: null,
+  sessiónsPlaceholder: null,
   resultatsContainer: null,
   exportChartBtn: null
 };
 
 const restableixCallbacks = [];
-const sessioCallbacks = [];
-const STORAGE_KEY = 'kinegraphia:sessions';
+const sessióCallbacks = [];
+const STORAGE_KEY = 'kinegraphia:sessións';
 const MAX_SESSIONS = 10;
 const MAGNITUDS_VECTORIALS = new Set(['v0', 'vf', 'a']);
 
@@ -35,8 +35,8 @@ export function inicialitzaUI() {
   elements.restableixBtn = document.querySelector('#btn-restableix');
   elements.status = document.querySelector('#status-missatge');
   elements.sampleSelector = document.querySelector('#sample-selector');
-  elements.sessionsList = document.querySelector('#sessions-llista');
-  elements.sessionsPlaceholder = document.querySelector('#sessions-buit');
+  elements.sessiónsList = document.querySelector('#sessións-llista');
+  elements.sessiónsPlaceholder = document.querySelector('#sessións-buit');
   elements.resultatsContainer = document.querySelector('#resultats-container');
   elements.exportChartBtn = document.querySelector('#btn-exporta-chart');
 
@@ -155,7 +155,7 @@ export function guardaSessio(enunciat, resposta) {
 
 export function onSessioCarregada(callback) {
   if (typeof callback === 'function') {
-    sessioCallbacks.push(callback);
+    sessióCallbacks.push(callback);
   }
 }
 
@@ -163,45 +163,45 @@ function llegeixSessions() {
   try {
     const cru = localStorage.getItem(STORAGE_KEY);
     if (!cru) return [];
-    const sessions = JSON.parse(cru);
-    return Array.isArray(sessions) ? sessions : [];
+    const sessións = JSON.parse(cru);
+    return Array.isArray(sessións) ? sessións : [];
   } catch (error) {
-    console.warn("[ui.js] Error llegint sessions guardades", error);
+    console.warn("[ui.js] Error llegint sessións guardades", error);
     return [];
   }
 }
 
 function renderitzaSessions() {
-  if (!elements.sessionsList || !elements.sessionsPlaceholder) return;
-  const sessions = llegeixSessions();
+  if (!elements.sessiónsList || !elements.sessiónsPlaceholder) return;
+  const sessións = llegeixSessions();
 
-  if (!sessions.length) {
-    elements.sessionsPlaceholder.hidden = false;
-    elements.sessionsList.innerHTML = '';
+  if (!sessións.length) {
+    elements.sessiónsPlaceholder.hidden = false;
+    elements.sessiónsList.innerHTML = '';
     return;
   }
 
-  elements.sessionsPlaceholder.hidden = true;
-  elements.sessionsList.innerHTML = sessions
-    .map((sessio) => creaElementSessio(sessio))
+  elements.sessiónsPlaceholder.hidden = true;
+  elements.sessiónsList.innerHTML = sessións
+    .map((sessió) => creaElementSessio(sessió))
     .join('');
 
-  const enllaços = elements.sessionsList.querySelectorAll('[data-carrega-sessio]');
+  const enllaços = elements.sessiónsList.querySelectorAll('[data-carrega-sessió]');
   enllaços.forEach((enllaç) => {
     enllaç.addEventListener('click', (event) => {
       event.preventDefault();
       const id = Number(enllaç.dataset.id);
-      const sessio = sessions.find((item) => item.id === id);
-      if (sessio) {
+      const sessió = sessións.find((item) => item.id === id);
+      if (sessió) {
         if (elements.textarea) {
-          elements.textarea.value = sessio.enunciat;
+          elements.textarea.value = sessió.enunciat;
         }
-        sessioCallbacks.forEach((fn) => fn?.(sessio));
+        sessióCallbacks.forEach((fn) => fn?.(sessió));
       }
     });
   });
 
-  const esborra = elements.sessionsList.querySelectorAll('[data-esborra-sessio]');
+  const esborra = elements.sessiónsList.querySelectorAll('[data-esborra-sessió]');
   esborra.forEach((botó) => {
     botó.addEventListener('click', (event) => {
       event.preventDefault();
@@ -211,19 +211,19 @@ function renderitzaSessions() {
   });
 }
 
-function creaElementSessio(sessio) {
-  const dataFormatejada = formatData(sessio.timestamp);
-  const resum = resumSessio(sessio.resposta.mobils);
+function creaElementSessio(sessió) {
+  const dataFormatejada = formatData(sessió.timestamp);
+  const resum = resumSessio(sessió.resposta.mobils);
 
   return `
-    <li class="session-item">
-      <div class="session-item__content">
+    <li class="sessión-item">
+      <div class="sessión-item__content">
         <strong>${dataFormatejada}</strong>
         <p>${resum}</p>
       </div>
-      <div class="session-item__actions">
-        <button class="btn btn--ghost" data-carrega-sessio data-id="${sessio.id}">Carrega</button>
-        <button class="btn btn--icon" data-esborra-sessio data-id="${sessio.id}" aria-label="Esborra">×</button>
+      <div class="sessión-item__actions">
+        <button class="btn btn--ghost" data-carrega-sessió data-id="${sessió.id}">Carrega</button>
+        <button class="btn btn--icon" data-esborra-sessió data-id="${sessió.id}" aria-label="Esborra">×</button>
       </div>
     </li>
   `;
@@ -246,7 +246,7 @@ function formatData(timestamp) {
 
 function eliminaSessio(id) {
   const actuals = llegeixSessions();
-  const filtrades = actuals.filter((sessio) => sessio.id !== id);
+  const filtrades = actuals.filter((sessió) => sessió.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(filtrades));
   renderitzaSessions();
   actualitzaMissatge('Sessió eliminada.', 'info');
