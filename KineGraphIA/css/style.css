@@ -341,11 +341,6 @@ textarea#input-enunciat:focus {
   position: relative;
   width: 100%;
   height: clamp(240px, 28vw, 340px);
-}
-
-.chart-card__canvas canvas {
-  width: 100%;
-  height: 100%;
   display: block;
 }
 

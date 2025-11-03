@@ -27,7 +27,24 @@ function exportar(tipus) {
     return;
   }
 
-  const imatge = chart.toBase64Image('image/png', 1);
+  let imatge;
+  try {
+    imatge = chart.getDataURL({
+      type: 'png',
+      pixelRatio: 2,
+      backgroundColor: '#ffffff'
+    });
+  } catch (error) {
+    console.error('[export.js] Error generant la imatge', error);
+    actualitzaMissatge('No s\'ha pogut generar la imatge de la grafica.', 'error');
+    return;
+  }
+
+  if (!imatge) {
+    actualitzaMissatge('No s\'ha pogut generar la imatge de la grafica.', 'error');
+    return;
+  }
+
   const enllac = document.createElement('a');
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 

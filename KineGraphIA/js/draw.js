@@ -2,152 +2,214 @@ let chartPosicio = null;
 let chartVelocitat = null;
 
 const COLORS = ['#2563eb', '#f97316', '#14b8a6', '#9333ea', '#dc2626', '#0ea5e9'];
-const ZOOM_FACTOR = 1.25;
+const ZOOM_FACTOR = 1.4;
+
+const chartStates = {
+  posicio: { start: 0, end: 100 },
+  velocitat: { start: 0, end: 100 }
+};
+
+function obtenirECharts() {
+  if (typeof window === 'undefined' || !window.echarts) {
+    console.warn('[draw.js] ECharts no esta disponible en aquest entorn');
+    return null;
+  }
+  return window.echarts;
+}
+
+function actualitzaEstatDesChart(chart, key) {
+  if (!chart || !chartStates[key]) return;
+  const opcio = chart.getOption();
+  const zoom = Array.isArray(opcio.dataZoom) ? opcio.dataZoom[0] : null;
+  const start = typeof zoom?.start === 'number' ? zoom.start : 0;
+  const end = typeof zoom?.end === 'number' ? zoom.end : 100;
+  chartStates[key].start = start;
+  chartStates[key].end = end;
+}
+
+function creaOpcioBase(titolY, start, end) {
+  return {
+    color: COLORS,
+    backgroundColor: 'transparent',
+    animation: false,
+    grid: { left: 48, right: 24, top: 58, bottom: 76 },
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#0f172a',
+      borderWidth: 0,
+      padding: [10, 12],
+      textStyle: { color: '#e2e8f0', fontSize: 12 },
+      axisPointer: { lineStyle: { color: '#1e3a8a', width: 1.5 } }
+    },
+    legend: {
+      top: 8,
+      icon: 'circle',
+      itemWidth: 10,
+      itemHeight: 10,
+      textStyle: { color: '#1f2937', fontSize: 12 }
+    },
+    toolbox: { show: false },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      name: 'Temps (s)',
+      nameLocation: 'middle',
+      nameGap: 32,
+      axisLine: { lineStyle: { color: '#1e293b' } },
+      axisLabel: { color: '#475569' },
+      axisTick: { show: false },
+      splitLine: { show: false },
+      data: []
+    },
+    yAxis: {
+      type: 'value',
+      name: titolY,
+      nameLocation: 'middle',
+      nameGap: 42,
+      minInterval: 0,
+      axisLine: { lineStyle: { color: '#1e293b' } },
+      axisLabel: { color: '#475569' },
+      splitLine: { lineStyle: { color: 'rgba(148, 163, 184, 0.35)' } }
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+        throttle: 50,
+        minSpan: 5,
+        start,
+        end
+      },
+      {
+        type: 'slider',
+        show: true,
+        height: 14,
+        bottom: 12,
+        start,
+        end,
+        handleSize: 14,
+        handleStyle: { color: '#2563eb', borderColor: '#1d4ed8' },
+        brushSelect: false
+      }
+    ],
+    series: []
+  };
+}
+
+function construeixSeries(mobils, tipus) {
+  const clau = tipus === 'posicio' ? 'posicions' : 'velocitats';
+  const unitat = tipus === 'posicio' ? 'm' : 'm/s';
+  return mobils.map((mobil) => {
+    const valors = Array.isArray(mobil[clau]) ? mobil[clau] : [];
+    const simbol = valors.length > 80 ? 'none' : 'circle';
+    return {
+      name: mobil.nom,
+      type: 'line',
+      smooth: true,
+      symbol: simbol,
+      symbolSize: 6,
+      lineStyle: { width: 4 },
+      areaStyle: { opacity: 0.08 },
+      emphasis: { focus: 'series' },
+      tooltip: {
+        valueFormatter: (value) => {
+          const numeric = Number(value);
+          return Number.isFinite(numeric) ? `${numeric.toFixed(3)} ${unitat}` : `${value}`;
+        }
+      },
+      data: valors
+    };
+  });
+}
+
+function assignaZoom(chart, key, start, end) {
+  if (!chart || !chartStates[key]) return;
+  chartStates[key].start = start;
+  chartStates[key].end = end;
+  chart.dispatchAction({ type: 'dataZoom', dataZoomIndex: 0, start, end });
+  chart.dispatchAction({ type: 'dataZoom', dataZoomIndex: 1, start, end });
+}
+
+function ajustaZoom(chart, key, accio) {
+  const estat = chartStates[key];
+  if (!estat || !chart) return;
+  if (accio === 'reset') {
+    assignaZoom(chart, key, 0, 100);
+    return;
+  }
+  const interval = estat.end - estat.start;
+  const centre = (estat.start + estat.end) / 2;
+  let nouRang = accio === 'in' ? interval / ZOOM_FACTOR : interval * ZOOM_FACTOR;
+  nouRang = Math.min(100, Math.max(5, nouRang));
+  let nouStart = centre - nouRang / 2;
+  let nouEnd = centre + nouRang / 2;
+  if (nouStart < 0) {
+    nouEnd -= nouStart;
+    nouStart = 0;
+  }
+  if (nouEnd > 100) {
+    const exc = nouEnd - 100;
+    nouStart -= exc;
+    nouEnd = 100;
+  }
+  nouStart = Math.max(0, nouStart);
+  nouEnd = Math.min(100, nouEnd);
+  assignaZoom(chart, key, nouStart, nouEnd);
+}
 
 export function inicialitzaCharts() {
-  const posCanvas = document.getElementById('chart-position');
-  const velCanvas = document.getElementById('chart-velocity');
+  const echarts = obtenirECharts();
+  const posContainer = document.getElementById('chart-position');
+  const velContainer = document.getElementById('chart-velocity');
 
-  if (typeof Chart === 'undefined' || !posCanvas || !velCanvas) {
-    console.warn('[draw.js] Chart.js no esta disponible o falta algun canvas');
+  if (!echarts || !posContainer || !velContainer) {
+    console.warn('[draw.js] No s'han pogut inicialitzar les grafiques (ECharts o contenidors no disponibles)');
     return;
   }
 
-  const zoomPlugin =
-    window.ChartZoom ||
-    window.chartjsPluginZoom ||
-    window['chartjs-plugin-zoom'] ||
-    window['chartjs-plugin-zoom.min'];
-  if (zoomPlugin) {
-    Chart.register(zoomPlugin);
-  } else {
-    console.warn('[draw.js] No s\'ha trobat el plugin de zoom de Chart.js');
-  }
+  chartPosicio = echarts.init(posContainer, undefined, { renderer: 'svg' });
+  chartVelocitat = echarts.init(velContainer, undefined, { renderer: 'svg' });
 
-  Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
-  Chart.defaults.font.size = 12;
-  Chart.defaults.color = '#0f172a';
-
-  const baseOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: { mode: 'nearest', intersect: false },
-    animation: false,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: {
-          usePointStyle: true,
-          padding: 14,
-          boxWidth: 12
-        }
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const valor = Number(context.parsed.y.toFixed(3));
-            const unitat = context.dataset.yUnit || '';
-            return `${context.dataset.label}: ${valor} ${unitat}`.trim();
-          }
-        }
-      },
-      zoom: {
-        zoom: {
-          wheel: { enabled: true },
-          pinch: { enabled: true },
-          drag: { enabled: true },
-          mode: 'xy'
-        },
-        pan: {
-          enabled: true,
-          mode: 'xy'
-        },
-        limits: {
-          x: { minRange: 0.01 },
-          y: { minRange: 0.01 }
-        }
-      }
-    },
-    scales: {
-      x: {
-        title: { display: true, text: 'Temps (s)' },
-        ticks: { maxTicksLimit: 10 }
-      },
-      y: {
-        title: { display: true, text: '' },
-        ticks: { maxTicksLimit: 7 }
-      }
-    }
-  };
-
-  chartPosicio = new Chart(posCanvas.getContext('2d'), {
-    type: 'line',
-    data: { labels: [], datasets: [] },
-    options: {
-      ...baseOptions,
-      scales: {
-        ...baseOptions.scales,
-        y: { ...baseOptions.scales.y, title: { display: true, text: 'Posicio (m)' } }
-      }
-    }
+  window.addEventListener('resize', () => {
+    chartPosicio?.resize();
+    chartVelocitat?.resize();
   });
 
-  chartVelocitat = new Chart(velCanvas.getContext('2d'), {
-    type: 'line',
-    data: { labels: [], datasets: [] },
-    options: {
-      ...baseOptions,
-      scales: {
-        ...baseOptions.scales,
-        y: { ...baseOptions.scales.y, title: { display: true, text: 'Velocitat (m/s)' } }
-      }
-    }
-  });
+  chartPosicio.on('datazoom', () => actualitzaEstatDesChart(chartPosicio, 'posicio'));
+  chartVelocitat.on('datazoom', () => actualitzaEstatDesChart(chartVelocitat, 'velocitat'));
 
-  console.log('[draw.js] charts inicialitzats');
+  chartPosicio.setOption(creaOpcioBase('Posicio (m)', chartStates.posicio.start, chartStates.posicio.end));
+  chartVelocitat.setOption(creaOpcioBase('Velocitat (m/s)', chartStates.velocitat.start, chartStates.velocitat.end));
+
+  console.log('[draw.js] ECharts inicialitzat');
 }
 
 export function actualitzaCharts(cronologia) {
-  if (!chartPosicio || !chartVelocitat || !cronologia) return;
+  if (!chartPosicio || !chartVelocitat) return;
 
-  const temps = Array.isArray(cronologia.temps) ? cronologia.temps : [];
-  const series = Array.isArray(cronologia.series) ? cronologia.series : [];
+  const temps = Array.isArray(cronologia?.temps) ? cronologia.temps : [];
+  const series = Array.isArray(cronologia?.series) ? cronologia.series : [];
 
-  const datasetsPos = series.map((serie, index) => ({
-    label: serie.nom,
-    data: serie.posicions,
-    borderColor: COLORS[index % COLORS.length],
-    backgroundColor: `${COLORS[index % COLORS.length]}45`,
-    borderWidth: 4,
-    pointRadius: serie.posicions.length > 80 ? 0 : 2,
-    tension: 0.28,
-    fill: false,
-    yUnit: 'm'
-  }));
+  chartStates.posicio = { start: 0, end: 100 };
+  chartStates.velocitat = { start: 0, end: 100 };
 
-  const datasetsVel = series.map((serie, index) => ({
-    label: serie.nom,
-    data: serie.velocitats,
-    borderColor: COLORS[index % COLORS.length],
-    backgroundColor: `${COLORS[index % COLORS.length]}45`,
-    borderDash: index % 2 === 1 ? [5, 4] : undefined,
-    borderWidth: 4,
-    pointRadius: serie.velocitats.length > 80 ? 0 : 2,
-    tension: 0.18,
-    fill: false,
-    yUnit: 'm/s'
-  }));
+  const opcioPos = creaOpcioBase('Posicio (m)', chartStates.posicio.start, chartStates.posicio.end);
+  opcioPos.xAxis.data = temps;
+  opcioPos.legend.data = series.map((s) => s.nom);
+  opcioPos.series = construeixSeries(series, 'posicio');
 
-  chartPosicio.data.labels = temps;
-  chartPosicio.data.datasets = datasetsPos;
-  chartVelocitat.data.labels = temps;
-  chartVelocitat.data.datasets = datasetsVel;
+  const opcioVel = creaOpcioBase('Velocitat (m/s)', chartStates.velocitat.start, chartStates.velocitat.end);
+  opcioVel.xAxis.data = temps;
+  opcioVel.legend.data = series.map((s) => s.nom);
+  opcioVel.series = construeixSeries(series, 'velocitat');
 
-  ajustaEscales(chartPosicio, temps, datasetsPos);
-  ajustaEscales(chartVelocitat, temps, datasetsVel);
+  chartPosicio.setOption(opcioPos, true);
+  chartVelocitat.setOption(opcioVel, true);
 
-  chartPosicio.update('none');
-  chartVelocitat.update('none');
+  assignaZoom(chartPosicio, 'posicio', 0, 100);
+  assignaZoom(chartVelocitat, 'velocitat', 0, 100);
+
+  chartPosicio.resize();
+  chartVelocitat.resize();
 }
 
 export function obtenirCharts() {
@@ -158,46 +220,29 @@ export function obtenirCharts() {
 }
 
 export function configuraControlsZoom() {
-  const controls = [
-    {
-      zoomIn: document.getElementById('zoom-in-position'),
-      zoomOut: document.getElementById('zoom-out-position'),
-      reset: document.getElementById('zoom-reset-position'),
-      getChart: () => chartPosicio
-    },
-    {
-      zoomIn: document.getElementById('zoom-in-velocity'),
-      zoomOut: document.getElementById('zoom-out-velocity'),
-      reset: document.getElementById('zoom-reset-velocity'),
-      getChart: () => chartVelocitat
-    }
+  const configuracions = [
+    { botoIn: 'zoom-in-position', botoOut: 'zoom-out-position', botoResetId: 'zoom-reset-position', clau: 'posicio' },
+    { botoIn: 'zoom-in-velocity', botoOut: 'zoom-out-velocity', botoResetId: 'zoom-reset-velocity', clau: 'velocitat' }
   ];
 
-  controls.forEach(({ zoomIn, zoomOut, reset, getChart }) => {
-    assignaControl(zoomIn, () => {
-      const chart = getChart();
-      if (chart?.zoom) {
-        chart.zoom({ x: ZOOM_FACTOR, y: ZOOM_FACTOR });
-      }
-    });
-    assignaControl(zoomOut, () => {
-      const chart = getChart();
-      if (chart?.zoom) {
-        chart.zoom({ x: 1 / ZOOM_FACTOR, y: 1 / ZOOM_FACTOR });
-      }
-    });
-    assignaControl(reset, () => {
-      const chart = getChart();
-      if (chart?.resetZoom) {
-        chart.resetZoom();
-      }
-    });
+  configuracions.forEach(({ botoIn, botoOut, botoResetId, clau }) => {
+    const botoMes = document.getElementById(botoIn);
+    const botoMenys = document.getElementById(botoOut);
+    const botoReset = document.getElementById(botoResetId);
+
+    assignaControl(botoMes, () => ajustaZoom(obtenirChartPerClau(clau), clau, 'in'));
+    assignaControl(botoMenys, () => ajustaZoom(obtenirChartPerClau(clau), clau, 'out'));
+    assignaControl(botoReset, () => ajustaZoom(obtenirChartPerClau(clau), clau, 'reset'));
   });
 }
 
 export function reiniciaZoom() {
-  chartPosicio?.resetZoom?.();
-  chartVelocitat?.resetZoom?.();
+  assignaZoom(chartPosicio, 'posicio', 0, 100);
+  assignaZoom(chartVelocitat, 'velocitat', 0, 100);
+}
+
+function obtenirChartPerClau(clau) {
+  return clau === 'posicio' ? chartPosicio : chartVelocitat;
 }
 
 function assignaControl(boto, accio) {
@@ -210,26 +255,5 @@ function assignaControl(boto, accio) {
   boto.addEventListener('touchstart', handler, { passive: false });
 }
 
-function ajustaEscales(chart, temps, datasets) {
-  if (!chart) return;
-  const valors = datasets.flatMap((ds) => ds.data.filter((v) => Number.isFinite(v)));
-  if (valors.length === 0) {
-    chart.options.scales.y.suggestedMin = undefined;
-    chart.options.scales.y.suggestedMax = undefined;
-  } else {
-    const min = Math.min(...valors);
-    const max = Math.max(...valors);
-    const marge = max - min || 1;
-    const buffer = marge * 0.12;
-    chart.options.scales.y.suggestedMin = min - buffer;
-    chart.options.scales.y.suggestedMax = max + buffer;
-  }
-
-  if (Array.isArray(temps) && temps.length > 1) {
-    chart.options.scales.x.suggestedMin = 0;
-    chart.options.scales.x.suggestedMax = temps[temps.length - 1];
-    chart.options.scales.x.ticks.maxTicksLimit = Math.min(10, temps.length);
-  }
-}
-
 console.log('[draw.js] carregat');
+

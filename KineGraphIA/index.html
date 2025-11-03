@@ -6,8 +6,7 @@
   <title>KineGraphIA - Interpreta i visualitza cinematica</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" crossorigin="anonymous"></script>
   <script type="module" src="js/app.js" defer></script>
 </head>
 <body>
@@ -78,9 +77,7 @@
               <button id="zoom-reset-position" class="btn btn--icon" type="button" aria-label="Restableix zoom posicio">R</button>
             </div>
           </div>
-          <div class="chart-card__canvas">
-            <canvas id="chart-position" width="640" height="360" aria-label="Grafica posicio temps"></canvas>
-          </div>
+          <div id="chart-position" class="chart-card__canvas" role="img" aria-label="Grafica posicio temps"></div>
         </div>
         <div class="chart-card">
           <div class="chart-card__header">
@@ -91,9 +88,7 @@
               <button id="zoom-reset-velocity" class="btn btn--icon" type="button" aria-label="Restableix zoom velocitat">R</button>
             </div>
           </div>
-          <div class="chart-card__canvas">
-            <canvas id="chart-velocity" width="640" height="360" aria-label="Grafica velocitat temps"></canvas>
-          </div>
+          <div id="chart-velocity" class="chart-card__canvas" role="img" aria-label="Grafica velocitat temps"></div>
         </div>
       </div>
     </section>
