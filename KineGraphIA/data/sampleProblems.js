@@ -1,4 +1,4 @@
-﻿export const SAMPLE_PROBLEMS = [
+export const SAMPLE_PROBLEMS = [
   {
     titol: 'Cotxes en MRU i MRUA',
     enunciat:
@@ -45,7 +45,7 @@
   {
     titol: 'Triple duel de corredors',
     enunciat:
-      'Tres atletes surten de la mateixa línia. El primer fa un MRU a 6 m/s, el segon accelera 0,8 m/s² des del repòs i el tercer surt amb 3 m/s i accelera 0,4 m/s². Observa\'ls durant 18 segons.',
+      'Tres atletes surten de la mateixa línia. El primer fa un MRU a 6 m/s, el segon accelera 0,8 m/s² des del repòs i el tercer surt amb 3 m/s i accelera 0,4 m/s². Observa’ls durant 18 segons.',
     resposta: {
       mobils: [
         { nom: 'Corredor A', tipus: 'MRU', v0: 6, a: 0, s0: 0, t: 18 },

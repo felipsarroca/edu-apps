@@ -1,4 +1,4 @@
-﻿import { normalitzaMobil, calculaPosicio, calculaVelocitat, calculaAcceleracio } from './physics.js';
+import { normalitzaMobil, calculaPosicio, calculaVelocitat, calculaAcceleracio } from './physics.js';
 import { seriesColor, createCardStyles } from './theme.js';
 
 const elements = {
@@ -23,7 +23,7 @@ const ETIQUETES = {
   x0: creaEtiquetaEscalar('x', '0'),
   xf: creaEtiquetaEscalar('x', 'f'),
   t: creaEtiquetaEscalar('t'),
-  angle: creaEtiquetaEscalar('θ')
+  angle: creaEtiquetaEscalar('?')
 };
 
 export function inicialitzaUI() {
@@ -124,7 +124,7 @@ export function mostraResultats(mobils) {
 export function netejaResultats() {
   if (elements.resultatsContainer) {
     elements.resultatsContainer.innerHTML =
-      '<p class="placeholder">Aquí veuràs les dades dels mòbils un cop la IA analitzi l\'enunciat.</p>';
+      '<p class="placeholder">Aqu� veur�s les dades dels m�bils un cop la IA analitzi l\'enunciat.</p>';
   }
 }
 
@@ -161,60 +161,4 @@ function creaFilaMagnitud(clau, valor) {
   const etiqueta = ETIQUETES[clau] ?? clau;
   const vectorial = MAGNITUDS_VECTORIALS.has(clau);
   return `
-    <div class="mobil-card__fila" data-vector="${vectorial}">
-      <dt>${etiqueta}</dt>
-      <dd class="${vectorial ? 'is-vector' : 'is-scalar'}">${valor}</dd>
-    </div>
-  `;
-}
-
-function preparaMagnituds(dades) {
-  const tempsFinal = dades.t;
-  const posicioFinal = calculaPosicio(dades, tempsFinal);
-  const velocitatFinal = calculaVelocitat(dades, tempsFinal);
-  const acceleracio = calculaAcceleracio(dades, tempsFinal);
-
-  const llista = [
-    { clau: 'v0', valor: formatUnitat(dades.v0, 'm/s') },
-    { clau: 'vf', valor: formatUnitat(velocitatFinal, 'm/s') },
-    { clau: 'a', valor: formatUnitat(acceleracio, 'm/s²') },
-    { clau: 'x0', valor: formatUnitat(dades.s0, 'm') },
-    { clau: 'xf', valor: formatUnitat(posicioFinal, 'm') },
-    { clau: 't', valor: formatUnitat(dades.t, 's') }
-  ];
-
-  if (dades.tipus === 'TIR_PARABOLIC' && Number.isFinite(dades.angle)) {
-    llista.push({ clau: 'angle', valor: formatUnitat(dades.angle, '°') });
-  }
-
-  return llista;
-}
-
-function formatUnitat(valor, unitat) {
-  if (valor === undefined || valor === null || valor === '') return '';
-  if (!Number.isFinite(Number(valor))) return `${valor} ${unitat}`;
-  const numeric = Number(valor);
-  const decimals = Math.abs(numeric) < 10 ? 2 : 1;
-  const net = treuZerosFinals(numeric.toFixed(decimals));
-  return `${net} ${unitat}`;
-}
-
-function treuZerosFinals(text) {
-  return text.replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
-}
-
-function creaEtiquetaVector(base, sub = '') {
-  const subscript = sub ? `<sub>${sub}</sub>` : '';
-  return `<span class="symbol symbol--vector">${base}${subscript}</span>`;
-}
-
-function creaEtiquetaEscalar(base, sub = '') {
-  const subscript = sub ? `<sub>${sub}</sub>` : '';
-  return `<span class="symbol symbol--scalar">${base}${subscript}</span>`;
-}
-
-function creaEstilInline(estils) {
-  return `--card-accent:${estils.accent};--card-border:${estils.border};--card-glow:${estils.glow};--card-soft:${estils.soft};--card-shadow:${estils.shadow};`;
-}
-
-console.log('[ui.js] carregat');
+    <div class="mobil-card">[...]
