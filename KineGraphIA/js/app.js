@@ -1,4 +1,4 @@
-﻿import {
+\u00ef\u00bb\u00bfimport {
   inicialitzaUI,
   ompleSelectorExemples,
   onAnalitza,
@@ -118,7 +118,7 @@ function arrencaAplicacio() {
     actualitzaMissatge("Cap enunciat carregat.", "info");
   });
 
-  console.log("[app.js] aplicació inicialitzada");
+  console.log("[app.js] aplicaci\u00F3 inicialitzada");
 }
 async function gestionaAnalisi() {
   const enunciat = obtenirEnunciat();
@@ -146,11 +146,11 @@ async function gestionaAnalisi() {
     reiniciaZoom();
     estableixDisponibilitatExport(true);
 
-    const titol = estat.exempleSeleccionat?.titol ?? "enunciat introduït";
+    const titol = estat.exempleSeleccionat?.titol ?? "enunciat introdu\u00EFt";
     actualitzaMissatge(`Resultats generats a partir de "${titol}".`, "info");
   } catch (error) {
     console.error("[app.js] Error durant l'an\u00E0lisi", error);
-    actualitzaMissatge("S'ha produït un problema inesperat en processar l'enunciat.", "error");
+    actualitzaMissatge("S'ha produ\u00EFt un problema inesperat en processar l'enunciat.", "error");
   } finally {
     setAnalitzaDeshabilitat(false);
   }

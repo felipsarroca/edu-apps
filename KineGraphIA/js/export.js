@@ -1,4 +1,4 @@
-﻿import { obtenirBotonsExport, actualitzaMissatge } from './ui.js';
+\u00ef\u00bb\u00bfimport { obtenirBotonsExport, actualitzaMissatge } from './ui.js';
 import { obtenirCharts } from './draw.js';
 
 let botoExport = null;
@@ -33,12 +33,12 @@ function exportar() {
     });
   } catch (error) {
     console.error('[export.js] Error generant la imatge', error);
-    actualitzaMissatge('No s\'ha pogut generar la imatge de la gràfica.', 'error');
+    actualitzaMissatge('No s\'ha pogut generar la imatge de la gr\u00E0fica.', 'error');
     return;
   }
 
   if (!imatge) {
-    actualitzaMissatge('No s\'ha pogut generar la imatge de la gràfica.', 'error');
+    actualitzaMissatge('No s\'ha pogut generar la imatge de la gr\u00E0fica.', 'error');
     return;
   }
 
@@ -48,7 +48,7 @@ function exportar() {
   enllac.href = imatge;
   enllac.download = `kinegraphia-${mode}-${timestamp}.png`;
   enllac.click();
-  actualitzaMissatge('Gràfica descarregada correctament.', 'info');
+  actualitzaMissatge('Gr\u00E0fica descarregada correctament.', 'info');
 }
 
 console.log('[export.js] carregat');

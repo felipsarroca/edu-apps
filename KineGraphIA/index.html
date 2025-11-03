@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="ca">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KineGraphIA - Interpreta i visualitza cinemàtica</title>
+  <title>KineGraphIA - Interpreta i visualitza cinem&agrave;tica</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" crossorigin="anonymous"></script>
@@ -12,7 +12,7 @@
 <body>
   <header class="hero">
     <h1 class="hero__title">KineGraphIA</h1>
-    <p class="hero__subtitle">La cinemàtica explicada per la intel·ligència artificial</p>
+    <p class="hero__subtitle">La cinem&agrave;tica explicada per la intel&middot;lig&egrave;ncia artificial</p>
   </header>
 
   <main class="layout">
@@ -23,14 +23,14 @@
           <span id="status-missatge" class="status status--info" role="status">Cap enunciat carregat.</span>
         </div>
         <label class="select">
-          <span class="select__label">Exemple ràpid</span>
+          <span class="select__label">Exemple r&agrave;pid</span>
           <select id="sample-selector" class="select__control">
             <option value="">Cap exemple carregat</option>
           </select>
         </label>
       </header>
       <div class="block__body">
-        <textarea id="input-enunciat" rows="6" placeholder="Escriu aquí l'enunciat del problema..."></textarea>
+        <textarea id="input-enunciat" rows="6" placeholder="Escriu aqu&iacute; l'enunciat del problema..."></textarea>
         <div class="action-row">
           <button id="btn-analitza" class="btn btn--primary">Analitza amb IA</button>
           <button id="btn-restableix" class="btn btn--ghost">Neteja</button>
@@ -38,24 +38,24 @@
       </div>
     </section>
 
-    <div class="workspace" role="region" aria-label="Resultats i gràfica">
+    <div class="workspace" role="region" aria-label="Resultats i gr&agrave;fica">
       <section class="block block--results" aria-labelledby="resultats-heading">
         <header class="block__head">
           <h2 id="resultats-heading">Resultats interpretats</h2>
         </header>
         <div class="block__body" id="resultats-container">
-          <p class="placeholder">Aquí veuràs les dades dels mòbils un cop la IA analitzi l'enunciat.</p>
+          <p class="placeholder">Aqu&iacute; veur&agrave;s les dades dels m&ograve;bils un cop la IA analitzi l'enunciat.</p>
         </div>
       </section>
 
       <section class="block block--charts" aria-labelledby="grafiques-heading">
         <header class="block__head block__head--split">
-          <h2 id="grafiques-heading">Gràfica del moviment</h2>
+          <h2 id="grafiques-heading">Gr&agrave;fica del moviment</h2>
           <div class="chart-actions">
-            <div class="chart-toggle" role="group" aria-label="Selecciona la gràfica">
-              <button class="btn btn--toggle is-active" id="toggle-position" data-chart="position">Posició</button>
+            <div class="chart-toggle" role="group" aria-label="Selecciona la gr&agrave;fica">
+              <button class="btn btn--toggle is-active" id="toggle-position" data-chart="position">Posici&oacute;</button>
               <button class="btn btn--toggle" id="toggle-velocity" data-chart="velocity">Velocitat</button>
-              <button class="btn btn--toggle" id="toggle-acceleration" data-chart="acceleration">Acceleració</button>
+              <button class="btn btn--toggle" id="toggle-acceleration" data-chart="acceleration">Acceleraci&oacute;</button>
             </div>
             <div class="chart-buttons">
               <button id="zoom-out-chart" class="btn btn--icon" type="button" aria-label="Redueix zoom">-</button>
@@ -66,7 +66,7 @@
           </div>
         </header>
         <div class="block__body">
-          <div id="chart-main" class="chart-canvas" role="img" aria-label="Gràfica de moviment"></div>
+          <div id="chart-main" class="chart-canvas" role="img" aria-label="Gr&agrave;fica de moviment"></div>
         </div>
       </section>
     </div>
@@ -83,22 +83,22 @@
 
     <section class="block block--animation" aria-labelledby="animacio-heading">
       <header class="block__head">
-        <h2 id="animacio-heading">Animació del moviment</h2>
+        <h2 id="animacio-heading">Animaci&oacute; del moviment</h2>
       </header>
       <div class="block__body">
-        <div id="animacio-escenari" class="animacio__viewport" role="img" aria-label="Representació visual del moviment">
-          <p class="placeholder">L'animació apareixerà aquí quan calculis un problema.</p>
+        <div id="animacio-escenari" class="animacio__viewport" role="img" aria-label="Representaci&oacute; visual del moviment">
+          <p class="placeholder">L'animaci&oacute; apareixer&agrave; aqu&iacute; quan calculis un problema.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer" aria-label="Informació de llicència">
+  <footer class="footer" aria-label="Informaci&oacute; de llic&egrave;ncia">
     <div class="footer__license">
-      <img src="assets/CC_BY-NC-SA.svg" alt="Llicència Creative Commons BY-NC-SA" class="footer__license-logo">
+      <img src="assets/CC_BY-NC-SA.svg" alt="Llic&egrave;ncia Creative Commons BY-NC-SA" class="footer__license-logo">
       <div class="footer__license-text">
-        <p>Aplicació creada per <a href="https://ja.cat/edu-apps" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assistència de la IA</p>
-        <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-SA-NC 4.0</a></p>
+        <p>Aplicaci&oacute; creada per <a href="https://ja.cat/edu-apps" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assist&egrave;ncia de la IA</p>
+        <p>Obra sota llic&egrave;ncia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-SA-NC 4.0</a></p>
       </div>
     </div>
   </footer>

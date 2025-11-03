@@ -1,4 +1,4 @@
-﻿const TIPUS_PERMESOS = ['MRU', 'MRUA', 'CAIGUDA', 'TIR_VERTICAL', 'TIR_PARABOLIC'];
+\u00ef\u00bb\u00bfconst TIPUS_PERMESOS = ['MRU', 'MRUA', 'CAIGUDA', 'TIR_VERTICAL', 'TIR_PARABOLIC'];
 
 export function calculaCronologia(mobils, opcions = {}) {
   if (!Array.isArray(mobils) || mobils.length === 0) {

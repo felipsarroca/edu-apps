@@ -1,4 +1,4 @@
-﻿export const SAMPLE_PROBLEMS = [
+\u00ef\u00bb\u00bfexport const SAMPLE_PROBLEMS = [
   {
     titol: 'Cotxes en MRU i MRUA',
     enunciat: "Dos cotxes parteixen alhora. El primer surt del rep\u00F2s i accelera 2 m/s\u00B2. El segon mant\u00E9 una velocitat constant de 10 m/s.",

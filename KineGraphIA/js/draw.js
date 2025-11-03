@@ -9,7 +9,7 @@ const chartState = { start: 0, end: 100 };
 
 function obtenirECharts() {
   if (typeof window === 'undefined' || !window.echarts) {
-    console.warn('[draw.js] ECharts no està disponible en aquest entorn');
+    console.warn('[draw.js] ECharts no est\u00E0 disponible en aquest entorn');
     return null;
   }
   return window.echarts;
@@ -110,7 +110,7 @@ function creaSerie({ nom, valors, color, unitat, senseMarcador, ample, estil = '
 
 function construeixSeries(series, mode) {
   const clau = mode === 'position' ? 'posicions' : mode === 'velocity' ? 'velocitats' : 'acceleracions';
-  const unitat = mode === 'position' ? 'm' : mode === 'velocity' ? 'm/s' : 'm/s²';
+  const unitat = mode === 'position' ? 'm' : mode === 'velocity' ? 'm/s' : 'm/s\u00c2\u00b2';
   const resultat = [];
 
   series.forEach((serie, index) => {
@@ -121,7 +121,7 @@ function construeixSeries(series, mode) {
     if (mode === 'velocity' && Array.isArray(serie.velocitatX) && Array.isArray(serie.velocitatY)) {
       resultat.push(
         creaSerie({
-          nom: `${serie.nom} · |v|`,
+          nom: `${serie.nom} \u00c2\u00b7 |v|`,
           valors,
           color: baseColor,
           unitat,
@@ -130,7 +130,7 @@ function construeixSeries(series, mode) {
           area: withAlpha(baseColor, 0.08)
         }),
         creaSerie({
-          nom: `${serie.nom} · v_x`,
+          nom: `${serie.nom} \u00c2\u00b7 v_x`,
           valors: serie.velocitatX,
           color: withAlpha(baseColor, 0.75),
           unitat,
@@ -139,7 +139,7 @@ function construeixSeries(series, mode) {
           estil: 'dashed'
         }),
         creaSerie({
-          nom: `${serie.nom} · v_y`,
+          nom: `${serie.nom} \u00c2\u00b7 v_y`,
           valors: serie.velocitatY,
           color: withAlpha(baseColor, 0.6),
           unitat,
@@ -211,10 +211,10 @@ function renderitzaChart(mode = currentMode) {
 
   const titol =
     mode === 'position'
-      ? 'Posició (m)'
+      ? 'Posici\u00F3 (m)'
       : mode === 'velocity'
       ? 'Velocitat (m/s)'
-      : 'Acceleració (m/s²)';
+      : 'Acceleraci\u00F3 (m/s\u00c2\u00b2)';
 
   const opcions = creaOpcioBase(titol);
   opcions.xAxis.data = cronologiaActual.temps;
@@ -235,7 +235,7 @@ export function inicialitzaCharts() {
   const contenidor = document.getElementById('chart-main');
 
   if (!echarts || !contenidor) {
-    console.warn("[draw.js] No s'han pogut inicialitzar les gràfiques (ECharts o contenidor no disponible)");
+    console.warn("[draw.js] No s'han pogut inicialitzar les gr\u00E0fiques (ECharts o contenidor no disponible)");
     return;
   }
 

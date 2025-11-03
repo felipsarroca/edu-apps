@@ -1,4 +1,4 @@
-﻿import { normalitzaMobil, calculaPosicio, calculaVelocitat, calculaAcceleracio } from './physics.js';
+\u00ef\u00bb\u00bfimport { normalitzaMobil, calculaPosicio, calculaVelocitat, calculaAcceleracio } from './physics.js';
 import { seriesColor, createCardStyles } from './theme.js';
 
 const elements = {
@@ -23,7 +23,7 @@ const ETIQUETES = {
   x0: creaEtiquetaEscalar('x', '0'),
   xf: creaEtiquetaEscalar('x', 'f'),
   t: creaEtiquetaEscalar('t'),
-  angle: creaEtiquetaEscalar('θ')
+  angle: creaEtiquetaEscalar('\u00ce\u00b8')
 };
 
 export function inicialitzaUI() {
@@ -124,7 +124,7 @@ export function mostraResultats(mobils) {
 export function netejaResultats() {
   if (elements.resultatsContainer) {
     elements.resultatsContainer.innerHTML =
-      '<p class="placeholder">Aquí veuràs les dades dels mòbils un cop la IA analitzi l\'enunciat.</p>';
+      '<p class="placeholder">Aqu\u00ED veur\u00E0s les dades dels m\u00F2bils un cop la IA analitzi l\'enunciat.</p>';
   }
 }
 
@@ -177,14 +177,14 @@ function preparaMagnituds(dades) {
   const llista = [
     { clau: 'v0', valor: formatUnitat(dades.v0, 'm/s') },
     { clau: 'vf', valor: formatUnitat(velocitatFinal, 'm/s') },
-    { clau: 'a', valor: formatUnitat(acceleracio, 'm/s²') },
+    { clau: 'a', valor: formatUnitat(acceleracio, 'm/s\u00c2\u00b2') },
     { clau: 'x0', valor: formatUnitat(dades.s0, 'm') },
     { clau: 'xf', valor: formatUnitat(posicioFinal, 'm') },
     { clau: 't', valor: formatUnitat(dades.t, 's') }
   ];
 
   if (dades.tipus === 'TIR_PARABOLIC' && Number.isFinite(dades.angle)) {
-    llista.push({ clau: 'angle', valor: formatUnitat(dades.angle, '°') });
+    llista.push({ clau: 'angle', valor: formatUnitat(dades.angle, '\u00c2\u00b0') });
   }
 
   return llista;
