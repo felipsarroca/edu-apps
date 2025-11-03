@@ -1,4 +1,5 @@
-﻿const COLORS = ['#2563eb', '#f97316', '#14b8a6', '#9333ea', '#dc2626', '#0ea5e9'];
+﻿import { SERIES_COLORS, seriesColor, withAlpha } from './theme.js';
+
 const ZOOM_FACTOR = 1.4;
 
 let chartPrincipal = null;
@@ -16,7 +17,7 @@ function obtenirECharts() {
 
 function creaOpcioBase(titolY) {
   return {
-    color: COLORS,
+    color: SERIES_COLORS,
     backgroundColor: '#ffffff',
     animation: false,
     grid: { left: 55, right: 28, top: 60, bottom: 80 },
@@ -84,35 +85,61 @@ function creaOpcioBase(titolY) {
 
 function construeixSeries(series, mode) {
   const clau =
-    mode === 'position' ? 'posicions' : mode === 'velocity' ? 'velocitats' : 'acceleracions';
-  const unitat = mode === 'position' ? 'm' : mode === 'velocity' ? 'm/s' : 'm/sà';
+    mode === "position" ? "posicions" : mode === "velocity" ? "velocitats" : "acceleracions";
+  const unitat = mode === "position" ? "m" : mode === "velocity" ? "m/s" : "m/s²";
+  const resultat = [];
 
-  return series.map((serie) => {
+  series.forEach((serie, index) => {
+    const baseColor = seriesColor(index);
     const valors = Array.isArray(serie[clau]) ? serie[clau] : [];
-    const senseMarcador = valors.length > 120;
-    return {
-      name: serie.nom,
-      type: 'line',
-      smooth: true,
-      symbol: senseMarcador ? 'none' : 'circle',
-      symbolSize: 6,
-      lineStyle: { width: 4 },
-      areaStyle: { opacity: 0.1 },
-      emphasis: { focus: 'series' },
-      tooltip: {
-        valueFormatter: (value) => {
-          const numeric = Number(value);
-          if (Number.isFinite(numeric)) {
-            const decimals = Math.abs(numeric) < 10 ? 3 : 2;
-            const text = numeric.toFixed(decimals).replace(/\.?0+$/, '');
-            return `${text} ${unitat}`;
-          }
-          return `${value} ${unitat}`;
-        }
-      },
-      data: valors
-    };
+    const senseMarcador = valors.length > 140;
+
+    if (mode === "velocity" && Array.isArray(serie.velocitatX) && Array.isArray(serie.velocitatY)) {
+      resultat.push(
+        creaSerie({
+          nom: `${serie.nom} · |v|`,
+          valors,
+          color: baseColor,
+          unitat,
+          senseMarcador,
+          ample: 4,
+          area: withAlpha(baseColor, 0.08)
+        }),
+        creaSerie({
+          nom: `${serie.nom} · vₓ`,
+          valors: serie.velocitatX,
+          color: withAlpha(baseColor, 0.75),
+          unitat,
+          senseMarcador,
+          ample: 2,
+          estil: "dashed"
+        }),
+        creaSerie({
+          nom: `${serie.nom} · v_y`,
+          valors: serie.velocitatY,
+          color: withAlpha(baseColor, 0.6),
+          unitat,
+          senseMarcador,
+          ample: 2,
+          estil: "dotted"
+        })
+      );
+    } else {
+      resultat.push(
+        creaSerie({
+          nom: serie.nom,
+          valors,
+          color: baseColor,
+          unitat,
+          senseMarcador,
+          ample: 4,
+          area: withAlpha(baseColor, 0.08)
+        })
+      );
+    }
   });
+
+  return resultat;
 }
 
 function actualitzaEstatZoom(chart) {
@@ -167,10 +194,7 @@ function renderitzaChart(mode = currentMode) {
       ? 'Velocitat (m/s)'
       : 'Acceleracià (m/sà)';
 
-  const opcions = creaOpcioBase(titol);
-  opcions.xAxis.data = cronologiaActual.temps;
-  opcions.legend.data = cronologiaActual.series.map((s) => s.nom);
-  opcions.series = construeixSeries(cronologiaActual.series, mode);
+  const opcions = creaOpcioBase(titol);`r`n  opcions.xAxis.data = cronologiaActual.temps;`r`n  const llistatSeries = construeixSeries(cronologiaActual.series, mode);`r`n  opcions.legend.data = llistatSeries.map((s) => s.name);`r`n  opcions.series = llistatSeries;
 
   chartPrincipal.setOption(opcions, true);
   document
@@ -255,6 +279,39 @@ export function reiniciaZoom() {
   assignaZoom(0, 100);
 }
 
+function creaSerie({ nom, valors, color, unitat, senseMarcador, ample, estil = 'solid', area }) {
+  return {
+    name: nom,
+    type: 'line',
+    smooth: true,
+    symbol: senseMarcador ? 'none' : 'circle',
+    symbolSize: 6,
+    lineStyle: { width: ample, color, type: estil },
+    areaStyle: area ? { color: area } : undefined,
+    emphasis: { focus: 'series' },
+    tooltip: {
+      valueFormatter: (value) => {
+        const numeric = Number(value);
+        if (Number.isFinite(numeric)) {
+          const decimals = Math.abs(numeric) < 10 ? 3 : 2;
+          const text = numeric.toFixed(decimals).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+          return `${text} ${unitat}`;
+        }
+        return `${value} ${unitat}`;
+      }
+    },
+    data: Array.isArray(valors) ? valors : []
+  };
+}
 console.log('[draw.js] carregat');
+
+
+
+
+
+
+
+
+
 
 

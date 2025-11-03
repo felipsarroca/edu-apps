@@ -32,7 +32,8 @@ export function createCardStyles(hex) {
     border: withAlpha(hex, 0.45),
     glow: withAlpha(hex, 0.12),
     accent: hex,
-    soft: tint(hex, 0.7)
+    soft: tint(hex, 0.7),
+    shadow: withAlpha(hex, 0.25)
   };
 }
 
@@ -52,4 +53,3 @@ function hexToRgb(hex) {
 }
 
 console.log('[theme.js] Paleta carregada');
-

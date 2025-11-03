@@ -11,11 +11,22 @@ export function calculaCronologia(mobils, opcions = {}) {
 
   const series = mobils.map((mobil) => {
     const dades = normalitzaMobil(mobil);
+    const velocitatX =
+      dades.tipus === 'TIR_PARABOLIC'
+        ? temps.map((t) => Number(calculaVelocitatComponent(dades, t, 'x').toFixed(4)))
+        : undefined;
+    const velocitatY =
+      dades.tipus === 'TIR_PARABOLIC'
+        ? temps.map((t) => Number(calculaVelocitatComponent(dades, t, 'y').toFixed(4)))
+        : undefined;
+
     return {
       nom: dades.nom,
       tipus: dades.tipus,
       posicions: temps.map((t) => Number(calculaPosicio(dades, t).toFixed(4))),
       velocitats: temps.map((t) => Number(calculaVelocitat(dades, t).toFixed(4))),
+      velocitatX,
+      velocitatY,
       acceleracions: temps.map((t) => Number(calculaAcceleracio(dades, t).toFixed(4)))
     };
   });
@@ -36,7 +47,7 @@ export function generaResumMobil(mobil) {
   return components.join(' | ');
 }
 
-function normalitzaMobil(raw) {
+export function normalitzaMobil(raw) {
   const tipus = (raw.tipus || '').toUpperCase();
   const tipusValid = TIPUS_PERMESOS.includes(tipus) ? tipus : 'MRU';
 
@@ -58,7 +69,7 @@ function convertirNombre(valor, perDefecte) {
   return Number.isFinite(num) ? num : perDefecte;
 }
 
-function calculaPosicio(mobil, temps) {
+export function calculaPosicio(mobil, temps) {
   switch (mobil.tipus) {
     case 'MRU':
       return mobil.s0 + mobil.v0 * temps;
@@ -84,7 +95,7 @@ function calculaPosicio(mobil, temps) {
   }
 }
 
-function calculaVelocitat(mobil, temps) {
+export function calculaVelocitat(mobil, temps) {
   switch (mobil.tipus) {
     case 'MRU':
       return mobil.v0;
@@ -105,7 +116,29 @@ function calculaVelocitat(mobil, temps) {
   }
 }
 
-function calculaAcceleracio(mobil) {
+export function calculaVelocitatComponent(mobil, temps, component = 'x') {
+  const dades = mobil?.tipus ? mobil : normalitzaMobil(mobil);
+  switch (dades.tipus) {
+    case 'TIR_PARABOLIC': {
+      const angleRad = (dades.angle * Math.PI) / 180;
+      const vx = dades.v0 * Math.cos(angleRad);
+      const vy = dades.v0 * Math.sin(angleRad) + (-dades.g) * temps;
+      if (component === 'x') return vx;
+      if (component === 'y') return vy;
+      return calculaVelocitat(dades, temps);
+    }
+    case 'TIR_VERTICAL':
+    case 'CAIGUDA':
+      if (component === 'y') {
+        return dades.v0 + (-dades.g) * temps;
+      }
+      return calculaVelocitat(dades, temps);
+    default:
+      return calculaVelocitat(dades, temps);
+  }
+}
+
+export function calculaAcceleracio(mobil, _temps = 0) {
   switch (mobil.tipus) {
     case 'MRU':
       return 0;
@@ -155,4 +188,9 @@ function formatNumber(valor, unitat, etiqueta) {
 }
 
 console.log('[physics.js] carregat');
+
+
+
+
+
 

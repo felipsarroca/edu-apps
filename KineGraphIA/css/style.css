@@ -239,14 +239,15 @@ textarea#input-enunciat:focus {
 .mobil-card {
   border-radius: 18px;
   padding: 1.2rem 1.3rem 1.2rem 1.6rem;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(14, 165, 233, 0.06));
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  box-shadow: 0 18px 34px -28px rgba(15, 23, 42, 0.5);
+  background: linear-gradient(135deg, var(--card-glow, rgba(37, 99, 235, 0.1)), rgba(255, 255, 255, 0.96));
+  border: 1px solid var(--card-border, rgba(37, 99, 235, 0.28));
+  box-shadow: 0 20px 32px -26px var(--card-shadow, rgba(15, 23, 42, 0.45));
   display: flex;
   flex-direction: column;
   gap: 1rem;
   position: relative;
   overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.22s ease;
 }
 
 .mobil-card::before {
@@ -254,7 +255,7 @@ textarea#input-enunciat:focus {
   position: absolute;
   inset: 0;
   border-radius: 18px;
-  border-left: 6px solid rgba(37, 99, 235, 0.65);
+  border-left: 6px solid var(--card-accent, rgba(37, 99, 235, 0.65));
   pointer-events: none;
 }
 
@@ -268,15 +269,17 @@ textarea#input-enunciat:focus {
 .mobil-card__capcalera h3 {
   font-size: 1.1rem;
   letter-spacing: -0.01em;
+  color: var(--card-accent, #1e3a8a);
 }
 
 .mobil-card__etiqueta {
   font-size: 0.85rem;
   padding: 0.35rem 0.6rem;
   border-radius: 999px;
-  background: rgba(37, 99, 235, 0.15);
-  color: #1e3a8a;
+  background: var(--card-soft, rgba(37, 99, 235, 0.12));
+  color: var(--card-accent, #1e3a8a);
   font-weight: 600;
+  border: 1px solid var(--card-border, rgba(37, 99, 235, 0.3));
 }
 
 .mobil-card__dades {
@@ -292,7 +295,7 @@ textarea#input-enunciat:focus {
   gap: 0.25rem;
   padding: 0.65rem 0.75rem;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(148, 163, 184, 0.25);
 }
 
@@ -300,6 +303,7 @@ textarea#input-enunciat:focus {
   font-size: 0.88rem;
   font-weight: 600;
   color: rgba(15, 23, 42, 0.7);
+  font-style: italic;
 }
 
 
@@ -316,6 +320,8 @@ textarea#input-enunciat:focus {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  font-style: italic;
+  color: var(--card-accent, #1e3a8a);
 }
 
 .symbol--scalar {
@@ -517,10 +523,21 @@ textarea#input-enunciat:focus {
 }
 
 
+.mobil-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 38px -24px var(--card-shadow, rgba(15, 23, 42, 0.55));
+}
 
 
+.mobil-card__fila[data-vector='true'] {
+  border-color: var(--card-border, rgba(37, 99, 235, 0.35));
+}
 
+.mobil-card__fila dd.is-vector {
+  color: var(--card-accent, #1d4ed8);
+}
 
-
-
+.mobil-card__fila dd.is-scalar {
+  color: #0f172a;
+}
 
