@@ -315,12 +315,14 @@ textarea#input-enunciat:focus {
 
 
 .symbol {
-  font-weight: 650;
-  font-size: 0.95rem;
+  position: relative;
   display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  align-items: baseline;
+  gap: 0.08em;
+  font-size: 0.98rem;
+  font-weight: 650;
   font-style: italic;
+  line-height: 1;
   color: var(--card-accent, #1e3a8a);
 }
 
@@ -329,34 +331,40 @@ textarea#input-enunciat:focus {
 }
 
 .symbol sub {
-  font-size: 0.65em;
-  margin-left: 0.05rem;
+  font-size: 0.62em;
+  transform: translateY(0.2em);
+  margin-left: -0.18em;
+  font-style: normal;
 }
 
 .symbol--vector {
   position: relative;
-  padding-top: 0.4rem;
+  padding-left: 0.05em;
+  padding-right: 0.1em;
+}
+
+.symbol--vector::before,
+.symbol--vector::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
 }
 
 .symbol--vector::before {
-  content: '';
-  position: absolute;
-  left: 0.1rem;
-  right: 0.1rem;
-  top: 0.1rem;
-  height: 0.12rem;
-  background: var(--color-accent);
+  left: 0.05em;
+  right: 0.3em;
+  top: -0.45em;
+  height: 0.08em;
+  background: var(--card-accent, #1e3a8a);
   border-radius: 999px;
 }
 
 .symbol--vector::after {
-  content: '';
-  position: absolute;
-  right: -0.05rem;
-  top: -0.05rem;
-  border-width: 0.22rem 0 0.22rem 0.35rem;
+  right: 0;
+  top: -0.54em;
+  border-width: 0.2em 0 0.2em 0.3em;
   border-style: solid;
-  border-color: transparent transparent transparent var(--color-accent);
+  border-color: transparent transparent transparent var(--card-accent, #1e3a8a);
 }
 
 .sessions {
