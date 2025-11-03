@@ -7,11 +7,19 @@
   sessionsList: null,
   sessionsPlaceholder: null,
   resultatsContainer: null,
-  exportPosicioBtn: null,
-  exportVelocitatBtn: null
+  exportChartBtn: null
 };
 
 const restableixCallbacks = [];
+
+const ETIQUETES = {
+  v0: creaEtiquetaVector('v', '0'),
+  vf: creaEtiquetaVector('v', 'f'),
+  a: creaEtiquetaVector('a'),
+  s0: creaEtiquetaEscalar('s', '0'),
+  t: creaEtiquetaEscalar('t'),
+  angle: creaEtiquetaEscalar('θ')
+};
 
 export function inicialitzaUI() {
   elements.textarea = document.querySelector('#input-enunciat');
@@ -22,8 +30,7 @@ export function inicialitzaUI() {
   elements.sessionsList = document.querySelector('#sessions-llista');
   elements.sessionsPlaceholder = document.querySelector('#sessions-buit');
   elements.resultatsContainer = document.querySelector('#resultats-container');
-  elements.exportPosicioBtn = document.querySelector('#btn-exporta-position');
-  elements.exportVelocitatBtn = document.querySelector('#btn-exporta-velocity');
+  elements.exportChartBtn = document.querySelector('#btn-exporta-chart');
 
   elements.restableixBtn?.addEventListener('click', () => {
     elements.textarea.value = '';
@@ -31,11 +38,11 @@ export function inicialitzaUI() {
       elements.sampleSelector.value = '';
     }
     netejaResultats();
-    actualitzaMissatge('Enunciat restablert. Escriu un text o tria un exemple.', 'info');
+    actualitzaMissatge('Enunciat restablert. Escriu-ne un de nou o tria un exemple.', 'info');
     restableixCallbacks.forEach((fn) => fn?.());
   });
 
-  actualitzaMissatge('Escriu un enunciat per comen\u00E7ar.', 'info');
+  actualitzaMissatge('Cap enunciat carregat.', 'info');
 }
 
 export function ompleSelectorExemples(exemples, onSeleccio) {
@@ -111,25 +118,24 @@ export function mostraResultats(mobils) {
 export function netejaResultats() {
   if (elements.resultatsContainer) {
     elements.resultatsContainer.innerHTML =
-      '<p class="placeholder">Aqu\u00ED veur\u00E0s les dades dels mobils un cop la IA analitzi l\'enunciat.</p>';
+      '<p class="placeholder">Aquí veuràs les dades dels mòbils un cop la IA analitzi l\'enunciat.</p>';
   }
 }
 
 export function obtenirBotonsExport() {
-  return {
-    posicio: elements.exportPosicioBtn,
-    velocitat: elements.exportVelocitatBtn
-  };
+  return elements.exportChartBtn;
 }
 
 function creaTargetaMobil(mobil) {
+  const dades = normalitzaMobil(mobil);
+  const magnituds = preparaMagnituds(dades);
   const camps = [
-    formatCamp('Tipus', mobil.tipus),
-    formatCamp('v0', formatUnitat(mobil.v0, 'm/s')),
-    formatCamp('a', formatUnitat(mobil.a, 'm/s^2')),
-    formatCamp('s0', formatUnitat(mobil.s0, 'm')),
-    formatCamp('t', formatUnitat(mobil.t, 's')),
-    mobil.angle !== undefined ? formatCamp('Angle', formatUnitat(mobil.angle, 'graus')) : ''
+    creaFilaMagnitud('v0', magnituds.v0),
+    creaFilaMagnitud('vf', magnituds.vf),
+    creaFilaMagnitud('a', magnituds.a),
+    creaFilaMagnitud('s0', magnituds.s0),
+    creaFilaMagnitud('t', magnituds.t),
+    dades.tipus === 'TIR_PARABOLIC' ? creaFilaMagnitud('angle', magnituds.angle) : ''
   ]
     .filter(Boolean)
     .join('');
@@ -137,8 +143,8 @@ function creaTargetaMobil(mobil) {
   return `
     <article class="mobil-card">
       <header class="mobil-card__capcalera">
-        <h3>${mobil.nom ?? 'Mobil'}</h3>
-        <span class="mobil-card__etiqueta">${mobil.tipus ?? '-'}</span>
+        <h3>${dades.nom}</h3>
+        <span class="mobil-card__etiqueta">${dades.tipus}</span>
       </header>
       <dl class="mobil-card__dades">
         ${camps}
@@ -147,25 +153,106 @@ function creaTargetaMobil(mobil) {
   `;
 }
 
-function formatCamp(titol, valor) {
-  if (!valor && valor !== 0) return '';
+function creaFilaMagnitud(clau, valor) {
+  if (!valor && valor !== 0 && valor !== '0') return '';
+  const etiqueta = ETIQUETES[clau] ?? clau;
   return `
     <div class="mobil-card__fila">
-      <dt>${titol}</dt>
+      <dt>${etiqueta}</dt>
       <dd>${valor}</dd>
     </div>
   `;
 }
 
+function preparaMagnituds(dades) {
+  return {
+    v0: formatUnitat(dades.v0, 'm/s'),
+    vf: formatUnitat(calculaVelocitatFinal(dades), 'm/s'),
+    a: formatUnitat(calculaAcceleracio(dades), 'm/s²'),
+    s0: formatUnitat(dades.s0, 'm'),
+    t: formatUnitat(dades.t, 's'),
+    angle: formatUnitat(dades.angle, '°')
+  };
+}
+
+function normalitzaMobil(raw = {}) {
+  const tipus = (raw.tipus || 'MRU').toUpperCase();
+  return {
+    nom: raw.nom ?? 'Mòbil',
+    tipus,
+    v0: toNumber(raw.v0, 0),
+    a: toNumber(raw.a, 0),
+    s0: toNumber(raw.s0, 0),
+    t: Math.max(0, toNumber(raw.t, 0)),
+    angle: raw.angle !== undefined ? toNumber(raw.angle, 0) : undefined,
+    g: toNumber(raw.g, 9.81)
+  };
+}
+
+function toNumber(valor, perDefecte) {
+  if (valor === undefined || valor === null || valor === '') return perDefecte;
+  const num = Number(valor);
+  return Number.isFinite(num) ? num : perDefecte;
+}
+
+function calculaAcceleracio(dades) {
+  switch (dades.tipus) {
+    case 'MRU':
+      return 0;
+    case 'MRUA':
+      return dades.a;
+    case 'CAIGUDA':
+    case 'TIR_VERTICAL':
+    case 'TIR_PARABOLIC':
+      return -dades.g;
+    default:
+      return dades.a;
+  }
+}
+
+function calculaVelocitatFinal(dades) {
+  const t = dades.t;
+  switch (dades.tipus) {
+    case 'MRU':
+      return dades.v0;
+    case 'MRUA':
+      return dades.v0 + dades.a * t;
+    case 'CAIGUDA':
+    case 'TIR_VERTICAL':
+      return dades.v0 - dades.g * t;
+    case 'TIR_PARABOLIC': {
+      const angleRad = (toNumber(dades.angle, 0) * Math.PI) / 180;
+      const vx = dades.v0 * Math.cos(angleRad);
+      const vy = dades.v0 * Math.sin(angleRad) - dades.g * t;
+      const velocitat = Math.sqrt(vx ** 2 + vy ** 2);
+      return Number.isFinite(velocitat) ? velocitat : dades.v0;
+    }
+    default:
+      return dades.v0;
+  }
+}
+
 function formatUnitat(valor, unitat) {
   if (valor === undefined || valor === null || valor === '') return '';
   if (!Number.isFinite(Number(valor))) return `${valor} ${unitat}`;
-  const numerico = Number(valor).toFixed(Math.abs(Number(valor)) < 10 ? 2 : 1);
-  return `${treuZerosFinals(numerico)} ${unitat}`;
+  const numeric = Number(valor);
+  const decimals = Math.abs(numeric) < 10 ? 2 : 1;
+  const net = treuZerosFinals(numeric.toFixed(decimals));
+  return `${net} ${unitat}`;
 }
 
 function treuZerosFinals(text) {
-  return text.replace(/\.?0+$/, '');
+  return text.replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1');
+}
+
+function creaEtiquetaVector(base, sub = '') {
+  const subscript = sub ? `<sub>${sub}</sub>` : '';
+  return `<span class="symbol symbol--vector">${base}${subscript}</span>`;
+}
+
+function creaEtiquetaEscalar(base, sub = '') {
+  const subscript = sub ? `<sub>${sub}</sub>` : '';
+  return `<span class="symbol symbol--scalar">${base}${subscript}</span>`;
 }
 
 console.log('[ui.js] carregat');

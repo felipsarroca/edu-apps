@@ -1,4 +1,4 @@
-const TIPUS_PERMESOS = ['MRU', 'MRUA', 'CAIGUDA', 'TIR_VERTICAL', 'TIR_PARABOLIC'];
+﻿const TIPUS_PERMESOS = ['MRU', 'MRUA', 'CAIGUDA', 'TIR_VERTICAL', 'TIR_PARABOLIC'];
 
 export function calculaCronologia(mobils, opcions = {}) {
   if (!Array.isArray(mobils) || mobils.length === 0) {
@@ -15,7 +15,8 @@ export function calculaCronologia(mobils, opcions = {}) {
       nom: dades.nom,
       tipus: dades.tipus,
       posicions: temps.map((t) => Number(calculaPosicio(dades, t).toFixed(4))),
-      velocitats: temps.map((t) => Number(calculaVelocitat(dades, t).toFixed(4)))
+      velocitats: temps.map((t) => Number(calculaVelocitat(dades, t).toFixed(4))),
+      acceleracions: temps.map((t) => Number(calculaAcceleracio(dades, t).toFixed(4)))
     };
   });
 
@@ -40,7 +41,7 @@ function normalitzaMobil(raw) {
   const tipusValid = TIPUS_PERMESOS.includes(tipus) ? tipus : 'MRU';
 
   return {
-    nom: raw.nom || 'Mobil',
+    nom: raw.nom || 'M\u00F2bil',
     tipus: tipusValid,
     v0: convertirNombre(raw.v0, 0),
     a: convertirNombre(raw.a, 0),
@@ -104,6 +105,22 @@ function calculaVelocitat(mobil, temps) {
   }
 }
 
+function calculaAcceleracio(mobil) {
+  switch (mobil.tipus) {
+    case 'MRU':
+      return 0;
+    case 'MRUA':
+      return mobil.a;
+    case 'CAIGUDA':
+    case 'TIR_VERTICAL':
+      return -mobil.g;
+    case 'TIR_PARABOLIC':
+      return -mobil.g;
+    default:
+      return 0;
+  }
+}
+
 function determinarTempsMaxim(mobils, tempsOpcional) {
   if (Number.isFinite(tempsOpcional) && tempsOpcional > 0) {
     return tempsOpcional;
@@ -138,3 +155,4 @@ function formatNumber(valor, unitat, etiqueta) {
 }
 
 console.log('[physics.js] carregat');
+

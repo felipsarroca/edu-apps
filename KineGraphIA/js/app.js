@@ -1,4 +1,4 @@
-import {
+﻿import {
   inicialitzaUI,
   ompleSelectorExemples,
   onAnalitza,
@@ -14,7 +14,8 @@ import {
   inicialitzaCharts,
   actualitzaCharts,
   configuraControlsZoom,
-  reiniciaZoom
+  reiniciaZoom,
+  configuraSelectorGrafiques
 } from './draw.js';
 import { configuraExportacions, estableixDisponibilitatExport } from './export.js';
 import './storage.js';
@@ -24,7 +25,7 @@ import { SAMPLE_PROBLEMS } from '../data/sampleProblems.js';
 const FALLBACK_PROBLEMS = [
   {
     titol: "Cotxes en MRU i MRUA",
-    enunciat: "Dos cotxes parteixen alhora. El primer surt del repòs i accelera 2 m/s². El segon manté una velocitat constant de 10 m/s.",
+    enunciat: "Dos cotxes parteixen alhora. El primer surt del rep\u00F2s i accelera 2 m/s\u00B2. El segon mant\u00E9 una velocitat constant de 10 m/s.",
     resposta: {
       mobils: [
         { nom: "Cotxe A", tipus: "MRUA", v0: 0, a: 2, s0: 0, t: 14 },
@@ -34,7 +35,7 @@ const FALLBACK_PROBLEMS = [
   },
   {
     titol: "Trens que coincideixen",
-    enunciat: "Un tren surt del repòs amb acceleració 1.5 m/s² durant 8 segons. Un altre tren circula a 12 m/s constants i es vol comparar el moviment durant 12 segons.",
+    enunciat: "Un tren surt del rep\u00F2s amb acceleraci\u00F3 1.5 m/s\u00B2 durant 8 segons. Un altre tren circula a 12 m/s constants i es vol comparar el moviment durant 12 segons.",
     resposta: {
       mobils: [
         { nom: "Tren A", tipus: "MRUA", v0: 0, a: 1.5, s0: 0, t: 12 },
@@ -44,7 +45,7 @@ const FALLBACK_PROBLEMS = [
   },
   {
     titol: "Caiguda lliure de dues boles",
-    enunciat: "Llancem dues boles des d’una torre de 20 metres. La primera la deixem caure des del repòs. La segona la llencem cap avall amb velocitat inicial de 5 m/s. Compara-les durant 3 segons.",
+    enunciat: "Llancem dues boles des d'una torre de 20 metres. La primera la deixem caure des del rep\u00F2s. La segona la llencem cap avall amb velocitat inicial de 5 m/s. Compara-les durant 3 segons.",
     resposta: {
       mobils: [
         { nom: "Bola 1", tipus: "CAIGUDA", v0: 0, s0: 20, g: 9.81, t: 3 },
@@ -54,7 +55,7 @@ const FALLBACK_PROBLEMS = [
   },
   {
     titol: "Pilota en tir vertical",
-    enunciat: "Llancem una pilota cap amunt amb velocitat inicial de 18 m/s des d’una alçada de 1.5 m. Analitzem els primers 6 segons.",
+    enunciat: "Llancem una pilota cap amunt amb velocitat inicial de 18 m/s des d'una al\u00E7ada de 1.5 m. Analitzem els primers 6 segons.",
     resposta: {
       mobils: [
         { nom: "Pilota", tipus: "TIR_VERTICAL", v0: 18, s0: 1.5, g: 9.81, t: 6 }
@@ -63,7 +64,7 @@ const FALLBACK_PROBLEMS = [
   },
   {
     titol: "Triple duel de corredors",
-    enunciat: "Tres atletes surten de la mateixa línia. El primer fa un MRU a 6 m/s, el segon accelera 0.8 m/s² des del repòs, i el tercer surt amb 3 m/s i accelera 0.4 m/s². Observa’ls durant 18 segons.",
+    enunciat: "Tres atletes surten de la mateixa l\u00EDnia. El primer fa un MRU a 6 m/s, el segon accelera 0.8 m/s\u00B2 des del rep\u00F2s, i el tercer surt amb 3 m/s i accelera 0.4 m/s\u00B2. Observa'ls durant 18 segons.",
     resposta: {
       mobils: [
         { nom: "Corredor A", tipus: "MRU", v0: 6, a: 0, s0: 0, t: 18 },
@@ -73,11 +74,11 @@ const FALLBACK_PROBLEMS = [
     }
   },
   {
-    titol: "Tir parabòlic de pilota",
-    enunciat: "Una pilota es dispara amb velocitat inicial de 22 m/s amb un angle de 40° respecte l’horitzontal. Analitza el moviment vertical durant 4.5 segons.",
+    titol: "Tir parab\u00F2lic de pilota",
+    enunciat: "Una pilota es dispara amb velocitat inicial de 22 m/s amb un angle de 40\u00B0 respecte l'horitzontal. Analitza el moviment vertical durant 4.5 segons.",
     resposta: {
       mobils: [
-        { nom: "Pilota parabòlica", tipus: "TIR_PARABOLIC", v0: 22, angle: 40, s0: 0, g: 9.81, t: 4.5 }
+        { nom: "Pilota parab\u00F2lica", tipus: "TIR_PARABOLIC", v0: 22, angle: 40, s0: 0, g: 9.81, t: 4.5 }
       ]
     }
   }
@@ -97,10 +98,12 @@ const estat = {
 function arrencaAplicacio() {
   inicialitzaUI();
   inicialitzaCharts();
+  configuraSelectorGrafiques();
   configuraControlsZoom();
   configuraExportacions();
   estableixDisponibilitatExport(false);
   netejaResultats();
+  actualitzaMissatge("Cap enunciat carregat.", "info");
 
   ompleSelectorExemples(PROBLEMES_DISPONIBLES, (exemple) => {
     estat.exempleSeleccionat = exemple;
@@ -112,25 +115,25 @@ function arrencaAplicacio() {
     actualitzaCharts({ temps: [], series: [] });
     reiniciaZoom();
     estableixDisponibilitatExport(false);
+    actualitzaMissatge("Cap enunciat carregat.", "info");
   });
 
-  console.log('[app.js] aplicacio inicialitzada');
+  console.log("[app.js] aplicació inicialitzada");
 }
-
 async function gestionaAnalisi() {
   const enunciat = obtenirEnunciat();
   if (!enunciat) {
-    actualitzaMissatge('Cal introduir un enunciat o carregar un exemple abans d\'analitzar.', 'error');
+    actualitzaMissatge("Cal introduir un enunciat o triar un exemple abans d'analitzar.", "error");
     return;
   }
 
   setAnalitzaDeshabilitat(true);
-  actualitzaMissatge('Processant l\'enunciat. Preparant resultats...', 'info');
+  actualitzaMissatge("Processant l'enunciat. Preparant resultats...", "info");
 
   try {
     const resposta = await obtenirResultatTemporal(enunciat);
     if (!resposta) {
-      actualitzaMissatge('Encara no hi ha IA activa. Selecciona un dels exemples per veure el funcionament.', 'error');
+      actualitzaMissatge("Encara no hi ha IA activa. Selecciona un dels exemples per veure el funcionament.", "error");
       netejaResultats();
       reiniciaZoom();
       estableixDisponibilitatExport(false);
@@ -139,20 +142,19 @@ async function gestionaAnalisi() {
 
     mostraResultats(resposta.mobils);
     const cronologia = calculaCronologia(resposta.mobils);
-    reiniciaZoom();
     actualitzaCharts(cronologia);
+    reiniciaZoom();
     estableixDisponibilitatExport(true);
 
-    const titol = estat.exempleSeleccionat?.titol ?? 'exemple proporcionat';
-    actualitzaMissatge(`Resultats generats a partir de "${titol}".`, 'info');
+    const titol = estat.exempleSeleccionat?.titol ?? "enunciat introdu't";
+    actualitzaMissatge(`Resultats generats a partir de "${titol}".`, "info");
   } catch (error) {
-    console.error('[app.js] Error durant l\'analisi', error);
-    actualitzaMissatge('Hi ha hagut un problema inesperat en processar l\'enunciat.', 'error');
+    console.error("[app.js] Error durant l'an\u00E0lisi", error);
+    actualitzaMissatge("S'ha produ't un problema inesperat en processar l'enunciat.", "error");
   } finally {
     setAnalitzaDeshabilitat(false);
   }
 }
-
 async function obtenirResultatTemporal(enunciat) {
   const net = enunciat.trim().toLowerCase();
 
@@ -170,3 +172,5 @@ async function obtenirResultatTemporal(enunciat) {
 }
 
 document.addEventListener('DOMContentLoaded', arrencaAplicacio);
+
+
