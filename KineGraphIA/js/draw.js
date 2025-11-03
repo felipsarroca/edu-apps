@@ -162,7 +162,7 @@ export function inicialitzaCharts() {
   const velContainer = document.getElementById('chart-velocity');
 
   if (!echarts || !posContainer || !velContainer) {
-    console.warn('[draw.js] No s'han pogut inicialitzar les grafiques (ECharts o contenidors no disponibles)');
+    console.warn("[draw.js] No s'han pogut inicialitzar les grafiques (ECharts o contenidors no disponibles)");
     return;
   }
 
