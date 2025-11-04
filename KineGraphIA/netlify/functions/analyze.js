@@ -36,9 +36,17 @@ exports.handler = async (event) => {
 
     const payload = {
       contents: [
-        { parts: [{ text: systemInstruction }] },
-        { parts: [{ text: userText }] }
-      ]
+        {
+          role: 'user',
+          parts: [
+            { text: systemInstruction },
+            { text: userText }
+          ]
+        }
+      ],
+      generationConfig: {
+        responseMimeType: 'application/json'
+      }
     };
 
     const response = await fetch(url, {
