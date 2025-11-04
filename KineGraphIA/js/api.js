@@ -1,8 +1,15 @@
-const API_ENDPOINT = '/.netlify/functions/analyze';
+function getApiEndpoint() {
+  try {
+    const cfg = (typeof window !== 'undefined' && window.KG_CONFIG) ? window.KG_CONFIG : null;
+    const ep = cfg?.apiEndpoint;
+    if (typeof ep === 'string' && ep.trim()) return ep.trim();
+  } catch {}
+  return '/.netlify/functions/analyze';
+}
 
 export async function analitzaAmbIA(enunciat) {
   try {
-    const resposta = await fetch(API_ENDPOINT, {
+    const resposta = await fetch(getApiEndpoint(), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ enunciat })
