@@ -23,9 +23,9 @@ exports.handler = async (event) => {
       return cors(500, { error: 'Falta GEMINI_API_KEY al servidor' });
     }
 
-    const url =
-      `https://generativelanguage.googleapis.com/v1beta/models/` +
-      `gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const apiVersion = (process.env.GEMINI_API_VERSION || 'v1beta').trim();
+    const model = (process.env.GEMINI_MODEL || 'gemini-1.5-flash-latest').trim();
+    const url = `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent?key=${apiKey}`;
 
     const systemInstruction =
       'Ets un analista de problemes de cinemàtica. A partir del text, ' +
@@ -51,9 +51,16 @@ exports.handler = async (event) => {
     console.log('Gemini status', response.status, 'body', text.slice(0, 300));
 
     if (!response.ok) {
+      let hint = undefined;
+      if (response.status === 404) {
+        hint = 'Model o versió no disponible. Prova GEMINI_MODEL=gemini-1.5-flash-latest i GEMINI_API_VERSION=v1beta.';
+      }
       return cors(response.status, {
         error: 'Gemini error',
-        details: text
+        details: text,
+        hint,
+        model,
+        apiVersion
       });
     }
 
