@@ -21,7 +21,7 @@ exports.handler = async (event) => {
 
     const url =
       `https://generativelanguage.googleapis.com/v1/models/` +
-      `gemini-1.5-pro:generateContent?key=${apiKey}`;
+      `gemini-2.0-pro:generateContent?key=${apiKey}`;
 
     const payload = {
       contents: [
