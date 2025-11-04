@@ -23,9 +23,8 @@ exports.handler = async (event) => {
       return cors(500, { error: 'Falta GEMINI_API_KEY al servidor' });
     }
 
-    const apiVersion = (process.env.GEMINI_API_VERSION || 'v1beta').trim();
-    const model = (process.env.GEMINI_MODEL || 'gemini-1.5-flash-latest').trim();
-    const url = `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent?key=${apiKey}`;
+    const preferApiVersion = (process.env.GEMINI_API_VERSION || 'v1').trim();
+    const preferModel = (process.env.GEMINI_MODEL || 'gemini-1.5-flash').trim();
 
     const systemInstruction =
       'Ets un analista de problemes de cinemàtica. A partir del text, ' +
@@ -49,45 +48,54 @@ exports.handler = async (event) => {
       }
     };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    const attempts = [
+      { apiVersion: preferApiVersion, model: preferModel },
+      { apiVersion: 'v1', model: 'gemini-1.5-flash' },
+      { apiVersion: 'v1beta', model: 'gemini-1.5-flash' },
+      { apiVersion: 'v1', model: 'gemini-1.5-flash-latest' },
+      { apiVersion: 'v1beta', model: 'gemini-1.5-flash-latest' }
+    ];
 
-    const text = await response.text();
-    console.log('Gemini status', response.status, 'body', text.slice(0, 300));
-
-    if (!response.ok) {
-      let hint = undefined;
-      if (response.status === 404) {
-        hint = 'Model o versió no disponible. Prova GEMINI_MODEL=gemini-1.5-flash-latest i GEMINI_API_VERSION=v1beta.';
+    let lastError = null;
+    for (const attempt of attempts) {
+      const url = `https://generativelanguage.googleapis.com/${attempt.apiVersion}/models/${attempt.model}:generateContent?key=${apiKey}`;
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const text = await response.text();
+        console.log('Gemini status', attempt.apiVersion, attempt.model, response.status, text.slice(0, 200));
+        if (!response.ok) {
+          lastError = { status: response.status, body: text, attempt };
+          if (response.status === 404 || response.status === 400) continue;
+          // altres errors no val la pena reintentar
+          break;
+        }
+        const data = safeJson(text);
+        const output =
+          data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+          data?.candidates?.[0]?.output_text ??
+          '';
+        const parsed = parseModelJson(output);
+        if (parsed && Array.isArray(parsed.mobils)) {
+          const cleaned = sanitizeMobils(parsed.mobils);
+          return cors(200, { data: { mobils: cleaned } });
+        }
+        lastError = { status: 422, body: 'Invalid JSON from model', attempt };
+      } catch (err) {
+        lastError = { status: 500, body: String(err), attempt };
       }
-      return cors(response.status, {
-        error: 'Gemini error',
-        details: text,
-        hint,
-        model,
-        apiVersion
-      });
     }
 
-    const data = safeJson(text);
-    const output =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ??
-      data?.candidates?.[0]?.output_text ??
-      '';
-
-    const parsed = parseModelJson(output);
-    if (!parsed || !Array.isArray(parsed.mobils)) {
-      return cors(422, {
-        error: 'Format de sortida invàlid',
-        details: 'No s’ha pogut trobar un JSON vàlid amb "mobils".'
-      });
-    }
-
-    const cleaned = sanitizeMobils(parsed.mobils);
-    return cors(200, { data: { mobils: cleaned } });
+    const hint = 'Revisa GEMINI_MODEL/GEMINI_API_VERSION. Models típics: gemini-1.5-flash (v1), gemini-1.5-flash-latest (v1).';
+    return cors(lastError?.status || 500, {
+      error: 'Gemini error',
+      details: lastError?.body || 'Error desconegut',
+      hint,
+      attempts
+    });
   } catch (error) {
     console.error(error);
     return cors(500, {

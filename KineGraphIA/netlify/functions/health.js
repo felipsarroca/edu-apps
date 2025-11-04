@@ -11,8 +11,8 @@ exports.handler = async () => {
       keySample: process.env.GEMINI_API_KEY
         ? process.env.GEMINI_API_KEY.slice(0, 6) + '...'
         : null,
-      apiVersion: process.env.GEMINI_API_VERSION || 'v1beta',
-      model: process.env.GEMINI_MODEL || 'gemini-1.5-flash-latest'
+      apiVersion: process.env.GEMINI_API_VERSION || 'v1',
+      model: process.env.GEMINI_MODEL || 'gemini-1.5-flash'
     })
   };
 };
