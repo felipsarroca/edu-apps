@@ -7,15 +7,15 @@ const elements = {
   restableixBtn: null,
   status: null,
   sampleSelector: null,
-  sessiónsList: null,
-  sessiónsPlaceholder: null,
+  sessionsList: null,
+  sessionsPlaceholder: null,
   resultatsContainer: null,
   exportChartBtn: null
 };
 
 const restableixCallbacks = [];
-const sessióCallbacks = [];
-const STORAGE_KEY = 'kinegraphia:sessións';
+const sessionsCallbacks = [];
+const STORAGE_KEY = 'kinegraphia:sessions';
 const MAX_SESSIONS = 10;
 const MAGNITUDS_VECTORIALS = new Set(['v0', 'vf', 'a']);
 
@@ -35,8 +35,8 @@ export function inicialitzaUI() {
   elements.restableixBtn = document.querySelector('#btn-restableix');
   elements.status = document.querySelector('#status-missatge');
   elements.sampleSelector = document.querySelector('#sample-selector');
-  elements.sessiónsList = document.querySelector('#sessións-llista');
-  elements.sessiónsPlaceholder = document.querySelector('#sessións-buit');
+  elements.sessionsList = document.querySelector('#sessions-llista');
+  elements.sessionsPlaceholder = document.querySelector('#sessions-buit');
   elements.resultatsContainer = document.querySelector('#resultats-container');
   elements.exportChartBtn = document.querySelector('#btn-exporta-chart');
 
@@ -149,13 +149,13 @@ export function guardaSessio(enunciat, resposta) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(actualitzades));
     renderitzaSessions();
   } catch (error) {
-    console.warn("[ui.js] No s'ha pogut guardar la sessió", error);
+    console.warn("[ui.js] No s'ha pogut guardar la sessio", error);
   }
 }
 
 export function onSessioCarregada(callback) {
   if (typeof callback === 'function') {
-    sessióCallbacks.push(callback);
+    sessionsCallbacks.push(callback);
   }
 }
 
@@ -163,67 +163,67 @@ function llegeixSessions() {
   try {
     const cru = localStorage.getItem(STORAGE_KEY);
     if (!cru) return [];
-    const sessións = JSON.parse(cru);
-    return Array.isArray(sessións) ? sessións : [];
+    const sessions = JSON.parse(cru);
+    return Array.isArray(sessions) ? sessions : [];
   } catch (error) {
-    console.warn("[ui.js] Error llegint sessións guardades", error);
+    console.warn("[ui.js] Error llegint sessions guardades", error);
     return [];
   }
 }
 
 function renderitzaSessions() {
-  if (!elements.sessiónsList || !elements.sessiónsPlaceholder) return;
-  const sessións = llegeixSessions();
+  if (!elements.sessionsList || !elements.sessionsPlaceholder) return;
+  const sessions = llegeixSessions();
 
-  if (!sessións.length) {
-    elements.sessiónsPlaceholder.hidden = false;
-    elements.sessiónsList.innerHTML = '';
+  if (!sessions.length) {
+    elements.sessionsPlaceholder.hidden = false;
+    elements.sessionsList.innerHTML = '';
     return;
   }
 
-  elements.sessiónsPlaceholder.hidden = true;
-  elements.sessiónsList.innerHTML = sessións
-    .map((sessió) => creaElementSessio(sessió))
+  elements.sessionsPlaceholder.hidden = true;
+  elements.sessionsList.innerHTML = sessions
+    .map((sessio) => creaElementSessio(sessio))
     .join('');
 
-  const enllaços = elements.sessiónsList.querySelectorAll('[data-carrega-sessió]');
-  enllaços.forEach((enllaç) => {
-    enllaç.addEventListener('click', (event) => {
+  const enllacos = elements.sessionsList.querySelectorAll('[data-carrega-sessio]');
+  enllacos.forEach((enllac) => {
+    enllac.addEventListener('click', (event) => {
       event.preventDefault();
-      const id = Number(enllaç.dataset.id);
-      const sessió = sessións.find((item) => item.id === id);
-      if (sessió) {
+      const id = Number(enllac.dataset.id);
+      const sessio = sessions.find((item) => item.id === id);
+      if (sessio) {
         if (elements.textarea) {
-          elements.textarea.value = sessió.enunciat;
+          elements.textarea.value = sessio.enunciat;
         }
-        sessióCallbacks.forEach((fn) => fn?.(sessió));
+        sessionsCallbacks.forEach((fn) => fn?.(sessio));
       }
     });
   });
 
-  const esborra = elements.sessiónsList.querySelectorAll('[data-esborra-sessió]');
-  esborra.forEach((botó) => {
-    botó.addEventListener('click', (event) => {
+  const botonsEsborra = elements.sessionsList.querySelectorAll('[data-esborra-sessio]');
+  botonsEsborra.forEach((boto) => {
+    boto.addEventListener('click', (event) => {
       event.preventDefault();
-      const id = Number(botó.dataset.id);
+      const id = Number(boto.dataset.id);
       eliminaSessio(id);
     });
   });
 }
 
-function creaElementSessio(sessió) {
-  const dataFormatejada = formatData(sessió.timestamp);
-  const resum = resumSessio(sessió.resposta.mobils);
+function creaElementSessio(sessio) {
+  const dataFormatejada = formatData(sessio.timestamp);
+  const resum = resumSessio(sessio.resposta.mobils);
 
   return `
-    <li class="sessión-item">
-      <div class="sessión-item__content">
+    <li class="session-item">
+      <div class="session-item__content">
         <strong>${dataFormatejada}</strong>
         <p>${resum}</p>
       </div>
-      <div class="sessión-item__actions">
-        <button class="btn btn--ghost" data-carrega-sessió data-id="${sessió.id}">Carrega</button>
-        <button class="btn btn--icon" data-esborra-sessió data-id="${sessió.id}" aria-label="Esborra">×</button>
+      <div class="session-item__actions">
+        <button class="btn btn--ghost" data-carrega-sessio data-id="${sessio.id}">Carrega</button>
+        <button class="btn btn--icon" data-esborra-sessio data-id="${sessio.id}" aria-label="Esborra">×</button>
       </div>
     </li>
   `;
@@ -246,7 +246,7 @@ function formatData(timestamp) {
 
 function eliminaSessio(id) {
   const actuals = llegeixSessions();
-  const filtrades = actuals.filter((sessió) => sessió.id !== id);
+  const filtrades = actuals.filter((sessio) => sessio.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(filtrades));
   renderitzaSessions();
   actualitzaMissatge('Sessió eliminada.', 'info');

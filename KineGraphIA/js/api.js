@@ -1,13 +1,24 @@
+const DEFAULT_ENDPOINT = 'https://kinegraphia.netlify.app/.netlify/functions/analyze';
+
 const API_ENDPOINT = (() => {
   try {
-    const cfg = (typeof window !== 'undefined' && window.KG_CONFIG) ? window.KG_CONFIG : null;
+    const cfg = typeof window !== 'undefined' ? window.KG_CONFIG : null;
     const ep = cfg?.apiEndpoint;
     if (typeof ep === 'string' && ep.trim()) return ep.trim();
+    if (typeof window !== 'undefined') {
+      const origin = window.location?.origin;
+      if (origin && origin !== 'null' && origin.startsWith('http')) {
+        return `${origin.replace(/\/$/, '')}/.netlify/functions/analyze`;
+      }
+    }
   } catch {}
-  return '/.netlify/functions/analyze';
+  return DEFAULT_ENDPOINT;
 })();
 
-try { console.log('[api.js] endpoint', API_ENDPOINT); } catch {}
+try {
+  const isFallback = API_ENDPOINT === DEFAULT_ENDPOINT;
+  console.log('[api.js] endpoint', API_ENDPOINT, isFallback ? '(fallback)' : '');
+} catch {}
 
 export async function analitzaAmbIA(enunciat) {
   try {
