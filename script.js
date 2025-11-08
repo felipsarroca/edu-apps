@@ -73,6 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: 'MCD-mcm/assets/logo.svg'
         },
 
+        // Física
+        {
+            name: "KineGraphIA",
+            path: 'https://ja.cat/kinegraphia',
+            category: 'Física',
+            description: "Analitza amb IA l'enunciat d'un problema de cinemàtica i genera gràfiques, dades i resultats de manera automàtica",
+            icon: 'KineGraphIA/favicon.svg'
+        },
+
         // Economia i Emprenedoria
         { 
             name: "Joc de Cooperatives", 
