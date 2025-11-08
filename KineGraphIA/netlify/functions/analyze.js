@@ -83,7 +83,7 @@ exports.handler = async (event) => {
       }
     }
 
-    const hint = 'Revisa GEMINI_MODEL/GEMINI_API_VERSION. Models habituals: gemini-1.5-flash o gemini-pro. L’API v1 és obligatòria per als models 1.5.';
+    const hint = 'Revisa GEMINI_MODEL/GEMINI_API_VERSION. Models habituals: gemini-1.5-flash o gemini-1.5-flash-latest (API v1).';
     return cors(lastError?.status || 500, {
       error: 'Gemini error',
       details: lastError?.body || 'Error desconegut',
@@ -179,6 +179,7 @@ function sanitizeMobils(mobils) {
 function buildAttempts(preferVersion, preferModel) {
   const queue = [];
   const seen = new Set();
+
   const push = (version, model) => {
     const attempt = normalizeCombination(version, model);
     const key = `${attempt.apiVersion}::${attempt.model}`;
@@ -188,31 +189,20 @@ function buildAttempts(preferVersion, preferModel) {
   };
 
   push(preferVersion, preferModel);
-  push(preferVersion, 'gemini-1.5-flash');
   push('v1', 'gemini-1.5-flash');
   push('v1', 'gemini-1.5-flash-latest');
-  push('v1', 'gemini-1.5-pro-latest');
-  push('v1beta', 'gemini-pro');
-  push('v1', 'gemini-pro-vision');
+  push('v1', 'gemini-1.5-pro');
 
   return queue;
 }
 
 function normalizeCombination(version, model) {
-  const safeModel = (model || 'gemini-1.5-flash').trim();
-  let safeVersion = (version || '').trim();
-  if (!safeVersion) {
-    safeVersion = /gemini-pro/.test(safeModel) ? 'v1beta' : 'v1';
-  }
+  const safeModel = (model || '').trim() || 'gemini-1.5-flash';
+  let safeVersion = (version || '').trim() || 'v1';
 
-  const isOnePointFive = /gemini-1\.5/i.test(safeModel);
-  const isProFamily = /gemini-pro/i.test(safeModel) && !isOnePointFive;
-
-  if (isOnePointFive && safeVersion.startsWith('v1beta')) {
+  // Models 1.5 només són compatibles amb v1.
+  if (/gemini-1\.5/i.test(safeModel)) {
     safeVersion = 'v1';
-  }
-  if (isProFamily && safeVersion.startsWith('v1')) {
-    safeVersion = 'v1beta';
   }
 
   return { apiVersion: safeVersion, model: safeModel };
