@@ -31,19 +31,16 @@ exports.handler = async (event) => {
       'Respon només amb JSON vàlid. Unitats: v0 m/s, a m/s^2, s0 m, t s, g 9.81, angle graus.';
 
     const payload = {
-      systemInstruction: {
-        role: 'system',
-        parts: [{ text: systemInstruction }]
-      },
       contents: [
         {
           role: 'user',
-          parts: [{ text: userText }]
+          parts: [
+            {
+              text: `${systemInstruction}\n\nText a analitzar:\n${userText}`
+            }
+          ]
         }
-      ],
-      generationConfig: {
-        responseMimeType: 'application/json'
-      }
+      ]
     };
 
     const attempts = buildAttempts(preferApiVersion, preferModel);
