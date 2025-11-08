@@ -27,23 +27,23 @@ exports.handler = async (event) => {
     const preferModel = (process.env.GEMINI_MODEL || 'gemini-1.5-flash').trim();
 
     const systemInstruction =
-      'Ets un analista de problemes de cinemàtica. A partir del text, ' +
-      'extreu i normalitza els mòbils descrits en un JSON estricte amb aquest esquema: ' +
-      '{"mobils":[{"nom":string opcional, "tipus":"MRU|MRUA|CAIGUDA|TIR_VERTICAL|TIR_PARABOLIC", "v0":number opcional, "a":number opcional, "s0":number opcional, "t":number opcional, "g":number opcional, "angle":number opcional}]}. ' +
-      'Respon ÚNICAMENT el JSON sense comentaris ni text addicional. ' +
-      'Unitats: v0 en m/s, a en m/s^2, s0 en m, t en s, g≈9.81 si s’escau, angle en graus.';
+      'Ets un analista de cinemàtica. Extreu els mòbils en JSON seguint {"mobils":[{"nom","tipus","v0","a","s0","t","g","angle"}]}. ' +
+      'Respon només amb JSON vàlid. Unitats: v0 m/s, a m/s^2, s0 m, t s, g 9.81, angle graus.';
 
     const payload = {
+      systemInstruction: {
+        role: 'system',
+        parts: [{ text: systemInstruction }]
+      },
       contents: [
         {
           role: 'user',
-          parts: [
-            {
-              text: `${systemInstruction}\n\nText a analitzar:\n${userText}`
-            }
-          ]
+          parts: [{ text: userText }]
         }
-      ]
+      ],
+      generationConfig: {
+        responseMimeType: 'application/json'
+      }
     };
 
     const attempts = buildAttempts(preferApiVersion, preferModel);
