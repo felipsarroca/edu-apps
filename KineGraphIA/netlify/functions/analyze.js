@@ -38,14 +38,12 @@ exports.handler = async (event) => {
         {
           role: 'user',
           parts: [
-            { text: systemInstruction },
-            { text: userText }
+            {
+              text: `${systemInstruction}\n\nText a analitzar:\n${userText}`
+            }
           ]
         }
-      ],
-      generationConfig: {
-        responseMimeType: 'application/json'
-      }
+      ]
     };
 
     const attempts = buildAttempts(preferApiVersion, preferModel);
