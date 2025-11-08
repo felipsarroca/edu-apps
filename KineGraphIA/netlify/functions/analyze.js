@@ -193,6 +193,7 @@ function buildAttempts(preferVersion, preferModel) {
   push('v1', 'gemini-1.5-flash-latest');
   push('v1', 'gemini-1.5-pro-latest');
   push('v1beta', 'gemini-pro');
+  push('v1', 'gemini-pro-vision');
 
   return queue;
 }
