@@ -1,4 +1,5 @@
 const DEFAULT_ENDPOINT = 'https://kinegraphia.netlify.app/.netlify/functions/analyze';
+const LOCAL_MATCHER = /(?:localhost|127\.0\.0\.1|\.netlify\.app)$/i;
 
 const API_ENDPOINT = (() => {
   try {
@@ -6,8 +7,8 @@ const API_ENDPOINT = (() => {
     const ep = cfg?.apiEndpoint;
     if (typeof ep === 'string' && ep.trim()) return ep.trim();
     if (typeof window !== 'undefined') {
-      const origin = window.location?.origin;
-      if (origin && origin !== 'null' && origin.startsWith('http')) {
+      const origin = window.location?.origin ?? '';
+      if (LOCAL_MATCHER.test(origin)) {
         return `${origin.replace(/\/$/, '')}/.netlify/functions/analyze`;
       }
     }
