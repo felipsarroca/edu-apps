@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "KineGraph",
             path: 'KineGraph/',
             category: 'Física',
-            description: "Simulador interactiu per definir fases de moviment (MRU, MRUA, caiguda vertical i tir parabòlic) de diversos mòbils i obtenir animacions, taules i gràfiques que comparem recorreguts, velocitats i temps d'aturada en temps real.",
+            description: "Simulador interactiu per graficar funcions de cinemàtica. També té un repositori de problemes-mostra.",
             icon: 'KineGraph/favicon.svg'
         },
 
