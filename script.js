@@ -81,6 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Analitza amb IA l'enunciat d'un problema de cinemàtica i genera gràfiques, dades i resultats de manera automàtica",
             icon: 'KineGraphIA/favicon.svg'
         },
+        {
+            name: "KineGraph",
+            path: 'KineGraph/',
+            category: 'Física',
+            description: "Simulador interactiu per definir fases de moviment (MRU, MRUA, caiguda vertical i tir parabòlic) de diversos mòbils i obtenir animacions, taules i gràfiques que comparem recorreguts, velocitats i temps d'aturada en temps real.",
+            icon: 'KineGraph/favicon.svg'
+        },
 
         // Economia i Emprenedoria
         { 
