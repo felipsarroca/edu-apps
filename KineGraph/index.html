@@ -9,16 +9,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./index.css" />
     <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-      body {
-        font-family: 'Poppins', sans-serif;
-      }
-    </style>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
 
-<link rel="stylesheet" href="/index.css">
   <script type="importmap">
 {
   "imports": {
@@ -30,7 +25,16 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-CqQHLlb4.js"></script>
+  <script>
+    (function ensureTrailingSlash() {
+      var path = window.location.pathname || '';
+      var hasExtension = path.split('/').pop().indexOf('.') !== -1;
+      if (path && !path.endsWith('/') && !hasExtension) {
+        window.location.replace(path + '/' + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="./assets/index-CqQHLlb4.js"></script>
 </head>
   <body class="bg-gray-100">
     <div id="root"></div>
