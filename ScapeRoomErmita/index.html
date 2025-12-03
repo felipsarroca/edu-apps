@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troba la relíquia de l'ermita</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 2rem;
+            color: #4a5568;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .game-area {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen {
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+        }
+
+        .question-container {
+            text-align: center;
+            display: none;
+        }
+
+        .question-number {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            color: #2d3748;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 350px;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 3px solid #e2e8f0;
+            border-radius: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        .hint-btn {
+            background: linear-gradient(45deg, #ed8936, #dd6b20);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+
+        .hint-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(237, 137, 54, 0.4);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .success {
+            background: linear-gradient(45deg, #c6f6d5, #9ae6b4);
+            color: #22543d;
+            border: 2px solid #68d391;
+        }
+
+        .error {
+            background: linear-gradient(45deg, #fed7d7, #feb2b2);
+            color: #742a2a;
+            border: 2px solid #fc8181;
+        }
+
+        .hint {
+            background: linear-gradient(45deg, #fef5e7, #fbd38d);
+            color: #744210;
+            border: 2px solid #f6ad55;
+        }
+
+        .code-display {
+            background: linear-gradient(45deg, #e6fffa, #b2f5ea);
+            color: #234e52;
+            border: 2px solid #4fd1c7;
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .header-progress {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .progress-label {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .header-progress-bar {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(45deg, #e2e8f0, #cbd5e0);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid #a0aec0;
+        }
+
+        .header-progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #48bb78, #38a169, #68d391);
+            transition: width 0.6s ease;
+            border-radius: 25px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(72, 187, 120, 0.4);
+            width: 0%;
+        }
+
+        .header-progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .final-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .congratulations {
+            font-size: 2.5rem;
+            color: #48bb78;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .final-stats {
+            background: linear-gradient(45deg, #f7fafc, #edf2f7);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #cbd5e0;
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .game-area {
+                padding: 20px;
+            }
+            
+            .stats {
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .stat-item {
+                min-width: 130px;
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+
+            .button-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .submit-btn, .hint-btn {
+                width: 100%;
+                max-width: 250px;
+                padding: 18px 20px;
+                font-size: 1.2rem;
+            }
+
+            .answer-input {
+                max-width: 300px;
+                padding: 18px 20px;
+                font-size: 1.3rem;
+            }
+
+            .question-text {
+                font-size: 1.3rem;
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.3rem;
+            }
+            
+            .welcome-title {
+                font-size: 1.8rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .answer-input {
+                max-width: 280px;
+                font-size: 1.2rem;
+            }
+
+            .stat-item {
+                min-width: 120px;
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+
+            .stats {
+                gap: 10px;
+            }
+
+            .submit-btn, .hint-btn {
+                max-width: 220px;
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+
+            .progress-label {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🏛️ Ermita de Ca n'Anglada</h1>
+            <p class="subtitle">Escape Room: Troba la relíquia perduda</p>
+            <div class="stats">
+                <div class="stat-item">
+                    ⏱️ Temps: <span id="timer">00:00</span>
+                </div>
+                <div class="stat-item">
+                    ❌ Errors: <span id="errors">0</span>
+                </div>
+            </div>
+            <div class="header-progress">
+                <div class="progress-label">
+                    ✅ Progrés: <span id="progress">0 / 12</span>
+                </div>
+                <div class="header-progress-bar">
+                    <div id="header-progress-fill" class="header-progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <!-- Pantalla d'inici -->
+            <div id="welcome-screen" class="welcome-screen">
+                <h2 class="welcome-title">🗝️ Benvinguts aventurers!</h2>
+                <p class="welcome-text">
+                    Esteu a punt de començar una aventura emocionant a l'ermita romànica de Ca n'Anglada. 
+                    Haureu de resoldre 12 preguntes explorant cada racó de l'ermita. 
+                    Cada resposta correcta us donarà un codi secret que us ajudarà a trobar la relíquia amagada!
+                </p>
+                <p class="welcome-text">
+                    <strong>Recordeu:</strong> Observeu bé l'ermita, llegiu els panells informatius i treballeu en equip. 
+                    Si us equivoqueu, us donarem una pista per ajudar-vos!
+                </p>
+                <button class="start-btn" onclick="startGame()">🚀 Començar l'aventura</button>
+            </div>
+
+            <!-- Pantalla de joc -->
+            <div id="question-container" class="question-container">
+                <div class="question-number" id="question-number">Pregunta 1 de 12</div>
+                <div class="question-text" id="question-text"></div>
+                
+                <input type="text" class="answer-input" id="answer-input" placeholder="Escriu la teva resposta aquí..." autocomplete="off">
+                
+                <div id="action-buttons" class="button-row">
+                    <button class="submit-btn" onclick="submitAnswer()">📝 Respondre</button>
+                    <button class="hint-btn" onclick="showHint()">💡 Pista</button>
+                </div>
+                
+                <div id="next-button-container" class="button-row" style="display: none;">
+                    <button class="submit-btn" onclick="nextQuestion()">➡️ Següent pregunta</button>
+                </div>
+                
+                <div id="message" class="message"></div>
+            </div>
+
+            <!-- Pantalla final -->
+            <div id="final-screen" class="final-screen">
+                <h2 class="congratulations">🎉 Felicitats!</h2>
+                <p class="welcome-text">
+                    Heu completat amb èxit l'Escape Room de l'ermita de Ca n'Anglada! 
+                    Ara teniu tots els codis necessaris per trobar la relíquia perduda.
+                </p>
+                <div class="final-stats">
+                    <h3>📊 Els vostres resultats:</h3>
+                    <p><strong>⏱️ Temps total:</strong> <span id="final-time"></span></p>
+                    <p><strong>❌ Errors comesos:</strong> <span id="final-errors"></span></p>
+                    <p><strong>🎯 Rendiment:</strong> <span id="performance"></span></p>
+                </div>
+                <p class="welcome-text">
+                    <strong>🗝️ Utilitzeu els codis que heu anotat per descobrir on es troba la relíquia!</strong>
+                    (recordeu que en les religions els missatges es transmeten de dalt a baix)
+                </p>
+                <p class="welcome-text">
+                    <strong>👨‍🏫 Mostreu aquests resultats al vostre professor perquè en prengui nota.</strong>
+                </p>
+                <button class="restart-btn" onclick="restartGame()">🔄 Jugar de nou</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuració del joc
+        const questions = [
+            {
+                id: 1,
+                question: "Quantes dovelles podeu comptar a la façana principal?",
+                answer: "17",
+                hint: "Busqueu què és una \"dovella\".",
+                code: "A la casella 1, el codi és la sisena nota musical."
+            },
+            {
+                id: 2,
+                question: "Com es diu el tipus de campanar d'aquesta ermita? Campanar d'... (9 lletres)",
+                answer: "ESPADANYA",
+                hint: "Escriviu en majúscules una paraula de 9 lletres que comença per \"E\" i acaba en \"A\"",
+                code: "A la casella 2, el codi és la vocal que es repeteix més en la resposta que acabeu d'introduir."
+            },
+            {
+                id: 3,
+                question: "Quantes estàtues es poden veure a l'exterior de l'ermita? (escriviu el número)",
+                answer: "0",
+                hint: "En veieu alguna?",
+                code: "Les caselles 3, 6 i 15 han de quedar en blanc."
+            },
+            {
+                id: 4,
+                question: "Quantes persones haurien de seure a cada banc perquè n'hi càpiguen 20? (escriviu el número)",
+                answer: "4",
+                hint: "Compteu el nombre de bancs que hi ha a l'interior, enfront de l'altar.",
+                code: "A la casella 4 hi escriureu una paraula de 3 lletres: quan hi ha tempesta, el que sentirem després de veure un llamp."
+            },
+            {
+                id: 5,
+                question: "De quin segle data la primera documentació d'aquesta ermita? (escriviu el número)",
+                answer: "11",
+                hint: "No feu servir números romans.",
+                code: "A les caselles 5 i 12 hi escriureu la segona nota musical."
+            },
+            {
+                id: 6,
+                question: "Quina lletra majúscula representa millor la forma de l'església?",
+                answer: "T",
+                hint: "Podeu llegir el panell informatiu que hi ha a l'entrada de l'ermita.",
+                code: "A la casella 7 hi escriureu \"LAL\" i a la casella que fa el doble de 7 hi escriureu \"BRE\""
+            },
+            {
+                id: 7,
+                question: "Quantes portes permeten l'accés a l'interior de l'ermita?",
+                answer: "2",
+                hint: "Mireu que no n'hi hagi cap altre…",
+                code: "A la casella 8 hi escriureu \"BA\""
+            },
+            {
+                id: 8,
+                question: "Entre la nau principal i el presbiteri hi ha un \"arc triomfal\". Si te'l mires mentre fas el pi, quina lletra dibuixa?",
+                answer: "U",
+                hint: "Es tracta d'una de les vocals, escrita en majúscules.",
+                code: "A la casella 16 hi escriureu la resposta d'aquesta pregunta."
+            },
+            {
+                id: 9,
+                question: "Quantes finestres il·luminen l'interior de l'església? (escriviu el número)",
+                answer: "4",
+                hint: "Des de l'interior ho veureu millor.",
+                code: "A la casella 9 hi escriureu el pronom feble català que fa la funció de complement indirecte de 3ª persona en singular."
+            },
+            {
+                id: 10,
+                question: "Busqueu una brúixola i escriviu de manera abreujada l'orientació de la porta més nova (E = Est, N = Nord, S = Sud, O = Oest)",
+                answer: "O",
+                hint: "Recordeu què són i quina forma tenen els contraforts.",
+                code: "A la casella 10 hi escriureu l'abreviatura de l'orientació de la porta vella i de la porta nova (en aquest ordre). També és el que se li diu a un cavall perquè s'aturi."
+            },
+            {
+                id: 11,
+                question: "Quants contraforts aguanten els murs de l'ermita? (escriviu el número)",
+                answer: "0",
+                hint: "Recordeu què són i quina forma tenen els contraforts.",
+                code: "A la casella 11 hi escriureu \"TAR\". Sí, així de fàcil!"
+            },
+            {
+                id: 12,
+                question: "Si totes les campanes de l'ermita es posen a tocar a les 12 del migdia, quants tocs de campana sentirem en total? (escriviu el número)",
+                answer: "12",
+                hint: "També podeu cantar una nadala que diu \"Les … van tocant\"",
+                code: "\"QUI\" escriurà el codi a la casella que té un número més que la vostra resposta?"
+            }
+        ];
+
+        // Variables del joc
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let startTime = null;
+        let timerInterval = null;
+        let errors = 0;
+        let hintShown = false;
+
+        // Funcions principals
+        function startGame() {
+            // Barrejar preguntes aleatòriament
+            currentQuestions = [...questions].sort(() => Math.random() - 0.5);
+            currentQuestionIndex = 0;
+            errors = 0;
+            hintShown = false;
+            
+            // Inicialitzar temps
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Mostrar primera pregunta
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            document.getElementById('final-screen').style.display = 'none';
+            
+            showCurrentQuestion();
+            updateProgress();
+        }
+
+        function showCurrentQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-number').textContent = `Pregunta ${currentQuestionIndex + 1} de 12`;
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('answer-input').disabled = false;
+            document.getElementById('answer-input').focus();
+            hideMessage();
+            hintShown = false;
+            
+            // Mostrar botons d'acció i ocultar botó següent
+            document.getElementById('action-buttons').style.display = 'flex';
+            document.getElementById('next-button-container').style.display = 'none';
+        }
+
+        function submitAnswer() {
+            const userAnswer = document.getElementById('answer-input').value.trim();
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            
+            if (!userAnswer) {
+                showMessage('Si us plau, introduïu una resposta abans de continuar.', 'error');
+                return;
+            }
+
+            if (userAnswer.toUpperCase() === currentQuestion.answer.toUpperCase()) {
+                // Resposta correcta
+                showMessage(`🎉 Correcte! ${currentQuestion.code}`, 'code-display');
+                
+                // Ocultar botons d'acció i mostrar botó següent
+                document.getElementById('action-buttons').style.display = 'none';
+                document.getElementById('next-button-container').style.display = 'flex';
+                document.getElementById('answer-input').disabled = true;
+            } else {
+                // Resposta incorrecta
+                errors++;
+                updateErrorCount();
+                showMessage('❌ Resposta incorrecta. Proveu-ho de nou!', 'error');
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuestions.length) {
+                showCurrentQuestion();
+                updateProgress();
+            } else {
+                finishGame();
+            }
+        }
+
+        function showHint() {
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            showMessage(`💡 Pista: ${currentQuestion.hint}`, 'hint');
+            hintShown = true;
+        }
+
+        function finishGame() {
+            clearInterval(timerInterval);
+            
+            const endTime = new Date();
+            const totalTime = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(totalTime / 60);
+            const seconds = totalTime % 60;
+            
+            document.getElementById('final-time').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('final-errors').textContent = errors;
+            
+            // Actualitzar comptador de preguntes a 12/12
+            document.getElementById('progress').textContent = '12 / 12';
+            document.getElementById('header-progress-fill').style.width = '100%';
+            
+            // Calcular rendiment
+            let performance = 'Excel·lent!';
+            if (errors > 5) performance = 'Molt bé!';
+            if (errors > 10) performance = 'Bé!';
+            if (errors > 15) performance = 'Podeu millorar!';
+            
+            document.getElementById('performance').textContent = performance;
+            
+            document.getElementById('question-container').style.display = 'none';
+            document.getElementById('final-screen').style.display = 'block';
+        }
+
+        function restartGame() {
+            document.getElementById('final-screen').style.display = 'none';
+            document.getElementById('welcome-screen').style.display = 'block';
+            document.getElementById('question-container').style.display = 'none';
+            
+            // Reinicialitzar variables
+            if (timerInterval) clearInterval(timerInterval);
+            errors = 0;
+            currentQuestionIndex = 0;
+            updateErrorCount();
+            updateProgress();
+            document.getElementById('timer').textContent = '00:00';
+            
+            // Netejar missatges
+            hideMessage();
+        }
+
+        // Funcions auxiliars
+        function updateTimer() {
+            const now = new Date();
+            const elapsed = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateErrorCount() {
+            document.getElementById('errors').textContent = errors;
+        }
+
+        function updateProgress() {
+            const progress = `${currentQuestionIndex} / 12`;
+            const percentage = (currentQuestionIndex / 12) * 100;
+            
+            document.getElementById('progress').textContent = progress;
+            document.getElementById('header-progress-fill').style.width = `${percentage}%`;
+        }
+
+        function showMessage(text, className) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${className}`;
+            messageEl.style.display = 'block';
+        }
+
+        function hideMessage() {
+            document.getElementById('message').style.display = 'none';
+        }
+
+        // Event listeners
+        document.getElementById('answer-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitAnswer();
+            }
+        });
+
+        // Inicialitzar l'aplicació
+        updateProgress();
+    </script>
+</body>
+</html>

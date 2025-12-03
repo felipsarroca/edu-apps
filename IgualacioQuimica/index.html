@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Igualaci&oacute; d'equacions qu&iacute;miques</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      // ConfiguraciÃ³ de MathJax abans de carregar el script
+      window.MathJax = {
+        loader: { load: ['[tex]/colorv2','[tex]/html'] },
+        tex: {
+          inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)']
+          ],
+          // Usem colorv2 per permetre \color[HTML]{...}
+          packages: { '[+]': ['colorv2','html'] }
+        },
+        startup: { typeset: false }
+      };
+    </script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script>
+      // Tipus de lletra per a la primera tipusaciÃ³ un cop carregat MathJax
+      if (window.MathJax) {
+        MathJax.startup?.promise?.then(() => {
+          if (window.updateEquationDisplay) {
+            try { window.updateEquationDisplay(); } catch {}
+          }
+          if (MathJax.typesetPromise) {
+            MathJax.typesetPromise();
+          }
+        });
+      }
+    </script>
+  </head>
+  <body class="app-body">
+    <div class="app-wrapper">
+      <header class="hero-card">
+        <div class="hero-inner">
+          <img src="favicon.svg" alt="" aria-hidden="true" class="hero-logo" />
+          <h1 class="hero-title">Laboratori d'igualaci&oacute; d'equacions</h1>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <aside class="control-panel">
+          <section class="panel-section">
+            <h2 class="panel-title">Selecci&oacute; d'equacions</h2>
+            <label class="panel-label">
+              Tipus de reacci&oacute;
+              <select id="reactionType" class="control-input hidden-select">
+                <option value="tots">Tots els tipus</option>
+              </select>
+              <div class="multi-select" id="typeMulti">
+                <button type="button" id="typeDropdownBtn" class="multi-trigger">Tots els tipus</button>
+                <div class="multi-menu" id="typeFilters"></div>
+              </div>
+            </label>
+            <label class="panel-label">
+              Grau de dificultat
+              <select id="difficultyLevel" class="control-input hidden-select">
+                <option value="tots">Tots els nivells</option>
+                <option value="1">F&agrave;cil (nivell 1)</option>
+                <option value="2">Mitj&agrave; (nivell 2)</option>
+                <option value="3">Avan&ccedil;at (nivell 3)</option>
+              </select>
+              <div class="multi-select" id="levelMulti">
+                <button type="button" id="levelDropdownBtn" class="multi-trigger">Tots els nivells</button>
+                <div class="multi-menu" id="levelFilters"></div>
+              </div>
+            </label>
+            <button id="newEquationBtn" class="primary-btn w-full">
+              Nova equaci&oacute;
+            </button>
+          </section>
+
+          <section class="panel-section">
+            <h2 class="panel-title">Assistents</h2>
+            <label class="toggle-row">
+              <input type="checkbox" id="toggleAtoms" checked />
+              <span>Mostra el recompte d'&agrave;toms</span>
+            </label>
+            <label class="toggle-row">
+              <input type="checkbox" id="toggleHints" checked />
+              <span>Activa les pistes guiades</span>
+            </label>
+          </section>
+
+          <section class="panel-section small-print">
+            <h2 class="panel-title">Consells r&agrave;pids</h2>
+            <ul class="bullet-list">
+              <li>Treballa amb coeficients sencers.</li>
+              <li>No canvi&iuml;s els sub&iacute;ndexs dels compostos.</li>
+              <li>Comen&ccedil;a pels elements que apareixen menys vegades.</li>
+            </ul>
+          </section>
+        </aside>
+
+        <section class="lab-section">
+          <div class="lab-header">
+            <div class="lab-heading"><p id="equationTitle" class="lab-subtitle"></p></div>
+            <div class="status-block compact">
+              <div id="moodBadge" class="mood-badge not-balanced">&#128578;</div>
+              <p id="balanceStatus" class="status-title not-balanced">No equilibrada</p>
+            </div>
+          </div>
+
+          <!-- 1) FÃ“RMULA CENTRAL -->
+          <div id="equationDisplay" class="equation-display"></div>
+
+          <!-- 2) AJUSTAMENT DE COEFICIENTS -->
+          <div class="workspace">
+            <div id="equationContainer" class="equation-zone"></div>
+          </div>
+
+          <!-- 3) REPRESENTACIÃ“ DE REACTIUS I PRODUCTES -->
+          <div class="lab-stage">
+            <div class="stage-card">
+              <div class="stage-header reactant">Reactius</div>
+              <div id="reactantStage" class="stage-board"></div>
+            </div>
+            <div class="stage-connector">
+              <div class="stage-arrow">&rArr;</div>
+            </div>
+            <div class="stage-card">
+              <div class="stage-header product">Productes</div>
+              <div id="productStage" class="stage-board"></div>
+            </div>
+          </div>
+
+          <div class="action-row workspace-actions">
+            <button id="checkBtn" class="action-btn accent"><span class="btn-icon" aria-hidden="true">&#10003;</span><span>Comprova</span></button>
+            <button id="hintBtn" class="action-btn neutral"><span class="btn-icon" aria-hidden="true">&#128161;</span><span>Mostra pista</span></button>
+            <button id="solutionBtn" class="action-btn warn"><span class="btn-icon" aria-hidden="true">&#128065;</span><span>Mostra soluci&oacute;</span></button>
+            <button id="resetBtn" class="action-btn neutral"><span class="btn-icon" aria-hidden="true">&#9851;</span><span>Reinicia coeficients</span></button>
+          </div>
+
+          <p id="feedback" class="feedback-msg neutral"></p>
+
+          <div class="scoreboard">
+            <div class="score-card">
+              <span class="score-label">Intents</span>
+              <span id="attemptCount" class="score-value">0</span>
+            </div>
+            <div class="score-card">
+              <span class="score-label">Encerts</span>
+              <span id="correctCount" class="score-value">0</span>
+            </div>
+            <div class="score-card">
+              <span class="score-label">R&agrave;ting</span>
+              <span id="streakCount" class="score-value">0</span>
+            </div>
+          </div>
+
+          <div id="atomPanel" class="table-panel">
+            <h2 class="panel-title">Taula d'&agrave;toms</h2>
+            <div class="table-wrapper">
+              <table class="atom-table">
+                <thead>
+                  <tr>
+                    <th>Element</th>
+                    <th>Reactius</th>
+                    <th>Productes</th>
+                    <th>Difer&egrave;ncia</th>
+                  </tr>
+                </thead>
+                <tbody id="atomTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <footer class="panel-section footer-panel">
+          <div class="footer-content">
+            <img src="CC_BY-NC-SA.svg" alt="Llic&egrave;ncia CC BY-NC-SA" class="license-icon" />
+            <div class="footer-texts">
+              <div class="footer-line">Aplicaci&oacute; creada per Felip Sarroca amb l'assist&egrave;ncia de la IA</div>
+              <div class="footer-line">
+                Obra sota llic&egrave;ncia
+                <a class="license-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
+
+
+
+
+

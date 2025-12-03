@@ -1,0 +1,340 @@
+## 1. Objectiu general de l’app
+
+Aplicació web (o mòbil) per **guiar l’alumnat en la resolució de problemes de combinatòria**, obligant-los a:
+
+1. Classificar el problema:
+
+   * si **importa l’ordre**,
+   * si **es poden repetir** elements,
+   * si **s’agafen tots els elements o només m d’entre n**.
+2. Identificar el **tipus de problema** (permutació, variació, combinació…).
+3. Triar la **fórmula correcta** associada al cas.
+4. Identificar **n** (nombre total d’elements) i **m** (nombre d’elements agafats de m en m).
+5. Obtenir el **càlcul final** i una **explicació raonada**.
+
+L’app ha de funcionar en **dos modes**:
+
+* **Mode A – Problemes guiats**: problemes predefinits emmagatzemats en un fitxer/BD (JSON).
+* **Mode B – Mode lliure (“calculadora guiada”)**: l’usuari introdueix ell mateix n, m i les condicions del problema.
+
+---
+
+## 2. Modes de funcionament
+
+### 2.1. Mode A – Problemes guiats
+
+* L’alumne tria un problema d’una llista (filtrable per nivell/tema).
+* Cada problema ve definit en un JSON (vegeu apartat 5).
+* El sistema sap en tot moment:
+
+  * si importa l’ordre (`ordre`),
+  * si hi ha repetició (`repeticio`),
+  * si s’agafen tots els elements (`tots`),
+  * el **tipus** de problema (permutació / variació / combinació…),
+  * els valors correctes de **n** i **m**,
+  * i el resultat final.
+
+L’alumne ha de passar per **quatre pantalles** consecutives. Per cada pas hi ha validació; si s’equivoca, pot demanar pistes, veure la solució d’aquell pas o canviar de problema.
+
+### 2.2. Mode B – Mode lliure (“calculadora guiada”)
+
+* L’usuari no parteix d’un enunciat fix.
+* Introdueix directament:
+
+  * `n` (nombre total d’elements),
+  * `m` (elements agafats de m en m),
+  * si importa l’ordre,
+  * si hi ha repetició,
+  * si s’agafen tots els elements o només m.
+* L’app aplica la **mateixa seqüència de pantalles** per identificar el tipus, la fórmula i fer el càlcul.
+* En aquest mode no hi ha “solució guardada” per comparar, però sí que es pot comprovar:
+
+  * coherència (p. ex. `m > n` i sense repetició → error),
+  * correcció de la classificació segons les opcions que l’usuari ha seleccionat.
+
+---
+
+## 3. Flux de pantalles (per a qualsevol mode)
+
+### Pantalla 1 – Classificació bàsica del problema
+
+**Objectiu:** que l’alumne indiqui:
+
+1. **Importa l’ordre?**
+
+   * Opcions: `Sí`, `No`.
+2. **Es poden repetir elements?**
+
+   * Opcions: `Sí`, `No`.
+3. **S’agafen tots els elements o només alguns?**
+
+   * Opcions: `Tots (m = n)`, `Només alguns (m < n)`.
+
+**Validació:**
+
+* **Mode A**: es compara amb els valors correctes del problema JSON:
+
+  * `ordre` (bool),
+  * `repeticio` (bool),
+  * `tots` (bool).
+* Si alguna resposta és incorrecta:
+
+  * es mostra un missatge i es permet:
+
+    * demanar **pista** (text curt),
+    * veure la **solució** d’aquest pas,
+    * o **canviar de problema**.
+
+### Pantalla 2 – Tipus de problema i fórmula
+
+A partir de les respostes de la pantalla 1, l’app ha de restringir les opcions a les que tinguin sentit, però **totes les fórmules mostrades han de ser fórmules reals de combinatòria** (cap fórmula inventada).
+
+#### 2.1. Tipus de problema
+
+Opcions possibles:
+
+* `Permutació simple`
+* `Permutació amb repetició`
+* `Variació simple`
+* `Variació amb repetició`
+* `Combinació simple`
+* `Combinació amb repetició`
+
+El sistema ha de desactivar o ocultar els tipus que no encaixin amb la tripleta (`ordre`, `repeticio`, `tots`). Per exemple:
+
+* `ordre = true`, `repeticio = false`, `tots = true` → només pot ser **Permutació simple**.
+* `ordre = true`, `repeticio = false`, `tots = false` → **Variació simple**.
+* `ordre = true`, `repeticio = true`, `tots = false` → **Variació amb repetició**.
+* `ordre = false`, `repeticio = false`, `tots = false` → **Combinació simple**.
+* `ordre = false`, `repeticio = true`, `tots = false` → **Combinació amb repetició**.
+* Altres combinacions poden existir (casos teòrics menys habituals, p. ex. `tots = true` sense ordre → 1 combinació única).
+
+#### 2.2. Tria de fórmula
+
+Hi ha un **catàleg tancat de fórmules reals**. Totes són correctes en algun context, però només una correspon al problema actual.
+
+Catàleg de fórmules, amb variables **n** (nombre total d’elements) i **m** (elements agafats de m en m):
+
+1. **Permutació simple**
+
+   * Nom: `"permutacio_simple"`
+   * Fórmula: `P = n!`
+2. **Permutació amb repetició**
+
+   * Nom: `"permutacio_amb_repeticio"`
+   * Fórmula general:
+     `P = n! / (a1! · a2! · ... · ak!)`
+     on `a1 + a2 + ... + ak = n`.
+3. **Variació simple**
+
+   * Nom: `"variacio_simple"`
+   * Fórmula: `V = n! / (n - m)!`
+4. **Variació amb repetició**
+
+   * Nom: `"variacio_amb_repeticio"`
+   * Fórmula: `V = n^m`
+5. **Combinació simple**
+
+   * Nom: `"combinacio_simple"`
+   * Fórmula: `C = C(n, m) = n! / (m! · (n - m)!)`
+6. **Combinació amb repetició**
+
+   * Nom: `"combinacio_amb_repeticio"`
+   * Fórmula: `C = C(n + m - 1, m) = (n + m - 1)! / (m! · (n - 1)!)`
+
+A la pantalla, l’alumne veu diverses fórmules d’aquesta llista (totes matemàticament correctes) i ha de seleccionar la que correspon al **tipus** i a la **classificació** del problema actual.
+
+**Validació:**
+
+* **Mode A:**
+
+  * El problema JSON porta el camp `tipus` (un dels noms anteriors) i `formula_id` (identificador de la fórmula del catàleg).
+  * L’elecció de tipus i fórmula s’ha de comparar amb aquests camps.
+* **Mode B:**
+
+  * El tipus i la fórmula es dedueixen directament a partir de les respostes de la pantalla 1.
+
+Si l’alumne s’equivoca:
+
+* es pot mostrar una pista (p. ex. “Hi ha ordre i no agafes tots → pensa en variacions”),
+* o la solució del pas.
+
+### Pantalla 3 – Assignació de n i m
+
+**Objectiu:** que l’alumne identifiqui correctament n i m.
+
+Entrades:
+
+1. **n**: “Nombre total d’elements possibles del problema.”
+2. **m**: “Nombre d’elements que agafes de m en m (llocs, posicions, triats…).”
+
+**Validació:**
+
+* **Mode A:**
+
+  * comparar amb `n_correcte` i `m_correcte` emmagatzemats al JSON.
+* **Mode B:**
+
+  * verificar coherència:
+
+    * si `repeticio = false`, comprovar que `m ≤ n`,
+    * si `tots = true`, comprovar que `m = n`,
+    * etc.
+
+En cas d’error:
+
+* Pista: “Repassa quants elements hi ha en total al problema (aquests són n)” o “Quants elements poses a cada disposició? (aquests són m)”.
+
+### Pantalla 4 – Càlcul i explicació
+
+**Funcions de la pantalla:**
+
+1. Mostrar la **fórmula simbòlica** seleccionada a la pantalla 2.
+2. Substituir-hi **n** i **m**:
+
+   * Ex.: `V = n! / (n - m)!` → `V = 8! / (8 - 3)!`.
+3. Mostrar el **desenvolupament numèric**:
+
+   * `V = 8! / 5! = (8·7·6·5!)/5! = 8·7·6 = 336`.
+4. Mostrar una **explicació en llenguatge natural**:
+
+   * “Hi ha n = 8 atletes i agafem m = 3 llocs al podi. L’ordre importa i no es repeteixen, per això fem una variació simple. El resultat 336 indica el nombre de podis possibles diferents.”
+
+**Mode A:**
+
+* Comparar el resultat obtingut amb el valor `resultat` del JSON.
+* Opcionalment: permetre que l’alumne introdueixi ell mateix el resultat abans de mostrar el càlcul del sistema.
+
+**Mode B:**
+
+* El sistema només calcula el resultat a partir de n, m i de la fórmula seleccionada.
+
+---
+
+## 4. Sistema de pistes i opcions a cada pantalla
+
+A cada pantalla (1–3), sempre hi ha tres botons estàndard:
+
+1. **“Pista”**
+
+   * Mostra un text curt definit al JSON per a aquell problema i aquell pas (en Mode A), o un text genèric (Mode B).
+2. **“Veure solució d’aquest pas”**
+
+   * Omple automàticament la resposta correcta i permet continuar.
+3. **“Canviar de problema”** (només Mode A)
+
+   * Torna a la llista de problemes.
+
+---
+
+## 5. Estructura de dades d’un problema (JSON)
+
+Especificació dels camps mínims per a cada problema en Mode A.
+
+```json
+{
+  "id": 1,
+  "nivell": "ESO3",
+  "titol": "Podi d'atletisme",
+  "enunciat": "En una final d'atletisme hi participen 8 atletes. De quantes maneres diferents es pot formar el podi (primer, segon i tercer lloc)?",
+
+  "ordre": true,
+  "repeticio": false,
+  "tots": false,
+
+  "n_correcte": 8,
+  "m_correcte": 3,
+
+  "tipus": "variacio_simple",              // permutacio_simple, permutacio_amb_repeticio, variacio_simple, variacio_amb_repeticio, combinacio_simple, combinacio_amb_repeticio
+  "formula_id": "variacio_simple",        // ha de coincidir amb una entrada del catàleg de fórmules
+
+  "resultat": 336,
+
+  "explicacio_final": "Hi ha n = 8 atletes i agafem m = 3 llocs al podi. L'ordre importa i un atleta no pot ocupar dos llocs alhora, per això el cas és una variació simple: V = n! / (n - m)! = 8! / 5! = 8·7·6 = 336.",
+
+  "pistes": {
+    "pas1": [
+      "Pensa si canviés l'ordre dels atletes al podi: seria una situació diferent o la mateixa?",
+      "Pregunta't si algun atleta pot repetir lloc al podi."
+    ],
+    "pas2": [
+      "Si importa l'ordre i no agafes tots els elements, tens una variació.",
+      "Recorda: variació simple quan no hi ha repetició."
+    ],
+    "pas3": [
+      "n és el nombre total d'atletes que poden pujar al podi.",
+      "m és el nombre de llocs del podi (primer, segon i tercer)."
+    ]
+  },
+
+  "solucions_parcials": {
+    "pas1": {
+      "ordre": true,
+      "repeticio": false,
+      "tots": false
+    },
+    "pas2": {
+      "tipus": "variacio_simple",
+      "formula_id": "variacio_simple"
+    },
+    "pas3": {
+      "n": 8,
+      "m": 3
+    }
+  }
+}
+```
+
+> Nota:
+>
+> * El camp `formula_id` s’ha de referir a una entrada fixa del catàleg de fórmules definides al codi de l’app.
+> * Si en algun problema es vol fer servir **permutació amb repetició**, caldria afegir un camp opcional, p. ex. `"multiplicitats": [2, 2, 1]`, que sumi `n_correcte`.
+
+---
+
+## 6. Catàleg de fórmules (referenciat per `formula_id`)
+
+Aquest catàleg pot estar fix al codi:
+
+```json
+[
+  {
+    "id": "permutacio_simple",
+    "nom": "Permutació simple",
+    "expressio": "P = n!",
+    "descripcio": "Ordenar tots els n elements diferents, sense repetició."
+  },
+  {
+    "id": "permutacio_amb_repeticio",
+    "nom": "Permutació amb repetició",
+    "expressio": "P = n! / (a1! · a2! · ... · ak!)",
+    "descripcio": "Ordenar n elements on alguns es repeteixen."
+  },
+  {
+    "id": "variacio_simple",
+    "nom": "Variació simple",
+    "expressio": "V = n! / (n - m)!",
+    "descripcio": "Ordenar m elements diferents triats d'entre n, sense repetició."
+  },
+  {
+    "id": "variacio_amb_repeticio",
+    "nom": "Variació amb repetició",
+    "expressio": "V = n^m",
+    "descripcio": "Disposicions d'm elements on es pot repetir qualsevol dels n elements."
+  },
+  {
+    "id": "combinacio_simple",
+    "nom": "Combinació simple",
+    "expressio": "C = C(n, m) = n! / (m! · (n - m)!)",
+    "descripcio": "Triar m elements d'entre n, sense ordre i sense repetició."
+  },
+  {
+    "id": "combinacio_amb_repeticio",
+    "nom": "Combinació amb repetició",
+    "expressio": "C = C(n + m - 1, m) = (n + m - 1)! / (m! · (n - 1)!)",
+    "descripcio": "Triar m elements d'entre n, sense ordre però permetent repeticions."
+  }
+]
+```
+
+L’app, en la pantalla 2, sempre mostrarà **només fórmules d’aquest catàleg**. Totes són reals; l’error de l’alumne no és escollir una “fórmula falsa”, sinó una **fórmula que no correspon al tipus de problema** que té entre mans.

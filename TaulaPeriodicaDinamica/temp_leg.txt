@@ -1,0 +1,396 @@
+﻿    case 'body': {
+      const map = (window.PT_ABUND && window.PT_ABUND.human) || {};
+      paintAbundance(map, false);
+      break; }
+    case 'earth': {
+      const map = (window.PT_ABUND && window.PT_ABUND.earth) || {};
+      paintAbundance(map, false);
+      break; }
+    case 'universe': {
+      const map = (window.PT_ABUND && window.PT_ABUND.universe) || {};
+      paintAbundance(map, true);
+      break; }
+  }
+}
+
+function renderLegend() {
+  const box = document.getElementById('legend');
+  box.innerHTML = '';
+
+  const title = document.createElement('h3');
+  title.textContent = 'Llegenda';
+  box.appendChild(title);
+
+  if (state.mode === 'blank') {
+    const p = document.createElement('div');
+    p.className = 'items';
+    p.innerHTML = '<span class="item">Sense colors: nomÃ©s sÃ­mbol i nÃºmero atÃ²mic.</span>';
+    box.appendChild(p);
+    return;
+  }
+
+  if (state.mode === 'families') {
+    const wrap = document.createElement('div');
+    wrap.className = 'items';
+    for (const [key, color] of Object.entries(familiesPalette)) {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${familiesLabelCa[key] || key}</span>`;
+      wrap.appendChild(item);
+    }
+    box.appendChild(wrap);
+    return;
+  }
+
+  if (state.mode === 'blocks') {
+    const wrap = document.createElement('div');
+    wrap.className = 'items';
+    for (const [b, color] of Object.entries(blocksPalette)) {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>Bloc ${b}</span>`;
+      wrap.appendChild(item);
+    }
+    const note = document.createElement('div');
+    note.style.cssText = 'margin-top:8px; font-size:12px; color:#a8acb3';
+    note.textContent = 'Nota: Lu i Lr es mostren com a f per coherÃ¨ncia visual amb la fila.';
+    box.appendChild(wrap);
+    box.appendChild(note);
+    return;
+  }
+
+  if (state.mode === 'state') {
+    const wrap = document.createElement('div');
+    wrap.className = 'items';
+    const map = { Solid: 'SÃ²lid', Liquid: 'LÃ­quid', Gas: 'Gas', Unknown: 'Desconegut' };
+    for (const [k, color] of Object.entries(statePalette)) {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${map[k]}</span>`;
+      wrap.appendChild(item);
+    }
+    box.appendChild(wrap);
+    return;
+  }
+
+  if (state.mode === 'reactivity') {
+    const wrap = document.createElement('div');
+    wrap.className = 'items';
+    const items = [
+      ['molt reactiu', qualitativePalette.high],
+      ['bastant reactiu', qualitativePalette.fairly],
+      ['reactiu', qualitativePalette.medium],
+      ['poc reactiu', qualitativePalette.low],
+      ['inert', qualitativePalette.none],
+    ];
+    for (const [label, color] of items) {
+      const item = document.createElement('div'); item.className = 'item';
+      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${label}</span>`;
+      wrap.appendChild(item);
+    }
+    const note = document.createElement('div');
+    note.style.cssText = 'margin-top:8px; font-size:12px; color:#6b7280';
+    note.textContent = 'Criteri: alcalins/halÃ²gens=molt, alcalinoterris=bastant, transiciÃ³/no-metalls=reactiu, altres=baix, nobles=inert.';
+    box.appendChild(wrap); box.appendChild(note); return;
+  }
+
+  if (state.mode === 'condElectric' || state.mode === 'condThermal') {
+    const map = (window.PT_COND)||{}; const key = state.mode==='condElectric'?'e':'t'; const unit = state.mode==='condElectric'?'S/m':'W/m·K';
+    const vals = state.elements.map(e=>map[e.symbol]?.[key]).filter(v=>typeof v==='number' && v>0);
+    if (vals.length){
+      if (state.mode==='condThermal'){
+        const lmin = Math.log10(Math.min(...vals)), lmax = Math.log10(Math.max(...vals));
+        const bins = makeBins(lmin, lmax, paletteThermal.length);
+        const wrap = document.createElement('div'); wrap.className='items';
+        for (let i=0;i<bins.length;i++){
+          const a = i===0 ? lmin : bins[i-1]; const b = bins[i];
+          const item = document.createElement('div'); item.className='item';
+          item.innerHTML = `<span class="swatch" style="background:${paletteThermal[i]}"></span><span>${formatSI(Math.pow(10,a))} – ${formatSI(Math.pow(10,b))} ${unit}</span>`;
+          wrap.appendChild(item);
+        }
+        box.appendChild(wrap);
+      } else {
+        const min = Math.min(...vals), max = Math.max(...vals);
+        const bins = makeBins(min, max, paletteDistinct.length);
+        const wrap = document.createElement('div'); wrap.className='items';
+        for (let i=0;i<bins.length;i++){
+          const a = i===0 ? min : bins[i-1]; const b = bins[i];
+          const item = document.createElement('div'); item.className='item';
+          item.innerHTML = `<span class="swatch" style="background:${paletteDistinct[i]}"></span><span>${formatSI(a)} – ${formatSI(b)} ${unit}</span>`;
+          wrap.appendChild(item);
+        }
+        box.appendChild(wrap);
+      }
+    }
+    if (state.elements.some(e=> typeof (map[e.symbol]?.[key]) !== 'number')) addItems([["Sense dades", '#e5e7eb']]);
+    const note = document.createElement('div'); note.style.cssText='margin-top:8px;font-size:12px;color:#6b7280'; note.textContent='Valors aproximats a 300 K. Escala logarítmica per a tèrmica.'; box.appendChild(note); return;
+  }
+
+  if (state.mode === 'density') {
+    const vals = state.elements.map(e=> (typeof e.density === 'number' && e.density>0 ? e.density : undefined)).filter(v=> typeof v === 'number');
+    if (vals.length){ addBinsLegend(vals, v=>`${v.toFixed(2)} g/cmÂ³`); }
+    if (state.elements.some(e=> !(typeof e.density === 'number' && e.density>0))) addItems([['Sense dades', '#e5e7eb']]);
+    return;
+  }
+
+  if (state.mode === 'atomicRadius') {
+    const vals = state.elements.map(e=> e.atomic_radius_pm).filter(v=> typeof v === 'number' && v>0);
+    if (vals.length){ addBinsLegend(vals, v=>`${v.toFixed(0)} pm`); }
+    if (state.elements.some(e=> !(typeof e.atomic_radius_pm === 'number' && e.atomic_radius_pm>0))) addItems([['Sense dades', '#e5e7eb']]);
+    return;
+  }
+
+  if (state.mode === 'metallic') {
+    addItems([
+      ['MetÃ lÂ·lics', '#0ea5e9'],
+      ['No metÃ lÂ·lics', '#9ca3af']
+    ]);
+    return;
+  }
+
+  if (state.mode === 'body' || state.mode === 'earth' || state.mode === 'universe') {
+    const map = (window.PT_ABUND && (state.mode==='body'?window.PT_ABUND.human: state.mode==='earth'?window.PT_ABUND.earth: window.PT_ABUND.universe))||{};
+    const raw = state.elements.map(e=>map[e.symbol]??0).filter(v=>typeof v==='number' && v>0);
+    if (!raw.length){ const p=document.createElement('div'); p.className='items'; p.innerHTML='<span class="item">Sense dades.</span>'; box.appendChild(p); return; }
+    if (state.mode==='universe'){
+      const vals = raw.map(v=>Math.log10(v)); addBinsLegend(vals, v=>formatPct(Math.pow(10,v))); return;
+    } else { addBinsLegend(raw, v=>formatPct(v)); return; }
+  }
+
+  // ValÃ¨ncia: mantenim banda contÃ­nua
+  if (state.mode === 'valence') {
+    const vals = state.elements.map(e=>Array.isArray(e.shells)? e.shells[e.shells.length-1] : undefined).filter(v=>typeof v==='number');
+    min = Math.min(...vals); max = Math.max(...vals);
+    const wrap = document.createElement('div'); wrap.className='items';
+    const bar = document.createElement('div'); bar.className='item range'; bar.innerHTML = `<span class="tick">${min} electrons</span><span class="bar" style="background:linear-gradient(90deg,#93c5fd,#ef4444)"></span><span class="tick">${max} electrons</span>`;
+    wrap.appendChild(bar); box.appendChild(wrap); return;
+  }
+}
+
+function mixColor(hex1, hex2, t) {
+  const c1 = hexToRgb(hex1), c2 = hexToRgb(hex2);
+  const r = Math.round(c1.r + (c2.r - c1.r) * t);
+  const g = Math.round(c1.g + (c2.g - c1.g) * t);
+  const b = Math.round(c1.b + (c2.b - c1.b) * t);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+function hexToRgb(hex){
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return m ? { r: parseInt(m[1],16), g: parseInt(m[2],16), b: parseInt(m[3],16) } : {r:0,g:0,b:0};
+}
+
+function getFgForBg(bg){
+  // bg pot ser rgb(...) o #hex; tornem negre o blanc segons luminÃ ncia
+  let r=17,g=19,b=24;
+  if (bg.startsWith('#')) { const c = hexToRgb(bg); r=c.r; g=c.g; b=c.b; }
+  else {
+    const m = /rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)/.exec(bg);
+    if (m) { r=parseInt(m[1]); g=parseInt(m[2]); b=parseInt(m[3]); }
+  }
+  const sr = r/255, sg=g/255, sb=b/255;
+  const lin = (x)=> (x<=0.03928? x/12.92 : Math.pow((x+0.055)/1.055,2.4));
+  const L = 0.2126*lin(sr) + 0.7152*lin(sg) + 0.0722*lin(sb);
+  return L > 0.53 ? '#111318' : '#f8fafc'; // si clar, negre; si fosc, blanc
+}
+
+function setCardBG(card,color){
+  card.style.background = color;
+  const fg = getFgForBg(color);
+  card.style.setProperty('--cell-fg', fg);
+}
+
+function setMeta(card, text){
+  const meta = card.querySelector('.meta');
+  if (!meta) return;
+  meta.textContent = text || '';
+}
+
+// Helpers per a franges discretes
+function makeBins(min, max, n){
+  const bins = [];
+  const step = (max - min) / n;
+  for (let i=1;i<=n;i++) bins.push(min + step * i);
+  return bins;
+}
+function binIndex(v, bins){
+  for (let i=0;i<bins.length;i++) if (v <= bins[i]) return i;
+  return bins.length - 1;
+}
+function stepColors(hex1, hex2, n){
+  const colors = [];
+  for (let i=0;i<n;i++){
+    const t = n===1 ? 0.5 : i/(n-1);
+    colors.push(mixColor(hex1, hex2, t));
+  }
+  return colors;
+}
+
+function formatSI(v){
+  // Format curt amb prefixos SI: S/m i W/mÂ·K
+  const abs = Math.abs(v);
+  const units = [
+    {k:1e9, s:'G'}, {k:1e6, s:'M'}, {k:1e3, s:'k'}, {k:1, s:''}, {k:1e-3, s:'m'}, {k:1e-6, s:'Âµ'}, {k:1e-9, s:'n'}
+  ];
+  for (const u of units){ if (abs >= u.k){ return (v/u.k).toFixed(2).replace(/\.00$/,'') + ' ' + u.s; } }
+  return v.toExponential(2);
+}
+
+function formatPct(v){
+  if (v === 0) return '0%';
+  if (v >= 10) return v.toFixed(1).replace(/\.0$/,'') + '%';
+  if (v >= 1) return v.toFixed(2).replace(/0$/,'').replace(/\.$/,'') + '%';
+  if (v >= 0.1) return v.toFixed(2) + '%';
+  if (v >= 0.01) return v.toFixed(3) + '%';
+  if (v >= 0.001) return v.toFixed(4) + '%';
+  return v.toExponential(1).replace('e','Ã—10^') + '%';
+}
+
+function paintAbundance(map, useLog){
+  const grid = document.getElementById('periodic-grid');
+  const vals = [];
+  for (const el of state.elements){ const v = map[el.symbol] ?? 0; if (typeof v === 'number' && v>0) vals.push(v); }
+  if (!vals.length){ for (const el of state.elements){ const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`); setCardBG(card,'#374151'); card.classList.add('colored'); setMeta(card,'0%'); } return; }
+  if (useLog){
+    const lmin = Math.log10(Math.min(...vals)), lmax = Math.log10(Math.max(...vals));
+    const bins = makeBins(lmin, lmax, paletteDistinct.length);
+    const colors = paletteDistinct;
+    for (const el of state.elements){
+      const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
+      const vv = map[el.symbol] ?? 0;
+      if (vv>0){ const idx = binIndex(Math.log10(vv), bins); setCardBG(card, colors[idx]); card.classList.add('colored'); setMeta(card, formatPct(vv)); }
+      else { setCardBG(card, '#374151'); card.classList.add('colored'); setMeta(card, '0%'); }
+    }
+  } else {
+    const min = Math.min(...vals), max = Math.max(...vals);
+    const bins = makeBins(min, max, paletteDistinct.length);
+    const colors = paletteDistinct;
+    for (const el of state.elements){
+      const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
+      const vv = map[el.symbol] ?? 0;
+      if (vv>0){ const idx = binIndex(vv, bins); setCardBG(card, colors[idx]); card.classList.add('colored'); setMeta(card, formatPct(vv)); }
+      else { setCardBG(card, '#374151'); card.classList.add('colored'); setMeta(card, '0%'); }
+    }
+  }
+}
+
+function applyCustomValues(){
+  if (typeof window === 'undefined' || !window.PT_VALUES) return;
+  const V = window.PT_VALUES;
+  for (const el of state.elements){
+    const sym = el.symbol;
+    if (V.electronegativity_pauling && sym in V.electronegativity_pauling){
+      const val = V.electronegativity_pauling[sym];
+      if (val === null || typeof val === 'number') el.electronegativity_pauling = val;
+    }
+    if (V.ionization_kjmol && sym in V.ionization_kjmol){
+      const val = V.ionization_kjmol[sym];
+      if (typeof val === 'number') {
+        if (!Array.isArray(el.ionization_energies)) el.ionization_energies = [];
+        el.ionization_energies[0] = val;
+      }
+    }
+    if (V.conductivity){
+      // Completa PT_COND amb valors personalitzats, sense sobreescriure valors existents
+      if (!window.PT_COND) window.PT_COND = {};
+      if (!window.PT_COND[sym]) window.PT_COND[sym] = {};
+      if (V.conductivity.e && (sym in V.conductivity.e) && typeof window.PT_COND[sym].e !== 'number') {
+        window.PT_COND[sym].e = V.conductivity.e[sym];
+      }
+      if (V.conductivity.t && (sym in V.conductivity.t) && typeof window.PT_COND[sym].t !== 'number') {
+        // Evita possibles unitats errònies en gasos (dades sobredimensionades)
+        const proposed = V.conductivity.t[sym];
+        if (!(el.phase === 'Gas' && proposed > 5)) {
+          window.PT_COND[sym].t = proposed;
+        }
+      }
+    }
+    if (V.density_gcm3 && sym in V.density_gcm3){
+      const val = V.density_gcm3[sym];
+      if (typeof val === 'number') el.density = val;
+    }
+    if (V.atomic_radius_pm && sym in V.atomic_radius_pm){
+      const val = V.atomic_radius_pm[sym];
+      if (typeof val === 'number') el.atomic_radius_pm = val;
+    }
+  }
+}
+
+function initUI() {
+  const select = document.getElementById('mode-select');
+  select.addEventListener('change', e => setMode(e.target.value));
+}
+
+async function main() {
+  await loadData();
+  createGrid();
+  initUI();
+  setMode('blank');
+}
+
+main().catch(err => {
+  console.error(err);
+  const grid = document.getElementById('periodic-grid');
+  grid.innerHTML = '<div style="grid-column:1 / span 18;color:#f87171">Error carregant dades: ' + (err?.message || err) + '<br>SoluciÃ³: obre amb un servidor (http://localhost) o assegura que es carrega <code>data/elements.js</code>.</div>';
+});
+
+// Responsivitat: ajust d'escala perquÃ¨ la taula sencera es vegi
+function fitGridScale(){
+  const viewport = document.getElementById('grid-viewport');
+  const scaler = document.getElementById('grid-scale');
+  const grid = document.getElementById('periodic-grid');
+  if (!viewport || !scaler || !grid) return;
+  // Mesura mides naturals
+  // Assegurem que no hi ha escala abans de mesurar
+  scaler.style.transform = 'scale(1)';
+  const gw = grid.scrollWidth;
+  const gh = grid.scrollHeight;
+  const vw = viewport.clientWidth - 16; // marge interior
+  const vh = viewport.clientHeight - 16;
+  if (gw === 0 || gh === 0 || vw <= 0 || vh <= 0) return;
+  const s = Math.min(vw / gw, vh / gh);
+  scaler.style.transform = `scale(${s})`;
+}
+
+window.addEventListener('resize', () => {
+  fitGridScale();
+});
+
+
+// Complement: llegenda específica per a conductivitat tèrmica (log) si cal
+(function setupThermalLegendOverride(){
+  function drawThermalLegendIfNeeded(){
+    try{
+      if (!document) return;
+      if (state.mode !== 'condThermal') return;
+      const box = document.getElementById('legend');
+      if (!box) return;
+      // Neteja i capçalera
+      box.innerHTML = '';
+      const title = document.createElement('h3'); title.textContent = 'Llegenda'; box.appendChild(title);
+      const map = (window.PT_COND)||{}; const unit = 'W/m·K';
+      const vals = (state.elements||[]).map(e=>map[e.symbol]?.t).filter(v=>typeof v==='number' && v>0);
+      if (vals.length){
+        const lmin = Math.log10(Math.min(...vals)), lmax = Math.log10(Math.max(...vals));
+        const bins = makeBins(lmin, lmax, paletteThermal.length);
+        const wrap = document.createElement('div'); wrap.className='items';
+        for (let i=0;i<bins.length;i++){
+          const a = i===0 ? lmin : bins[i-1]; const b = bins[i];
+          const item = document.createElement('div'); item.className='item';
+          item.innerHTML = `<span class="swatch" style="background:${paletteThermal[i]}"></span><span>${formatSI(Math.pow(10,a))} – ${formatSI(Math.pow(10,b))} ${unit}</span>`;
+          wrap.appendChild(item);
+        }
+        box.appendChild(wrap);
+        const note = document.createElement('div'); note.style.cssText='margin-top:8px;font-size:12px;color:#6b7280'; note.textContent='Escala logarítmica per visualitzar millor el rang dels valors (≈300 K).'; box.appendChild(note);
+      } else {
+        const p = document.createElement('div'); p.className='items'; p.innerHTML = '<span class="item">Sense dades</span>'; box.appendChild(p);
+      }
+    }catch(e){ /* no-op */ }
+  }
+  // Redibuixa quan canviï el selector
+  const sel = document.getElementById('mode-select');
+  if (sel) sel.addEventListener('change', ()=> setTimeout(drawThermalLegendIfNeeded));
+  // També quan carregui inicialment
+  if (typeof window!== 'undefined') window.addEventListener('load', ()=> setTimeout(drawThermalLegendIfNeeded));
+})();
+
+

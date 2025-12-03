@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <title>4 x 15 - Joc de la IA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* Pantalles superposades (Inici, Game Over, Victòria) */
+        .overlay-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .overlay-content {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            max-width: 90%;
+            width: 550px;
+            color: white;
+        }
+
+        .start-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .start-title {
+            font-size: clamp(3rem, 15vw, 6rem);
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f7b731);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        /* Estil pel nou subtítol */
+        .start-main-subtitle {
+            font-size: clamp(1.5rem, 6vw, 2.2rem);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .start-subtitle {
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        /* Estil pel camp de nom */
+        .name-input {
+            width: 80%;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 500;
+            transition: box-shadow 0.3s ease;
+        }
+        .name-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .name-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .name-input.error {
+            border-color: #ff6b6b;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 20px 40px;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        .game-over-screen {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            animation: gameOverAnimation 1s ease;
+        }
+
+        @keyframes gameOverAnimation {
+            from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+            to { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .game-over-title {
+            font-size: clamp(2rem, 10vw, 3rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .game-over-score {
+            font-size: clamp(2.5rem, 12vw, 4rem);
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .game-over-message {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .victory-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Estil pel nom del jugador a la pantalla de victòria */
+        .victory-player-name {
+            font-size: clamp(1.8rem, 8vw, 2.5rem);
+            color: #f7b731;
+            margin: 10px 0 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-weight: bold;
+            word-break: break-all;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .game-header {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                flex-direction: row;
+            }
+        }
+
+        .game-area {
+            flex: 2;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .progress-area {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+            min-height: 100px;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 576px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .option-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .option-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-button.correct {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            animation: correctAnswer 0.5s ease;
+        }
+
+        .option-button.incorrect {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            animation: incorrectAnswer 0.5s ease;
+        }
+        
+        @keyframes correctAnswer {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectAnswer {
+            0%, 25%, 50%, 75%, 100% { transform: rotate(0deg); }
+            10%, 30%, 70% { transform: rotate(-5deg); }
+            20%, 40%, 60% { transform: rotate(5deg); }
+        }
+
+        .progress-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* MODIFICACIÓ: CSS Grid per ordenar en columnes de baix a dalt */
+        .progress-grid {
+            display: grid;
+            grid-template-rows: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-flow: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .progress-item {
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 8px 5px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 40px;
+        }
+        
+        /* Colors base per al progrés (colors pastel) */
+        .progress-item[data-level="1"] { background: #e8f5e8; border-color: #c3e6c3; }
+        .progress-item[data-level="2"] { background: #e8f0ff; border-color: #c3d9ff; }
+        .progress-item[data-level="3"] { background: #fff0e8; border-color: #ffd9c3; }
+
+        .progress-item.completed {
+            color: white;
+            font-weight: bold;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+            transform: scale(1.02);
+            border-style: solid;
+        }
+        
+        .progress-item.completed[data-level="1"] { background: #28a745; border-color: #218838; }
+        .progress-item.completed[data-level="2"] { background: #007bff; border-color: #0069d9; }
+        .progress-item.completed[data-level="3"] { background: #fd7e14; border-color: #e36402; }
+
+        .progress-item.current {
+            color: white;
+            border-color: #ff6b6b;
+            animation: currentQuestion 1s ease-in-out infinite alternate;
+        }
+        
+        .progress-item.current[data-level="1"] { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .progress-item.current[data-level="2"] { background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%); }
+        .progress-item.current[data-level="3"] { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+
+        @keyframes currentQuestion {
+            from { transform: scale(1); box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+            to { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+            color: white;
+            min-height: 65px;
+        }
+
+        .message.success { background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); }
+        .message.error { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s linear infinite;
+            top: -20px;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla inicial -->
+    <div class="start-screen overlay-screen" id="startScreen">
+        <div class="overlay-content">
+            <h1 class="start-title">🏆 4 x 15</h1>
+            <h2 class="start-main-subtitle">Intel·ligència Artificial</h2>
+            <p class="start-subtitle">Encerta 15 preguntes seguides i guanya un 4!</p>
+            <input type="text" id="playerNameInput" class="name-input" placeholder="Escriu el teu nom">
+            <button class="action-btn" id="startBtn">COMENÇA el REPTE</button>
+        </div>
+    </div>
+    
+    <!-- Pantalla de Game Over -->
+    <div class="game-over-screen overlay-screen hidden" id="gameOverScreen">
+         <div class="overlay-content">
+            <h2 class="game-over-title">HAS FALLAT!</h2>
+            <p class="game-over-message">Has respost correctament:</p>
+            <div class="game-over-score" id="finalScore">0</div>
+             <p class="game-over-message">Continua intentant-ho per aconseguir el 4!</p>
+            <button class="action-btn" id="restartBtnGameOver">Torna-ho a provar</button>
+        </div>
+    </div>
+    
+    <!-- Pantalla de Victòria -->
+    <div class="victory-screen overlay-screen hidden" id="victoryScreen">
+         <div class="overlay-content">
+            <h2 class="game-over-title">🎉 ENHORABONA! 🎉</h2>
+            <h3 id="victoryPlayerName" class="victory-player-name"></h3>
+            <p class="game-over-message">HAS COMPLETAT EL REPTE 4 x 15!</p>
+            <div class="game-over-score">15 / 15</div>
+            <p class="game-over-message">
+                Has aconseguit la puntuació màxima!<br>
+                📲 <strong>Mostra aquesta pantalla al teu professor per registrar l'èxit!</strong>
+            </p>
+            <button class="action-btn" id="restartBtnVictory">JUGAR DE NOU</button>
+        </div>
+    </div>
+
+    <!-- Joc principal -->
+    <div id="gameContent" class="hidden">
+        <header class="game-header">
+            <h1 class="start-title">🏆 4 x 15</h1>
+        </header>
+
+        <main class="container">
+            <section class="game-area">
+                <div class="timer" id="timer">30</div>
+                <div class="question-container">
+                    <p class="question-number" id="questionNumber">Pregunta 1 de 15</p>
+                    <p class="question-text" id="questionText">Carregant pregunta...</p>
+                </div>
+                <div class="options-grid" id="optionsGrid"></div>
+                <div id="message" class="message"></div>
+            </section>
+
+            <aside class="progress-area">
+                <h2 class="progress-title">Progrés</h2>
+                <div class="progress-grid" id="progressGrid"></div>
+            </aside>
+        </main>
+    </div>
+
+    <script>
+        const questionBank = [
+            { question: "Amb quine sigles es coneix la intel·ligència artificial en anglès?", options: ["IA", "AI", "IT", "ML"], correct: 1 },
+            { question: "Quina paraula especial és la que dona instruccions clares a una IA perquè et respongui?", options: ["Ordre", "Prompt", "Comanda", "Pregunta"], correct: 1 },
+            { question: "Com es diu quan una IA aprèn per ella mateixa gràcies a les dades?", options: ["Programació", "Aprenentatge automàtic", "Codificació", "Simulació"], correct: 1 },
+            { question: "Què imita una xarxa neuronal artificial per aprendre com els humans?", options: ["Xarxa social", "El cervell humà", "Aprenentatge significatiu", "Pensament profund"], correct: 1 },
+            { question: "Quina branca de la IA se centra en l'aprenentatge profund?", options: ["Machine Learning", "Deep Learning", "Data Mining", "Big Data"], correct: 1 },
+            { question: "Com s'anomena la capacitat d'una IA per interpretar i respondre al llenguatge que parlem?", options: ["Traducció automàtica", "Processament del llenguatge natural", "Reconversió de text", "Lectura digital"], correct: 1 },
+            { question: "Quina tecnologia permet que una IA 'vegi' persones i objectes en fotos?", options: ["Visió artificial", "Visió per computador", "Anàlisi d'imatges", "Lectura visual"], correct: 1 },
+            { question: "Quin concepte fa referència a una seqüència d'instruccions que la IA ha de fer una darrera l'altra?", options: ["Cursa de xips", "Algoritme", "Pensament computacional", "Cadena de pensament"], correct: 1 },
+            { question: "Com anomenem quan una IA reconeix i respon als nostres sentiments?", options: ["Empatia digital", "Computació afectiva", "Simulació emocional", "Resposta empàtica"], correct: 1 },
+            { question: "Com es diu quan una IA modifica el que fa segons noves dades?", options: ["Flexibilitat", "Aprenentatge adaptatiu", "Resposta variable", "Evolució digital"], correct: 1 },
+            { question: "Quina famosa empresa tecnològica està darrere de l'assistent virtual Siri?", options: ["Google", "Apple", "Microsoft", "Amazon"], correct: 1 },
+            { question: "Quina empresa és coneguda per haver creat l'assistent virtual Alexa?", options: ["Google", "Apple", "Microsoft", "Amazon"], correct: 3 },
+            { question: "Quina empresa va desenvolupar l'assistent virtual Cortana?", options: ["Google", "Apple", "Microsoft", "Amazon"], correct: 2 },
+            { question: "Quina empresa va crear el model d'IA anomenat Bard?", options: ["Google", "Apple", "OpenAI", "IBM"], correct: 0 },
+            { question: "Quina famosa marca de cotxes elèctrics també aposta per la intel·ligència artificial?", options: ["Google", "Tesla", "Microsoft", "Meta"], correct: 1 },
+            { question: "Quina empresa va crear el model d'IA anomenat Claude?", options: ["Microsoft", "Anthropic", "Amazon", "Meta"], correct: 1 },
+            { question: "Quina empresa va desenvolupar el model d'IA anomenat Watson?", options: ["Google", "Apple", "IBM", "Amazon"], correct: 2 },
+            { question: "Quina empresa va crear el model d'IA anomenat Gemini?", options: ["Google DeepMind", "OpenAI", "IBM", "Amazon"], correct: 0 },
+            { question: "Quin és el nom del tipus d'IA capaç de generar imatges realistes a partir de textos descriptius?", options: ["GPT-4", "IA generativa", "IA predictiva", "IA supervisada"], correct: 1 },
+            { question: "Quina empresa va crear el model d'IA anomenat ChatGPT?", options: ["Google", "OpenAI", "Apple", "Microsoft"], correct: 1 },
+            { question: "Quina popular plataforma utilitza la IA per suggerir-te vídeos que et poden encantar?", options: ["WhatsApp", "YouTube", "Word", "Paint"], correct: 1 },
+            { question: "Quina aplicació converteix el teu text escrit en veu amb l'ajuda d'una IA?", options: ["Suno", "Clipchamp", "Chat GPT", "Gemini"], correct: 1 },
+            { question: "Quina aplicació d'IA permet crear cançons amb melodia, base rítmica i lletra cantada?", options: ["Suno", "Clipchamp", "Chat GPT", "Gemini"], correct: 0 },
+            { question: "Quina aplicació permet crear imatges amb IA de bona qualitat?", options: ["Google Fotos", "Ideogram", "Paint", "Imaginatio"], correct: 1 },
+            { question: "Quina plataforma d'entreteniment utilitza IA per saber quines pel·lícules o sèries t'agradaran més?", options: ["Carter TV", "Netflix", "Peliculix", "FilmAI"], correct: 1 },
+            { question: "Com pot ajudar la IA en l'àmbit de la salut?", options: ["Fent cirurgies més complicades", "Detectant malalties a partir de patrons", "Prescrivint medicaments", "Diagnosticant sense dades"], correct: 1 },
+            { question: "Com pot ajudar la IA en l'educació?", options: ["Substituint professors", "Personalitzant els aprenentatges", "Eliminant estudis", "Creant exàmens difícils"], correct: 1 },
+            { question: "Com pot ajudar la IA en el sector financer?", options: ["Imprimint bitllets", "Detectant fraus", "Decidint polítiques", "Augmentant salaris"], correct: 1 },
+            { question: "Quina innovació tecnològica, impulsada per IA, permetrà que els cotxes condueixin sols?", options: ["Els semàfors brillants", "La conducció autònoma", "Les carreteres amples", "El Wifi universal"], correct: 1 },
+            { question: "Com ajuda la IA a cuidar el medi ambient?", options: ["Contaminant menys", "Monitoritzant la contaminació", "Creant plàstic ecològic", "Fabricant energia solar"], correct: 1 },
+            { question: "Per què és important l'ètica en el desenvolupament de la IA?", options: ["Per fer la IA ràpida", "Per prendre decisions justes", "Per reduir energia cerebral", "Per fer la IA barata"], correct: 1 },
+            { question: "Com anomenem el problema que té la IA quan mostra preferències injustes segons les dades que rep?", options: ["Funció matemàtica", "Biaix", "Error de programació", "Racisme"], correct: 1 },
+            { question: "Com es pot reduir el biaix en la IA?", options: ["Donant-li dades molt diverses", "Eliminant dades personals", "Prenent decisions aleatòries", "Eliminant la IA"], correct: 0 },
+            { question: "Quin és el principal risc quan una IA gestiona les nostres dades i sap coses de nosaltres?", options: ["Que ens manipuli", "Perdre la nostra privacitat", "Que substitueixi els humans", "Que desenvolupi emocions pròpies"], correct: 1 },
+            { question: "Per què és necessari saber com pren decisions una IA?", options: ["Per detectar errors", "Per fer-la més ràpida", "Per incrementar la potència", "Per millorar la humanitat"], correct: 0 },
+            { question: "Com es diu la famosa prova que determina si una IA pot pensar i parlar com un humà?", options: ["Test de Voigt-Kampff", "Test de Turing", "Test de Searle", "Test de Lovelace"], correct: 1 },
+            { question: "Com s'anomena el procés de preparar dades perquè una IA les pugui utilitzar correctament?", options: ["Neteja de dades", "Preprocessament de dades", "Anàlisi de dades", "Codificació de dades"], correct: 1 },
+            { question: "Com es diu l'estructura d'IA inspirada en el cervell humà que processa informació en capes?", options: ["Algoritme genètic", "Xarxa neuronal artificial", "Sistema expert", "Model estadístic"], correct: 1 },
+            { question: "Quin terme descriu la capacitat d'una IA per aprendre de dades etiquetades?", options: ["Aprenentatge no supervisat", "Aprenentatge supervisat", "Aprenentatge profund", "Aprenentatge reforçat"], correct: 1 },
+            { question: "Quin tipus d'aprenentatge permet a la IA millorar mitjançant recompenses i penalitzacions?", options: ["Aprenentatge supervisat", "Aprenentatge per reforç", "Aprenentatge no supervisat", "Aprenentatge automàtic"], correct: 1 }
+        ];
+
+        class Game4x15 {
+            constructor() {
+                // Elements del DOM
+                this.startScreen = document.getElementById('startScreen');
+                this.gameOverScreen = document.getElementById('gameOverScreen');
+                this.victoryScreen = document.getElementById('victoryScreen');
+                this.gameContent = document.getElementById('gameContent');
+                this.startBtn = document.getElementById('startBtn');
+                this.restartBtnGameOver = document.getElementById('restartBtnGameOver');
+                this.restartBtnVictory = document.getElementById('restartBtnVictory');
+                this.timerEl = document.getElementById('timer');
+                this.questionNumberEl = document.getElementById('questionNumber');
+                this.questionTextEl = document.getElementById('questionText');
+                this.optionsGridEl = document.getElementById('optionsGrid');
+                this.messageEl = document.getElementById('message');
+                this.progressGridEl = document.getElementById('progressGrid');
+                this.finalScoreEl = document.getElementById('finalScore');
+                this.playerNameInput = document.getElementById('playerNameInput');
+                this.victoryPlayerNameEl = document.getElementById('victoryPlayerName');
+
+                // Estat del joc
+                this.playerName = '';
+                this.resetState();
+                
+                // Event Listeners
+                this.startBtn.addEventListener('click', () => this.startGame());
+                this.restartBtnGameOver.addEventListener('click', () => this.showStartScreen());
+                this.restartBtnVictory.addEventListener('click', () => this.showStartScreen());
+            }
+            
+            resetState() {
+                this.currentQuestionIndex = 0;
+                this.selectedQuestions = [];
+                this.timeLeft = 30;
+                this.timerInterval = null;
+                this.isAnswering = false;
+            }
+
+            showStartScreen() {
+                this.gameOverScreen.classList.add('hidden');
+                this.victoryScreen.classList.add('hidden');
+                this.gameContent.classList.add('hidden');
+                this.startScreen.classList.remove('hidden');
+                this.playerNameInput.value = this.playerName; // Opcional: mantenir el nom
+                this.playerNameInput.focus();
+            }
+
+            startGame() {
+                const name = this.playerNameInput.value.trim();
+                if (!name) {
+                    this.playerNameInput.classList.add('error');
+                    setTimeout(() => this.playerNameInput.classList.remove('error'), 500);
+                    return;
+                }
+                this.playerName = name;
+                
+                this.resetState();
+                
+                this.startScreen.classList.add('hidden');
+                this.gameContent.classList.remove('hidden');
+                
+                this.selectRandomQuestions();
+                this.createProgressGrid();
+                this.loadQuestion();
+            }
+
+            selectRandomQuestions() {
+                const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+                this.selectedQuestions = shuffled.slice(0, 15);
+            }
+
+            // MODIFICACIÓ: Crear la graella en l'ordre correcte (de baix a dalt per columna)
+            createProgressGrid() {
+                this.progressGridEl.innerHTML = '';
+                
+                // Columna 1 (esquerra): 5, 4, 3, 2, 1
+                for (let i = 5; i >= 1; i--) {
+                    const item = document.createElement('div');
+                    item.className = 'progress-item';
+                    item.textContent = i;
+                    item.id = `progress-${i}`;
+                    item.dataset.level = 1;
+                    this.progressGridEl.appendChild(item);
+                }
+                // Columna 2 (centre): 10, 9, 8, 7, 6
+                for (let i = 10; i >= 6; i--) {
+                    const item = document.createElement('div');
+                    item.className = 'progress-item';
+                    item.textContent = i;
+                    item.id = `progress-${i}`;
+                    item.dataset.level = 2;
+                    this.progressGridEl.appendChild(item);
+                }
+                // Columna 3 (dreta): 15, 14, 13, 12, 11
+                for (let i = 15; i >= 11; i--) {
+                    const item = document.createElement('div');
+                    item.className = 'progress-item';
+                    item.textContent = i;
+                    item.id = `progress-${i}`;
+                    item.dataset.level = 3;
+                    this.progressGridEl.appendChild(item);
+                }
+            }
+
+            loadQuestion() {
+                if (this.currentQuestionIndex >= 15) {
+                    this.showVictory();
+                    return;
+                }
+                
+                this.isAnswering = false;
+                this.messageEl.className = 'message';
+                this.messageEl.textContent = '';
+                
+                const questionData = this.selectedQuestions[this.currentQuestionIndex];
+                
+                this.questionNumberEl.textContent = `Pregunta ${this.currentQuestionIndex + 1} de 15`;
+                this.questionTextEl.textContent = questionData.question;
+                
+                this.loadOptions(questionData);
+                this.updateProgressDisplay();
+                this.startTimer();
+            }
+
+            loadOptions(questionData) {
+                this.optionsGridEl.innerHTML = '';
+                const optionsWithIndices = questionData.options.map((optionText, index) => {
+                    return { text: optionText, isCorrect: index === questionData.correct };
+                });
+                const shuffledOptions = optionsWithIndices.sort(() => Math.random() - 0.5);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'option-button';
+                    button.textContent = option.text;
+                    button.onclick = () => this.selectAnswer(option.isCorrect, button);
+                    this.optionsGridEl.appendChild(button);
+                });
+            }
+
+            updateProgressDisplay() {
+                for (let i = 1; i <= 15; i++) {
+                    const item = document.getElementById(`progress-${i}`);
+                    if (item) { // Afegit per seguretat
+                        item.classList.remove('current', 'completed');
+                        if (i <= this.currentQuestionIndex) {
+                            item.classList.add('completed');
+                        }
+                    }
+                }
+                
+                if (this.currentQuestionIndex < 15) {
+                    const currentItem = document.getElementById(`progress-${this.currentQuestionIndex + 1}`);
+                    if (currentItem) {
+                        currentItem.classList.add('current');
+                    }
+                }
+            }
+
+            startTimer() {
+                this.timeLeft = 30;
+                this.updateTimerDisplay();
+                
+                clearInterval(this.timerInterval);
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    if (this.timeLeft <= 0) {
+                        this.timeUp();
+                    }
+                }, 1000);
+            }
+
+            updateTimerDisplay() {
+                this.timerEl.textContent = this.timeLeft;
+                if (this.timeLeft <= 10) {
+                    this.timerEl.style.color = '#ff6b6b';
+                } else {
+                    this.timerEl.style.color = '#45b7d1';
+                }
+            }
+
+            selectAnswer(isCorrect, buttonEl) {
+                if (this.isAnswering) return;
+                
+                this.isAnswering = true;
+                clearInterval(this.timerInterval);
+                document.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+                
+                if (isCorrect) {
+                    buttonEl.classList.add('correct');
+                    this.showMessage('Correcte! 🎉', 'success');
+                    setTimeout(() => {
+                        this.currentQuestionIndex++;
+                        this.loadQuestion();
+                    }, 1500);
+                } else {
+                    buttonEl.classList.add('incorrect');
+                    this.showMessage("Has fallat... 😞", 'error');
+                    setTimeout(() => this.showGameOver(), 2000);
+                }
+            }
+
+            timeUp() {
+                clearInterval(this.timerInterval);
+                document.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+                this.showMessage("Se t'ha acabat el temps ⏰", 'error');
+                setTimeout(() => this.showGameOver(), 2000);
+            }
+
+            showMessage(text, type) {
+                this.messageEl.textContent = text;
+                this.messageEl.className = `message ${type}`;
+            }
+
+            showGameOver() {
+                this.finalScoreEl.textContent = `${this.currentQuestionIndex} / 15`;
+                this.gameContent.classList.add('hidden');
+                this.gameOverScreen.classList.remove('hidden');
+            }
+
+            showVictory() {
+                clearInterval(this.timerInterval);
+                this.victoryPlayerNameEl.textContent = this.playerName;
+                this.createConfetti();
+                this.gameContent.classList.add('hidden');
+                this.victoryScreen.classList.remove('hidden');
+            }
+
+            createConfetti() {
+                const confettiContainer = this.victoryScreen;
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#9b59b6'];
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.opacity = Math.random();
+                    confetti.style.width = (Math.random() * 8 + 6) + 'px';
+                    confetti.style.height = (Math.random() * 8 + 6) + 'px';
+                    confettiContainer.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 5000);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new Game4x15();
+        });
+    </script>
+</body>
+</html>

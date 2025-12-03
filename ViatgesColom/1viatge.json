@@ -1,0 +1,171 @@
+{
+  "viatge": {
+    "titol": "Primer viatge de Cristòfor Colom",
+    "anys": "1492-1493",
+    "finalitat": "Obrir una nova ruta comercial amb les Índies (Àsia) navegant cap a l'oest, un desafiament sense precedents per evitar el control portuguès de les rutes africanes.",
+    "vaixells": [
+      { "nom": "Santa María", "tipus": "nao", "desti": "naufragi a Hispaniola" },
+      { "nom": "Pinta", "tipus": "caravel·la", "desti": "retorn a Palos" },
+      { "nom": "Niña", "tipus": "caravel·la", "desti": "retorn a Palos amb Colom" }
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Palos",
+        "lloc": {
+          "nom_modern": "Palos de la Frontera, Espanya",
+          "nom_antic": "Palos",
+          "coordenades": [37.218, -6.890]
+        },
+        "data": "3 d’agost de 1492",
+        "descripcio": "Les tres naus surten del petit port de Palos amb uns 90 homes. La majoria eren mariners experimentats, però també hi havia condemnats alliberats a canvi de participar en l’expedició.",
+        "curiositats": [
+          "Els germans Pinzón aportaren la seva experiència i diners, essent claus per aconseguir la tripulació.",
+          "Colom havia promès una recompensa de 10.000 maravedís al primer que veiés terra."
+        ]
+      },
+      {
+        "ordre": 2,
+        "titol": "Reparacions a Canàries",
+        "lloc": {
+          "nom_modern": "Illes Canàries",
+          "nom_antic": "Canàries",
+          "coordenades": [28.2916, -16.6291]
+        },
+        "data": "9 d’agost de 1492",
+        "descripcio": "La Pinta havia patit desperfectes al timó i fou reparada a Gran Canària. També aprovisionaren aigua i menjar abans d’iniciar la travessia de l’oceà.",
+        "curiositats": [
+          "Les Canàries eren clau per als viatges atlàntics, ja que eren el darrer punt europeu amb recursos.",
+          "El temps favorable va facilitar la sortida cap a l’oest."
+        ]
+      },
+      {
+        "ordre": 3,
+        "titol": "Travessem l’oceà desconegut",
+        "lloc": {
+          "nom_modern": "Atlàntic central",
+          "nom_antic": "Mar Oceà",
+          "coordenades": [26.0, -40.0]
+        },
+        "data": "setembre-octubre de 1492",
+        "descripcio": "Durant 33 dies, l'horitzó fou una línia infinita d'aigua i cel. La tripulació, acostumada a navegar prop de la costa, experimentà una por creixent davant la immensitat del 'Mar Tenebrós'. El descontentament començava a bullir a coberta.",
+        "curiositats": [
+          "Colom anotava menys milles a la seva bitàcola del que realment navegaven per tranquil·litzar la tripulació.",
+          "Es veieren ocells migratoris, algues i branques que feien pensar que la terra era a prop.",
+          "Per orientar-se, Colom feia servir l'astrolabi per mesurar l'altura de l'Estrella Polar, una tècnica imprecisa que el va portar a creure que estava més al nord del que realment es trobava."
+        ]
+      },
+      {
+        "ordre": 4,
+        "titol": "El motí del 9 d’octubre",
+        "lloc": {
+          "nom_modern": "Atlàntic, a mig camí",
+          "nom_antic": "Mar Oceà",
+          "coordenades": [25.5, -65.0]
+        },
+        "data": "9 d’octubre de 1492",
+        "descripcio": "La tensió explota. La tripulació de la Santa María dona un ultimàtum a Colom: o giren cua o hi haurà un motí. Martín Alonso Pinzón, capità de la Pinta, intervé i aconsegueix un pacte: navegaran tres dies més. Si no troben terra, tornaran.",
+        "curiositats": [
+          "Aquesta va ser la crisi més greu del viatge.",
+          "Colom mantenia el lideratge amb una barreja de promeses i autoritat."
+        ],
+        "problemes": [
+          "Amenaça de motí obert.",
+          "Por a morir a la immensitat de l’oceà."
+        ],
+        "resolucio": "Colom va guanyar temps i l’endemà ja es veieren senyals de terra."
+      },
+      {
+        "ordre": 5,
+        "titol": "Descobriment de Guanahaní",
+        "lloc": {
+          "nom_modern": "San Salvador (Bahames)",
+          "nom_antic": "Guanahaní",
+          "coordenades": [24.063, -74.524]
+        },
+        "data": "12 d’octubre de 1492",
+        "descripcio": "De matinada, Rodrigo de Triana crida 'Tierra!'. Colom desembarca i bateja l’illa com a San Salvador. El contacte amb els taïnos fou pacífic i cordial.",
+        "curiositats": [
+          "Rodrigo de Triana mai rebé la recompensa, ja que Colom es va atribuir l’avistament.",
+          "Els taïnos els oferiren ornaments d’or i fruites exòtiques."
+        ]
+      },
+      {
+        "ordre": 6,
+        "titol": "Exploració de Cuba",
+        "lloc": {
+          "nom_modern": "Cuba",
+          "nom_antic": "Juana",
+          "coordenades": [21.5218, -77.7812]
+        },
+        "data": "28 d’octubre de 1492",
+        "descripcio": "Colom recorre la costa nord de Cuba convençut que havia arribat a les Índies Orientals. Creia estar prop de Cipango (Japó).",
+        "curiositats": [
+          "Els espanyols observaren per primer cop el tabac i els indígenes fumant-lo.",
+          "Van quedar sorpresos per la vegetació exuberant."
+        ]
+      },
+      {
+        "ordre": 7,
+        "titol": "Arribada a Hispaniola",
+        "lloc": {
+          "nom_modern": "Haití i República Dominicana",
+          "nom_antic": "La Española",
+          "coordenades": [18.7357, -70.1627]
+        },
+        "data": "6 de desembre de 1492",
+        "descripcio": "Després de deixar Cuba, arriben a Hispaniola. La nit de Nadal, la Santa María naufraga en un escull i s’utilitza la seva fusta per construir el fort de la Nativitat.",
+        "curiositats": [
+          "Colom deixà 39 homes al fort, el primer assentament europeu a Amèrica.",
+          "Quan Colom va tornar en el seu segon viatge, va trobar el fort destruït i els 39 homes morts. Els abusos i la violència dels colons havien provocat la venjança dels taïnos."
+        ],
+        "problemes": [
+          "Naufragi de la Santa María.",
+          "Conflictes inicials amb alguns grups indígenes."
+        ]
+      },
+      {
+        "ordre": 8,
+        "titol": "Primera escaramussa a Samaná",
+        "lloc": {
+          "nom_modern": "Badia de Samaná, Rep. Dominicana",
+          "nom_antic": "Golf de les Fletxes",
+          "coordenades": [19.203, -69.218]
+        },
+        "data": "gener de 1493",
+        "descripcio": "Abans de marxar, en una badia de La Hispaniola, tenen el primer enfrontament violent amb els indígenes ciguayos. Aquests reben els exploradors amb fletxes, i els espanyols responen amb les seves espases. És el primer xoc armat registrat.",
+        "curiositats": [
+          "Colom va anomenar el lloc 'Golf de les Fletxes' per aquest incident.",
+          "Aquest enfrontament va trencar la imatge d'un contacte sempre pacífic i va ser un presagi dels conflictes que vindrien."
+        ]
+      },
+      {
+        "ordre": 9,
+        "titol": "Retorn a Espanya",
+        "lloc": {
+          "nom_modern": "Palos de la Frontera, Espanya",
+          "nom_antic": "Palos",
+          "coordenades": [37.218, -6.890]
+        },
+        "data": "15 de març de 1493",
+        "descripcio": "La Niña i la Pinta tornen per separat a Espanya. Colom és rebut amb honors pels Reis Catòlics a Barcelona.",
+        "curiositats": [
+          "La tornada fou molt dura per tempestes, i Colom arribà primer a Lisboa abans de retornar a Castella.",
+          "La notícia del 'Nou Món' s’escampà ràpidament per Europa."
+        ]
+      }
+    ],
+    "problemes_generals": [
+      "Por i tensió a la tripulació per la durada del viatge.",
+      "Amenaces de motí al setembre i octubre de 1492.",
+      "Naufragi de la Santa María la nit de Nadal de 1492."
+    ],
+    "resultats": [
+      "Arribada a terres americanes desconegudes per Europa.",
+      "Primer contacte amb pobles indígenes taïnos.",
+      "Inici de l'intercanvi colombí: la transferència de plantes, animals, tecnologia i malalties entre el Vell Món i el Nou Món.",
+      "Fundació del primer assentament europeu al Nou Món (fort de la Nativitat).",
+      "Retorn triomfal a Espanya amb Colom com a 'almirall de la mar oceana'."
+    ]
+  }
+}

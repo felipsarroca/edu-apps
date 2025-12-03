@@ -1,0 +1,149 @@
+
+## 🧪 Objectiu de l’aplicació
+
+Crear una eina **visual, interactiva i pedagògica** per practicar i aprendre a **igualar equacions químiques** mitjançant:
+
+* mètode per **inspecció** (nivell bàsic i mitjà),
+* mètode **algebraic** (nivell avançat),
+* mètode **redox** (nivell superior).
+
+L’usuari pot veure **pas a pas** com s’ajusta i practicar amb **equacions de tipus classificat** (combustió, oxidació, neutralització…).
+
+---
+
+## 🧰 Estructura de l’app
+
+### 1. Pantalla inicial
+
+* Títol i breu explicació dels objectius.
+* Menú per escollir:
+
+  * 🌱 Nivell bàsic (Inspecció)
+  * ⚡ Nivell avançat (Algebraic)
+  * 🧪 Redox (Pas a pas)
+* Selector de tipus de reacció (o mode aleatori).
+
+---
+
+## 🧮 Pantalla de pràctica
+
+* Mostra una equació sense coeficients.
+* A sota: **taula dinàmica amb nombre d’àtoms** a esquerra/dreta.
+* Controls per:
+
+  * Afegir coeficients (+/–)
+  * Veure pista (pas següent suggerit)
+  * Veure solució completa pas a pas.
+* Indicadors visuals: ✔️ si està equilibrat, ❌ si no.
+* Explicació didàctica en temps real:
+
+  * “Ara hi ha més oxigen a la dreta que a l’esquerra, afegeix-ne més davant de O₂”
+  * “Recorda multiplicar tot el compost, no els subíndexs.”
+
+---
+
+## 🧠 Base de dades (JSON)
+
+Cada equació es pot guardar així:
+
+```json
+{
+  "id": "eq001",
+  "reactius": ["H2", "O2"],
+  "productes": ["H2O"],
+  "coeficients": [2, 1, 2],
+  "metode": ["inspeccio", "algebraic"],
+  "tipus": "combustio",
+  "explicacio": "L’aigua es forma a partir de la reacció de l’hidrogen amb l’oxigen. Cal 2 molècules d’H₂ per cada molècula d’O₂ per formar 2 molècules d’H₂O.",
+  "nivell": 1
+}
+```
+
+Per equacions redox:
+
+```json
+{
+  "id": "eq102",
+  "reactius": ["Fe2+", "MnO4-", "H+"],
+  "productes": ["Fe3+", "Mn2+", "H2O"],
+  "coeficients": [5, 1, 8, 5, 1, 4],
+  "metode": ["redox"],
+  "tipus": "oxidacio-reduccio",
+  "explicacio": "El Fe(II) s’oxida a Fe(III) i el Mn(VII) es redueix a Mn(II).",
+  "nivell": 3,
+  "redox": {
+    "agents": {
+      "oxidant": "MnO4-",
+      "reductor": "Fe2+"
+    },
+    "electrons_transferits": 5
+  }
+}
+```
+
+📁 **Organització recomanada de la base de dades**:
+
+```
+/data
+  ├── eq_inspeccio.json
+  ├── eq_algebraic.json
+  ├── eq_redox.json
+  └── eq_tipus.json   ← etiquetes de tipus (combustió, neutralització…)
+```
+
+---
+
+## 🧮 Funcionalitats clau
+
+* ✅ Sistema de validació automàtica de coeficients.
+* 📊 Visualització gràfica dels àtoms a esquerra i dreta.
+* 🪄 Guia pas a pas (pistes, suggeriments).
+* 🔁 Mode “aprenentatge” i “joc” (temps i puntuació).
+* 🌍 Idioma en català (amb opcions per afegir castellà o anglès més endavant).
+* 🧰 Nivells graduats:
+
+  * **Nivell 1:** reaccions senzilles (aigua, sals, combustions).
+  * **Nivell 2:** compostos orgànics i algebraics.
+  * **Nivell 3:** redox pas a pas.
+
+---
+
+## 🧭 Tipus de reacció (metadades útils)
+
+* Combustió
+* Oxidació / Reducció
+* Neutralització
+* Descomposició
+* Síntesi
+* Desplaçament simple o doble
+
+Aquest camp permet **fer filtres temàtics** (ex.: “Practica 5 combustions”).
+
+---
+
+## 🖥️ Stack tecnològic suggerit (fàcil de desplegar a GitHub Pages)
+
+* HTML + CSS + JavaScript (o React si vols més interactivitat)
+* Tailwind per estil ràpid i net
+* MathJax per escriure fórmules químiques boniques
+* JSON per la base de dades
+* LocalStorage per desar puntuacions
+* Opcional: Firebase/Sheets per guardar resultats d’alumnes
+
+---
+
+## 🧭 Avantatges pedagògics
+
+* Ajuda els alumnes a **entendre el “per què”** de cada coeficient.
+* És **adaptable** per cursos diferents (ESO i Batxillerat).
+* Facilita la pràctica i l’autoavaluació.
+* Permet que el docent hi afegeixi **noves equacions** fàcilment al JSON.
+
+---
+
+Si vols, puc preparar-te:
+
+1. 📁 L’estructura bàsica de carpetes i fitxers (HTML, CSS, JS, JSON)
+2. 📊 Un petit conjunt inicial de 10 equacions classificades (com a exemple)
+3. 🧮 Un primer mode funcional: **Inspecció directa + validació automàtica**.
+

@@ -1,0 +1,400 @@
+[
+  {
+    "numbers": [
+      20,
+      30,
+      50
+    ],
+    "solution": {
+      "mcd": 10,
+      "mcm": 300
+    }
+  },
+  {
+    "numbers": [
+      18,
+      24,
+      60
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 360
+    }
+  },
+  {
+    "numbers": [
+      16,
+      24,
+      32
+    ],
+    "solution": {
+      "mcd": 8,
+      "mcm": 96
+    }
+  },
+  {
+    "numbers": [
+      25,
+      35,
+      50
+    ],
+    "solution": {
+      "mcd": 5,
+      "mcm": 350
+    }
+  },
+  {
+    "numbers": [
+      15,
+      25,
+      30
+    ],
+    "solution": {
+      "mcd": 5,
+      "mcm": 150
+    }
+  },
+  {
+    "numbers": [
+      18,
+      36,
+      45
+    ],
+    "solution": {
+      "mcd": 9,
+      "mcm": 180
+    }
+  },
+  {
+    "numbers": [
+      30,
+      45,
+      60
+    ],
+    "solution": {
+      "mcd": 15,
+      "mcm": 180
+    }
+  },
+  {
+    "numbers": [
+      28,
+      35,
+      42
+    ],
+    "solution": {
+      "mcd": 7,
+      "mcm": 420
+    }
+  },
+  {
+    "numbers": [
+      32,
+      48,
+      64
+    ],
+    "solution": {
+      "mcd": 16,
+      "mcm": 192
+    }
+  },
+  {
+    "numbers": [
+      21,
+      28,
+      35
+    ],
+    "solution": {
+      "mcd": 7,
+      "mcm": 420
+    }
+  },
+  {
+    "numbers": [
+      12,
+      18,
+      20,
+      30
+    ],
+    "solution": {
+      "mcd": 2,
+      "mcm": 180
+    }
+  },
+  {
+    "numbers": [
+      15,
+      20,
+      25,
+      30
+    ],
+    "solution": {
+      "mcd": 5,
+      "mcm": 300
+    }
+  },
+  {
+    "numbers": [
+      18,
+      24,
+      30,
+      36
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 360
+    }
+  },
+  {
+    "numbers": [
+      12,
+      16,
+      24,
+      28
+    ],
+    "solution": {
+      "mcd": 4,
+      "mcm": 336
+    }
+  },
+  {
+    "numbers": [
+      14,
+      21,
+      28,
+      35
+    ],
+    "solution": {
+      "mcd": 7,
+      "mcm": 420
+    }
+  },
+  {
+    "numbers": [
+      20,
+      25,
+      30,
+      40
+    ],
+    "solution": {
+      "mcd": 5,
+      "mcm": 600
+    }
+  },
+  {
+    "numbers": [
+      18,
+      20,
+      24,
+      30
+    ],
+    "solution": {
+      "mcd": 2,
+      "mcm": 360
+    }
+  },
+  {
+    "numbers": [
+      15,
+      21,
+      28,
+      35
+    ],
+    "solution": {
+      "mcd": 1,
+      "mcm": 420
+    }
+  },
+  {
+    "numbers": [
+      12,
+      18,
+      24,
+      36
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 72
+    }
+  },
+  {
+    "numbers": [
+      24,
+      30,
+      36,
+      42
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 2520
+    }
+  },
+  {
+    "numbers": [
+      18,
+      24,
+      42
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 504
+    }
+  },
+  {
+    "numbers": [
+      20,
+      28,
+      45
+    ],
+    "solution": {
+      "mcd": 1,
+      "mcm": 1260
+    }
+  },
+  {
+    "numbers": [
+      16,
+      24,
+      36,
+      60
+    ],
+    "solution": {
+      "mcd": 4,
+      "mcm": 720
+    }
+  },
+  {
+    "numbers": [
+      18,
+      40,
+      54,
+      90
+    ],
+    "solution": {
+      "mcd": 2,
+      "mcm": 1080
+    }
+  },
+  {
+    "numbers": [
+      27,
+      36,
+      54
+    ],
+    "solution": {
+      "mcd": 9,
+      "mcm": 108
+    }
+  },
+  {
+    "numbers": [
+      24,
+      54,
+      72
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 216
+    }
+  },
+  {
+    "numbers": [
+      22,
+      33,
+      44
+    ],
+    "solution": {
+      "mcd": 11,
+      "mcm": 132
+    }
+  },
+  {
+    "numbers": [
+      18,
+      30,
+      42,
+      54
+    ],
+    "solution": {
+      "mcd": 6,
+      "mcm": 1890
+    }
+  },
+  {
+    "numbers": [
+      24,
+      40,
+      56
+    ],
+    "solution": {
+      "mcd": 8,
+      "mcm": 840
+    }
+  },
+  {
+    "numbers": [
+      27,
+      45,
+      60
+    ],
+    "solution": {
+      "mcd": 3,
+      "mcm": 540
+    }
+  },
+  {
+    "numbers": [
+      28,
+      36,
+      63
+    ],
+    "solution": {
+      "mcd": 1,
+      "mcm": 252
+    }
+  },
+  {
+    "numbers": [
+      32,
+      60,
+      96
+    ],
+    "solution": {
+      "mcd": 4,
+      "mcm": 480
+    }
+  },
+  {
+    "numbers": [
+      21,
+      45,
+      60
+    ],
+    "solution": {
+      "mcd": 3,
+      "mcm": 1260
+    }
+  },
+  {
+    "numbers": [
+      26,
+      39,
+      65
+    ],
+    "solution": {
+      "mcd": 13,
+      "mcm": 390
+    }
+  },
+  {
+    "numbers": [
+      36,
+      48,
+      75
+    ],
+    "solution": {
+      "mcd": 3,
+      "mcm": 3600
+    }
+  }
+]

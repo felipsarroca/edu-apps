@@ -1,0 +1,119 @@
+{
+  "expedicio": {
+    "id": "valdivia",
+    "titol": "Conquesta de Xile per Pedro de Valdivia",
+    "resum": "Travessa dels Andes, fundació de Santiago i guerra amb el poble maputxe.",
+    "anys": "1540-1553",
+    "finalitat": "Estendre la jurisdicció castellana cap al sud, assegurar terres agrícoles i controlar les mines de la futura Nueva Extremadura.",
+    "personatge": {
+      "nom": "Pedro de Valdivia",
+      "origen": "Villanueva de la Serena (Extremadura)",
+      "rol": "Governador de Nueva Extremadura"
+    },
+    "forces": [
+      { "tipus": "soldats", "quantitat": 150, "descripcio": "Veterans del Perú armats amb arcabussos i espases" },
+      { "tipus": "aliats andins", "quantitat": 1000, "descripcio": "Yanaconas i mitimaes procedents del Cusco" },
+      { "tipus": "cavalls", "quantitat": 200, "descripcio": "Essencials per dominar les planures centrals" },
+      { "tipus": "artilleria", "quantitat": 4, "descripcio": "Petits canons transportats en peces" }
+    ],
+    "estrategies": [
+      "Fundar ciutats i repartiments d'encomienda per consolidar el territori",
+      "Controlar els passos andins amb fortins",
+      "Buscar aliances amb pobles picunxes i utilitzar Inés Suárez com a mediadora"
+    ],
+    "aliats": [
+      "Yanaconas peruans",
+      "Picunches",
+      "Inés Suárez",
+      "Francisco de Villagra"
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Cusco cap al sud",
+        "lloc": {
+          "nom_modern": "Cusco, Perú",
+          "coordenades": [-13.52, -71.97]
+        },
+        "data": "6 de gener de 1540",
+        "descripcio": "Valdivia parteix amb una columna reduïda però ben muntada seguint l'antic camí inca."
+      },
+      {
+        "ordre": 2,
+        "titol": "Travessa del desert d'Atacama",
+        "lloc": {
+          "nom_modern": "San Pedro de Atacama, Xile",
+          "coordenades": [-22.91, -68.2]
+        },
+        "data": "agost de 1540",
+        "descripcio": "La manca d'aigua i aliments obliga a dividir la columna i reutilitzar oasis indígenes."
+      },
+      {
+        "ordre": 3,
+        "titol": "Fundació de Santiago del Nou Extremo",
+        "lloc": {
+          "nom_modern": "Santiago, Xile",
+          "coordenades": [-33.45, -70.66]
+        },
+        "data": "12 de febrer de 1541",
+        "descripcio": "Inés Suárez traça el pla urbà i s'alça la fortalesa al turó Huelén."
+      },
+      {
+        "ordre": 4,
+        "titol": "Setge maputxe a Santiago",
+        "lloc": {
+          "nom_modern": "Santiago, Xile",
+          "coordenades": [-33.45, -70.66]
+        },
+        "data": "11 de setembre de 1541",
+        "descripcio": "Milers de maputxes assalten la ciutat acabada de fundar. Inés Suárez ordena decapitar cacics presoners i es defensa la plaça."
+      },
+      {
+        "ordre": 5,
+        "titol": "Fundació de La Serena",
+        "lloc": {
+          "nom_modern": "La Serena, Xile",
+          "coordenades": [-29.9, -71.25]
+        },
+        "data": "juliol de 1544",
+        "descripcio": "Es crea un punt intermedi per assegurar comunicacions entre Lima i Santiago."
+      },
+      {
+        "ordre": 6,
+        "titol": "Fundació de Concepción",
+        "lloc": {
+          "nom_modern": "Concepción, Xile",
+          "coordenades": [-36.82, -73.05]
+        },
+        "data": "5 d'octubre de 1550",
+        "descripcio": "Valdivia s'endinsa al territori maputxe i crea un fort a la badia de Penco."
+      },
+      {
+        "ordre": 7,
+        "titol": "Mort a Tucapel",
+        "lloc": {
+          "nom_modern": "Prop de Cañete, Xile",
+          "coordenades": [-37.35, -72.95]
+        },
+        "data": "25 de desembre de 1553",
+        "descripcio": "El cacic Lautaro embosca Valdivia; el governador és capturat i executat, cosa que encén la guerra d'Arauco.",
+        "problemes": [
+          "Revolta generalitzada del poble maputxe",
+          "Manca de reforços des del Perú"
+        ]
+      }
+    ],
+    "problemes_generals": [
+      "Resistència maputxe amb tàctiques de guerrilla",
+      "Escassetat crònica de mà d'obra i aliments",
+      "Distància enorme respecte de Lima i retard dels reforços",
+      "Terratrèmols i desastres naturals recurrents"
+    ],
+    "resultats": [
+      "Fundació de les principals ciutats centrals de Xile",
+      "Inici de la guerra d'Arauco que s'estendrà durant segles",
+      "Estructuració de l'encomienda i repartiment de terres",
+      "Construcció del mite de Valdivia com a fundador"
+    ]
+  }
+}

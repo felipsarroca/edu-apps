@@ -1,0 +1,118 @@
+{
+  "expedicio": {
+    "id": "desoto",
+    "titol": "Expedició de Hernando de Soto per l'interior de la Florida",
+    "resum": "Una marxa devastadora pel sud-est nord-americà i el primer contacte europeu amb el Mississipí.",
+    "anys": "1539-1543",
+    "finalitat": "Localitzar riqueses interiors a La Florida i establir una governació estable per a la Corona.",
+    "personatge": {
+      "nom": "Hernando de Soto",
+      "origen": "Jerez de los Caballeros (Extremadura)",
+      "rol": "Adelantado de la Florida i veterà de la conquesta del Perú"
+    },
+    "forces": [
+      { "tipus": "soldats", "quantitat": 620, "descripcio": "Veterans armats amb arcabussos i espases" },
+      { "tipus": "cavalls", "quantitat": 220, "descripcio": "Element clau de mobilitat i xoc" },
+      { "tipus": "porcs", "quantitat": 300, "descripcio": "Ramats portats com a reserva d'aliments" },
+      { "tipus": "vaixells", "quantitat": 9, "descripcio": "Transporten l'expedició fins a la badia de Tampa" }
+    ],
+    "estrategies": [
+      "Capturar cacics locals per obtenir guies i alimentació",
+      "Utilitzar patrulles ràpides de cavalleria per castigar la resistència",
+      "Registrar el territori per justificar futures colonitzacions"
+    ],
+    "aliats": [
+      "Juan Ortiz com a intèrpret",
+      "Alguns grups Apalachee sota coerció",
+      "Portadors nadius obligats"
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Arribada a la badia d'Espíritu Santo",
+        "lloc": {
+          "nom_modern": "Badia de Tampa, Florida",
+          "coordenades": [27.94, -82.46]
+        },
+        "data": "30 de maig de 1539",
+        "descripcio": "De Soto desembarca i estableix un campament base abans d'endinsar-se cap al nord."
+      },
+      {
+        "ordre": 2,
+        "titol": "Conquesta d'Anhaica",
+        "lloc": {
+          "nom_modern": "Tallahassee, Florida",
+          "coordenades": [30.44, -84.28]
+        },
+        "data": "setembre de 1539",
+        "descripcio": "Destrucció de la capital Apalachee, que és reutilitzada com a campament d'hivern."
+      },
+      {
+        "ordre": 3,
+        "titol": "Captura de la cacica de Cofitachequi",
+        "lloc": {
+          "nom_modern": "Prop de Camden, Carolina del Sud",
+          "coordenades": [34.74, -80.77]
+        },
+        "data": "maig de 1540",
+        "descripcio": "El grup travessa Geòrgia i Carolina, saquejant temples i capturant nobles locals."
+      },
+      {
+        "ordre": 4,
+        "titol": "Batalla de Mabila",
+        "lloc": {
+          "nom_modern": "Sud d'Alabama",
+          "coordenades": [31.5, -87.7]
+        },
+        "data": "18 d'octubre de 1540",
+        "descripcio": "De Soto és emboscat pel cacic Tascaluza; centenars d'indígenes moren, però l'expedició queda greument tocada.",
+        "problemes": [
+          "Pèrdua de la major part de l'equipatge",
+          "Ferides greus i baixes massives"
+        ]
+      },
+      {
+        "ordre": 5,
+        "titol": "Creuament del riu Mississipí",
+        "lloc": {
+          "nom_modern": "Prop de Memphis, Tennessee",
+          "coordenades": [34.2, -90.2]
+        },
+        "data": "8 de maig de 1541",
+        "descripcio": "Els espanyols construeixen barques per travessar el gran riu, primer registre europeu confirmat del Mississipí."
+      },
+      {
+        "ordre": 6,
+        "titol": "Mort de Hernando de Soto",
+        "lloc": {
+          "nom_modern": "Riba occidental del Mississipí",
+          "coordenades": [34.36, -91.3]
+        },
+        "data": "21 de maig de 1542",
+        "descripcio": "De Soto mor de febres i els seus homes enfonsen el cos al riu per evitar profanacions."
+      },
+      {
+        "ordre": 7,
+        "titol": "Retirada cap al riu Pánuco",
+        "lloc": {
+          "nom_modern": "Pánuco, Mèxic",
+          "coordenades": [22.05, -98.18]
+        },
+        "data": "1543",
+        "descripcio": "Els supervivents construeixen bergantins i arriben al Golf de Mèxic després de tres anys de marxa."
+      }
+    ],
+    "problemes_generals": [
+      "Resistència feroç de pobles com els Apalachee, Chickasaw i Mississipians",
+      "Terrenys pantanosos i desconeguts que destrossen els subministraments",
+      "Malalties tropicals i febres letals",
+      "Violència que trenca qualsevol aliança potencial"
+    ],
+    "resultats": [
+      "Primer reconeixement europeu extens del sud-est nord-americà",
+      "Devastació demogràfica i social entre múltiples societats indígenes",
+      "Fracàs en trobar riqueses immediates però precedents per a futures colonitzacions",
+      "Cartografia valuosa per a missions posteriors de França i Anglaterra"
+    ]
+  }
+}

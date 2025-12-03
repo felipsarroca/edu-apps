@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La primera volta al món: L'expedició de Magallanes i Elcano</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome (icones) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- ---------- ESTILS ---------- -->
+    <style>
+        :root {
+            --primary-color: #0d47a1;
+            --secondary-color: #1976d2;
+            --accent-color: #c62828;
+            --gold-color: #ffc107;
+            --success-color: #2e7d32;
+            --background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-background: rgba(255, 255, 255, 0.95);
+            --text-color: #212121;
+            --text-light: #5f5f5f;
+            --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --border-radius: 20px;
+            --animation-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--background-gradient);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            height: 100vh; /* Ocupa tota l'alçada de la pantalla */
+        }
+
+        header {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 15px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 5px auto 0;
+        }
+
+        #map-container {
+            flex: 1 1 auto; /* Permet que el mapa creixi per omplir l'espai */
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            display: flex;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius);
+        }
+
+        /* --- Marcadors --- */
+        .custom-marker-numbered {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: 2px solid #fff;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--animation-speed) ease;
+        }
+
+        .custom-marker-numbered:hover {
+            transform: scale(1.2);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .start-marker {
+            background: linear-gradient(135deg, var(--success-color), #4caf50);
+            animation: pulse 2s infinite;
+        }
+
+        .end-marker {
+            background: linear-gradient(135deg, var(--gold-color), #ffb300);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+        }
+
+        /* --- Popup --- */
+        .leaflet-popup-content-wrapper {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            padding: 0;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            width: 360px;
+        }
+
+        .leaflet-popup-tip {
+            background: var(--card-background);
+        }
+
+        .popup-header {
+            background: linear-gradient(135deg, #1e88e5, var(--primary-color));
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .popup-header i {
+            margin-right: 12px;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .popup-header h3 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-body {
+            padding: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85em;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+        }
+
+        .stat-item i {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-right: 10px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .stat-item span {
+            font-weight: 500;
+        }
+
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
+            margin: 15px 0;
+        }
+
+        .ships-section h4 {
+            margin: 0 0 10px;
+            font-size: 1em;
+            color: var(--primary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ships-section h4 i {
+            margin-right: 8px;
+        }
+        
+        .ship-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            font-size: 0.85em;
+        }
+
+        .ship-list li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ship-list i {
+            font-size: 1.1em;
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .active-ships i { color: var(--success-color); }
+        .lost-ships { color: var(--accent-color); }
+        .lost-ships { color: var(--accent-color); }
+        
+
+        .event-section .event-title {
+            font-family: 'Lora', serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--accent-color);
+            text-align: center;
+            margin: 15px 0 10px;
+        }
+
+        .event-section .event-desc {
+            font-size: 0.95em;
+            line-height: 1.6;
+            text-align: justify;
+            color: var(--text-light);
+            max-height: 150px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            color: #fff;
+            background: rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        
+        footer p {
+            margin: 2px 0;
+        }
+
+        .footer-main {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .footer-license {
+            font-size: 0.8em;
+        }
+
+        footer a {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container { padding: 15px; }
+            header h1 { font-size: 1.8rem; }
+            .leaflet-popup-content { width: 320px; }
+        }
+        @media (max-width: 480px) {
+            .main-container { padding: 10px; }
+            header h1 { font-size: 1.5rem; }
+            .leaflet-popup-content { width: calc(100vw - 60px); }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>La primera volta al món</h1>
+            <p>L'expedició de Magallanes i Elcano (1519-1522)</p>
+        </header>
+        <div id="map-container"><div id="map"></div></div>
+    </div>
+    <footer>
+        <p class="footer-main">Aplicació creada per Felip Sarroca amb l'ajuda de la IA</p>
+        <p class="footer-license">Aquesta obra està sota una <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank">llicència Creative Commons BY-SA</a>.</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
+
+    <!-- ---------- JS ---------- -->
+    <script>
+        const eventData = [
+            { num: 1, place: "Sevilla", coords: [37.3891, -5.9845], date: "10 agost 1519", totalDays: 0, daysSinceLast: 0, activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Inici de l'aventura", eventDesc: "La flota parteix del moll de les Moluques a Sevilla, remuntant el riu Guadalquivir cap a Sanlúcar de Barrameda. Són cinc naus i uns 270 homes sota el comandament de Fernão de Magalhães, navegant portuguès al servei de la corona de Castella. El viatge comença amb incertesa i expectació, amb l’objectiu d’arribar a les Illes de les Espècies per una ruta occidental." },
+            { num: 2, place: "Sanlúcar de Barrameda", coords: [36.7785, -6.3520], date: "20 setembre 1519", totalDays: 41, daysSinceLast: 41, activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Sortida cap a l’oceà desconegut", eventDesc: "Després de més d’un mes preparant l’expedició a Sanlúcar, les cinc naus finalment s’endinsen a l’Atlàntic. El 20 de setembre parteixen cap a les Illes Canàries. Magallanes manté el rumb en secret fins al darrer moment per evitar sabotatges. Els mariners encara ignoren la magnitud del viatge que estan a punt d’emprendre." },
+            { num: 3, place: "Illes Canàries (Tenerife)", coords: [28.2916, -16.6291], date: "finals de setembre 1519", totalDays: "~45", daysSinceLast: "~5", activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Primera escala tècnica", eventDesc: "A les Illes Canàries fan una aturada per carregar provisions i fer petites reparacions. També hi arriben notícies que el rei portuguès intenta capturar Magallanes per aturar l’expedició. Es fa evident que l’empresa no només és marítima, sinó també política. A partir d’aquí, Magallanes adopta més precaucions i accelera la travessa cap al sud." },
+            { num: 4, place: "Cap Verd", coords: [14.9167, -23.5167], date: "primera quinzena d’octubre 1519", totalDays: "~55", daysSinceLast: "~10", activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Reaprovisionament abans del gran salt", eventDesc: "Fan una breu aturada a Cap Verd per aprovisionar-se d’aigua i queviures. Aquesta serà una de les darreres escales abans de travessar l’Atlàntic cap a Sud-amèrica. L’expedició comença a afrontar els primers reptes logístics, i la incertesa sobre el que trobaran més enllà creix entre la tripulació." },
+            { num: 5, place: "Travessa de l’Atlàntic", coords: [0, -30], date: "octubre - novembre 1519", totalDays: "~90", daysSinceLast: "~35", activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Creuen l’equador i entenen la magnitud del viatge", eventDesc: "La flota creua la línia equatorial per primera vegada. El viatge es fa llarg i les provisions comencen a escassejar, però encara no hi ha baixes significatives. La monotonia, la calor tropical i les condicions de navegació posen a prova la resistència física i emocional dels mariners. La confiança en Magallanes es manté, però sorgeixen les primeres tensions." },
+            { num: 6, place: "Río de Janeiro (Brasil)", coords: [-22.9068, -43.1729], date: "13 desembre 1519", totalDays: 114, daysSinceLast: "~24", activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Primera trobada amb el Nou Món", eventDesc: "Després d'una llarga travessa, les naus arriben a les costes del Brasil. Fan una estada d’uns dies al port natural del futur Rio de Janeiro per abastir-se d’aigua, menjar i fusta. El contacte amb les poblacions indígenes és inicialment pacífic. La bellesa i riquesa del lloc sorprèn els europeus, però saben que el veritable objectiu encara és molt lluny." },
+            { num: 7, place: "Río de la Plata", coords: [-35.1716, -56.0894], date: "gener-febrer 1520", totalDays: "~150", daysSinceLast: "~35", activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "±270", eventTitle: "Confusió entre rius i estrets", eventDesc: "Exploren el gran estuari del Río de la Plata buscant una possible sortida cap a l'oest, però ràpidament s’adonen que no es tracta de cap estret. Tot i la decepció, aprofiten per explorar i obtenir més aliments. L’exploració geogràfica es fa més lenta i laboriosa, i l’expedició es va endinsant en territoris desconeguts i més inestables." },
+            { num: 8, place: "Port de San Julián (Patagònia)", coords: [-49.3069, -67.7260], date: "31 març 1520", totalDays: 194, daysSinceLast: "~44", activeShips: "Trinidad, San Antonio, Concepción, Victoria, Santiago", lostShips: "cap", survivors: "~268", eventTitle: "Motí a la Patagònia", eventDesc: "L’expedició decideix hivernar a San Julián davant l’arribada del fred austral. Durant aquesta estada, es produeix un motí liderat per diversos capitans espanyols, que desconfiaven de Magallanes per ser portuguès. La rebel·lió és sufocada amb contundència: un capità és executat, un altre abandonat i un tercer empresonat. Magallanes consolida el seu lideratge però augmenta la tensió interna." },
+            { num: 9, place: "Naufragi de la Santiago", coords: [-50.0333, -68.4667], date: "principis de maig 1520", totalDays: "~225", daysSinceLast: "~31", activeShips: "Trinidad, San Antonio, Concepción, Victoria", lostShips: "Santiago (naufragada)", survivors: "~266", eventTitle: "Perdem el primer vaixell", eventDesc: "La nau Santiago és enviada a explorar més al sud per localitzar el pas cap a l’oest, però una tempesta la destrossa. Els mariners sobreviuen i tornen caminant fins a San Julián. És la primera pèrdua material de l’expedició, i un avís de les dificultats que encara han d’afrontar. El rumb correcte continua sent un misteri." },
+            { num: 10, place: "Entrada a l’estret de Magallanes", coords: [-52.7550, -71.0000], date: "21 octubre 1520", totalDays: 428, daysSinceLast: "~203", activeShips: "Trinidad, San Antonio, Concepción, Victoria", lostShips: "Santiago (ja naufragada)", survivors: "~266", eventTitle: "Descoberta del pas cap al Pacífic", eventDesc: "Després de mesos de navegació i espera, l’expedició troba finalment un estret que sembla conduir cap a un altre oceà. Magallanes ordena l’exploració cautelosa del pas. L’expectativa creix entre la tripulació: podrien haver trobat la ruta que els portarà a les Illes de les Espècies. Les aigües són estretes, gelades i traïdores." },
+            { num: 11, place: "Desertció de la San Antonio", coords: [-52.9611, -71.3194], date: "1 novembre 1520", totalDays: 439, daysSinceLast: "~11", activeShips: "Trinidad, Concepción, Victoria", lostShips: "San Antonio (deserta)", survivors: "~200", eventTitle: "Fugida i traïció", eventDesc: "La nau San Antonio aprofita la foscor i el desconcert per desertar. Torna cap a Espanya amb una part important de les provisions i materials. Aquest fet redueix significativament la capacitat logística de l’expedició i suposa un cop moral per a Magallanes. La confiança entre les tripulacions es veu greument afectada." },
+            { num: 12, place: "Sortida a l’oceà Pacífic", coords: [-52.6200, -75.0500], date: "28 novembre 1520", totalDays: 466, daysSinceLast: "~27", activeShips: "Trinidad, Concepción, Victoria", lostShips: "Santiago (naufragada), San Antonio (deserta)", survivors: "~200", eventTitle: "Un nou oceà, infinit i desconegut", eventDesc: "Les tres naus que queden arriben finalment a les aigües tranquil·les del nou oceà, que Magallanes anomena “Pacífic”. No saben que estan a punt d’afrontar una de les travesses més dures i llargues de tota la història de la navegació. Sense mapes ni certeses, s’endinsen cap a l’immens blau sense tocar terra durant mesos." },
+            { num: 13, place: "Travessa de l’oceà Pacífic", coords: [-5.0000, -145.0000], date: "desembre 1520 – març 1521", totalDays: "~640", daysSinceLast: "~174", activeShips: "Trinidad, Concepción, Victoria", lostShips: "Santiago (naufragada), San Antonio (deserta)", survivors: "~190", eventTitle: "Tres mesos sense tocar terra", eventDesc: "L’expedició navega durant més de tres mesos sense veure terra ni obtenir aliments frescos. La fam, l'escorbut i la desesperació s'estenen entre la tripulació. Menjaven serradures, cuir bullit i fins i tot rates. Van morir almenys 20 homes durant la travessa. Malgrat això, no es produeixen motins, i el comandament de Magallanes es manté ferm." },
+            { num: 14, place: "Illes Marianes (Guam)", coords: [13.4443, 144.7937], date: "6 març 1521", totalDays: 567, daysSinceLast: "~100", activeShips: "Trinidad, Concepción, Victoria", lostShips: "Santiago (naufragada), San Antonio (deserta)", survivors: "~170", eventTitle: "Terra al Pacífic: les illes dels lladres", eventDesc: "Després de gairebé cent dies sense tocar terra, arriben a l’illa de Guam, on es troben amb indígenes que s’enduen objectes de les naus. Magallanes respon violentament, crema algunes cabanes i mata alguns illencs. Aquest primer contacte al Pacífic rep el nom d’“Illes dels Lladres”, i marca un canvi de to en la relació amb els pobles locals." },
+            { num: 15, place: "Illes Filipines (Limasawa i Cebu)", coords: [9.9194, 125.0723], date: "16 març – abril 1521", totalDays: 577, daysSinceLast: "~10", activeShips: "Trinidad, Concepción, Victoria", lostShips: "Santiago (naufragada), San Antonio (deserta)", survivors: "~160", eventTitle: "Contacte amistós i primera missa a Filipines", eventDesc: "Les naus arriben a Limasawa, on tenen un primer contacte pacífic amb els habitants. El 31 de març celebren la primera missa documentada a l’arxipèlag. Després naveguen fins a Cebu, on Magallanes es guanya la confiança del rei local, Humabón. Els mariners recuperen forces i aliments, i s’inicia un procés d’evangelització dels nadius." },
+            { num: 16, place: "Batalla de Mactan (Filipines)", coords: [10.3091, 123.9634], date: "27 abril 1521", totalDays: 619, daysSinceLast: "~42", activeShips: "Trinidad, Concepción, Victoria", lostShips: "Santiago (naufragada), San Antonio (deserta)", survivors: "~155", eventTitle: "Magallanes mor a Mactan", eventDesc: "Magallanes decideix intervenir en un conflicte local entre dos caps rivals filipins. En intentar sotmetre Lapu-Lapu, líder de Mactan, és ferit de mort durant la batalla. La sua mort deixa l’expedició sinse el seu líder natural, i obliga a reorganitzar la cadena de comandament. És un punt d’inflexió que posa en risc la continuïtat del viatge." },
+            { num: 17, place: "Illa de Bohol (Filipines)", coords: [9.8500, 124.1435], date: "maig 1521", totalDays: "~635", daysSinceLast: "~16", activeShips: "Trinidad, Victoria", lostShips: "Santiago (naufragada), San Antonio (deserta), Concepción (incendiada)", survivors: "~115", eventTitle: "Destrucció de la Concepción i reorganització", eventDesc: "Després de la mort de Magallanes, la tensió creix i els mariners decideixen abandonar Cebu per por de represàlies. Es dirigeixen a Bohol, on revaloren la situació. La nau Concepción, en mal estat i amb poca tripulació disponible, és incendiada per decisió dels nous líders. L'expedició continua només amb dues naus: Trinidad i Victoria." },
+            { num: 18, place: "Palawan (Filipines)", coords: [9.8349, 118.7384], date: "juny 1521", totalDays: "~660", daysSinceLast: "~25", activeShips: "Trinidad, Victoria", lostShips: "Santiago, San Antonio, Concepción", survivors: "~110", eventTitle: "Nova pausa abans del gran salt", eventDesc: "L’expedició arriba a Palawan, on troba una rebuda amistosa. Durant uns dies poden reparar les naus i carregar aliments frescos. Els contactes amb els pobles locals són pacífics i comercials. Es fan nous càlculs de rumb per encaminar-se finalment cap a les Moluques, l’objectiu inicial de la travessia." },
+            { num: 19, place: "Brunei (illa de Borneo)", coords: [4.9031, 114.9398], date: "juliol-agost 1521", totalDays: "~700", daysSinceLast: "~40", activeShips: "Trinidad, Victoria", lostShips: "Santiago, San Antonio, Concepción", survivors: "~105", eventTitle: "Un món luxós i desconegut", eventDesc: "A Brunei, els europeus descobreixen una ciutat esplendorosa i molt desenvolupada. La trobada amb l'elit local mostra un nivell alt de civilització i riquesa inesperat. Malgrat les bones primeres impressions, hi ha tensió política, i part de la tripulació és empresonada breument. Aquest episodi accelera la decisió de partir cap a les Moluques." },
+            { num: 20, place: "Illes Moluques (Ternate)", coords: [0.7893, 127.3846], date: "6 novembre 1521", totalDays: 778, daysSinceLast: "~78", activeShips: "Trinidad, Victoria", lostShips: "Santiago, San Antonio, Concepción", survivors: "~100", eventTitle: "Objectiu assolit: arriben a les Illes de les Espècies", eventDesc: "Després de més de dos anys de viatge, l’expedició arriba finalment a les Moluques. Els reis de Ternate els reben amb interès comercial i s’estableixen acords per carregar grans quantitats de claus. Aquest èxit parcial compensa les grans pèrdues. El repte ara és tornar a casa: només dues naus, molt danyades, carregades d’espècies i amb una tripulació minvada." },
+            { num: 21, place: "Sortida de les Moluques", coords: [0.7893, 127.3846], date: "21 desembre 1521", totalDays: 823, daysSinceLast: "~45", activeShips: "Trinidad, Victoria", lostShips: "Santiago, San Antonio, Concepción", survivors: "~95", eventTitle: "Carregats d'espècies, comença el retorn", eventDesc: "Amb les dues naus plenes de claus d’espècia, l’expedició emprèn la tornada. Es decideix separar els rumbs: la Trinidad intentarà tornar per l’est, creuant novament el Pacífic, mentre que la Victoria ho farà pel sud i l’oceà Índic. Aquesta decisió marcarà destins molt diferents. Tots els esforços se centren en sobreviure i arribar a Europa amb la valuosa càrrega." },
+            { num: 22, place: "Captiveri de la Trinidad (Ternate)", coords: [0.7893, 127.3846], date: "gener-març 1522", totalDays: "~880", daysSinceLast: "~57", activeShips: "Victoria", lostShips: "Trinidad (desmuntada i captiva)", survivors: "~50", eventTitle: "Fracàs de la Trinidad i empresonament", eventDesc: "La Trinidad, malmesa i amb una tripulació debilitada, no pot creuar el Pacífic i retorna a Ternate, on és capturada pels portuguesos. La tripulació roman empresonada durant mesos, i pocs aconseguiran tornar anys després. Aquest fet deixa la Victoria com a única nau per completar la primera volta al món." },
+            { num: 23, place: "Illa de Timor", coords: [-9.1540, 124.2678], date: "febrer 1522", totalDays: "~890", daysSinceLast: "~10", activeShips: "Victoria", lostShips: "Trinidad (capturada), Santiago, San Antonio, Concepción", survivors: "~47", eventTitle: "Darrera escala abans del retorn definitiu", eventDesc: "La Victoria, ara sota el comandament d’Elcano, fa una aturada breu a Timor per carregar provisions. El vaixell està molt deteriorat i la tripulació es troba al límit físic. L’objectiu ara és arribar a Cap Verd i després a Sevilla sense fer més escales. Comença la travessa final per l’oceà Índic." },
+            { num: 24, place: "Cap de Bona Esperança", coords: [-34.3526, 18.4710], date: "març – maig 1522", totalDays: "~950", daysSinceLast: "~60", activeShips: "Victoria", lostShips: "Trinidad, Santiago, San Antonio, Concepción", survivors: "~45", eventTitle: "L’infern del retorn", eventDesc: "La Victoria passa el cap de Bona Esperança en condicions extremes: tempestes, manca de queviures i aigua contaminada. Moren diversos mariners i la nau gairebé naufraga. L'Elcano pren decisions dràstiques per garantir la supervivència, com no parar en cap port dominat pels portuguesos. La supervivència passa per arribar directament a Europa, costi el que costi." },
+            { num: 25, place: "Illes de Cap Verd", coords: [16.5388, -23.0418], date: "9 juliol 1522", totalDays: 1023, daysSinceLast: "~73", activeShips: "Victoria", lostShips: "Trinidad, Santiago, San Antonio, Concepción", survivors: "~35", eventTitle: "Engany i captura per part dels portuguesos", eventDesc: "Malgrat el pla inicial de no aturar-se, la desesperació obliga a parar breument a Cap Verd per obtenir provisions. Fingint ser una nau perduda d’Amèrica, aconsegueixen carregar queviures, però les autoritats portugueses sospiten i capturen 13 mariners. L’Elcano fuig immediatament amb la resta de la tripulació, deixant enrere els presoners. La Victoria parteix rumb final a la península." },
+            // Offset for point 26 to avoid overlap with point 2
+            { num: 26, place: "Sanlúcar de Barrameda", coords: [36.7785, -6.3520 + 0.1], date: "6 setembre 1522", totalDays: 1083, daysSinceLast: "~51", activeShips: "Victoria", lostShips: "Trinidad, Santiago, San Antonio, Concepción", survivors: "18", eventTitle: "Tornada heroica i devastadora", eventDesc: "La nau Victoria arriba a Sanlúcar després de fer la primera volta al món. De les cinc naus inicials, només una torna. Només 18 homes arriben vius, malalts i exhausts. La càrrega d’espècies compensa econòmicament l’expedició, però el cost humà és immens. Juan Sebastián Elcano esdevé el primer home en completar la circumnavegació." },
+            // Offset for point 27 to avoid overlap with point 1
+            { num: 27, place: "Sevilla", coords: [37.3891, -5.9845 + 0.1], date: "8 setembre 1522", totalDays: 1085, daysSinceLast: 2, activeShips: "Victoria", lostShips: "Trinidad, Santiago, San Antonio, Concepción", survivors: "18", eventTitle: "Fi del viatge i llegenda eterna", eventDesc: "Dos dies després d’arribar a Sanlúcar, la Victoria remunta el Guadalquivir fins a Sevilla. L’expedició que havia sortit amb 5 naus i 270 homes torna amb una sola nau i 18 supervivents. L’Elcano i els seus homes són rebuts com a herois. La volta al món s’ha completat per primera vegada a la història, marcant un abans i un després en la navegació i el coneixement geogràfic global." }
+        ];
+
+        const map = L.map('map', {
+            scrollWheelZoom: true
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        eventData.forEach(evt => {
+            const markerDiv = document.createElement('div');
+            markerDiv.className = 'custom-marker-numbered';
+            if (evt.num === 1 || evt.num === 2) {
+                markerDiv.classList.add('start-marker');
+            } else if (evt.num === eventData.length || evt.num === eventData.length -1) {
+                markerDiv.classList.add('end-marker');
+            }
+            markerDiv.textContent = evt.num;
+            
+            const icon = L.divIcon({
+                html: markerDiv.outerHTML,
+                className: '', // Important to clear default leaflet styles
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+            
+            const marker = L.marker(evt.coords, { icon }).addTo(map);
+            marker.bindPopup(buildPopup(evt), {
+                maxWidth: "auto"
+            });
+        });
+
+        // Split route to remove line between points 13 and 14
+        const allCoords = eventData.map(e => e.coords);
+        const routeSegment1 = allCoords.slice(0, 13);
+        const routeSegment2 = allCoords.slice(13, 25); // End before offset points
+        const finalLeg = allCoords.slice(24); // From point 25 to 27
+
+        const polylineOptions = {
+            color: 'var(--secondary-color)',
+            weight: 3,
+            opacity: 0.8,
+            className: 'route-line'
+        };
+        
+        const casingOptions = {
+            color: 'var(--primary-color)',
+            weight: 6,
+            opacity: 0.3
+        };
+
+        L.polyline(routeSegment1, casingOptions).addTo(map);
+        L.polyline(routeSegment2, casingOptions).addTo(map);
+        L.polyline(finalLeg, casingOptions).addTo(map);
+        L.polyline(routeSegment1, polylineOptions).addTo(map);
+        L.polyline(routeSegment2, polylineOptions).addTo(map);
+        L.polyline(finalLeg, polylineOptions).addTo(map);
+
+
+        // Correction for point 1 and 2 visibility
+        setTimeout(() => {
+            map.fitBounds(L.latLngBounds(allCoords).pad(0.2));
+            // No panBy needed with the offset solution
+        }, 100);
+
+
+        function buildPopup(e) {
+            const activeList = e.activeShips.split(',').map(s => s.trim()).filter(s => s !== 'cap');
+            const lostList = e.lostShips.split(',').map(s => s.trim()).filter(s => s !== 'cap');
+
+            return `
+                <div class="popup-card">
+                    <div class="popup-header"><i class="fa-solid fa-scroll"></i><h3>${e.place}</h3></div>
+                    <div class="popup-body">
+                        <div class="stats-grid">
+                            <div class="stat-item"><i class="fa-solid fa-calendar-days"></i><span>${e.date}</span></div>
+                            <div class="stat-item"><i class="fa-solid fa-flag-checkered"></i><span>${e.totalDays} dies totals</span></div>
+                            <div class="stat-item"><i class="fa-solid fa-route"></i><span>${e.daysSinceLast} dies des de l'últim port</span></div>
+                            <div class="stat-item"><i class="fa-solid fa-users"></i><span>${e.survivors} supervivents</span></div>
+                        </div>
+                        <hr class="section-divider" />
+                        <div class="ships-section">
+                            <h4><i class="fa-solid fa-ship"></i>Flota</h4>
+                            <ul class="ship-list">
+                                ${activeList.map(s => `<li class="active-ships"><i class="fa-solid fa-sailboat"></i>${s}</li>`).join('')}
+                                ${lostList.map(s => `<li class="lost-ships"><i class="fa-solid fa-skull-crossbones"></i>${s}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <hr class="section-divider" />
+                        <div class="event-section">
+                            <div class="event-title">${e.eventTitle}</div>
+                            <div class="event-desc">${e.eventDesc}</div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "name": "KineGraphIA v.24",
+  "description": "A web application that automatically interprets kinematics problems written in natural language (Catalan) and generates physical data, motion equations, and interactive graphs using AI.",
+  "requestFramePermissions": []
+}

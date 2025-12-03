@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Els viatges de Colom</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preload" as="image" href="./colonportada.avif">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="app">
+    <section id="home-screen" class="screen home active" aria-labelledby="home-title">
+      <div class="home-background" role="presentation"></div>
+      <div class="home-ornaments" aria-hidden="true">
+        <span class="spark spark-1"></span>
+        <span class="spark spark-2"></span>
+        <span class="spark spark-3"></span>
+        <span class="path-glow"></span>
+        <span class="constellation constellation-1"></span>
+        <span class="constellation constellation-2"></span>
+      </div>
+      <div class="home-content">
+        <header class="home-header">
+          <span class="home-badge">✦ experiència interactiva</span>
+          <h1 id="home-title">Els viatges de Colom</h1>
+          <p class="home-subtitle">Tria una expedició i reviu l'aventura al mapa interactiu.</p>
+          <div id="home-alert" class="home-alert" role="alert" aria-live="polite"></div>
+        </header>
+        <div class="home-selector" role="list">
+          <button class="voyage-card" data-viatge="1" data-accent="var(--accent-1)" role="listitem">
+            <span class="card-top">
+              <span class="card-number"><span class="num">1r</span><span class="label">VIATGE</span></span>
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 88 88"><path d="M16 62l28-30 28 30-13 10H29z" fill="currentColor"/><path d="M44 12l16 24H28z" fill="currentColor" opacity="0.8"/></svg>
+              </span>
+            </span>
+            <span class="card-body">
+              <strong>Descobriment atlàntic</strong>
+              <span>De Palos a Guanahaní, un viatge que va canviar el món.</span>
+            </span>
+          </button>
+          <button class="voyage-card" data-viatge="2" data-accent="var(--accent-2)" role="listitem">
+            <span class="card-top">
+              <span class="card-number"><span class="num">2n</span><span class="label">VIATGE</span></span>
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 88 88"><path d="M20 68V32l24-16 24 16v36l-24 16z" fill="currentColor"/><path d="M34 72h20v12H34z" fill="currentColor" opacity="0.8"/></svg>
+              </span>
+            </span>
+            <span class="card-body">
+              <strong>Colonització i fortaleses</strong>
+              <span>La fundació de La Isabela, entre epidèmies i tensions.</span>
+            </span>
+          </button>
+          <button class="voyage-card" data-viatge="3" data-accent="var(--accent-3)" role="listitem">
+            <span class="card-top">
+              <span class="card-number"><span class="num">3r</span><span class="label">VIATGE</span></span>
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 88 88"><path d="M14 36c12-12 24-18 36-18s24 6 36 18L50 82z" fill="currentColor"/><circle cx="50" cy="38" r="10" fill="currentColor" opacity="0.8"/></svg>
+              </span>
+            </span>
+            <span class="card-body">
+              <strong>Sud-amèrica revelada</strong>
+              <span>Arribada a Sud-amèrica i la descoberta d'un 'Nou Món'.</span>
+            </span>
+          </button>
+          <button class="voyage-card" data-viatge="4" data-accent="var(--accent-4)" role="listitem">
+            <span class="card-top">
+              <span class="card-number"><span class="num">4t</span><span class="label">VIATGE</span></span>
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 88 88"><path d="M18 62l14-28 12 18 16-28 16 40-16 10-12-14-12 16z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="card-body">
+              <strong>Declivi a Centreamèrica</strong>
+              <span>Naufragis, eclipsis i supervivència a Jamaica.</span>
+            </span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="experience-screen" class="screen experience" aria-live="polite">
+      <div id="map" role="region" aria-label="Mapa interactiu dels viatges de Cristòfor Colom"></div>
+      <div class="map-overlay" aria-hidden="true">
+        <div class="map-gradient"></div>
+        <div class="map-texture"></div>
+      </div>
+      <div class="overlay">
+        <div class="panel selector" aria-label="Selector de viatges i comparativa">
+          <div class="panel-header">
+            <span class="brand">Viatges de Colom</span>
+            <button class="panel-close" id="back-home" aria-label="Torna a l'inici">&larr;</button>
+          </div>
+          <div class="panel-body selector-grid" id="selector-grid"></div>
+          <div class="panel-footer">
+            <label class="toggle" title="Activa l'animació automàtica de la ruta">
+              <input type="checkbox" id="auto-play">
+              <span>Animació automàtica</span>
+            </label>
+            <button id="reset-view" class="ghost">Tornar a la vista global</button>
+          </div>
+        </div>
+
+        <div class="panel info" aria-label="Informació clau del viatge">
+          <nav class="info-tabs" aria-label="Seccions del panell informatiu">
+            <button data-section="overview" class="active"><span class="tab-icon">📜</span><span>Objectiu</span></button>
+            <button data-section="ships"><span class="tab-icon">⛵</span><span>Vaixells</span></button>
+            <button data-section="issues"><span class="tab-icon">⚠️</span><span>Problemes</span></button>
+            <button data-section="outcome"><span class="tab-icon">🏁</span><span>Resultats</span></button>
+          </nav>
+          <div class="info-content" id="info-content" tabindex="0"></div>
+        </div>
+
+
+
+        <div class="panel timeline" aria-label="Línia de temps interactiva">
+          <div class="timeline-header">
+            <h2>Línia de temps</h2>
+            <span id="timeline-label"></span>
+          </div>
+          <input type="range" id="timeline-slider" min="0" value="0" step="1" aria-valuemin="0" aria-valuemax="0" aria-label="Desplaça per la cronologia">
+          <div class="timeline-legend" id="timeline-legend"></div>
+        </div>
+      </div>
+      <footer id="app-footer"><span>Aplicació creada per Felip Sarroca amb l'assistència de la IA.</span><span><img src="./CC_BY-NC-SA.svg" alt="Llicència Creative Commons" class="license-icon"> Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.</span></footer>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

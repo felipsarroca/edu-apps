@@ -1,0 +1,328 @@
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Els viatges d'Ulisses</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts per a estil manuscrit/clàssic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:wght@400..900&display=swap" rel="stylesheet">
+    <style>
+        /* Definició de variables CSS per als tons ocres */
+        :root {
+            --color-parchment-light: #FCF8E8; /* Fons clar, com pergamí */
+            --color-sepia-dark: #4A362C; /* Text fosc, com tinta sèpia */
+            --color-ochre-main: #CC7722; /* Groc ocre principal */
+            --color-ochre-light: #E6B88C; /* Groc ocre clar per a vores i ressaltats */
+        }
+
+        /* Estils generals del cos */
+        body {
+            background-color: var(--color-parchment-light);
+            font-family: 'Lora', serif; /* Font principal per al cos */
+            color: var(--color-sepia-dark);
+            line-height: 1.6;
+        }
+
+        /* Estils del contenidor principal */
+        .container {
+            max-width: 1000px;
+            background-color: rgba(255, 255, 255, 0.7); /* Fons semi-transparent per al contingut */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem; /* Més padding */
+            border: 1px solid var(--color-ochre-light); /* Vora subtil */
+        }
+
+        /* Títol principal */
+        h1 {
+            font-family: 'Playfair Display', serif; /* Font elegant per al títol */
+            font-weight: 700;
+            color: var(--color-ochre-main) !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed var(--color-ochre-light); /* Línia puntejada decorativa */
+            padding-bottom: 1rem;
+        }
+
+        /* Estils del mapa */
+        #map {
+            height: 550px;
+            width: 100%;
+            margin: 30px auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Ombra més pronunciada */
+            border: 3px solid var(--color-ochre-main); /* Vora més gruixuda */
+        }
+
+        /* Estils dels popups de Leaflet */
+        .leaflet-popup-content {
+            font-family: 'Lora', serif;
+            font-size: 16px;
+            color: var(--color-sepia-dark);
+            line-height: 1.6;
+            padding: 15px;
+            background-color: var(--color-parchment-light); /* Fons del popup */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--color-ochre-light);
+        }
+        .leaflet-popup-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--color-ochre-main);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--color-ochre-light);
+            padding-bottom: 8px;
+        }
+        .leaflet-popup-text {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .leaflet-popup-quote {
+            font-style: italic;
+            color: var(--color-sepia-dark);
+            border-left: 4px solid var(--color-ochre-light);
+            padding-left: 15px;
+            margin-bottom: 15px;
+            background-color: rgba(204, 119, 34, 0.1); /* Fons suau per a la cita amb ocre */
+            padding: 10px 15px;
+            border-radius: 4px;
+        }
+        .leaflet-popup-reflection {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            color: var(--color-ochre-main);
+            font-weight: 500;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--color-ochre-light);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'cormorant-garamond': ['Cormorant Garamond', 'serif'],
+                        'lora': ['Lora', 'serif'],
+                        'playfair-display': ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'parchment-light': 'var(--color-parchment-light)',
+                        'sepia-dark': 'var(--color-sepia-dark)',
+                        'ochre-main': 'var(--color-ochre-main)',
+                        'ochre-light': 'var(--color-ochre-light)',
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-parchment-light font-lora">
+    <div class="container mx-auto p-4 md:p-6 lg:p-8">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl text-center mb-6">Els viatges d'Ulisses</h1>
+
+        <div id="map"></div>
+
+        <!-- Text de l'autor i llicència -->
+        <div class="text-center mt-8 text-lg font-cormorant-garamond text-sepia-dark">
+            <p>Traducció al català de la proposta de Ramón Besonías.</p>
+            <p class="mt-2">
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank" class="hover:underline text-ochre-main">Llicència Creative Commons BY-SA</a>
+            </p>
+        </div>
+
+        <script>
+            // Inicialitzar el mapa
+            var map = L.map('map').setView([38, 25], 6); // Coordenades aproximades de Grècia, zoom 6
+
+            // Afegir capa de tile d'OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Dades dels llocs visitats per Ulisses amb reflexions filosòfiques
+            var llocs = [
+                {
+                    nombre: "Troia",
+                    ciutat: "Troia",
+                    succes: "Inici de l'Odissea, fi de la Guerra de Troia.",
+                    text: "Allà vam lluitar durant deu llargs anys.",
+                    coordenades: [39.957, 26.237], // Coordenades de Troia
+                    ordre: 1,
+                    poema: "L'Odissea, Cant I",
+                    reflexio: "És la victòria sempre un triomf? L'Odissea comença amb la fi d'una guerra, però quins nous conflictes interns i externs desferma la 'victòria' d'Ulisses? És la pau només l'inici d'una altra batalla?"
+                },
+                {
+                    nombre: "Illa dels cícons",
+                    ciutat: "Ísmar",
+                    succes: "Primer saqueig i contraatac dels cícons. Ulisses perd diversos homes per la cobdícia i la desobediència.",
+                    text: "Vaig saquejar la ciutat i vaig matar els homes, però després els cícons... ens van atacar i vam patir grans pèrdues.",
+                    coordenades: [40.933, 25.433], // Coordenades aproximades
+                    ordre: 2,
+                    poema: "L'Odissea, Cant IX",
+                    reflexio: "La desobediència i la cobdícia marquen el primer revés d'Ulisses. Fins a quin punt les nostres pròpies 'victòries' ens enceguen davant els perills imminents? És la hybris la veritable nèmesi de l'heroi?"
+                },
+                {
+                    nombre: "País dels lotòfags",
+                    ciutat: "No s'especifica",
+                    succes: "Alguns homes d'Ulisses mengen el lotus i obliden la seva llar i el seu propòsit, quedant atrapats en una feliç ignorància.",
+                    text: "Vaig enviar alguns dels meus companys a explorar... però van menjar el lotus i ja no volien tornar.",
+                    coordenades: [34, -7], //Coordenades aproximades de la costa de Líbia
+                    ordre: 3,
+                    poema: "L'Odissea, Cant IX",
+                    reflexio: "Preferiries una existència d'oblit i plaer constant, o la dura realitat amb els seus desafiaments i la possibilitat d'una veritable llar? És la ignorància una benedicció o una condemna?"
+                },
+                {
+                    nombre: "Illa dels ciclops",
+                    ciutat: "No s'especifica",
+                    succes: "Trobada amb Polifem, el ciclop. Ulisses l'encega amb astúcia, però es guanya la ira de Posidó en revelar el seu nom.",
+                    text: "Vam arribar a la terra dels ciclops... Vam entrar a la seva cova i Polifem ens va atrapar. El vam cegar, però vam perdre sis homes.",
+                    coordenades: [37.5, 21.5], // Coordenades aproximades d'una illa grega
+                    ordre: 4,
+                    poema: "L'Odissea, Cant IX",
+                    reflexio: "És l'astúcia moralment superior a la força bruta? Ulisses demostra que la intel·ligència pot vèncer el poder, però el seu orgull en revelar el seu nom, és una prova de la seva grandesa o del seu defecte fatal?"
+                },
+                {
+                    nombre: "Illa d'Èol",
+                    ciutat: "Eòlia",
+                    succes: "Èol, el déu del vent, dóna a Ulisses un odre amb els vents favorables, però els seus homes l'obren per enveja i desconfiança, desviant-los de nou.",
+                    text: "Èol em va donar un odre amb tots els vents... però els meus companys el van obrir i els vents ens van portar de tornada.",
+                    coordenades: [38.7, 14.933], //Coordenades de les Illes Eòlies
+                    ordre: 5,
+                    poema: "L'Odissea, Cant X",
+                    reflexio: "L'enveja i la desconfiança poden destruir fins i tot els regals dels déus. Què ens ensenya aquest episodi sobre la naturalesa humana i la fragilitat de la col·laboració?"
+                },
+                {
+                    nombre: "País dels lestrígons",
+                    ciutat: "Lamos",
+                    succes: "Trobada amb gegants caníbals, els lestrígons, que destrueixen gairebé tota la flota d'Ulisses.",
+                    text: "Vam arribar a la terra dels lestrígons... Gegants caníbals van destruir els meus vaixells i van matar molts dels meus homes.",
+                    coordenades: [40.8, 8.23], //Coordenades aproximades de Sardenya
+                    ordre: 6,
+                    poema: "L'Odissea, Cant X",
+                    reflexio: "La brutalitat sense sentit. Quin paper juga el caos i la violència impredictible en la formació del caràcter d'un heroi? Hi ha lliçons que només s'aprenen a través de la pèrdua massiva?"
+                },
+                {
+                    nombre: "Illa de Circe",
+                    ciutat: "Eea",
+                    succes: "Circe converteix alguns dels homes d'Ulisses en porcs. Ulisses, amb l'ajuda d'Hermes, la domina i roman un any amb ella.",
+                    text: "Circe va convertir els meus homes en porcs... però amb l'ajuda d'Hermes, la vaig convèncer que els tornés a la seva forma humana.",
+                    coordenades: [41.2, 13.16], //Coordenades aproximades de la costa italiana
+                    ordre: 7,
+                    poema: "L'Odissea, Cants X-XII",
+                    reflexio: "La temptació de la bestialitat enfront de la raó. Què ens diu la transformació en porcs sobre la naturalesa humana i la facilitat amb què podem perdre la nostra essència? És la 'civilització' només una fina capa?"
+                },
+                {
+                    nombre: "Inframon",
+                    ciutat: "No s'especifica",
+                    succes: "Ulisses descendeix a l'Hades per consultar l'endeví Tirèsias i es troba amb les ànimes dels morts, incloent-hi la seva mare i companys caiguts.",
+                    text: "Vaig descendir a l'Hades per parlar amb l'endeví Tirèsias... Em va donar profecies sobre el meu viatge de tornada.",
+                    coordenades: [39.9523, 22.4933], //Coordenades aproximades d'una entrada a l'inframon a Tessàlia
+                    ordre: 8,
+                    poema: "L'Odissea, Cant XI",
+                    reflexio: "El viatge a l'inframon com a metàfora de l'autoconeixement. És necessari confrontar les nostres pors i el passat per poder avançar? Quines veritats incòmodes ens revela la mort sobre la vida?"
+                },
+                {
+                    nombre: "Illa de les sirenes",
+                    ciutat: "No s'especifica",
+                    succes: "Ulisses escolta el cant de les sirenes lligat al pal, mentre els seus homes es tapen les orelles. Una prova d'autocontrol i coneixement de si mateix.",
+                    text: "Vam passar per l'illa de les Sirenes... El seu cant era irresistible, però em vaig lligar al pal i els meus homes es van tapar les orelles.",
+                    coordenades: [39.6, 19.9], //Coordenades aproximades d'una illa al mar Jònic
+                    ordre: 9,
+                    poema: "L'Odissea, Cant XII",
+                    reflexio: "Com resistim les temptacions que prometen un plaer absolut, però que condueixen a la destrucció? És la raó o la limitació externa la clau per a la llibertat?"
+                },
+                {
+                    nombre: "Escil·la i Caribdis",
+                    ciutat: "Estret de Messina",
+                    succes: "Ulisses navega entre dos monstres marins, triant el mal menor i sacrificant sis homes per salvar la resta.",
+                    text: "Vaig haver de triar entre Escil·la i Caribdis... Escil·la es va endur sis dels meus homes, però vam evitar el remolí de Caribdis.",
+                    coordenades: [38.25, 15.6], //Coordenades de l'Estret de Messina
+                    ordre: 10,
+                    poema: "L'Odissea, Cant XII",
+                    reflexio: "El dilema del lideratge: quan és ètic sacrificar uns pocs per salvar la majoria? Existeix una 'bona' elecció en un escenari de pèrdua inevitable?"
+                },
+                {
+                    nombre: "Illa d'Hèlios",
+                    ciutat: "Trinàcria",
+                    succes: "Els companys d'Ulisses desobeeixen i mengen el bestiar sagrat d'Hèlios, la qual cosa provoca la ira divina i la destrucció final de la seva tripulació.",
+                    text: "Els meus homes van desobeir les meves ordres i van menjar el bestiar sagrat d'Hèlios... Això va provocar la ira del déu i una gran tempesta.",
+                    coordenades: [38, 15], //Coordenades aproximades de Sicília
+                    ordre: 11,
+                    poema: "L'Odissea, Cant XII",
+                    reflexio: "L'última prova d'obediència, i el seu fracàs. És la fe en el líder o la creença en el sagrat el que realment ens guia? Què passa quan la necessitat humana xoca amb la voluntat divina?"
+                },
+                 {
+                    nombre: "Illa de Calipso",
+                    ciutat: "Ogígia",
+                    succes: "Ulisses és retingut per la nimfa Calipso durant set anys, oferint-li immortalitat a canvi del seu amor, però ell anhela la seva llar.",
+                    text: "Vaig naufragar i vaig arribar a l'illa de Calipso... Em va retenir durant set anys, desitjosa de fer-me el seu espòs.",
+                    coordenades: [36.4, 24.8], //Coordenades aproximades d'una illa remota
+                    ordre: 12,
+                    poema: "L'Odissea, Cants I i V",
+                    reflexio: "Què és més valuós: la immortalitat sense llibertat i sense propòsit, o una vida mortal plena de desafiaments però amb la possibilitat de tornar a casa i a la identitat? És la nostàlgia una forma de resistència filosòfica?"
+                },
+                {
+                    nombre: "País dels feacis",
+                    ciutat: "Esqueria",
+                    succes: "Ulisses és rescatat i ajudat pel rei Alcínous i la princesa Nausica, que li proporcionen un vaixell per tornar a Ítaca.",
+                    text: "Vaig arribar a la terra dels feacis... Em van rebre amb hospitalitat i em van proporcionar un vaixell per tornar a Ítaca.",
+                    coordenades: [39.6, 19.383], //Coordenades de Corfú, possible Esqueria
+                    ordre: 13,
+                    poema: "L'Odissea, Cants VI-XIII",
+                    reflexio: "L'hospitalitat com a virtut fonamental. Quin paper juga l'ajuda desinteressada en el viatge de l'heroi? És la civilització una xarxa d'interdependència?"
+                },
+                {
+                    nombre: "Ítaca",
+                    ciutat: "Ítaca",
+                    succes: "Arribada d'Ulisses a la seva llar, retrobament amb la seva família i recuperació del seu regne després de la matança dels pretendents.",
+                    text: "Finalment, vaig tornar a Ítaca... Em vaig reunir amb la meva esposa Penèlope i el meu fill Telèmac, i vaig recuperar el meu regne.",
+                    coordenades: [38.35, 20.683], //Coordenades d'Ítaca
+                    ordre: 14,
+                    poema: "L'Odissea, Cants XIII-XXIV",
+                    reflexio: "El retorn a casa no és la fi del viatge, sinó el començament d'una nova lluita per la identitat i l'ordre. Què significa realment 'tornar a casa' quan tant un mateix com la llar han canviat irrevocablement?"
+                },
+            ];
+
+            // Afegir marcadors al mapa
+            llocs.forEach(function(lloc) {
+                var marker = L.marker(lloc.coordenades, {
+                    icon: L.divIcon({
+                        className: 'my-div-icon',
+                        html: `<div style="background-color:var(--color-ochre-main); color:var(--color-parchment-light); border-radius:50%; width:30px; height:30px; display:flex; justify-content:center; align-items:center; font-size:14px; font-weight:bold; border: 2px solid var(--color-ochre-light);">${lloc.ordre}</div>`,
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15]
+                    })
+                }).addTo(map);
+                marker.bindPopup(
+                    `<div class="leaflet-popup-header">${lloc.nombre}, ${lloc.ciutat}</div>
+                    <div class="leaflet-popup-text">${lloc.succes}</div>
+                    <p class="leaflet-popup-quote">"${lloc.text}"</p>
+                    <div class="leaflet-popup-reflection"><strong>Reflexió filosòfica:</strong> ${lloc.reflexio}</div>`
+                );
+            });
+
+            // Ajustar el mapa perquè mostri tots els marcadors
+            var group = new L.featureGroup(llocs.map(lloc => L.marker(lloc.coordenades)));
+            map.fitBounds(group.getBounds().pad(0.5)); // Afegir una mica de padding
+        </script>
+    </div>
+</body>
+</html>

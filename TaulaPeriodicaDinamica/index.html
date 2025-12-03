@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Taula peri&ograve;dica din&agrave;mica</title>
+    <link rel="icon" type="image/svg+xml" href="data/favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1 class="app-title">Taula peri&ograve;dica din&agrave;mica</h1>
+                    <div class="theme-switcher">
+            <span id="theme-label" class="theme-label"></span>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" title="Canviar tema clar/fosc">&#9728;&#65039;</button> <!-- Sun icon -->
+          </div>
+        </div>
+        <div id="mode-indicator" class="mode-indicator" title="Mode de visualitzaci&oacute;" aria-hidden="true">-</div>
+        <h2 class="subtitle" id="subtitle">Mode: en blanc</h2>
+
+        <label for="mode-select" class="label">Tria la visualitzaci&oacute;</label>
+        <select id="mode-select" class="select">
+          <option value="blank">En blanc</option>
+          <option value="families">Fam&iacute;lies / grups</option>
+          <option value="blocks">Blocs electr&ograve;nics (s, p, d, f)</option>
+          <option value="valence">Val&egrave;ncies d&rsquo;oxidaci&oacute;</option>
+          <option value="electronegativity">Electronegativitat (Pauling)</option>
+          <option value="ionization">Energia d'ionitzaci&oacute;</option>
+          <option value="state">Estat f&iacute;sic a T ambient</option>
+          <option value="density">Densitat</option>
+          <option value="meltPoint">Punt de fusi&oacute; (K)</option>
+          <option value="boilPoint">Punt d'ebullici&oacute; (K)</option>
+          <option value="atomicRadius">Radi at&ograve;mic</option>
+          <option value="metallic">Met&agrave;l&middot;lics</option>
+          <option value="reactivity">Reactivitat (aprox.)</option>
+          <option value="condElectric">Conductivitat el&egrave;ctrica (aprox.)</option>
+          <option value="condThermal">Conductivitat t&egrave;rmica (aprox.)</option>
+          <option value="ferromagnetism">Ferromagnetisme</option>
+          <option value="bioessential">Essencials per a la vida</option>
+          <option value="toxic">T&ograve;xics/contaminants (selecci&oacute;)</option>
+          <option value="radioactive">Radioactivitat</option>
+          <optgroup label="Abund&agrave;ncia (percentatge)">
+            <option value="body">Cos hum&agrave; (%)</option>
+            <option value="earth">Pres&egrave;ncia a la Terra (%)</option>
+            <option value="universe">Abund&agrave;ncia a l&rsquo;Univers (%)</option>
+          </optgroup>
+        </select>
+
+        <div id="legend" class="legend" aria-live="polite"></div>
+        <div class="legend-footer">
+          <div class="credit">Aplicaci&oacute; realitzada per Felip Sarroca amb l'assist&egrave;ncia de la IA</div>
+          <div class="license">Obra sota llic&egrave;ncia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></div>
+        </div>
+      </aside>
+
+      <main class="board">
+        <div class="grid-viewport" id="grid-viewport">
+          <div class="grid-scale" id="grid-scale">
+            <div id="periodic-grid" class="grid" aria-label="Taula peri&ograve;dica"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Fallback de dades offline: carrega dataset com a JS si s'obre amb file:// -->
+    <script src="data/elements.js"></script>
+    <script src="data/noms_ca.js"></script>
+    <script src="data/conductivity.js"></script>
+    <script src="data/custom_values.js"></script>
+    <script src="data/oxidation.js"></script>
+    <script src="data/abundance.js"></script>
+    <script src="data/summaries_ca.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Element Details Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+      <div id="element-modal" class="modal">
+        <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+        <div id="modal-content">
+          <!-- Content will be injected by JS -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

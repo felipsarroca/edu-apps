@@ -1,0 +1,141 @@
+{
+  "viatge": {
+    "titol": "Tercer viatge de Cristòfor Colom",
+    "anys": "1498-1500",
+    "finalitat": "Explorar noves rutes més al sud i reforçar la colònia de La Española.",
+    "vaixells": [
+      { "nom": "6 vaixells", "tipus": "caravel·les i naus", "desti": "Tres es quedaren a Hispaniola, tres continuaren cap al sud" }
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Sanlúcar",
+        "lloc": {
+          "nom_modern": "Sanlúcar de Barrameda, Espanya",
+          "nom_antic": "Sanlúcar",
+          "coordenades": [36.7781, -6.3515]
+        },
+        "data": "30 de maig de 1498",
+        "descripcio": "Colom salpa amb sis vaixells. Tres tenien ordre d’anar directament a Hispaniola amb subministraments; els altres tres exploraren rutes més meridionals.",
+        "curiositats": [
+          "Aquesta vegada viatjaven també dones, per afavorir l’assentament estable.",
+          "Els recursos escassejaven a La Española, per això part de la flota hi anava directament."
+        ]
+      },
+      {
+        "ordre": 2,
+        "titol": "Escales a Cap Verd",
+        "lloc": {
+          "nom_modern": "Illes Cap Verd",
+          "nom_antic": "Cap Verd",
+          "coordenades": [14.9163, -23.5096]
+        },
+        "data": "juny de 1498",
+        "descripcio": "Colom passa per Cap Verd per buscar provisions abans d’endinsar-se en l’Atlàntic sud.",
+        "curiositats": [
+          "Aquesta ruta era més calorosa i dura que les anteriors.",
+          "Colom volia provar una ruta més curta cap a l’Índia seguint latituds meridionals."
+        ]
+      },
+      {
+        "ordre": 3,
+        "titol": "La calma ardent",
+        "lloc": {
+          "nom_modern": "Zona de calmes equatorials (Atlàntic)",
+          "nom_antic": "Doldrums",
+          "coordenades": [7.0, -25.0]
+        },
+        "data": "juliol de 1498",
+        "descripcio": "Després de sortir de Cap Verd, la flota queda atrapada durant vuit dies en una zona sense vent i amb una calor sufocant. Les provisions es fan malbé i la tripulació pateix enormement, tement quedar-se encallats per sempre al mig de l'oceà.",
+        "curiositats": [
+          "Aquesta zona és coneguda avui com la 'zona de convergència intertropical' o 'doldrums'.",
+          "L'experiència va ser tan extrema que Colom va decidir canviar el rumb cap a l'oest, la qual cosa el va portar directament a Trinitat."
+        ]
+      },
+      {
+        "ordre": 4,
+        "titol": "Descobriment de Trinitat",
+        "lloc": {
+          "nom_modern": "Illa de Trinitat (Trinidad)",
+          "nom_antic": "La Trinidad",
+          "coordenades": [10.6918, -61.2225]
+        },
+        "data": "31 de juliol de 1498",
+        "descripcio": "Colom arriba a l’illa de Trinitat, així anomenada perquè l’albirà el dia de la festivitat de la Santíssima Trinitat.",
+        "curiositats": [
+          "Va ser el primer cop que Colom trepitjà territori sud-americà.",
+          "Els mariners quedaren sorpresos per la quantitat de perles que portaven els indígenes."
+        ]
+      },
+      {
+        "ordre": 5,
+        "titol": "Arribada a la costa de Veneçuela",
+        "lloc": {
+          "nom_modern": "Delta de l’Orinoco, Veneçuela",
+          "nom_antic": "Terra de Gràcia",
+          "coordenades": [8.367, -62.65]
+        },
+        "data": "agost de 1498",
+        "descripcio": "Navegant pel Golf de Paria, Colom descobreix la desembocadura del riu Orinoco. La immensa quantitat d'aigua dolça que aboca al mar el porta a una deducció genial: una illa no pot generar un riu tan cabalós. Està convençut que ha trobat un continent, una 'Tierra de Gracia'.",
+        "curiositats": [
+          "Colom escriu que ha arribat a un ‘nou món’, tot i que encara creia estar prop de l’Àsia.",
+          "En els seus escrits, Colom especulà que aquelles terres eren una antesala del Paradís Terrenal i que el riu Orinoco era un dels quatre rius bíblics que naixien de l'Edèn."
+        ]
+      },
+      {
+        "ordre": 6,
+        "titol": "La rebel·lió de Roldán",
+        "lloc": {
+          "nom_modern": "Hispaniola",
+          "coordenades": [18.7357, -70.1627]
+        },
+        "data": "1498-1499",
+        "descripcio": "En arribar a Santo Domingo, Colom es troba la colònia en plena guerra civil. Francisco Roldán, l'antic alcalde major, s'ha rebel·lat amb desenes de colons, denunciant la tirania dels germans Colom i vivint entre els indígenes. La gestió de Colom com a governador és un caos absolut.",
+        "curiositats": [
+          "Roldán i els seus seguidors exigien el dret a explotar l'or i a tenir indígenes al seu servei, cosa que Colom inicialment els negava.",
+          "Per posar fi a la revolta, Colom va haver de cedir a les demandes de Roldán, la qual cosa va afeblir encara més la seva autoritat."
+        ]
+      },
+      {
+        "ordre": 7,
+        "titol": "L'arrest de Colom",
+        "lloc": {
+          "nom_modern": "Santo Domingo, Hispaniola",
+          "coordenades": [18.4861, -69.9312]
+        },
+        "data": "agost de 1500",
+        "descripcio": "Les notícies del caos a La Hispaniola arriben a Castella. Els Reis Catòlics envien Francisco de Bobadilla com a investigador reial amb plens poders. Després d'escoltar les queixes, Bobadilla ordena l'arrest de Cristòfor Colom i els seus germans, Diego i Bartomeu.",
+        "curiositats": [
+          "Colom va ser arrestat i empresonat a la fortalesa de Santo Domingo.",
+          "L'Almirall de la Mar Oceana, descobridor d'un nou món, es veia humiliat i desposseït de tots els seus títols."
+        ]
+      },
+      {
+        "ordre": 8,
+        "titol": "Retorn a Espanya encadenat",
+        "lloc": {
+          "nom_modern": "Cadis, Espanya",
+          "coordenades": [36.5297, -6.2925]
+        },
+        "data": "novembre de 1500",
+        "descripcio": "Colom i els seus germans són enviats a Espanya carregats de cadenes. La imatge de l'Almirall arribant presoner a Cadis causa una gran commoció. Els Reis ordenen el seu alliberament immediat, però el mal ja està fet.",
+        "curiositats": [
+          "Es diu que Colom, per orgull, es va negar que li traguessin les cadenes durant tot el viatge, afirmant que només els Reis podien fer-ho.",
+          "Tot i que va ser alliberat i va recuperar part dels seus diners, mai més va recuperar els títols de Virrei i Governador de les Índies."
+        ]
+      }
+    ],
+    "problemes_generals": [
+      "Gran part dels colons descontents per la manca d’or i riqueses.",
+      "Conflictes i rebel·lions a Hispaniola.",
+      "Denúncies contra Colom per tirania i mala gestió.",
+      "Pèrdua de confiança dels Reis Catòlics."
+    ],
+    "resultats": [
+      "Primer contacte europeu amb el continent sud-americà (Trinitat i delta de l’Orinoco).",
+      "Confirmació de la presència de terres immenses més enllà de les illes.",
+      "Greu crisi política a Hispaniola.",
+      "Colom destituït i empresonat, malgrat el seu descobriment continental."
+    ]
+  }
+}

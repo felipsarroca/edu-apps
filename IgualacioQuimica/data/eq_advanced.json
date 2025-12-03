@@ -1,0 +1,32 @@
+﻿[
+  {
+    "id": "eq102",
+    "reactants": ["Fe2+", "MnO4-", "H+"],
+    "products": ["Fe3+", "Mn2+", "H2O"],
+    "coefficients": [5, 1, 8, 5, 1, 4],
+    "type": "oxidacio-reduccio",
+    "level": 3,
+    "explanation": "El Fe(II) s'oxida a Fe(III) i el Mn(VII) es redueix a Mn(II).",
+    "details": {
+      "method": "redox",
+      "agents": {"oxidant": "MnO4-", "reductor": "Fe2+"},
+      "electrons": 5
+    }
+  },
+  {"id": "eq103", "reactants": ["Cr2O7^2-", "Fe2+", "H+"], "products": ["Cr3+", "Fe3+", "H2O"], "coefficients": [1, 6, 14, 2, 6, 7], "type": "oxidacio-reduccio", "level": 3, "explanation": "El dicromat oxida Fe(II) a Fe(III) en medi àcid."},
+  {"id": "eq104", "reactants": ["MnO4-", "C2O4^2-", "H+"], "products": ["Mn2+", "CO2", "H2O"], "coefficients": [2, 5, 16, 2, 10, 8], "type": "oxidacio-reduccio", "level": 3, "explanation": "El permanganat oxida l'oxalat a CO2 en medi àcid."},
+  {"id": "eq105", "reactants": ["Cl2", "OH-"], "products": ["Cl-", "ClO-", "H2O"], "coefficients": [1, 2, 1, 1, 1], "type": "oxidacio-reduccio", "level": 3, "explanation": "Disproporcionació del clor en medi bàsic."},
+  {"id": "eq106", "reactants": ["MnO4-", "I-", "H2O"], "products": ["MnO2", "I2", "OH-"], "coefficients": [2, 6, 4, 2, 3, 8], "type": "oxidacio-reduccio", "level": 3, "explanation": "El permanganat oxida l'iodur a iode en medi bàsic."},
+  {"id": "eq107", "reactants": ["C4H10", "O2"], "products": ["CO2", "H2O"], "coefficients": [2, 13, 8, 10], "type": "combustio", "level": 3, "explanation": "Combustió del butà amb coeficients elevats."},
+  {"id": "eq108", "reactants": ["C6H6", "O2"], "products": ["CO2", "H2O"], "coefficients": [2, 15, 12, 6], "type": "combustio", "level": 3, "explanation": "Combustió del benzè amb requeriment alt d'oxigen."},
+  {"id": "eq109", "reactants": ["I2", "S2O3^2-"], "products": ["I-", "S4O6^2-"], "coefficients": [1, 2, 2, 1], "type": "oxidacio-reduccio", "level": 3, "explanation": "Titulació iodomètrica: l'iod reacciona amb tiosulfat."},
+  {"id": "eq110", "reactants": ["K2Cr2O7", "HCl"], "products": ["KCl", "CrCl3", "Cl2", "H2O"], "coefficients": [1, 14, 2, 2, 3, 7], "type": "oxidacio-reduccio", "level": 3, "explanation": "El dicromat en medi àcid genera clor i sals corresponents."},
+  {"id": "eq111", "reactants": ["Na2S2O3", "HCl"], "products": ["NaCl", "SO2", "S", "H2O"], "coefficients": [1, 2, 2, 1, 1, 1], "type": "oxidacio-reduccio", "level": 3, "explanation": "El tiosulfat amb HCl produeix SO2 i sofre col·loidal."},
+  {"id": "eq112", "reactants": ["H2S", "HNO3"], "products": ["S", "NO2", "H2O"], "coefficients": [1, 2, 1, 2, 2], "type": "oxidacio-reduccio", "level": 3, "explanation": "L'àcid nitríc concentra oxida H2S a sofre."},
+  {"id": "eq069", "reactants": ["C7H16", "O2"], "products": ["CO2", "H2O"], "coefficients": [1, 11, 7, 8], "type": "combustio", "level": 3, "explanation": "Combustió de l'heptà amb coeficients grans."},
+  {"id": "eq070", "reactants": ["Fe3+", "Sn2+"], "products": ["Fe2+", "Sn4+"], "coefficients": [2, 1, 2, 1], "type": "oxidacio-reduccio", "level": 3, "explanation": "Redox entre ferro(III)/ferro(II) i estany(II)/estany(IV)."}
+]
+
+
+
+

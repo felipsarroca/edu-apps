@@ -1,0 +1,28 @@
+﻿*** Begin Patch
+*** Update File: css/styles.css
+@@
+-.lab-stage {
+-  display: grid;
+-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+-  gap: 1rem;
+-  align-items: start;
+-}
++.lab-stage {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
++  gap: 1rem;
++  align-items: stretch; /* perquè el connector ocupi tota l'alçada */
++}
+@@
+-.stage-connector {
+-  display: flex;
+-  align-items: center;
+-  justify-content: center;
+-}
++.stage-connector {
++  display: flex;
++  align-items: center; /* centra verticalment la fletxa */
++  justify-content: center;
++  align-self: stretch; /* ocupa tota l'alçada disponible */
++}
+*** End Patch

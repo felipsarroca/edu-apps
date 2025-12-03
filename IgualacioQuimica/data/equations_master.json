@@ -1,0 +1,1583 @@
+﻿[
+    {
+        "id":  "eq001",
+        "reactants":  [
+                          "H2",
+                          "O2"
+                      ],
+        "products":  [
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "combustio",
+        "level":  1,
+        "explanation":  "La formació d\u0027aigua necessita dues molècules d\u0027hidrogen per cada molècula d\u0027oxigen."
+    },
+    {
+        "id":  "eq002",
+        "reactants":  [
+                          "Fe",
+                          "O2"
+                      ],
+        "products":  [
+                         "Fe2O3"
+                     ],
+        "coefficients":  [
+                             4,
+                             3,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  1,
+        "explanation":  "Per formar òxid de ferro(III) calen quatre àtoms de ferro i tres de dioxigen."
+    },
+    {
+        "id":  "eq003",
+        "reactants":  [
+                          "C3H8",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             5,
+                             3,
+                             4
+                         ],
+        "type":  "combustio",
+        "level":  1,
+        "explanation":  "Una combustió completa del propà produeix diòxid de carboni i aigua."
+    },
+    {
+        "id":  "eq004",
+        "reactants":  [
+                          "Na",
+                          "Cl2"
+                      ],
+        "products":  [
+                         "NaCl"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "Dos àtoms de sodi reaccionen amb una molècula de clor per formar clorur de sodi."
+    },
+    {
+        "id":  "eq005",
+        "reactants":  [
+                          "CaCO3"
+                      ],
+        "products":  [
+                         "CaO",
+                         "CO2"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  1,
+        "explanation":  "El carbonat de calci es descompon en òxid de calci i diòxid de carboni."
+    },
+    {
+        "id":  "eq011",
+        "reactants":  [
+                          "CH4",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "combustio",
+        "level":  1,
+        "explanation":  "La combustió del metà produeix diòxid de carboni i aigua."
+    },
+    {
+        "id":  "eq012",
+        "reactants":  [
+                          "Mg",
+                          "O2"
+                      ],
+        "products":  [
+                         "MgO"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "El magnesi reacciona amb el dioxigen formant òxid de magnesi."
+    },
+    {
+        "id":  "eq013",
+        "reactants":  [
+                          "Ca",
+                          "Cl2"
+                      ],
+        "products":  [
+                         "CaCl2"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "El calci i el clor formen clorur de calci."
+    },
+    {
+        "id":  "eq014",
+        "reactants":  [
+                          "H2O2"
+                      ],
+        "products":  [
+                         "H2O",
+                         "O2"
+                     ],
+        "coefficients":  [
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  1,
+        "explanation":  "El peròxid d\u0027hidrogen es descompon en aigua i dioxigen."
+    },
+    {
+        "id":  "eq015",
+        "reactants":  [
+                          "Zn",
+                          "HCl"
+                      ],
+        "products":  [
+                         "ZnCl2",
+                         "H2"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  1,
+        "explanation":  "El zinc desplaça l\u0027hidrogen de l\u0027àcid clorhídric."
+    },
+    {
+        "id":  "eq016",
+        "reactants":  [
+                          "Na",
+                          "H2O"
+                      ],
+        "products":  [
+                         "NaOH",
+                         "H2"
+                     ],
+        "coefficients":  [
+                             2,
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  1,
+        "explanation":  "El sodi reacciona amb l\u0027aigua formant hidròxid de sodi i hidrogen."
+    },
+    {
+        "id":  "eq017",
+        "reactants":  [
+                          "K",
+                          "Cl2"
+                      ],
+        "products":  [
+                         "KCl"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "El potassi i el clor formen clorur de potassi."
+    },
+    {
+        "id":  "eq018",
+        "reactants":  [
+                          "CaO",
+                          "H2O"
+                      ],
+        "products":  [
+                         "Ca(OH)2"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "L\u0027òxid de calci reacciona amb aigua per donar hidròxid de calci."
+    },
+    {
+        "id":  "eq019",
+        "reactants":  [
+                          "HCl",
+                          "NaOH"
+                      ],
+        "products":  [
+                         "NaCl",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "neutralitzacio",
+        "level":  1,
+        "explanation":  "Neutralització àcid-base entre HCl i NaOH."
+    },
+    {
+        "id":  "eq020",
+        "reactants":  [
+                          "BaCl2",
+                          "Na2SO4"
+                      ],
+        "products":  [
+                         "BaSO4",
+                         "NaCl"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "desplacament_doble",
+        "level":  1,
+        "explanation":  "Intercanvi d\u0027ions amb precipitació de sulfat de bari."
+    },
+    {
+        "id":  "eq021",
+        "reactants":  [
+                          "NH3",
+                          "HCl"
+                      ],
+        "products":  [
+                         "NH4Cl"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "neutralitzacio",
+        "level":  1,
+        "explanation":  "L\u0027amoníac gasós reacciona amb HCl formant clorur d\u0027amoni."
+    },
+    {
+        "id":  "eq022",
+        "reactants":  [
+                          "CO",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "combustio",
+        "level":  1,
+        "explanation":  "Oxidació del monòxid de carboni a diòxid de carboni."
+    },
+    {
+        "id":  "eq023",
+        "reactants":  [
+                          "H2",
+                          "Cl2"
+                      ],
+        "products":  [
+                         "HCl"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "L\u0027hidrogen i el clor formen àcid clorhídric."
+    },
+    {
+        "id":  "eq036",
+        "reactants":  [
+                          "HgO"
+                      ],
+        "products":  [
+                         "Hg",
+                         "O2"
+                     ],
+        "coefficients":  [
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  1,
+        "explanation":  "L\u0027òxid de mercuri(II) es descompon en mercuri i dioxigen."
+    },
+    {
+        "id":  "eq037",
+        "reactants":  [
+                          "Ca(OH)2"
+                      ],
+        "products":  [
+                         "CaO",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  1,
+        "explanation":  "L\u0027hidròxid de calci es descompon en òxid de calci i aigua."
+    },
+    {
+        "id":  "eq038",
+        "reactants":  [
+                          "CuCO3"
+                      ],
+        "products":  [
+                         "CuO",
+                         "CO2"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  1,
+        "explanation":  "El carbonat de coure(II) es descompon en òxid de coure(II) i diòxid de carboni."
+    },
+    {
+        "id":  "eq039",
+        "reactants":  [
+                          "Fe",
+                          "HCl"
+                      ],
+        "products":  [
+                         "FeCl2",
+                         "H2"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  1,
+        "explanation":  "El ferro reacciona amb HCl formant clorur ferrós i hidrogen."
+    },
+    {
+        "id":  "eq040",
+        "reactants":  [
+                          "Mg",
+                          "H2O"
+                      ],
+        "products":  [
+                         "Mg(OH)2",
+                         "H2"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  1,
+        "explanation":  "El magnesi desplaça l\u0027hidrogen de l\u0027aigua produint hidròxid de magnesi."
+    },
+    {
+        "id":  "eq041",
+        "reactants":  [
+                          "HNO3",
+                          "KOH"
+                      ],
+        "products":  [
+                         "KNO3",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "neutralitzacio",
+        "level":  1,
+        "explanation":  "Neutralització entre àcid nitríc i hidròxid de potassi."
+    },
+    {
+        "id":  "eq042",
+        "reactants":  [
+                          "CH3COOH",
+                          "NaOH"
+                      ],
+        "products":  [
+                         "CH3COONa",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "neutralitzacio",
+        "level":  1,
+        "explanation":  "Neutralització d\u0027un àcid feble amb una base forta."
+    },
+    {
+        "id":  "eq043",
+        "reactants":  [
+                          "Cu",
+                          "O2"
+                      ],
+        "products":  [
+                         "CuO"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  1,
+        "explanation":  "Oxidació del coure a òxid de coure(II)."
+    },
+    {
+        "id":  "eq044",
+        "reactants":  [
+                          "S",
+                          "O2"
+                      ],
+        "products":  [
+                         "SO2"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "oxidacio",
+        "level":  1,
+        "explanation":  "Formació de diòxid de sofre per oxidació del sofre."
+    },
+    {
+        "id":  "eq045",
+        "reactants":  [
+                          "C",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "oxidacio",
+        "level":  1,
+        "explanation":  "Oxidació del carboni a diòxid de carboni."
+    },
+    {
+        "id":  "eq046",
+        "reactants":  [
+                          "CaO",
+                          "CO2"
+                      ],
+        "products":  [
+                         "CaCO3"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "Formació de carbonat de calci a partir d\u0027òxid de calci i CO2."
+    },
+    {
+        "id":  "eq047",
+        "reactants":  [
+                          "Fe",
+                          "Cl2"
+                      ],
+        "products":  [
+                         "FeCl3"
+                     ],
+        "coefficients":  [
+                             2,
+                             3,
+                             2
+                         ],
+        "type":  "sintesi",
+        "level":  1,
+        "explanation":  "El ferro reacciona amb clor formant clorur de ferro(III)."
+    },
+    {
+        "id":  "eq048",
+        "reactants":  [
+                          "AgNO3",
+                          "KBr"
+                      ],
+        "products":  [
+                         "AgBr",
+                         "KNO3"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_doble",
+        "level":  1,
+        "explanation":  "Intercanvi d\u0027ions amb precipitació de bromur de plata."
+    },
+    {
+        "id":  "eq006",
+        "reactants":  [
+                          "Al",
+                          "HCl"
+                      ],
+        "products":  [
+                         "AlCl3",
+                         "H2"
+                     ],
+        "coefficients":  [
+                             2,
+                             6,
+                             2,
+                             3
+                         ],
+        "type":  "desplacament_simple",
+        "level":  2,
+        "explanation":  "L\u0027alumini desplaça l\u0027hidrogen de l\u0027àcid clorhídric i forma clorur d\u0027alumini."
+    },
+    {
+        "id":  "eq007",
+        "reactants":  [
+                          "KClO3"
+                      ],
+        "products":  [
+                         "KCl",
+                         "O2"
+                     ],
+        "coefficients":  [
+                             2,
+                             2,
+                             3
+                         ],
+        "type":  "descomposicio",
+        "level":  2,
+        "explanation":  "El clorat de potassi es descompon en clorur de potassi i dioxigen."
+    },
+    {
+        "id":  "eq008",
+        "reactants":  [
+                          "N2",
+                          "H2"
+                      ],
+        "products":  [
+                         "NH3"
+                     ],
+        "coefficients":  [
+                             1,
+                             3,
+                             2
+                         ],
+        "type":  "sintesi",
+        "level":  2,
+        "explanation":  "El proc©s Haber-Bosch combina nitrogen i hidrogen per formar amoníac."
+    },
+    {
+        "id":  "eq009",
+        "reactants":  [
+                          "AgNO3",
+                          "NaCl"
+                      ],
+        "products":  [
+                         "AgCl",
+                         "NaNO3"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Es produeix un intercanvi d\u0027ions que genera el precipitat de clorur de plata."
+    },
+    {
+        "id":  "eq010",
+        "reactants":  [
+                          "H2SO4",
+                          "NaOH"
+                      ],
+        "products":  [
+                         "Na2SO4",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "neutralitzacio",
+        "level":  2,
+        "explanation":  "Una neutralització entre un àcid fort i una base forta dona sal i aigua."
+    },
+    {
+        "id":  "eq024",
+        "reactants":  [
+                          "C2H5OH",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             3,
+                             2,
+                             3
+                         ],
+        "type":  "combustio",
+        "level":  2,
+        "explanation":  "La combustió de l\u0027etanol produeix CO2 i H2O."
+    },
+    {
+        "id":  "eq025",
+        "reactants":  [
+                          "C2H6",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             7,
+                             4,
+                             6
+                         ],
+        "type":  "combustio",
+        "level":  2,
+        "explanation":  "Combustió de l\u0027età amb coeficients enters mínims."
+    },
+    {
+        "id":  "eq026",
+        "reactants":  [
+                          "Na2CO3",
+                          "CaCl2"
+                      ],
+        "products":  [
+                         "CaCO3",
+                         "NaCl"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Formació de carbonat de calci insoluble per intercanvi d\u0027ions."
+    },
+    {
+        "id":  "eq027",
+        "reactants":  [
+                          "Pb(NO3)2",
+                          "KI"
+                      ],
+        "products":  [
+                         "PbI2",
+                         "KNO3"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Precipitació de I2 de plom(II) en una reacció d\u0027intercanvi."
+    },
+    {
+        "id":  "eq028",
+        "reactants":  [
+                          "Fe",
+                          "CuSO4"
+                      ],
+        "products":  [
+                         "FeSO4",
+                         "Cu"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  2,
+        "explanation":  "El ferro desplaça el coure del seu sulfat."
+    },
+    {
+        "id":  "eq029",
+        "reactants":  [
+                          "Cl2",
+                          "KI"
+                      ],
+        "products":  [
+                         "KCl",
+                         "I2"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  2,
+        "explanation":  "El clor oxida l\u0027iodur a iode elemental."
+    },
+    {
+        "id":  "eq030",
+        "reactants":  [
+                          "H3PO4",
+                          "NaOH"
+                      ],
+        "products":  [
+                         "Na3PO4",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             3,
+                             1,
+                             3
+                         ],
+        "type":  "neutralitzacio",
+        "level":  2,
+        "explanation":  "Neutralització d\u0027un àcid tripròtic amb una base forta."
+    },
+    {
+        "id":  "eq031",
+        "reactants":  [
+                          "SO3",
+                          "H2O"
+                      ],
+        "products":  [
+                         "H2SO4"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "sintesi",
+        "level":  2,
+        "explanation":  "Formació d\u0027àcid sulfúric a partir de triòxid de sofre."
+    },
+    {
+        "id":  "eq032",
+        "reactants":  [
+                          "Ca(OH)2",
+                          "H2SO4"
+                      ],
+        "products":  [
+                         "CaSO4",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "neutralitzacio",
+        "level":  2,
+        "explanation":  "Neutralització d\u0027una base forta amb un àcid fort."
+    },
+    {
+        "id":  "eq033",
+        "reactants":  [
+                          "Al2O3",
+                          "HCl"
+                      ],
+        "products":  [
+                         "AlCl3",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             6,
+                             2,
+                             3
+                         ],
+        "type":  "neutralitzacio",
+        "level":  2,
+        "explanation":  "Reacció àcid-òxid bàsic entre Al2O3 i HCl."
+    },
+    {
+        "id":  "eq034",
+        "reactants":  [
+                          "CaCO3",
+                          "HCl"
+                      ],
+        "products":  [
+                         "CaCl2",
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "El carbonat reacciona amb HCl alliberant CO2."
+    },
+    {
+        "id":  "eq035",
+        "reactants":  [
+                          "C6H12O6",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             6,
+                             6,
+                             6
+                         ],
+        "type":  "combustio",
+        "level":  2,
+        "explanation":  "Oxidació de la glucosa amb coeficients equilibrats."
+    },
+    {
+        "id":  "eq049",
+        "reactants":  [
+                          "NaHCO3"
+                      ],
+        "products":  [
+                         "Na2CO3",
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  2,
+        "explanation":  "Descomposició del bicarbonat de sodi amb alliberament de CO2."
+    },
+    {
+        "id":  "eq050",
+        "reactants":  [
+                          "KNO3"
+                      ],
+        "products":  [
+                         "KNO2",
+                         "O2"
+                     ],
+        "coefficients":  [
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  2,
+        "explanation":  "Descomposició del nitrat de potassi a nitrit i oxigen."
+    },
+    {
+        "id":  "eq051",
+        "reactants":  [
+                          "(NH4)2CO3"
+                      ],
+        "products":  [
+                         "NH3",
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  2,
+        "explanation":  "Descomposició del carbonat d\u0027amoni a amoníac, CO2 i aigua."
+    },
+    {
+        "id":  "eq052",
+        "reactants":  [
+                          "Ag2O"
+                      ],
+        "products":  [
+                         "Ag",
+                         "O2"
+                     ],
+        "coefficients":  [
+                             2,
+                             4,
+                             1
+                         ],
+        "type":  "descomposicio",
+        "level":  2,
+        "explanation":  "L\u0027òxid de plata es descompon a plata metàl·lica i oxigen."
+    },
+    {
+        "id":  "eq053",
+        "reactants":  [
+                          "Ba(NO3)2",
+                          "Na2SO4"
+                      ],
+        "products":  [
+                         "BaSO4",
+                         "NaNO3"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Precipitació de sulfat de bari."
+    },
+    {
+        "id":  "eq054",
+        "reactants":  [
+                          "Pb(NO3)2",
+                          "Na2SO4"
+                      ],
+        "products":  [
+                         "PbSO4",
+                         "NaNO3"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Precipitació de sulfat de plom(II)."
+    },
+    {
+        "id":  "eq056",
+        "reactants":  [
+                          "FeCl3",
+                          "NaOH"
+                      ],
+        "products":  [
+                         "Fe(OH)3",
+                         "NaCl"
+                     ],
+        "coefficients":  [
+                             1,
+                             3,
+                             1,
+                             3
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Formació d\u0027hidròxid de ferro(III) per intercanvi d\u0027ions."
+    },
+    {
+        "id":  "eq057",
+        "reactants":  [
+                          "CaCl2",
+                          "Na3PO4"
+                      ],
+        "products":  [
+                         "Ca3(PO4)2",
+                         "NaCl"
+                     ],
+        "coefficients":  [
+                             3,
+                             2,
+                             1,
+                             6
+                         ],
+        "type":  "desplacament_doble",
+        "level":  2,
+        "explanation":  "Precipitació de fosfat de calci."
+    },
+    {
+        "id":  "eq058",
+        "reactants":  [
+                          "Zn",
+                          "CuSO4"
+                      ],
+        "products":  [
+                         "ZnSO4",
+                         "Cu"
+                     ],
+        "coefficients":  [
+                             1,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  2,
+        "explanation":  "El zinc desplaça el coure del sulfat de coure(II)."
+    },
+    {
+        "id":  "eq059",
+        "reactants":  [
+                          "Cu",
+                          "AgNO3"
+                      ],
+        "products":  [
+                         "Cu(NO3)2",
+                         "Ag"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "desplacament_simple",
+        "level":  2,
+        "explanation":  "El coure desplaça la plata d\u0027AgNO3 formant Cu(NO3)2."
+    },
+    {
+        "id":  "eq060",
+        "reactants":  [
+                          "Cl2",
+                          "NaBr"
+                      ],
+        "products":  [
+                         "NaCl",
+                         "Br2"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "desplacament_simple",
+        "level":  2,
+        "explanation":  "El clor oxida el bromur a brom."
+    },
+    {
+        "id":  "eq061",
+        "reactants":  [
+                          "HNO3",
+                          "Ca(OH)2"
+                      ],
+        "products":  [
+                         "Ca(NO3)2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             1,
+                             2
+                         ],
+        "type":  "neutralitzacio",
+        "level":  2,
+        "explanation":  "Neutralització de Ca(OH)2 amb àcid nitríc."
+    },
+    {
+        "id":  "eq062",
+        "reactants":  [
+                          "H2CO3",
+                          "NaOH"
+                      ],
+        "products":  [
+                         "Na2CO3",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "neutralitzacio",
+        "level":  2,
+        "explanation":  "Neutralització d\u0027àcid carbònic amb base forta."
+    },
+    {
+        "id":  "eq063",
+        "reactants":  [
+                          "Al",
+                          "O2"
+                      ],
+        "products":  [
+                         "Al2O3"
+                     ],
+        "coefficients":  [
+                             4,
+                             3,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  2,
+        "explanation":  "Oxidació de l\u0027alumini a òxid d\u0027alumini."
+    },
+    {
+        "id":  "eq064",
+        "reactants":  [
+                          "Na",
+                          "O2"
+                      ],
+        "products":  [
+                         "Na2O"
+                     ],
+        "coefficients":  [
+                             4,
+                             1,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  2,
+        "explanation":  "Oxidació del sodi a òxid de sodi."
+    },
+    {
+        "id":  "eq065",
+        "reactants":  [
+                          "Fe",
+                          "O2"
+                      ],
+        "products":  [
+                         "FeO"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  2,
+        "explanation":  "Formació d\u0027òxid de ferro(II)."
+    },
+    {
+        "id":  "eq066",
+        "reactants":  [
+                          "S",
+                          "O2"
+                      ],
+        "products":  [
+                         "SO3"
+                     ],
+        "coefficients":  [
+                             2,
+                             3,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  2,
+        "explanation":  "Oxidació del sofre a triòxid de sofre."
+    },
+    {
+        "id":  "eq067",
+        "reactants":  [
+                          "P",
+                          "O2"
+                      ],
+        "products":  [
+                         "P2O5"
+                     ],
+        "coefficients":  [
+                             4,
+                             5,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  2,
+        "explanation":  "Oxidació del fòsfor blanc a diòxid de difòsfor."
+    },
+    {
+        "id":  "eq068",
+        "reactants":  [
+                          "Zn",
+                          "O2"
+                      ],
+        "products":  [
+                         "ZnO"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2
+                         ],
+        "type":  "oxidacio",
+        "level":  2,
+        "explanation":  "Oxidació del zinc a òxid de zinc."
+    },
+    {
+        "id":  "eq102",
+        "reactants":  [
+                          "Fe2+",
+                          "MnO4-",
+                          "H+"
+                      ],
+        "products":  [
+                         "Fe3+",
+                         "Mn2+",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             5,
+                             1,
+                             8,
+                             5,
+                             1,
+                             4
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "El Fe(II) s\u0027oxida a Fe(III) i el Mn(VII) es redueix a Mn(II).",
+        "details":  {
+                        "method":  "redox",
+                        "agents":  {
+                                       "oxidant":  "MnO4-",
+                                       "reductor":  "Fe2+"
+                                   },
+                        "electrons":  5
+                    }
+    },
+    {
+        "id":  "eq103",
+        "reactants":  [
+                          "Cr2O7^2-",
+                          "Fe2+",
+                          "H+"
+                      ],
+        "products":  [
+                         "Cr3+",
+                         "Fe3+",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             6,
+                             14,
+                             2,
+                             6,
+                             7
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "El dicromat oxida Fe(II) a Fe(III) en medi àcid."
+    },
+    {
+        "id":  "eq104",
+        "reactants":  [
+                          "MnO4-",
+                          "C2O4^2-",
+                          "H+"
+                      ],
+        "products":  [
+                         "Mn2+",
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             5,
+                             16,
+                             2,
+                             10,
+                             8
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "El permanganat oxida l\u0027oxalat a CO2 en medi àcid."
+    },
+    {
+        "id":  "eq105",
+        "reactants":  [
+                          "Cl2",
+                          "OH-"
+                      ],
+        "products":  [
+                         "Cl-",
+                         "ClO-",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "Disproporcionació del clor en medi bàsic."
+    },
+    {
+        "id":  "eq106",
+        "reactants":  [
+                          "MnO4-",
+                          "I-",
+                          "H2O"
+                      ],
+        "products":  [
+                         "MnO2",
+                         "I2",
+                         "OH-"
+                     ],
+        "coefficients":  [
+                             2,
+                             6,
+                             4,
+                             2,
+                             3,
+                             8
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "El permanganat oxida l\u0027iodur a iode en medi bàsic."
+    },
+    {
+        "id":  "eq107",
+        "reactants":  [
+                          "C4H10",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             13,
+                             8,
+                             10
+                         ],
+        "type":  "combustio",
+        "level":  3,
+        "explanation":  "Combustió del butà amb coeficients elevats."
+    },
+    {
+        "id":  "eq108",
+        "reactants":  [
+                          "C6H6",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             2,
+                             15,
+                             12,
+                             6
+                         ],
+        "type":  "combustio",
+        "level":  3,
+        "explanation":  "Combustió del benzè amb requeriment alt d\u0027oxigen."
+    },
+    {
+        "id":  "eq109",
+        "reactants":  [
+                          "I2",
+                          "S2O3^2-"
+                      ],
+        "products":  [
+                         "I-",
+                         "S4O6^2-"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             2,
+                             1
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "Titulació iodomètrica: l\u0027iod reacciona amb tiosulfat."
+    },
+    {
+        "id":  "eq110",
+        "reactants":  [
+                          "K2Cr2O7",
+                          "HCl"
+                      ],
+        "products":  [
+                         "KCl",
+                         "CrCl3",
+                         "Cl2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             14,
+                             2,
+                             2,
+                             3,
+                             7
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "El dicromat en medi àcid genera clor i sals corresponents."
+    },
+    {
+        "id":  "eq111",
+        "reactants":  [
+                          "Na2S2O3",
+                          "HCl"
+                      ],
+        "products":  [
+                         "NaCl",
+                         "SO2",
+                         "S",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             2,
+                             1,
+                             1,
+                             1
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "El tiosulfat amb HCl produeix SO2 i sofre col·loidal."
+    },
+    {
+        "id":  "eq112",
+        "reactants":  [
+                          "H2S",
+                          "HNO3"
+                      ],
+        "products":  [
+                         "S",
+                         "NO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             2,
+                             1,
+                             2,
+                             2
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "L\u0027àcid nitríc concentra oxida H2S a sofre."
+    },
+    {
+        "id":  "eq069",
+        "reactants":  [
+                          "C7H16",
+                          "O2"
+                      ],
+        "products":  [
+                         "CO2",
+                         "H2O"
+                     ],
+        "coefficients":  [
+                             1,
+                             11,
+                             7,
+                             8
+                         ],
+        "type":  "combustio",
+        "level":  3,
+        "explanation":  "Combustió de l\u0027heptà amb coeficients grans."
+    },
+    {
+        "id":  "eq070",
+        "reactants":  [
+                          "Fe3+",
+                          "Sn2+"
+                      ],
+        "products":  [
+                         "Fe2+",
+                         "Sn4+"
+                     ],
+        "coefficients":  [
+                             2,
+                             1,
+                             2,
+                             1
+                         ],
+        "type":  "oxidacio-reduccio",
+        "level":  3,
+        "explanation":  "Redox entre ferro(III)/ferro(II) i estany(II)/estany(IV)."
+    }
+]
+
+
+
+
+

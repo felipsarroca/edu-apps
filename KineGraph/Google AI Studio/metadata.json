@@ -1,0 +1,5 @@
+{
+  "name": "KineGraph",
+  "description": "A web application to visualize and solve kinematics problems. Manually enter data for one or two mobiles, define multiple phases of motion, and instantly generate interactive graphs and detailed numerical results.",
+  "requestFramePermissions": []
+}

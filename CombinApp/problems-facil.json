@@ -1,0 +1,1198 @@
+[
+  {
+    "id": "F1",
+    "nivell": "Fàcil",
+    "titol": "Llibres en lleixa",
+    "enunciat": "En Marc acaba d'arribar a casa amb 4 llibres nous i vol deixar-los en una lleixa buida. De quantes maneres pot disposar-los un darrere l'altre",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 4,
+    "m_correcte": 4,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 24,
+    "explicacio_final": "Podem col·locar els 4 llibres de 24 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Estàs situant tots els llibres disponibles.",
+        "Canviar-ne dos de lloc ja fa un resultat diferent."
+      ],
+      "pas2": [
+        "Si uses tots els llibres i cada posició és única, treballes amb una permutació simple."
+      ],
+      "pas3": [
+        "n = 4 llibres, m = 4 posicions."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "F2",
+    "nivell": "Fàcil",
+    "titol": "Ninos a la foto",
+    "enunciat": "Per a un cartell de la festa major, la Maria vol posar 5 ninos diferents en una filera davant del decorat. Quantes disposicions diferents pot preparar abans de fer la foto bona",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 5,
+    "m_correcte": 5,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 120,
+    "explicacio_final": "Pot situar els 5 ninos de 120 maneres diferents abans de fer la foto.",
+    "pistes": {
+      "pas1": [
+        "Cada lloc a la filera és diferent.",
+        "Cap ninot es repeteix."
+      ],
+      "pas2": [
+        "Quan col·loques tots els elements disponibles, tens una permutació simple."
+      ],
+      "pas3": [
+        "n = 5, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "F3",
+    "nivell": "Fàcil",
+    "titol": "Mascotes al podi",
+    "enunciat": "En una fira d'animals, un gos, un gat i un hàmster són finalistes i pujaran a un podi amb tres esglaons. De quantes maneres diferents podrien quedar situats",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 3,
+    "m_correcte": 3,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 6,
+    "explicacio_final": "Podem repartir els tres animals als esglaons de 6 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Cada esglaó és únic.",
+        "No repeteixes animals."
+      ],
+      "pas2": [
+        "Si col·loques tots els animals, és una permutació simple."
+      ],
+      "pas3": [
+        "n = 3 animals, m = 3 llocs."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 3,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F4",
+    "nivell": "Fàcil",
+    "titol": "Paraula MAMA",
+    "enunciat": "En un joc de lletres tens MAMA (2 M i 2 A) i vols descobrir totes les paraules diferents possibles fent servir totes les lletres. Quantes variants pots obtenir",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 4,
+    "m_correcte": 4,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      2,
+      2
+    ],
+    "resultat": 6,
+    "explicacio_final": "Amb les lletres de MAMA podem formar 6 paraules diferents.",
+    "pistes": {
+      "pas1": [
+        "Hi ha lletres repetides.",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Quan hi ha repeticions i col·loques totes les lletres, és una permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 4, multiplicitats 2 i 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "F5",
+    "nivell": "Fàcil",
+    "titol": "Paraula LLUNA",
+    "enunciat": "Una amiga et desafia a escriure totes les versions possibles de la paraula LLUNA (amb dues L) utilitzant totes les lletres. Quantes formes diferents pots obtenir",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 5,
+    "m_correcte": 5,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      2,
+      1,
+      1,
+      1
+    ],
+    "resultat": 60,
+    "explicacio_final": "Podem escriure LLUNA de 60 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "La L apareix dues vegades.",
+        "S'utilitzen totes les lletres."
+      ],
+      "pas2": [
+        "Amb lletres repetides i totes en joc, parlem d'una permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 5, multiplicitats 2,1,1,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "F6",
+    "nivell": "Fàcil",
+    "titol": "Nom PEPE",
+    "enunciat": "En Pepe vol crear totes les versions possibles del seu nom amb les lletres P, E, P i E. Si les fa servir totes, quantes paraules diferents pot escriure",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 4,
+    "m_correcte": 4,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      2,
+      2
+    ],
+    "resultat": 6,
+    "explicacio_final": "El nom PEPE es pot reordenar de 6 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Hi ha dues P i dues E.",
+        "Utilitzes totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres, és una permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 4, multiplicitats 2 i 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "F7",
+    "nivell": "Fàcil",
+    "titol": "Podi de 6 atletes",
+    "enunciat": "En un campionat escolar hi participen 6 atletes i només hi ha medalla d'or, plata i bronze. De quantes maneres diferents poden quedar repartits els tres metalls",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 3,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 120,
+    "explicacio_final": "Es poden repartir les tres medalles de 120 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Els tres llocs són diferents.",
+        "Cap atleta repeteix medalla."
+      ],
+      "pas2": [
+        "Quan ocupes només alguns llocs sense repeticions, és una variació simple."
+      ],
+      "pas3": [
+        "n = 6, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F8",
+    "nivell": "Fàcil",
+    "titol": "Delegats de classe",
+    "enunciat": "En una classe de 5 alumnes s'han d'assignar els rols de president i secretari. Quantes parelles de càrrecs diferents es poden formar",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 2,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 20,
+    "explicacio_final": "Es poden formar 20 parelles de president i secretari diferents.",
+    "pistes": {
+      "pas1": [
+        "President i secretari són rols diferents.",
+        "Cap alumne repeteix càrrec."
+      ],
+      "pas2": [
+        "Assignar rols diferents a alguns membres és una variació simple."
+      ],
+      "pas3": [
+        "n = 5, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F9",
+    "nivell": "Fàcil",
+    "titol": "Clau ABCD",
+    "enunciat": "Una caixa forta es desbloqueja amb una clau de 3 lletres diferents triades entre A, B, C i D. Quantes claus distintes pots configurar",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 4,
+    "m_correcte": 3,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 24,
+    "explicacio_final": "Podem crear 24 claus diferents de tres lletres sense repetir-ne cap.",
+    "pistes": {
+      "pas1": [
+        "Les lletres ocupen posicions distintes.",
+        "No repeteixes lletres."
+      ],
+      "pas2": [
+        "Escollir alguns elements sense repeticions dona una variació simple."
+      ],
+      "pas3": [
+        "n = 4, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F10",
+    "nivell": "Fàcil",
+    "titol": "Codi de dos dígits",
+    "enunciat": "Un joc et demana inventar un codi curt amb dos dígits del 0 al 9, i pots repetir dígits si vols. Quants codis diferents podries provar",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 10,
+    "m_correcte": 2,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 100,
+    "explicacio_final": "Podem crear 100 codis diferents de dos dígits permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Cada digit pot ser qualsevol del 0 al 9.",
+        "Es poden repetir dígits."
+      ],
+      "pas2": [
+        "Quan cada posició admet qualsevol opció, tens una variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 10, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F11",
+    "nivell": "Fàcil",
+    "titol": "Gelat triple",
+    "enunciat": "La gelatera del barri té 5 gustos i et deixa triar un cucurutxo amb 3 boles disposades de dalt a baix; pots repetir el gust que més t'agradi. Quants gelats diferents podries demanar",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 3,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 125,
+    "explicacio_final": "Podem combinar les boles de 5 gustos en 125 gelats diferents.",
+    "pistes": {
+      "pas1": [
+        "Les tres boles tenen posició al cucurutxo.",
+        "Pots repetir gustos."
+      ],
+      "pas2": [
+        "Cada posició pot ser qualsevol gust, així que és una variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 5, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F12",
+    "nivell": "Fàcil",
+    "titol": "Paraules ABC",
+    "enunciat": "En un tauler magnètic tens A, B i C per crear missatges de 3 lletres, i pots repetir la lletra que vulguis. Quantes paraules diferents podries enganxar",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 3,
+    "m_correcte": 3,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 27,
+    "explicacio_final": "Podem formar 27 paraules diferents de tres lletres amb A, B i C.",
+    "pistes": {
+      "pas1": [
+        "Cada lloc pot ser A, B o C.",
+        "Es poden repetir lletres."
+      ],
+      "pas2": [
+        "Cada posició admet qualsevol lletra, així que és una variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 3, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 3,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F13",
+    "nivell": "Fàcil",
+    "titol": "Comitè de 2",
+    "enunciat": "D'entre 5 alumnes voluntaris, el professor vol crear un petit comitè de 2 persones per preparar la sortida de fi de curs. De quantes maneres diferents es pot formar aquest equip",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 2,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 10,
+    "explicacio_final": "Es poden formar 10 equips diferents de dos alumnes.",
+    "pistes": {
+      "pas1": [
+        "Només importa qui forma el comitè.",
+        "No es repeteix cap alumne."
+      ],
+      "pas2": [
+        "Escollir un grup sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 5, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F14",
+    "nivell": "Fàcil",
+    "titol": "Escollir llibres",
+    "enunciat": "A la biblioteca de casa hi ha 7 novel·les i vols endur-te'n 3 per al cap de setmana. De quants trios diferents pots omplir la motxilla",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 7,
+    "m_correcte": 3,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 35,
+    "explicacio_final": "Podem seleccionar 3 llibres d'entre 7 de 35 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "T'importa quins llibres agafes, no l'ordre en què els poses a la bossa.",
+        "No repeteixes cap llibre."
+      ],
+      "pas2": [
+        "Triar un grup sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 7, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 7,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F15",
+    "nivell": "Fàcil",
+    "titol": "Toppings de pizza",
+    "enunciat": "A una pizzeria et deixen escollir 2 toppings diferents d'entre 6 opcions per personalitzar la teva pizza. Quantes combinacions diferents podries tastar",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 2,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 15,
+    "explicacio_final": "Hi ha 15 maneres diferents de combinar dos toppings entre sis opcions.",
+    "pistes": {
+      "pas1": [
+        "Només compta quins toppings tries.",
+        "No repeteixes cap ingredient."
+      ],
+      "pas2": [
+        "Escollir un grup sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 6, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F16",
+    "nivell": "Fàcil",
+    "titol": "Gelat de dues boles",
+    "enunciat": "En Pau vol un gelat amb 2 boles i la gelateria ofereix 4 gustos; pot repetir el mateix gust o combinar-ne de diferents. Quantes opcions de parelles de boles pot demanar",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 4,
+    "m_correcte": 2,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 10,
+    "explicacio_final": "Hi ha 10 opcions diferents per a les dues boles, encara que es repeteixi el gust.",
+    "pistes": {
+      "pas1": [
+        "Només importa quins gustos acabes tenint.",
+        "Es pot repetir gust."
+      ],
+      "pas2": [
+        "Escollir amb possibilitat de repetir és una combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 4, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F17",
+    "nivell": "Fàcil",
+    "titol": "Monedes col·leccionables",
+    "enunciat": "Un col·leccionista té 5 tipus de moneda i vol preparar sobres sorpresa amb 3 monedes, permetent que algun tipus es repeteixi. Quants sobres diferents pot muntar",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 3,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 35,
+    "explicacio_final": "Pot preparar 35 sobres diferents de tres monedes permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "T'importa quins tipus hi ha al sobre, no l'ordre.",
+        "Es poden repetir tipus de moneda."
+      ],
+      "pas2": [
+        "Escollir amb repetició és una combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 5, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F18",
+    "nivell": "Fàcil",
+    "titol": "Rams de flors",
+    "enunciat": "En una floristeria hi ha 4 tipus de flor i vols preparar rams de 3 flors; pots repetir tipus si t'agrada molt un color. Quants rams diferents podries oferir als clients",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 4,
+    "m_correcte": 3,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 20,
+    "explicacio_final": "Es poden oferir 20 rams diferents de tres flors permetent repetir tipus.",
+    "pistes": {
+      "pas1": [
+        "El ram només depèn de quins tipus hi ha.",
+        "Es poden repetir flors del mateix tipus."
+      ],
+      "pas2": [
+        "Escollir amb repeticions possibles és una combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 4, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F19",
+    "nivell": "Fàcil",
+    "titol": "Botelles a l'aparador",
+    "enunciat": "En un mercat medieval, 5 botelles d'espècies totes diferents han d'anar en una lleixa estreta, una al costat de l'altra. De quantes maneres es poden disposar",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 5,
+    "m_correcte": 5,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 120,
+    "explicacio_final": "Podem col·locar les 5 botelles de 120 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Uses totes les botelles.",
+        "Canviar-ne dues ja canvia el resultat."
+      ],
+      "pas2": [
+        "Tots els elements i cada lloc és únic: permutació simple."
+      ],
+      "pas3": [
+        "n = 5, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "F20",
+    "nivell": "Fàcil",
+    "titol": "Codi de dues caselles",
+    "enunciat": "L'Arnau pinta un mini codi amb dues caselles en fila usant tres colors (vermell, verd i blau) i pot repetir el color preferit. Quants codis diferents pot fer",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 3,
+    "m_correcte": 2,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 9,
+    "explicacio_final": "Pot pintar 9 codis diferents de dues caselles amb els tres colors.",
+    "pistes": {
+      "pas1": [
+        "Cada casella pot ser qualsevol color.",
+        "Es poden repetir colors."
+      ],
+      "pas2": [
+        "Quan cada posició accepta qualsevol opció: n^m."
+      ],
+      "pas3": [
+        "n = 3, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 3,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F21",
+    "nivell": "Fàcil",
+    "titol": "Parella d'investigadors",
+    "enunciat": "En un club científic hi ha 6 joves i se'n volen triar 2 per presentar un experiment a la fira. De quantes parelles diferents es poden formar",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 2,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 15,
+    "explicacio_final": "Es poden formar 15 parelles diferents de presentadors.",
+    "pistes": {
+      "pas1": [
+        "Només importa qui presenta, no l'ordre de noms."
+      ],
+      "pas2": [
+        "Sense repeticions ni ordre: combinació simple."
+      ],
+      "pas3": [
+        "n = 6, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F22",
+    "nivell": "Fàcil",
+    "titol": "Candau de quatre xifres",
+    "enunciat": "Una caixa de jocs s'obre amb un candau de 4 xifres diferents que van del 0 al 5. Quantes claus diferents es podrien provar",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 4,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 360,
+    "explicacio_final": "Hi ha 360 claus possibles de quatre xifres sense repetir cap número.",
+    "pistes": {
+      "pas1": [
+        "Cada posició és diferent.",
+        "No repeteixes xifres."
+      ],
+      "pas2": [
+        "Alguns elements sense repetició: variació simple."
+      ],
+      "pas3": [
+        "n = 6, m = 4."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "F23",
+    "nivell": "Fàcil",
+    "titol": "Paraula CIRC",
+    "enunciat": "En un concurs de mots, la paraula CIRC té la C repetida dues vegades. Si utilitzes totes les lletres, quantes paraules diferents pots formar",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 4,
+    "m_correcte": 4,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      2,
+      1,
+      1
+    ],
+    "resultat": 12,
+    "explicacio_final": "Podem reordenar CIRC de 12 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "La lletra C apareix dues vegades.",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres: permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 4, multiplicitats 2,1,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "F24",
+    "nivell": "Fàcil",
+    "titol": "Sobre de monedes",
+    "enunciat": "Una botiga ven sobres sorpresa amb 2 monedes triades d'entre 5 models i es pot repetir algun model. Quants sobres diferents podrien aparèixer",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 2,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 15,
+    "explicacio_final": "Es poden preparar 15 sobres diferents de dues monedes permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Només importa quins models hi ha.",
+        "Es poden repetir models."
+      ],
+      "pas2": [
+        "Sense ordre i amb repetició: combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 5, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F25",
+    "nivell": "Fàcil",
+    "titol": "Banderins al pati",
+    "enunciat": "A l'escola pengen 3 banderins en fila triats entre 4 colors, i es poden repetir colors. Quantes seqüències de colors es poden fer",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 4,
+    "m_correcte": 3,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 64,
+    "explicacio_final": "Es poden fer 64 seqüències diferents de tres banderins amb quatre colors.",
+    "pistes": {
+      "pas1": [
+        "Cada banderí ocupa un lloc.",
+        "Es poden repetir colors."
+      ],
+      "pas2": [
+        "Cada lloc accepta qualsevol color: variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 4, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 4,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F26",
+    "nivell": "Fàcil",
+    "titol": "Jardineres del terrat",
+    "enunciat": "Hi ha 8 tipus de planta i vols posar-ne 3 en testos per al terrat. De quantes combinacions diferents pots omplir els testos",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 8,
+    "m_correcte": 3,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 56,
+    "explicacio_final": "Pots triar 3 plantes d'entre 8 de 56 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Importa quines plantes, no l'ordre de compra."
+      ],
+      "pas2": [
+        "Sense ordre i sense repeticions: combinació simple."
+      ],
+      "pas3": [
+        "n = 8, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 8,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F27",
+    "nivell": "Fàcil",
+    "titol": "Capítols del podcast",
+    "enunciat": "Una sèrie de 6 capítols s'ha de publicar en un ordre determinat per mantenir la trama. De quantes maneres es podrien ordenar els 6 capítols",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 6,
+    "m_correcte": 6,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 720,
+    "explicacio_final": "Podem ordenar els 6 capítols de 720 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Es fan servir tots els capítols.",
+        "Canviar-ne dos ja dona una seqüència nova."
+      ],
+      "pas2": [
+        "Tots els elements en línia: permutació simple."
+      ],
+      "pas3": [
+        "n = 6, m = 6."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "F28",
+    "nivell": "Fàcil",
+    "titol": "Paraula PAPPA",
+    "enunciat": "Un pastisser juga amb les lletres de PAPPA (3 P i 2 A) per decorar una capsa. Si usa totes les lletres, quantes paraules diferents pot fer",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 5,
+    "m_correcte": 5,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      3,
+      2
+    ],
+    "resultat": 10,
+    "explicacio_final": "Amb les lletres de PAPPA podem formar 10 paraules diferents.",
+    "pistes": {
+      "pas1": [
+        "Hi ha P repetides tres vegades i A dues."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres: permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 5, multiplicitats 3 i 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 5
+      }
+    }
+  }
+]

@@ -1,0 +1,115 @@
+{
+  "expedicio": {
+    "id": "cabeza",
+    "titol": "Travessa d'Álvar Núñez Cabeza de Vaca",
+    "resum": "De Florida a Mèxic a peu: vuit anys de supervivència i contacte amb pobles nadius.",
+    "anys": "1527-1536",
+    "finalitat": "Explorar i colonitzar la Florida en nom de Pánfilo de Narváez, cercant riqueses i rutes comercials.",
+    "personatge": {
+      "nom": "Álvar Núñez Cabeza de Vaca",
+      "origen": "Jerez de la Frontera (Andalusia)",
+      "rol": "Tresorer de l'expedició Narváez i cronista de la travessa"
+    },
+    "forces": [
+      { "tipus": "membres originals", "quantitat": 600, "descripcio": "Soldats, mariners i colons que salpen de Sanlúcar" },
+      { "tipus": "vaixells", "quantitat": 5, "descripcio": "Naus de l'expedició Narváez" },
+      { "tipus": "cavalls", "quantitat": 80, "descripcio": "La majoria es van perdre abans d'arribar a Florida" },
+      { "tipus": "supervivents finals", "quantitat": 4, "descripcio": "Cabeza de Vaca, Dorantes, Castillo i Estebanico" }
+    ],
+    "estrategies": [
+      "Adoptar les pràctiques de cura i intercanvi dels pobles nadius",
+      "Utilitzar la xarxa de cacics per obtenir guies i provisions",
+      "Relatar l'experiència a 'Naufragios' per influir en noves polítiques"
+    ],
+    "aliats": [
+      "Karankawa",
+      "Coahuilteca",
+      "Avavares",
+      "Opata"
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Sanlúcar de Barrameda",
+        "lloc": {
+          "nom_modern": "Sanlúcar de Barrameda, Espanya",
+          "coordenades": [36.778, -6.352]
+        },
+        "data": "17 de juny de 1527",
+        "descripcio": "La flota surt cap al Carib amb l'objectiu de colonitzar la Florida."
+      },
+      {
+        "ordre": 2,
+        "titol": "Desembarcament a la badia de Tampa",
+        "lloc": {
+          "nom_modern": "Tampa Bay, Florida",
+          "coordenades": [27.96, -82.45]
+        },
+        "data": "abril de 1528",
+        "descripcio": "Narváez divideix la flota: la major part de l'expedició avança per terra cap al nord-oest."
+      },
+      {
+        "ordre": 3,
+        "titol": "Naufragi a la costa de Texas",
+        "lloc": {
+          "nom_modern": "Illa de Galveston, Texas",
+          "coordenades": [29.26, -94.86]
+        },
+        "data": "novembre de 1528",
+        "descripcio": "Els supervivents arriben a la costa en balses improvisades; molts moren de fam i fred."
+      },
+      {
+        "ordre": 4,
+        "titol": "Captivitat i curacions",
+        "lloc": {
+          "nom_modern": "Costa del golf de Texas",
+          "coordenades": [29.4, -95.0]
+        },
+        "data": "1528-1532",
+        "descripcio": "Cabeza de Vaca viu entre els Karankawa i guanya fama de curandero, aprenent llengües locals."
+      },
+      {
+        "ordre": 5,
+        "titol": "Travessa del nord de Mèxic",
+        "lloc": {
+          "nom_modern": "Coahuila i Chihuahua, Mèxic",
+          "coordenades": [28.7, -100.5]
+        },
+        "data": "1534-1535",
+        "descripcio": "El grup recorre deserts i serralades guiat pels pobles indígenes; actuen com a comerciants i curadors itinerants."
+      },
+      {
+        "ordre": 6,
+        "titol": "Troben espanyols a Sinaloa",
+        "lloc": {
+          "nom_modern": "Culiacán, Mèxic",
+          "coordenades": [24.807, -107.394]
+        },
+        "data": "1536",
+        "descripcio": "El governador Nuño de Guzmán rep els supervivents, sorprès pel seu aspecte indígena."
+      },
+      {
+        "ordre": 7,
+        "titol": "Arribada a Ciutat de Mèxic",
+        "lloc": {
+          "nom_modern": "Ciutat de Mèxic",
+          "coordenades": [19.4326, -99.1332]
+        },
+        "data": "juliol de 1536",
+        "descripcio": "Cabeza de Vaca narra la seva epopeia al virrei Antonio de Mendoza i reclama un canvi de tracte envers els pobles nadius."
+      }
+    ],
+    "problemes_generals": [
+      "Naufragis successius i pèrdua de la major part dels recursos",
+      "Fam extrema i malalties prolongades",
+      "Captivitat i esclavitud en diferents pobles",
+      "Conflictes amb altres expedicions espanyoles com la de Nuño de Guzmán"
+    ],
+    "resultats": [
+      "Crònica 'Naufragios', un testimoni fonamental del contacte hispano-indígena",
+      "Reivindicació d'una política més humanitària i crítica de l'encomienda",
+      "Mapatge inicial de rutes indígenes al nord de Mèxic",
+      "Inspiració per a futures expedicions cap a les 'Siete Ciudades de Cíbola'"
+    ]
+  }
+}

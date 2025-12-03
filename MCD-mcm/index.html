@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCD &middot; mcm &ndash; Guia visual</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="preload" href="assets/logo.svg" as="image">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <img class="logo" src="assets/logo.svg" alt="Logo MCD mcm">
+      <div class="titles">
+        <h1>MCD &middot; mcm</h1>
+        <p class="subtitle">Guia interactiva per descompondre i calcular</p>
+      </div>
+    </header>
+
+    <nav class="mode-switch" aria-label="Canvia de mode de treball">
+      <button type="button" data-mode="lliure" class="mode active">Mode lliure</button>
+      <button type="button" data-mode="practica" class="mode">Pr&agrave;ctica</button>
+      <button type="button" data-mode="problemes" class="mode">Problemes</button>
+    </nav>
+
+    <main class="app" id="main-content">
+      <section id="panel-lliure" class="panel visible" aria-labelledby="lliure">
+        <div class="card inputs">
+          <p>Introdueix 2, 3 o 4 nombres enters positius.</p>
+          <div class="number-list" id="free-number-list"></div>
+          <div class="actions">
+            <button type="button" id="add-number">+ Afegeix nombre</button>
+            <button type="button" id="start-free" class="primary">Comen&ccedil;a</button>
+          </div>
+        </div>
+
+        <div class="card factor-area" id="free-workspace" hidden>
+          <div class="workspace-body">
+            <aside class="palette-wrap">
+              <h3>Botonera de nombres primers</h3>
+              <p class="palette-hint">Arrossega el nombre primer a la casella corresponent.</p>
+              <div id="prime-palette-free" class="prime-palette"></div>
+            </aside>
+
+            <section class="lanes-zone">
+              <div class="lanes-wrap">
+                <h3>Nombres a descompondre</h3>
+                <div id="lanes-free" class="lanes" aria-live="polite"></div>
+              </div>
+              <div class="factor-columns-wrap">
+                <h3>Factors</h3>
+                <div id="factor-columns-free" class="factor-columns"></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="grids">
+            <section class="builder-grid">
+              <h3>Ara calculem el resultat</h3>
+              <p class="builder-hint">Arrossega els factors des de la zona de Factors o la botonera. Repeteix un factor per indicar quadrat, cub, etc.</p>
+              <div class="builder-panels">
+                <article class="result-drop" data-kind="mcd">
+                  <div class="drop-row">
+                    <span class="drop-label">MCD =</span>
+                    <div class="drop-strip" id="mcd-drop-free" data-target="mcd"></div><span class="provisional-result"></span><span class="feedback-icon"></span>
+                    <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcd">Factors comuns amb el mínim exponent. (Han d'aparèixer a tots els nombres.)</p>
+                  <p class="drop-expression" id="mcd-expression-free"></p>
+                </article>
+                <article class="result-drop" data-kind="mcm">
+                  <div class="drop-row">
+                    <span class="drop-label">mcm =</span>
+                    <div class="drop-strip" id="mcm-drop-free" data-target="mcm"></div><span class="provisional-result"></span><span class="feedback-icon"></span>
+                    <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcm">Factors comuns i no comuns amb el màxim exponent. (Inclou tots els factors necessaris.)</p>
+                  <p class="drop-expression" id="mcm-expression-free"></p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="bottom-actions">
+            <button type="button" id="reset-free" class="ghost">Reinicia</button>
+            <div class="result">
+              <button type="button" id="compute-free" class="primary">Comprova i calcula</button>
+              <output id="result-free" aria-live="polite"></output>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-practica" class="panel" aria-labelledby="practica">
+        <h2 id="practica">Mode pr&agrave;ctica</h2>
+        <div class="card inputs">
+          <div class="row">
+            <label for="difficulty">Dificultat</label>
+            <select id="difficulty">
+              <option value="easy">F&agrave;cil</option>
+              <option value="medium">Mitjana</option>
+              <option value="hard">Dif&iacute;cil</option>
+            </select>
+            <button type="button" id="next-set" class="primary">Nou conjunt</button>
+          </div>
+          <div class="row sticky">
+            <span>Conjunt actual:</span>
+            <span id="practice-set" class="badge"></span>
+          </div>
+        </div>
+
+        <div class="card factor-area" id="practice-workspace" hidden>
+          <div class="workspace-body">
+            <aside class="palette-wrap">
+              <h3>Botonera de nombres primers</h3>
+              <p class="palette-hint">Arrossega el nombre primer a la casella corresponent.</p>
+              <div id="prime-palette-practice" class="prime-palette"></div>
+            </aside>
+
+            <section class="lanes-zone">
+              <div class="lanes-wrap">
+                <h3>Nombres a descompondre</h3>
+                <div id="lanes-practice" class="lanes" aria-live="polite"></div>
+              </div>
+              <div class="factor-columns-wrap">
+                <h3>Factors</h3>
+                <div id="factor-columns-practice" class="factor-columns"></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="grids">
+            <section class="builder-grid">
+              <h3>Ara calculem el resultat</h3>
+              <p class="builder-hint">Arrossega els factors que necessites. Repeteix-los per indicar quadrats, cubes o altres exponents.</p>
+              <div class="builder-panels">
+                <article class="result-drop" data-kind="mcd">
+                  <div class="drop-row">
+                    <span class="drop-label">MCD =</span>
+                    <div class="drop-strip" id="mcd-drop-practice" data-target="mcd"></div><span class="provisional-result"></span><span class="feedback-icon"></span>
+                    <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcd">Selecciona els factors comuns de tots els nombres amb l'exponent més petit.</p>
+                  <p class="drop-expression" id="mcd-expression-practice"></p>
+                </article>
+                <article class="result-drop" data-kind="mcm">
+                  <div class="drop-row">
+                    <span class="drop-label">mcm =</span>
+                    <div class="drop-strip" id="mcm-drop-practice" data-target="mcm"></div><span class="provisional-result"></span><span class="feedback-icon"></span>
+                    <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcm">Inclou els factors comuns i no comuns amb l'exponent més gran.</p>
+                  <p class="drop-expression" id="mcm-expression-practice"></p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="bottom-actions">
+            <button type="button" id="reset-practice" class="ghost">Reinicia</button>
+            <div class="result">
+              <button type="button" id="compute-practice" class="primary">Comprova i calcula</button>
+              <output id="result-practice" aria-live="polite"></output>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-problemes" class="panel" aria-labelledby="problemes">
+        <h2 id="problemes">Mode problemes</h2>
+        <div class="card inputs">
+          <div class="row space-between">
+            <button type="button" id="next-problem" class="primary">Nou problema</button>
+            <span id="problem-status" class="pill" aria-live="polite"></span>
+          </div>
+          <p id="problem-text" class="problem-text"></p>
+          <div class="problem-form" id="problem-form">
+            <div class="problem-section">
+              <p class="problem-label">Quins nombres cal descompondre?</p>
+              <div class="number-list" id="problem-number-list"></div>
+              <div class="actions">
+                <button type="button" id="problem-add-number" class="ghost">+ Afegeix nombre</button>
+              </div>
+            </div>
+            <div class="problem-section">
+              <p class="problem-label">Quin càlcul vols fer?</p>
+              <div class="goal-options" id="problem-goal-options">
+                <label class="goal-option">
+                  <input type="radio" name="problem-goal" value="mcd">
+                  <span>MCD</span>
+                </label>
+                <label class="goal-option">
+                  <input type="radio" name="problem-goal" value="mcm">
+                  <span>mcm</span>
+                </label>
+              </div>
+            </div>
+            <p id="problem-feedback" class="problem-feedback"></p>
+            <div class="actions">
+              <button type="button" id="problem-begin" class="primary">Comença la resolució</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card factor-area" id="problem-workspace" hidden>
+          <div class="workspace-body">
+            <aside class="palette-wrap">
+              <h3>Botonera de nombres primers</h3>
+              <p class="palette-hint">Arrossega el nombre primer a la casella corresponent.</p>
+              <div id="prime-palette-problem" class="prime-palette"></div>
+            </aside>
+
+            <section class="lanes-zone">
+              <div class="lanes-wrap">
+                <h3>Nombres a descompondre</h3>
+                <div id="lanes-problem" class="lanes" aria-live="polite"></div>
+              </div>
+              <div class="factor-columns-wrap">
+                <h3>Factors</h3>
+                <div id="factor-columns-problem" class="factor-columns"></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="grids">
+            <section class="builder-grid">
+              <h3>Ara calculem el resultat</h3>
+              <p class="builder-hint">Arrossega els factors que toquen i repeteix-los per indicar exponents.</p>
+              <div class="builder-panels">
+                <article class="result-drop" data-kind="mcd">
+                  <div class="drop-row">
+                    <span class="drop-label">MCD =</span>
+                    <div class="drop-strip" id="mcd-drop-problem" data-target="mcd"></div><span class="provisional-result"></span><span class="feedback-icon"></span>
+                    <button type="button" class="clear-drop ghost" data-target="mcd">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcd">Factors comuns amb l'exponent mínim (els que apareixen a tots els nombres).</p>
+                  <p class="drop-expression" id="mcd-expression-problem"></p>
+                </article>
+                <article class="result-drop" data-kind="mcm">
+                  <div class="drop-row">
+                    <span class="drop-label">mcm =</span>
+                    <div class="drop-strip" id="mcm-drop-problem" data-target="mcm"></div><span class="provisional-result"></span><span class="feedback-icon"></span>
+                    <button type="button" class="clear-drop ghost" data-target="mcm">Neteja</button>
+                  </div>
+                  <p class="rule rule-mcm">Factors comuns i no comuns amb l'exponent màxim (perquè tots els nombres quedin coberts).</p>
+                  <p class="drop-expression" id="mcm-expression-problem"></p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div class="bottom-actions">
+            <button type="button" id="reset-problem" class="ghost">Reinicia</button>
+            <div class="result">
+              <button type="button" id="compute-problem" class="primary">Comprova i calcula</button>
+              <output id="result-problem" aria-live="polite"></output>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <img class="cc cc-footer" src="assets/cc-by-nc-sa.svg" alt="Llic&egrave;ncia CC BY-NC-SA">
+      <div class="footer-text">
+        <p class="footer-line">Aplicaci&oacute; creada per Felip Sarroca amb l'assist&egrave;ncia de la IA</p>
+        <p class="footer-line footer-license">
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">Obra sota llic&egrave;ncia CC BY-NC-SA 4.0</a>
+        </p>
+      </div>
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/dragdroptouch@0.1.1/DragDropTouch.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

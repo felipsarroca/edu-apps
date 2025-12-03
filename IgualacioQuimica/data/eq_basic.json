@@ -1,0 +1,331 @@
+﻿[
+  {
+    "id": "eq001",
+    "reactants": [
+      "H2",
+      "O2"
+    ],
+    "products": [
+      "H2O"
+    ],
+    "coefficients": [
+      2,
+      1,
+      2
+    ],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "La formació d'aigua necessita dues molècules d'hidrogen per cada molècula d'oxigen."
+  },
+  {
+    "id": "eq002",
+    "reactants": [
+      "Fe",
+      "O2"
+    ],
+    "products": [
+      "Fe2O3"
+    ],
+    "coefficients": [
+      4,
+      3,
+      2
+    ],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "Per formar òxid de ferro(III) calen quatre àtoms de ferro i tres de dioxigen."
+  },
+  {
+    "id": "eq003",
+    "reactants": [
+      "C3H8",
+      "O2"
+    ],
+    "products": [
+      "CO2",
+      "H2O"
+    ],
+    "coefficients": [
+      1,
+      5,
+      3,
+      4
+    ],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "Una combustió completa del propà produeix diòxid de carboni i aigua."
+  },
+  {
+    "id": "eq004",
+    "reactants": [
+      "Na",
+      "Cl2"
+    ],
+    "products": [
+      "NaCl"
+    ],
+    "coefficients": [
+      2,
+      1,
+      2
+    ],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "Dos àtoms de sodi reaccionen amb una molècula de clor per formar clorur de sodi."
+  },
+  {
+    "id": "eq005",
+    "reactants": [
+      "CaCO3"
+    ],
+    "products": [
+      "CaO",
+      "CO2"
+    ],
+    "coefficients": [
+      1,
+      1,
+      1
+    ],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "El carbonat de calci es descompon en òxid de calci i diòxid de carboni."
+  },
+  {
+    "id": "eq011",
+    "reactants": ["CH4", "O2"],
+    "products": ["CO2", "H2O"],
+    "coefficients": [1, 2, 1, 2],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "La combustió del metà produeix diòxid de carboni i aigua."
+  },
+  {
+    "id": "eq012",
+    "reactants": ["Mg", "O2"],
+    "products": ["MgO"],
+    "coefficients": [2, 1, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El magnesi reacciona amb el dioxigen formant òxid de magnesi."
+  },
+  {
+    "id": "eq013",
+    "reactants": ["Ca", "Cl2"],
+    "products": ["CaCl2"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El calci i el clor formen clorur de calci."
+  },
+  {
+    "id": "eq014",
+    "reactants": ["H2O2"],
+    "products": ["H2O", "O2"],
+    "coefficients": [2, 2, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "El peròxid d'hidrogen es descompon en aigua i dioxigen."
+  },
+  {
+    "id": "eq015",
+    "reactants": ["Zn", "HCl"],
+    "products": ["ZnCl2", "H2"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El zinc desplaça l'hidrogen de l'àcid clorhídric."
+  },
+  {
+    "id": "eq016",
+    "reactants": ["Na", "H2O"],
+    "products": ["NaOH", "H2"],
+    "coefficients": [2, 2, 2, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El sodi reacciona amb l'aigua formant hidròxid de sodi i hidrogen."
+  },
+  {
+    "id": "eq017",
+    "reactants": ["K", "Cl2"],
+    "products": ["KCl"],
+    "coefficients": [2, 1, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El potassi i el clor formen clorur de potassi."
+  },
+  {
+    "id": "eq018",
+    "reactants": ["CaO", "H2O"],
+    "products": ["Ca(OH)2"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "L'òxid de calci reacciona amb aigua per donar hidròxid de calci."
+  },
+  {
+    "id": "eq019",
+    "reactants": ["HCl", "NaOH"],
+    "products": ["NaCl", "H2O"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "Neutralització àcid-base entre HCl i NaOH."
+  },
+  {
+    "id": "eq020",
+    "reactants": ["BaCl2", "Na2SO4"],
+    "products": ["BaSO4", "NaCl"],
+    "coefficients": [1, 1, 1, 2],
+    "type": "desplacament_doble",
+    "level": 1,
+    "explanation": "Intercanvi d'ions amb precipitació de sulfat de bari."
+  },
+  {
+    "id": "eq021",
+    "reactants": ["NH3", "HCl"],
+    "products": ["NH4Cl"],
+    "coefficients": [1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "L'amoníac gasós reacciona amb HCl formant clorur d'amoni."
+  },
+  {
+    "id": "eq022",
+    "reactants": ["CO", "O2"],
+    "products": ["CO2"],
+    "coefficients": [2, 1, 2],
+    "type": "combustio",
+    "level": 1,
+    "explanation": "Oxidació del monòxid de carboni a diòxid de carboni."
+  },
+  {
+    "id": "eq023",
+    "reactants": ["H2", "Cl2"],
+    "products": ["HCl"],
+    "coefficients": [1, 1, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "L'hidrogen i el clor formen àcid clorhídric."
+  },
+  {
+    "id": "eq036",
+    "reactants": ["HgO"],
+    "products": ["Hg", "O2"],
+    "coefficients": [2, 2, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "L'òxid de mercuri(II) es descompon en mercuri i dioxigen."
+  },
+  {
+    "id": "eq037",
+    "reactants": ["Ca(OH)2"],
+    "products": ["CaO", "H2O"],
+    "coefficients": [1, 1, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "L'hidròxid de calci es descompon en òxid de calci i aigua."
+  },
+  {
+    "id": "eq038",
+    "reactants": ["CuCO3"],
+    "products": ["CuO", "CO2"],
+    "coefficients": [1, 1, 1],
+    "type": "descomposicio",
+    "level": 1,
+    "explanation": "El carbonat de coure(II) es descompon en òxid de coure(II) i diòxid de carboni."
+  },
+  {
+    "id": "eq039",
+    "reactants": ["Fe", "HCl"],
+    "products": ["FeCl2", "H2"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El ferro reacciona amb HCl formant clorur ferrós i hidrogen."
+  },
+  {
+    "id": "eq040",
+    "reactants": ["Mg", "H2O"],
+    "products": ["Mg(OH)2", "H2"],
+    "coefficients": [1, 2, 1, 1],
+    "type": "desplacament_simple",
+    "level": 1,
+    "explanation": "El magnesi desplaça l'hidrogen de l'aigua produint hidròxid de magnesi."
+  },
+  {
+    "id": "eq041",
+    "reactants": ["HNO3", "KOH"],
+    "products": ["KNO3", "H2O"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "Neutralització entre àcid nitríc i hidròxid de potassi."
+  },
+  {
+    "id": "eq042",
+    "reactants": ["CH3COOH", "NaOH"],
+    "products": ["CH3COONa", "H2O"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "neutralitzacio",
+    "level": 1,
+    "explanation": "Neutralització d'un àcid feble amb una base forta."
+  },
+  {
+    "id": "eq043",
+    "reactants": ["Cu", "O2"],
+    "products": ["CuO"],
+    "coefficients": [2, 1, 2],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "Oxidació del coure a òxid de coure(II)."
+  },
+  {
+    "id": "eq044",
+    "reactants": ["S", "O2"],
+    "products": ["SO2"],
+    "coefficients": [1, 1, 1],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "Formació de diòxid de sofre per oxidació del sofre."
+  },
+  {
+    "id": "eq045",
+    "reactants": ["C", "O2"],
+    "products": ["CO2"],
+    "coefficients": [1, 1, 1],
+    "type": "oxidacio",
+    "level": 1,
+    "explanation": "Oxidació del carboni a diòxid de carboni."
+  },
+  {
+    "id": "eq046",
+    "reactants": ["CaO", "CO2"],
+    "products": ["CaCO3"],
+    "coefficients": [1, 1, 1],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "Formació de carbonat de calci a partir d'òxid de calci i CO2."
+  },
+  {
+    "id": "eq047",
+    "reactants": ["Fe", "Cl2"],
+    "products": ["FeCl3"],
+    "coefficients": [2, 3, 2],
+    "type": "sintesi",
+    "level": 1,
+    "explanation": "El ferro reacciona amb clor formant clorur de ferro(III)."
+  },
+  {
+    "id": "eq048",
+    "reactants": ["AgNO3", "KBr"],
+    "products": ["AgBr", "KNO3"],
+    "coefficients": [1, 1, 1, 1],
+    "type": "desplacament_doble",
+    "level": 1,
+    "explanation": "Intercanvi d'ions amb precipitació de bromur de plata."
+  }
+]
+
+
+

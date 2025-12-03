@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Taula periÃ²dica dinÃ mica</title>
+    <link rel="icon" type="image/svg+xml" href="data/favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <h1 class="app-title">Taula periÃ²dica dinÃ mica</h1>
+        <div id="mode-indicator" class="mode-indicator" title="Mode de visualitzaciÃ³" aria-hidden="true">â€”</div>
+        <h2 class="subtitle" id="subtitle">Mode: en blanc</h2>
+
+        <label for="mode-select" class="label">Tria la visualitzaciÃ³</label>
+        <select id="mode-select" class="select">
+          <option value="blank">En blanc</option>
+          <option value="families">FamÃ­lies / grups</option>
+          <option value="blocks">Blocs electrÃ²nics (s, p, d, f)</option>
+          <option value="valence">ValÃ¨ncia (electrons de valÃ¨ncia)</option>
+          <option value="electronegativity">Electronegativitat (Pauling)</option>
+          <option value="ionization">Energia dâ€™ionitzaciÃ³</option>
+          <option value="state">Estat fÃ­sic a T ambient</option>
+          <option value="density">Densitat</option>
+          <option value="atomicRadius">Radi atÃ²mic</option>
+          <option value="metallic">MetÃ lÂ·lics</option>
+          <option value="reactivity">Reactivitat (aprox.)</option>
+          <option value="condElectric">Conductivitat elÃ¨ctrica (aprox.)</option>
+          <option value="condThermal">Conductivitat tÃ¨rmica (aprox.)</option>
+          <option value="ferromagnetism">Ferromagnetisme</option>
+          <option value="bioessential">Essencials per a la vida</option>
+          <option value="toxic">TÃ²xics/contaminants (selecciÃ³)</option>
+          <option value="radioactive">Radioactivitat</option>
+          <optgroup label="AbundÃ ncia (percentatge)">
+            <option value="body">Cos humÃ  (%)</option>
+            <option value="earth">PresÃ¨ncia a la Terra (%)</option>
+            <option value="universe">AbundÃ ncia a lâ€™Univers (%)</option>
+          </optgroup>
+        </select>
+
+        <div id="legend" class="legend" aria-live="polite"></div>
+        <div class="legend-footer">
+          <div class="credit">AplicaciÃ³ realitzada per Felip Sarroca amb l'assistÃ¨ncia de la IA</div>
+          <div class="license">Obra sota llicÃ¨ncia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></div>
+        </div>
+      </aside>
+
+      <main class="board">
+        <div class="grid-viewport" id="grid-viewport">
+          <div class="grid-scale" id="grid-scale">
+            <div id="periodic-grid" class="grid" aria-label="Taula periÃ²dica"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Fallback de dades offline: carrega dataset com a JS si s'obre amb file:// -->
+    <script src="data/elements.js"></script>
+    <script src="data/noms_ca.js"></script>
+    <script src="data/conductivity.js"></script>
+    <script src="data/custom_values.js"></script>
+    <script src="data/abundance.js"></script>
+    <script src="app.js"></script>
+  </body>
+  </html>

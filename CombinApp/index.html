@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CombinApp</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.0/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.0/katex.min.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <h1>CombinApp</h1>
+            <p class="eyebrow">Combinatòria guiada pas a pas</p>
+        </header>
+
+        <div id="progress-bar">
+            <div class="step-badge current" data-step-id="mode">Mode</div>
+            <div class="step-badge" data-step-id="problema">Problema</div>
+            <div class="step-badge" data-step-id="tipus">Classificació</div>
+            <div class="step-badge" data-step-id="formula">Fórmula</div>
+            <div class="step-badge" data-step-id="dades">Dades (n, m)</div>
+            <div class="step-badge" data-step-id="calcul">Càlcul</div>
+        </div>
+
+        <div class="workspace">
+            <aside id="context-panel" class="hidden" aria-live="polite">
+                <div class="context-header">
+                    <div id="context-icon">?</div>
+                    <div>
+                        <p class="eyebrow">Enunciat a la vista</p>
+                        <h2 id="context-title">Enunciat</h2>
+                    </div>
+                </div>
+                <p id="context-enunciat" class="context-body">Selecciona el mode i un problema per veure'l sempre visible mentre avances.</p>
+            </aside>
+
+            <main id="main-content">
+                <!-- Screen: Mode Selection -->
+                <section id="screen-mode-selection" class="screen active">
+                    <div class="section-heading">
+                        <h2>Benvingut/da!</h2>
+                        <p>Escull si vols problemes guiats o la calculadora guiada.</p>
+                    </div>
+                    <div class="mode-buttons">
+                        <button id="btn-mode-a" class="accent-1 btn-3d">Problemes guiats</button>
+                        <button id="btn-mode-b" class="accent-2 btn-3d">Calculadora guiada</button>
+                    </div>
+                </section>
+
+                <!-- Screen: Problem Picker (Mode A) -->
+                <section id="screen-problem-picker" class="screen">
+                    <div class="section-heading">
+                        <h2>Tria un problema</h2>
+                        <p>Filtra per nivell i selecciona un enunciat. L'enunciat quedarà fix a l'esquerra.</p>
+                    </div>
+                    <div class="problem-picker-grid">
+                        <div class="form-group">
+                            <label for="level-filter">Nivell</label>
+                            <select id="level-filter"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="problem-select">Problema</label>
+                            <select id="problem-select"></select>
+                        </div>
+                    </div>
+                    <p id="problem-statement" class="statement-card"></p>
+                    <div class="step-actions">
+                        <button id="btn-start-problem" class="primary btn-3d">Començar</button>
+                        <button class="btn-back btn-3d">Enrere</button>
+                    </div>
+                </section>
+
+                <!-- Screen: Step 1 (Classification) -->
+                <section id="screen-step-1" class="screen">
+                    <div class="section-heading">
+                        <h2>Pas 1: Classificació</h2>
+                        <p>Marca si importa l'ordre, si hi ha repetició i si agafes tots els elements. Sense aquest pas no encertaràs la fórmula.</p>
+                    </div>
+                    <div class="classification-grid">
+                        <div class="classification-top">
+                            <div id="classification-questions"></div>
+                        </div>
+                        <div id="classification-visual" class="classification-visual card"></div>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn-back btn-3d">Enrere</button>
+                        <button class="btn-hint btn-3d">Pista</button>
+                        <button class="btn-solve-step btn-3d">Veure solució</button>
+                        <button id="btn-change-problem" class="btn-3d">Canviar de problema</button>
+                        <button id="btn-step-1-next" class="primary btn-3d">Continua</button>
+                    </div>
+                </section>
+
+                <!-- Screen: Step 2 (Type and Formula) -->
+                <section id="screen-step-2" class="screen">
+                    <div class="section-heading">
+                        <h2>Pas 2: Tipus i fórmula</h2>
+                        <p>Escull la fórmula que encaixa amb la classificació del pas anterior.</p>
+                    </div>
+                    <div id="type-formula-selection"></div>
+                    <div class="step-actions">
+                        <button class="btn-back btn-3d">Enrere</button>
+                        <button class="btn-hint btn-3d">Pista</button>
+                        <button class="btn-solve-step btn-3d">Veure solució</button>
+                        <button id="btn-step-2-next" class="primary btn-3d">Continua</button>
+                    </div>
+                </section>
+
+                <!-- Screen: Step 3 (n and m) -->
+                <section id="screen-step-3" class="screen">
+                    <div class="section-heading">
+                        <h2>Pas 3: Assignació de n i m</h2>
+                        <p>Identifica n (total d'elements) i m (elements que col·loques). Si hi ha repeticions en permutació, indica les multiplicitats.</p>
+                    </div>
+                    <div id="n-m-inputs"></div>
+                    <div class="step-actions">
+                        <button class="btn-back btn-3d">Enrere</button>
+                        <button class="btn-hint btn-3d">Pista</button>
+                        <button class="btn-solve-step btn-3d">Veure solució</button>
+                        <button id="btn-step-3-next" class="primary btn-3d">Continua</button>
+                    </div>
+                </section>
+
+                <!-- Screen: Step 4 (Calculation) -->
+                <section id="screen-step-4" class="screen">
+                    <div class="section-heading">
+                        <h2>Pas 4: Càlcul i explicació</h2>
+                        <p>Veus la fórmula, la substitució, el desenvolupament i una explicació en llenguatge natural.</p>
+                    </div>
+                    <div id="calculation-results"></div>
+                    <div class="step-actions">
+                        <button id="btn-restart" class="primary btn-3d">Reiniciar</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer id="license-footer">
+            <img src="CC_BY-NC-SA.svg" alt="Llicència CC BY-NC-SA">
+            <div class="license-text">
+                <div>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb l'assistència de la IA</div>
+                <div>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+            </div>
+        </footer>
+        <div id="toast" class="toast"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿[
+  {
+    "id": "combustio",
+    "name": "Combustió"
+  },
+  {
+    "id": "oxidacio",
+    "name": "Oxidació"
+  },
+  {
+    "id": "neutralitzacio",
+    "name": "Neutralització"
+  },
+  {
+    "id": "descomposicio",
+    "name": "Descomposició"
+  },
+  {
+    "id": "sintesi",
+    "name": "Síntesi"
+  },
+  {
+    "id": "desplacament_simple",
+    "name": "Desplaçament simple"
+  },
+  {
+    "id": "desplacament_doble",
+    "name": "Desplaçament doble"
+  },
+  {
+    "id": "oxidacio-reduccio",
+    "name": "Oxidació-reducció"
+  }
+]

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repte de la taula periòdica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-banner">
+      <div class="banner-content">
+        <h1>Repte de la taula periòdica</h1>
+        <p>Encerta 10 elements seguits abans que s’esgoti el temps</p>
+      </div>
+      <div class="header-extras">
+        <div class="branding-badge">
+          <span class="sparkle">✨</span>
+          <span>Encerta'n 10 seguits!</span>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="circle-trigger" id="open-instructions" aria-label="Mostra les instruccions del joc" aria-haspopup="dialog" aria-controls="instructions-modal">
+            <span aria-hidden="true">?</span>
+            <span class="sr-only">Instruccions del joc</span>
+          </button>
+          <button type="button" class="circle-trigger" id="open-leaderboard" aria-label="Mostra el rànquing" aria-haspopup="dialog" aria-controls="leaderboard-modal">
+            <span aria-hidden="true">🏆</span>
+            <span class="sr-only">Rànquing</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="game-layout">
+      <section class="control-panel">
+        <div class="card">
+          <h2>Configuració inicial</h2>
+          <form id="start-form" class="start-form">
+            <label class="input-group">
+              <span>Nom i cognom</span>
+              <input type="text" id="player-name" name="playerName" placeholder="Nom i cognom" required>
+            </label>
+
+            <div class="input-group">
+              <span>Nivell de dificultat</span>
+              <div class="difficulty-buttons" id="difficulty-buttons">
+                <button type="button" class="difficulty-btn" data-difficulty="very-easy">Molt fàcil</button>
+                <button type="button" class="difficulty-btn" data-difficulty="easy">Fàcil</button>
+                <button type="button" class="difficulty-btn" data-difficulty="normal">Normal</button>
+                <button type="button" class="difficulty-btn" data-difficulty="hard">Difícil</button>
+                <button type="button" class="difficulty-btn" data-difficulty="very-hard">Molt difícil</button>
+              </div>
+              <input type="hidden" id="difficulty" name="difficulty" required>
+            </div>
+
+            <button type="submit" class="primary-btn" id="start-btn">Comença el repte</button>
+          </form>
+        </div>
+
+        <div class="card info-card" id="status-card" hidden>
+          <h2>Estat de la partida</h2>
+          <div class="status-grid">
+            <div>
+              <span class="label">Jugador/a</span>
+              <span class="value" id="status-player">–</span>
+            </div>
+            <div>
+              <span class="label">Nivell</span>
+              <span class="value" id="status-level">–</span>
+            </div>
+            <div>
+              <span class="label">Temps restant</span>
+              <span class="value timer" id="status-timer">00:00</span>
+            </div>
+            <div>
+              <span class="label">Temps total</span>
+              <span class="value" id="status-total">00:00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card feedback-card" id="feedback-card" hidden>
+          <h2>Feedback</h2>
+          <p id="feedback-message">Endavant, tria l’element correcte!</p>
+        </div>
+
+        <div class="attribution-card">
+          <p class="attribution-text">Aplicació realitzada per Felip Sarroca amb assistència de la IA i a partir d'una idea d'E. Boixader.</p>
+          <p class="license-text">
+            Obra sota llicència <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>
+            
+          </p>
+        </div>
+      </section>
+
+      <section class="play-area">
+        <div class="table-wrapper" id="table-wrapper">
+          <div class="spotlight-card" id="spotlight" hidden>
+            <span class="prompt-label">Quin element és aquest?</span>
+            <span class="element-name" id="target-element-name">–</span>
+          </div>
+          <div class="table-overlay" id="table-overlay">
+            <p>Tria un nivell per veure els elements del repte.</p>
+          </div>
+          <div class="periodic-table" id="periodic-table"></div>
+        </div>
+      </section>
+
+      <div class="card streak-card" id="streak-card" hidden>
+        <h2>Ratxa d’encerts</h2>
+        <div class="streak-track" id="streak-track"></div>
+        <p class="tip">Recorda: un error i hauràs de començar de nou!</p>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="instructions-modal" hidden>
+    <div class="modal-content instructions">
+      <div class="modal-header">
+        <h2>Com funciona el repte</h2>
+        <button class="close-btn" id="close-instructions" aria-label="Tanca">×</button>
+      </div>
+      <div class="modal-body">
+        <ul class="instructions-list">
+          <li><span class="instruction-icon" aria-hidden="true">📝</span>Introdueix el teu nom i cognoms i escull el nivell de dificultat.</li>
+          <li><span class="instruction-icon" aria-hidden="true">🔍</span>Observa el símbol ressaltat i tria l'element correcte: cal encertar-ne 10 seguits.</li>
+          <li><span class="instruction-icon" aria-hidden="true">⏱️</span>El temps és limitat, així que intenta completar la ratxa el més ràpid possible.</li>
+          <li><span class="instruction-icon" aria-hidden="true">📤</span>Si acabes en nivell normal o difícil, podràs enviar els resultats perquè quedin registrats.</li>
+        </ul>
+        <p class="instructions-tip"><span class="instruction-tip-icon" aria-hidden="true">💡</span><span>Comença pels nivells més assequibles i augmenta la dificultat a mesura que guanyis destresa.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="leaderboard-modal" hidden>
+    <div class="modal-content leaderboard-modal">
+      <div class="modal-header">
+        <h2><span class="modal-title-icon" aria-hidden="true">🏆</span>Rànquing</h2>
+        <button class="close-btn" id="close-leaderboard" aria-label="Tanca">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="leaderboard-hint">Temps més ràpid per nivell (mm:ss).</p>
+        <div class="leaderboard-grid" id="leaderboard-grid" aria-live="polite"></div>
+        <p class="leaderboard-empty" id="leaderboard-empty" hidden>Encara no hi ha registres disponibles.</p>
+        <button type="button" class="text-btn leaderboard-refresh" id="refresh-leaderboard">Actualitza</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="result-modal" hidden>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Enhorabona!</h2>
+        <button class="close-btn" id="close-modal" aria-label="Tanca">×</button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-text">Has completat el repte amb 10 encerts seguits. Vols enviar el teu resultat?</p>
+        <div class="modal-actions">
+          <button class="primary-btn" id="send-results">Enviar resultats 📤</button>
+          <button class="secondary-btn" id="close-modal-2">No, gràcies ❌</button>
+        </div>
+        <p class="modal-status" id="submission-status"></p>
+      </div>
+    </div>
+  </div>
+
+  <template id="element-template">
+    <button class="element-cell" type="button">
+      <span class="atomic-number"></span>
+      <span class="symbol"></span>
+      <span class="name"></span>
+    </button>
+  </template>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

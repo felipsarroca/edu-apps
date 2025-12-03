@@ -1,0 +1,147 @@
+{
+  "expedicio": {
+    "id": "cortes",
+    "titol": "Conquesta de Mèxic per Hernán Cortés",
+    "resum": "De Veracruz a Tenochtitlan, l'expedició que va enderrocar l'Imperi asteca.",
+    "anys": "1519-1521",
+    "finalitat": "Sotmetre l'Imperi asteca i reclamar Mèxic per a la Corona de Castella, tot aprofitant les rivalitats internes i sense autorització formal del governador de Cuba.",
+    "personatge": {
+      "nom": "Hernán Cortés",
+      "origen": "Medellín (Extremadura)",
+      "rol": "Capità general de la Nova Espanya"
+    },
+    "forces": [
+      { "tipus": "soldats castellans", "quantitat": 500, "descripcio": "Infanteria, arcabussers i ballesters procedents de Cuba" },
+      { "tipus": "cavalleria", "quantitat": 16, "descripcio": "Cavalls importats, un avantatge decisiu sobre els asteques" },
+      { "tipus": "artilleria lleugera", "quantitat": 14, "descripcio": "Falconets i pedrers utilitzats per intimidar" },
+      { "tipus": "aliats indígenes", "quantitat": 20000, "descripcio": "Principalment totonaques i tlaxcalteques" }
+    ],
+    "estrategies": [
+      "Captar pobles sotmesos pels asteques com a aliats militars",
+      "Utilitzar traductors com Malintzin per negociar i obtenir intel·ligència",
+      "Fer servir la tecnologia europea per impressionar i sembrar por"
+    ],
+    "aliats": [
+      "Totonaca",
+      "Tlaxcalteca",
+      "Texcocans dissidents"
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Cuba i fundació de Veracruz",
+        "lloc": {
+          "nom_modern": "Veracruz, Mèxic",
+          "nom_antic": "Villa Rica de la Vera Cruz",
+          "coordenades": [19.1738, -96.1342]
+        },
+        "data": "febrer-abril de 1519",
+        "descripcio": "Cortés parteix de Cuba sense permís oficial i estableix un cabildo fidel a la Corona a Veracruz. Enfonsa els vaixells per evitar desercions.",
+        "curiositats": [
+          "La llegenda parla de 'cremar les naus', però en realitat les va desmuntar per peces utilitzables.",
+          "El cabildo va legitimar jurídicament l'expedició davant la Corona."
+        ]
+      },
+      {
+        "ordre": 2,
+        "titol": "Aliança amb els totonaques i combat amb els tlaxcalteques",
+        "lloc": {
+          "nom_modern": "Tlaxcala, Mèxic",
+          "coordenades": [19.319, -98.23]
+        },
+        "data": "agost de 1519",
+        "descripcio": "Cortés derrota els tlaxcalteques, que acaben convertint-se en els seus aliats més lleials contra els asteques.",
+        "curiositats": [
+          "Els tlaxcalteques aportaren desenes de milers de guerrers auxiliars.",
+          "Malintzin intervingué com a traductora i mediadora clau."
+        ]
+      },
+      {
+        "ordre": 3,
+        "titol": "Massacre de Cholula",
+        "lloc": {
+          "nom_modern": "Cholula, Mèxic",
+          "coordenades": [19.058, -98.306]
+        },
+        "data": "octubre de 1519",
+        "descripcio": "Sospitant un complot, Cortés ordena un atac preventiu que causa milers de morts i envia un missatge de terror a les ciutats aliades dels asteques.",
+        "curiositats": [
+          "Els cronistes parlen de 3.000 a 6.000 morts en poques hores.",
+          "La massacre va consolidar la reputació dels espanyols com a força imparable."
+        ]
+      },
+      {
+        "ordre": 4,
+        "titol": "Entrada a Tenochtitlan",
+        "lloc": {
+          "nom_modern": "Ciutat de Mèxic",
+          "nom_antic": "Tenochtitlan",
+          "coordenades": [19.4326, -99.1332]
+        },
+        "data": "8 de novembre de 1519",
+        "descripcio": "Moctezuma II rep Cortés amb honors. Els castellans s'allotgen al palau d'Axayácatl mentre estudien la ciutat flotant.",
+        "curiositats": [
+          "Cortés va col·locar Moctezuma sota arrest 'voluntari'.",
+          "Els espanyols van congelar el flux d'or i tribut asteques per forçar el control polític."
+        ]
+      },
+      {
+        "ordre": 5,
+        "titol": "La Nit Trista",
+        "lloc": {
+          "nom_modern": "Tacuba, Ciutat de Mèxic",
+          "coordenades": [19.45, -99.2]
+        },
+        "data": "30 de juny de 1520",
+        "descripcio": "Després d'un aixecament general, l'expedició intenta fugir de nit carregada d'or. Una emboscada asteca causa una gran mortaldat.",
+        "curiositats": [
+          "Cortés va perdre la major part dels seus veterans i el botí acumulat.",
+          "La tradició parla del plor de Cortés sota el 'árbol de la noche triste'."
+        ],
+        "problemes": [
+          "Desercions i pèrdua de prestigi",
+          "Escassetat extrema de pertrets"
+        ]
+      },
+      {
+        "ordre": 6,
+        "titol": "Batalla d'Otumba",
+        "lloc": {
+          "nom_modern": "Otumba, Estat de Mèxic",
+          "coordenades": [19.71, -98.76]
+        },
+        "data": "7 de juliol de 1520",
+        "descripcio": "Cortés derrota un exèrcit asteca numèricament superior matant el seu estendard principal. Es replega a Tlaxcala per reorganitzar-se.",
+        "curiositats": [
+          "Els tlaxcalteques van impedir la destrucció total de l'expedició.",
+          "Els cronistes ho van atribuir a intervenció divina."
+        ]
+      },
+      {
+        "ordre": 7,
+        "titol": "Setge i caiguda de Tenochtitlan",
+        "lloc": {
+          "nom_modern": "Ciutat de Mèxic",
+          "coordenades": [19.4326, -99.1332]
+        },
+        "data": "maig-agost de 1521",
+        "descripcio": "Amb brigantins construïts a Tlaxcala, Cortés tanca els accessos aquàtics i, després de tres mesos, força la rendició de Cuauhtémoc.",
+        "curiositats": [
+          "La ciutat fou arrasada i reconstruïda amb traçat occidental.",
+          "Cuauhtémoc fou capturat mentre intentava fugir per l'aigua."
+        ]
+      }
+    ],
+    "problemes_generals": [
+      "Hostilitat asteques i pressió constant de pobles lleials a Tenochtitlan",
+      "Manca de provisions europees i epidèmies que també afectaven els aliats indígenes",
+      "Conflicte polític amb Diego Velázquez i expedicions rivals com la de Narváez"
+    ],
+    "resultats": [
+      "Caiguda de l'Imperi asteca i naixement del Virregnat de la Nova Espanya",
+      "Redistribució de terres i població a través de les encomandes",
+      "Introducció d'una nova capital hispana sobre mitjans asteques",
+      "Difusió ràpida de malalties europees entre la població indígena"
+    ]
+  }
+}

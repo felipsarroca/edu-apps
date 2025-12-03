@@ -1,0 +1,133 @@
+{
+  "viatge": {
+    "titol": "Quart viatge de Cristòfor Colom",
+    "anys": "1502-1504",
+    "finalitat": "Trobar un pas cap a l’oest per arribar a l’Àsia a través de Centreamèrica.",
+    "vaixells": [
+      { "nom": "Capitana", "tipus": "caravel·la", "desti": "naufragi a Jamaica" },
+      { "nom": "Santiago de Palos", "tipus": "caravel·la", "desti": "naufragi" },
+      { "nom": "Gallega", "tipus": "caravel·la", "desti": "naufragi" },
+      { "nom": "Vizcaína", "tipus": "caravel·la", "desti": "naufragi" }
+    ],
+    "episodis": [
+      {
+        "ordre": 1,
+        "titol": "Sortida de Cadis",
+        "lloc": {
+          "nom_modern": "Cadis, Espanya",
+          "nom_antic": "Cadis",
+          "coordenades": [36.5297, -6.2925]
+        },
+        "data": "11 de maig de 1502",
+        "descripcio": "Colom, amb uns 150 homes i quatre caravel·les, emprèn el seu darrer viatge. Ja té 51 anys i està malalt, però insisteix a trobar el pas marítim cap a l’Àsia.",
+        "curiositats": [
+          "Els Reis Catòlics li prohibiren aturar-se a Hispaniola, ja que havia perdut el càrrec de governador.",
+          "Colom insistia que Déu l’havia escollit per a una missió especial."
+        ]
+      },
+      {
+        "ordre": 2,
+        "titol": "Exclusió de Santo Domingo",
+        "lloc": {
+          "nom_modern": "Santo Domingo, República Dominicana",
+          "nom_antic": "Santo Domingo",
+          "coordenades": [18.4861, -69.9312]
+        },
+        "data": "juny de 1502",
+        "descripcio": "Colom, un mariner expert, prediu l'arribada d'un huracà imminent i demana refugi al port de Santo Domingo. El nou governador, Nicolás de Ovando, se'n riu i li nega l'entrada, enviant alhora una flota de 30 vaixells carregats d'or cap a Espanya.",
+        "curiositats": [
+          "L'huracà, tal com Colom va predir, va arribar. Va destruir gairebé tota la flota d'Ovando, on viatjaven enemics de Colom com Bobadilla i Roldán, que van morir ofegats. Les quatre naus de Colom, malmeses però a la superfície, van sobreviure.",
+          "Ell ho va interpretar com un senyal de Déu."
+        ]
+      },
+      {
+        "ordre": 3,
+        "titol": "Exploració de Centreamèrica",
+        "lloc": {
+          "nom_modern": "Costa de Hondures, Nicaragua, Costa Rica i Panamà",
+          "nom_antic": "Veragua",
+          "coordenades": [9.0, -79.5]
+        },
+        "data": "1502-1503",
+        "descripcio": "Colom recorre les costes de Centreamèrica convençut que hi trobaria un pas a l’oceà Índic. Descobreix rius rics en or i fundà un assentament a Veragua (Panamà). Però el pitjor enemic no eren les tempestes, sinó 'la broma', un mol·lusc que perforava la fusta dels vaixells, deixant-los com un formatge Gruyère i condemnats a enfonsar-se.",
+        "curiositats": [
+          "Els indígenes li mostraren pepites d’or del riu Belén.",
+          "Aquest fou el punt més proper a trobar el futur 'canal de Panamà'."
+        ],
+        "problemes": [
+          "Els indígenes es rebel·laren i atacaren el campament.",
+          "Moltes baixes i abandonament del poblat."
+        ]
+      },
+      {
+        "ordre": 4,
+        "titol": "Atrapats a Jamaica",
+        "lloc": {
+          "nom_modern": "Badia de Santa Ann, Jamaica",
+          "coordenades": [18.471, -77.21]
+        },
+        "data": "juny de 1503",
+        "descripcio": "Amb els dos vaixells restants completament inutilitzats per la broma, Colom els fa embarrancar a la costa nord de Jamaica, convertint-los en un refugi improvisat. Ell i els 115 supervivents queden aïllats del món, a 190 km d'Hispaniola i sense mitjans per tornar.",
+        "curiositats": [
+          "Els vaixells ja no suraven, estaven tan foradats que només servien de fortalesa a la platja.",
+          "La supervivència depenia completament del menjar que els poguessin proporcionar els indígenes de l'illa."
+        ]
+      },
+      {
+        "ordre": 5,
+        "titol": "Motí, fam i un eclipsi",
+        "lloc": {
+          "nom_modern": "Badia de Santa Ann, Jamaica",
+          "coordenades": [18.471, -77.21]
+        },
+        "data": "gener-febrer de 1504",
+        "descripcio": "Part de la tripulació, liderada pels germans Porras, s'amotina contra un Colom malalt d'artritis. Mentrestant, els indígenes, cansats de mantenir-los, deixen de portar-los menjar. La situació és desesperada.",
+        "curiositats": [
+          "Per recuperar el control, Colom va utilitzar un almanac astronòmic per predir un eclipsi de lluna el 29 de febrer de 1504. Va 'amenaçar' els indígenes de robar-los la lluna si no tornaven a portar menjar. L'èxit del seu 'truc' li va garantir el subministrament i el respecte.",
+          "Els amotinats van intentar arribar a Hispaniola en canoes, però van fracassar i van tornar per ser perdonats."
+        ]
+      },
+      {
+        "ordre": 6,
+        "titol": "La gesta de Diego Méndez",
+        "lloc": {
+          "nom_modern": "Mar Carib, entre Jamaica i Hispaniola",
+          "coordenades": [18.0, -75.0]
+        },
+        "data": "juliol de 1503 - juny de 1504",
+        "descripcio": "L'única esperança era enviar algú a Hispaniola a demanar ajuda. Diego Méndez, un dels homes més lleials de Colom, es va oferir voluntari per a una missió suïcida: creuar 190 km de mar obert en una canoa indígena. Després de cinc dies remant sense descans, ell i el seu acompanyant van arribar a Hispaniola i, eventualment, van aconseguir organitzar un rescat.",
+        "curiositats": [
+          "Méndez va remar sota un sol implacable, patint una set terrible fins al punt de beure aigua salada.",
+          "El governador Ovando va trigar mesos a autoritzar el rescat, possiblement esperant que Colom morís a Jamaica."
+        ]
+      },
+      {
+        "ordre": 7,
+        "titol": "Rescat i retorn",
+        "lloc": {
+          "nom_modern": "Sanlúcar de Barrameda, Espanya",
+          "nom_antic": "Sanlúcar",
+          "coordenades": [36.7781, -6.3515]
+        },
+        "data": "novembre de 1504",
+        "descripcio": "Finalment, un vaixell enviat per Diego Méndez des d’Hispaniola rescata Colom i els supervivents. Retorna a Castella envellit, malalt i derrotat, sense haver trobat mai el pas cap a l’Àsia.",
+        "curiositats": [
+          "Isabel la Catòlica, la seva gran protectora, mor pocs dies després del seu retorn, deixant-lo sense el seu principal suport a la cort.",
+          "Colom moriria dos anys després, el 1506, convençut que havia arribat a les costes d'Àsia."
+        ]
+      }
+    ],
+    "problemes_generals": [
+      "Prohibició d’entrar a Santo Domingo.",
+      "Naufragis de les quatre caravel·les a Jamaica.",
+      "Fam, malalties i dependència dels indígenes.",
+      "Fracàs en trobar el pas cap a l’oceà Índic."
+    ],
+    "resultats": [
+      "Exploració detallada de la costa centreamericana (Hondures, Nicaragua, Costa Rica i Panamà).",
+      "Contacte amb pobles indígenes de la regió de Veragua.",
+      "Última expedició de Colom, marcada per desastres i naufragis.",
+      "Retorn derrotat i declivi final de Colom."
+    ]
+  }
+}

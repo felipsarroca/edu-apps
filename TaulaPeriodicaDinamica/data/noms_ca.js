@@ -1,0 +1,589 @@
+﻿window.PT_NOMS_CA = [
+    {
+        "Key":  "Ac",
+        "Value":  "Actini",
+        "Name":  "Ac"
+    },
+    {
+        "Key":  "Ag",
+        "Value":  "Argent",
+        "Name":  "Ag"
+    },
+    {
+        "Key":  "Al",
+        "Value":  "Alumini",
+        "Name":  "Al"
+    },
+    {
+        "Key":  "Am",
+        "Value":  "Americi",
+        "Name":  "Am"
+    },
+    {
+        "Key":  "Ar",
+        "Value":  "Argó",
+        "Name":  "Ar"
+    },
+    {
+        "Key":  "As",
+        "Value":  "Arsènic",
+        "Name":  "As"
+    },
+    {
+        "Key":  "At",
+        "Value":  "Àstat",
+        "Name":  "At"
+    },
+    {
+        "Key":  "Au",
+        "Value":  "Or",
+        "Name":  "Au"
+    },
+    {
+        "Key":  "B",
+        "Value":  "Bor",
+        "Name":  "B"
+    },
+    {
+        "Key":  "Ba",
+        "Value":  "Bari",
+        "Name":  "Ba"
+    },
+    {
+        "Key":  "Be",
+        "Value":  "Beril·li",
+        "Name":  "Be"
+    },
+    {
+        "Key":  "Bh",
+        "Value":  "Bohri",
+        "Name":  "Bh"
+    },
+    {
+        "Key":  "Bi",
+        "Value":  "Bismut",
+        "Name":  "Bi"
+    },
+    {
+        "Key":  "Bk",
+        "Value":  "Berkeli",
+        "Name":  "Bk"
+    },
+    {
+        "Key":  "Br",
+        "Value":  "Brom",
+        "Name":  "Br"
+    },
+    {
+        "Key":  "C",
+        "Value":  "Carboni",
+        "Name":  "C"
+    },
+    {
+        "Key":  "Ca",
+        "Value":  "Calci",
+        "Name":  "Ca"
+    },
+    {
+        "Key":  "Cd",
+        "Value":  "Cadmi",
+        "Name":  "Cd"
+    },
+    {
+        "Key":  "Ce",
+        "Value":  "Ceri",
+        "Name":  "Ce"
+    },
+    {
+        "Key":  "Cf",
+        "Value":  "Californi",
+        "Name":  "Cf"
+    },
+    {
+        "Key":  "Cl",
+        "Value":  "Clor",
+        "Name":  "Cl"
+    },
+    {
+        "Key":  "Cm",
+        "Value":  "Curi",
+        "Name":  "Cm"
+    },
+    {
+        "Key":  "Cn",
+        "Value":  "Copernici",
+        "Name":  "Cn"
+    },
+    {
+        "Key":  "Co",
+        "Value":  "Cobalt",
+        "Name":  "Co"
+    },
+    {
+        "Key":  "Cr",
+        "Value":  "Crom",
+        "Name":  "Cr"
+    },
+    {
+        "Key":  "Cs",
+        "Value":  "Cesi",
+        "Name":  "Cs"
+    },
+    {
+        "Key":  "Cu",
+        "Value":  "Coure",
+        "Name":  "Cu"
+    },
+    {
+        "Key":  "Db",
+        "Value":  "Dubni",
+        "Name":  "Db"
+    },
+    
+    {
+        "Key":  "Ds",
+        "Value":  "Darmstadti",
+        "Name":  "Ds"
+    },
+    {
+        "Key":  "Er",
+        "Value":  "Erbi",
+        "Name":  "Er"
+    },
+    {
+        "Key":  "Es",
+        "Value":  "Einsteini",
+        "Name":  "Es"
+    },
+    {
+        "Key":  "Eu",
+        "Value":  "Europi",
+        "Name":  "Eu"
+    },
+    {
+        "Key":  "F",
+        "Value":  "Fluor",
+        "Name":  "F"
+    },
+    {
+        "Key":  "Fe",
+        "Value":  "Ferro",
+        "Name":  "Fe"
+    },
+    {
+        "Key":  "Fl",
+        "Value":  "Flerovi",
+        "Name":  "Fl"
+    },
+    {
+        "Key":  "Fm",
+        "Value":  "Fermi",
+        "Name":  "Fm"
+    },
+    {
+        "Key":  "Fr",
+        "Value":  "Franci",
+        "Name":  "Fr"
+    },
+    {
+        "Key":  "Ga",
+        "Value":  "Gal·li",
+        "Name":  "Ga"
+    },
+    {
+        "Key":  "Gd",
+        "Value":  "Gadolini",
+        "Name":  "Gd"
+    },
+    {
+        "Key":  "Ge",
+        "Value":  "Germani",
+        "Name":  "Ge"
+    },
+    {
+        "Key":  "H",
+        "Value":  "Hidrogen",
+        "Name":  "H"
+    },
+    {
+        "Key":  "He",
+        "Value":  "Heli",
+        "Name":  "He"
+    },
+    {
+        "Key":  "Hf",
+        "Value":  "Hafni",
+        "Name":  "Hf"
+    },
+    {
+        "Key":  "Hg",
+        "Value":  "Mercuri",
+        "Name":  "Hg"
+    },
+    {
+        "Key":  "Ho",
+        "Value":  "Holmi",
+        "Name":  "Ho"
+    },
+    {
+        "Key":  "Hs",
+        "Value":  "Hassi",
+        "Name":  "Hs"
+    },
+    {
+        "Key":  "I",
+        "Value":  "Iode",
+        "Name":  "I"
+    },
+    {
+        "Key":  "In",
+        "Value":  "Indi",
+        "Name":  "In"
+    },
+    {
+        "Key":  "Ir",
+        "Value":  "Iridi",
+        "Name":  "Ir"
+    },
+    {
+        "Key":  "K",
+        "Value":  "Potassi",
+        "Name":  "K"
+    },
+    {
+        "Key":  "Kr",
+        "Value":  "Criptó",
+        "Name":  "Kr"
+    },
+    {
+        "Key":  "La",
+        "Value":  "Lantani",
+        "Name":  "La"
+    },
+    {
+        "Key":  "Li",
+        "Value":  "Liti",
+        "Name":  "Li"
+    },
+    {
+        "Key":  "Lr",
+        "Value":  "Lawrenci",
+        "Name":  "Lr"
+    },
+    {
+        "Key":  "Lu",
+        "Value":  "Luteci",
+        "Name":  "Lu"
+    },
+    {
+        "Key":  "Lv",
+        "Value":  "Livermori",
+        "Name":  "Lv"
+    },
+    {
+        "Key":  "Mc",
+        "Value":  "Moscovi",
+        "Name":  "Mc"
+    },
+    {
+        "Key":  "Md",
+        "Value":  "Mendelevi",
+        "Name":  "Md"
+    },
+    {
+        "Key":  "Mg",
+        "Value":  "Magnesi",
+        "Name":  "Mg"
+    },
+    {
+        "Key":  "Mn",
+        "Value":  "Manganès",
+        "Name":  "Mn"
+    },
+    {
+        "Key":  "Mo",
+        "Value":  "Molibdè",
+        "Name":  "Mo"
+    },
+    {
+        "Key":  "Mt",
+        "Value":  "Meitneri",
+        "Name":  "Mt"
+    },
+    {
+        "Key":  "N",
+        "Value":  "Nitrogen",
+        "Name":  "N"
+    },
+    {
+        "Key":  "Na",
+        "Value":  "Sodi",
+        "Name":  "Na"
+    },
+    {
+        "Key":  "Nb",
+        "Value":  "Niobi",
+        "Name":  "Nb"
+    },
+    {
+        "Key":  "Nd",
+        "Value":  "Neodimi",
+        "Name":  "Nd"
+    },
+    {
+        "Key":  "Ne",
+        "Value":  "Neó",
+        "Name":  "Ne"
+    },
+    {
+        "Key":  "Nh",
+        "Value":  "Nihoni",
+        "Name":  "Nh"
+    },
+    {
+        "Key":  "Ni",
+        "Value":  "Níquel",
+        "Name":  "Ni"
+    },
+    {
+        "Key":  "No",
+        "Value":  "Nobeli",
+        "Name":  "No"
+    },
+    {
+        "Key":  "Np",
+        "Value":  "Neptuni",
+        "Name":  "Np"
+    },
+    {
+        "Key":  "O",
+        "Value":  "Oxigen",
+        "Name":  "O"
+    },
+    {
+        "Key":  "Og",
+        "Value":  "Oganessó",
+        "Name":  "Og"
+    },
+    {
+        "Key":  "Os",
+        "Value":  "Osmi",
+        "Name":  "Os"
+    },
+    {
+        "Key":  "P",
+        "Value":  "Fòsfor",
+        "Name":  "P"
+    },
+    {
+        "Key":  "Pa",
+        "Value":  "Protoactini",
+        "Name":  "Pa"
+    },
+    {
+        "Key":  "Pb",
+        "Value":  "Plom",
+        "Name":  "Pb"
+    },
+    {
+        "Key":  "Pd",
+        "Value":  "Pal·ladi",
+        "Name":  "Pd"
+    },
+    {
+        "Key":  "Pm",
+        "Value":  "Prometi",
+        "Name":  "Pm"
+    },
+    {
+        "Key":  "Po",
+        "Value":  "Poloni",
+        "Name":  "Po"
+    },
+    {
+        "Key":  "Pr",
+        "Value":  "Praseodimi",
+        "Name":  "Pr"
+    },
+    {
+        "Key":  "Pt",
+        "Value":  "Platí",
+        "Name":  "Pt"
+    },
+    {
+        "Key":  "Pu",
+        "Value":  "Plutoni",
+        "Name":  "Pu"
+    },
+    {
+        "Key":  "Ra",
+        "Value":  "Radi",
+        "Name":  "Ra"
+    },
+    {
+        "Key":  "Rb",
+        "Value":  "Rubidi",
+        "Name":  "Rb"
+    },
+    {
+        "Key":  "Re",
+        "Value":  "Reni",
+        "Name":  "Re"
+    },
+    {
+        "Key":  "Rf",
+        "Value":  "Rutherfordi",
+        "Name":  "Rf"
+    },
+    {
+        "Key":  "Rg",
+        "Value":  "Roentgeni",
+        "Name":  "Rg"
+    },
+    {
+        "Key":  "Rh",
+        "Value":  "Rodi",
+        "Name":  "Rh"
+    },
+    {
+        "Key":  "Rn",
+        "Value":  "Radó",
+        "Name":  "Rn"
+    },
+    {
+        "Key":  "Ru",
+        "Value":  "Ruteni",
+        "Name":  "Ru"
+    },
+    {
+        "Key":  "S",
+        "Value":  "Sofre",
+        "Name":  "S"
+    },
+    {
+        "Key":  "Sb",
+        "Value":  "Antimoni",
+        "Name":  "Sb"
+    },
+    {
+        "Key":  "Sc",
+        "Value":  "Escandi",
+        "Name":  "Sc"
+    },
+    {
+        "Key":  "Se",
+        "Value":  "Seleni",
+        "Name":  "Se"
+    },
+    {
+        "Key":  "Sg",
+        "Value":  "Seaborgi",
+        "Name":  "Sg"
+    },
+    {
+        "Key":  "Si",
+        "Value":  "Silici",
+        "Name":  "Si"
+    },
+    {
+        "Key":  "Sm",
+        "Value":  "Samari",
+        "Name":  "Sm"
+    },
+    {
+        "Key":  "Sn",
+        "Value":  "Estany",
+        "Name":  "Sn"
+    },
+    {
+        "Key":  "Sr",
+        "Value":  "Estronci",
+        "Name":  "Sr"
+    },
+    {
+        "Key":  "Ta",
+        "Value":  "Tàntal",
+        "Name":  "Ta"
+    },
+    {
+        "Key":  "Tb",
+        "Value":  "Terbi",
+        "Name":  "Tb"
+    },
+    {
+        "Key":  "Tc",
+        "Value":  "Tecneci",
+        "Name":  "Tc"
+    },
+    {
+        "Key":  "Te",
+        "Value":  "Tel·luri",
+        "Name":  "Te"
+    },
+    {
+        "Key":  "Th",
+        "Value":  "Tori",
+        "Name":  "Th"
+    },
+    {
+        "Key":  "Ti",
+        "Value":  "Titani",
+        "Name":  "Ti"
+    },
+    {
+        "Key":  "Tl",
+        "Value":  "Tal·li",
+        "Name":  "Tl"
+    },
+    {
+        "Key":  "Tm",
+        "Value":  "Tuli",
+        "Name":  "Tm"
+    },
+    {
+        "Key":  "Ts",
+        "Value":  "Tennes",
+        "Name":  "Ts"
+    },
+    {
+        "Key":  "U",
+        "Value":  "Urani",
+        "Name":  "U"
+    },
+    {
+        "Key":  "V",
+        "Value":  "Vanadi",
+        "Name":  "V"
+    },
+    {
+        "Key":  "W",
+        "Value":  "Tungstè",
+        "Name":  "W"
+    },
+    {
+        "Key":  "Xe",
+        "Value":  "Xenó",
+        "Name":  "Xe"
+    },
+    {
+        "Key":  "Y",
+        "Value":  "Itri",
+        "Name":  "Y"
+    },
+    {
+        "Key":  "Yb",
+        "Value":  "Iterbi",
+        "Name":  "Yb"
+    },
+    {
+        "Key":  "Zn",
+        "Value":  "Zinc",
+        "Name":  "Zn"
+    },
+    {
+        "Key":  "Zr",
+        "Value":  "Zirconi",
+        "Name":  "Zr"
+    }
+]
+;

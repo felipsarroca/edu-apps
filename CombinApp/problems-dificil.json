@@ -1,0 +1,1211 @@
+[
+  {
+    "id": "D1",
+    "nivell": "Difícil",
+    "titol": "Robots en desfilada",
+    "enunciat": "En una fira de tecnologia, nou robots diferents s'alineen per creuar l'escenari d'un en un. De quantes maneres podria veure'ls el públic quan les llums s'encenen?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 9,
+    "m_correcte": 9,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 362880,
+    "explicacio_final": "Els nou robots poden desfilar de 362.880 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Surten tots els robots.",
+        "Cada lloc de la fila és diferent."
+      ],
+      "pas2": [
+        "Col·locar tots els elements és una permutació simple."
+      ],
+      "pas3": [
+        "n = 9, m = 9."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 9
+      }
+    }
+  },
+  {
+    "id": "D2",
+    "nivell": "Difícil",
+    "titol": "Museu de maquetes",
+    "enunciat": "Un museu rep 10 maquetes úniques d'edificis i les ha de col·locar en una prestatgeria llarga. De quantes maneres pot quedar l'exposició el dia de la inauguració?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 10,
+    "m_correcte": 10,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 3628800,
+    "explicacio_final": "Les 10 maquetes es poden disposar de 3.628.800 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Cada espai de la prestatgeria és únic.",
+        "S'exposen totes les maquetes."
+      ],
+      "pas2": [
+        "Amb tots els elements, és una permutació simple."
+      ],
+      "pas3": [
+        "n = 10, m = 10."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 10
+      }
+    }
+  },
+  {
+    "id": "D3",
+    "nivell": "Difícil",
+    "titol": "Satèl·lits en òrbita",
+    "enunciat": "Onze satèl·lits diferents esperen permís per connectar-se a una cadena orbital amb punts numerats. Quantes disposicions possibles pot adoptar la cadena?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 11,
+    "m_correcte": 11,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 39916800,
+    "explicacio_final": "Els onze satèl·lits es poden col·locar de 39.916.800 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Tots els satèl·lits ocupen un punt diferent.",
+        "No se'n deixa cap fora."
+      ],
+      "pas2": [
+        "Quan uses tots els elements, és una permutació simple."
+      ],
+      "pas3": [
+        "n = 11, m = 11."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 11,
+        "m": 11
+      }
+    }
+  },
+  {
+    "id": "D4",
+    "nivell": "Difícil",
+    "titol": "Paraula MISSISSI",
+    "enunciat": "En un joc de mots tens les lletres de MISSISSI (4 S, 3 I i 1 M) i vols descobrir totes les versions possibles fent-les servir totes. Quantes en surten?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 8,
+    "m_correcte": 8,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      4,
+      3,
+      1
+    ],
+    "resultat": 280,
+    "explicacio_final": "Podem escriure MISSISSI de 280 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "La S apareix 4 vegades i la I 3.",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres, és una permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 8, multiplicitats 4,3,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 8,
+        "m": 8
+      }
+    }
+  },
+  {
+    "id": "D5",
+    "nivell": "Difícil",
+    "titol": "Paraula BALALAIKA",
+    "enunciat": "En un recital rus apareix la paraula BALALAIKA, amb 4 A, 2 L i tres lletres úniques. Si les reordenes totes, quantes paraules diferents pots obtenir?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 9,
+    "m_correcte": 9,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      4,
+      2,
+      1,
+      1,
+      1
+    ],
+    "resultat": 7560,
+    "explicacio_final": "Podem reordenar BALALAIKA de 7.560 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "La A surt 4 vegades i la L, 2.",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Amb lletres repetides i totes en joc, és una permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 9, multiplicitats 4,2,1,1,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 9
+      }
+    }
+  },
+  {
+    "id": "D6",
+    "nivell": "Difícil",
+    "titol": "Paraula TATAMI",
+    "enunciat": "Per decorar un dojo, algú juga amb les lletres de TATAMI (2 T, 2 A, 1 M i 1 I) i vol escriure totes les combinacions possibles amb totes les lletres. Quantes opcions té?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 6,
+    "m_correcte": 6,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      2,
+      2,
+      1,
+      1
+    ],
+    "resultat": 180,
+    "explicacio_final": "Podem ordenar les lletres de TATAMI de 180 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "T i A es repeteixen dues vegades.",
+        "Uses totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres, és una permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 6, multiplicitats 2,2,1,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "D7",
+    "nivell": "Difícil",
+    "titol": "Marató de relleus",
+    "enunciat": "En una marató de relleus hi ha 12 corredors i només 5 trams per repartir. De quantes maneres diferents es poden assignar els cinc trams als corredors?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 12,
+    "m_correcte": 5,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 95040,
+    "explicacio_final": "Els cinc trams es poden assignar de 95.040 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Cada tram és diferent.",
+        "Cap corredor repeteix tram."
+      ],
+      "pas2": [
+        "Ocupes només alguns llocs sense repeticions: variació simple."
+      ],
+      "pas3": [
+        "n = 12, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 12,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "D8",
+    "nivell": "Difícil",
+    "titol": "Missions espacials",
+    "enunciat": "Una agència espacial ha de decidir l'ordre de llançament de 4 missions d'entre 9 projectes disponibles. Quantes programacions diferents pot plantejar?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 9,
+    "m_correcte": 4,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 3024,
+    "explicacio_final": "Es poden planificar 3.024 seqüències de quatre missions diferents.",
+    "pistes": {
+      "pas1": [
+        "Cada fase del calendari és única.",
+        "Cap missió es repeteix."
+      ],
+      "pas2": [
+        "Assignar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 9, m = 4."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "D9",
+    "nivell": "Difícil",
+    "titol": "Assajos científics",
+    "enunciat": "Un laboratori té 11 assajos i només hi ha temps per fer-ne 3 de seguits. De quantes maneres es pot decidir la seqüència d'assajos?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 11,
+    "m_correcte": 3,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 990,
+    "explicacio_final": "Es poden programar 990 seqüències diferents de tres assajos.",
+    "pistes": {
+      "pas1": [
+        "Cada assaig ocupa un moment diferent.",
+        "No es repeteix cap assaig."
+      ],
+      "pas2": [
+        "Ocupar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 11, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 11,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "D10",
+    "nivell": "Difícil",
+    "titol": "Codi bancari",
+    "enunciat": "Un banc assigna claus digitals de 6 xifres que van del 0 al 9, i permet repetir xifres. Quants codis diferents pot generar el sistema?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 10,
+    "m_correcte": 6,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 1000000,
+    "explicacio_final": "El sistema pot generar 1.000.000 de codis de sis xifres permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Cada posició del codi pot ser qualsevol dígit.",
+        "Es poden repetir dígits."
+      ],
+      "pas2": [
+        "Cada lloc admet qualsevol opció: variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 10, m = 6."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "D11",
+    "nivell": "Difícil",
+    "titol": "Seqüència genètica",
+    "enunciat": "Un equip de biòlegs simula cadenes de 5 bases triades entre 6 possibles i pot repetir qualsevol base. Quantes cadenes diferents pot analitzar?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 5,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 7776,
+    "explicacio_final": "Poden analitzar 7.776 cadenes diferents de cinc bases permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Cada posició de la cadena pot ser qualsevol base.",
+        "Es poden repetir bases."
+      ],
+      "pas2": [
+        "Cada lloc admet qualsevol opció: variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 6, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "D12",
+    "nivell": "Difícil",
+    "titol": "Experiments amb reactius",
+    "enunciat": "En un laboratori es preparen quatre tubs etiquetats amb reactius triats entre 8 possibles, i un mateix reactiu pot aparèixer en diversos tubs. Quantes configuracions diferents pot provar el tècnic?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 8,
+    "m_correcte": 4,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 4096,
+    "explicacio_final": "Es poden preparar 4.096 configuracions diferents de quatre tubs permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Cada tub pot rebre qualsevol reactiu.",
+        "Es poden repetir reactius."
+      ],
+      "pas2": [
+        "Cada lloc admet qualsevol opció: variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 8, m = 4."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 8,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "D13",
+    "nivell": "Difícil",
+    "titol": "Equip d'investigació",
+    "enunciat": "Per a una missió polar s'han d'escollir 6 especialistes d'entre 12 candidats. De quantes maneres diferents es pot formar l'equip?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 12,
+    "m_correcte": 6,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 924,
+    "explicacio_final": "Es poden formar 924 equips diferents de sis especialistes.",
+    "pistes": {
+      "pas1": [
+        "Només importa qui viatja.",
+        "No es repeteix cap persona."
+      ],
+      "pas2": [
+        "Triar un grup sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 12, m = 6."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 12,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "D14",
+    "nivell": "Difícil",
+    "titol": "Biblioteca temàtica",
+    "enunciat": "Una biblioteca crea lots de 5 llibres d'entre una col·lecció de 11 novel·les per recomanar lectures d'estiu. Quants lots diferents es poden preparar?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 11,
+    "m_correcte": 5,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 462,
+    "explicacio_final": "Es poden preparar 462 lots diferents de cinc llibres.",
+    "pistes": {
+      "pas1": [
+        "Només importa quins llibres hi van, no l'ordre dins del lot.",
+        "No repeteixes cap títol."
+      ],
+      "pas2": [
+        "Escollir sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 11, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 11,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "D15",
+    "nivell": "Difícil",
+    "titol": "Jurat d'innovació",
+    "enunciat": "Un concurs de ciència forma jurats de 7 persones triades d'entre 15 experts. De quantes maneres diferents pot quedar configurat el jurat?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 15,
+    "m_correcte": 7,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 6435,
+    "explicacio_final": "Hi ha 6.435 jurats possibles amb set experts entre quinze.",
+    "pistes": {
+      "pas1": [
+        "Només importa qui forma el jurat.",
+        "No es repeteix cap expert."
+      ],
+      "pas2": [
+        "Escollir un grup sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 15, m = 7."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 15,
+        "m": 7
+      }
+    }
+  },
+  {
+    "id": "D16",
+    "nivell": "Difícil",
+    "titol": "Barreja de tes",
+    "enunciat": "Una botiga de tes ofereix 8 varietats i vol crear una llauna amb 5 cullerades en total, permetent repetir algun gust. Quantes barreges diferents pot dissenyar?",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 8,
+    "m_correcte": 5,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 792,
+    "explicacio_final": "Es poden dissenyar 792 barreges diferents de cinc cullerades permetent repetir varietats.",
+    "pistes": {
+      "pas1": [
+        "Només importa quines varietats hi ha.",
+        "Es poden repetir gustos."
+      ],
+      "pas2": [
+        "Triar amb repeticions possibles és una combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 8, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 8,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "D17",
+    "nivell": "Difícil",
+    "titol": "Còctels de fruita",
+    "enunciat": "Un bar de sucs prepara còctels amb 4 racions escollides d'entre 10 fruites i pot repetir els sabors que triï. Quants còctels diferents pot crear?",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 10,
+    "m_correcte": 4,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 715,
+    "explicacio_final": "Es poden crear 715 còctels diferents de quatre racions permetent repetir fruites.",
+    "pistes": {
+      "pas1": [
+        "Només compta quines fruites hi ha al got.",
+        "Es poden repetir fruites."
+      ],
+      "pas2": [
+        "Triar amb repetició és una combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 10, m = 4."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "D18",
+    "nivell": "Difícil",
+    "titol": "Safata de cargols",
+    "enunciat": "En un festival gastronòmic es prepara una safata amb 6 cargols cuinats amb espècies triades entre 9 opcions, i es pot repetir alguna espècia. Quantes safates diferents podria provar el jurat?",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 9,
+    "m_correcte": 6,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 3003,
+    "explicacio_final": "El jurat podria tastar 3.003 safates diferents amb sis cargols permetent repetir espècies.",
+    "pistes": {
+      "pas1": [
+        "El que importa és quines espècies hi ha a la safata.",
+        "Es poden repetir espècies."
+      ],
+      "pas2": [
+        "Triar amb repetició és una combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 9, m = 6."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "D19",
+    "nivell": "Difícil",
+    "titol": "Paraula STATISTICS",
+    "enunciat": "Un matemàtic vol fer pòsters amb totes les versions possibles de la paraula STATISTICS (3 S, 3 T, 2 I, A i C). Quantes paraules diferents pot escriure utilitzant totes les lletres?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 10,
+    "m_correcte": 10,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      3,
+      3,
+      2,
+      1,
+      1
+    ],
+    "resultat": 50400,
+    "explicacio_final": "Podem escriure STATISTICS de 50.400 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Hi ha lletres repetides (3 S, 3 T, 2 I).",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres: permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 10, multiplicitats 3,3,2,1,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 10
+      }
+    }
+  },
+  {
+    "id": "D20",
+    "nivell": "Difícil",
+    "titol": "Desfilada de 12 drons",
+    "enunciat": "En una demostració, 12 drons diferents han d'entrar a l'escenari un darrere l'altre. De quantes maneres diferents es pot veure la desfilada?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 12,
+    "m_correcte": 12,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 479001600,
+    "explicacio_final": "Els 12 drons es poden ordenar de 479.001.600 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Participen tots els drons.",
+        "Cada posició és única: permutació simple."
+      ],
+      "pas2": [
+        "Quan uses tots els elements, és una permutació simple."
+      ],
+      "pas3": [
+        "n = 12, m = 12."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 12,
+        "m": 12
+      }
+    }
+  },
+  {
+    "id": "D21",
+    "nivell": "Difícil",
+    "titol": "Projectes d'innovació",
+    "enunciat": "Un jurat ha d'atorgar cinc premis d'entre 15 projectes, assignant ordre de primer a cinquè. Quantes llistes de premiats diferents són possibles?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 15,
+    "m_correcte": 5,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 360360,
+    "explicacio_final": "Es poden fer 360.360 llistes ordenades de cinc premiats diferents.",
+    "pistes": {
+      "pas1": [
+        "Cada premi té lloc específic.",
+        "Cap projecte es repeteix."
+      ],
+      "pas2": [
+        "Alguns elements sense repeticions: variació simple."
+      ],
+      "pas3": [
+        "n = 15, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 15,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "D22",
+    "nivell": "Difícil",
+    "titol": "Mapa de recerca",
+    "enunciat": "Un equip ha de seleccionar 8 laboratoris d'entre 16 per compartir dades en un projecte global. De quantes maneres diferents poden formar el grup?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 16,
+    "m_correcte": 8,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 12870,
+    "explicacio_final": "Es poden formar 12.870 grups diferents de vuit laboratoris.",
+    "pistes": {
+      "pas1": [
+        "Només importa qui entra al grup.",
+        "No es repeteix laboratori."
+      ],
+      "pas2": [
+        "Sense ordre i sense repeticions: combinació simple."
+      ],
+      "pas3": [
+        "n = 16, m = 8."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 16,
+        "m": 8
+      }
+    }
+  },
+  {
+    "id": "D23",
+    "nivell": "Difícil",
+    "titol": "Codi de seguretat hexagonal",
+    "enunciat": "Un servidor usa un codi de 6 símbols triats entre 12 icones i es poden repetir icones. Quants codis diferents pot generar?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 12,
+    "m_correcte": 6,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 2985984,
+    "explicacio_final": "Es poden generar 2.985.984 codis diferents de sis símbols.",
+    "pistes": {
+      "pas1": [
+        "Cada posició accepta qualsevol de les 12 icones.",
+        "Es poden repetir icones."
+      ],
+      "pas2": [
+        "Cada lloc admet qualsevol opció: variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 12, m = 6."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 12,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "D24",
+    "nivell": "Difícil",
+    "titol": "Barreja d'espècies rares",
+    "enunciat": "Un xef vol preparar un pot amb 7 cullerades d'entre 9 espècies rares, permetent repetir-ne algunes. Quantes barreges diferents pot dissenyar?",
+    "ordre": false,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 9,
+    "m_correcte": 7,
+    "tipus": "combinacio_amb_repeticio",
+    "formula_id": "combinacio_amb_repeticio",
+    "resultat": 6435,
+    "explicacio_final": "Pot dissenyar 6.435 barreges diferents de set cullerades permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Només importa quines espècies hi ha.",
+        "Es poden repetir espècies."
+      ],
+      "pas2": [
+        "Sense ordre amb repeticions: combinació amb repetició."
+      ],
+      "pas3": [
+        "n = 9, m = 7."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_amb_repeticio",
+        "formula_id": "combinacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 7
+      }
+    }
+  },
+  {
+    "id": "D25",
+    "nivell": "Difícil",
+    "titol": "Paraula MARMELADA",
+    "enunciat": "Un artesà vol imprimir totes les variants possibles de MARMELADA (3 A, 2 M, i la resta úniques) per a etiquetes d'un lot. Quantes paraules diferents pot fer?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 9,
+    "m_correcte": 9,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      3,
+      2,
+      1,
+      1,
+      1,
+      1
+    ],
+    "resultat": 30240,
+    "explicacio_final": "Podem escriure MARMELADA de 30.240 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "La A apareix tres vegades i la M, dues.",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres: permutació amb repetició."
+      ],
+      "pas3": [
+        "n = 9, multiplicitats 3,2,1,1,1,1."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 9
+      }
+    }
+  },
+  {
+    "id": "D26",
+    "nivell": "Difícil",
+    "titol": "Equip de set missions",
+    "enunciat": "D'una llista de 14 agents es trien 7 per cobrir set rols diferents en una missió global. De quantes maneres es poden assignar els rols?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 14,
+    "m_correcte": 7,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 17297280,
+    "explicacio_final": "Els set rols es poden assignar de 17.297.280 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Cada rol és únic.",
+        "Cap agent repeteix rol."
+      ],
+      "pas2": [
+        "Alguns elements sense repeticions: variació simple."
+      ],
+      "pas3": [
+        "n = 14, m = 7."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 14,
+        "m": 7
+      }
+    }
+  },
+  {
+    "id": "D27",
+    "nivell": "Difícil",
+    "titol": "Selecció de 6 investigadors",
+    "enunciat": "Per a una beca europea s'han de triar 6 investigadors d'entre 18 candidats. Quantes comissions diferents poden sortir?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 18,
+    "m_correcte": 6,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 18564,
+    "explicacio_final": "Es poden formar 18.564 comissions diferents de sis investigadors.",
+    "pistes": {
+      "pas1": [
+        "Només importa qui hi és.",
+        "No es repeteix cap candidat."
+      ],
+      "pas2": [
+        "Sense ordre ni repetició: combinació simple."
+      ],
+      "pas3": [
+        "n = 18, m = 6."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 18,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "D28",
+    "nivell": "Difícil",
+    "titol": "Codis d'antenes",
+    "enunciat": "Un observatori genera codis de 5 números per activar grups d'antenes, triant cada número entre 20 opcions i permetent repeticions. Quants codis diferents pot generar?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 20,
+    "m_correcte": 5,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 3200000,
+    "explicacio_final": "Es poden generar 3.200.000 codis diferents de cinc números permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Cada posició admet qualsevol número de 20.",
+        "Es poden repetir números."
+      ],
+      "pas2": [
+        "Cada lloc accepta qualsevol opció: variació amb repetició (n^m)."
+      ],
+      "pas3": [
+        "n = 20, m = 5."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 20,
+        "m": 5
+      }
+    }
+  }
+]

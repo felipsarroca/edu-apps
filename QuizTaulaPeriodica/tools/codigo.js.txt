@@ -1,0 +1,38 @@
+`
+  function doPost(e) {
+    try {
+      // En enviar com a FormData, les dades estan a e.parameter
+      const dades = e.parameter;
+
+      const ss = SpreadsheetApp.openById("1-W01-KZ1v7PVAQc72pHth9h-CkAAcDBJrBqqsfUd8ZU");
+      const sheet = ss.getSheetByName("Resultats");
+
+      if (!sheet) {
+        // Aquest error només es veurà als logs de l'script
+        Logger.log("Error: No s'ha trobat la pestanya 'Resultats'.");
+        throw new Error("No s'ha trobat la pestanya 'Resultats'.");
+      }
+
+      sheet.appendRow([
+        new Date(),
+        dades.nom || "",
+        dades.puntuacio || "",
+        dades.nivell || "",
+        dades.temps || ""
+      ]);
+
+      // Aquesta resposta no la pot llegir el navegador en mode no-cors,
+      // però serveix per confirmar als logs que l'script ha acabat bé.
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "ok" }))
+        .setMimeType(ContentService.MimeType.JSON);
+
+    } catch (err) {
+      Logger.log("S'ha produït un error a doPost: " + err.toString());
+      // CORRECCIÓ FINAL: Canviat Content per ContentService
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "error", missatge: String(err) }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+  `
