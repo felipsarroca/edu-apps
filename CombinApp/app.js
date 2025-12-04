@@ -567,6 +567,7 @@ function renderStep4() {
     return;
   }
   const { result, substitution, development } = calculate(state.userAnswers.formula_id, n, m, multiplicitats);
+  const developmentParts = splitDevelopmentLatex(development);
   state.computedResult = result;
   const expected = state.mode === "A" ? state.selectedProblem?.resultat : null;
   const correcte = expected !== null && expected !== undefined ? result === BigInt(expected) : null;
@@ -576,7 +577,11 @@ function renderStep4() {
   elements.calculationResults.innerHTML = `
     <div class="card accent-3"><h3>Fórmula aplicada</h3><div class="katex-display">${katex.renderToString(formula.expressio, { displayMode: true })}</div><p>${formula.descripcio}</p></div>
     <div class="card accent-4"><h3>Substitució</h3><div class="katex-display">${katex.renderToString(substitution, { displayMode: true })}</div></div>
-    <div class="card accent-1"><h3>Desenvolupament</h3><div class="katex-display">${katex.renderToString(development, { displayMode: true })}</div></div>
+    <div class="card accent-1"><h3>Desenvolupament</h3>${
+      developmentParts
+        .map((part, idx) => `<div class="katex-display development-part" data-chunk="${idx}">${katex.renderToString(part, { displayMode: true })}</div>`)
+        .join("")
+    }</div>
     <div class="card accent-2 result-card"><div><p class="eyebrow">Resultat</p><div class="result-number">${result.toString()}</div></div>${correcte !== null ? `<div class="pill ${correcte ? "ok" : "alert"}">${correcte ? "Coincideix amb la solució" : "No coincideix"}</div>` : ""}</div>
     <div class="card accent-5 explanation"><h3>Resposta final</h3><p>${explicacio}</p></div>`;
 }
@@ -613,6 +618,31 @@ function powerExpansionLatex(base, exponent) {
   if (exponent <= 1) return `${base}`;
   if (exponent <= 6) return Array(exponent).fill(base).join(" \\times ");
   return `${base} \\times ${base} \\times ${base} \\times \\cdots \\text{ (${exponent} cops)}`;
+}
+
+function splitDevelopmentLatex(development) {
+  const maxLen = 140;
+  if (!development || development.length <= maxLen) return [development];
+  const separator = development.includes("\\times") ? " \\times " : " ";
+  const tokens = development.split(separator);
+  const first = [];
+  const second = [];
+  let overflow = false;
+  tokens.forEach((token) => {
+    if (overflow) {
+      second.push(token);
+      return;
+    }
+    const candidate = first.length ? `${first.join(separator)}${separator}${token}` : token;
+    if (candidate.length > maxLen) {
+      overflow = true;
+      second.push(token);
+    } else {
+      first.push(token);
+    }
+  });
+  if (!second.length) return [development];
+  return [first.join(separator), second.join(separator)];
 }
 
 function formatBigInt(bi) {

@@ -255,6 +255,7 @@ select:focus, input:focus { outline: 2px solid var(--secondary); }
 
 #calculation-results .katex-display { padding: 12px; background: #f3f4f6; border-radius: 12px; margin: 8px 0; }
 #calculation-results .card.accent-1 .katex-display { font-size: 0.85em; }
+#calculation-results .development-part + .development-part { margin-top: 16px; }
 .result-card { display: flex; align-items: center; justify-content: space-between; }
 .result-number { font-size: 2.2rem; font-weight: 700; }
 
