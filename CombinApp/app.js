@@ -621,14 +621,10 @@ function formatBigInt(bi) {
 
 function formatDevelopment(parts) {
   const joined = parts.join(" = ");
-  if (joined.length <= 110) return joined;
-  if (parts.length <= 2) return joined;
-  const lines = [];
-  lines.push(`${parts[0]} = ${parts[1]}`);
-  for (let i = 2; i < parts.length; i++) {
-    lines.push(`= ${parts[i]}`);
-  }
-  return lines.join(" \\\\ ");
+  if (joined.length <= 110 || parts.length <= 2) return joined;
+  const lines = [`${parts[0]} = ${parts[1]}`];
+  for (let i = 2; i < parts.length; i++) lines.push(`= ${parts[i]}`);
+  return `\\begin{aligned} ${lines.join(" \\\\ ")} \\end{aligned}`;
 }
 
 function gcd(a, b) {
