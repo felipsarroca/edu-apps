@@ -619,6 +619,18 @@ function formatBigInt(bi) {
   return bi.toString();
 }
 
+function formatDevelopment(parts) {
+  const joined = parts.join(" = ");
+  if (joined.length <= 90) return joined;
+  if (parts.length <= 2) return joined;
+  const lines = [];
+  lines.push(`${parts[0]} = ${parts[1]}`);
+  for (let i = 2; i < parts.length; i++) {
+    lines.push(`= ${parts[i]}`);
+  }
+  return lines.join(" \\\\ ");
+}
+
 function gcd(a, b) {
   let x = Math.abs(Number(a));
   let y = Math.abs(Number(b));
@@ -720,7 +732,7 @@ function calculate(formulaId, n, m, multiplicitats = []) {
     case "permutacio_simple":
       result = factorial(n);
       substitution = `P_{${n}} = ${n}!`;
-      development = `${n}! = ${factorialExpansionLatex(n)} = ${formatBigInt(result)}`;
+      development = formatDevelopment([`${n}!`, factorialExpansionLatex(n), formatBigInt(result)]);
       break;
     case "permutacio_amb_repeticio": {
       const product = multiplicitats.reduce((acc, val) => acc * factorial(parseInt(val, 10)), BigInt(1));
@@ -730,35 +742,59 @@ function calculate(formulaId, n, m, multiplicitats = []) {
         ? multiplicitats.map((v) => `(${factorialExpansionLatex(parseInt(v, 10))})`).join(" \\cdot ")
         : "1";
       const cancellation = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPart = cancellation ? ` = ${cancellation.cancelled} = ${cancellation.simplified}` : "";
-      development = `\\dfrac{${n}!}{${multiplicitats.map((v) => `${v}!`).join(" \\cdot ") || "1"}} = \\dfrac{${factorialExpansionLatex(n)}}{${denominatorExpanded}}${cancelPart} = \\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(product)}} = ${formatBigInt(result)}`;
+      const cancelPart = cancellation ? [`${cancellation.cancelled}`, `${cancellation.simplified}`] : [];
+      development = formatDevelopment([
+        `\\dfrac{${n}!}{${multiplicitats.map((v) => `${v}!`).join(" \\cdot ") || "1"}}`,
+        `\\dfrac{${factorialExpansionLatex(n)}}{${denominatorExpanded}}`,
+        ...cancelPart,
+        `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(product)}}`,
+        `${formatBigInt(result)}`
+      ]);
       break;
     }
     case "variacio_simple":
       result = n >= m ? factorial(n) / factorial(n - m) : BigInt(0);
       substitution = `V_{${n},${m}} = \\dfrac{${n}!}{(${n}-${m})!}`;
       const cancellationV = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPartV = cancellationV ? ` = ${cancellationV.cancelled} = ${cancellationV.simplified}` : "";
-      development = `\\dfrac{${n}!}{(${n}-${m})!} = \\dfrac{${factorialExpansionLatex(n)}}{${factorialExpansionLatex(n - m)}}${cancelPartV} = \\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(n - m))}} = ${formatBigInt(result)}`;
+      const cancelPartV = cancellationV ? [`${cancellationV.cancelled}`, `${cancellationV.simplified}`] : [];
+      development = formatDevelopment([
+        `\\dfrac{${n}!}{(${n}-${m})!}`,
+        `\\dfrac{${factorialExpansionLatex(n)}}{${factorialExpansionLatex(n - m)}}`,
+        ...cancelPartV,
+        `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(n - m))}}`,
+        `${formatBigInt(result)}`
+      ]);
       break;
     case "variacio_amb_repeticio":
       result = BigInt(n) ** BigInt(m);
       substitution = `VR_{${n},${m}} = ${n}^{${m}}`;
-      development = `${n}^{${m}} = ${powerExpansionLatex(n, m)} = ${formatBigInt(result)}`;
+      development = formatDevelopment([`${n}^{${m}}`, powerExpansionLatex(n, m), formatBigInt(result)]);
       break;
     case "combinacio_simple":
       result = factorial(n) / (factorial(m) * factorial(n - m));
       substitution = `C_{${n},${m}} = \\dfrac{${n}!}{${m}! \\cdot (${n}-${m})!}`;
       const cancellationC = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPartC = cancellationC ? ` = ${cancellationC.cancelled} = ${cancellationC.simplified}` : "";
-      development = `\\dfrac{${n}!}{${m}! \\cdot (${n}-${m})!} = \\dfrac{${factorialExpansionLatex(n)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - m)})}${cancelPartC} = \\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - m))}} = ${formatBigInt(result)}`;
+      const cancelPartC = cancellationC ? [`${cancellationC.cancelled}`, `${cancellationC.simplified}`] : [];
+      development = formatDevelopment([
+        `\\dfrac{${n}!}{${m}! \\cdot (${n}-${m})!}`,
+        `\\dfrac{${factorialExpansionLatex(n)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - m)})}`,
+        ...cancelPartC,
+        `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - m))}}`,
+        `${formatBigInt(result)}`
+      ]);
       break;
     case "combinacio_amb_repeticio":
       result = factorial(n + m - 1) / (factorial(m) * factorial(n - 1));
       substitution = `CR_{${n},${m}} = \\dfrac{(${n}+${m}-1)!}{${m}! \\cdot (${n}-1)!}`;
       const cancellationCR = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPartCR = cancellationCR ? ` = ${cancellationCR.cancelled} = ${cancellationCR.simplified}` : "";
-      development = `\\dfrac{(${n}+${m}-1)!}{${m}! \\cdot (${n}-1)!} = \\dfrac{${factorialExpansionLatex(n + m - 1)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - 1)})}${cancelPartCR} = \\dfrac{${formatBigInt(factorial(n + m - 1))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - 1))}} = ${formatBigInt(result)}`;
+      const cancelPartCR = cancellationCR ? [`${cancellationCR.cancelled}`, `${cancellationCR.simplified}`] : [];
+      development = formatDevelopment([
+        `\\dfrac{(${n}+${m}-1)!}{${m}! \\cdot (${n}-1)!}`,
+        `\\dfrac{${factorialExpansionLatex(n + m - 1)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - 1)})}`,
+        ...cancelPartCR,
+        `\\dfrac{${formatBigInt(factorial(n + m - 1))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - 1))}}`,
+        `${formatBigInt(result)}`
+      ]);
       break;
   }
   return { result, substitution, development };
