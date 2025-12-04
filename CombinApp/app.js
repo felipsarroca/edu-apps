@@ -671,7 +671,7 @@ function renderLatexSafely(latex) {
 
 function highlightResultNumbers(text, fallbackNumber = null) {
   if (!text) return "";
-  let highlighted = text.replace(/(\\d[\\d\\.,]*)/g, '<span class="result-highlight">$1</span>');
+  let highlighted = text.replace(/(\d[\d.,]*)/g, '<span class="result-highlight">$1</span>');
   if (!highlighted.includes("result-highlight") && fallbackNumber !== null && fallbackNumber !== undefined) {
     const formatted = formatBigInt(fallbackNumber);
     highlighted += ` <span class="result-highlight">${formatted}</span>`;
