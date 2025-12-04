@@ -1207,5 +1207,98 @@
         "m": 5
       }
     }
+  },
+  {
+    "id": "D29",
+    "nivell": "Difícil",
+    "titol": "Alineació de futbol",
+    "enunciat": "Un entrenador disposa de 22 jugadors per formar un equip de futbol. Quantes alineacions de 11 jugadors pot fer?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 22,
+    "m_correcte": 11,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 705432,
+    "explicacio_final": "Es poden fer 705.432 alineacions diferents triant 11 jugadors entre 22.",
+    "pistes": {
+      "pas1": [
+        "Importa qui juga, no l'ordre dins del camp.",
+        "Cap jugador es repeteix."
+      ],
+      "pas2": [
+        "Triar un grup sense repeticions és una combinació simple."
+      ],
+      "pas3": [
+        "n = 22, m = 11."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 22,
+        "m": 11
+      }
+    }
+  },
+  {
+    "id": "D30",
+    "nivell": "Difícil",
+    "titol": "Paraula MATEMÀTIQUES",
+    "enunciat": "Quantes paraules distintes es poden formar amb les lletres de MATEMÀTIQUES?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 11,
+    "m_correcte": 11,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      3,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1
+    ],
+    "resultat": 1663200,
+    "explicacio_final": "Es poden formar 1.663.200 paraules diferents amb les lletres de MATEMÀTIQUES.",
+    "pistes": {
+      "pas1": [
+        "Les lletres A apareixen 3 cops; M i T apareixen 2 cops cadascuna.",
+        "Fas servir totes les lletres."
+      ],
+      "pas2": [
+        "Amb repeticions i totes les lletres, uses una permutació amb repeticó: 11! dividit pels factorials de cada multiplicitat."
+      ],
+      "pas3": [
+        "11! / (3!·2!·2!) = 1.663.200."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 11,
+        "m": 11
+      }
+    }
   }
 ]

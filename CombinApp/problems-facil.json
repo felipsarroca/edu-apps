@@ -1194,5 +1194,382 @@
         "m": 5
       }
     }
+  },
+  {
+    "id": "F29",
+    "nivell": "Fàcil",
+    "titol": "Quadrilàters d'un pentàgon",
+    "enunciat": "Quants quadrilàters es poden formar amb els vèrtexs d'un pentàgon regular?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 4,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 5,
+    "explicacio_final": "Amb cinc vèrtexs, es poden triar quadrilàters de 5 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Només importa quin conjunt de quatre vèrtexs tries.",
+        "No repeteixes cap vèrtex."
+      ],
+      "pas2": [
+        "Escollir 4 d'entre 5 sense ordre és una combinació simple."
+      ],
+      "pas3": [
+        "n = 5 vèrtexs, m = 4 vèrtexs del quadrilàter."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "F30",
+    "nivell": "Fàcil",
+    "titol": "Família al cinema",
+    "enunciat": "Una família, formada pel pare, la mare i tres fills, va al cinema. S'asseuen en cinc butaques consecutives. De quantes maneres diferents poden asseure's?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 5,
+    "m_correcte": 5,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 120,
+    "explicacio_final": "Es poden asseure de 120 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Utilitzes les 5 persones i cada lloc és diferent.",
+        "L'ordre d'asseure's altera el resultat."
+      ],
+      "pas2": [
+        "Col·locar totes les persones és una permutació simple."
+      ],
+      "pas3": [
+        "n = 5 persones, m = 5 seients."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "F31",
+    "nivell": "Fàcil",
+    "titol": "Tres persones en sis cadires",
+    "enunciat": "De quantes maneres es poden asseure tres persones en sis cadires?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 3,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 120,
+    "explicacio_final": "Hi ha 120 formes d'ocupar tres cadires amb sis persones possibles.",
+    "pistes": {
+      "pas1": [
+        "Cada cadira és un lloc diferent.",
+        "No repeteixes persones."
+      ],
+      "pas2": [
+        "Ocupar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 6 persones, m = 3 cadires ocupades."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F32",
+    "nivell": "Fàcil",
+    "titol": "President i secretari",
+    "enunciat": "De quantes maneres es poden cobrir els càrrecs de president i secretari d'una comunitat de veïns si hi ha 10 veïns disponibles?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 10,
+    "m_correcte": 2,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 90,
+    "explicacio_final": "Es poden assignar els dos càrrecs de 90 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Els dos rols són diferents.",
+        "No es pot repetir persona."
+      ],
+      "pas2": [
+        "Assignar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 10 veïns, m = 2 càrrecs."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F33",
+    "nivell": "Fàcil",
+    "titol": "Paraula SOBRE",
+    "enunciat": "Quantes paraules es poden escriure amb les lletres de SOBRE sense repetir cap lletra?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": true,
+    "n_correcte": 5,
+    "m_correcte": 5,
+    "tipus": "permutacio_simple",
+    "formula_id": "permutacio_simple",
+    "resultat": 120,
+    "explicacio_final": "Les lletres de SOBRE es poden reordenar de 120 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Fas servir totes les lletres i cada posició és única."
+      ],
+      "pas2": [
+        "Col·locar tots els elements és una permutació simple."
+      ],
+      "pas3": [
+        "n = 5 lletres, m = 5 posicions."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_simple",
+        "formula_id": "permutacio_simple"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 5
+      }
+    }
+  },
+  {
+    "id": "F34",
+    "nivell": "Fàcil",
+    "titol": "Codi Braille",
+    "enunciat": "El sistema Braille es basa en combinacions de punt en relleu o espai buit, en grups ordenats de sis posicions. Quantes ordenacions possibles hi ha?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 2,
+    "m_correcte": 6,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 64,
+    "explicacio_final": "Hi ha 64 patrons diferents de sis punts o espais en Braille.",
+    "pistes": {
+      "pas1": [
+        "Cada posició pot ser punt o espai.",
+        "Es poden repetir les opcions."
+      ],
+      "pas2": [
+        "Cada lloc admet qualsevol opció: és una variació amb repeticó (n^m)."
+      ],
+      "pas3": [
+        "n = 2 opcions, m = 6 posicions."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 2,
+        "m": 6
+      }
+    }
+  },
+  {
+    "id": "F35",
+    "nivell": "Fàcil",
+    "titol": "Dos premis de ràdio",
+    "enunciat": "En un concurs de ràdio hi participen 7 persones i s'atorguen dos premis diferents (una enciclopèdia i una ràdio). Si ningú pot rebre els dos premis, quantes distribucions són possibles?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 7,
+    "m_correcte": 2,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 42,
+    "explicacio_final": "Es poden repartir els dos premis de 42 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Els premis tenen llocs diferents.",
+        "Cap persona repeteix premi."
+      ],
+      "pas2": [
+        "Assignar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 7 participants, m = 2 premis."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 7,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "F36",
+    "nivell": "Fàcil",
+    "titol": "Nombres senars de tres xifres",
+    "enunciat": "Amb les xifres senars (1, 3, 5, 7 i 9), quants nombres de tres xifres es poden formar si es poden repetir xifres?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 5,
+    "m_correcte": 3,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 125,
+    "explicacio_final": "Es poden formar 125 nombres de tres xifres amb xifres senars permetent repeticions.",
+    "pistes": {
+      "pas1": [
+        "Cada posició pot ser qualsevol de les 5 xifres senars.",
+        "Es poden repetir xifres."
+      ],
+      "pas2": [
+        "Cada lloc admet qualsevol opció: variació amb repeticó (n^m)."
+      ],
+      "pas3": [
+        "n = 5, m = 3."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 5,
+        "m": 3
+      }
+    }
+  },
+  {
+    "id": "F37",
+    "nivell": "Fàcil",
+    "titol": "Delegat i subdelegat",
+    "enunciat": "Sabent que els càrrecs de delegat i subdelegat no poden ser coberts per la mateixa persona, quantes possibilitats hi ha per assignar-los en una classe de 22 alumnes?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 22,
+    "m_correcte": 2,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 462,
+    "explicacio_final": "Es poden assignar els dos càrrecs de 462 maneres diferents.",
+    "pistes": {
+      "pas1": [
+        "Delegat i subdelegat són rols diferents.",
+        "No es pot repetir alumne."
+      ],
+      "pas2": [
+        "Assignar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 22, m = 2."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 22,
+        "m": 2
+      }
+    }
   }
 ]

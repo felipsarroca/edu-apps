@@ -1206,5 +1206,262 @@
         "m": 3
       }
     }
+  },
+  {
+    "id": "M29",
+    "nivell": "Mitjà",
+    "titol": "Seqüències curtes en Morse",
+    "enunciat": "L'alfabet Morse utilitza els signes punt (.) i guió (-). Fent servir com a màxim quatre signes, quantes seqüències diferents pots formar?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": false,
+    "n_correcte": 2,
+    "m_correcte": 4,
+    "tipus": "variacio_amb_repeticio",
+    "formula_id": "variacio_amb_repeticio",
+    "resultat": 30,
+    "explicacio_final": "Es poden formar 30 seqüències diferents sumant totes les longituds de 1 a 4 signes.",
+    "pistes": {
+      "pas1": [
+        "Cada posició pot ser punt o guió.",
+        "Les longituds permeses són 1, 2, 3 o 4 signes."
+      ],
+      "pas2": [
+        "Per a cada longitud k, tens 2^k opcions i les sumes totes."
+      ],
+      "pas3": [
+        "2^1 + 2^2 + 2^3 + 2^4 = 30."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_amb_repeticio",
+        "formula_id": "variacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 2,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "M30",
+    "nivell": "Mitjà",
+    "titol": "Senyals amb 4 banderes",
+    "enunciat": "Un vaixell té deu banderes diferents per fer senyals i cada senyal es forma col·locant 4 banderes en un màstil. Quantes senyals diferents poden fer?",
+    "ordre": true,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 10,
+    "m_correcte": 4,
+    "tipus": "variacio_simple",
+    "formula_id": "variacio_simple",
+    "resultat": 5040,
+    "explicacio_final": "Es poden formar 5.040 senyals diferents col·locant 4 banderes entre 10 sense repetir.",
+    "pistes": {
+      "pas1": [
+        "Cada lloc al màstil és diferent.",
+        "No repeteixes bandera."
+      ],
+      "pas2": [
+        "Ocupar alguns llocs sense repeticions és una variació simple."
+      ],
+      "pas3": [
+        "n = 10, m = 4."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "variacio_simple",
+        "formula_id": "variacio_simple"
+      },
+      "pas3": {
+        "n": 10,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "M31",
+    "nivell": "Mitjà",
+    "titol": "Diàlegs sense intèrpret",
+    "enunciat": "A un congrés hi assisteixen 60 persones, de les quals 40 només parlen anglès i 20 només alemany. Quants diàlegs es poden establir sense intèrpret?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 60,
+    "m_correcte": 2,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 970,
+    "explicacio_final": "Es poden fer 970 diàlegs: 780 entre anglòfons i 190 entre germanoparlants.",
+    "pistes": {
+      "pas1": [
+        "Només es poden entendre persones del mateix idioma.",
+        "Cada diàleg és entre dues persones."
+      ],
+      "pas2": [
+        "Calcula C(40,2) per l'anglès i C(20,2) per l'alemany."
+      ],
+      "pas3": [
+        "C(40,2) = 780 i C(20,2) = 190; els sumes."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 60,
+        "m": 2
+      }
+    }
+  },
+  {
+    "id": "M32",
+    "nivell": "Mitjà",
+    "titol": "Viatge amb dos cotxes",
+    "enunciat": "Vuit amics van de viatge amb dos cotxes i decideixen anar-hi 4 en cada vehicle. De quantes maneres poden repartir-se si tots poden conduir?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 8,
+    "m_correcte": 4,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 70,
+    "explicacio_final": "Es poden distribuir en els dos cotxes de 70 maneres diferents (triant qui va al primer).",
+    "pistes": {
+      "pas1": [
+        "Només importa qui puja a cada cotxe, no l'ordre dels seients.",
+        "Els cotxes es consideren diferents."
+      ],
+      "pas2": [
+        "Esculls 4 persones per al primer cotxe; la resta van a l'altre."
+      ],
+      "pas3": [
+        "C(8,4) = 70."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 8,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "M33",
+    "nivell": "Mitjà",
+    "titol": "Llibres de matemàtiques i física",
+    "enunciat": "En un prestatge hi ha 6 llibres de matemàtiques i 3 de física. Volem agafar 2 llibres de matemàtiques i 2 de física. De quantes maneres ho podem fer?",
+    "ordre": false,
+    "repeticio": false,
+    "tots": false,
+    "n_correcte": 6,
+    "m_correcte": 4,
+    "tipus": "combinacio_simple",
+    "formula_id": "combinacio_simple",
+    "resultat": 45,
+    "explicacio_final": "Hi ha 45 maneres diferents d'escollir dos llibres de cada matèria.",
+    "pistes": {
+      "pas1": [
+        "Separat: tria 2 entre els 6 de mates i 2 entre els 3 de física.",
+        "No importa l'ordre de cada parella."
+      ],
+      "pas2": [
+        "Multiplica les combinacions de cada bloc: C(6,2) * C(3,2)."
+      ],
+      "pas3": [
+        "C(6,2) = 15 i C(3,2) = 3; 15·3 = 45."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": false,
+        "repeticio": false,
+        "tots": false
+      },
+      "pas2": {
+        "tipus": "combinacio_simple",
+        "formula_id": "combinacio_simple"
+      },
+      "pas3": {
+        "n": 6,
+        "m": 4
+      }
+    }
+  },
+  {
+    "id": "M34",
+    "nivell": "Mitjà",
+    "titol": "Senyals amb banderes de colors",
+    "enunciat": "En el pal de senyals d'un vaixell es poden hissar tres banderes vermelles, dues de blaves i quatre de verdes. Quantes senyals diferents poden indicar col·locant les nou banderes?",
+    "ordre": true,
+    "repeticio": true,
+    "tots": true,
+    "n_correcte": 9,
+    "m_correcte": 9,
+    "tipus": "permutacio_amb_repeticio",
+    "formula_id": "permutacio_amb_repeticio",
+    "multiplicitats": [
+      3,
+      2,
+      4
+    ],
+    "resultat": 1260,
+    "explicacio_final": "Es poden formar 1.260 senyals diferents amb les 9 banderes repetides per colors.",
+    "pistes": {
+      "pas1": [
+        "Hi ha repeticions: 3 vermelles, 2 blaves, 4 verdes.",
+        "Fas servir totes les banderes."
+      ],
+      "pas2": [
+        "Amb repeticions i tots els elements, uses una permutació amb repeticó (n! dividit pels factorials de cada multiplicitat)."
+      ],
+      "pas3": [
+        "9! / (3!·2!·4!) = 1.260."
+      ]
+    },
+    "solucions_parcials": {
+      "pas1": {
+        "ordre": true,
+        "repeticio": true,
+        "tots": true
+      },
+      "pas2": {
+        "tipus": "permutacio_amb_repeticio",
+        "formula_id": "permutacio_amb_repeticio"
+      },
+      "pas3": {
+        "n": 9,
+        "m": 9
+      }
+    }
   }
 ]
