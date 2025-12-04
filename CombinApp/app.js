@@ -579,7 +579,7 @@ function renderStep4() {
     <div class="card accent-4"><h3>Substitució</h3><div class="katex-display">${katex.renderToString(substitution, { displayMode: true })}</div></div>
     <div class="card accent-1"><h3>Desenvolupament</h3>${
       developmentParts
-        .map((part, idx) => `<div class="katex-display development-part" data-chunk="${idx}">${katex.renderToString(part, { displayMode: true })}</div>`)
+        .map((part, idx) => `<div class="katex-display development-part" data-chunk="${idx}">${renderLatexSafely(part)}</div>`)
         .join("")
     }</div>
     <div class="card accent-2 result-card"><div><p class="eyebrow">Resultat</p><div class="result-number">${result.toString()}</div></div>${correcte !== null ? `<div class="pill ${correcte ? "ok" : "alert"}">${correcte ? "Coincideix amb la solució" : "No coincideix"}</div>` : ""}</div>
@@ -623,26 +623,33 @@ function powerExpansionLatex(base, exponent) {
 function splitDevelopmentLatex(development) {
   const maxLen = 140;
   if (!development || development.length <= maxLen) return [development];
-  const separator = development.includes("\\times") ? " \\times " : " ";
-  const tokens = development.split(separator);
-  const first = [];
-  const second = [];
-  let overflow = false;
-  tokens.forEach((token) => {
-    if (overflow) {
-      second.push(token);
-      return;
-    }
-    const candidate = first.length ? `${first.join(separator)}${separator}${token}` : token;
+  const separator = " = ";
+  if (!development.includes(separator)) return [development];
+  const parts = development.split(separator);
+  let first = parts[0];
+  let splitIndex = null;
+  for (let i = 1; i < parts.length; i++) {
+    const candidate = `${first}${separator}${parts[i]}`;
     if (candidate.length > maxLen) {
-      overflow = true;
-      second.push(token);
-    } else {
-      first.push(token);
+      splitIndex = i;
+      break;
     }
-  });
-  if (!second.length) return [development];
-  return [first.join(separator), second.join(separator)];
+    first = candidate;
+  }
+  if (splitIndex === null) return [development];
+  const firstPart = parts.slice(0, splitIndex).join(separator);
+  const secondPart = `= ${parts.slice(splitIndex).join(separator)}`;
+  return [firstPart, secondPart];
+}
+
+function renderLatexSafely(latex) {
+  if (latex === undefined || latex === null) return "";
+  try {
+    return katex.renderToString(latex, { displayMode: true });
+  } catch (error) {
+    console.error("Error renderitzant KaTeX:", error);
+    return String(latex);
+  }
 }
 
 function formatBigInt(bi) {
