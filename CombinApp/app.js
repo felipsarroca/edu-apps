@@ -570,10 +570,10 @@ function renderStep4() {
   const developmentParts = splitDevelopmentLatex(development);
   state.computedResult = result;
   const expected = state.mode === "A" ? state.selectedProblem?.resultat : null;
-  const correcte = expected !== null && expected !== undefined ? result === BigInt(expected) : null;
   const explicacio = state.mode === "A" && state.selectedProblem?.explicacio_final
     ? state.selectedProblem.explicacio_final
     : buildNaturalExplanation(n, m, formula.nom, result);
+  const formattedResult = formatBigInt(result);
   elements.calculationResults.innerHTML = `
     <div class="card accent-3"><h3>Fórmula aplicada</h3><div class="katex-display">${katex.renderToString(formula.expressio, { displayMode: true })}</div><p>${formula.descripcio}</p></div>
     <div class="card accent-4"><h3>Substitució</h3><div class="katex-display">${katex.renderToString(substitution, { displayMode: true })}</div></div>
@@ -582,7 +582,7 @@ function renderStep4() {
         .map((part, idx) => `<div class="katex-display development-part" data-chunk="${idx}">${renderLatexSafely(part)}</div>`)
         .join("")
     }</div>
-    <div class="card accent-2 result-card"><div><p class="eyebrow">Resultat</p><div class="result-number">${result.toString()}</div></div>${correcte !== null ? `<div class="pill ${correcte ? "ok" : "alert"}">${correcte ? "Coincideix amb la solució" : "No coincideix"}</div>` : ""}</div>
+    <div class="card accent-2 result-card"><div><p class="eyebrow">Resultat</p><div class="result-number">${formattedResult}</div></div></div>
     <div class="card accent-5 explanation"><h3>Resposta final</h3><p>${explicacio}</p></div>`;
 }
 
@@ -670,7 +670,9 @@ function renderLatexSafely(latex) {
 }
 
 function formatBigInt(bi) {
-  return bi.toString();
+  if (bi === undefined || bi === null) return "";
+  const str = bi.toString();
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
 function gcd(a, b) {
@@ -831,7 +833,9 @@ function buildNaturalExplanation(n, m, tipus, result) {
   const fraseBase = ordre ? "L'ordre importa" : "L'ordre no importa";
   const fraseRep = repeticio ? "es permet repetir elements" : "no es repeteixen elements";
   const fraseTots = tots ? "es fan servir tots els elements" : "només se'n prenen alguns";
-  const resultat = result ? `Hi ha ${formatBigInt(result)} resultats possibles.` : "";
+  const resultat = result
+    ? `Hi ha <span class="result-highlight">${formatBigInt(result)}</span> resultats possibles.`
+    : "";
   return [`Treballem amb n = ${n} i m = ${m}.`, `${fraseBase}, ${fraseRep} i ${fraseTots}.`, `Això correspon a: ${tipus}.`, resultat]
     .filter(Boolean)
     .join(" ");
