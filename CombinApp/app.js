@@ -628,7 +628,7 @@ function formatDevelopment(parts) {
   for (let i = 2; i < parts.length; i++) {
     lines.push(`= ${parts[i]}`);
   }
-  return lines.join(" \\\\[6pt] ");
+  return lines.join(" \\\\ ");
 }
 
 function gcd(a, b) {
