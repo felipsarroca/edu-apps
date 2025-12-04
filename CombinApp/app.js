@@ -621,25 +621,42 @@ function powerExpansionLatex(base, exponent) {
 }
 
 function splitDevelopmentLatex(development) {
-  const maxLen = 140;
+  const maxLen = 120;
   if (!development || development.length <= maxLen) return [development];
   const separator = " = ";
   if (!development.includes(separator)) return [development];
+
   const parts = development.split(separator);
-  let first = parts[0];
-  let splitIndex = null;
-  for (let i = 1; i < parts.length; i++) {
-    const candidate = `${first}${separator}${parts[i]}`;
-    if (candidate.length > maxLen) {
-      splitIndex = i;
-      break;
+  const totalLen = parts.reduce((acc, p) => acc + p.length, 0) + separator.length * (parts.length - 1);
+  const idealLines = Math.ceil(totalLen / maxLen);
+  const targetLen = Math.max(Math.floor(totalLen / idealLines), 60);
+
+  const chunks = [];
+  let current = "";
+  parts.forEach((part, idx) => {
+    const candidate = current ? `${current}${separator}${part}` : part;
+    const isLast = idx === parts.length - 1;
+    if (candidate.length > maxLen && current.length >= targetLen * 0.6) {
+      chunks.push(current);
+      current = part;
+    } else if (candidate.length > maxLen && !current.length) {
+      chunks.push(part);
+      current = "";
+    } else {
+      current = candidate;
     }
-    first = candidate;
+    if (isLast && current) chunks.push(current);
+  });
+
+  if (chunks.length > 1) {
+    const last = chunks[chunks.length - 1];
+    const prev = chunks[chunks.length - 2];
+    if (last.length < targetLen * 0.5 && (prev.length + separator.length + last.length) <= maxLen) {
+      chunks.splice(chunks.length - 2, 2, `${prev}${separator}${last}`);
+    }
   }
-  if (splitIndex === null) return [development];
-  const firstPart = parts.slice(0, splitIndex).join(separator);
-  const secondPart = `= ${parts.slice(splitIndex).join(separator)}`;
-  return [firstPart, secondPart];
+
+  return chunks.map((chunk, idx) => (idx === 0 ? chunk : `= ${chunk}`));
 }
 
 function renderLatexSafely(latex) {
