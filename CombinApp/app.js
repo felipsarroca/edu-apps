@@ -804,18 +804,28 @@ function calculate(formulaId, n, m, multiplicitats = []) {
         ? multiplicitats.map((v) => `(${factorialExpansionLatex(parseInt(v, 10))})`).join(" \\cdot ")
         : "1";
       const cancellation = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPart = cancellation ? ` = ${cancellation.cancelled} = ${cancellation.simplified}` : "";
-      const finalFraction = cancellation ? cancellation.simplified : `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(product)}}`;
-      development = `\\dfrac{${n}!}{${multiplicitats.map((v) => `${v}!`).join(" \\cdot ") || "1"}} = \\dfrac{${factorialExpansionLatex(n)}}{${denominatorExpanded}}${cancelPart} = ${finalFraction} = ${formatBigInt(result)}`;
+      const chain = [
+        `\\dfrac{${n}!}{${multiplicitats.map((v) => `${v}!`).join(" \\cdot ") || "1"}}`,
+        `\\dfrac{${factorialExpansionLatex(n)}}{${denominatorExpanded}}`,
+        cancellation?.cancelled,
+        cancellation?.simplified || `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(product)}}`,
+        formatBigInt(result)
+      ];
+      development = chain.filter(Boolean).join(" = ");
       break;
     }
     case "variacio_simple":
       result = n >= m ? factorial(n) / factorial(n - m) : BigInt(0);
       substitution = `V_{${n},${m}} = \\dfrac{${n}!}{(${n}-${m})!}`;
       const cancellationV = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPartV = cancellationV ? ` = ${cancellationV.cancelled} = ${cancellationV.simplified}` : "";
-      const finalFractionV = cancellationV ? cancellationV.simplified : `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(n - m))}}`;
-      development = `\\dfrac{${n}!}{(${n}-${m})!} = \\dfrac{${factorialExpansionLatex(n)}}{${factorialExpansionLatex(n - m)}}${cancelPartV} = ${finalFractionV} = ${formatBigInt(result)}`;
+      const chainV = [
+        `\\dfrac{${n}!}{(${n}-${m})!}`,
+        `\\dfrac{${factorialExpansionLatex(n)}}{${factorialExpansionLatex(n - m)}}`,
+        cancellationV?.cancelled,
+        cancellationV?.simplified || `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(n - m))}}`,
+        formatBigInt(result)
+      ];
+      development = chainV.filter(Boolean).join(" = ");
       break;
     case "variacio_amb_repeticio":
       result = BigInt(n) ** BigInt(m);
@@ -826,17 +836,27 @@ function calculate(formulaId, n, m, multiplicitats = []) {
       result = factorial(n) / (factorial(m) * factorial(n - m));
       substitution = `C_{${n},${m}} = \\dfrac{${n}!}{${m}! \\cdot (${n}-${m})!}`;
       const cancellationC = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPartC = cancellationC ? ` = ${cancellationC.cancelled} = ${cancellationC.simplified}` : "";
-      const finalFractionC = cancellationC ? cancellationC.simplified : `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - m))}}`;
-      development = `\\dfrac{${n}!}{${m}! \\cdot (${n}-${m})!} = \\dfrac{${factorialExpansionLatex(n)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - m)})}${cancelPartC} = ${finalFractionC} = ${formatBigInt(result)}`;
+      const chainC = [
+        `\\dfrac{${n}!}{${m}! \\cdot (${n}-${m})!}`,
+        `\\dfrac{${factorialExpansionLatex(n)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - m)})}`,
+        cancellationC?.cancelled,
+        cancellationC?.simplified || `\\dfrac{${formatBigInt(factorial(n))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - m))}}`,
+        formatBigInt(result)
+      ];
+      development = chainC.filter(Boolean).join(" = ");
       break;
     case "combinacio_amb_repeticio":
       result = factorial(n + m - 1) / (factorial(m) * factorial(n - 1));
       substitution = `CR_{${n},${m}} = \\dfrac{(${n}+${m}-1)!}{${m}! \\cdot (${n}-1)!}`;
       const cancellationCR = buildCancellationLatex(formulaId, n, m, multiplicitats);
-      const cancelPartCR = cancellationCR ? ` = ${cancellationCR.cancelled} = ${cancellationCR.simplified}` : "";
-      const finalFractionCR = cancellationCR ? cancellationCR.simplified : `\\dfrac{${formatBigInt(factorial(n + m - 1))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - 1))}}`;
-      development = `\\dfrac{(${n}+${m}-1)!}{${m}! \\cdot (${n}-1)!} = \\dfrac{${factorialExpansionLatex(n + m - 1)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - 1)})}${cancelPartCR} = ${finalFractionCR} = ${formatBigInt(result)}`;
+      const chainCR = [
+        `\\dfrac{(${n}+${m}-1)!}{${m}! \\cdot (${n}-1)!}`,
+        `\\dfrac{${factorialExpansionLatex(n + m - 1)}}{(${factorialExpansionLatex(m)}) \\cdot (${factorialExpansionLatex(n - 1)})}`,
+        cancellationCR?.cancelled,
+        cancellationCR?.simplified || `\\dfrac{${formatBigInt(factorial(n + m - 1))}}{${formatBigInt(factorial(m))} \\cdot ${formatBigInt(factorial(n - 1))}}`,
+        formatBigInt(result)
+      ];
+      development = chainCR.filter(Boolean).join(" = ");
       break;
   }
   return { result, substitution, development };
