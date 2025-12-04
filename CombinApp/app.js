@@ -719,11 +719,19 @@ function performCancellation(numeratorTerms, denominatorTerms) {
   const numerator = numeratorTerms.map((value) => ({ original: value, remainder: value }));
   const denominator = denominatorTerms.map((value) => ({ original: value, remainder: value }));
 
-  for (const dTerm of denominator) {
+  const sortedNumerator = [...numerator].sort((a, b) => a.remainder - b.remainder);
+  const sortedDenominator = [...denominator].sort((a, b) => a.remainder - b.remainder);
+
+  for (const dTerm of sortedDenominator) {
     let remaining = dTerm.remainder;
-    for (const nTerm of numerator) {
+    for (const nTerm of sortedNumerator) {
       if (remaining === 1) break;
       if (nTerm.remainder === 1) continue;
+      if (nTerm.remainder === remaining) {
+        nTerm.remainder = 1;
+        remaining = 1;
+        break;
+      }
       const factor = gcd(nTerm.remainder, remaining);
       if (factor > 1) {
         nTerm.remainder = nTerm.remainder / factor;
