@@ -571,7 +571,7 @@ function renderStep4() {
   state.computedResult = result;
   const expected = state.mode === "A" ? state.selectedProblem?.resultat : null;
   const explicacio = state.mode === "A" && state.selectedProblem?.explicacio_final
-    ? state.selectedProblem.explicacio_final
+    ? highlightResultNumbers(state.selectedProblem.explicacio_final)
     : buildNaturalExplanation(n, m, formula.nom, result);
   const formattedResult = formatBigInt(result);
   elements.calculationResults.innerHTML = `
@@ -667,6 +667,11 @@ function renderLatexSafely(latex) {
     console.error("Error renderitzant KaTeX:", error);
     return String(latex);
   }
+}
+
+function highlightResultNumbers(text) {
+  if (!text) return "";
+  return text.replace(/(\\d[\\d\\.]*)/g, '<span class="result-highlight">$1</span>');
 }
 
 function formatBigInt(bi) {
