@@ -577,8 +577,7 @@ function renderStep4() {
   elements.calculationResults.innerHTML = `
     <div class="card accent-3"><h3>Fórmula aplicada</h3><div class="katex-display">${katex.renderToString(formula.expressio, { displayMode: true })}</div><p>${formula.descripcio}</p></div>
     <div class="card accent-4"><h3>Substitució</h3><div class="katex-display">${katex.renderToString(substitution, { displayMode: true })}</div></div>
-    <div class="card accent-1"><h3>Desenvolupament</h3><div class="katex-display">${katex.renderToString(development, { displayMode: true })}</div></div>
-    ${simplificationBlock}
+    <div class="card accent-1"><h3>Desenvolupament</h3><div class="katex-display">${katex.renderToString(development, { displayMode: true })}</div>${simplificationBlock}</div>
     <div class="card accent-2 result-card"><div><p class="eyebrow">Resultat</p><div class="result-number">${result.toString()}</div></div>${correcte !== null ? `<div class="pill ${correcte ? "ok" : "alert"}">${correcte ? "Coincideix amb la solució" : "No coincideix"}</div>` : ""}</div>
     <div class="card accent-5 explanation"><h3>Resposta final</h3><p>${explicacio}</p></div>`;
 }
@@ -705,7 +704,7 @@ function buildSimplificationBlock(formulaId, n, m, multiplicitats) {
   if (!fraction || !fraction.denominator?.length) return "";
   const totalTerms = (fraction.numerator?.length || 0) + (fraction.denominator?.length || 0);
   if (totalTerms > 80) {
-    return `<div class="card accent-5 simplification"><h3>Simplificacio</h3><p class="microcopy">Llistes massa llargues per mostrar la cancel-lacio pas a pas.</p></div>`;
+    return `<div class="simplification-inline"><p class="microcopy">Llistes massa llargues per mostrar la cancel-lacio pas a pas.</p></div>`;
   }
 
   const cancellation = performCancellation(fraction.numerator, fraction.denominator);
@@ -719,9 +718,8 @@ function buildSimplificationBlock(formulaId, n, m, multiplicitats) {
   const simplifiedKaTeX = katex.renderToString(simplifiedLatex, { displayMode: true });
 
   return `
-    <div class="card accent-5 simplification">
-      <h3>Simplificacio</h3>
-      <p class="microcopy">Cancela factors comuns abans d'avaluar.</p>
+    <div class="simplification-inline">
+      <div class="simplification-header"><strong>Simplificacio</strong><span class="microcopy">Cancela factors comuns abans d'avaluar.</span></div>
       <div class="cancel-fraction">
         <div class="cancel-line">${numeratorRow || '<span class="cancel-term">1</span>'}</div>
         <div class="cancel-divider"></div>
