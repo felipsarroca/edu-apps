@@ -1,1467 +1,1467 @@
-[
-  {
-    "id": "M1",
-    "nivell": "Mitjà",
-    "titol": "Cadira musical",
-    "enunciat": "Sis alumnes esperen per comenÃƒÆ’Ã‚Â§ar un joc i troben 6 tamborets numerats en fila. De quantes maneres diferents podrien seure abans que soni la mÃƒÆ’Ã‚Âºsica?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": true,
-    "n_correcte": 6,
-    "m_correcte": 6,
-    "tipus": "permutacio_simple",
-    "formula_id": "permutacio_simple",
-    "resultat": 720,
-    "explicacio_final": "Es poden asseure de 720 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Cada tamboret tÃƒÆ’Ã‚Â© un nÃƒÆ’Ã‚Âºmero distint.",
-        "Tots els alumnes participen."
-      ],
-      "pas2": [
-        "Quan colÃƒâ€šÃ‚Â·loques tots els elements disponibles, ÃƒÆ’Ã‚Â©s una permutaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 6, m = 6."
-      ]
+﻿[
+    {
+        "id":  "M1",
+        "nivell":  "MitjÃ ",
+        "titol":  "Cadira musical",
+        "enunciat":  "Sis alumnes esperen per començar un joc i troben 6 tamborets numerats en fila. De quantes maneres diferents podrien seure abans que soni la música?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  true,
+        "n_correcte":  6,
+        "m_correcte":  6,
+        "tipus":  "permutacio_simple",
+        "formula_id":  "permutacio_simple",
+        "resultat":  720,
+        "explicacio_final":  "Es poden asseure de 720 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada tamboret tÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â© un nÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºmero distint.",
+                                    "Tots els alumnes participen."
+                                ],
+                       "pas2":  [
+                                    "Quan colÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â·loques tots els elements disponibles, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 6, m = 6."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_simple",
+                                                "formula_id":  "permutacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  6,
+                                                "m":  6
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_simple",
-        "formula_id": "permutacio_simple"
-      },
-      "pas3": {
-        "n": 6,
-        "m": 6
-      }
-    }
-  },
-  {
-    "id": "M2",
-    "nivell": "Mitjà",
-    "titol": "Puzzle de planetes",
-    "enunciat": "Set maquetes de planetes arriben al museu i s'han de posar en una vitrina en lÃƒÆ’Ã‚Â­nia. De quantes disposicions diferents pot quedar la vitrina abans de l'obertura?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": true,
-    "n_correcte": 7,
-    "m_correcte": 7,
-    "tipus": "permutacio_simple",
-    "formula_id": "permutacio_simple",
-    "resultat": 5040,
-    "explicacio_final": "Les maquetes es poden disposar de 5.040 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Hi colÃƒâ€šÃ‚Â·loques totes les maquetes.",
-        "Cada posiciÃƒÆ’Ã‚Â³ a la vitrina ÃƒÆ’Ã‚Â©s ÃƒÆ’Ã‚Âºnica."
-      ],
-      "pas2": [
-        "Quan uses tots els elements, ÃƒÆ’Ã‚Â©s una permutaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 7, m = 7."
-      ]
+    {
+        "id":  "M2",
+        "nivell":  "MitjÃ ",
+        "titol":  "Puzzle de planetes",
+        "enunciat":  "Set maquetes de planetes arriben al museu i s\u0027han de posar en una vitrina en línia. De quantes disposicions diferents pot quedar la vitrina abans de l\u0027obertura?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  true,
+        "n_correcte":  7,
+        "m_correcte":  7,
+        "tipus":  "permutacio_simple",
+        "formula_id":  "permutacio_simple",
+        "resultat":  5040,
+        "explicacio_final":  "Les maquetes es poden disposar de 5.040 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Hi colÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â·loques totes les maquetes.",
+                                    "Cada posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ a la vitrina ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºnica."
+                                ],
+                       "pas2":  [
+                                    "Quan uses tots els elements, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 7, m = 7."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_simple",
+                                                "formula_id":  "permutacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  7
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_simple",
-        "formula_id": "permutacio_simple"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 7
-      }
-    }
-  },
-  {
-    "id": "M3",
-    "nivell": "Mitjà",
-    "titol": "Vehicles al garatge",
-    "enunciat": "En una fira de clÃƒÆ’Ã‚Â ssics, vuit vehicles diferents entren en un passadÃƒÆ’Ã‚Â­s estret per fer la fotografia oficial. De quantes maneres poden aparÃƒÆ’Ã‚Â¨ixer alineats?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": true,
-    "n_correcte": 8,
-    "m_correcte": 8,
-    "tipus": "permutacio_simple",
-    "formula_id": "permutacio_simple",
-    "resultat": 40320,
-    "explicacio_final": "Els vuit vehicles es poden alinear de 40.320 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "No es repeteix cap vehicle.",
-        "Cada lloc de la fila ÃƒÆ’Ã‚Â©s diferent."
-      ],
-      "pas2": [
-        "Quan participen tots els elements, ÃƒÆ’Ã‚Â©s una permutaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 8, m = 8."
-      ]
+    {
+        "id":  "M3",
+        "nivell":  "MitjÃ ",
+        "titol":  "Vehicles al garatge",
+        "enunciat":  "En una fira de clàssics, vuit vehicles diferents entren en un passadís estret per fer la fotografia oficial. De quantes maneres poden aparèixer alineats?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  true,
+        "n_correcte":  8,
+        "m_correcte":  8,
+        "tipus":  "permutacio_simple",
+        "formula_id":  "permutacio_simple",
+        "resultat":  40320,
+        "explicacio_final":  "Els vuit vehicles es poden alinear de 40.320 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "No es repeteix cap vehicle.",
+                                    "Cada lloc de la fila ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s diferent."
+                                ],
+                       "pas2":  [
+                                    "Quan participen tots els elements, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 8, m = 8."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_simple",
+                                                "formula_id":  "permutacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  8,
+                                                "m":  8
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_simple",
-        "formula_id": "permutacio_simple"
-      },
-      "pas3": {
-        "n": 8,
-        "m": 8
-      }
-    }
-  },
-  {
-    "id": "M4",
-    "nivell": "Mitjà",
-    "titol": "Paraula BANANA",
-    "enunciat": "En un taller de criptografia et demanen escriure totes les versions possibles de la paraula BANANA (amb 3 A, 2 N i 1 B) utilitzant totes les lletres. Quantes en surten?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": true,
-    "n_correcte": 6,
-    "m_correcte": 6,
-    "tipus": "permutacio_amb_repeticio",
-    "formula_id": "permutacio_amb_repeticio",
-    "multiplicitats": [
-      3,
-      2,
-      1
-    ],
-    "resultat": 60,
-    "explicacio_final": "Podem escriure BANANA de 60 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Hi ha lletres repetides (A i N).",
-        "Fas servir totes les lletres."
-      ],
-      "pas2": [
-        "Quan hi ha repeticions i uses totes les lletres, ÃƒÆ’Ã‚Â©s una permutaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 6, multiplicitats 3,2,1."
-      ]
+    {
+        "id":  "M4",
+        "nivell":  "MitjÃ ",
+        "titol":  "Paraula BANANA",
+        "enunciat":  "En un taller de criptografia et demanen escriure totes les versions possibles de la paraula BANANA (amb 3 A, 2 N i 1 B) utilitzant totes les lletres. Quantes en surten?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  true,
+        "n_correcte":  6,
+        "m_correcte":  6,
+        "tipus":  "permutacio_amb_repeticio",
+        "formula_id":  "permutacio_amb_repeticio",
+        "multiplicitats":  [
+                               3,
+                               2,
+                               1
+                           ],
+        "resultat":  60,
+        "explicacio_final":  "Podem escriure BANANA de 60 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Hi ha lletres repetides (A i N).",
+                                    "Fas servir totes les lletres."
+                                ],
+                       "pas2":  [
+                                    "Quan hi ha repeticions i uses totes les lletres, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 6, multiplicitats 3,2,1."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_amb_repeticio",
+                                                "formula_id":  "permutacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  6,
+                                                "m":  6
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_amb_repeticio",
-        "formula_id": "permutacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 6,
-        "m": 6
-      }
-    }
-  },
-  {
-    "id": "M5",
-    "nivell": "Mitjà",
-    "titol": "Paraula TERRAT",
-    "enunciat": "Un poeta juga amb les lletres de TERRAT (T,T,R,R,E,A) i vol saber totes les formes diferents d'escriure-les utilitzant-les totes. Quantes combinacions pot trobar?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": true,
-    "n_correcte": 6,
-    "m_correcte": 6,
-    "tipus": "permutacio_amb_repeticio",
-    "formula_id": "permutacio_amb_repeticio",
-    "multiplicitats": [
-      2,
-      2,
-      1,
-      1
-    ],
-    "resultat": 180,
-    "explicacio_final": "Les lletres de TERRAT es poden reordenar de 180 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Les lletres T i R apareixen dues vegades.",
-        "Uses totes les lletres."
-      ],
-      "pas2": [
-        "Amb repeticions i totes les lletres, ÃƒÆ’Ã‚Â©s una permutaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 6, multiplicitats 2,2,1,1."
-      ]
+    {
+        "id":  "M5",
+        "nivell":  "MitjÃ ",
+        "titol":  "Paraula TERRAT",
+        "enunciat":  "Un poeta juga amb les lletres de TERRAT (T,T,R,R,E,A) i vol saber totes les formes diferents d\u0027escriure-les utilitzant-les totes. Quantes combinacions pot trobar?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  true,
+        "n_correcte":  6,
+        "m_correcte":  6,
+        "tipus":  "permutacio_amb_repeticio",
+        "formula_id":  "permutacio_amb_repeticio",
+        "multiplicitats":  [
+                               2,
+                               2,
+                               1,
+                               1
+                           ],
+        "resultat":  180,
+        "explicacio_final":  "Les lletres de TERRAT es poden reordenar de 180 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Les lletres T i R apareixen dues vegades.",
+                                    "Uses totes les lletres."
+                                ],
+                       "pas2":  [
+                                    "Amb repeticions i totes les lletres, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 6, multiplicitats 2,2,1,1."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_amb_repeticio",
+                                                "formula_id":  "permutacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  6,
+                                                "m":  6
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_amb_repeticio",
-        "formula_id": "permutacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 6,
-        "m": 6
-      }
-    }
-  },
-  {
-    "id": "M6",
-    "nivell": "Mitjà",
-    "titol": "Globus de colors",
-    "enunciat": "Per decorar el gimnÃƒÆ’Ã‚Â s es pengen 7 globus: 2 blaus, 2 vermells i 3 d'un sol color cadascun. De quantes maneres diferents poden quedar penjats en una filera?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": true,
-    "n_correcte": 7,
-    "m_correcte": 7,
-    "tipus": "permutacio_amb_repeticio",
-    "formula_id": "permutacio_amb_repeticio",
-    "multiplicitats": [
-      2,
-      2,
-      1,
-      1,
-      1
-    ],
-    "resultat": 1260,
-    "explicacio_final": "Podem penjar els globus de 1.260 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Hi ha dos colors repetits dues vegades.",
-        "Penjes tots els globus."
-      ],
-      "pas2": [
-        "Amb repeticions i tots els elements, ÃƒÆ’Ã‚Â©s una permutaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 7, multiplicitats 2,2,1,1,1."
-      ]
+    {
+        "id":  "M6",
+        "nivell":  "MitjÃ ",
+        "titol":  "Globus de colors",
+        "enunciat":  "Per decorar el gimnàs es pengen 7 globus: 2 blaus, 2 vermells i 3 d\u0027un sol color cadascun. De quantes maneres diferents poden quedar penjats en una filera?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  true,
+        "n_correcte":  7,
+        "m_correcte":  7,
+        "tipus":  "permutacio_amb_repeticio",
+        "formula_id":  "permutacio_amb_repeticio",
+        "multiplicitats":  [
+                               2,
+                               2,
+                               1,
+                               1,
+                               1
+                           ],
+        "resultat":  1260,
+        "explicacio_final":  "Podem penjar els globus de 1.260 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Hi ha dos colors repetits dues vegades.",
+                                    "Penjes tots els globus."
+                                ],
+                       "pas2":  [
+                                    "Amb repeticions i tots els elements, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 7, multiplicitats 2,2,1,1,1."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_amb_repeticio",
+                                                "formula_id":  "permutacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  7
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_amb_repeticio",
-        "formula_id": "permutacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 7
-      }
-    }
-  },
-  {
-    "id": "M7",
-    "nivell": "Mitjà",
-    "titol": "Podis de gimnÃƒÆ’Ã‚Â stica",
-    "enunciat": "En una competiciÃƒÆ’Ã‚Â³ de gimnÃƒÆ’Ã‚Â stica hi ha 8 finalistes i es lliuren quatre posicions amb medalla i diploma. De quantes formes diferents poden quedar els resultats?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 8,
-    "m_correcte": 4,
-    "tipus": "variacio_simple",
-    "formula_id": "variacio_simple",
-    "resultat": 1680,
-    "explicacio_final": "Els quatre llocs es poden atribuir de 1.680 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Cada lloc de premi ÃƒÆ’Ã‚Â©s diferent.",
-        "Cap gimnasta repeteix posiciÃƒÆ’Ã‚Â³."
-      ],
-      "pas2": [
-        "Assignar alguns llocs sense repeticions ÃƒÆ’Ã‚Â©s una variaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 8, m = 4."
-      ]
+    {
+        "id":  "M7",
+        "nivell":  "MitjÃ ",
+        "titol":  "Podis de gimnÃ stica",
+        "enunciat":  "En una competició de gimnàstica hi ha 8 finalistes i es lliuren quatre posicions amb medalla i diploma. De quantes formes diferents poden quedar els resultats?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  8,
+        "m_correcte":  4,
+        "tipus":  "variacio_simple",
+        "formula_id":  "variacio_simple",
+        "resultat":  1680,
+        "explicacio_final":  "Els quatre llocs es poden atribuir de 1.680 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada lloc de premi ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s diferent.",
+                                    "Cap gimnasta repeteix posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas2":  [
+                                    "Assignar alguns llocs sense repeticions ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 8, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_simple",
+                                                "formula_id":  "variacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  8,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_simple",
-        "formula_id": "variacio_simple"
-      },
-      "pas3": {
-        "n": 8,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M8",
-    "nivell": "Mitjà",
-    "titol": "Claus d'armari",
-    "enunciat": "Un armari antiguitat es pot obrir amb una clau de 3 xifres diferents triades entre els dÃƒÆ’Ã‚Â­gits del 0 al 9. Quantes claus podries provar abans d'encertar-la?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 10,
-    "m_correcte": 3,
-    "tipus": "variacio_simple",
-    "formula_id": "variacio_simple",
-    "resultat": 720,
-    "explicacio_final": "Hi ha 720 claus possibles de tres xifres sense repetir dÃƒÆ’Ã‚Â­gits.",
-    "pistes": {
-      "pas1": [
-        "Les posicions de la clau sÃƒÆ’Ã‚Â³n distintes.",
-        "No repeteixes xifres."
-      ],
-      "pas2": [
-        "Escollir alguns elements sense repeticions ÃƒÆ’Ã‚Â©s una variaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 10, m = 3."
-      ]
+    {
+        "id":  "M8",
+        "nivell":  "MitjÃ ",
+        "titol":  "Claus d\u0027armari",
+        "enunciat":  "Un armari d\u0027antiguitat es pot obrir amb una clau de 3 xifres diferents triades entre els dígits del 0 al 9. Quantes claus podries provar abans d\u0027encertar-la?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  10,
+        "m_correcte":  3,
+        "tipus":  "variacio_simple",
+        "formula_id":  "variacio_simple",
+        "resultat":  720,
+        "explicacio_final":  "Hi ha 720 claus possibles de tres xifres sense repetir dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­gits.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Les posicions de la clau sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n distintes.",
+                                    "No repeteixes xifres."
+                                ],
+                       "pas2":  [
+                                    "Escollir alguns elements sense repeticions ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 10, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_simple",
+                                                "formula_id":  "variacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  10,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_simple",
-        "formula_id": "variacio_simple"
-      },
-      "pas3": {
-        "n": 10,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M9",
-    "nivell": "Mitjà",
-    "titol": "Banderes de colors",
-    "enunciat": "Al pati hi ha un pal on s'han de pujar 3 banderes d'avÃƒÆ’Ã‚Â­s, totes de colors diferents triats entre 7 possibles. De quantes maneres es poden hissar les tres peces?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 7,
-    "m_correcte": 3,
-    "tipus": "variacio_simple",
-    "formula_id": "variacio_simple",
-    "resultat": 210,
-    "explicacio_final": "Es poden hissar 210 combinacions diferents de tres banderes sense repetir color.",
-    "pistes": {
-      "pas1": [
-        "Cada bandera ocupa una alÃƒÆ’Ã‚Â§ada diferent.",
-        "No repeteixes colors."
-      ],
-      "pas2": [
-        "Escollir alguns elements sense repeticiÃƒÆ’Ã‚Â³ ÃƒÆ’Ã‚Â©s una variaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 7, m = 3."
-      ]
+    {
+        "id":  "M9",
+        "nivell":  "MitjÃ ",
+        "titol":  "Banderes de colors",
+        "enunciat":  "Al pati hi ha un pal on s\u0027han de pujar 3 banderes d\u0027avís, totes de colors diferents triats entre 7 possibles. De quantes maneres es poden hissar les tres peces?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  7,
+        "m_correcte":  3,
+        "tipus":  "variacio_simple",
+        "formula_id":  "variacio_simple",
+        "resultat":  210,
+        "explicacio_final":  "Es poden hissar 210 combinacions diferents de tres banderes sense repetir color.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada bandera ocupa una alÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§ada diferent.",
+                                    "No repeteixes colors."
+                                ],
+                       "pas2":  [
+                                    "Escollir alguns elements sense repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 7, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_simple",
+                                                "formula_id":  "variacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_simple",
-        "formula_id": "variacio_simple"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M10",
-    "nivell": "Mitjà",
-    "titol": "Codi de 4 dÃƒÆ’Ã‚Â­gits",
-    "enunciat": "Un escape room et dona un pany que s'obre amb un codi de 4 dÃƒÆ’Ã‚Â­gits del 0 al 9, i pots repetir nÃƒÆ’Ã‚Âºmeros. Quantes claus diferents podries provar?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 10,
-    "m_correcte": 4,
-    "tipus": "variacio_amb_repeticio",
-    "formula_id": "variacio_amb_repeticio",
-    "resultat": 10000,
-    "explicacio_final": "Es poden provar 10.000 codis diferents de quatre dÃƒÆ’Ã‚Â­gits permetent repeticions.",
-    "pistes": {
-      "pas1": [
-        "Cada posiciÃƒÆ’Ã‚Â³ del codi pot ser qualsevol dÃƒÆ’Ã‚Â­git.",
-        "Es poden repetir nÃƒÆ’Ã‚Âºmeros."
-      ],
-      "pas2": [
-        "Cada lloc admet qualsevol opciÃƒÆ’Ã‚Â³, aixÃƒÆ’Ã‚Â­ que ÃƒÆ’Ã‚Â©s una variaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³ (n^m)."
-      ],
-      "pas3": [
-        "n = 10, m = 4."
-      ]
+    {
+        "id":  "M10",
+        "nivell":  "MitjÃ ",
+        "titol":  "Codi de 4 dÃ­gits",
+        "enunciat":  "Un escape room et dona un pany que s\u0027obre amb un codi de 4 dígits del 0 al 9, i pots repetir números. Quantes claus diferents podries provar?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  10,
+        "m_correcte":  4,
+        "tipus":  "variacio_amb_repeticio",
+        "formula_id":  "variacio_amb_repeticio",
+        "resultat":  10000,
+        "explicacio_final":  "Es poden provar 10.000 codis diferents de quatre dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­gits permetent repeticions.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ del codi pot ser qualsevol dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­git.",
+                                    "Es poden repetir nÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºmeros."
+                                ],
+                       "pas2":  [
+                                    "Cada lloc admet qualsevol opciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³, aixÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­ que ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ (n^m)."
+                                ],
+                       "pas3":  [
+                                    "n = 10, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_amb_repeticio",
+                                                "formula_id":  "variacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  10,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_amb_repeticio",
-        "formula_id": "variacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 10,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M11",
-    "nivell": "Mitjà",
-    "titol": "Llanternes de colors",
-    "enunciat": "Un escenari es prepara amb 4 llanternes colÃƒâ€šÃ‚Â·locades en una barra; hi ha 3 colors disponibles i es poden repetir. De quantes maneres es pot ilÃƒâ€šÃ‚Â·luminar la barra?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 3,
-    "m_correcte": 4,
-    "tipus": "variacio_amb_repeticio",
-    "formula_id": "variacio_amb_repeticio",
-    "resultat": 81,
-    "explicacio_final": "Podem combinar els colors de les llanternes de 81 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "Cada llanterna pot ser de qualsevol color disponible.",
-        "Es poden repetir colors."
-      ],
-      "pas2": [
-        "Quan cada posiciÃƒÆ’Ã‚Â³ accepta qualsevol opciÃƒÆ’Ã‚Â³, ÃƒÆ’Ã‚Â©s una variaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³ (n^m)."
-      ],
-      "pas3": [
-        "n = 3, m = 4."
-      ]
+    {
+        "id":  "M11",
+        "nivell":  "MitjÃ ",
+        "titol":  "Llanternes de colors",
+        "enunciat":  "Un escenari es prepara amb 4 llanternes col·locades en una barra; hi ha 3 colors disponibles i es poden repetir. De quantes maneres es pot il·luminar la barra?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  3,
+        "m_correcte":  4,
+        "tipus":  "variacio_amb_repeticio",
+        "formula_id":  "variacio_amb_repeticio",
+        "resultat":  81,
+        "explicacio_final":  "Podem combinar els colors de les llanternes de 81 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada llanterna pot ser de qualsevol color disponible.",
+                                    "Es poden repetir colors."
+                                ],
+                       "pas2":  [
+                                    "Quan cada posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ accepta qualsevol opciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ (n^m)."
+                                ],
+                       "pas3":  [
+                                    "n = 3, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_amb_repeticio",
+                                                "formula_id":  "variacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  3,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_amb_repeticio",
-        "formula_id": "variacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 3,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M12",
-    "nivell": "Mitjà",
-    "titol": "Codis de tres lletres",
-    "enunciat": "Un petit robot et saluda amb missatges de 3 lletres triades entre A, B, C, D i E, i pot repetir la lletra que vulgui. Quants missatges diferents pot enviar?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 5,
-    "m_correcte": 3,
-    "tipus": "variacio_amb_repeticio",
-    "formula_id": "variacio_amb_repeticio",
-    "resultat": 125,
-    "explicacio_final": "El robot pot enviar 125 missatges diferents de tres lletres permetent repeticions.",
-    "pistes": {
-      "pas1": [
-        "Cada posiciÃƒÆ’Ã‚Â³ pot ser qualsevol lletra de les cinc.",
-        "Es poden repetir lletres."
-      ],
-      "pas2": [
-        "Quan cada lloc admet qualsevol lletra, ÃƒÆ’Ã‚Â©s una variaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³ (n^m)."
-      ],
-      "pas3": [
-        "n = 5, m = 3."
-      ]
+    {
+        "id":  "M12",
+        "nivell":  "MitjÃ ",
+        "titol":  "Codis de tres lletres",
+        "enunciat":  "Un petit robot et saluda amb missatges de 3 lletres triades entre A, B, C, D i E, i pot repetir la lletra que vulgui. Quants missatges diferents pot enviar?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  5,
+        "m_correcte":  3,
+        "tipus":  "variacio_amb_repeticio",
+        "formula_id":  "variacio_amb_repeticio",
+        "resultat":  125,
+        "explicacio_final":  "El robot pot enviar 125 missatges diferents de tres lletres permetent repeticions.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ pot ser qualsevol lletra de les cinc.",
+                                    "Es poden repetir lletres."
+                                ],
+                       "pas2":  [
+                                    "Quan cada lloc admet qualsevol lletra, ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ (n^m)."
+                                ],
+                       "pas3":  [
+                                    "n = 5, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_amb_repeticio",
+                                                "formula_id":  "variacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  5,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_amb_repeticio",
-        "formula_id": "variacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 5,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M13",
-    "nivell": "Mitjà",
-    "titol": "SelecciÃƒÆ’Ã‚Â³ d'instruments",
-    "enunciat": "Una escola de mÃƒÆ’Ã‚Âºsica vol formar un quartet escollint 4 instruments diferents d'entre 9 disponibles. De quantes maneres pot decidir la formaciÃƒÆ’Ã‚Â³?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 9,
-    "m_correcte": 4,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 126,
-    "explicacio_final": "Es poden formar 126 quartets diferents amb quatre instruments entre nou.",
-    "pistes": {
-      "pas1": [
-        "NomÃƒÆ’Ã‚Â©s importa quin grup d'instruments esculls.",
-        "No es repeteix cap instrument."
-      ],
-      "pas2": [
-        "Triar un grup sense repeticions ÃƒÆ’Ã‚Â©s una combinaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 9, m = 4."
-      ]
+    {
+        "id":  "M13",
+        "nivell":  "MitjÃ ",
+        "titol":  "SelecciÃ³ d\u0027instruments",
+        "enunciat":  "Una escola de música vol formar un quartet escollint 4 instruments diferents d\u0027entre 9 disponibles. De quantes maneres pot decidir la formació?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  9,
+        "m_correcte":  4,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  126,
+        "explicacio_final":  "Es poden formar 126 quartets diferents amb quatre instruments entre nou.",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s importa quin grup d\u0027instruments esculls.",
+                                    "No es repeteix cap instrument."
+                                ],
+                       "pas2":  [
+                                    "Triar un grup sense repeticions ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 9, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  9,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 9,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M14",
-    "nivell": "Mitjà",
-    "titol": "Sopar degustaciÃƒÆ’Ã‚Â³",
-    "enunciat": "En un sopar degustaciÃƒÆ’Ã‚Â³, el xef ofereix 10 plats i tu n'has d'escollir 5 per al teu menÃƒÆ’Ã‚Âº personal. Quantes combinacions diferents de plats pots preparar?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 10,
-    "m_correcte": 5,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 252,
-    "explicacio_final": "Pots dissenyar 252 menÃƒÆ’Ã‚Âºs diferents triant cinc plats entre deu.",
-    "pistes": {
-      "pas1": [
-        "Importa quins plats tries, no la seqÃƒÆ’Ã‚Â¼ÃƒÆ’Ã‚Â¨ncia en quÃƒÆ’Ã‚Â¨ els menges.",
-        "No repeteixes cap plat."
-      ],
-      "pas2": [
-        "Escollir un grup sense repeticions ÃƒÆ’Ã‚Â©s una combinaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 10, m = 5."
-      ]
+    {
+        "id":  "M14",
+        "nivell":  "MitjÃ ",
+        "titol":  "Sopar degustaciÃ³",
+        "enunciat":  "En un sopar degustació, el xef ofereix 10 plats i tu n\u0027has d\u0027escollir 5 per al teu menú personal. Quantes combinacions diferents de plats pots preparar?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  10,
+        "m_correcte":  5,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  252,
+        "explicacio_final":  "Pots dissenyar 252 menÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºs diferents triant cinc plats entre deu.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Importa quins plats tries, no la seqÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ncia en quÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ els menges.",
+                                    "No repeteixes cap plat."
+                                ],
+                       "pas2":  [
+                                    "Escollir un grup sense repeticions ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 10, m = 5."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  10,
+                                                "m":  5
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 10,
-        "m": 5
-      }
-    }
-  },
-  {
-    "id": "M15",
-    "nivell": "Mitjà",
-    "titol": "Equip de campament",
-    "enunciat": "Per organitzar el campament, de 8 monitors voluntaris se'n trien 3 per muntar les tendes. Quants equips diferents podrien sortir?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 8,
-    "m_correcte": 3,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 56,
-    "explicacio_final": "Podem formar 56 equips diferents de tres monitors entre vuit.",
-    "pistes": {
-      "pas1": [
-        "NomÃƒÆ’Ã‚Â©s compta qui forma l'equip.",
-        "No es repeteix cap monitor."
-      ],
-      "pas2": [
-        "Escollir un grup sense repeticions ÃƒÆ’Ã‚Â©s una combinaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 8, m = 3."
-      ]
+    {
+        "id":  "M15",
+        "nivell":  "MitjÃ ",
+        "titol":  "Equip de campament",
+        "enunciat":  "Per organitzar el campament, de 8 monitors voluntaris se\u0027n trien 3 per muntar les tendes. Quants equips diferents podrien sortir?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  8,
+        "m_correcte":  3,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  56,
+        "explicacio_final":  "Podem formar 56 equips diferents de tres monitors entre vuit.",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s compta qui forma l\u0027equip.",
+                                    "No es repeteix cap monitor."
+                                ],
+                       "pas2":  [
+                                    "Escollir un grup sense repeticions ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 8, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  8,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 8,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M16",
-    "nivell": "Mitjà",
-    "titol": "Gelat de 4 boles",
-    "enunciat": "Un gelater ofereix 5 gustos i et deixa omplir un cucurutxo amb 4 boles, fins i tot repetint el gust preferit. Quantes opcions de combinaciÃƒÆ’Ã‚Â³ de boles tens?",
-    "ordre": false,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 5,
-    "m_correcte": 4,
-    "tipus": "combinacio_amb_repeticio",
-    "formula_id": "combinacio_amb_repeticio",
-    "resultat": 70,
-    "explicacio_final": "Hi ha 70 maneres diferents d'omplir el cucurutxo amb quatre boles permetent repetir gustos.",
-    "pistes": {
-      "pas1": [
-        "T'importa quins gustos tens al final.",
-        "Es pot repetir gust."
-      ],
-      "pas2": [
-        "Triar amb repeticiÃƒÆ’Ã‚Â³ possible ÃƒÆ’Ã‚Â©s una combinaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 5, m = 4."
-      ]
+    {
+        "id":  "M16",
+        "nivell":  "MitjÃ ",
+        "titol":  "Gelat de 4 boles",
+        "enunciat":  "Un gelater ofereix 5 gustos i et deixa omplir un cucurutxo amb 4 boles, fins i tot repetint el gust preferit. Quantes opcions de combinació de boles tens?",
+        "ordre":  false,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  5,
+        "m_correcte":  4,
+        "tipus":  "combinacio_amb_repeticio",
+        "formula_id":  "combinacio_amb_repeticio",
+        "resultat":  70,
+        "explicacio_final":  "Hi ha 70 maneres diferents d\u0027omplir el cucurutxo amb quatre boles permetent repetir gustos.",
+        "pistes":  {
+                       "pas1":  [
+                                    "T\u0027importa quins gustos tens al final.",
+                                    "Es pot repetir gust."
+                                ],
+                       "pas2":  [
+                                    "Triar amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ possible ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 5, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_amb_repeticio",
+                                                "formula_id":  "combinacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  5,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_amb_repeticio",
-        "formula_id": "combinacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 5,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M17",
-    "nivell": "Mitjà",
-    "titol": "Collarets de perles",
-    "enunciat": "Una artesana fa collarets amb 3 perles triades entre 7 colors i pot repetir el to que mÃƒÆ’Ã‚Â©s agradi. De quantes maneres pot preparar els collarets?",
-    "ordre": false,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 7,
-    "m_correcte": 3,
-    "tipus": "combinacio_amb_repeticio",
-    "formula_id": "combinacio_amb_repeticio",
-    "resultat": 84,
-    "explicacio_final": "Pot crear 84 collarets diferents amb tres perles permetent repetir colors.",
-    "pistes": {
-      "pas1": [
-        "El que compta ÃƒÆ’Ã‚Â©s quins colors hi ha al collaret.",
-        "Es poden repetir colors."
-      ],
-      "pas2": [
-        "Escollir amb repeticiÃƒÆ’Ã‚Â³ ÃƒÆ’Ã‚Â©s una combinaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 7, m = 3."
-      ]
+    {
+        "id":  "M17",
+        "nivell":  "MitjÃ ",
+        "titol":  "Collarets de perles",
+        "enunciat":  "Una artesana fa collarets amb 3 perles triades entre 7 colors i pot repetir el to que més agradi. De quantes maneres pot preparar els collarets?",
+        "ordre":  false,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  7,
+        "m_correcte":  3,
+        "tipus":  "combinacio_amb_repeticio",
+        "formula_id":  "combinacio_amb_repeticio",
+        "resultat":  84,
+        "explicacio_final":  "Pot crear 84 collarets diferents amb tres perles permetent repetir colors.",
+        "pistes":  {
+                       "pas1":  [
+                                    "El que compta ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s quins colors hi ha al collaret.",
+                                    "Es poden repetir colors."
+                                ],
+                       "pas2":  [
+                                    "Escollir amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 7, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_amb_repeticio",
+                                                "formula_id":  "combinacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_amb_repeticio",
-        "formula_id": "combinacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M18",
-    "nivell": "Mitjà",
-    "titol": "PÃƒÆ’Ã‚Â²cima mÃƒÆ’Ã‚Â gica",
-    "enunciat": "Un alquimista vol preparar una pÃƒÆ’Ã‚Â²cima barrejant 5 dosis triades entre 6 ingredients, i pot repetir-ne algun. De quantes barreges diferents pot provar abans de trobar la definitiva?",
-    "ordre": false,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 6,
-    "m_correcte": 5,
-    "tipus": "combinacio_amb_repeticio",
-    "formula_id": "combinacio_amb_repeticio",
-    "resultat": 252,
-    "explicacio_final": "Pot provar 252 barreges diferents de cinc dosis permetent repetir ingredients.",
-    "pistes": {
-      "pas1": [
-        "El que importa ÃƒÆ’Ã‚Â©s quins ingredients formen la mescla.",
-        "Es poden repetir ingredients."
-      ],
-      "pas2": [
-        "Triar amb repeticions possibles ÃƒÆ’Ã‚Â©s una combinaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 6, m = 5."
-      ]
+    {
+        "id":  "M18",
+        "nivell":  "MitjÃ ",
+        "titol":  "PociÃ³ mÃ gica",
+        "enunciat":  "Un alquimista vol preparar una poció barrejant 5 dosis triades entre 6 ingredients, i pot repetir-ne algun. De quantes barreges diferents pot provar abans de trobar la definitiva?",
+        "ordre":  false,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  6,
+        "m_correcte":  5,
+        "tipus":  "combinacio_amb_repeticio",
+        "formula_id":  "combinacio_amb_repeticio",
+        "resultat":  252,
+        "explicacio_final":  "Pot provar 252 barreges diferents de cinc dosis permetent repetir ingredients.",
+        "pistes":  {
+                       "pas1":  [
+                                    "El que importa ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s quins ingredients formen la mescla.",
+                                    "Es poden repetir ingredients."
+                                ],
+                       "pas2":  [
+                                    "Triar amb repeticions possibles ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s una combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 6, m = 5."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_amb_repeticio",
+                                                "formula_id":  "combinacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  6,
+                                                "m":  5
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_amb_repeticio",
-        "formula_id": "combinacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 6,
-        "m": 5
-      }
-    }
-  },
-  {
-    "id": "M19",
-    "nivell": "Mitjà",
-    "titol": "Paraula TORRADA",
-    "enunciat": "En un concurs de cuina, la paraula TORRADA (amb dues R i dues A) s'usa per fer cartells. Quantes versions diferents es poden escriure utilitzant totes les lletres?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": true,
-    "n_correcte": 7,
-    "m_correcte": 7,
-    "tipus": "permutacio_amb_repeticio",
-    "formula_id": "permutacio_amb_repeticio",
-    "multiplicitats": [
-      2,
-      2,
-      1,
-      1,
-      1
-    ],
-    "resultat": 1260,
-    "explicacio_final": "Podem escriure TORRADA de 1.260 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "R i A es repeteixen.",
-        "Fas servir totes les lletres."
-      ],
-      "pas2": [
-        "Amb repeticions i totes les lletres: permutaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 7, multiplicitats 2,2,1,1,1."
-      ]
+    {
+        "id":  "M19",
+        "nivell":  "MitjÃ ",
+        "titol":  "Paraula TORRADA",
+        "enunciat":  "En un concurs de cuina, la paraula TORRADA (amb dues R i dues A) s\u0027usa per fer cartells. Quantes versions diferents es poden escriure utilitzant totes les lletres?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  true,
+        "n_correcte":  7,
+        "m_correcte":  7,
+        "tipus":  "permutacio_amb_repeticio",
+        "formula_id":  "permutacio_amb_repeticio",
+        "multiplicitats":  [
+                               2,
+                               2,
+                               1,
+                               1,
+                               1
+                           ],
+        "resultat":  1260,
+        "explicacio_final":  "Podem escriure TORRADA de 1.260 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "R i A es repeteixen.",
+                                    "Fas servir totes les lletres."
+                                ],
+                       "pas2":  [
+                                    "Amb repeticions i totes les lletres: permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 7, multiplicitats 2,2,1,1,1."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_amb_repeticio",
+                                                "formula_id":  "permutacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  7
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_amb_repeticio",
-        "formula_id": "permutacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 7
-      }
-    }
-  },
-  {
-    "id": "M20",
-    "nivell": "Mitjà",
-    "titol": "Codi de 4 rodes",
-    "enunciat": "Un robot es desplaÃƒÆ’Ã‚Â§a si rep un codi de 4 rodes numerades totes diferents triades entre els dÃƒÆ’Ã‚Â­gits del 0 al 9. Quantes seqÃƒÆ’Ã‚Â¼ÃƒÆ’Ã‚Â¨ncies pot provar el tÃƒÆ’Ã‚Â¨cnic?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 10,
-    "m_correcte": 4,
-    "tipus": "variacio_simple",
-    "formula_id": "variacio_simple",
-    "resultat": 5040,
-    "explicacio_final": "Es poden provar 5.040 seqÃƒÆ’Ã‚Â¼ÃƒÆ’Ã‚Â¨ncies diferents de quatre xifres sense repetir.",
-    "pistes": {
-      "pas1": [
-        "Cada lloc del codi ÃƒÆ’Ã‚Â©s diferent.",
-        "No es repeteixen xifres."
-      ],
-      "pas2": [
-        "Alguns elements sense repeticions: variaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 10, m = 4."
-      ]
+    {
+        "id":  "M20",
+        "nivell":  "MitjÃ ",
+        "titol":  "Codi de 4 rodes",
+        "enunciat":  "Un robot es desplaça si rep un codi de 4 rodes numerades totes diferents triades entre els dígits del 0 al 9. Quantes seqüències pot provar el tècnic?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  10,
+        "m_correcte":  4,
+        "tipus":  "variacio_simple",
+        "formula_id":  "variacio_simple",
+        "resultat":  5040,
+        "explicacio_final":  "Es poden provar 5.040 seqÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨ncies diferents de quatre xifres sense repetir.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada lloc del codi ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s diferent.",
+                                    "No es repeteixen xifres."
+                                ],
+                       "pas2":  [
+                                    "Alguns elements sense repeticions: variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 10, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_simple",
+                                                "formula_id":  "variacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  10,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_simple",
-        "formula_id": "variacio_simple"
-      },
-      "pas3": {
-        "n": 10,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M21",
-    "nivell": "Mitjà",
-    "titol": "Tria de tallers",
-    "enunciat": "En una jornada STEAM hi ha 12 tallers i el professor n'ha de triar 3 per als seus alumnes. De quantes maneres pot fer la selecciÃƒÆ’Ã‚Â³?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 12,
-    "m_correcte": 3,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 220,
-    "explicacio_final": "Es poden triar 3 tallers d'entre 12 de 220 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "NomÃƒÆ’Ã‚Â©s importa quins tallers, no l'ordre.",
-        "No es repeteix taller."
-      ],
-      "pas2": [
-        "Sense ordre ni repeticiÃƒÆ’Ã‚Â³: combinaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 12, m = 3."
-      ]
+    {
+        "id":  "M21",
+        "nivell":  "MitjÃ ",
+        "titol":  "Tria de tallers",
+        "enunciat":  "En una jornada STEAM hi ha 12 tallers i el professor n\u0027ha de triar 3 per als seus alumnes. De quantes maneres pot fer la selecció?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  12,
+        "m_correcte":  3,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  220,
+        "explicacio_final":  "Es poden triar 3 tallers d\u0027entre 12 de 220 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s importa quins tallers, no l\u0027ordre.",
+                                    "No es repeteix taller."
+                                ],
+                       "pas2":  [
+                                    "Sense ordre ni repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³: combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 12, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  12,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 12,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M22",
-    "nivell": "Mitjà",
-    "titol": "Clau de llums intelÃƒâ€šÃ‚Â·ligents",
-    "enunciat": "Una sala es controla amb 5 interruptors consecutius que poden posar-se en 6 nivells d'intensitat cadascun, i es poden repetir intensitats. Quantes claus diferents hi ha?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 6,
-    "m_correcte": 5,
-    "tipus": "variacio_amb_repeticio",
-    "formula_id": "variacio_amb_repeticio",
-    "resultat": 7776,
-    "explicacio_final": "Hi ha 7.776 claus diferents de cinc posicions amb sis intensitats.",
-    "pistes": {
-      "pas1": [
-        "Cada posiciÃƒÆ’Ã‚Â³ pot ser qualsevol nivell.",
-        "Es poden repetir nivells."
-      ],
-      "pas2": [
-        "Cada lloc admet qualsevol opciÃƒÆ’Ã‚Â³: n^m."
-      ],
-      "pas3": [
-        "n = 6, m = 5."
-      ]
+    {
+        "id":  "M22",
+        "nivell":  "MitjÃ ",
+        "titol":  "Clau de llums intelÂ·ligents",
+        "enunciat":  "Una sala es controla amb 5 interruptors consecutius que poden posar-se en 6 nivells d\u0027intensitat cadascun, i es poden repetir intensitats. Quantes claus diferents hi ha?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  6,
+        "m_correcte":  5,
+        "tipus":  "variacio_amb_repeticio",
+        "formula_id":  "variacio_amb_repeticio",
+        "resultat":  7776,
+        "explicacio_final":  "Hi ha 7.776 claus diferents de cinc posicions amb sis intensitats.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ pot ser qualsevol nivell.",
+                                    "Es poden repetir nivells."
+                                ],
+                       "pas2":  [
+                                    "Cada lloc admet qualsevol opciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³: n^m."
+                                ],
+                       "pas3":  [
+                                    "n = 6, m = 5."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_amb_repeticio",
+                                                "formula_id":  "variacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  6,
+                                                "m":  5
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_amb_repeticio",
-        "formula_id": "variacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 6,
-        "m": 5
-      }
-    }
-  },
-  {
-    "id": "M23",
-    "nivell": "Mitjà",
-    "titol": "Collage de fotos",
-    "enunciat": "Una exposiciÃƒÆ’Ã‚Â³ vol un collage amb 4 fotos triades d'entre 7 temÃƒÆ’Ã‚Â tiques, i es pot repetir temÃƒÆ’Ã‚Â tica. Quants collages diferents es poden fer?",
-    "ordre": false,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 7,
-    "m_correcte": 4,
-    "tipus": "combinacio_amb_repeticio",
-    "formula_id": "combinacio_amb_repeticio",
-    "resultat": 210,
-    "explicacio_final": "Es poden preparar 210 collages diferents amb quatre fotos permetent repetir temÃƒÆ’Ã‚Â tiques.",
-    "pistes": {
-      "pas1": [
-        "NomÃƒÆ’Ã‚Â©s compta quines temÃƒÆ’Ã‚Â tiques hi ha.",
-        "Es poden repetir temes."
-      ],
-      "pas2": [
-        "Sense ordre amb repeticions: combinaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 7, m = 4."
-      ]
+    {
+        "id":  "M23",
+        "nivell":  "MitjÃ ",
+        "titol":  "Collage de fotos",
+        "enunciat":  "Una exposició vol un collage amb 4 fotos triades d\u0027entre 7 temàtiques, i es pot repetir temàtica. Quants collages diferents es poden fer?",
+        "ordre":  false,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  7,
+        "m_correcte":  4,
+        "tipus":  "combinacio_amb_repeticio",
+        "formula_id":  "combinacio_amb_repeticio",
+        "resultat":  210,
+        "explicacio_final":  "Es poden preparar 210 collages diferents amb quatre fotos permetent repetir temÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â tiques.",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s compta quines temÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â tiques hi ha.",
+                                    "Es poden repetir temes."
+                                ],
+                       "pas2":  [
+                                    "Sense ordre amb repeticions: combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 7, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_amb_repeticio",
+                                                "formula_id":  "combinacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_amb_repeticio",
-        "formula_id": "combinacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M24",
-    "nivell": "Mitjà",
-    "titol": "Seients del cor",
-    "enunciat": "Un cor juvenil ha d'ordenar 9 cantaires en una filera per a l'assaig general. De quantes maneres es poden colÃƒâ€šÃ‚Â·locar?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": true,
-    "n_correcte": 9,
-    "m_correcte": 9,
-    "tipus": "permutacio_simple",
-    "formula_id": "permutacio_simple",
-    "resultat": 362880,
-    "explicacio_final": "Els 9 cantaires es poden colÃƒâ€šÃ‚Â·locar de 362.880 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "S'utilitzen tots els cantaires."
-      ],
-      "pas2": [
-        "Cada lloc ÃƒÆ’Ã‚Â©s ÃƒÆ’Ã‚Âºnic: permutaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 9, m = 9."
-      ]
+    {
+        "id":  "M24",
+        "nivell":  "MitjÃ ",
+        "titol":  "Seients del cor",
+        "enunciat":  "Un cor juvenil ha d\u0027ordenar 9 cantaires en una filera per a l\u0027assaig general. De quantes maneres es poden col·locar?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  true,
+        "n_correcte":  9,
+        "m_correcte":  9,
+        "tipus":  "permutacio_simple",
+        "formula_id":  "permutacio_simple",
+        "resultat":  362880,
+        "explicacio_final":  "Els 9 cantaires es poden colÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â·locar de 362.880 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "S\u0027utilitzen tots els cantaires."
+                                ],
+                       "pas2":  [
+                                    "Cada lloc ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºnic: permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 9, m = 9."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_simple",
+                                                "formula_id":  "permutacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  9,
+                                                "m":  9
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_simple",
-        "formula_id": "permutacio_simple"
-      },
-      "pas3": {
-        "n": 9,
-        "m": 9
-      }
-    }
-  },
-  {
-    "id": "M25",
-    "nivell": "Mitjà",
-    "titol": "Ruta de drons",
-    "enunciat": "Un dron ha de visitar 3 punts de control diferents d'entre 11 disponibles. De quantes rutes ordenades possibles disposa?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 11,
-    "m_correcte": 3,
-    "tipus": "variacio_simple",
-    "formula_id": "variacio_simple",
-    "resultat": 990,
-    "explicacio_final": "El dron pot planificar 990 rutes diferents de tres punts sense repetir.",
-    "pistes": {
-      "pas1": [
-        "Cada parada ÃƒÆ’Ã‚Â©s diferent.",
-        "No es repeteix punt."
-      ],
-      "pas2": [
-        "Alguns elements sense repeticions: variaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 11, m = 3."
-      ]
+    {
+        "id":  "M25",
+        "nivell":  "MitjÃ ",
+        "titol":  "Ruta de drons",
+        "enunciat":  "Un dron ha de visitar 3 punts de control diferents d\u0027entre 11 disponibles. De quantes rutes ordenades possibles disposa?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  11,
+        "m_correcte":  3,
+        "tipus":  "variacio_simple",
+        "formula_id":  "variacio_simple",
+        "resultat":  990,
+        "explicacio_final":  "El dron pot planificar 990 rutes diferents de tres punts sense repetir.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada parada ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s diferent.",
+                                    "No es repeteix punt."
+                                ],
+                       "pas2":  [
+                                    "Alguns elements sense repeticions: variaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 11, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_simple",
+                                                "formula_id":  "variacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  11,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_simple",
-        "formula_id": "variacio_simple"
-      },
-      "pas3": {
-        "n": 11,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M26",
-    "nivell": "Mitjà",
-    "titol": "Paraula CARAMEL",
-    "enunciat": "Una parada de fira vol escriure totes les formes possibles de CARAMEL (A repetida dues vegades) per a les etiquetes. Quantes paraules diferents surten?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": true,
-    "n_correcte": 7,
-    "m_correcte": 7,
-    "tipus": "permutacio_amb_repeticio",
-    "formula_id": "permutacio_amb_repeticio",
-    "multiplicitats": [
-      2,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    "resultat": 2520,
-    "explicacio_final": "Podem escriure CARAMEL de 2.520 maneres diferents.",
-    "pistes": {
-      "pas1": [
-        "La A es repeteix dues vegades.",
-        "Fas servir totes les lletres."
-      ],
-      "pas2": [
-        "Amb repeticions i totes les lletres: permutaciÃƒÆ’Ã‚Â³ amb repeticiÃƒÆ’Ã‚Â³."
-      ],
-      "pas3": [
-        "n = 7, multiplicitats 2,1,1,1,1,1."
-      ]
+    {
+        "id":  "M26",
+        "nivell":  "MitjÃ ",
+        "titol":  "Paraula CARAMEL",
+        "enunciat":  "Una parada de fira vol escriure totes les formes possibles de CARAMEL (A repetida dues vegades) per a les etiquetes. Quantes paraules diferents surten?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  true,
+        "n_correcte":  7,
+        "m_correcte":  7,
+        "tipus":  "permutacio_amb_repeticio",
+        "formula_id":  "permutacio_amb_repeticio",
+        "multiplicitats":  [
+                               2,
+                               1,
+                               1,
+                               1,
+                               1,
+                               1
+                           ],
+        "resultat":  2520,
+        "explicacio_final":  "Podem escriure CARAMEL de 2.520 maneres diferents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "La A es repeteix dues vegades.",
+                                    "Fas servir totes les lletres."
+                                ],
+                       "pas2":  [
+                                    "Amb repeticions i totes les lletres: permutaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ amb repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³."
+                                ],
+                       "pas3":  [
+                                    "n = 7, multiplicitats 2,1,1,1,1,1."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_amb_repeticio",
+                                                "formula_id":  "permutacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  7,
+                                                "m":  7
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_amb_repeticio",
-        "formula_id": "permutacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 7,
-        "m": 7
-      }
-    }
-  },
-  {
-    "id": "M27",
-    "nivell": "Mitjà",
-    "titol": "Equip de debat",
-    "enunciat": "En un torneig es formen equips de 4 debatents d'entre 10 candidats. Quantes combinacions d'equip es poden crear?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 10,
-    "m_correcte": 4,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 210,
-    "explicacio_final": "Es poden formar 210 equips diferents de quatre debatents.",
-    "pistes": {
-      "pas1": [
-        "NomÃƒÆ’Ã‚Â©s importa qui hi ÃƒÆ’Ã‚Â©s, no l'ordre de paraula.",
-        "No es repeteix cap debatent."
-      ],
-      "pas2": [
-        "Sense ordre ni repeticiÃƒÆ’Ã‚Â³: combinaciÃƒÆ’Ã‚Â³ simple."
-      ],
-      "pas3": [
-        "n = 10, m = 4."
-      ]
+    {
+        "id":  "M27",
+        "nivell":  "MitjÃ ",
+        "titol":  "Equip de debat",
+        "enunciat":  "En un torneig es formen equips de 4 debatents d\u0027entre 10 candidats. Quantes combinacions d\u0027equip es poden crear?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  10,
+        "m_correcte":  4,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  210,
+        "explicacio_final":  "Es poden formar 210 equips diferents de quatre debatents.",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s importa qui hi ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©s, no l\u0027ordre de paraula.",
+                                    "No es repeteix cap debatent."
+                                ],
+                       "pas2":  [
+                                    "Sense ordre ni repeticiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³: combinaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 10, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  10,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 10,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M28",
-    "nivell": "Mitjà",
-    "titol": "Codi de tres sÃƒÆ’Ã‚Â­mbols",
-    "enunciat": "Un escape room demana un codi de 3 sÃƒÆ’Ã‚Â­mbols triats entre 9 runes i es poden repetir. Quants codis diferents poden provar els jugadors?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 9,
-    "m_correcte": 3,
-    "tipus": "variacio_amb_repeticio",
-    "formula_id": "variacio_amb_repeticio",
-    "resultat": 729,
-    "explicacio_final": "Es poden provar 729 codis diferents de tres sÃƒÆ’Ã‚Â­mbols amb repeticions permeses.",
-    "pistes": {
-      "pas1": [
-        "Cada lloc pot ser qualsevol de les 9 runes.",
-        "Es poden repetir sÃƒÆ’Ã‚Â­mbols."
-      ],
-      "pas2": [
-        "Cada posiciÃƒÆ’Ã‚Â³ accepta qualsevol opciÃƒÆ’Ã‚Â³: n^m."
-      ],
-      "pas3": [
-        "n = 9, m = 3."
-      ]
+    {
+        "id":  "M28",
+        "nivell":  "MitjÃ ",
+        "titol":  "Codi de tres sÃ­mbols",
+        "enunciat":  "Un escape room demana un codi de 3 símbols triats entre 9 runes i es poden repetir. Quants codis diferents poden provar els jugadors?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  9,
+        "m_correcte":  3,
+        "tipus":  "variacio_amb_repeticio",
+        "formula_id":  "variacio_amb_repeticio",
+        "resultat":  729,
+        "explicacio_final":  "Es poden provar 729 codis diferents de tres sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­mbols amb repeticions permeses.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada lloc pot ser qualsevol de les 9 runes.",
+                                    "Es poden repetir sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­mbols."
+                                ],
+                       "pas2":  [
+                                    "Cada posiciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³ accepta qualsevol opciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³: n^m."
+                                ],
+                       "pas3":  [
+                                    "n = 9, m = 3."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_amb_repeticio",
+                                                "formula_id":  "variacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  9,
+                                                "m":  3
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_amb_repeticio",
-        "formula_id": "variacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 9,
-        "m": 3
-      }
-    }
-  },
-  {
-    "id": "M29",
-    "nivell": "Mitjà",
-    "titol": "Seqüències curtes en Morse",
-    "enunciat": "L'alfabet Morse utilitza els signes punt (.) i guió (-). Fent servir com a màxim quatre signes, quantes seqüències diferents pots formar?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": false,
-    "n_correcte": 2,
-    "m_correcte": 4,
-    "tipus": "variacio_amb_repeticio",
-    "formula_id": "variacio_amb_repeticio",
-    "resultat": 30,
-    "explicacio_final": "Es poden formar 30 seqüències diferents sumant totes les longituds de 1 a 4 signes.",
-    "pistes": {
-      "pas1": [
-        "Cada posició pot ser punt o guió.",
-        "Les longituds permeses són 1, 2, 3 o 4 signes."
-      ],
-      "pas2": [
-        "Per a cada longitud k, tens 2^k opcions i les sumes totes."
-      ],
-      "pas3": [
-        "2^1 + 2^2 + 2^3 + 2^4 = 30."
-      ]
+    {
+        "id":  "M29",
+        "nivell":  "MitjÃ ",
+        "titol":  "SeqÃ¼Ã¨ncies curtes en Morse",
+        "enunciat":  "L\u0027alfabet Morse utilitza els signes punt (.) i guió (-). Fent servir com a màxim quatre signes, quantes seqüències diferents pots formar?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  false,
+        "n_correcte":  2,
+        "m_correcte":  4,
+        "tipus":  "variacio_amb_repeticio",
+        "formula_id":  "variacio_amb_repeticio",
+        "resultat":  30,
+        "explicacio_final":  "Es poden formar 30 seqÃ¼Ã¨ncies diferents sumant totes les longituds de 1 a 4 signes.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada posiciÃ³ pot ser punt o guiÃ³.",
+                                    "Les longituds permeses sÃ³n 1, 2, 3 o 4 signes."
+                                ],
+                       "pas2":  [
+                                    "Per a cada longitud k, tens 2^k opcions i les sumes totes."
+                                ],
+                       "pas3":  [
+                                    "2^1 + 2^2 + 2^3 + 2^4 = 30."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_amb_repeticio",
+                                                "formula_id":  "variacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  2,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_amb_repeticio",
-        "formula_id": "variacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 2,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M30",
-    "nivell": "Mitjà",
-    "titol": "Senyals amb 4 banderes",
-    "enunciat": "Un vaixell té deu banderes diferents per fer senyals i cada senyal es forma col·locant 4 banderes en un màstil. Quantes senyals diferents poden fer?",
-    "ordre": true,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 10,
-    "m_correcte": 4,
-    "tipus": "variacio_simple",
-    "formula_id": "variacio_simple",
-    "resultat": 5040,
-    "explicacio_final": "Es poden formar 5.040 senyals diferents col·locant 4 banderes entre 10 sense repetir.",
-    "pistes": {
-      "pas1": [
-        "Cada lloc al màstil és diferent.",
-        "No repeteixes bandera."
-      ],
-      "pas2": [
-        "Ocupar alguns llocs sense repeticions és una variació simple."
-      ],
-      "pas3": [
-        "n = 10, m = 4."
-      ]
+    {
+        "id":  "M30",
+        "nivell":  "MitjÃ ",
+        "titol":  "Senyals amb 4 banderes",
+        "enunciat":  "Un vaixell té deu banderes diferents per fer senyals i cada senyal es forma col·locant 4 banderes en un màstil. Quantes senyals diferents poden fer?",
+        "ordre":  true,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  10,
+        "m_correcte":  4,
+        "tipus":  "variacio_simple",
+        "formula_id":  "variacio_simple",
+        "resultat":  5040,
+        "explicacio_final":  "Es poden formar 5.040 senyals diferents colÂ·locant 4 banderes entre 10 sense repetir.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Cada lloc al mÃ stil Ã©s diferent.",
+                                    "No repeteixes bandera."
+                                ],
+                       "pas2":  [
+                                    "Ocupar alguns llocs sense repeticions Ã©s una variaciÃ³ simple."
+                                ],
+                       "pas3":  [
+                                    "n = 10, m = 4."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "variacio_simple",
+                                                "formula_id":  "variacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  10,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "variacio_simple",
-        "formula_id": "variacio_simple"
-      },
-      "pas3": {
-        "n": 10,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M31",
-    "nivell": "Mitjà",
-    "titol": "Diàlegs sense intèrpret",
-    "enunciat": "A un congrés hi assisteixen 60 persones, de les quals 40 només parlen anglès i 20 només alemany. Quants diàlegs es poden establir sense intèrpret?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 60,
-    "m_correcte": 2,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 970,
-    "explicacio_final": "Es poden fer 970 diàlegs: 780 entre anglòfons i 190 entre germanoparlants.",
-    "pistes": {
-      "pas1": [
-        "Només es poden entendre persones del mateix idioma.",
-        "Cada diàleg és entre dues persones."
-      ],
-      "pas2": [
-        "Calcula C(40,2) per l'anglès i C(20,2) per l'alemany."
-      ],
-      "pas3": [
-        "C(40,2) = 780 i C(20,2) = 190; els sumes."
-      ]
+    {
+        "id":  "M31",
+        "nivell":  "MitjÃ ",
+        "titol":  "DiÃ legs sense intÃ¨rpret",
+        "enunciat":  "A un congrés hi assisteixen 60 persones, de les quals 40 només parlen anglès i 20 només alemany. Quants diàlegs es poden establir sense intèrpret?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  60,
+        "m_correcte":  2,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  970,
+        "explicacio_final":  "Es poden fer 970 diÃ legs: 780 entre anglÃ²fons i 190 entre germanoparlants.",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃ©s es poden entendre persones del mateix idioma.",
+                                    "Cada diÃ leg Ã©s entre dues persones."
+                                ],
+                       "pas2":  [
+                                    "Calcula C(40,2) per l\u0027anglÃ¨s i C(20,2) per l\u0027alemany."
+                                ],
+                       "pas3":  [
+                                    "C(40,2) = 780 i C(20,2) = 190; els sumes."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  60,
+                                                "m":  2
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 60,
-        "m": 2
-      }
-    }
-  },
-  {
-    "id": "M32",
-    "nivell": "Mitjà",
-    "titol": "Viatge amb dos cotxes",
-    "enunciat": "Vuit amics van de viatge amb dos cotxes i decideixen anar-hi 4 en cada vehicle. De quantes maneres poden repartir-se si tots poden conduir?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 8,
-    "m_correcte": 4,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 70,
-    "explicacio_final": "Es poden distribuir en els dos cotxes de 70 maneres diferents (triant qui va al primer).",
-    "pistes": {
-      "pas1": [
-        "Només importa qui puja a cada cotxe, no l'ordre dels seients.",
-        "Els cotxes es consideren diferents."
-      ],
-      "pas2": [
-        "Esculls 4 persones per al primer cotxe; la resta van a l'altre."
-      ],
-      "pas3": [
-        "C(8,4) = 70."
-      ]
+    {
+        "id":  "M32",
+        "nivell":  "MitjÃ ",
+        "titol":  "Viatge amb dos cotxes",
+        "enunciat":  "Vuit amics van de viatge amb dos cotxes i decideixen anar-hi 4 en cada vehicle. De quantes maneres poden repartir-se si tots poden conduir?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  8,
+        "m_correcte":  4,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  70,
+        "explicacio_final":  "Es poden distribuir en els dos cotxes de 70 maneres diferents (triant qui va al primer).",
+        "pistes":  {
+                       "pas1":  [
+                                    "NomÃ©s importa qui puja a cada cotxe, no l\u0027ordre dels seients.",
+                                    "Els cotxes es consideren diferents."
+                                ],
+                       "pas2":  [
+                                    "Esculls 4 persones per al primer cotxe; la resta van a l\u0027altre."
+                                ],
+                       "pas3":  [
+                                    "C(8,4) = 70."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  8,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 8,
-        "m": 4
-      }
-    }
-  },
-  {
-    "id": "M33",
-    "nivell": "Mitjà",
-    "titol": "Llibres de matemàtiques i física",
-    "enunciat": "En un prestatge hi ha 6 llibres de matemàtiques i 3 de física. Volem agafar 2 llibres de matemàtiques i 2 de física. De quantes maneres ho podem fer?",
-    "ordre": false,
-    "repeticio": false,
-    "tots": false,
-    "n_correcte": 6,
-    "m_correcte": 4,
-    "tipus": "combinacio_simple",
-    "formula_id": "combinacio_simple",
-    "resultat": 45,
-    "explicacio_final": "Hi ha 45 maneres diferents d'escollir dos llibres de cada matèria.",
-    "pistes": {
-      "pas1": [
-        "Separat: tria 2 entre els 6 de mates i 2 entre els 3 de física.",
-        "No importa l'ordre de cada parella."
-      ],
-      "pas2": [
-        "Multiplica les combinacions de cada bloc: C(6,2) * C(3,2)."
-      ],
-      "pas3": [
-        "C(6,2) = 15 i C(3,2) = 3; 15·3 = 45."
-      ]
+    {
+        "id":  "M33",
+        "nivell":  "MitjÃ ",
+        "titol":  "Llibres de matemÃ tiques i fÃ­sica",
+        "enunciat":  "En un prestatge hi ha 6 llibres de matemàtiques i 3 de física. Volem agafar 2 llibres de matemàtiques i 2 de física. De quantes maneres ho podem fer?",
+        "ordre":  false,
+        "repeticio":  false,
+        "tots":  false,
+        "n_correcte":  6,
+        "m_correcte":  4,
+        "tipus":  "combinacio_simple",
+        "formula_id":  "combinacio_simple",
+        "resultat":  45,
+        "explicacio_final":  "Hi ha 45 maneres diferents d\u0027escollir dos llibres de cada matÃ¨ria.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Separat: tria 2 entre els 6 de mates i 2 entre els 3 de fÃ­sica.",
+                                    "No importa l\u0027ordre de cada parella."
+                                ],
+                       "pas2":  [
+                                    "Multiplica les combinacions de cada bloc: C(6,2) * C(3,2)."
+                                ],
+                       "pas3":  [
+                                    "C(6,2) = 15 i C(3,2) = 3; 15Â·3 = 45."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  false,
+                                                "repeticio":  false,
+                                                "tots":  false
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "combinacio_simple",
+                                                "formula_id":  "combinacio_simple"
+                                            },
+                                   "pas3":  {
+                                                "n":  6,
+                                                "m":  4
+                                            }
+                               }
     },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": false,
-        "repeticio": false,
-        "tots": false
-      },
-      "pas2": {
-        "tipus": "combinacio_simple",
-        "formula_id": "combinacio_simple"
-      },
-      "pas3": {
-        "n": 6,
-        "m": 4
-      }
+    {
+        "id":  "M34",
+        "nivell":  "MitjÃ ",
+        "titol":  "Senyals amb banderes de colors",
+        "enunciat":  "En el pal de senyals d\u0027un vaixell es poden hissar tres banderes vermelles, dues de blaves i quatre de verdes. Quantes senyals diferents poden indicar col·locant les nou banderes?",
+        "ordre":  true,
+        "repeticio":  true,
+        "tots":  true,
+        "n_correcte":  9,
+        "m_correcte":  9,
+        "tipus":  "permutacio_amb_repeticio",
+        "formula_id":  "permutacio_amb_repeticio",
+        "multiplicitats":  [
+                               3,
+                               2,
+                               4
+                           ],
+        "resultat":  1260,
+        "explicacio_final":  "Es poden formar 1.260 senyals diferents amb les 9 banderes repetides per colors.",
+        "pistes":  {
+                       "pas1":  [
+                                    "Hi ha repeticions: 3 vermelles, 2 blaves, 4 verdes.",
+                                    "Fas servir totes les banderes."
+                                ],
+                       "pas2":  [
+                                    "Amb repeticions i tots els elements, uses una permutaciÃ³ amb repeticÃ³ (n! dividit pels factorials de cada multiplicitat)."
+                                ],
+                       "pas3":  [
+                                    "9! / (3!Â·2!Â·4!) = 1.260."
+                                ]
+                   },
+        "solucions_parcials":  {
+                                   "pas1":  {
+                                                "ordre":  true,
+                                                "repeticio":  true,
+                                                "tots":  true
+                                            },
+                                   "pas2":  {
+                                                "tipus":  "permutacio_amb_repeticio",
+                                                "formula_id":  "permutacio_amb_repeticio"
+                                            },
+                                   "pas3":  {
+                                                "n":  9,
+                                                "m":  9
+                                            }
+                               }
     }
-  },
-  {
-    "id": "M34",
-    "nivell": "Mitjà",
-    "titol": "Senyals amb banderes de colors",
-    "enunciat": "En el pal de senyals d'un vaixell es poden hissar tres banderes vermelles, dues de blaves i quatre de verdes. Quantes senyals diferents poden indicar col·locant les nou banderes?",
-    "ordre": true,
-    "repeticio": true,
-    "tots": true,
-    "n_correcte": 9,
-    "m_correcte": 9,
-    "tipus": "permutacio_amb_repeticio",
-    "formula_id": "permutacio_amb_repeticio",
-    "multiplicitats": [
-      3,
-      2,
-      4
-    ],
-    "resultat": 1260,
-    "explicacio_final": "Es poden formar 1.260 senyals diferents amb les 9 banderes repetides per colors.",
-    "pistes": {
-      "pas1": [
-        "Hi ha repeticions: 3 vermelles, 2 blaves, 4 verdes.",
-        "Fas servir totes les banderes."
-      ],
-      "pas2": [
-        "Amb repeticions i tots els elements, uses una permutació amb repeticó (n! dividit pels factorials de cada multiplicitat)."
-      ],
-      "pas3": [
-        "9! / (3!·2!·4!) = 1.260."
-      ]
-    },
-    "solucions_parcials": {
-      "pas1": {
-        "ordre": true,
-        "repeticio": true,
-        "tots": true
-      },
-      "pas2": {
-        "tipus": "permutacio_amb_repeticio",
-        "formula_id": "permutacio_amb_repeticio"
-      },
-      "pas3": {
-        "n": 9,
-        "m": 9
-      }
-    }
-  }
 ]
