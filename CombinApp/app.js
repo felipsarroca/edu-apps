@@ -567,6 +567,7 @@ function renderStep4() {
     return;
   }
   const { result, substitution, development } = calculate(state.userAnswers.formula_id, n, m, multiplicitats);
+  const simplificationBlock = buildSimplificationBlock(state.userAnswers.formula_id, n, m, multiplicitats);
   state.computedResult = result;
   const expected = state.mode === "A" ? state.selectedProblem?.resultat : null;
   const correcte = expected !== null && expected !== undefined ? result === BigInt(expected) : null;
@@ -577,6 +578,7 @@ function renderStep4() {
     <div class="card accent-3"><h3>Fórmula aplicada</h3><div class="katex-display">${katex.renderToString(formula.expressio, { displayMode: true })}</div><p>${formula.descripcio}</p></div>
     <div class="card accent-4"><h3>Substitució</h3><div class="katex-display">${katex.renderToString(substitution, { displayMode: true })}</div></div>
     <div class="card accent-1"><h3>Desenvolupament</h3><div class="katex-display">${katex.renderToString(development, { displayMode: true })}</div></div>
+    ${simplificationBlock}
     <div class="card accent-2 result-card"><div><p class="eyebrow">Resultat</p><div class="result-number">${result.toString()}</div></div>${correcte !== null ? `<div class="pill ${correcte ? "ok" : "alert"}">${correcte ? "Coincideix amb la solució" : "No coincideix"}</div>` : ""}</div>
     <div class="card accent-5 explanation"><h3>Resposta final</h3><p>${explicacio}</p></div>`;
 }
@@ -617,6 +619,116 @@ function powerExpansionLatex(base, exponent) {
 
 function formatBigInt(bi) {
   return bi.toString();
+}
+
+function gcd(a, b) {
+  let x = Math.abs(Number(a));
+  let y = Math.abs(Number(b));
+  while (y) {
+    [x, y] = [y, x % y];
+  }
+  return x || 1;
+}
+
+function factorialTerms(num) {
+  if (num <= 1) return [1];
+  const terms = [];
+  for (let i = num; i >= 1; i--) terms.push(i);
+  return terms;
+}
+
+function buildFractionTerms(formulaId, n, m, multiplicitats = []) {
+  switch (formulaId) {
+    case "permutacio_simple":
+      return { numerator: factorialTerms(n), denominator: [] };
+    case "permutacio_amb_repeticio":
+      return {
+        numerator: factorialTerms(n),
+        denominator: multiplicitats.flatMap((v) => factorialTerms(parseInt(v, 10) || 0))
+      };
+    case "variacio_simple":
+      return { numerator: factorialTerms(n), denominator: factorialTerms(n - m) };
+    case "combinacio_simple":
+      return {
+        numerator: factorialTerms(n),
+        denominator: [...factorialTerms(m), ...factorialTerms(n - m)]
+      };
+    case "combinacio_amb_repeticio":
+      return {
+        numerator: factorialTerms(n + m - 1),
+        denominator: [...factorialTerms(m), ...factorialTerms(n - 1)]
+      };
+    default:
+      return null;
+  }
+}
+
+function performCancellation(numeratorTerms, denominatorTerms) {
+  const numerator = numeratorTerms.map((value) => ({ original: value, remainder: value }));
+  const denominator = denominatorTerms.map((value) => ({ original: value, remainder: value }));
+
+  for (const dTerm of denominator) {
+    let remaining = dTerm.remainder;
+    for (const nTerm of numerator) {
+      if (remaining === 1) break;
+      if (nTerm.remainder === 1) continue;
+      const factor = gcd(nTerm.remainder, remaining);
+      if (factor > 1) {
+        nTerm.remainder = nTerm.remainder / factor;
+        remaining = remaining / factor;
+      }
+    }
+    dTerm.remainder = remaining;
+  }
+
+  return { numerator, denominator };
+}
+
+function renderCancellationTerm(term) {
+  const classes = ["cancel-term"];
+  let remainderAttr = "";
+  if (term.remainder === 1 && term.original !== 1) {
+    classes.push("cancelled");
+  } else if (term.remainder !== term.original) {
+    classes.push("reduced");
+    remainderAttr = ` data-remainder="${term.remainder}"`;
+  }
+  return `<span class="${classes.join(" ")}"${remainderAttr}>${term.original}</span>`;
+}
+
+function latexProduct(terms) {
+  return terms.length ? terms.join(" \\cdot ") : "1";
+}
+
+function buildSimplificationBlock(formulaId, n, m, multiplicitats) {
+  const fraction = buildFractionTerms(formulaId, n, m, multiplicitats);
+  if (!fraction || !fraction.denominator?.length) return "";
+  const totalTerms = (fraction.numerator?.length || 0) + (fraction.denominator?.length || 0);
+  if (totalTerms > 80) {
+    return `<div class="card accent-5 simplification"><h3>Simplificacio</h3><p class="microcopy">Llistes massa llargues per mostrar la cancel-lacio pas a pas.</p></div>`;
+  }
+
+  const cancellation = performCancellation(fraction.numerator, fraction.denominator);
+  const numeratorRow = cancellation.numerator.map(renderCancellationTerm).join('<span class="cancel-times">&times;</span>');
+  const denominatorRow = cancellation.denominator.map(renderCancellationTerm).join('<span class="cancel-times">&times;</span>');
+  const simplifiedNum = cancellation.numerator.filter((t) => t.remainder > 1).map((t) => t.remainder);
+  const simplifiedDen = cancellation.denominator.filter((t) => t.remainder > 1).map((t) => t.remainder);
+  const simplifiedLatex = simplifiedDen.length
+    ? `\\dfrac{${latexProduct(simplifiedNum)}}{${latexProduct(simplifiedDen)}}`
+    : latexProduct(simplifiedNum);
+  const simplifiedKaTeX = katex.renderToString(simplifiedLatex, { displayMode: true });
+
+  return `
+    <div class="card accent-5 simplification">
+      <h3>Simplificacio</h3>
+      <p class="microcopy">Cancela factors comuns abans d'avaluar.</p>
+      <div class="cancel-fraction">
+        <div class="cancel-line">${numeratorRow || '<span class="cancel-term">1</span>'}</div>
+        <div class="cancel-divider"></div>
+        <div class="cancel-line">${denominatorRow || '<span class="cancel-term">1</span>'}</div>
+      </div>
+      <div class="simplified-equivalent">${simplifiedKaTeX}</div>
+    </div>`;
 }
 
 function calculate(formulaId, n, m, multiplicitats = []) {
