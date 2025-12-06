@@ -92,9 +92,9 @@ footer {
 }
 
 .license-icon {
-    height: 31px; /* Mida estàndard per a la imatge de llicència */
-    width: 88px;
-    margin-right: 5px;
+    height: 36px; /* 15% més gran */
+    width: 101px;
+    margin-right: 2.5px; /* Distància a la meitat */
     vertical-align: middle;
     opacity: 0.8;
 }
