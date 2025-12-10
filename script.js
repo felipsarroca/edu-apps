@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Segueix la primera circumnavegació de la història." 
         },
         { 
-            name: "Modernisme català", 
+            name: "El Modernisme", 
             path: '../web/Modernisme/', 
             category: 'Història', 
             description: "Introducció al Modernisme català amb característiques i exemples." 
