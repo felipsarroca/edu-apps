@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'Història', 
             description: "Segueix la primera circumnavegació de la història." 
         },
+        { 
+            name: "Modernisme català", 
+            path: '../web/Modernisme/', 
+            category: 'Història', 
+            description: "Introducció al Modernisme català amb característiques i exemples." 
+        },
 
         // Química
         { 
