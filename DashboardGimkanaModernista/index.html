@@ -134,8 +134,8 @@
       display:grid;
       grid-template-columns:48px 1fr auto;
       align-items:center;
-      gap:12px;
-      padding:12px 14px;
+      gap:10px;
+      padding:10px 12px;
       border-radius:14px;
       border:1px solid var(--border);
       background:rgba(255,255,255,.04);
@@ -158,8 +158,8 @@
     .details{
       display:flex;
       align-items:center;
-      gap:14px;
-      min-height:40px;
+      gap:12px;
+      min-height:36px;
     }
     .name{
       font-weight:800;
@@ -169,7 +169,7 @@
     .bar{
       position:relative;
       flex:1;
-      height:15px;
+      height:13px;
       border-radius:999px;
       background:rgba(255,255,255,.1);
       overflow:hidden;
@@ -254,8 +254,8 @@
 </head>
 <body>
   <div class="page">
-    <div class="glow"></div>
-        <header>
+        <div class="glow"></div>
+    <header>
       <div class="header-left">
         <img src="dashboard.svg" alt="Dashboard" class="logo-mark" loading="lazy">
         <div>
@@ -421,7 +421,7 @@
         const leader = tableToLeader(table);
         renderColumn("col-3r", leader["3r"] || [], "var(--accent-3r)", "3r");
         renderColumn("col-4t", leader["4t"] || [], "var(--accent-4t)", "4t");
-        document.getElementById("last").textContent = "Darrera actualitzaciÃ³: " + new Date().toLocaleTimeString();
+        document.getElementById("last").textContent = "Darrera actualització: " + new Date().toLocaleTimeString();
       } catch(err){
         document.getElementById("error").textContent = "Error en carregar les dades: " + (err?.message || err);
       }
@@ -432,3 +432,10 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
