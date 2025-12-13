@@ -247,10 +247,9 @@
   </footer>
 
   <script>
-    // Configura aquí la teva graella
-    // Enllaç publicat (Fitxer -> Publica al web) de la pestanya Classificacio
-    // Usa el format /d/e/.../ i l'opció gviz per obtenir JSON.
-    const QUERY_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTMR39wbmMJDgt9GPzKFhdBqIYDHEwu6dAdkPGXtChehWXq4hXG7-jWUQ5WnIKobTKSnSwewK3t0hr1/gviz/tq?gid=1626563500";
+    // Configura aquí la teva graella (compartida "qualsevol amb l'enllaç pot veure")
+    // Fem servir GViz en mode JSONP per evitar CORS.
+    const QUERY_BASE = "https://docs.google.com/spreadsheets/d/11OBKW0XE1S5ia5H2BuIlr9TSexkS-tIsIyCH_TvogWU/gviz/tq?sheet=Classificacio";
 
     function escapeHtml(s){
       return String(s ?? "").replace(/[&<>"']/g, m => ({
