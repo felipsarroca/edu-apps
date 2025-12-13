@@ -31,7 +31,7 @@
     }
     .page{
       flex:1;
-      padding:5px clamp(16px, 4vw, 60px) 110px;
+      padding:0 clamp(16px, 4vw, 60px) 110px;
       position:relative;
       overflow:hidden;
     }
@@ -49,9 +49,10 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:18px;
+      gap:14px;
       flex-wrap:wrap;
-      margin-bottom:5px;
+      margin-bottom:2px;
+      padding-top:6px;
     }
     .header-left{
       display:flex;
@@ -85,15 +86,18 @@
     .badge{
       background:rgba(255,255,255,.08);
       border:1px solid var(--border);
-      padding:8px 12px;
+      padding:6px 10px;
       border-radius:999px;
-      font-size:12px;
+      font-size:11px;
       color:var(--text);
       display:flex;
       align-items:center;
-      gap:8px;
+      gap:6px;
       box-shadow:var(--shadow);
-      margin-top:-6px;
+      margin-top:0;
+    }
+    .last-badge{
+      align-self:flex-start;
     }
     .board{
       position:relative;
@@ -258,7 +262,6 @@
     <div class="glow"></div>
     <header>
       <div class="header-left">
-      <div class="header-left">
         <img src="dashboard.svg" alt="Dashboard" class="logo-mark" loading="lazy">
         <div>
           <p class="eyebrow">gimkana en directe</p>
@@ -266,6 +269,7 @@
           <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
         </div>
       </div>
+      <div class="badge last-badge" id="last"></div>
     </header>
 
     <main class="board">
@@ -422,9 +426,7 @@
         const leader = tableToLeader(table);
         renderColumn("col-3r", leader["3r"] || [], "var(--accent-3r)", "3r");
         renderColumn("col-4t", leader["4t"] || [], "var(--accent-4t)", "4t");
-        document.getElementById("last").textContent = "Darrera actualització: " + new Date().toLocaleTimeString();
-      } catch(err){
-        document.getElementById("error").textContent = "Error en carregar les dades: " + (err?.message || err);
+        document.getElementById("last").textContent = "Darrera actualització: " + new Date().toLocaleTimeString();\n        document.getElementById("error").textContent = "Error en carregar les dades: " + (err?.message || err);
       }
     }
 
@@ -433,6 +435,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
