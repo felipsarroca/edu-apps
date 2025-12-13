@@ -31,7 +31,7 @@
     }
     .page{
       flex:1;
-      padding:32px clamp(16px, 4vw, 64px) 120px;
+      padding:20px clamp(16px, 4vw, 60px) 110px;
       position:relative;
       overflow:hidden;
     }
@@ -51,7 +51,7 @@
       justify-content:space-between;
       gap:18px;
       flex-wrap:wrap;
-      margin-bottom:26px;
+      margin-bottom:18px;
     }
     .header-left{
       display:flex;
@@ -85,7 +85,7 @@
     .badge{
       background:rgba(255,255,255,.08);
       border:1px solid var(--border);
-      padding:10px 14px;
+      padding:8px 12px;
       border-radius:999px;
       font-size:12px;
       color:var(--text);
@@ -93,6 +93,7 @@
       align-items:center;
       gap:8px;
       box-shadow:var(--shadow);
+      margin-top:-6px;
     }
     .board{
       position:relative;
@@ -260,10 +261,10 @@
         <img src="dashboard.svg" alt="Dashboard" class="logo-mark" loading="lazy">
         <div>
           <p class="eyebrow">gimkana en directe</p>
-          <h1>Panell de resultats de la Gimkana Modernista</h1>
           <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
         </div>
       </div>
+      <div class="badge" id="last">Esperant dades…</div>
       <div class="badge" id="last">Esperant dades…</div>
     </header>
 
@@ -289,8 +290,8 @@
   </div>
 
   <footer>
-    <div>AplicaciÃ³ creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assistÃ¨ncia de la IA</div>
-    <div>Obra sota llicÃ¨ncia CC BY-NC-SA 4.0</div>
+    <div>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assistència de la IA</div>
+    <div>Obra sota llicència CC BY-NC-SA 4.0</div>
   </footer>
 
   <script>
@@ -432,6 +433,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
