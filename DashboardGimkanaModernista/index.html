@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ca">
 <head>
   <meta charset="utf-8" />
@@ -31,7 +31,7 @@
     }
     .page{
       flex:1;
-      padding:0 clamp(16px, 4vw, 60px) 110px;
+      padding:5px clamp(16px, 4vw, 60px) 110px;
       position:relative;
       overflow:hidden;
     }
@@ -51,8 +51,7 @@
       justify-content:space-between;
       gap:14px;
       flex-wrap:wrap;
-      margin-bottom:2px;
-      padding-top:6px;
+      margin-bottom:6px;
     }
     .header-left{
       display:flex;
@@ -71,7 +70,7 @@
       letter-spacing:.16em;
       font-size:10px;
       color:var(--muted);
-      margin:0 0 8px;
+      margin:0 0 6px;
     }
     h1{
       margin:0;
@@ -79,7 +78,7 @@
       line-height:1.1;
     }
     .subtitle{
-      margin:6px 0 0;
+      margin:4px 0 0;
       color:var(--muted);
       font-size:14px;
     }
@@ -94,9 +93,6 @@
       align-items:center;
       gap:6px;
       box-shadow:var(--shadow);
-      margin-top:0;
-    }
-    .last-badge{
       align-self:flex-start;
     }
     .board{
@@ -299,8 +295,6 @@
   </footer>
 
   <script>
-    // Configura aquÃ­ la teva graella (compartida "qualsevol amb l'enllaÃ§ pot veure")
-    // Fem servir GViz en mode JSONP per evitar CORS.
     const QUERY_BASE = "https://docs.google.com/spreadsheets/d/11OBKW0XE1S5ia5H2BuIlr9TSexkS-tIsIyCH_TvogWU/gviz/tq?sheet=Classificacio";
 
     function escapeHtml(s){
@@ -394,7 +388,6 @@
         nodes.forEach((node, idx) => {
           if (idx < 3){
             node.classList.remove("pulse");
-            // restart animation
             void node.offsetWidth;
             node.style.setProperty("--pulse-color", accent);
             node.classList.add("pulse");
@@ -426,7 +419,9 @@
         const leader = tableToLeader(table);
         renderColumn("col-3r", leader["3r"] || [], "var(--accent-3r)", "3r");
         renderColumn("col-4t", leader["4t"] || [], "var(--accent-4t)", "4t");
-        document.getElementById("last").textContent = "Darrera actualització: " + new Date().toLocaleTimeString();\n        document.getElementById("error").textContent = "Error en carregar les dades: " + (err?.message || err);
+        document.getElementById("last").textContent = "Darrera actualització: " + new Date().toLocaleTimeString();
+      } catch(err){
+        document.getElementById("error").textContent = "Error en carregar les dades: " + (err?.message || err);
       }
     }
 
@@ -435,10 +430,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
