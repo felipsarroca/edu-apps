@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ca">
 <head>
   <meta charset="utf-8" />
@@ -52,6 +52,18 @@
       gap:18px;
       flex-wrap:wrap;
       margin-bottom:26px;
+    }
+    .header-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex:1;
+      min-width:260px;
+    }
+    .logo-mark{
+      height:72px;
+      width:auto;
+      filter:drop-shadow(0 6px 20px rgba(0,0,0,.25));
     }
     .eyebrow{
       text-transform:uppercase;
@@ -243,11 +255,14 @@
 <body>
   <div class="page">
     <div class="glow"></div>
-    <header>
-      <div>
-        <p class="eyebrow">gimkana en directe</p>
-        <h1>Panell de resultats de la Gimkana Modernista</h1>
-        <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
+        <header>
+      <div class="header-left">
+        <img src="dashboard.svg" alt="Dashboard" class="logo-mark" loading="lazy">
+        <div>
+          <p class="eyebrow">gimkana en directe</p>
+          <h1>Panell de resultats de la Gimkana Modernista</h1>
+          <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
+        </div>
       </div>
       <div class="badge" id="last">Esperant dades…</div>
     </header>
@@ -274,12 +289,12 @@
   </div>
 
   <footer>
-    <div>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assistència de la IA</div>
-    <div>Obra sota llicència CC BY-NC-SA 4.0</div>
+    <div>AplicaciÃ³ creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener">Felip Sarroca</a> amb l'assistÃ¨ncia de la IA</div>
+    <div>Obra sota llicÃ¨ncia CC BY-NC-SA 4.0</div>
   </footer>
 
   <script>
-    // Configura aquí la teva graella (compartida "qualsevol amb l'enllaç pot veure")
+    // Configura aquÃ­ la teva graella (compartida "qualsevol amb l'enllaÃ§ pot veure")
     // Fem servir GViz en mode JSONP per evitar CORS.
     const QUERY_BASE = "https://docs.google.com/spreadsheets/d/11OBKW0XE1S5ia5H2BuIlr9TSexkS-tIsIyCH_TvogWU/gviz/tq?sheet=Classificacio";
 
@@ -406,7 +421,7 @@
         const leader = tableToLeader(table);
         renderColumn("col-3r", leader["3r"] || [], "var(--accent-3r)", "3r");
         renderColumn("col-4t", leader["4t"] || [], "var(--accent-4t)", "4t");
-        document.getElementById("last").textContent = "Darrera actualització: " + new Date().toLocaleTimeString();
+        document.getElementById("last").textContent = "Darrera actualitzaciÃ³: " + new Date().toLocaleTimeString();
       } catch(err){
         document.getElementById("error").textContent = "Error en carregar les dades: " + (err?.message || err);
       }
@@ -417,3 +432,4 @@
   </script>
 </body>
 </html>
+
