@@ -177,6 +177,38 @@
       min-width:80px;
       text-align:right;
     }
+    .gain{
+      display:inline-block;
+      margin-top:4px;
+      padding:2px 8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      color:var(--text);
+      font-size:12px;
+      font-weight:700;
+      animation:popIn .8s ease;
+    }
+    @keyframes popIn{
+      0%{transform:translateY(6px) scale(.9); opacity:0;}
+      60%{transform:translateY(0) scale(1.02); opacity:1;}
+      100%{transform:translateY(0) scale(1); opacity:1;}
+    }
+    .confetti{
+      position:fixed;
+      top:-20px;
+      width:10px;
+      height:18px;
+      opacity:0.9;
+      border-radius:3px;
+      animation:confettiFall 1.2s ease-out forwards;
+      pointer-events:none;
+      z-index:5;
+    }
+    @keyframes confettiFall{
+      0%{transform:translate3d(var(--x,0),0,0) rotate(0deg);}
+      100%{transform:translate3d(var(--x,0),110vh,0) rotate(320deg);}
+      to{opacity:0;}
+    }
     .empty{
       color:var(--muted);
       font-size:14px;
@@ -215,7 +247,7 @@
       <div>
         <p class="eyebrow">gimkana en directe</p>
         <h1>Panell de resultats de la Gimkana Modernista</h1>
-        <p class="subtitle">Actualització automàtica cada 10 segons · dades en temps real</p>
+        <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
       </div>
       <div class="badge" id="last">Esperant dades…</div>
     </header>
@@ -258,6 +290,7 @@
     }
 
     const prevTop = { "3r": [], "4t": [] };
+    const prevPoints = { "3r": {}, "4t": {} };
 
     function loadSheetData(){
       return new Promise((resolve, reject)=>{
@@ -312,20 +345,28 @@
         host.innerHTML = `<div class="empty">Encara no hi ha puntuacions.</div>`;
         return;
       }
+      const prevMap = prevPoints[courseKey] || {};
       const max = Math.max(...clean.map(x => Number(x.punts) || 0));
       host.innerHTML = clean.map((x, i) => {
         const pct = max ? Math.round((Number(x.punts) || 0) / max * 100) : 0;
         const rankCls = i < 3 ? `border-color:${accent}; box-shadow:0 6px 20px ${accent}33;` : "";
+        const diff = (Number(x.punts) || 0) - (prevMap[x.grup] || 0);
+        const gain = diff > 0 ? `<span class="gain">+${diff} punts</span>` : "";
         return `
           <div class="item" style="${i < 3 ? `background:linear-gradient(120deg, ${accent}1a, rgba(255,255,255,.04));` : ""}">
             <div class="rank" style="${rankCls}">${i + 1}</div>
             <div class="details">
               <div class="name">${escapeHtml(x.grup)}</div>
               <div class="bar"><div class="fill" style="width:${pct}%; background:linear-gradient(90deg, ${accent}, #ffffff80);"></div></div>
+              ${gain}
             </div>
             <div class="score">${Number(x.punts)} pts</div>
           </div>`;
       }).join("");
+
+      const map = {};
+      clean.forEach(x => { map[x.grup] = Number(x.punts) || 0; });
+      prevPoints[courseKey] = map;
 
       highlightTopChanges(host, clean, courseKey, accent);
     }
@@ -336,6 +377,8 @@
       const prev = prevTop[courseKey] || [];
       const changed = newTop.length !== prev.length || newTop.some((v,i) => v !== prev[i]);
       if (changed){
+        const leaderChanged = newTop[0] !== prev[0];
+        if (leaderChanged) triggerConfetti(accent);
         const nodes = host.querySelectorAll(".item");
         nodes.forEach((node, idx) => {
           if (idx < 3){
@@ -347,6 +390,21 @@
           }
         });
         prevTop[courseKey] = newTop;
+      }
+    }
+
+    function triggerConfetti(color){
+      const colors = [color, "#ffffff", "#cde8ff"];
+      for (let i = 0; i < 24; i++){
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.background = colors[i % colors.length];
+        piece.style.left = Math.random()*100 + "vw";
+        piece.style.setProperty("--x", (Math.random()*60 - 30) + "px");
+        piece.style.animationDuration = (0.9 + Math.random()*0.5) + "s";
+        piece.style.transform = `rotate(${Math.random()*360}deg)`;
+        document.body.appendChild(piece);
+        setTimeout(()=> piece.remove(), 1400);
       }
     }
 
@@ -364,7 +422,7 @@
     }
 
     refresh();
-    setInterval(refresh, 10000);
+    setInterval(refresh, 5000);
   </script>
 </body>
 </html>
