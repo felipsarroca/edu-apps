@@ -31,7 +31,7 @@
     }
     .page{
       flex:1;
-      padding:2px clamp(16px, 4vw, 60px) 110px;
+      padding:1px clamp(16px, 4vw, 60px) 110px;
       position:relative;
       overflow:hidden;
     }
@@ -47,7 +47,7 @@
       position:relative;
       z-index:1;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
@@ -259,7 +259,7 @@
         <h1>Panell de resultats de la Gimkana Modernista</h1>
         <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
       </div>
-      <div style="margin-top: 12px; display: flex; gap: 8px;">
+      <div style="display: flex; gap: 8px;">
         <div class="badge" id="last"></div>
         <button id="fullscreen-btn" class="badge" title="Pantalla completa" style="cursor:pointer; padding: 8px; line-height: 1;">
           <svg id="icon-fullscreen" width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2">
