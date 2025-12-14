@@ -49,7 +49,7 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
       flex-wrap:wrap;
       margin-bottom:0px;
     }
@@ -95,6 +95,7 @@
       box-shadow:var(--shadow);
       align-self:flex-start;
     }
+    .hidden-icon { display: none !important; }
 
     .board{
       position:relative;
@@ -102,7 +103,7 @@
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
       gap:22px;
-      margin-top: 15px;
+      margin-top: 2px;
     }
     .col{
       background:var(--card);
@@ -275,7 +276,7 @@
             <path d="M8 10L1 17"/>
             <path d="M10 10L17 17"/>
           </svg>
-          <svg id="icon-actualsize" width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" style="display: none;">
+          <svg id="icon-actualsize" width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" class="hidden-icon">
             <path d="M1 1L8 8"/>
             <path d="M1 17L8 10"/>
             <path d="M17 1L10 8"/>
@@ -458,17 +459,14 @@
     }
 
     function updateFullscreenIcons() {
-      console.log('updateFullscreenIcons called');
       const iconFullscreen = document.getElementById('icon-fullscreen');
       const iconActualsize = document.getElementById('icon-actualsize');
       if (document.fullscreenElement) {
-        console.log('Currently in fullscreen');
-        iconFullscreen.style.display = 'none';
-        iconActualsize.style.display = 'unset'; // Use unset to revert to default inline display for SVG
+        iconFullscreen.classList.add('hidden-icon');
+        iconActualsize.classList.remove('hidden-icon');
       } else {
-        console.log('Not in fullscreen');
-        iconFullscreen.style.display = 'unset';
-        iconActualsize.style.display = 'none';
+        iconFullscreen.classList.remove('hidden-icon');
+        iconActualsize.classList.add('hidden-icon');
       }
     }
 
