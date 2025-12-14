@@ -102,6 +102,7 @@
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
       gap:22px;
+      margin-top: 15px;
     }
     .col{
       background:var(--card);
@@ -457,13 +458,16 @@
     }
 
     function updateFullscreenIcons() {
+      console.log('updateFullscreenIcons called');
       const iconFullscreen = document.getElementById('icon-fullscreen');
       const iconActualsize = document.getElementById('icon-actualsize');
       if (document.fullscreenElement) {
+        console.log('Currently in fullscreen');
         iconFullscreen.style.display = 'none';
-        iconActualsize.style.display = 'block';
+        iconActualsize.style.display = 'unset'; // Use unset to revert to default inline display for SVG
       } else {
-        iconFullscreen.style.display = 'block';
+        console.log('Not in fullscreen');
+        iconFullscreen.style.display = 'unset';
         iconActualsize.style.display = 'none';
       }
     }
