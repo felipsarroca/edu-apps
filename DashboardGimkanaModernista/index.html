@@ -31,7 +31,7 @@
     }
     .page{
       flex:1;
-      padding:1px clamp(16px, 4vw, 60px) 110px;
+      padding:10px clamp(16px, 4vw, 60px) 110px;
       position:relative;
       overflow:hidden;
     }
@@ -52,6 +52,13 @@
       gap:12px;
       flex-wrap:wrap;
       margin-bottom:0px;
+    }
+    .header-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      min-width:260px;
     }
 
     .logo-mark{
@@ -254,10 +261,12 @@
   <div class="page">
     <div class="glow"></div>
     <header>
-      <img src="dashboard.svg" alt="Dashboard" class="logo-mark" loading="lazy">
-      <div style="flex: 1;">
-        <h1>Panell de resultats de la Gimkana Modernista</h1>
-        <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
+      <div class="header-left">
+        <img src="dashboard.svg" alt="Dashboard" class="logo-mark" loading="lazy">
+        <div style="flex: 1;">
+          <h1>Panell de resultats de la Gimkana Modernista</h1>
+          <p class="subtitle">Actualització automàtica cada 5 segons · dades en temps real</p>
+        </div>
       </div>
       <div style="display: flex; gap: 8px;">
         <div class="badge" id="last"></div>
