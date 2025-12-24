@@ -644,5 +644,5 @@ function stopPendingLoad() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(stopPendingLoad, 2000);
+  setTimeout(stopPendingLoad, 6000);
 });
