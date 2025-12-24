@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Space+Grotesk:wght@400;600;700&display=swap");
+
 @keyframes popIn {
   0% { transform: scale(0.96) translateY(6px); opacity: 0; }
   100% { transform: scale(1) translateY(0); opacity: 1; }
