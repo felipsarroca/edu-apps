@@ -105,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Llengua catalana
         {
-            name: "Ara ?s l'hora",
+            name: "Ara és l'hora",
             path: 'LesHores/',
             category: 'Llengua catalana',
-            description: "Apr?n a llegir i expressar l'hora en catal? amb nivells i modes de joc.",
+            description: "Aprèn a llegir un rellotge analògic i a expressar l'hora correctament en català de manera gamificada",
             icon: 'LesHores/favicon.svg'
         },
 
