@@ -102,6 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: 'KineGraph/favicon.svg'
         },
 
+
+        // Llengua catalana
+        {
+            name: "Ara ?s l'hora",
+            path: 'LesHores/',
+            category: 'Llengua catalana',
+            description: "Apr?n a llegir i expressar l'hora en catal? amb nivells i modes de joc.",
+            icon: 'LesHores/favicon.svg'
+        },
+
         // Economia i Emprenedoria
         { 
             name: "Joc de Cooperatives", 
