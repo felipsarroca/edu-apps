@@ -263,13 +263,13 @@ function validatePool(level, pool) {
   };
 }
 
-export {
-  buildPool,
-  buildChallenge,
-  buildQuestion,
-  buildOptions,
-  validatePool,
-  randomSample,
-  shuffle,
-  uniqueById,
-};
+// Expose functions globally for non-module usage
+window.buildPool = buildPool;
+window.buildChallenge = buildChallenge;
+window.buildQuestion = buildQuestion;
+window.buildOptions = buildOptions;
+window.validatePool = validatePool;
+window.randomSample = randomSample;
+window.shuffle = shuffle;
+window.uniqueById = uniqueById;
+
