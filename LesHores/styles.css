@@ -129,6 +129,10 @@ body[data-screenmode="mobile"] .question-repeat.active {
   display: block;
 }
 
+body[data-screenmode="mobile"].hide-question-repeat .question-repeat.active {
+  display: none;
+}
+
 .app-header {
   display: flex;
   align-items: flex-start;

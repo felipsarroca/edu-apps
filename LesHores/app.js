@@ -298,6 +298,8 @@ function nextQuestion() {
   state.currentEntryId = entry.id;
   const candidates = filterByTags(timeBank, level.filters);
   const levelNum = parseInt(level.levelId.slice(1), 10);
+  const hideRepeatOnMobile = levelNum === 11 || levelNum === 12;
+  document.body.classList.toggle("hide-question-repeat", hideRepeatOnMobile);
   const use24h = levelNum >= 5;
   const question = buildQuestion(entry, level, state.pool, { use24h }, Math.random, candidates);
 
