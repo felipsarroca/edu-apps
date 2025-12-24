@@ -576,6 +576,11 @@ input[type="text"] {
   color: #0e2a63;
 }
 
+#screen-levels .back-btn,
+#screen-badges .back-btn {
+  margin-bottom: 12px;
+}
+
 .levels-list {
   display: grid;
   gap: 10px;
