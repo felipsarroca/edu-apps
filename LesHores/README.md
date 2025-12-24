@@ -24,6 +24,17 @@ Aplicació web (HTML, CSS i JavaScript) per aprendre a llegir i expressar l'hora
 
 Si vols evitar problemes de memòria cau, pots fer un hard refresh (Ctrl+F5) després de canvis.
 
+## Instal·lació com a app (PWA)
+### Android (Chrome)
+1. Obre https://ja.cat/araeslhora al mòbil.
+2. Toca el menú (⋮) i tria "Afegeix a la pantalla d'inici".
+3. Confirma i obre l'app des de la icona.
+
+### iPhone / iPad (Safari)
+1. Obre https://ja.cat/araeslhora amb Safari.
+2. Toca "Compartir" i tria "Afegir a la pantalla d'inici".
+3. Confirma i obre l'app des de la icona.
+
 ## Configuració dins l'app
 - So: activable/desactivable des d'"Opcions".
 - Tema: clar o fosc.
