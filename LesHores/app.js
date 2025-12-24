@@ -1,6 +1,8 @@
-// Functions buildPool, buildChallenge, buildQuestion are loaded from engine.js (global)
-// Note: We access them directly from window when needed to ensure engine.js has loaded
-
+import {
+  buildPool,
+  buildChallenge,
+  buildQuestion,
+} from "./engine.js";
 
 const screens = document.querySelectorAll(".screen");
 const playerNameInput = document.getElementById("playerName");
@@ -74,14 +76,8 @@ function syncHud() {
 }
 
 function loadProfiles() {
-  try {
-    const saved = localStorage.getItem("leshores_profiles");
-    state.profiles = saved ? JSON.parse(saved) : {};
-  } catch (e) {
-    console.error("Error loading profiles, resetting", e);
-    state.profiles = {};
-  }
-
+  const saved = localStorage.getItem("leshores_profiles");
+  state.profiles = saved ? JSON.parse(saved) : {};
   if (state.profiles[""]) {
     delete state.profiles[""];
   }
@@ -100,444 +96,426 @@ function loadProfiles() {
   renderProfileList();
 }
 
-function saveProfile(name) {
-  if (!name) return;
-  if (!state.profiles[name]) {
-    state.profiles[name] = { name, unlockedLevel: 1, points: 0, streak: 0, badges: [] };
-  }
-  state.profile = state.profiles[name];
+function persistProfiles() {
   localStorage.setItem("leshores_profiles", JSON.stringify(state.profiles));
-  localStorage.setItem("leshores_active", name);
+  localStorage.setItem("leshores_active", state.profile.name);
+}
+
+function saveProfile(name) {
+  const clean = (name || "").trim();
+  if (!clean) return;
+  if (!state.profiles[clean]) {
+    state.profiles[clean] = { name: clean, unlockedLevel: 1, points: 0, streak: 0, badges: [] };
+  }
+  state.profile = state.profiles[clean];
   syncHud();
+  persistProfiles();
   renderProfileList();
 }
 
 function resetProfile() {
-  playerNameInput.value = "";
   state.profile = { name: "", unlockedLevel: 1, points: 0, streak: 0, badges: [] };
+  playerNameInput.value = "";
+  localStorage.removeItem("leshores_active");
   syncHud();
+  renderProfileList();
 }
 
 function renderProfileList() {
   profileList.innerHTML = "";
   Object.keys(state.profiles).forEach((name) => {
     const pill = document.createElement("div");
-    pill.className = "profile-pill" + (state.profile.name === name ? " active" : "");
+    pill.className = `profile-pill${state.profile.name === name ? " active" : ""}`;
     pill.textContent = name;
     pill.addEventListener("click", () => {
       state.profile = state.profiles[name];
-      localStorage.setItem("leshores_active", name);
-      playerNameInput.value = name;
       syncHud();
+      persistProfiles();
+      renderLevels();
+      renderBadges();
+      renderBadgeStrip();
       renderProfileList();
     });
     profileList.appendChild(pill);
   });
 }
 
+function filterByTags(entries, filters = {}) {
+  const tagsAll = filters.tagsAll || [];
+  const tagsAny = filters.tagsAny || [];
+  let out = entries.slice();
+  if (tagsAll.length > 0) {
+    out = out.filter((e) => tagsAll.every((t) => e.tags.includes(t)));
+  }
+  if (tagsAny.length > 0) {
+    out = out.filter((e) => tagsAny.some((t) => e.tags.includes(t)));
+  }
+  return out;
+}
+
+function renderClock(entry, style = { numbers: true, marks: "all" }, extraClass = "") {
+  const radius = 100;
+  const center = 120;
+  const hourAngle = (entry.h % 12) * 30 + entry.m * 0.5;
+  const minuteAngle = entry.m * 6;
+  const className = extraClass ? `clock-svg ${extraClass}` : "clock-svg";
+
+  const numbers = style.numbers
+    ? Array.from({ length: 12 }).map((_, i) => {
+        const angle = (i + 1) * 30;
+        const rad = ((angle - 90) * Math.PI) / 180;
+        const x = center + Math.cos(rad) * 80;
+        const y = center + Math.sin(rad) * 80;
+        return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" class="num">${i + 1}</text>`;
+      }).join("")
+    : "";
+
+  const marks = style.marks === "none" ? "" : Array.from({ length: 60 }).map((_, i) => {
+    if (style.marks === "hoursOnly" && i % 5 !== 0) return "";
+    const angle = i * 6;
+    const rad = ((angle - 90) * Math.PI) / 180;
+    const x1 = center + Math.cos(rad) * 92;
+    const y1 = center + Math.sin(rad) * 92;
+    const x2 = center + Math.cos(rad) * (i % 5 === 0 ? 82 : 88);
+    const y2 = center + Math.sin(rad) * (i % 5 === 0 ? 82 : 88);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="tick"/>`;
+  }).join("");
+
+  return `
+    <svg class="${className}" viewBox="0 0 240 240">
+      <circle cx="${center}" cy="${center}" r="${radius}" class="clock-face"></circle>
+      ${marks}
+      ${numbers}
+      <line x1="${center}" y1="${center}" x2="${center}" y2="${center - 50}" class="hand hour" transform="rotate(${hourAngle} ${center} ${center})"/>
+      <line x1="${center}" y1="${center}" x2="${center}" y2="${center - 75}" class="hand minute" transform="rotate(${minuteAngle} ${center} ${center})"/>
+      <circle cx="${center}" cy="${center}" r="4" class="pin"/>
+    </svg>
+  `;
+}
+
+function renderOptions(question, level) {
+  optionsWrap.innerHTML = "";
+  question.options.forEach((opt) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    if (level.mode === "textToClock") {
+      const entry = timeBank.find((e) => e.id === opt);
+      btn.innerHTML = renderClock(entry, level.clockStyle, "option-clock");
+    } else {
+      if (typeof opt === "string" && /[a-zà-ÿ]/i.test(opt)) {
+        btn.classList.add("option-text");
+      }
+      btn.textContent = opt;
+    }
+    btn.addEventListener("click", () => handleAnswer(btn, opt, question.correct));
+    optionsWrap.appendChild(btn);
+  });
+}
+
+function handleAnswer(btn, optionValue, correctValue) {
+  const allButtons = optionsWrap.querySelectorAll(".option-btn");
+  allButtons.forEach((b) => b.disabled = true);
+
+  if (optionValue === correctValue) {
+    btn.classList.add("correct");
+    feedback.textContent = "Correcte!";
+    state.profile.points += 10;
+    state.profile.streak += 1;
+    state.correctCount += 1;
+    state.maxStreak = Math.max(state.maxStreak, state.profile.streak);
+    state.lastEntryId = state.currentEntryId;
+
+    hudPoints.textContent = state.profile.points;
+    hudStreak.textContent = state.profile.streak;
+    state.profiles[state.profile.name] = state.profile;
+    persistProfiles();
+
+    const progressCount = Math.min(state.correctCount, MAX_CORRECT);
+    progressFill.style.width = `${(progressCount / MAX_CORRECT) * 100}%`;
+    progressText.textContent = `${progressCount}/${MAX_CORRECT} encerts`;
+
+    if (state.correctCount >= MAX_CORRECT && state.maxStreak >= 5) {
+      setTimeout(() => finishLevel(), 400);
+      return;
+    }
+    if (state.correctCount >= MAX_CORRECT && state.maxStreak < 5) {
+      setTimeout(() => showRetryModal(), 400);
+      return;
+    }
+
+    setTimeout(() => {
+      nextQuestion();
+    }, 700);
+    return;
+  }
+
+  btn.classList.add("wrong");
+  feedback.textContent = "Ops... Torna-ho a provar!";
+  state.profile.streak = 0;
+  hudStreak.textContent = state.profile.streak;
+  state.profiles[state.profile.name] = state.profile;
+  persistProfiles();
+
+  setTimeout(() => {
+    allButtons.forEach((b) => {
+      b.disabled = false;
+      b.classList.remove("wrong");
+    });
+  }, 600);
+}
+
+function nextQuestion() {
+  const level = state.currentLevel;
+  if (!level) return;
+
+  if (state.currentIndex >= state.challenge.length) {
+    state.challenge = buildChallenge(state.pool, state.pool.length, Math.random);
+    state.currentIndex = 0;
+  }
+
+  let entry = state.challenge[state.currentIndex];
+  if (state.lastEntryId && entry.id === state.lastEntryId) {
+    const altIndex = state.challenge.findIndex(
+      (e, idx) => idx > state.currentIndex && e.id !== state.lastEntryId
+    );
+    if (altIndex !== -1) {
+      const tmp = state.challenge[state.currentIndex];
+      state.challenge[state.currentIndex] = state.challenge[altIndex];
+      state.challenge[altIndex] = tmp;
+      entry = state.challenge[state.currentIndex];
+    } else {
+      state.challenge = buildChallenge(state.pool, state.pool.length, Math.random);
+      state.currentIndex = 0;
+      const swapIndex = state.challenge.findIndex((e) => e.id !== state.lastEntryId);
+      if (swapIndex !== -1) {
+        const tmp = state.challenge[0];
+        state.challenge[0] = state.challenge[swapIndex];
+        state.challenge[swapIndex] = tmp;
+      }
+      entry = state.challenge[state.currentIndex];
+    }
+  }
+  state.currentEntryId = entry.id;
+  const candidates = filterByTags(timeBank, level.filters);
+  const levelNum = parseInt(level.levelId.slice(1), 10);
+  const hideRepeatOnMobile = levelNum === 11 || levelNum === 12;
+  document.body.classList.toggle("hide-question-repeat", hideRepeatOnMobile);
+  const use24h = levelNum >= 5;
+  const question = buildQuestion(entry, level, state.pool, { use24h }, Math.random, candidates);
+
+  hudLevel.textContent = `Nivell ${levelNum}`;
+  feedback.textContent = "";
+  optionsWrap.innerHTML = "";
+
+  if (level.mode === "textToClock") {
+    clockContainer.classList.add("text-question");
+    if (clockWrap) clockWrap.classList.add("compact");
+    clockContainer.innerHTML = `<div class="clock-title">Llegeix i tria el rellotge correcte</div>
+      <div class="question-text">${entry.catalan}</div>`;
+    if (questionRepeat) {
+      questionRepeat.textContent = entry.catalan;
+      questionRepeat.classList.add("active");
+    }
+  } else {
+    clockContainer.classList.remove("text-question");
+    if (clockWrap) clockWrap.classList.remove("compact");
+    clockContainer.innerHTML = renderClock(entry, level.clockStyle);
+    if (questionRepeat) {
+      questionRepeat.textContent = "";
+      questionRepeat.classList.remove("active");
+    }
+  }
+
+  renderOptions(question, level);
+  state.currentIndex += 1;
+}
+
+function showRetryModal() {
+  const level = state.currentLevel;
+  if (!level) return;
+
+  const levelNum = parseInt(level.levelId.slice(1), 10);
+  modalBadge.textContent = "\u{1F44F}";
+  modalTitle.textContent = `Has fet 10 encerts al nivell ${levelNum}!`;
+  modalText.textContent = "Per passar cal una ratxa minima de 5 encerts seguits. Torna-ho a intentar.";
+  modalNext.textContent = "Repetir nivell";
+  modalNext.style.display = "";
+  modalLevels.textContent = "Torna a nivells";
+  levelModal.classList.add("active");
+
+  modalNext.onclick = () => {
+    levelModal.classList.remove("active");
+    startLevel(level.levelId);
+  };
+  modalLevels.onclick = () => {
+    levelModal.classList.remove("active");
+    renderLevels();
+    renderBadges();
+    if (nextLevelExists) {
+      go("levels");
+    } else {
+      go("home");
+    }
+  };
+}
+
+function finishLevel() {
+  const level = state.currentLevel;
+  const passedStreak = state.maxStreak >= 5;
+  const passedCorrect = state.correctCount >= MAX_CORRECT;
+  if (!passedStreak || !passedCorrect) return;
+  const wonBadge = true;
+
+  if (wonBadge && !state.profile.badges.includes(level.rewards.badgeOnComplete)) {
+    state.profile.badges.push(level.rewards.badgeOnComplete);
+  }
+  const levelNum = parseInt(level.levelId.slice(1), 10);
+  const badgeInfo = badges.find((b) => b.badgeId === level.rewards.badgeOnComplete);
+  const nextLevelNum = levelNum + 1;
+  const nextLevelId = `L${nextLevelNum}`;
+  const nextLevelExists = levels.some((l) => l.levelId === nextLevelId);
+
+  if (nextLevelExists && state.profile.unlockedLevel < levelNum + 1) {
+    state.profile.unlockedLevel += 1;
+  } else {
+    state.profile.unlockedLevel = Math.max(state.profile.unlockedLevel, levelNum);
+  }
+  state.profiles[state.profile.name] = state.profile;
+  persistProfiles();
+
+  modalBadge.textContent = badgeInfo ? badgeInfo.icon : "\u{1F3C5}";
+  modalTitle.textContent = `Nivell ${levelNum} superat!`;
+  modalText.textContent = nextLevelExists
+    ? "Nova insígnia! Vols intentar la següent?"
+    : "Has completat tots els nivells!";
+  modalNext.textContent = "Següent nivell";
+  if (nextLevelExists) {
+    modalNext.style.display = "";
+    modalLevels.textContent = "Torna a nivells";
+  } else {
+    modalNext.style.display = "none";
+    modalLevels.textContent = "Tornar";
+  }
+  levelModal.classList.add("active");
+  startConfetti();
+  if (winSound && soundOn.checked) {
+    winSound.currentTime = 0;
+    winSound.play().catch(() => {});
+  }
+
+  modalNext.onclick = () => {
+    levelModal.classList.remove("active");
+    if (nextLevelExists) startLevel(nextLevelId);
+    else go("levels");
+  };
+  modalLevels.onclick = () => {
+    levelModal.classList.remove("active");
+    renderLevels();
+    renderBadges();
+    go("levels");
+  };
+}
+
+function startLevel(levelId) {
+  if (!state.profile.name) {
+    go("home");
+    playerNameInput.focus();
+    return;
+  }
+  const level = levels.find((l) => l.levelId === levelId);
+  state.currentLevel = level;
+  state.pool = buildPool(level, timeBank, Math.random);
+  state.challenge = buildChallenge(state.pool, state.pool.length, Math.random);
+  state.currentIndex = 0;
+  state.correctCount = 0;
+  state.maxStreak = 0;
+  hudName.textContent = state.profile.name || "Jugador";
+  hudPoints.textContent = state.profile.points;
+  hudStreak.textContent = state.profile.streak;
+  const levelNum = parseInt(level.levelId.slice(1), 10);
+  hudLevel.textContent = `Nivell ${levelNum}`;
+  progressFill.style.width = "0%";
+  progressText.textContent = `0/${MAX_CORRECT} encerts`;
+  renderBadgeStrip(levelNum);
+  go("game");
+  nextQuestion();
+}
+
 function renderLevels() {
   levelsList.innerHTML = "";
-  levels.forEach((lv, idx) => {
+  levels.forEach((level) => {
+    const num = parseInt(level.levelId.slice(1), 10);
+    const locked = num > state.profile.unlockedLevel;
     const item = document.createElement("div");
-    item.className = "level-item" + (idx + 1 > state.profile.unlockedLevel ? " locked" : "");
-    const earned = state.profile.badges.includes(lv.rewards?.badgeOnComplete);
+    item.className = `level-item ${locked ? "locked" : ""}`;
     item.innerHTML = `
       <div>
-        <strong>${lv.title}</strong>
-        <div class="meta">${lv.description}</div>
+        <strong>Nivell ${num}</strong> - ${level.title}
+        <div class="meta">${level.description}</div>
       </div>
-      <div>${earned ? "✅" : idx + 1 <= state.profile.unlockedLevel ? "▶️" : "🔒"}</div>
+      <button class="btn ${locked ? "ghost" : "primary"}" ${locked ? "disabled" : ""}>
+        ${locked ? "Bloquejat" : "Jugar"}
+      </button>
     `;
-    if (idx + 1 <= state.profile.unlockedLevel) {
-      item.style.cursor = "pointer";
-      item.addEventListener("click", () => startLevel(lv.levelId));
-    }
+    const btn = item.querySelector("button");
+    btn.addEventListener("click", () => startLevel(level.levelId));
     levelsList.appendChild(item);
   });
 }
 
 function renderBadges() {
   badgesGrid.innerHTML = "";
-  badges.forEach((b) => {
-    const earned = state.profile.badges.includes(b.badgeId);
+  const displayLevel = state.profile.unlockedLevel || 1;
+  badges.forEach((badge, index) => {
+    const levelNum = index + 1;
+    const earned = state.profile.badges.includes(badge.badgeId);
     const card = document.createElement("div");
-    card.className = "badge" + (earned ? " earned" : "");
+    const reached = levelNum <= displayLevel;
+    card.className = `badge${reached ? " reached" : ""}${earned ? " earned" : ""}`;
+    const statusIcon = earned
+      ? `<span class="badge-check" aria-label="Aconseguida" title="Aconseguida">
+          <svg viewBox="0 0 24 24" role="img">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M7 12.5l3 3 7-7"></path>
+          </svg>
+        </span>`
+      : "";
     card.innerHTML = `
-      <div class="icon">${b.icon}</div>
-      <div><strong>${b.name}</strong></div>
-      <div class="desc">${b.description}</div>
-      ${earned ? '<div class="badge-check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path fill="#fff" d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" fill="none"/></svg></div>' : ""}
+      ${statusIcon}
+      <div class="icon">${badge.icon}</div>
+      <div><strong>${badge.name}</strong></div>
+      <div class="desc">${badge.description}</div>
     `;
     badgesGrid.appendChild(card);
   });
 }
 
-function renderBadgeStrip() {
+function renderBadgeStrip(displayLevel = null) {
   badgeStrip.innerHTML = "";
-  const levelBadges = badges.filter((b) => {
-    const lvNum = parseInt(b.condition.split(":L")[1], 10);
-    return lvNum <= state.profile.unlockedLevel;
-  });
-  levelBadges.forEach((b) => {
-    const earned = state.profile.badges.includes(b.badgeId);
-    const pill = document.createElement("span");
-    pill.className = "badge-pill" + (earned ? " earned" : " reached");
-    pill.innerHTML = `${b.icon} ${b.name}`;
+  const levelToShow = displayLevel || state.profile.unlockedLevel || 1;
+  badges.forEach((badge, index) => {
+    const levelNum = index + 1;
+    const earned = state.profile.badges.includes(badge.badgeId);
+    const pill = document.createElement("div");
+    const reached = levelNum <= levelToShow;
+    pill.className = `badge-pill${reached ? " reached" : ""}${earned ? " earned" : ""}`;
+    pill.textContent = `${badge.icon} ${badge.name}`;
     badgeStrip.appendChild(pill);
   });
 }
 
-function renderClock(entry, style, container) {
-  const size = 375;
-  const cx = size / 2;
-  const cy = size / 2;
-  const r = size / 2 - 20;
-
-  let ticksHtml = "";
-  if (style.marks === "all") {
-    for (let i = 0; i < 60; i++) {
-      const angle = (i * 6 - 90) * (Math.PI / 180);
-      const len = i % 5 === 0 ? 12 : 6;
-      const x1 = cx + (r - len) * Math.cos(angle);
-      const y1 = cy + (r - len) * Math.sin(angle);
-      const x2 = cx + r * Math.cos(angle);
-      const y2 = cy + r * Math.sin(angle);
-      ticksHtml += `<line class="tick" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-    }
-  } else if (style.marks === "hoursOnly") {
-    for (let i = 0; i < 12; i++) {
-      const angle = (i * 30 - 90) * (Math.PI / 180);
-      const len = 12;
-      const x1 = cx + (r - len) * Math.cos(angle);
-      const y1 = cy + (r - len) * Math.sin(angle);
-      const x2 = cx + r * Math.cos(angle);
-      const y2 = cy + r * Math.sin(angle);
-      ticksHtml += `<line class="tick" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-    }
-  }
-
-  let numsHtml = "";
-  if (style.numbers) {
-    for (let i = 1; i <= 12; i++) {
-      const angle = (i * 30 - 90) * (Math.PI / 180);
-      const x = cx + (r - 30) * Math.cos(angle);
-      const y = cy + (r - 30) * Math.sin(angle) + 6;
-      numsHtml += `<text class="num" x="${x}" y="${y}" text-anchor="middle">${i}</text>`;
-    }
-  }
-
-  const h12 = entry.h % 12;
-  const hourAngle = (h12 + entry.m / 60) * 30 - 90;
-  const minAngle = entry.m * 6 - 90;
-  const hourLen = r * 0.5;
-  const minLen = r * 0.75;
-
-  const hx = cx + hourLen * Math.cos(hourAngle * Math.PI / 180);
-  const hy = cy + hourLen * Math.sin(hourAngle * Math.PI / 180);
-  const mx = cx + minLen * Math.cos(minAngle * Math.PI / 180);
-  const my = cy + minLen * Math.sin(minAngle * Math.PI / 180);
-
-  container.innerHTML = `
-    <svg class="clock-svg" viewBox="0 0 ${size} ${size}">
-      <circle class="clock-face" cx="${cx}" cy="${cy}" r="${r}"/>
-      ${ticksHtml}
-      ${numsHtml}
-      <line class="hand hour" x1="${cx}" y1="${cy}" x2="${hx}" y2="${hy}"/>
-      <line class="hand minute" x1="${cx}" y1="${cy}" x2="${mx}" y2="${my}"/>
-      <circle class="pin" cx="${cx}" cy="${cy}" r="8"/>
-    </svg>
-  `;
-}
-
-function renderClockOption(entry, style) {
-  const size = 220;
-  const cx = size / 2;
-  const cy = size / 2;
-  const r = size / 2 - 12;
-
-  let ticksHtml = "";
-  if (style.marks === "all") {
-    for (let i = 0; i < 60; i++) {
-      const angle = (i * 6 - 90) * (Math.PI / 180);
-      const len = i % 5 === 0 ? 8 : 4;
-      const x1 = cx + (r - len) * Math.cos(angle);
-      const y1 = cy + (r - len) * Math.sin(angle);
-      const x2 = cx + r * Math.cos(angle);
-      const y2 = cy + r * Math.sin(angle);
-      ticksHtml += `<line class="tick" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-    }
-  } else if (style.marks === "hoursOnly") {
-    for (let i = 0; i < 12; i++) {
-      const angle = (i * 30 - 90) * (Math.PI / 180);
-      const len = 8;
-      const x1 = cx + (r - len) * Math.cos(angle);
-      const y1 = cy + (r - len) * Math.sin(angle);
-      const x2 = cx + r * Math.cos(angle);
-      const y2 = cy + r * Math.sin(angle);
-      ticksHtml += `<line class="tick" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-    }
-  }
-
-  let numsHtml = "";
-  if (style.numbers) {
-    for (let i = 1; i <= 12; i++) {
-      const angle = (i * 30 - 90) * (Math.PI / 180);
-      const x = cx + (r - 20) * Math.cos(angle);
-      const y = cy + (r - 20) * Math.sin(angle) + 4;
-      numsHtml += `<text class="num" x="${x}" y="${y}" text-anchor="middle" style="font-size:12px">${i}</text>`;
-    }
-  }
-
-  const h12 = entry.h % 12;
-  const hourAngle = (h12 + entry.m / 60) * 30 - 90;
-  const minAngle = entry.m * 6 - 90;
-  const hourLen = r * 0.5;
-  const minLen = r * 0.75;
-
-  const hx = cx + hourLen * Math.cos(hourAngle * Math.PI / 180);
-  const hy = cy + hourLen * Math.sin(hourAngle * Math.PI / 180);
-  const mx = cx + minLen * Math.cos(minAngle * Math.PI / 180);
-  const my = cy + minLen * Math.sin(minAngle * Math.PI / 180);
-
-  return `
-    <svg class="clock-svg option-clock" viewBox="0 0 ${size} ${size}">
-      <circle class="clock-face" cx="${cx}" cy="${cy}" r="${r}"/>
-      ${ticksHtml}
-      ${numsHtml}
-      <line class="hand hour" x1="${cx}" y1="${cy}" x2="${hx}" y2="${hy}"/>
-      <line class="hand minute" x1="${cx}" y1="${cy}" x2="${mx}" y2="${my}"/>
-      <circle class="pin" cx="${cx}" cy="${cy}" r="5"/>
-    </svg>
-  `;
-}
-
-function startLevel(levelId) {
-  const level = levels.find((l) => l.levelId === levelId);
-  if (!level) return;
-  state.currentLevel = level;
-  state.pool = window.buildPool(level, timeBank);
-  state.challenge = window.buildChallenge(state.pool, MAX_CORRECT);
-  state.currentIndex = 0;
-  state.correctCount = 0;
-  state.maxStreak = 0;
-  state.profile.streak = 0;
-  renderBadgeStrip();
-  updateProgress();
-  go("game");
-  showQuestion();
-}
-
-function updateProgress() {
-  const pct = (state.correctCount / MAX_CORRECT) * 100;
-  progressFill.style.width = `${pct}%`;
-  progressText.textContent = `${state.correctCount}/${MAX_CORRECT} encerts`;
-}
-
-function showQuestion() {
-  if (state.currentIndex >= state.challenge.length) {
-    checkLevelComplete();
-    return;
-  }
-  const entry = state.challenge[state.currentIndex];
-  const level = state.currentLevel;
-  const question = window.buildQuestion(entry, level, state.pool, {}, Math.random, timeBank);
-
-  state.currentEntryId = entry.id;
-
-  if (level.mode === "textToClock") {
-    clockContainer.classList.add("text-question");
-    clockWrap.classList.add("compact");
-    clockContainer.innerHTML = `
-      <div class="clock-title">Quina hora és?</div>
-      <div class="question-text">${question.prompt}</div>
-    `;
-    questionRepeat.style.display = "none";
-  } else {
-    clockContainer.classList.remove("text-question");
-    clockWrap.classList.remove("compact");
-    renderClock(entry, level.clockStyle, clockContainer);
-    if (level.mode === "say") {
-      questionRepeat.textContent = `Quina hora és?`;
-      questionRepeat.style.display = "block";
-    } else {
-      questionRepeat.style.display = "none";
-    }
-  }
-
-  optionsWrap.innerHTML = "";
-  question.options.forEach((opt) => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn" + (level.mode === "say" ? " option-text" : "");
-
-    if (level.mode === "textToClock") {
-      const optEntry = timeBank.find((e) => e.id === opt);
-      if (optEntry) {
-        btn.innerHTML = renderClockOption(optEntry, level.clockStyle);
-      } else {
-        btn.textContent = opt;
-      }
-    } else {
-      btn.textContent = opt;
-    }
-
-    btn.dataset.value = opt;
-    btn.addEventListener("click", () => handleAnswer(btn, opt, question.correct));
-    optionsWrap.appendChild(btn);
-  });
-
-  feedback.textContent = "";
-}
-
-function handleAnswer(btn, selected, correct) {
-  const isCorrect = selected === correct;
-  document.querySelectorAll(".option-btn").forEach((b) => {
-    b.disabled = true;
-    if (b.dataset.value === correct) b.classList.add("correct");
-    if (b.dataset.value === selected && !isCorrect) b.classList.add("wrong");
-  });
-
-  if (isCorrect) {
-    state.correctCount++;
-    state.profile.streak++;
-    if (state.profile.streak > state.maxStreak) state.maxStreak = state.profile.streak;
-    state.profile.points += state.currentLevel.rewards?.basePoints || 10;
-    feedback.textContent = "✅ Correcte!";
-    feedback.style.color = "#22c55e";
-  } else {
-    state.profile.streak = 0;
-    feedback.textContent = "❌ Ops...";
-    feedback.style.color = "#ef4444";
-  }
-
-  syncHud();
-  saveProfiles();
-  updateProgress();
-
-  setTimeout(() => {
-    state.currentIndex++;
-    showQuestion();
-  }, 1200);
-}
-
-function saveProfiles() {
-  state.profiles[state.profile.name] = state.profile;
-  localStorage.setItem("leshores_profiles", JSON.stringify(state.profiles));
-}
-
-function checkLevelComplete() {
-  const level = state.currentLevel;
-  const accuracy = state.correctCount / MAX_CORRECT;
-  const passed = accuracy >= (level.winCondition?.minAccuracy || 0.8) && state.maxStreak >= 5;
-
-  if (passed) {
-    const badgeId = level.rewards?.badgeOnComplete;
-    if (badgeId && !state.profile.badges.includes(badgeId)) {
-      state.profile.badges.push(badgeId);
-    }
-    const lvNum = parseInt(level.levelId.replace("L", ""), 10);
-    if (lvNum >= state.profile.unlockedLevel && lvNum < levels.length) {
-      state.profile.unlockedLevel = lvNum + 1;
-    }
-    saveProfiles();
-    showLevelCompleteModal(true, badgeId);
-  } else {
-    showLevelCompleteModal(false, null);
-  }
-}
-
-function showLevelCompleteModal(passed, badgeId) {
-  if (passed) {
-    const badge = badges.find((b) => b.badgeId === badgeId);
-    modalBadge.textContent = badge?.icon || "🏆";
-    modalTitle.textContent = "Nivell superat!";
-    modalText.textContent = badge ? `Has guanyat: ${badge.name}` : "Has desbloquejat el següent nivell.";
-    if (soundOn.checked && winSound) {
-      winSound.currentTime = 0;
-      winSound.play().catch(() => { });
-    }
-    startConfetti();
-  } else {
-    modalBadge.textContent = "🔄";
-    modalTitle.textContent = "Torna-ho a provar";
-    modalText.textContent = "Necessites més encerts o una ratxa de 5 per passar.";
-  }
-  levelModal.classList.add("active");
-}
-
-if (modalNext) {
-  modalNext.addEventListener("click", () => {
-    levelModal.classList.remove("active");
-    const nextLevelId = `L${state.profile.unlockedLevel}`;
-    startLevel(nextLevelId);
-  });
-}
-
-if (modalLevels) {
-  modalLevels.addEventListener("click", () => {
-    levelModal.classList.remove("active");
-    renderLevels();
-    go("levels");
-  });
-}
-
-
-
-function loadJSON(url) {
-  return new Promise((resolve, reject) => {
-    // Try fetch first (works on http/https)
-    if (window.location.protocol !== "file:") {
-      fetch(url)
-        .then(r => {
-          if (!r.ok) throw new Error(`Error loading ${url}`);
-          return r.json();
-        })
-        .then(resolve)
-        .catch(reject);
-    } else {
-      // Use XMLHttpRequest for file:// protocol
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", url, true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 0 || xhr.status === 200) {
-            try {
-              resolve(JSON.parse(xhr.responseText));
-            } catch (e) {
-              reject(new Error(`Error parsing ${url}: ${e.message}`));
-            }
-          } else {
-            reject(new Error(`Error loading ${url}`));
-          }
-        }
-      };
-      xhr.onerror = () => reject(new Error(`Network error loading ${url}`));
-      xhr.send();
-    }
-  });
-}
-
 async function loadData() {
-  try {
-    const [tb, lv, bd] = await Promise.all([
-      loadJSON("time_bank.json"),
-      loadJSON("levels.json"),
-      loadJSON("badges.json"),
-    ]);
-    timeBank = tb;
-    levels = lv;
-    badges = bd;
-    renderLevels();
-    renderBadges();
-  } catch (err) {
-    console.error("Failed to load game data:", err);
-    // Show a more helpful message for file:// protocol
-    if (window.location.protocol === "file:") {
-      console.warn("Hint: The app works better when served via a local server. Try using 'npx http-server' or the Live Server extension in VS Code.");
-    }
-    alert("Hi ha hagut un error carregant les dades del joc. Prova a obrir l'app amb un servidor local (Live Server, http-server, etc.).");
-  }
+  const [tb, lv, bd] = await Promise.all([
+    fetch("time_bank.json").then((r) => r.json()),
+    fetch("levels.json").then((r) => r.json()),
+    fetch("badges.json").then((r) => r.json()),
+  ]);
+  timeBank = tb;
+  levels = lv;
+  badges = bd;
+  renderLevels();
+  renderBadges();
 }
-
 
 document.querySelectorAll("[data-go]").forEach((btn) => {
   btn.addEventListener("click", () => go(btn.dataset.go));
@@ -659,12 +637,12 @@ function startConfetti() {
   confettiTimer = requestAnimationFrame(draw);
 }
 
-if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("./sw.js")
-      .then(() => console.log("Service Worker registered"))
-      .catch((err) => console.error("SW registration failed", err));
-  });
+function stopPendingLoad() {
+  if (document.readyState !== "complete") {
+    window.stop();
+  }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(stopPendingLoad, 2000);
+});
