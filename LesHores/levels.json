@@ -184,7 +184,7 @@
   {
     "levelId": "L11",
     "mode": "textToClock",
-    "title": "Text i rellotge (quarts + min5)",
+    "title": "Text i rellotge (quarts + minuts de 5)",
     "description": "Llegeix la frase i tria el rellotge correcte.",
     "filters": { "tagsAll": ["quarts", "min5"] },
     "questionPool": { "size": 30, "sampling": "random" },
