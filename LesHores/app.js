@@ -636,3 +636,37 @@ function startConfetti() {
   if (confettiTimer) cancelAnimationFrame(confettiTimer);
   confettiTimer = requestAnimationFrame(draw);
 }
+
+let loadFired = false;
+window.addEventListener("load", () => {
+  loadFired = true;
+});
+
+function waitForFavicon(timeoutMs = 3000) {
+  return new Promise((resolve) => {
+    const link = document.querySelector('link[rel="icon"]');
+    if (!link || !link.href) {
+      resolve();
+      return;
+    }
+    const img = new Image();
+    const done = () => resolve();
+    img.onload = done;
+    img.onerror = done;
+    img.src = link.href;
+    setTimeout(done, timeoutMs);
+  });
+}
+
+function stopPendingLoad() {
+  if (!loadFired && document.readyState !== "complete") {
+    window.stop();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  waitForFavicon().finally(() => {
+    setTimeout(stopPendingLoad, 4000);
+  });
+  setTimeout(stopPendingLoad, 12000);
+});
