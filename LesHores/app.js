@@ -636,3 +636,13 @@ function startConfetti() {
   if (confettiTimer) cancelAnimationFrame(confettiTimer);
   confettiTimer = requestAnimationFrame(draw);
 }
+
+function stopPendingLoad() {
+  if (document.readyState !== "complete") {
+    window.stop();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(stopPendingLoad, 2000);
+});
