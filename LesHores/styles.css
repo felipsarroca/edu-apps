@@ -89,6 +89,10 @@ body[data-screenmode="mobile"] .app-header {
   gap: 10px;
 }
 
+body[data-screenmode="mobile"] .subtitle {
+  font-size: 13.5px;
+}
+
 body[data-screenmode="mobile"] .header-right {
   flex-direction: row;
   align-items: center;
