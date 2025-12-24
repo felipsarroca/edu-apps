@@ -1,5 +1,5 @@
 // Functions buildPool, buildChallenge, buildQuestion are loaded from engine.js (global)
-const { buildPool, buildChallenge, buildQuestion } = window;
+// Note: We access them directly from window when needed to ensure engine.js has loaded
 
 
 const screens = document.querySelectorAll(".screen");
@@ -315,8 +315,8 @@ function startLevel(levelId) {
   const level = levels.find((l) => l.levelId === levelId);
   if (!level) return;
   state.currentLevel = level;
-  state.pool = buildPool(level, timeBank);
-  state.challenge = buildChallenge(state.pool, MAX_CORRECT);
+  state.pool = window.buildPool(level, timeBank);
+  state.challenge = window.buildChallenge(state.pool, MAX_CORRECT);
   state.currentIndex = 0;
   state.correctCount = 0;
   state.maxStreak = 0;
@@ -340,7 +340,7 @@ function showQuestion() {
   }
   const entry = state.challenge[state.currentIndex];
   const level = state.currentLevel;
-  const question = buildQuestion(entry, level, state.pool, {}, Math.random, timeBank);
+  const question = window.buildQuestion(entry, level, state.pool, {}, Math.random, timeBank);
 
   state.currentEntryId = entry.id;
 
