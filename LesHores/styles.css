@@ -581,6 +581,13 @@ input[type="text"] {
   margin-bottom: 12px;
 }
 
+#screen-levels .back-btn,
+#screen-options .back-btn,
+#screen-badges .back-btn {
+  display: flex;
+  margin-left: auto;
+}
+
 .levels-list {
   display: grid;
   gap: 10px;
