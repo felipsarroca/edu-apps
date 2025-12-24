@@ -1,4 +1,4 @@
-const CACHE_NAME = "leshores-v1";
+const CACHE_NAME = "leshores-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -15,6 +15,7 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (event) => {
+  self.skipWaiting(); // Força l'activació immediata
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS);
@@ -31,7 +32,7 @@ self.addEventListener("activate", (event) => {
             return caches.delete(key);
           }
         })
-      );
+      ).then(() => self.clients.claim()); // Pren el control de les pàgines immediatament
     })
   );
 });
