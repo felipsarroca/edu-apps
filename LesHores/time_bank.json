@@ -1,0 +1,3329 @@
+[
+  {
+    "id": "t_0000",
+    "h": 0,
+    "m": 0,
+    "digital24": "00:00",
+    "digital12": "12:00",
+    "catalan": "les dotze en punt",
+    "catalanVariants": [
+      "les dotze"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0100",
+    "h": 1,
+    "m": 0,
+    "digital24": "01:00",
+    "digital12": "1:00",
+    "catalan": "l'una en punt",
+    "catalanVariants": [
+      "l'una en punt",
+      "una en punt",
+      "la una en punt"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0200",
+    "h": 2,
+    "m": 0,
+    "digital24": "02:00",
+    "digital12": "2:00",
+    "catalan": "les dues en punt",
+    "catalanVariants": [
+      "les dues"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0300",
+    "h": 3,
+    "m": 0,
+    "digital24": "03:00",
+    "digital12": "3:00",
+    "catalan": "les tres en punt",
+    "catalanVariants": [
+      "les tres"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0400",
+    "h": 4,
+    "m": 0,
+    "digital24": "04:00",
+    "digital12": "4:00",
+    "catalan": "les quatre en punt",
+    "catalanVariants": [
+      "les quatre"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0500",
+    "h": 5,
+    "m": 0,
+    "digital24": "05:00",
+    "digital12": "5:00",
+    "catalan": "les cinc en punt",
+    "catalanVariants": [
+      "les cinc"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0600",
+    "h": 6,
+    "m": 0,
+    "digital24": "06:00",
+    "digital12": "6:00",
+    "catalan": "les sis en punt",
+    "catalanVariants": [
+      "les sis"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0700",
+    "h": 7,
+    "m": 0,
+    "digital24": "07:00",
+    "digital12": "7:00",
+    "catalan": "les set en punt",
+    "catalanVariants": [
+      "les set"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0800",
+    "h": 8,
+    "m": 0,
+    "digital24": "08:00",
+    "digital12": "8:00",
+    "catalan": "les vuit en punt",
+    "catalanVariants": [
+      "les vuit"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0900",
+    "h": 9,
+    "m": 0,
+    "digital24": "09:00",
+    "digital12": "9:00",
+    "catalan": "les nou en punt",
+    "catalanVariants": [
+      "les nou"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1000",
+    "h": 10,
+    "m": 0,
+    "digital24": "10:00",
+    "digital12": "10:00",
+    "catalan": "les deu en punt",
+    "catalanVariants": [
+      "les deu"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1100",
+    "h": 11,
+    "m": 0,
+    "digital24": "11:00",
+    "digital12": "11:00",
+    "catalan": "les onze en punt",
+    "catalanVariants": [
+      "les onze"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1200",
+    "h": 12,
+    "m": 0,
+    "digital24": "12:00",
+    "digital12": "12:00",
+    "catalan": "les dotze en punt",
+    "catalanVariants": [
+      "les dotze"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1300",
+    "h": 13,
+    "m": 0,
+    "digital24": "13:00",
+    "digital12": "1:00",
+    "catalan": "l'una en punt",
+    "catalanVariants": [
+      "l'una en punt",
+      "una en punt",
+      "la una en punt"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1400",
+    "h": 14,
+    "m": 0,
+    "digital24": "14:00",
+    "digital12": "2:00",
+    "catalan": "les dues en punt",
+    "catalanVariants": [
+      "les dues"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1500",
+    "h": 15,
+    "m": 0,
+    "digital24": "15:00",
+    "digital12": "3:00",
+    "catalan": "les tres en punt",
+    "catalanVariants": [
+      "les tres"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1600",
+    "h": 16,
+    "m": 0,
+    "digital24": "16:00",
+    "digital12": "4:00",
+    "catalan": "les quatre en punt",
+    "catalanVariants": [
+      "les quatre"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1700",
+    "h": 17,
+    "m": 0,
+    "digital24": "17:00",
+    "digital12": "5:00",
+    "catalan": "les cinc en punt",
+    "catalanVariants": [
+      "les cinc"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1800",
+    "h": 18,
+    "m": 0,
+    "digital24": "18:00",
+    "digital12": "6:00",
+    "catalan": "les sis en punt",
+    "catalanVariants": [
+      "les sis"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1900",
+    "h": 19,
+    "m": 0,
+    "digital24": "19:00",
+    "digital12": "7:00",
+    "catalan": "les set en punt",
+    "catalanVariants": [
+      "les set"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2000",
+    "h": 20,
+    "m": 0,
+    "digital24": "20:00",
+    "digital12": "8:00",
+    "catalan": "les vuit en punt",
+    "catalanVariants": [
+      "les vuit"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2100",
+    "h": 21,
+    "m": 0,
+    "digital24": "21:00",
+    "digital12": "9:00",
+    "catalan": "les nou en punt",
+    "catalanVariants": [
+      "les nou"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2200",
+    "h": 22,
+    "m": 0,
+    "digital24": "22:00",
+    "digital12": "10:00",
+    "catalan": "les deu en punt",
+    "catalanVariants": [
+      "les deu"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2300",
+    "h": 23,
+    "m": 0,
+    "digital24": "23:00",
+    "digital12": "11:00",
+    "catalan": "les onze en punt",
+    "catalanVariants": [
+      "les onze"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0100_b",
+    "h": 1,
+    "m": 0,
+    "digital24": "01:00",
+    "digital12": "1:00",
+    "catalan": "l'una en punt",
+    "catalanVariants": [
+      "l'una en punt",
+      "una en punt",
+      "la una en punt"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0200_b",
+    "h": 2,
+    "m": 0,
+    "digital24": "02:00",
+    "digital12": "2:00",
+    "catalan": "les dues en punt",
+    "catalanVariants": [
+      "les dues"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0300_b",
+    "h": 3,
+    "m": 0,
+    "digital24": "03:00",
+    "digital12": "3:00",
+    "catalan": "les tres en punt",
+    "catalanVariants": [
+      "les tres"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0400_b",
+    "h": 4,
+    "m": 0,
+    "digital24": "04:00",
+    "digital12": "4:00",
+    "catalan": "les quatre en punt",
+    "catalanVariants": [
+      "les quatre"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0500_b",
+    "h": 5,
+    "m": 0,
+    "digital24": "05:00",
+    "digital12": "5:00",
+    "catalan": "les cinc en punt",
+    "catalanVariants": [
+      "les cinc"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0600_b",
+    "h": 6,
+    "m": 0,
+    "digital24": "06:00",
+    "digital12": "6:00",
+    "catalan": "les sis en punt",
+    "catalanVariants": [
+      "les sis"
+    ],
+    "tags": [
+      "en_punt"
+    ],
+    "difficultyScore": 1,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0030",
+    "h": 0,
+    "m": 30,
+    "digital24": "00:30",
+    "digital12": "12:30",
+    "catalan": "les dotze i mitja",
+    "catalanVariants": [
+      "dos quarts d'una"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0130",
+    "h": 1,
+    "m": 30,
+    "digital24": "01:30",
+    "digital12": "1:30",
+    "catalan": "l'una i mitja",
+    "catalanVariants": [
+      "l'una i mitja",
+      "una i mitja",
+      "la una i mitja"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0230",
+    "h": 2,
+    "m": 30,
+    "digital24": "02:30",
+    "digital12": "2:30",
+    "catalan": "les dues i mitja",
+    "catalanVariants": [
+      "dos quarts de tres"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0330",
+    "h": 3,
+    "m": 30,
+    "digital24": "03:30",
+    "digital12": "3:30",
+    "catalan": "les tres i mitja",
+    "catalanVariants": [
+      "dos quarts de quatre"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0430",
+    "h": 4,
+    "m": 30,
+    "digital24": "04:30",
+    "digital12": "4:30",
+    "catalan": "les quatre i mitja",
+    "catalanVariants": [
+      "dos quarts de cinc"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0530",
+    "h": 5,
+    "m": 30,
+    "digital24": "05:30",
+    "digital12": "5:30",
+    "catalan": "les cinc i mitja",
+    "catalanVariants": [
+      "dos quarts de sis"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0630",
+    "h": 6,
+    "m": 30,
+    "digital24": "06:30",
+    "digital12": "6:30",
+    "catalan": "les sis i mitja",
+    "catalanVariants": [
+      "dos quarts de set"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0730",
+    "h": 7,
+    "m": 30,
+    "digital24": "07:30",
+    "digital12": "7:30",
+    "catalan": "les set i mitja",
+    "catalanVariants": [
+      "dos quarts de vuit"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0830",
+    "h": 8,
+    "m": 30,
+    "digital24": "08:30",
+    "digital12": "8:30",
+    "catalan": "les vuit i mitja",
+    "catalanVariants": [
+      "dos quarts de nou"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0930",
+    "h": 9,
+    "m": 30,
+    "digital24": "09:30",
+    "digital12": "9:30",
+    "catalan": "les nou i mitja",
+    "catalanVariants": [
+      "dos quarts de deu"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1030",
+    "h": 10,
+    "m": 30,
+    "digital24": "10:30",
+    "digital12": "10:30",
+    "catalan": "les deu i mitja",
+    "catalanVariants": [
+      "dos quarts d'onze"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1130",
+    "h": 11,
+    "m": 30,
+    "digital24": "11:30",
+    "digital12": "11:30",
+    "catalan": "les onze i mitja",
+    "catalanVariants": [
+      "dos quarts de dotze"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1230",
+    "h": 12,
+    "m": 30,
+    "digital24": "12:30",
+    "digital12": "12:30",
+    "catalan": "les dotze i mitja",
+    "catalanVariants": [
+      "dos quarts d'una"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1330",
+    "h": 13,
+    "m": 30,
+    "digital24": "13:30",
+    "digital12": "1:30",
+    "catalan": "l'una i mitja",
+    "catalanVariants": [
+      "l'una i mitja",
+      "una i mitja",
+      "la una i mitja"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1430",
+    "h": 14,
+    "m": 30,
+    "digital24": "14:30",
+    "digital12": "2:30",
+    "catalan": "les dues i mitja",
+    "catalanVariants": [
+      "dos quarts de tres"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1530",
+    "h": 15,
+    "m": 30,
+    "digital24": "15:30",
+    "digital12": "3:30",
+    "catalan": "les tres i mitja",
+    "catalanVariants": [
+      "dos quarts de quatre"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1630",
+    "h": 16,
+    "m": 30,
+    "digital24": "16:30",
+    "digital12": "4:30",
+    "catalan": "les quatre i mitja",
+    "catalanVariants": [
+      "dos quarts de cinc"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1730",
+    "h": 17,
+    "m": 30,
+    "digital24": "17:30",
+    "digital12": "5:30",
+    "catalan": "les cinc i mitja",
+    "catalanVariants": [
+      "dos quarts de sis"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1830",
+    "h": 18,
+    "m": 30,
+    "digital24": "18:30",
+    "digital12": "6:30",
+    "catalan": "les sis i mitja",
+    "catalanVariants": [
+      "dos quarts de set"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1930",
+    "h": 19,
+    "m": 30,
+    "digital24": "19:30",
+    "digital12": "7:30",
+    "catalan": "les set i mitja",
+    "catalanVariants": [
+      "dos quarts de vuit"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2030",
+    "h": 20,
+    "m": 30,
+    "digital24": "20:30",
+    "digital12": "8:30",
+    "catalan": "les vuit i mitja",
+    "catalanVariants": [
+      "dos quarts de nou"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2130",
+    "h": 21,
+    "m": 30,
+    "digital24": "21:30",
+    "digital12": "9:30",
+    "catalan": "les nou i mitja",
+    "catalanVariants": [
+      "dos quarts de deu"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2230",
+    "h": 22,
+    "m": 30,
+    "digital24": "22:30",
+    "digital12": "10:30",
+    "catalan": "les deu i mitja",
+    "catalanVariants": [
+      "dos quarts d'onze"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_2330",
+    "h": 23,
+    "m": 30,
+    "digital24": "23:30",
+    "digital12": "11:30",
+    "catalan": "les onze i mitja",
+    "catalanVariants": [
+      "dos quarts de dotze"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0130_b",
+    "h": 1,
+    "m": 30,
+    "digital24": "01:30",
+    "digital12": "1:30",
+    "catalan": "l'una i mitja",
+    "catalanVariants": [
+      "dos quarts de dues",
+      "la una i mitja"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0230_b",
+    "h": 2,
+    "m": 30,
+    "digital24": "02:30",
+    "digital12": "2:30",
+    "catalan": "les dues i mitja",
+    "catalanVariants": [
+      "dos quarts de tres"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0330_b",
+    "h": 3,
+    "m": 30,
+    "digital24": "03:30",
+    "digital12": "3:30",
+    "catalan": "les tres i mitja",
+    "catalanVariants": [
+      "dos quarts de quatre"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0430_b",
+    "h": 4,
+    "m": 30,
+    "digital24": "04:30",
+    "digital12": "4:30",
+    "catalan": "les quatre i mitja",
+    "catalanVariants": [
+      "dos quarts de cinc"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0530_b",
+    "h": 5,
+    "m": 30,
+    "digital24": "05:30",
+    "digital12": "5:30",
+    "catalan": "les cinc i mitja",
+    "catalanVariants": [
+      "dos quarts de sis"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0630_b",
+    "h": 6,
+    "m": 30,
+    "digital24": "06:30",
+    "digital12": "6:30",
+    "catalan": "les sis i mitja",
+    "catalanVariants": [
+      "dos quarts de set"
+    ],
+    "tags": [
+      "mitja"
+    ],
+    "difficultyScore": 2,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0115",
+    "h": 1,
+    "m": 15,
+    "digital24": "01:15",
+    "digital12": "1:15",
+    "catalan": "un quart de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0145",
+    "h": 1,
+    "m": 45,
+    "digital24": "01:45",
+    "digital12": "1:45",
+    "catalan": "tres quarts de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0215",
+    "h": 2,
+    "m": 15,
+    "digital24": "02:15",
+    "digital12": "2:15",
+    "catalan": "un quart de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0245",
+    "h": 2,
+    "m": 45,
+    "digital24": "02:45",
+    "digital12": "2:45",
+    "catalan": "tres quarts de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0315",
+    "h": 3,
+    "m": 15,
+    "digital24": "03:15",
+    "digital12": "3:15",
+    "catalan": "un quart de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0345",
+    "h": 3,
+    "m": 45,
+    "digital24": "03:45",
+    "digital12": "3:45",
+    "catalan": "tres quarts de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0415",
+    "h": 4,
+    "m": 15,
+    "digital24": "04:15",
+    "digital12": "4:15",
+    "catalan": "un quart de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0445",
+    "h": 4,
+    "m": 45,
+    "digital24": "04:45",
+    "digital12": "4:45",
+    "catalan": "tres quarts de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0515",
+    "h": 5,
+    "m": 15,
+    "digital24": "05:15",
+    "digital12": "5:15",
+    "catalan": "un quart de sis",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0545",
+    "h": 5,
+    "m": 45,
+    "digital24": "05:45",
+    "digital12": "5:45",
+    "catalan": "tres quarts de sis",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0615",
+    "h": 6,
+    "m": 15,
+    "digital24": "06:15",
+    "digital12": "6:15",
+    "catalan": "un quart de set",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0645",
+    "h": 6,
+    "m": 45,
+    "digital24": "06:45",
+    "digital12": "6:45",
+    "catalan": "tres quarts de set",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0715",
+    "h": 7,
+    "m": 15,
+    "digital24": "07:15",
+    "digital12": "7:15",
+    "catalan": "un quart de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0745",
+    "h": 7,
+    "m": 45,
+    "digital24": "07:45",
+    "digital12": "7:45",
+    "catalan": "tres quarts de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0815",
+    "h": 8,
+    "m": 15,
+    "digital24": "08:15",
+    "digital12": "8:15",
+    "catalan": "un quart de nou",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0845",
+    "h": 8,
+    "m": 45,
+    "digital24": "08:45",
+    "digital12": "8:45",
+    "catalan": "tres quarts de nou",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0915",
+    "h": 9,
+    "m": 15,
+    "digital24": "09:15",
+    "digital12": "9:15",
+    "catalan": "un quart de deu",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0945",
+    "h": 9,
+    "m": 45,
+    "digital24": "09:45",
+    "digital12": "9:45",
+    "catalan": "tres quarts de deu",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1015",
+    "h": 10,
+    "m": 15,
+    "digital24": "10:15",
+    "digital12": "10:15",
+    "catalan": "un quart d'onze",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1045",
+    "h": 10,
+    "m": 45,
+    "digital24": "10:45",
+    "digital12": "10:45",
+    "catalan": "tres quarts d'onze",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1115",
+    "h": 11,
+    "m": 15,
+    "digital24": "11:15",
+    "digital12": "11:15",
+    "catalan": "un quart de dotze",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1145",
+    "h": 11,
+    "m": 45,
+    "digital24": "11:45",
+    "digital12": "11:45",
+    "catalan": "tres quarts de dotze",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1215",
+    "h": 12,
+    "m": 15,
+    "digital24": "12:15",
+    "digital12": "12:15",
+    "catalan": "un quart d'una",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1245",
+    "h": 12,
+    "m": 45,
+    "digital24": "12:45",
+    "digital12": "12:45",
+    "catalan": "tres quarts d'una",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1315",
+    "h": 13,
+    "m": 15,
+    "digital24": "13:15",
+    "digital12": "1:15",
+    "catalan": "un quart de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1345",
+    "h": 13,
+    "m": 45,
+    "digital24": "13:45",
+    "digital12": "1:45",
+    "catalan": "tres quarts de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1415",
+    "h": 14,
+    "m": 15,
+    "digital24": "14:15",
+    "digital12": "2:15",
+    "catalan": "un quart de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1445",
+    "h": 14,
+    "m": 45,
+    "digital24": "14:45",
+    "digital12": "2:45",
+    "catalan": "tres quarts de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1515",
+    "h": 15,
+    "m": 15,
+    "digital24": "15:15",
+    "digital12": "3:15",
+    "catalan": "un quart de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_1545",
+    "h": 15,
+    "m": 45,
+    "digital24": "15:45",
+    "digital12": "3:45",
+    "catalan": "tres quarts de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts"
+    ],
+    "difficultyScore": 3,
+    "clockRenderHints": {
+      "minuteStep": 15,
+      "angleTolerance": 3
+    }
+  },
+  {
+    "id": "t_0105",
+    "h": 1,
+    "m": 5,
+    "digital24": "01:05",
+    "digital12": "1:05",
+    "catalan": "l'una i cinc",
+    "catalanVariants": [
+      "la una i cinc"
+    ],
+    "tags": [
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0110",
+    "h": 1,
+    "m": 10,
+    "digital24": "01:10",
+    "digital12": "1:10",
+    "catalan": "l'una i deu",
+    "catalanVariants": [
+      "la una i deu"
+    ],
+    "tags": [
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0120",
+    "h": 1,
+    "m": 20,
+    "digital24": "01:20",
+    "digital12": "1:20",
+    "catalan": "l'una i vint",
+    "catalanVariants": [
+      "la una i vint"
+    ],
+    "tags": [
+      "min5",
+      "i_vint"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0125",
+    "h": 1,
+    "m": 25,
+    "digital24": "01:25",
+    "digital12": "1:25",
+    "catalan": "l'una i vint-i-cinc",
+    "catalanVariants": [
+      "la una i vint-i-cinc"
+    ],
+    "tags": [
+      "min5",
+      "i_vint_i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0135",
+    "h": 1,
+    "m": 35,
+    "digital24": "01:35",
+    "digital12": "1:35",
+    "catalan": "l'una i trenta-cinc",
+    "catalanVariants": [
+      "la una i trenta-cinc"
+    ],
+    "tags": [
+      "min5",
+      "i_trenta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0140",
+    "h": 1,
+    "m": 40,
+    "digital24": "01:40",
+    "digital12": "1:40",
+    "catalan": "l'una i quaranta",
+    "catalanVariants": [
+      "la una i quaranta"
+    ],
+    "tags": [
+      "min5",
+      "i_quaranta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0150",
+    "h": 1,
+    "m": 50,
+    "digital24": "01:50",
+    "digital12": "1:50",
+    "catalan": "l'una i cinquanta",
+    "catalanVariants": [
+      "la una i cinquanta"
+    ],
+    "tags": [
+      "min5",
+      "i_cinquanta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0155",
+    "h": 1,
+    "m": 55,
+    "digital24": "01:55",
+    "digital12": "1:55",
+    "catalan": "l'una i cinquanta-cinc",
+    "catalanVariants": [
+      "la una i cinquanta-cinc"
+    ],
+    "tags": [
+      "min5",
+      "i_cinquanta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0205",
+    "h": 2,
+    "m": 5,
+    "digital24": "02:05",
+    "digital12": "2:05",
+    "catalan": "les dues i cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0210",
+    "h": 2,
+    "m": 10,
+    "digital24": "02:10",
+    "digital12": "2:10",
+    "catalan": "les dues i deu",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0220",
+    "h": 2,
+    "m": 20,
+    "digital24": "02:20",
+    "digital12": "2:20",
+    "catalan": "les dues i vint",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_vint"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0225",
+    "h": 2,
+    "m": 25,
+    "digital24": "02:25",
+    "digital12": "2:25",
+    "catalan": "les dues i vint-i-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_vint_i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0235",
+    "h": 2,
+    "m": 35,
+    "digital24": "02:35",
+    "digital12": "2:35",
+    "catalan": "les dues i trenta-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_trenta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0240",
+    "h": 2,
+    "m": 40,
+    "digital24": "02:40",
+    "digital12": "2:40",
+    "catalan": "les dues i quaranta",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_quaranta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0250",
+    "h": 2,
+    "m": 50,
+    "digital24": "02:50",
+    "digital12": "2:50",
+    "catalan": "les dues i cinquanta",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinquanta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0255",
+    "h": 2,
+    "m": 55,
+    "digital24": "02:55",
+    "digital12": "2:55",
+    "catalan": "les dues i cinquanta-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinquanta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0305",
+    "h": 3,
+    "m": 5,
+    "digital24": "03:05",
+    "digital12": "3:05",
+    "catalan": "les tres i cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0310",
+    "h": 3,
+    "m": 10,
+    "digital24": "03:10",
+    "digital12": "3:10",
+    "catalan": "les tres i deu",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0320",
+    "h": 3,
+    "m": 20,
+    "digital24": "03:20",
+    "digital12": "3:20",
+    "catalan": "les tres i vint",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_vint"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0325",
+    "h": 3,
+    "m": 25,
+    "digital24": "03:25",
+    "digital12": "3:25",
+    "catalan": "les tres i vint-i-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_vint_i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0335",
+    "h": 3,
+    "m": 35,
+    "digital24": "03:35",
+    "digital12": "3:35",
+    "catalan": "les tres i trenta-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_trenta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0340",
+    "h": 3,
+    "m": 40,
+    "digital24": "03:40",
+    "digital12": "3:40",
+    "catalan": "les tres i quaranta",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_quaranta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0350",
+    "h": 3,
+    "m": 50,
+    "digital24": "03:50",
+    "digital12": "3:50",
+    "catalan": "les tres i cinquanta",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinquanta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0355",
+    "h": 3,
+    "m": 55,
+    "digital24": "03:55",
+    "digital12": "3:55",
+    "catalan": "les tres i cinquanta-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinquanta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0405",
+    "h": 4,
+    "m": 5,
+    "digital24": "04:05",
+    "digital12": "4:05",
+    "catalan": "les quatre i cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0410",
+    "h": 4,
+    "m": 10,
+    "digital24": "04:10",
+    "digital12": "4:10",
+    "catalan": "les quatre i deu",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0420",
+    "h": 4,
+    "m": 20,
+    "digital24": "04:20",
+    "digital12": "4:20",
+    "catalan": "les quatre i vint",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_vint"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0425",
+    "h": 4,
+    "m": 25,
+    "digital24": "04:25",
+    "digital12": "4:25",
+    "catalan": "les quatre i vint-i-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_vint_i_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0435",
+    "h": 4,
+    "m": 35,
+    "digital24": "04:35",
+    "digital12": "4:35",
+    "catalan": "les quatre i trenta-cinc",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_trenta_cinc"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0440",
+    "h": 4,
+    "m": 40,
+    "digital24": "04:40",
+    "digital12": "4:40",
+    "catalan": "les quatre i quaranta",
+    "catalanVariants": [],
+    "tags": [
+      "min5",
+      "i_quaranta"
+    ],
+    "difficultyScore": 4,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0135_q",
+    "h": 1,
+    "m": 35,
+    "digital24": "01:35",
+    "digital12": "1:35",
+    "catalan": "dos quarts i cinc de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0140_q",
+    "h": 1,
+    "m": 40,
+    "digital24": "01:40",
+    "digital12": "1:40",
+    "catalan": "dos quarts i deu de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0150_q",
+    "h": 1,
+    "m": 50,
+    "digital24": "01:50",
+    "digital12": "1:50",
+    "catalan": "tres quarts i cinc de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0155_q",
+    "h": 1,
+    "m": 55,
+    "digital24": "01:55",
+    "digital12": "1:55",
+    "catalan": "tres quarts i deu de dues",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0235_q",
+    "h": 2,
+    "m": 35,
+    "digital24": "02:35",
+    "digital12": "2:35",
+    "catalan": "dos quarts i cinc de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0240_q",
+    "h": 2,
+    "m": 40,
+    "digital24": "02:40",
+    "digital12": "2:40",
+    "catalan": "dos quarts i deu de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0250_q",
+    "h": 2,
+    "m": 50,
+    "digital24": "02:50",
+    "digital12": "2:50",
+    "catalan": "tres quarts i cinc de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0255_q",
+    "h": 2,
+    "m": 55,
+    "digital24": "02:55",
+    "digital12": "2:55",
+    "catalan": "tres quarts i deu de tres",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0335_q",
+    "h": 3,
+    "m": 35,
+    "digital24": "03:35",
+    "digital12": "3:35",
+    "catalan": "dos quarts i cinc de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0340_q",
+    "h": 3,
+    "m": 40,
+    "digital24": "03:40",
+    "digital12": "3:40",
+    "catalan": "dos quarts i deu de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0350_q",
+    "h": 3,
+    "m": 50,
+    "digital24": "03:50",
+    "digital12": "3:50",
+    "catalan": "tres quarts i cinc de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0355_q",
+    "h": 3,
+    "m": 55,
+    "digital24": "03:55",
+    "digital12": "3:55",
+    "catalan": "tres quarts i deu de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0435_q",
+    "h": 4,
+    "m": 35,
+    "digital24": "04:35",
+    "digital12": "4:35",
+    "catalan": "dos quarts i cinc de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0440_q",
+    "h": 4,
+    "m": 40,
+    "digital24": "04:40",
+    "digital12": "4:40",
+    "catalan": "dos quarts i deu de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0450_q",
+    "h": 4,
+    "m": 50,
+    "digital24": "04:50",
+    "digital12": "4:50",
+    "catalan": "tres quarts i cinc de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0455_q",
+    "h": 4,
+    "m": 55,
+    "digital24": "04:55",
+    "digital12": "4:55",
+    "catalan": "tres quarts i deu de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0535_q",
+    "h": 5,
+    "m": 35,
+    "digital24": "05:35",
+    "digital12": "5:35",
+    "catalan": "dos quarts i cinc de sis",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0540_q",
+    "h": 5,
+    "m": 40,
+    "digital24": "05:40",
+    "digital12": "5:40",
+    "catalan": "dos quarts i deu de sis",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0550_q",
+    "h": 5,
+    "m": 50,
+    "digital24": "05:50",
+    "digital12": "5:50",
+    "catalan": "tres quarts i cinc de sis",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0555_q",
+    "h": 5,
+    "m": 55,
+    "digital24": "05:55",
+    "digital12": "5:55",
+    "catalan": "tres quarts i deu de sis",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0635_q",
+    "h": 6,
+    "m": 35,
+    "digital24": "06:35",
+    "digital12": "6:35",
+    "catalan": "dos quarts i cinc de set",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0640_q",
+    "h": 6,
+    "m": 40,
+    "digital24": "06:40",
+    "digital12": "6:40",
+    "catalan": "dos quarts i deu de set",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0650_q",
+    "h": 6,
+    "m": 50,
+    "digital24": "06:50",
+    "digital12": "6:50",
+    "catalan": "tres quarts i cinc de set",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0655_q",
+    "h": 6,
+    "m": 55,
+    "digital24": "06:55",
+    "digital12": "6:55",
+    "catalan": "tres quarts i deu de set",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0735_q",
+    "h": 7,
+    "m": 35,
+    "digital24": "07:35",
+    "digital12": "7:35",
+    "catalan": "dos quarts i cinc de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0740_q",
+    "h": 7,
+    "m": 40,
+    "digital24": "07:40",
+    "digital12": "7:40",
+    "catalan": "dos quarts i deu de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0750_q",
+    "h": 7,
+    "m": 50,
+    "digital24": "07:50",
+    "digital12": "7:50",
+    "catalan": "tres quarts i cinc de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0755_q",
+    "h": 7,
+    "m": 55,
+    "digital24": "07:55",
+    "digital12": "7:55",
+    "catalan": "tres quarts i deu de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0835_q",
+    "h": 8,
+    "m": 35,
+    "digital24": "08:35",
+    "digital12": "8:35",
+    "catalan": "dos quarts i cinc de nou",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_cinc"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0840_q",
+    "h": 8,
+    "m": 40,
+    "digital24": "08:40",
+    "digital12": "8:40",
+    "catalan": "dos quarts i deu de nou",
+    "catalanVariants": [],
+    "tags": [
+      "quarts",
+      "min5",
+      "i_deu"
+    ],
+    "difficultyScore": 5,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0110_m",
+    "h": 1,
+    "m": 10,
+    "digital24": "01:10",
+    "digital12": "1:10",
+    "catalan": "un quart menys cinc de dues",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0125_m",
+    "h": 1,
+    "m": 25,
+    "digital24": "01:25",
+    "digital12": "1:25",
+    "catalan": "dos quarts menys cinc de dues",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0140_m",
+    "h": 1,
+    "m": 40,
+    "digital24": "01:40",
+    "digital12": "1:40",
+    "catalan": "tres quarts menys cinc de dues",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0155_m",
+    "h": 1,
+    "m": 55,
+    "digital24": "01:55",
+    "digital12": "1:55",
+    "catalan": "les dues menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0210_m",
+    "h": 2,
+    "m": 10,
+    "digital24": "02:10",
+    "digital12": "2:10",
+    "catalan": "un quart menys cinc de tres",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0225_m",
+    "h": 2,
+    "m": 25,
+    "digital24": "02:25",
+    "digital12": "2:25",
+    "catalan": "dos quarts menys cinc de tres",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0240_m",
+    "h": 2,
+    "m": 40,
+    "digital24": "02:40",
+    "digital12": "2:40",
+    "catalan": "tres quarts menys cinc de tres",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0255_m",
+    "h": 2,
+    "m": 55,
+    "digital24": "02:55",
+    "digital12": "2:55",
+    "catalan": "les tres menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0310_m",
+    "h": 3,
+    "m": 10,
+    "digital24": "03:10",
+    "digital12": "3:10",
+    "catalan": "un quart menys cinc de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0325_m",
+    "h": 3,
+    "m": 25,
+    "digital24": "03:25",
+    "digital12": "3:25",
+    "catalan": "dos quarts menys cinc de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0340_m",
+    "h": 3,
+    "m": 40,
+    "digital24": "03:40",
+    "digital12": "3:40",
+    "catalan": "tres quarts menys cinc de quatre",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0355_m",
+    "h": 3,
+    "m": 55,
+    "digital24": "03:55",
+    "digital12": "3:55",
+    "catalan": "les quatre menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0410_m",
+    "h": 4,
+    "m": 10,
+    "digital24": "04:10",
+    "digital12": "4:10",
+    "catalan": "un quart menys cinc de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0425_m",
+    "h": 4,
+    "m": 25,
+    "digital24": "04:25",
+    "digital12": "4:25",
+    "catalan": "dos quarts menys cinc de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0440_m",
+    "h": 4,
+    "m": 40,
+    "digital24": "04:40",
+    "digital12": "4:40",
+    "catalan": "tres quarts menys cinc de cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0455_m",
+    "h": 4,
+    "m": 55,
+    "digital24": "04:55",
+    "digital12": "4:55",
+    "catalan": "les cinc menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0510_m",
+    "h": 5,
+    "m": 10,
+    "digital24": "05:10",
+    "digital12": "5:10",
+    "catalan": "un quart menys cinc de sis",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0525_m",
+    "h": 5,
+    "m": 25,
+    "digital24": "05:25",
+    "digital12": "5:25",
+    "catalan": "dos quarts menys cinc de sis",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0540_m",
+    "h": 5,
+    "m": 40,
+    "digital24": "05:40",
+    "digital12": "5:40",
+    "catalan": "tres quarts menys cinc de sis",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0555_m",
+    "h": 5,
+    "m": 55,
+    "digital24": "05:55",
+    "digital12": "5:55",
+    "catalan": "les sis menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0610_m",
+    "h": 6,
+    "m": 10,
+    "digital24": "06:10",
+    "digital12": "6:10",
+    "catalan": "un quart menys cinc de set",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0625_m",
+    "h": 6,
+    "m": 25,
+    "digital24": "06:25",
+    "digital12": "6:25",
+    "catalan": "dos quarts menys cinc de set",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0640_m",
+    "h": 6,
+    "m": 40,
+    "digital24": "06:40",
+    "digital12": "6:40",
+    "catalan": "tres quarts menys cinc de set",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0655_m",
+    "h": 6,
+    "m": 55,
+    "digital24": "06:55",
+    "digital12": "6:55",
+    "catalan": "les set menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0710_m",
+    "h": 7,
+    "m": 10,
+    "digital24": "07:10",
+    "digital12": "7:10",
+    "catalan": "un quart menys cinc de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0725_m",
+    "h": 7,
+    "m": 25,
+    "digital24": "07:25",
+    "digital12": "7:25",
+    "catalan": "dos quarts menys cinc de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0740_m",
+    "h": 7,
+    "m": 40,
+    "digital24": "07:40",
+    "digital12": "7:40",
+    "catalan": "tres quarts menys cinc de vuit",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0755_m",
+    "h": 7,
+    "m": 55,
+    "digital24": "07:55",
+    "digital12": "7:55",
+    "catalan": "les vuit menys cinc",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0810_m",
+    "h": 8,
+    "m": 10,
+    "digital24": "08:10",
+    "digital12": "8:10",
+    "catalan": "un quart menys cinc de nou",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  },
+  {
+    "id": "t_0825_m",
+    "h": 8,
+    "m": 25,
+    "digital24": "08:25",
+    "digital12": "8:25",
+    "catalan": "dos quarts menys cinc de nou",
+    "catalanVariants": [],
+    "tags": [
+      "menys",
+      "menys_cinc"
+    ],
+    "difficultyScore": 6,
+    "clockRenderHints": {
+      "minuteStep": 5,
+      "angleTolerance": 2
+    }
+  }
+]

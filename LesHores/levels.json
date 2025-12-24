@@ -1,0 +1,222 @@
+[
+  {
+    "levelId": "L1",
+    "mode": "match",
+    "title": "En punt",
+    "description": "Relaciona rellotge analògic amb l'hora digital en punt.",
+    "filters": { "tagsAny": ["en_punt"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [30, 15],
+      "hourDeltas": [2],
+      "similarity": "low"
+    },
+    "winCondition": { "minQuestions": 10, "minAccuracy": 0.8 },
+    "rewards": { "basePoints": 10, "badgeOnComplete": "b_en_punt" }
+  },
+  {
+    "levelId": "L2",
+    "mode": "match",
+    "title": "En punt i mitja",
+    "description": "Relaciona analògic amb digital en punt i mitja.",
+    "filters": { "tagsAny": ["en_punt", "mitja"] },
+    "questionPool": { "size": 30, "sampling": "random", "perTag": { "en_punt": 15, "mitja": 15 } },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [30, 15, 5],
+      "hourDeltas": [1],
+      "similarity": "medium"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.8 },
+    "rewards": { "basePoints": 12, "badgeOnComplete": "b_mitja" }
+  },
+  {
+    "levelId": "L3",
+    "mode": "match",
+    "title": "Quarts",
+    "description": "Relaciona analògic amb digital amb quarts.",
+    "filters": { "tagsAny": ["quarts"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [0],
+      "hourDeltas": [1],
+      "preferSameMinute": true,
+      "distractorStrategy": "same_quarter_neighbor_hour",
+      "similarity": "medium-high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.8 },
+    "rewards": { "basePoints": 14, "badgeOnComplete": "b_quarts" }
+  },
+  {
+    "levelId": "L4",
+    "mode": "match",
+    "title": "Minuts de 5",
+    "description": "Relaciona analògic amb digital amb minuts de 5.",
+    "filters": { "tagsAny": ["min5"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [5, 10],
+      "hourDeltas": [1],
+      "similarity": "medium-high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.8 },
+    "rewards": { "basePoints": 15, "badgeOnComplete": "b_min5" }
+  },
+  {
+    "levelId": "L5",
+    "mode": "match",
+    "title": "Minuts de 5 sense números",
+    "description": "Igual que el nivell 4 però sense números al rellotge.",
+    "filters": { "tagsAny": ["min5"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": false, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [5],
+      "hourDeltas": [1],
+      "similarity": "high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.85 },
+    "rewards": { "basePoints": 16, "badgeOnComplete": "b_min5_sense_nums" }
+  },
+  {
+    "levelId": "L6",
+    "mode": "match",
+    "title": "Minuts de 5 sense marques",
+    "description": "Rellotge net: només agulles.",
+    "filters": { "tagsAny": ["min5"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": false, "marks": "none", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [5],
+      "hourDeltas": [1],
+      "similarity": "high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.85 },
+    "rewards": { "basePoints": 18, "badgeOnComplete": "b_min5_net" }
+  },
+  {
+    "levelId": "L7",
+    "mode": "say",
+    "title": "En punt i mitja (text)",
+    "description": "Relaciona analògic amb frase en català.",
+    "filters": { "tagsAny": ["en_punt", "mitja"] },
+    "questionPool": { "size": 30, "sampling": "random", "perTag": { "en_punt": 15, "mitja": 15 } },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "useCatalanOptions": true,
+      "textDistractors": ["same_pattern_neighbor_hour", "en_punt_vs_mitja"],
+      "similarity": "medium"
+    },
+    "winCondition": { "minQuestions": 10, "minAccuracy": 0.8 },
+    "rewards": { "basePoints": 12, "badgeOnComplete": "b_text_punt_mitja" }
+  },
+  {
+    "levelId": "L8",
+    "mode": "say",
+    "title": "Quarts (text)",
+    "description": "Relaciona analògic amb frase amb quarts.",
+    "filters": { "tagsAny": ["quarts"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "useCatalanOptions": true,
+      "textDistractors": ["same_quarter_neighbor_hour"],
+      "similarity": "medium-high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.85 },
+    "rewards": { "basePoints": 14, "badgeOnComplete": "b_text_quarts" }
+  },
+  {
+    "levelId": "L9",
+    "mode": "say",
+    "title": "Quarts + minuts de 5",
+    "description": "Frases amb quarts i minuts de 5.",
+    "filters": { "tagsAll": ["quarts", "min5"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "useCatalanOptions": true,
+      "textDistractors": ["same_quarter_neighbor_hour", "quarts_i_min5_confusion"],
+      "similarity": "high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.85 },
+    "rewards": { "basePoints": 16, "badgeOnComplete": "b_text_quarts_min5" }
+  },
+  {
+    "levelId": "L10",
+    "mode": "say",
+    "title": "Forma menys",
+    "description": "Frases amb 'menys'.",
+    "filters": { "tagsAny": ["menys"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "useCatalanOptions": true,
+      "textDistractors": ["menys_neighbor_hour", "menys_vs_quarts"],
+      "similarity": "high"
+    },
+    "winCondition": { "minQuestions": 10, "minAccuracy": 0.85 },
+    "rewards": { "basePoints": 18, "badgeOnComplete": "b_text_menys" }
+  },
+  {
+    "levelId": "L11",
+    "mode": "textToClock",
+    "title": "Text i rellotge (quarts + min5)",
+    "description": "Llegeix la frase i tria el rellotge correcte.",
+    "filters": { "tagsAll": ["quarts", "min5"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": true, "marks": "all", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [5],
+      "hourDeltas": [1],
+      "distractorStrategy": "neighbor_hour_same_minute",
+      "similarity": "high"
+    },
+    "winCondition": { "minQuestions": 12, "minAccuracy": 0.85 },
+    "rewards": { "basePoints": 18, "badgeOnComplete": "b_text_clock_quarts_min5" }
+  },
+  {
+    "levelId": "L12",
+    "mode": "textToClock",
+    "title": "Text i rellotge (menys)",
+    "description": "Frases amb 'menys' i rellotges més nets.",
+    "filters": { "tagsAny": ["menys"] },
+    "questionPool": { "size": 30, "sampling": "random" },
+    "clockStyle": { "numbers": false, "marks": "hoursOnly", "showSecondHand": false },
+    "questionType": "options",
+    "optionsRules": {
+      "count": 4,
+      "minuteDeltas": [5],
+      "hourDeltas": [1],
+      "distractorStrategy": "neighbor_hour_same_minute",
+      "similarity": "high"
+    },
+    "winCondition": { "minQuestions": 10, "minAccuracy": 0.9 },
+    "rewards": { "basePoints": 20, "badgeOnComplete": "b_text_clock_menys" }
+  }
+]

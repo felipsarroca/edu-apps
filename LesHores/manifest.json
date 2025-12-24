@@ -1,0 +1,16 @@
+{
+  "name": "Ara és l'hora",
+  "short_name": "Ara és l'hora",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff0a8",
+  "theme_color": "#ff4b5c",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

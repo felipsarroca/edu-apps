@@ -1,0 +1,309 @@
+## Visió general de l'aplicació
+
+Una app (HTML + CSS + JavaScript) per **aprendre a llegir i expressar l'hora** amb **nivells progressius**, **gamificació** (insígnies/medalles), **perfil de jugador** (nom + progrés guardat) i **disseny responsive** (mòbil vertical / ordinador horitzontal) perquè **tot càpiga en una sola pantalla**.
+
+La clau perquè enganxi és que sigui:
+
+* **Molt visual** (rellotges grans, feedback immediat, animacions suaus)
+* **Ritme ràpid** (preguntes curtes, sense pantalles "mortes")
+* **Progressió clara** (nivells, barres d'avenç, reptes diaris/setmanals opcional)
+
+---
+
+## Modes de joc i nivells
+
+### Mode 1: "Relaciona analògic ↔ digital"
+
+**Objectiu:** veus un rellotge analògic i tries la resposta correcta en format digital (4 opcions).
+
+**Dificultats possibles (progressió):**
+
+1. **Amb números** (1-12) i hores "fàcils": en punt i mitja.
+2. Amb números + **quarts** (un quart, dos quarts, tres quarts).
+3. Amb números + **minuts exactes** (5 en 5).
+4. **Sense números** però amb marques (tics de les 12 hores).
+5. **Sense marques** (rellotge "net" modern): només agulles.
+6. Distractors més fins: opcions amb minuts "versemblants" (p. ex. 10:25 / 10:30 / 10:35 / 10:20).
+
+> Truc perquè sigui just: quan no hi ha marques, limita minuts a **múltiples de 5** i dona opcions molt plausibles, però no "cruels".
+
+---
+
+### Mode 2: "Digues l'hora" (analògic → text)
+
+**Objectiu:** veus un rellotge analògic i respons en **català correcte**.
+
+Aquí tens dues submodalitats:
+
+#### 2A) Resposta seleccionable (recomanat per començar)
+
+* En lloc d'escriure, tries entre 4 frases:
+
+  * "Les dues en punt"
+  * "Un quart de tres"
+  * "Dos quarts de quatre"
+  * "Tres quarts de cinc"
+* Evites frustració ortogràfica i mantens ritme.
+
+#### 2B) Resposta escrita (nivell avançat)
+
+* Escrius la frase.
+* Necessitaràs un sistema de validació tolerant:
+
+  * Acceptar variants (p. ex. "les 2" no, però potser "les dues" sí).
+  * Normalitzar accents/punts (ideal: suggerir la forma correcta si és gairebé bé).
+
+**Dificultats lingüístiques (progressió):**
+
+1. En punt / mitja
+2. Quarts
+3. Quarts + minuts ("dos quarts i cinc de...")
+4. "Menys" (p. ex. "un quart menys cinc")
+
+---
+
+### Mode 3: "Text → tria el rellotge" (frase → analògic)
+
+**Objectiu:** llegeixes "dos quarts de quatre" i tries entre 4 rellotges analògics.
+
+**Dificultats possibles:**
+
+* Rellotges amb números → sense números → sense marques
+* Distractors amb agulla de minuts molt propera
+* Frases amb minuts afegits ("dos quarts i cinc...")
+
+---
+
+## Ordre i dificultat dels nivells
+
+* **Primers nivells:** relacionar rellotge **analògic ↔ digital** amb dificultat creixent.
+* **Quan és analògic → digital:** es pot complicar retirant **números** i després **marques** del rellotge analògic.
+* **Nivells posteriors:** mode **analògic ↔ text** (o viceversa).
+* **Dificultat per a text:** depèn de si són **hores en punt**, si inclouen **quarts** i/o **minuts de 5**.
+* **S'inclou la forma "menys"** (ex.: "un quart menys cinc").
+* **No incloure franges horàries** (matí/tarda/nit).
+
+### Llista de nivells (L1-L12)
+
+* **L1**: Relaciona analògic → digital, **en punt**, amb números i marques.
+* **L2**: Relaciona analògic → digital, **en punt + mitja**, amb números i marques.
+* **L3**: Relaciona analògic → digital, **quarts**, amb números i marques.
+* **L4**: Relaciona analògic → digital, **minuts de 5**, amb números i marques.
+* **L5**: Relaciona analògic → digital, **minuts de 5**, **sense números** (amb marques).
+* **L6**: Relaciona analògic → digital, **minuts de 5**, **sense números ni marques**.
+* **L7**: Relaciona analògic → text, **en punt + mitja** (resposta seleccionable).
+* **L8**: Relaciona analògic → text, **quarts** (resposta seleccionable).
+* **L9**: Relaciona analògic → text, **quarts + minuts de 5** (resposta seleccionable).
+* **L10**: Relaciona analògic → text, **forma "menys"** (resposta seleccionable).
+* **L11**: Relaciona text → analògic, **quarts + minuts de 5** (rellotges amb números i marques).
+* **L12**: Relaciona text → analògic, **forma "menys"** (rellotges sense números o sense marques, segons progrés).
+
+---
+
+## Estructura de pantalles
+
+### Pantalla inicial
+
+* Logo/títol: "Aprenem l'hora"
+* Selecció de perfil:
+
+  * "Continua com: Felip" (si hi ha perfil guardat)
+  * "Nou jugador"
+* Botons grans: **Jugar**, **Nivells**, **Insígnies**, **Opcions**
+
+### Pantalla de joc (una sola pantalla)
+
+Recomanació de layout (responsive):
+
+* **Capçalera**: nom + nivell + punts + ratxa
+* **Zona central**: rellotge (gran)
+* **Zona d'opcions**: 4 respostes (botons grans)
+* **Feedback**: "Correcte!" / "Ops..." + explicació curta
+* **Footer fix**: llicència + crèdits (tal com demanes)
+
+---
+
+## Gamificació que enganxa
+
+### Moneda principal
+
+* **Punts** per encert (més punts si és ràpid)
+* **Ratxa** (streak) d'encerts consecutius
+* **Vides** o "errors permesos" per repte (opcional; millor no penalitzar massa als petits)
+
+### Insígnies (exemples)
+
+* 🥉 "Primer encert"
+* 🥈 "10 encerts seguits"
+* 🥇 "Domines els quarts"
+* ⏱️ "Ràpid!" (3 encerts en menys de X segons)
+* 🎯 "Precisió" (95% d'encert en una sessió)
+* 🌙 "Jugues 3 dies seguits" (si vols hàbit)
+
+### Progressió clara
+
+* Cada nivell té:
+
+  * % d'encert mínim per "superar"
+  * nombre mínim de preguntes (p. ex. 10)
+* Un "mapa" de nivells tipus camí (molt motivador visualment)
+* Regla d'insígnies: per aconseguir-ne una cal encertar 10 preguntes; aquestes 10 es trien a l'atzar d'entre 30 creades per nivell.
+
+---
+
+## Persistència i perfil de jugador
+
+Persistència amb **base de dades** (p. ex. Google Sheets o altra) per **carregar partides**, amb suport de **localStorage** com a memòria local.
+
+Guarda per cada jugador:
+
+* nom
+* mode i nivell desbloquejat
+* insígnies aconseguides
+* estadístiques (encerts, errors, millor ratxa, temps mitjà)
+* configuració (dificultat, so, vibració, idioma si algun dia hi afegeixes castellà)
+* punt de progrés exacte per reprendre la partida
+
+Norma clau:
+
+* L'usuari **comença sempre al primer nivell** i va desbloquejant nivells i insígnies.
+* En reprendre l'app, **carrega la partida** associada al nom recordat i continua on ho havia deixat.
+
+---
+
+## Planificació de JSON: què ha de contenir
+
+Jo ho separaria en 3 JSON (o 3 "objectes" dins d'un sol fitxer), perquè sigui net:
+
+### 1) `time_bank.json` (banc d'hores)
+
+Cada entrada descriu **una hora** en múltiples formats.
+
+Camps recomanats:
+
+* `id` (ex. `"t_1540"`)
+* `h` (0-23)
+* `m` (0-59)
+* `digital24` (ex. `"15:40"`)
+* `digital12` (ex. `"3:40"`)
+* `period` (no inclòs, perquè no es fan servir franges horàries)
+* `catalan` (forma principal: `"dos quarts de quatre"`, etc.)
+* `catalanVariants` (llista d'alternatives acceptables si fas mode d'escriptura)
+* `tags` (ex. `["quarts","i_cinc","tarda"]`)
+* `difficultyScore` (un número per ordenar dificultat)
+* `clockRenderHints`:
+
+  * `minuteStep` (1/5/15) segons nivell
+  * `angleTolerance` (per nivells sense marques, si vols "ajuda" visual)
+
+### 2) `levels.json` (definició de nivells)
+
+Per cada nivell:
+
+* `levelId`, `mode` (match / say / textToClock)
+* `title`, `description`
+* `filters` (quines entrades del banc d'hores es poden usar: per tags o rangs)
+* `clockStyle`:
+
+  * `numbers: true/false`
+  * `marks: "all" | "hoursOnly" | "none"`
+  * `showSecondHand: false`
+* `questionType`:
+
+  * opcions (4) o escrit
+* `optionsRules` (com generar distractors):
+
+  * minuts +/- 5, +/-10
+  * mateixa hora, minut diferent
+  * hora veïna (p. ex. 3:40 vs 4:40)
+* `winCondition`:
+
+  * `minQuestions`
+  * `minAccuracy`
+  * `maxMistakes` (opcional)
+* `rewards`:
+
+  * punts base
+  * insígnia per completar
+
+### 3) `badges.json` (insígnies)
+
+Per cada insígnia:
+
+* `badgeId`
+* `name`
+* `description`
+* `icon` (emoji o ruta d'imatge)
+* `condition` (regla: "streak>=10", "levelCompleted: L3", etc.)
+* `rarity` (comú/rar/èpic) per fer-ho més "col·leccionable"
+
+---
+
+## Com generar rellotges i opcions de resposta
+
+### Generació del rellotge (UI)
+
+* Dibuix amb **SVG** (ideal): agulles rotables amb `transform: rotate()`
+* Canvi d'estil (números/marques/cap) només activant/desactivant capes SVG
+* Animació petita quan encertes (agulles fan "tic" o un halo)
+
+### Generació de distractors (molt important)
+
+Regles perquè siguin plausibles:
+
+* Mateixa hora, minuts propers: `m±5`, `m±10`
+* Mateix minut, hora veïna: `h±1`
+* Evitar duplicats i evitar opcions massa absurdes
+* Ajustar segons nivell: en nivells fàcils, distractors més "lluny"; en difícils, més "a prop".
+
+---
+
+## Disseny visual (colorit i atractiu)
+
+* Estètica "cards" amb ombra suau + cantonades arrodonides
+* Botons grans, amb estat:
+
+  * normal / hover / seleccionat / correcte / incorrecte
+* Barra de progrés del nivell
+* So "pop" suau + vibració curta (mòbil) en encert (configurable)
+* Mode "nit" opcional (per jugar a casa)
+
+---
+
+## Footer amb llicència i crèdits (tal com demanes)
+
+A la part de baix (fix o dins de la pantalla, però sempre visible):
+
+* Icona Creative Commons **BY-NC-SA 4.0** (entenc que "By NFSA" vols dir **BY-NC-SA**; si realment és una altra, ho podem ajustar)
+* A la dreta, dues línies petites:
+
+  1. "Aplicació creada per **Felip Serroca** amb assistència de la IA"
+
+     * enllaç a: `https://ja.cat/FelipSerroca` (tot junt)
+  2. "Obra sota llicència **CC BY-NC-SA 4.0**"
+
+     * enllaç a la pàgina oficial en català de la llicència (la que correspongui)
+
+---
+
+## Idees extra per fer-la encara millor
+
+1. **Mode entrenament lliure**: tries "només quarts", "només en punt", "minuts de 5", etc.
+2. **Reptes curts** (30 segons): "quants encerts en 30s?" Ideal per enganxar.
+3. **Ajuda progressiva** ("pistes"):
+
+   * Mostrar un puntet a les 12
+   * Ressaltar lleugerament les marques (si el nivell és sense)
+   * Mostrar una guia fantasma només si falles 2 cops
+4. **Estadístiques útils**: "hores que et costen més" i practicar només aquestes.
+5. **Accessibilitat**: mode alt contrast, botons extra grans, lectura en veu (Text-to-Speech) de la pregunta i/o de la solució.
+
+---
+
+Si vols, el següent pas lògic és que et deixi un **document de disseny** (tipus "mini-GDD") amb:
+
+* llista exacta de nivells (L1-L12),
+* criteris de dificultat,
+* i un primer esborrany realista de `time_bank.json` (amb molts exemples i tags ben pensats).
+
+I quan ho tinguis validat, ja passarem a muntar l'esquelet HTML/CSS/JS.

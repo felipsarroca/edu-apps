@@ -1,0 +1,25 @@
+{
+  "applets": [{
+    "lastAccessTime": "2025-12-19T17:20:09.086779Z",
+    "firstAccessTime": "2025-12-19T17:20:09.086779Z",
+    "source": {
+      "sourceType": "DRIVE",
+      "drive": {
+        "resourceId": "1CzI4XIXUafoQqYl50ytMXElbYAYhGBNb"
+      }
+    },
+    "name": "Letra a Letra - Competición",
+    "description": "Juego de preguntas en base a una respuesta con la ayuda de saber por que palabra comienza o incluye determinada letra."
+  }, {
+    "lastAccessTime": "2025-12-19T17:15:42.884159Z",
+    "firstAccessTime": "2025-12-19T17:15:42.884159Z",
+    "source": {
+      "sourceType": "DRIVE",
+      "drive": {
+        "resourceId": "1WpcrXVrxZyMHAKFnxOamxZoPl8bIA9pA"
+      }
+    },
+    "name": "Lector de Texto Natural",
+    "description": "Convierte texto en audio natural con voces realistas mediante IA. Alterna entre voces masculinas y femeninas en español o catalán y descarga tus audios en alta calidad fácilmente."
+  }]
+}
