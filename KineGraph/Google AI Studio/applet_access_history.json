@@ -1,5 +1,16 @@
 {
   "applets": [{
+    "lastAccessTime": "2026-01-01T10:00:28.128394Z",
+    "firstAccessTime": "2026-01-01T10:00:28.128394Z",
+    "source": {
+      "sourceType": "DRIVE",
+      "drive": {
+        "resourceId": "1aI7NH9yBJTjtAvJwCC3ucO_hQYMfMRim"
+      }
+    },
+    "name": "Copy 2 of Gemini Scribe",
+    "description": "Herramienta de transcripción y análisis de audio. Convierte voz a texto, genera resúmenes y extrae tareas automáticamente."
+  }, {
     "lastAccessTime": "2025-12-19T17:20:09.086779Z",
     "firstAccessTime": "2025-12-19T17:20:09.086779Z",
     "source": {
