@@ -1,0 +1,142 @@
+[
+  {
+    "id": "prado_01",
+    "museum": "prado",
+    "title": "Autorretrato",
+    "artist": "Alberto Durero",
+    "image": "Alberto Durero - Autorretrato.jpg"
+  },
+  {
+    "id": "prado_02",
+    "museum": "prado",
+    "title": "El tránsito de la Virgen",
+    "artist": "Andrea Mantegna",
+    "image": "Andrea Mantegna - El tránsito de la Virgen.jpg"
+  },
+  {
+    "id": "prado_03",
+    "museum": "prado",
+    "title": "David vencedor de Goliat",
+    "artist": "Caravaggio",
+    "image": "Caravaggio - David vencedor de Goliat.jpg"
+  },
+  {
+    "id": "prado_04",
+    "museum": "prado",
+    "title": "Las Meninas",
+    "artist": "Diego Velázquez",
+    "image": "Diego Velázquez - Las meninas.jpg"
+  },
+  {
+    "id": "prado_05",
+    "museum": "prado",
+    "title": "El jardín de las Delicias",
+    "artist": "El Bosco",
+    "image": "El Bosco - El jardín de las Delicias.jpg"
+  },
+  {
+    "id": "prado_06",
+    "museum": "prado",
+    "title": "El caballero de la mano en el pecho",
+    "artist": "El Greco",
+    "image": "El Greco - El caballero de la mano en el pecho.jpg"
+  },
+  {
+    "id": "prado_07",
+    "museum": "prado",
+    "title": "Huida a Egipto",
+    "artist": "El Greco",
+    "image": "El Greco - Huida a Egipto.jpg"
+  },
+  {
+    "id": "prado_08",
+    "museum": "prado",
+    "title": "La Anunciación",
+    "artist": "Fra Angelico",
+    "image": "Fra Angelico - La anunciación.jpg"
+  },
+  {
+    "id": "prado_09",
+    "museum": "prado",
+    "title": "La familia de Carlos IV",
+    "artist": "Francisco de Goya",
+    "image": "Francisco de Goya - La familia de Carlos IV.jpg"
+  },
+  {
+    "id": "prado_10",
+    "museum": "prado",
+    "title": "Los fusilamientos del 3 de mayo",
+    "artist": "Francisco de Goya",
+    "image": "Francisco de Goya - Los fusilamientos.jpg"
+  },
+  {
+    "id": "prado_11",
+    "museum": "prado",
+    "title": "Saturno devorando a su hijo",
+    "artist": "Francisco de Goya",
+    "image": "Francisco de Goya - Saturno.jpg"
+  },
+  {
+    "id": "prado_12",
+    "museum": "prado",
+    "title": "La Inmaculada Concepción",
+    "artist": "Giambattista Tiepolo",
+    "image": "Giambattista Tiepolo - La Inmaculada Concepción.jpg"
+  },
+  {
+    "id": "prado_13",
+    "museum": "prado",
+    "title": "El sueño de Jacob",
+    "artist": "José de Ribera",
+    "image": "José de Ribera - El sueño de Jacob.jpg"
+  },
+  {
+    "id": "prado_14",
+    "museum": "prado",
+    "title": "La Crucifixión",
+    "artist": "Juan de Flandes",
+    "image": "Juan de Flandes - La Crucifixión.jpg"
+  },
+  {
+    "id": "prado_15",
+    "museum": "prado",
+    "title": "Las tres Gracias",
+    "artist": "Pablo Rubens",
+    "image": "Pablo Rubens - Las tres Gracias.jpg"
+  },
+  {
+    "id": "prado_16",
+    "museum": "prado",
+    "title": "El Cardenal",
+    "artist": "Rafael",
+    "image": "Rafael - El Cardenal.jpg"
+  },
+  {
+    "id": "prado_17",
+    "museum": "prado",
+    "title": "Judith en el banquete de Holofernes",
+    "artist": "Rembrandt",
+    "image": "Rembrandt - Judit en el banquete de Holofernes.jpg"
+  },
+  {
+    "id": "prado_18",
+    "museum": "prado",
+    "title": "El descendimiento",
+    "artist": "Roger van der Weyden",
+    "image": "Roger van der Weyden - El descendimiento.jpg"
+  },
+  {
+    "id": "prado_19",
+    "museum": "prado",
+    "title": "El Lavatorio",
+    "artist": "Tintoretto",
+    "image": "Tintoretto - El Lavatorio.jpg"
+  },
+  {
+    "id": "prado_20",
+    "museum": "prado",
+    "title": "Carlos V en la batalla de Mühlberg",
+    "artist": "Tiziano",
+    "image": "Tiziano - Carlos V en la Batalla de Mühlberg.jpg"
+  }
+]

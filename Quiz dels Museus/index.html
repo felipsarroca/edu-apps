@@ -1,0 +1,227 @@
+﻿<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz dels museus</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-shapes" aria-hidden="true"></div>
+
+  <main class="app">
+    <header class="app-header">
+      <div class="brand">
+        <img class="brand-icon" src="favicon.svg" alt="Quiz dels museus" />
+        <div>
+          <div class="brand-title">Quiz dels museus</div>
+          <div class="brand-sub">El Prado · Reina Sofía</div>
+        </div>
+      </div>
+    </header>
+
+    <section id="screen-start" class="screen active">
+      <div class="panel hero">
+        <div class="form-grid">
+          <label class="field">
+            <span>Escriu el teu nom i cognom</span>
+            <input id="player-name" type="text" placeholder="Escriu el teu nom" maxlength="24" />
+          </label>
+
+          <div class="field">
+            <span>Tria un dels museus</span>
+            <div class="segmented">
+              <button class="seg active" data-museum="prado">El Prado</button>
+              <button class="seg" data-museum="reina">Reina Sofía</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <button id="btn-start" class="primary start-btn">
+            <span class="action-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" role="presentation">
+                <path d="M6 4l10 6-10 6V4z"></path>
+              </svg>
+            </span>
+            Comença
+          </button>
+          <button id="btn-demo" class="ghost rank-btn">
+            <span class="rank-icon trophy" aria-hidden="true">
+              <svg viewBox="0 0 20 20" role="presentation">
+                <path d="M6 3h8v2h2a2 2 0 0 1 2 2v1a4 4 0 0 1-4 4h-1a5 5 0 0 1-2 2.23V16h3v2H6v-2h3v-1.77A5 5 0 0 1 7 12H6a4 4 0 0 1-4-4V7a2 2 0 0 1 2-2h2V3zm-2 4v1a2 2 0 0 0 2 2h1V7H4zm12 0h-3v3h1a2 2 0 0 0 2-2V7z"></path>
+              </svg>
+            </span>
+            Veure rànquing
+          </button>
+        </div>
+      </div>
+
+      <div class="panel rules">
+        <h2>Regles ràpides</h2>
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="rule-icon">✅</span>
+            <div>
+              <div class="rule-title">Punts per encert</div>
+              <div class="rule-text">1 punt per resposta correcta.</div>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="rule-icon">⚡</span>
+            <div>
+              <div class="rule-title">Bonus de velocitat</div>
+              <div class="rule-text"><span class="text-good">+2 punts</span> si respons abans de 4 s; <span class="text-good">+3 punts</span> abans de 2 s.</div>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="rule-icon">⛔</span>
+            <div>
+              <div class="rule-title">Penalització</div>
+              <div class="rule-text">Error o temps esgotat: <span class="text-bad">-1 punt</span>.</div>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="rule-icon">🏁</span>
+            <div>
+              <div class="rule-title">Objectiu</div>
+              <div class="rule-text">Arriba a <span class="text-info">100 punts</span>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <img class="cc-icon" src="CC_BY-NC-SA.svg" alt="Llicència Creative Commons" />
+      <div class="footer-text">
+        <div class="footer-line">
+          Aplicació creada per
+          <a class="footer-link" href="https://ja.cat/felipsarroca" target="_blank" rel="noopener">Felip Sarroca</a>
+          amb l'assistència de la IA
+        </div>
+        <div class="footer-line">
+          Obra sota llicència
+          <a class="footer-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+        </div>
+      </div>
+    </footer>
+
+    <section id="screen-game" class="screen">
+      <div class="timer-full">
+        <div class="timer timer-top timer-wide">
+          <div class="timer-label">Temps</div>
+          <div class="timer-bar" id="timer-bar"></div>
+          <div class="timer-text" id="timer-text">20.0 s</div>
+        </div>
+      </div>
+
+      <div class="game-main">
+        <div class="game-media">
+          <img id="art-image" alt="Obra d'art" loading="lazy" draggable="false" />
+        </div>
+
+        <div class="game-choices">
+          <div class="game-top">
+            <div class="score">
+              <div class="score-card">
+                <div class="score-label">Puntuació</div>
+                <div id="score-value" class="score-value">0</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">Ratxa</div>
+                <div id="streak-value" class="score-value">0</div>
+              </div>
+            </div>
+            <button id="btn-stop" class="ghost stop-btn" type="button">
+              <span class="stop-icon disk" aria-hidden="true">
+                <svg viewBox="0 0 20 20" role="presentation">
+                  <path d="M4 3h9l3 3v11H4V3zm2 2v4h8V6l-1-1H6zm0 8h8v2H6v-2zm2-7h4v2H8V6z"></path>
+                </svg>
+              </span>
+              Atura
+            </button>
+          </div>
+
+          <div class="choices" id="title-block">
+            <h3>Tria el títol</h3>
+            <div id="title-options" class="options"></div>
+          </div>
+          <div class="choices" id="artist-block">
+            <h3>Tria l’autor</h3>
+            <div id="artist-options" class="options"></div>
+          </div>
+          <div id="feedback" class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-end" class="screen">
+      <div class="panel end-card">
+        <div class="end-header">
+          <h1>Partida acabada</h1>
+          <p class="lead" id="final-message">Has obtingut un total de...</p>
+        </div>
+        <div class="final-score">
+          <span id="final-score">0</span>
+          <span class="score-unit">punts</span>
+        </div>
+        <div id="save-status" class="save-status hidden">
+          <span class="save-icon" aria-hidden="true">✉️</span>
+          <span class="save-text">Enregistrant el teu resultat...</span>
+          <span class="save-spinner" aria-hidden="true"></span>
+        </div>
+        <div class="end-actions">
+          <button id="btn-restart" class="primary start-btn">
+            <span class="action-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" role="presentation">
+                <path d="M6 4l10 6-10 6V4z"></path>
+              </svg>
+            </span>
+            Jugar de nou
+          </button>
+          <button id="btn-ranking" class="ghost rank-btn">
+            <span class="rank-icon trophy" aria-hidden="true">
+              <svg viewBox="0 0 20 20" role="presentation">
+                <path d="M6 3h8v2h2a2 2 0 0 1 2 2v1a4 4 0 0 1-4 4h-1a5 5 0 0 1-2 2.23V16h3v2H6v-2h3v-1.77A5 5 0 0 1 7 12H6a4 4 0 0 1-4-4V7a2 2 0 0 1 2-2h2V3zm-2 4v1a2 2 0 0 0 2 2h1V7H4zm12 0h-3v3h1a2 2 0 0 0 2-2V7z"></path>
+              </svg>
+            </span>
+            Veure rànquing
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="ranking-modal" class="ranking">
+    <div class="ranking-header">
+      <h2 class="ranking-title">
+        <span class="rank-title-icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20" role="presentation">
+            <path d="M6 3h8v2h2a2 2 0 0 1 2 2v1a4 4 0 0 1-4 4h-1a5 5 0 0 1-2 2.23V16h3v2H6v-2h3v-1.77A5 5 0 0 1 7 12H6a4 4 0 0 1-4-4V7a2 2 0 0 1 2-2h2V3zm-2 4v1a2 2 0 0 0 2 2h1V7H4zm12 0h-3v3h1a2 2 0 0 0 2-2V7z"></path>
+          </svg>
+        </span>
+        Rànquing
+      </h2>
+      <button id="btn-close-ranking" class="ghost close-btn">Tancar</button>
+    </div>
+    <div class="ranking-table">
+        <div class="ranking-row ranking-head">
+          <div>#</div>
+          <div>Nom</div>
+          <div>El Prado</div>
+          <div>Reina Sofía</div>
+          <div>Total</div>
+        </div>
+      <div id="ranking-rows" class="ranking-rows"></div>
+    </div>
+    <p class="ranking-note" id="ranking-note"></p>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

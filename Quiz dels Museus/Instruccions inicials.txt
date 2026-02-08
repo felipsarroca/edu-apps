@@ -1,0 +1,206 @@
+D’acord. Et deixo **el procés complet**, ben ordenat i amb decisions clares, escrit perquè et serveixi com a **prompt/briefing per a un programador** que ho vagi implementant pas a pas.
+
+---
+
+# Prompt per al programador: joc d’identificació d’obres del Prado i del Reina Sofía
+
+## 0) Objectiu de l’aplicació
+
+Vull una aplicació web responsiva (mòbil primer), molt visual i atractiva, en forma de joc/concurs. El joc serveix perquè l’alumnat **aprengui a reconèixer visualment** 20 obres del Museo del Prado i 20 obres del Museo Reina Sofía.
+
+Cada ronda mostra **una imatge** i l’usuari ha d’identificar:
+
+1. el **títol** de l’obra (tria entre 4 opcions),
+2. l’**autor** (tria entre 4 opcions).
+
+Les obres surten en **ordre aleatori**.
+
+## 1) Regles de joc
+
+* Abans de començar, l’app demana el **nom del jugador**.
+* Hi ha dues modalitats: **Prado** i **Reina Sofía** (l’usuari en tria una).
+* Cada obra té un temporitzador de **10 segons** (comptador enrere visual).
+* Puntuació:
+
+  * Si encerta **títol i autor**, guanya **1 punt base**.
+  * Bonus de velocitat: si respon dins els **primers 4 segons**, guanya **+1 punt extra** (és a dir, 2 punts en total per aquella ronda).
+  * Si falla (títol o autor), **s’acaba la ratxa** (es deixa d’acumular ratxa; es pot decidir si la partida continua o acaba, però l’objectiu és que el disseny sigui jugable i no frustrant).
+* El joc s’atura quan:
+
+  * Arriba a **100 punts**, o
+  * (alternativa si s’implementa) es queden sense vides / acaba el temps diverses vegades.
+* En acabar, el resultat s’ha de guardar en un Google Sheets i ha d’entrar (si escau) al rànquing.
+
+## 2) Dades d’entrada: JSONs
+
+Hi ha dos fitxers JSON, un per museu, que contenen les 20 obres cadascun.
+
+Cada entrada té:
+
+* `id`
+* `museum` (`"prado"` o `"reina"`)
+* `title`
+* `artist`
+* `image` (nom exacte del fitxer JPG)
+
+Els fitxers d’imatge es guarden dins del projecte (carpeta d’assets) i el nom ha de coincidir exactament amb el camp `image`.
+
+**Fitxers:**
+
+* `data/prado.json`
+* `data/reina.json`
+* Imatges a:
+
+  * `assets/prado/<nom-fitxer.jpg>`
+  * `assets/reina/<nom-fitxer.jpg>`
+
+## 3) Generació d’opcions (4 títols i 4 autors) per a cada ronda
+
+No vull posar distractors a mà dins del JSON. L’app ha de generar opcions automàticament.
+
+Per una obra seleccionada (la correcta):
+
+* **Opcions de títol (4):**
+
+  * 1 és el títol correcte.
+  * 3 són títols d’altres obres del mateix museu (preferència), triats perquè siguin creïbles.
+* **Opcions d’autor (4):**
+
+  * 1 és l’autor correcte.
+  * 3 són autors d’altres obres del mateix museu (preferència), triats de manera que siguin creïbles.
+
+Condicions:
+
+* No repetir cap opció dins de les 4.
+* Barrejades aleatòriament (shuffle) a cada ronda.
+
+**Nota important:** Alguns autors apareixen en més d’una obra (Picasso, Goya, Miró, El Greco…). A les opcions d’autor, cada nom d’autor només pot aparèixer un cop.
+
+## 4) Persistència de puntuacions: Google Sheets
+
+Vull un Google Sheets amb:
+
+* Pestanya `Prado` (rànquing)
+* Pestanya `Reina` (rànquing)
+
+Cada pestanya ha de tenir columnes:
+
+* `Nom`
+* `Punts`
+* `DataHora` (timestamp de quan s’ha fet aquella millor puntuació)
+
+### Regla de rànquing (“best score”)
+
+Si un jugador ja existeix:
+
+* Si el nou resultat és **més alt**, substitueix l’anterior.
+* Si el nou resultat és **igual o més baix**, no el guardis.
+
+Després d’actualitzar:
+
+* Ordena la pestanya per `Punts` descendent.
+* L’app ha de mostrar només el **Top 10** per museu.
+
+## 5) Arquitectura tècnica (proposta simple i robusta)
+
+### Frontend
+
+Aplicació web estàtica (HTML/CSS/JS o React, a decidir), publicada a GitHub Pages.
+
+Ha de fer:
+
+* Carregar JSON del museu.
+* Seleccionar obra aleatòria.
+* Mostrar imatge.
+* Generar opcions i mostrar-les com a botons.
+* Gestionar temporitzador i puntuació.
+* Pantalla final amb:
+
+  * puntuació total
+  * botó “Torna a jugar”
+  * botó “Veure rànquing”
+* Pantalla/Popup de rànquing (Top 10) per museu.
+
+### Backend mínim (per escriure al Sheets)
+
+L’usuari no té accés directe al Sheets; l’app **ha d’enviar el resultat** a un endpoint controlat.
+
+Opcions:
+
+* Google Apps Script com a Web App (endpoint HTTPS) que rep:
+
+  * `museum`
+  * `playerName`
+  * `score`
+  * (opcional) `clientTimestamp`
+    i escriu/actualitza al Google Sheets amb la regla de best score.
+
+L’app també ha de poder:
+
+* Llegir el Top 10 (dues opcions):
+
+  1. Via un endpoint Apps Script que retorna JSON amb el Top 10
+  2. O bé publicant el rànquing en format CSV/JSON i llegint-lo (preferible si volem lectura fàcil sense autenticació).
+
+**Decisió a prendre abans d’implementar:** quin mètode de lectura del rànquing fem servir (endpoint o CSV publicat). En qualsevol cas, l’escriptura ha de ser via Apps Script.
+
+## 6) Disseny d’interfície (pantalles mínimes)
+
+1. **Pantalla inicial**
+
+   * Input: nom del jugador
+   * Selector de museu: Prado / Reina
+   * Botó: “Comença”
+   * Botó secundari: “Veure rànquing”
+
+2. **Pantalla de joc**
+
+   * Imatge gran
+   * Temporitzador (10s, visual)
+   * Bloc “Tria el títol” (4 opcions)
+   * Bloc “Tria l’autor” (4 opcions)
+   * Puntuació actual + ratxa (visual)
+
+3. **Pantalla final**
+
+   * Puntuació
+   * Missatge curt (sense “kumbaya”)
+   * Botó “Jugar de nou”
+   * Botó “Veure rànquing”
+
+4. **Popup/Modal rànquing**
+
+   * Top 10 Prado
+   * Top 10 Reina
+   * Botó “Tancar”
+
+## 7) Pla de treball (ordre recomanat)
+
+1. Preparar repositori i estructura de carpetes (`/assets`, `/data`, etc.).
+2. Carregar i validar els JSON + servir les imatges (comprovar que tots els `image` existeixen).
+3. Implementar “motor de joc” sense Google Sheets:
+
+   * selecció aleatòria d’obra
+   * generació d’opcions
+   * validació d’encert
+   * temporitzador
+   * sistema de puntuació fins a 100
+4. Implementar UI i estils (responsiu, atractiu, colors).
+5. Implementar Google Apps Script:
+
+   * endpoint per guardar best score (Prado/Reina)
+   * ordenació descendent i timestamp
+6. Implementar lectura del rànquing (Top 10) i mostrar-lo a l’app.
+7. Provar-ho amb alumnes (debug de jugabilitat, ajust de temps/punts).
+8. Deploy final a GitHub Pages.
+
+---
+
+## 8) Criteris de qualitat
+
+* Ha de funcionar bé en mòbil.
+* Carrega ràpid (imatges optimitzades).
+* No ha d’haver errors si falta una imatge: mostrar placeholder i saltar.
+* El rànquing ha de ser estable (best score per nom).
+* Codi mantenible i ben comentat.
+

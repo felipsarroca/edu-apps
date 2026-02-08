@@ -1,0 +1,126 @@
+[
+  {
+    "id": "reina_01",
+    "museum": "reina",
+    "title": "Tertulia",
+    "artist": "Ángeles Santos",
+    "image": "Ángeles Santos - Tertulia.jpg"
+  },
+  {
+    "id": "reina_02",
+    "museum": "reina",
+    "title": "Pintura",
+    "artist": "Antoni Tàpies",
+    "image": "Antoni Tàpies - Pintura.jpg"
+  },
+  {
+    "id": "reina_03",
+    "museum": "reina",
+    "title": "Lola",
+    "artist": "Antonio Saura",
+    "image": "Antonio Saura - Lola.jpg"
+  },
+  {
+    "id": "reina_04",
+    "museum": "reina",
+    "title": "Composición",
+    "artist": "Benjamín Palencia",
+    "image": "Benjamín Palencia - Composición.jpg"
+  },
+  {
+    "id": "reina_05",
+    "museum": "reina",
+    "title": "Personajes a la salida de un concierto de rock",
+    "artist": "Guillermo Pérez Villalta",
+    "image": "Guillermo Pérez Villalta - Personajes a la salida de un concierto de rock.jpg"
+  },
+  {
+    "id": "reina_06",
+    "museum": "reina",
+    "title": "Suelo terroso",
+    "artist": "Jean Dubuffet",
+    "image": "Jean Dubuffet - Suelo terroso.jpg"
+  },
+  {
+    "id": "reina_07",
+    "museum": "reina",
+    "title": "La casa de la palmera",
+    "artist": "Joan Miró",
+    "image": "Joan Miró - La casa de la palmera.jpg"
+  },
+  {
+    "id": "reina_08",
+    "museum": "reina",
+    "title": "Pastoral",
+    "artist": "Joan Miró",
+    "image": "Joan Miró - Pastoral.jpg"
+  },
+  {
+    "id": "reina_09",
+    "museum": "reina",
+    "title": "Estructura abstracta con formas geométricas intercaladas",
+    "artist": "Joaquín Torres García",
+    "image": "Joaquín Torres García - Estructura abstracta con formas geométricas intercaladas.jpg"
+  },
+  {
+    "id": "reina_10",
+    "museum": "reina",
+    "title": "Religio Depopulata",
+    "artist": "Joaquín Valverde",
+    "image": "Joaquín Valverde - Religio Depopulata (2).jpg"
+  },
+  {
+    "id": "reina_11",
+    "museum": "reina",
+    "title": "Crecientes con verde",
+    "artist": "José Guerrero",
+    "image": "José Guerrero - Crecientes con verde.jpg"
+  },
+  {
+    "id": "reina_12",
+    "museum": "reina",
+    "title": "La tertulia del Café de Pombo",
+    "artist": "José Solana",
+    "image": "José Solana - La tertulia del Café de Pombo.jpg"
+  },
+  {
+    "id": "reina_13",
+    "museum": "reina",
+    "title": "La ventana abierta",
+    "artist": "Juan Gris",
+    "image": "Juan Gris - La ventana abierta.jpg"
+  },
+  {
+    "id": "reina_14",
+    "museum": "reina",
+    "title": "Regla",
+    "artist": "Manolo Quejido",
+    "image": "Manolo Quejido - Regla.jpg"
+  },
+  {
+    "id": "reina_15",
+    "museum": "reina",
+    "title": "Souvenir de París",
+    "artist": "Óscar Domínguez",
+    "image": "Óscar Domínguez - Souvenir de París.jpg"
+  },
+  {
+    "id": "reina_16",
+    "museum": "reina",
+    "title": "Guernica",
+    "artist": "Pablo Picasso",
+    "image": "Pablo Picasso - Guernica.jpg"
+  },
+  {
+    "id": "reina_17",
+    "museum": "reina",
+    "title": "Los pájaros muertos",
+    "artist": "Pablo Picasso",
+    "image": "Pablo Picasso - Los pájaros muertos.jpg"
+  },
+  {
+    "id": "reina_18",
+    "museum": "reina",
+    "title": "Monumento a los españoles muertos por Francia",
+    "artist": "Pablo Picasso",
+    "image": "Pablo Picasso - Monume
