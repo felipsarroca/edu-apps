@@ -31,6 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'Història', 
             description: "Introducció al Modernisme català amb característiques i exemples." 
         },
+        { 
+            name: "Quiz dels museus", 
+            path: 'Quiz-Museus/', 
+            category: 'Història', 
+            description: "Quiz interactiu sobre el Museu del Prado i el Reina Sofía." 
+        },
 
         // Química
         { 
