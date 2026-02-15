@@ -35,6 +35,99 @@ Aplicació web educativa per entrenar el reconeixement visual d'obres del **Muse
 - Lectura del rànquing: `GET ?action=top10` (si el backend retorna `top`).
 - Si el backend falla, s'utilitza **localStorage** com a alternativa local.
 - La taula mostra posició, nom, puntuació per museu i total combinat.
+- El Google Sheets **només conserva resultats durant 1 any**.
+
+**Instruccions del joc**
+
+**Objectiu del joc**
+
+Aplicació web educativa per entrenar el reconeixement visual d'obres del **Museo del Prado** i del **Museo Reina Sofía**. L'objectiu és arribar a **100 punts** identificant el **títol** o l'**autor** d'una obra en temps limitat.
+
+**Obres del Museo del Prado (20)**
+
+| Títol | Autor |
+| --- | --- |
+| Autorretrato | Alberto Durero |
+| El tránsito de la Virgen | Andrea Mantegna |
+| David vencedor de Goliat | Caravaggio |
+| Las Meninas | Diego Velázquez |
+| El jardín de las Delicias | El Bosco |
+| El caballero de la mano en el pecho | El Greco |
+| Huida a Egipto | El Greco |
+| La Anunciación | Fra Angelico |
+| La familia de Carlos IV | Francisco de Goya |
+| Los fusilamientos del 3 de mayo | Francisco de Goya |
+| Saturno devorando a su hijo | Francisco de Goya |
+| La Inmaculada Concepción | Giambattista Tiepolo |
+| El sueño de Jacob | José de Ribera |
+| La Crucifixión | Juan de Flandes |
+| Las tres Gracias | Pablo Rubens |
+| El Cardenal | Rafael |
+| Judith en el banquete de Holofernes | Rembrandt |
+| El descendimiento | Roger van der Weyden |
+| El Lavatorio | Tintoretto |
+| Carlos V en la batalla de Mühlberg | Tiziano |
+
+**Obres del Museo Reina Sofía (20)**
+
+| Títol | Autor |
+| --- | --- |
+| Pintura | Antoni Tàpies |
+| Lola | Antonio Saura |
+| Composición | Benjamín Palencia |
+| Personajes a la salida de un concierto de rock | Guillermo Pérez Villalta |
+| Suelo terroso | Jean Dubuffet |
+| La casa de la palmera | Joan Miró |
+| Pastoral | Joan Miró |
+| Estructura abstracta con formas geométricas intercaladas | Joaquín Torres García |
+| Religio Depopulata | Joaquín Valverde |
+| Crecientes con verde | José Guerrero |
+| La tertulia del Café de Pombo | José Solana |
+| La ventana abierta | Juan Gris |
+| Regla | Manolo Quejido |
+| Guernica | Pablo Picasso |
+| Los pájaros muertos | Pablo Picasso |
+| Monumento a los españoles muertos por Francia | Pablo Picasso |
+| Antiluna | Pinot Gallizio |
+| Naturaleza muerta | Salvador Dalí |
+| Tertulia | Ángeles Santos |
+| Souvenir de París | Óscar Domínguez |
+
+**Dinàmica del joc**
+
+1. L'usuari introdueix el nom.
+2. Tria un museu: **Prado** o **Reina Sofía**.
+3. Comença la partida.
+4. A cada ronda apareix una imatge i **una sola pregunta aleatòria**: títol o autor.
+5. Hi ha **4 opcions** de resposta.
+6. Temps per resposta: **10 segons**.
+7. Les obres es barregen en **ordre aleatori**; quan s'esgoten, es tornen a barrejar.
+
+**Puntuació i ratxa**
+
+- Encert: `+1` punt.
+- Bonus velocitat:
+- `+3` punts si respons en `2 s` o menys.
+- `+2` punts si respons abans de `4 s`.
+- Error o temps esgotat: `-1` punt.
+- La ratxa puja amb encerts i es reinicia si hi ha error o timeout.
+- La puntuació no baixa de `0`.
+- Objectiu final: `100 punts`.
+
+**Final de partida**
+
+- En arribar a `100 punts`, la partida s'acaba.
+- Si la puntuació final és **inferior a `25`**, **no s'enregistra** al rànquing.
+
+**Rànquing i criteris**
+
+- El rànquing principal es desa a **Google Sheets** via Google Apps Script.
+- Per cada jugador, es guarda el **millor resultat** de cada museu.
+- Es mostra una taula amb **Prado**, **Reina** i **Total combinat** (Prado + Reina).
+- L'ordre del rànquing és per **total combinat**.
+- Si el backend falla, l'app mostra un **rànquing local** (localStorage).
+- El nom del jugador queda desat localment per facilitar l'inici.
+- El Google Sheets **només conserva resultats durant 1 any** per criteris de manteniment i privacitat.
 
 **Arquitectura**
 
