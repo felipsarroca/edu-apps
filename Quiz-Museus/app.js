@@ -54,6 +54,8 @@ const els = {
   rankingNote: document.getElementById("ranking-note"),
 };
 
+const MAX_MUSEUM_RANKING_SCORE = 100;
+
 function shuffle(arr) {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i -= 1) {
@@ -304,31 +306,32 @@ function getLocalRankingKey(museum) {
 function getLocalMuseumScore(museum, playerName) {
   if (!playerName) return 0;
   const key = playerName.trim().toLowerCase();
-  return Number(localStorage.getItem(`score_${museum}_${key}`) || 0);
+  return clampMuseumRankingScore(localStorage.getItem(`score_${museum}_${key}`) || 0);
 }
 
 function setLocalMuseumScore(museum, playerName, score) {
   if (!playerName) return;
   const key = playerName.trim().toLowerCase();
-  localStorage.setItem(`score_${museum}_${key}`, String(score));
+  localStorage.setItem(`score_${museum}_${key}`, String(clampMuseumRankingScore(score)));
 }
 
 function saveScoreLocal(museum, playerName, score) {
   if (!playerName) return;
+  const normalizedScore = clampMuseumRankingScore(score);
   const key = getLocalRankingKey(museum);
   const data = JSON.parse(localStorage.getItem(key) || "[]");
   const existing = data.find((item) => item.name.toLowerCase() === playerName.toLowerCase());
 
   if (existing) {
-    if (score > existing.score) {
-      existing.score = score;
+    if (normalizedScore > clampMuseumRankingScore(existing.score)) {
+      existing.score = normalizedScore;
       existing.date = new Date().toISOString();
     }
   } else {
-    data.push({ name: playerName, score, date: new Date().toISOString() });
+    data.push({ name: playerName, score: normalizedScore, date: new Date().toISOString() });
   }
 
-  data.sort((a, b) => b.score - a.score);
+  data.sort(compareMuseumEntries);
   localStorage.setItem(key, JSON.stringify(data.slice(0, 50)));
 }
 
@@ -398,10 +401,18 @@ async function loadRanking() {
 function renderRankingFromTop(top) {
   const rows = top.map((row) => ({
     name: row.name,
-    prado: Number(row.prado || 0),
-    reina: Number(row.reina || 0),
-    total: Number(row.total || 0),
+    prado: clampMuseumRankingScore(row.prado || 0),
+    reina: clampMuseumRankingScore(row.reina || 0),
+    totalDate: row.totalDate || row.date || null,
+    pradoDate: row.pradoDate || null,
+    reinaDate: row.reinaDate || null,
   }));
+
+  rows.forEach((row) => {
+    row.total = row.prado + row.reina;
+    row.achievementTs = getRankingAchievementTs(row);
+  });
+  rows.sort(compareRankingRows);
 
   els.rankingRows.innerHTML = "";
   if (!rows.length) {
@@ -425,9 +436,9 @@ function renderRankingFromTop(top) {
     item.innerHTML = `
       <div class="rank-cell">${index + 1}</div>
       <div class="rank-name">${medalBadge}<span>${row.name}</span></div>
-      <div class="rank-score">${formatScore(row.prado, 100)}</div>
-      <div class="rank-score">${formatScore(row.reina, 100)}</div>
-      <div class="rank-score">${formatScore(row.total, 200)}</div>
+      <div class="rank-score">${formatScore(row.prado, MAX_MUSEUM_RANKING_SCORE)}</div>
+      <div class="rank-score">${formatScore(row.reina, MAX_MUSEUM_RANKING_SCORE)}</div>
+      <div class="rank-score">${formatScore(row.total, MAX_MUSEUM_RANKING_SCORE * 2)}</div>
     `;
     els.rankingRows.appendChild(item);
   });
@@ -439,9 +450,16 @@ function renderRanking(prado, reina) {
     list.forEach((item) => {
       const key = item.name.trim().toLowerCase();
       if (!map.has(key)) {
-        map.set(key, { name: item.name.trim(), prado: 0, reina: 0 });
+        map.set(key, {
+          name: item.name.trim(),
+          prado: 0,
+          reina: 0,
+          pradoDate: null,
+          reinaDate: null,
+        });
       }
-      map.get(key)[museum] = item.score;
+      map.get(key)[museum] = clampMuseumRankingScore(item.score);
+      map.get(key)[`${museum}Date`] = item.date || null;
     });
   };
 
@@ -451,9 +469,10 @@ function renderRanking(prado, reina) {
   const rows = Array.from(map.values()).map((row) => ({
     ...row,
     total: row.prado + row.reina,
+    achievementTs: getRankingAchievementTs(row),
   }));
 
-  rows.sort((a, b) => b.total - a.total);
+  rows.sort(compareRankingRows);
 
   els.rankingRows.innerHTML = "";
   if (!rows.length) {
@@ -477,12 +496,49 @@ function renderRanking(prado, reina) {
     item.innerHTML = `
       <div class="rank-cell">${index + 1}</div>
       <div class="rank-name">${medalBadge}<span>${row.name}</span></div>
-      <div class="rank-score">${formatScore(row.prado, 100)}</div>
-      <div class="rank-score">${formatScore(row.reina, 100)}</div>
-      <div class="rank-score">${formatScore(row.total, 200)}</div>
+      <div class="rank-score">${formatScore(row.prado, MAX_MUSEUM_RANKING_SCORE)}</div>
+      <div class="rank-score">${formatScore(row.reina, MAX_MUSEUM_RANKING_SCORE)}</div>
+      <div class="rank-score">${formatScore(row.total, MAX_MUSEUM_RANKING_SCORE * 2)}</div>
     `;
     els.rankingRows.appendChild(item);
   });
+}
+
+function clampMuseumRankingScore(value) {
+  const numericValue = Number(value || 0);
+  if (!Number.isFinite(numericValue)) return 0;
+  return Math.max(0, Math.min(MAX_MUSEUM_RANKING_SCORE, numericValue));
+}
+
+function toTimestamp(value) {
+  if (!value) return Number.POSITIVE_INFINITY;
+  const timestamp = Date.parse(value);
+  return Number.isNaN(timestamp) ? Number.POSITIVE_INFINITY : timestamp;
+}
+
+function getRankingAchievementTs(row) {
+  const explicitTotalTs = toTimestamp(row.totalDate);
+  if (explicitTotalTs !== Number.POSITIVE_INFINITY) return explicitTotalTs;
+
+  const museumTimestamps = [toTimestamp(row.pradoDate), toTimestamp(row.reinaDate)]
+    .filter((timestamp) => timestamp !== Number.POSITIVE_INFINITY);
+
+  if (!museumTimestamps.length) return Number.POSITIVE_INFINITY;
+  return Math.max(...museumTimestamps);
+}
+
+function compareRankingRows(a, b) {
+  if (b.total !== a.total) return b.total - a.total;
+  if (a.achievementTs !== b.achievementTs) return a.achievementTs - b.achievementTs;
+  return a.name.localeCompare(b.name, "ca");
+}
+
+function compareMuseumEntries(a, b) {
+  const scoreDiff = clampMuseumRankingScore(b.score) - clampMuseumRankingScore(a.score);
+  if (scoreDiff !== 0) return scoreDiff;
+  const dateDiff = toTimestamp(a.date) - toTimestamp(b.date);
+  if (dateDiff !== 0) return dateDiff;
+  return a.name.localeCompare(b.name, "ca");
 }
 
 function formatScore(value, highlightValue) {
