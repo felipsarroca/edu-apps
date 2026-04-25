@@ -130,9 +130,13 @@ function analyzeExpression(expression) {
   }
   return result;
 }
+function normalizeMathInput(expr) {
+  return expr.replace(/[−–]/g, "-");
+}
 function prepareForFunction(expr) {
-  let prepared = expr.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, "(($1)/($2))").replace(/\\sqrt\{([^}]+)\}/g, "sqrt($1)").replace(/\\cdot/g, "*").replace(/\\pi/g, "PI");
+  let prepared = normalizeMathInput(expr).replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, "(($1)/($2))").replace(/\\sqrt\{([^}]+)\}/g, "sqrt($1)").replace(/\\cdot/g, "*").replace(/\\pi/g, "PI");
   prepared = prepared.replace(/\^/g, "**");
+  prepared = prepared.replace(/(^|[+\-*/,(])\s*-\s*(?=[A-Za-z0-9.(])/g, "$1-1*");
   prepared = prepared.replace(/(\d)([a-zA-Z(])/g, "$1*$2");
   prepared = prepared.replace(/\)([a-zA-Z(])/g, ")*$1");
   prepared = prepared.replace(/\b([a-zA-Z_]+)\(/g, (match, p1) => {
@@ -292,7 +296,7 @@ function parseIntervalExpression(expression) {
 }
 function parseExpression(expression) {
   try {
-    const trimmedExpression = expression.trim();
+    const trimmedExpression = normalizeMathInput(expression).trim();
     if (!trimmedExpression) return null;
     const implicitLinear = parseImplicitLinearEquation(trimmedExpression);
     if (implicitLinear) {
