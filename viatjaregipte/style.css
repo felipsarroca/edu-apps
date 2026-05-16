@@ -1,0 +1,496 @@
+/* ============================================
+   RESET I BASE
+   ============================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+/* ============================================
+   PANTALLES
+   ============================================ */
+.pantalla {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+}
+
+.pantalla.activa {
+    display: flex;
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Fons per pantalla */
+#pantalla-inici {
+    background: linear-gradient(145deg, #FFF3CD, #FFE082, #FFD54F);
+}
+
+#pantalla-pregunta {
+    background: linear-gradient(145deg, #E3F2FD, #BBDEFB, #90CAF9);
+    transition: background 0.6s ease;
+}
+
+#pantalla-pregunta.tema-tren {
+    background: linear-gradient(145deg, #E8F5E9, #C8E6C9, #A5D6A7);
+}
+
+#pantalla-pregunta.tema-avio {
+    background: linear-gradient(145deg, #E3F2FD, #BBDEFB, #90CAF9);
+}
+
+#pantalla-pregunta.tema-cotxe {
+    background: linear-gradient(145deg, #FFF3E0, #FFE0B2, #FFCC80);
+}
+
+#pantalla-pregunta.tema-vaixell {
+    background: linear-gradient(145deg, #E0F7FA, #B2EBF2, #80DEEA);
+}
+
+#pantalla-resum {
+    background: linear-gradient(145deg, #FFF8E1, #FFECB3, #FFE082);
+}
+
+.titol-resum {
+    color: #E65100;
+    font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+}
+
+.resum-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 1.5vw, 16px);
+    width: min(95%, 900px);
+}
+
+.targeta-resum {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 16px);
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: clamp(8px, 1.2vw, 16px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: apareixTargeta 0.5s ease both;
+}
+
+.targeta-resum:nth-child(1) { animation-delay: 0.1s; }
+.targeta-resum:nth-child(2) { animation-delay: 0.3s; }
+.targeta-resum:nth-child(3) { animation-delay: 0.5s; }
+.targeta-resum:nth-child(4) { animation-delay: 0.7s; }
+
+@keyframes apareixTargeta {
+    0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.targeta-resum img {
+    width: clamp(50px, 8vw, 100px);
+    height: clamp(50px, 8vw, 100px);
+    object-fit: contain;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.6);
+    padding: 4px;
+    flex-shrink: 0;
+}
+
+.targeta-resum-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 2px;
+}
+
+.targeta-resum-nom {
+    font-size: clamp(0.9rem, 2vw, 1.5rem);
+    font-weight: 900;
+    color: #4E342E;
+}
+
+.targeta-resum-temps {
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    font-weight: 900;
+    color: #E65100;
+}
+
+#pantalla-final {
+    background: linear-gradient(145deg, #F3E5F5, #E1BEE7, #CE93D8);
+    overflow: hidden;
+}
+
+/* ============================================
+   CONTINGUT CENTRAT
+   ============================================ */
+.contingut-centrat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 2vh 4vw;
+    gap: 1.5vh;
+}
+
+/* ============================================
+   TIPOGRAFIA
+   ============================================ */
+.titol-gran {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    color: #4E342E;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.6);
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+}
+
+.titol-final {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: #6A1B9A;
+    animation: pulsaTitol 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsaTitol {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+.subtitol {
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    color: #5D4037;
+    font-weight: 700;
+}
+
+.pregunta {
+    font-size: clamp(1.3rem, 3.2vw, 2.4rem);
+    font-weight: 900;
+    color: #1A237E;
+    line-height: 1.3;
+    max-width: 90%;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+}
+
+/* ============================================
+   IMATGES DE TRANSPORT
+   ============================================ */
+.imatge-transport {
+    width: clamp(120px, 25vw, 280px);
+    height: auto;
+    max-height: 28vh;
+    object-fit: contain;
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.15));
+    animation: flotar 3s ease-in-out infinite;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+}
+
+.imatge-inici {
+    width: clamp(150px, 30vw, 320px);
+    max-height: 32vh;
+}
+
+.imatge-final {
+    width: clamp(130px, 25vw, 280px);
+    max-height: 25vh;
+}
+
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ============================================
+   BOTONS GENERALS
+   ============================================ */
+.boto-gran {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(1.3rem, 2.8vw, 2rem);
+    font-weight: 900;
+    padding: 1.2em 2em;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    letter-spacing: 0.03em;
+    min-height: 60px;
+    min-width: 200px;
+    touch-action: manipulation;
+}
+
+.boto-gran:active {
+    transform: scale(0.95);
+}
+
+.boto-comencar {
+    background: linear-gradient(135deg, #FF8A65, #FF7043);
+    color: white;
+    box-shadow: 0 6px 0 #E64A19, 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.boto-comencar:active {
+    box-shadow: 0 2px 0 #E64A19, 0 4px 10px rgba(0,0,0,0.1);
+    transform: translateY(4px) scale(0.98);
+}
+
+.boto-seguent {
+    background: linear-gradient(135deg, #66BB6A, #43A047);
+    color: white;
+    box-shadow: 0 6px 0 #2E7D32, 0 8px 20px rgba(0,0,0,0.15);
+    animation: pulsaBoto 1.2s ease-in-out infinite;
+}
+
+.boto-seguent:active {
+    box-shadow: 0 2px 0 #2E7D32, 0 4px 10px rgba(0,0,0,0.1);
+    transform: translateY(4px) scale(0.98);
+    animation: none;
+}
+
+@keyframes pulsaBoto {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ============================================
+   OPCIONS DE RESPOSTA
+   ============================================ */
+.opcions-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(10px, 2vw, 24px);
+    width: min(90%, 700px);
+}
+
+.boto-opcio {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+    font-weight: 900;
+    padding: 0.8em 0.6em;
+    border: 4px solid rgba(0,0,0,0.08);
+    border-radius: 18px;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.3s ease, border-color 0.3s ease;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    touch-action: manipulation;
+    background: white;
+    color: #333;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1), 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.boto-opcio:active {
+    transform: scale(0.95) translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.1), 0 3px 8px rgba(0,0,0,0.06);
+}
+
+.boto-opcio.correcta {
+    background: linear-gradient(135deg, #81C784, #66BB6A);
+    color: white;
+    border-color: #43A047;
+    box-shadow: 0 4px 0 #2E7D32, 0 6px 15px rgba(46, 125, 50, 0.3);
+    animation: botoCorrect 0.5s ease;
+}
+
+.boto-opcio.incorrecta {
+    background: linear-gradient(135deg, #EF5350, #E53935);
+    color: white;
+    border-color: #C62828;
+    box-shadow: 0 4px 0 #B71C1C, 0 6px 15px rgba(183, 28, 28, 0.3);
+    animation: shakeX 0.5s ease;
+}
+
+.boto-opcio.desactivat {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+@keyframes botoCorrect {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.1); }
+    60% { transform: scale(0.97); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shakeX {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+}
+
+/* ============================================
+   MISSATGE DE FEEDBACK
+   ============================================ */
+.missatge-feedback {
+    font-size: clamp(1.3rem, 3vw, 2.2rem);
+    font-weight: 900;
+    min-height: 1.8em;
+    transition: opacity 0.3s ease;
+}
+
+.missatge-feedback.correcte {
+    color: #2E7D32;
+    animation: apareix 0.4s ease;
+}
+
+.missatge-feedback.incorrecte {
+    color: #C62828;
+    animation: apareix 0.4s ease;
+}
+
+@keyframes apareix {
+    0% { opacity: 0; transform: scale(0.7); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   AMAGAT
+   ============================================ */
+.amagat {
+    display: none !important;
+}
+
+/* ============================================
+   CONFETI CANVAS
+   ============================================ */
+#confeti-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ============================================
+   ANIMACIÓ D'ENTRADA DE PANTALLA
+   ============================================ */
+.pantalla.entrant {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   RESPONSIVE - MÒBIL VERTICAL
+   ============================================ */
+@media (max-width: 600px) {
+    .contingut-centrat {
+        padding: 1.5vh 3vw;
+        gap: 1.2vh;
+    }
+
+    .imatge-transport {
+        max-height: 22vh;
+    }
+
+    .opcions-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 95%;
+    }
+
+    .boto-opcio {
+        padding: 0.7em 0.4em;
+        min-height: 50px;
+    }
+
+    .boto-gran {
+        padding: 0.9em 1.5em;
+        min-height: 50px;
+        min-width: 160px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - PANTALLA GRAN / PROJECTOR
+   ============================================ */
+@media (min-width: 1200px) {
+    .titol-gran {
+        font-size: 4.5rem;
+    }
+
+    .pregunta {
+        font-size: 2.6rem;
+    }
+
+    .boto-opcio {
+        font-size: 2rem;
+        padding: 1em 1em;
+        min-height: 80px;
+    }
+
+    .boto-gran {
+        font-size: 2.2rem;
+        padding: 1em 2.5em;
+    }
+
+    .imatge-transport {
+        max-height: 30vh;
+        width: 300px;
+    }
+
+    .missatge-feedback {
+        font-size: 2.4rem;
+    }
+}
+
+/* ============================================
+   MODE HORITZONTAL (LANDSCAPE)
+   ============================================ */
+@media (orientation: landscape) and (max-height: 500px) {
+    .contingut-centrat {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1vw;
+        padding: 1vh 2vw;
+    }
+
+    .titol-gran, .pregunta {
+        width: 100%;
+        font-size: clamp(1rem, 2.5vh, 1.6rem);
+    }
+
+    .imatge-transport {
+        max-height: 40vh;
+        width: auto;
+    }
+
+    .opcions-container {
+        width: 50%;
+    }
+
+    .boto-opcio {
+        min-height: 40px;
+        padding: 0.5em;
+        font-size: clamp(0.9rem, 2vh, 1.3rem);
+    }
+}

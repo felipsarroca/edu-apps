@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Joc educatiu per a infantil: endevina quant trigues a arribar a Egipte!">
+    <title>Viatgem a Egipte!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- PANTALLA D'INICI                             -->
+    <!-- ============================================ -->
+    <section id="pantalla-inici" class="pantalla activa">
+        <div class="contingut-centrat">
+            <h1 class="titol-gran">VIATGEM A EGIPTE! 🐪🏛️</h1>
+            <img src="img/egipte.png" alt="Piràmides d'Egipte" class="imatge-transport imatge-inici">
+            <p class="subtitol">QUANT TEMPS TRIGAREM?</p>
+            <button id="btn-comencar" class="boto-gran boto-comencar" onclick="comencarJoc()">
+                COMENCEM! 🚀
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PANTALLES DE PREGUNTES (generada per JS)     -->
+    <!-- ============================================ -->
+    <section id="pantalla-pregunta" class="pantalla">
+        <div class="contingut-centrat">
+            <p id="pregunta-text" class="pregunta"></p>
+            <img id="imatge-transport" class="imatge-transport" src="" alt="">
+            <div id="opcions-container" class="opcions-container"></div>
+            <div id="missatge-feedback" class="missatge-feedback"></div>
+            <button id="btn-seguent" class="boto-gran boto-seguent amagat" onclick="seguent()">
+                SEGÜENT ➡️
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PANTALLA DE RESUM                            -->
+    <!-- ============================================ -->
+    <section id="pantalla-resum" class="pantalla">
+        <div class="contingut-centrat">
+            <h1 class="titol-gran titol-resum">PER ANAR A EGIPTE TRIGAREM... 🌍</h1>
+            <div id="resum-container" class="resum-container">
+                <!-- Generat per JS -->
+            </div>
+            <button class="boto-gran boto-comencar" onclick="anarFinal()">
+                SEGÜENT ➡️
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PANTALLA FINAL                               -->
+    <!-- ============================================ -->
+    <section id="pantalla-final" class="pantalla">
+        <div class="contingut-centrat">
+            <h1 class="titol-gran titol-final">HO HAS FET MOLT BÉ! 🎉</h1>
+            <img src="img/egipte.png" alt="Piràmides d'Egipte" class="imatge-transport imatge-final">
+            <p class="subtitol">JA SABEM COM ARRIBAR A EGIPTE! 🌍✈️</p>
+            <button class="boto-gran boto-comencar" onclick="reiniciar()">
+                TORNAR A JUGAR 🔄
+            </button>
+        </div>
+        <!-- Contenidor per al confeti -->
+        <canvas id="confeti-canvas"></canvas>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
