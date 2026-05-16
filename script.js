@@ -109,6 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
 
+        // Ed. Infantil
+        {
+            name: "Viatjar a Egipte",
+            path: 'ViatjarEgipte/',
+            category: 'Ed. Infantil',
+            description: "Joc educatiu per a infantil per descobrir com podem arribar a Egipte.",
+            icon: 'ViatjarEgipte/img/egipte.png'
+        },
+
+
         // Llengua catalana
         {
             name: "Ara és l'hora",
