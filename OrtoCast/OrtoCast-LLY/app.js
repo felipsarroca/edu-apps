@@ -38,7 +38,7 @@ setupInstallSupport();
 async function init() {
   const [rules, words, homophones] = await Promise.all([
     fetch("data/rules.json?v=visual19").then((response) => response.json()),
-    fetch("data/words.json?v=visual18").then((response) => response.json()),
+    fetch("data/words.json?v=visual20").then((response) => response.json()),
     fetch("data/homophones.json?v=visual18").then((response) => response.json()),
   ]);
 
@@ -256,7 +256,7 @@ function renderPractice(container, items, mode, isSentence = false) {
 }
 
 function questionTemplate(item, mode, isSentence) {
-  const prompt = isSentence ? item.sentence : item.masked;
+  const prompt = promptForItem(item, isSentence);
   const promptClass = isSentence ? "word-prompt sentence-prompt" : "word-prompt";
   return `
     <article class="question-card" data-mode="${mode}" data-id="${item.id}">
@@ -268,6 +268,11 @@ function questionTemplate(item, mode, isSentence) {
       <div class="feedback" aria-live="polite"></div>
     </article>
   `;
+}
+
+function promptForItem(item, isSentence = false) {
+  if (isSentence) return item.sentence;
+  return item.hint ? `${item.masked} (${item.hint})` : item.masked;
 }
 
 function renderMasked(text, item, isSentence = false) {
@@ -366,12 +371,12 @@ function shouldUseUppercase(text, isSentence) {
 }
 
 function displayLetterForItem(item) {
-  const prompt = item.sentence || item.masked;
+  const prompt = promptForItem(item, Boolean(item.sentence));
   return shouldUseUppercase(prompt, Boolean(item.sentence)) ? item.answer.toUpperCase() : item.answer;
 }
 
 function renderSolvedPrompt(item, isSentence) {
-  const prompt = isSentence ? item.sentence : item.masked;
+  const prompt = promptForItem(item, isSentence);
   const solved = prompt.replace("_", displayLetterForItem(item));
   if (isSentence) {
     return highlightNorm(solved, item.ruleId || "homophones", item.word);
@@ -381,35 +386,34 @@ function renderSolvedPrompt(item, isSentence) {
 
 function highlightRuleText(text, ruleId, letter = "") {
   let html = escapeHtml(text);
-  if (letter) {
+  if (letter && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
-      new RegExp(`\\b${escapedLetter}\\b`, "i"),
+      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
       (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
     );
   }
   const replacements = {
     "ll-illo-illa": ["-illos", "-illas", "-illo", "-illa"],
     "ll-alle-elle-ello-ella": ["-alle", "-elle", "-ello", "-ella"],
-    "ll-verbos-ll": [],
-    "ll-familias": [],
-    "ll-inicial": [],
-    "y-final": ["y al final"],
+    "ll-verbos-ll": ["llamar", "llenar", "llevar", "hallar"],
+    "ll-familias": ["lluvia", "llave", "calle", "caballo", "cabello", "botella"],
+    "ll-inicial": ["llave", "lluvia", "llanto", "llegar", "llevar"],
+    "y-final": ["i", "diptongo", "triptongo"],
     "y-yer-yec": ["yer-", "yec-"],
-    "y-verbos": ["cayó", "leyó", "oyó", "huyó"],
-    "y-plurales": ["-yes"],
-    "y-familias": [],
+    "y-verbos": ["caer", "leer", "oír", "creer", "huir"],
+    "y-plurales": ["rey", "reyes", "ley", "leyes", "buey", "bueyes"],
+    "y-familias": ["rayo", "playa", "joya", "apoyo", "ensayo", "proyecto"],
   };
   const parts = replacements[ruleId] || [];
   if (parts.length) {
-    const pattern = new RegExp(
-      parts
-        .map((part) => escapeRegExp(escapeHtml(part)))
-        .sort((a, b) => b.length - a.length)
-        .join("|"),
-      "gi"
-    );
-    html = html.replace(pattern, (match) => `<strong class="norm-chip">${match}</strong>`);
+    const alternatives = parts
+      .map((part) => {
+        const escaped = escapeRegExp(escapeHtml(part));
+        return part.includes("-") || /[^\x00-\x7F]/.test(part) ? escaped : `\\b${escaped}\\b`;
+      })
+      .sort((a, b) => b.length - a.length);
+    html = html.replace(new RegExp(alternatives.join("|"), "gi"), (match) => `<strong class="norm-chip">${match}</strong>`);
   }
   return html;
 }

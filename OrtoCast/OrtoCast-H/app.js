@@ -38,7 +38,7 @@ setupInstallSupport();
 async function init() {
   const [rules, words, homophones] = await Promise.all([
     fetch("data/rules.json?v=visual19").then((response) => response.json()),
-    fetch("data/words.json?v=visual18").then((response) => response.json()),
+    fetch("data/words.json?v=visual20").then((response) => response.json()),
     fetch("data/homophones.json?v=visual18").then((response) => response.json()),
   ]);
 
@@ -257,7 +257,7 @@ function renderPractice(container, items, mode, isSentence = false) {
 }
 
 function questionTemplate(item, mode, isSentence) {
-  const prompt = isSentence ? item.sentence : item.masked;
+  const prompt = promptForItem(item, isSentence);
   const promptClass = isSentence ? "word-prompt sentence-prompt" : "word-prompt";
   return `
     <article class="question-card" data-mode="${mode}" data-id="${item.id}">
@@ -269,6 +269,11 @@ function questionTemplate(item, mode, isSentence) {
       <div class="feedback" aria-live="polite"></div>
     </article>
   `;
+}
+
+function promptForItem(item, isSentence = false) {
+  if (isSentence) return item.sentence;
+  return item.hint ? `${item.masked} (${item.hint})` : item.masked;
 }
 
 function renderMasked(text, item, isSentence = false) {
@@ -367,13 +372,13 @@ function shouldUseUppercase(text, isSentence) {
 }
 
 function displayLetterForItem(item) {
-  const prompt = item.sentence || item.masked;
+  const prompt = promptForItem(item, Boolean(item.sentence));
   if (item.answer === " ") return "";
   return shouldUseUppercase(prompt, Boolean(item.sentence)) ? item.answer.toUpperCase() : item.answer;
 }
 
 function renderSolvedPrompt(item, isSentence) {
-  const prompt = isSentence ? item.sentence : item.masked;
+  const prompt = promptForItem(item, isSentence);
   const solved = prompt.replace("_", displayLetterForItem(item));
   if (isSentence) {
     return highlightNorm(solved, item.ruleId || "homophones", item.word);
@@ -383,20 +388,20 @@ function renderSolvedPrompt(item, isSentence) {
 
 function highlightRuleText(text, ruleId, letter = "") {
   let html = escapeHtml(text);
-  if (letter && letter.trim()) {
+  if (letter && letter.trim() && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
-      new RegExp(`\\b${escapedLetter}\\b`, "i"),
+      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
       (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
     );
   }
   const replacements = {
     "h-hie-hue": ["hie-", "hue-"],
-    "h-hum": ["hum-"],
+    "h-hum": ["hum-", "vocal"],
     "h-prefijos": ["hemi-", "hexa-", "hepta-", "hetero-", "homo-", "hiper-", "hipo-", "hidro-"],
     "h-verbos": ["haber", "hacer", "hablar", "habitar", "hallar"],
-    "h-interjecciones": ["ah", "oh", "eh", "bah"],
-    "h-familias": [],
+    "h-interjecciones": ["ah", "eh", "oh", "bah", "hola"],
+    "h-familias": ["hora", "historia", "honor", "hospital", "horror", "herencia"],
     "no-h-a-ha": ["a", "ha", "h"],
     "no-h-e-he": ["e", "he", "h"],
     "no-h-ay-hay": ["ay", "hay", "h"],
@@ -407,10 +412,15 @@ function highlightRuleText(text, ruleId, letter = "") {
     const alternatives = parts
       .map((part) => {
         const escaped = escapeRegExp(escapeHtml(part));
-        return part.includes("-") ? escaped : `\\b${escaped}\\b`;
+        return part.includes("-") || /[^\x00-\x7F]/.test(part) ? escaped : `\\b${escaped}\\b`;
       })
       .sort((a, b) => b.length - a.length);
-    html = html.replace(new RegExp(alternatives.join("|"), "gi"), (match) => `<strong class="norm-chip">${match}</strong>`);
+    html = html.replace(new RegExp(alternatives.join("|"), "gi"), (match) => {
+      if (match.toLowerCase() === "h") {
+        return `<strong class="rule-letter rule-letter-h">${match}</strong>`;
+      }
+      return `<strong class="norm-chip">${match}</strong>`;
+    });
   }
   return html;
 }

@@ -1,109 +1,789 @@
 [
-  {"id":"ly001","word":"anillo","masked":"ani_o","answer":"ll","ruleId":"ll-illo-illa","difficulty":1},
-  {"id":"ly002","word":"castillo","masked":"casti_o","answer":"ll","ruleId":"ll-illo-illa","difficulty":1},
-  {"id":"ly003","word":"bolsillo","masked":"bolsi_o","answer":"ll","ruleId":"ll-illo-illa","difficulty":2},
-  {"id":"ly004","word":"pasillo","masked":"pasi_o","answer":"ll","ruleId":"ll-illo-illa","difficulty":1},
-  {"id":"ly005","word":"martillo","masked":"marti_o","answer":"ll","ruleId":"ll-illo-illa","difficulty":2},
-  {"id":"ly006","word":"tornillo","masked":"torni_o","answer":"ll","ruleId":"ll-illo-illa","difficulty":2},
-  {"id":"ly007","word":"silla","masked":"si_a","answer":"ll","ruleId":"ll-illo-illa","difficulty":1},
-  {"id":"ly008","word":"semilla","masked":"semi_a","answer":"ll","ruleId":"ll-illo-illa","difficulty":1},
-  {"id":"ly009","word":"orilla","masked":"ori_a","answer":"ll","ruleId":"ll-illo-illa","difficulty":2},
-  {"id":"ly010","word":"vajilla","masked":"vaji_a","answer":"ll","ruleId":"ll-illo-illa","difficulty":3},
-
-  {"id":"ly011","word":"calle","masked":"ca_e","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":1},
-  {"id":"ly012","word":"valle","masked":"va_e","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":1},
-  {"id":"ly013","word":"detalle","masked":"deta_e","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":2},
-  {"id":"ly014","word":"muelle","masked":"mue_e","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":2},
-  {"id":"ly015","word":"sello","masked":"se_o","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":1},
-  {"id":"ly016","word":"cabello","masked":"cabe_o","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":2},
-  {"id":"ly017","word":"aquello","masked":"aque_o","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":2},
-  {"id":"ly018","word":"estrella","masked":"estre_a","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":1},
-  {"id":"ly019","word":"botella","masked":"bote_a","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":1},
-  {"id":"ly020","word":"huella","masked":"hue_a","answer":"ll","ruleId":"ll-alle-elle-ello-ella","difficulty":2},
-
-  {"id":"ly021","word":"llamo","masked":"_amo","answer":"ll","ruleId":"ll-verbos-ll","difficulty":1},
-  {"id":"ly022","word":"llenas","masked":"_enas","answer":"ll","ruleId":"ll-verbos-ll","difficulty":1},
-  {"id":"ly023","word":"llevaba","masked":"_evaba","answer":"ll","ruleId":"ll-verbos-ll","difficulty":2},
-  {"id":"ly024","word":"hallaron","masked":"ha_aron","answer":"ll","ruleId":"ll-verbos-ll","difficulty":2},
-  {"id":"ly025","word":"calló","masked":"ca_ó","answer":"ll","ruleId":"ll-verbos-ll","difficulty":2},
-  {"id":"ly026","word":"brillaba","masked":"bri_aba","answer":"ll","ruleId":"ll-verbos-ll","difficulty":2},
-  {"id":"ly027","word":"sellamos","masked":"se_amos","answer":"ll","ruleId":"ll-verbos-ll","difficulty":2},
-  {"id":"ly028","word":"detalló","masked":"deta_ó","answer":"ll","ruleId":"ll-verbos-ll","difficulty":3},
-  {"id":"ly029","word":"rellené","masked":"re_ené","answer":"ll","ruleId":"ll-verbos-ll","difficulty":3},
-  {"id":"ly030","word":"atropelló","masked":"atrope_ó","answer":"ll","ruleId":"ll-verbos-ll","difficulty":3},
-
-  {"id":"ly031","word":"lluvioso","masked":"_uvioso","answer":"ll","ruleId":"ll-familias","difficulty":1},
-  {"id":"ly032","word":"llavero","masked":"_avero","answer":"ll","ruleId":"ll-familias","difficulty":1},
-  {"id":"ly033","word":"callejero","masked":"ca_ejero","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly034","word":"caballito","masked":"caba_ito","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly035","word":"cabellera","masked":"cabe_era","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly036","word":"botellín","masked":"bote_ín","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly037","word":"estrellado","masked":"estre_ado","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly038","word":"rollito","masked":"ro_ito","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly039","word":"sillón","masked":"si_ón","answer":"ll","ruleId":"ll-familias","difficulty":2},
-  {"id":"ly040","word":"millar","masked":"mi_ar","answer":"ll","ruleId":"ll-familias","difficulty":3},
-
-  {"id":"ly041","word":"llave","masked":"_ave","answer":"ll","ruleId":"ll-inicial","difficulty":1},
-  {"id":"ly042","word":"lluvia","masked":"_uvia","answer":"ll","ruleId":"ll-inicial","difficulty":1},
-  {"id":"ly043","word":"llanto","masked":"_anto","answer":"ll","ruleId":"ll-inicial","difficulty":1},
-  {"id":"ly044","word":"llegar","masked":"_egar","answer":"ll","ruleId":"ll-inicial","difficulty":1},
-  {"id":"ly045","word":"llevar","masked":"_evar","answer":"ll","ruleId":"ll-inicial","difficulty":1},
-  {"id":"ly046","word":"lleno","masked":"_eno","answer":"ll","ruleId":"ll-inicial","difficulty":1},
-  {"id":"ly047","word":"llama","masked":"_ama","answer":"ll","ruleId":"ll-inicial","difficulty":2},
-  {"id":"ly048","word":"llanura","masked":"_anura","answer":"ll","ruleId":"ll-inicial","difficulty":2},
-  {"id":"ly049","word":"lloraba","masked":"_oraba","answer":"ll","ruleId":"ll-inicial","difficulty":2},
-  {"id":"ly050","word":"llovizna","masked":"_ovizna","answer":"ll","ruleId":"ll-inicial","difficulty":3},
-
-  {"id":"ly051","word":"rey","masked":"re_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly052","word":"ley","masked":"le_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly053","word":"hoy","masked":"ho_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly054","word":"muy","masked":"mu_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly055","word":"soy","masked":"so_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly056","word":"estoy","masked":"esto_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly057","word":"doy","masked":"do_","answer":"y","ruleId":"y-final","difficulty":1},
-  {"id":"ly058","word":"buey","masked":"bue_","answer":"y","ruleId":"y-final","difficulty":2},
-  {"id":"ly059","word":"convoy","masked":"convo_","answer":"y","ruleId":"y-final","difficulty":2},
-  {"id":"ly060","word":"virrey","masked":"virre_","answer":"y","ruleId":"y-final","difficulty":3},
-
-  {"id":"ly061","word":"yerba","masked":"_erba","answer":"y","ruleId":"y-yer-yec","difficulty":2},
-  {"id":"ly062","word":"yerno","masked":"_erno","answer":"y","ruleId":"y-yer-yec","difficulty":1},
-  {"id":"ly063","word":"yermo","masked":"_ermo","answer":"y","ruleId":"y-yer-yec","difficulty":2},
-  {"id":"ly064","word":"yerto","masked":"_erto","answer":"y","ruleId":"y-yer-yec","difficulty":3},
-  {"id":"ly065","word":"proyecto","masked":"pro_ecto","answer":"y","ruleId":"y-yer-yec","difficulty":1},
-  {"id":"ly066","word":"trayecto","masked":"tra_ecto","answer":"y","ruleId":"y-yer-yec","difficulty":2},
-  {"id":"ly067","word":"inyección","masked":"in_ección","answer":"y","ruleId":"y-yer-yec","difficulty":2},
-  {"id":"ly068","word":"proyectil","masked":"pro_ectil","answer":"y","ruleId":"y-yer-yec","difficulty":2},
-  {"id":"ly069","word":"inyectar","masked":"in_ectar","answer":"y","ruleId":"y-yer-yec","difficulty":2},
-  {"id":"ly070","word":"subyace","masked":"sub_ace","answer":"y","ruleId":"y-yer-yec","difficulty":3},
-
-  {"id":"ly071","word":"cayó","masked":"ca_ó","answer":"y","ruleId":"y-verbos","difficulty":1},
-  {"id":"ly072","word":"cayeron","masked":"ca_eron","answer":"y","ruleId":"y-verbos","difficulty":2},
-  {"id":"ly073","word":"leyó","masked":"le_ó","answer":"y","ruleId":"y-verbos","difficulty":1},
-  {"id":"ly074","word":"leyeron","masked":"le_eron","answer":"y","ruleId":"y-verbos","difficulty":2},
-  {"id":"ly075","word":"oyó","masked":"o_ó","answer":"y","ruleId":"y-verbos","difficulty":1},
-  {"id":"ly076","word":"oyeron","masked":"o_eron","answer":"y","ruleId":"y-verbos","difficulty":2},
-  {"id":"ly077","word":"huyó","masked":"hu_ó","answer":"y","ruleId":"y-verbos","difficulty":2},
-  {"id":"ly078","word":"huyeron","masked":"hu_eron","answer":"y","ruleId":"y-verbos","difficulty":3},
-  {"id":"ly079","word":"creyó","masked":"cre_ó","answer":"y","ruleId":"y-verbos","difficulty":2},
-  {"id":"ly080","word":"construyeron","masked":"constru_eron","answer":"y","ruleId":"y-verbos","difficulty":3},
-
-  {"id":"ly081","word":"reyes","masked":"re_es","answer":"y","ruleId":"y-plurales","difficulty":1},
-  {"id":"ly082","word":"leyes","masked":"le_es","answer":"y","ruleId":"y-plurales","difficulty":1},
-  {"id":"ly083","word":"bueyes","masked":"bue_es","answer":"y","ruleId":"y-plurales","difficulty":2},
-  {"id":"ly084","word":"virreyes","masked":"virre_es","answer":"y","ruleId":"y-plurales","difficulty":3},
-  {"id":"ly085","word":"convoyes","masked":"convo_es","answer":"y","ruleId":"y-plurales","difficulty":3},
-  {"id":"ly086","word":"jerseys","masked":"jerse_s","answer":"y","ruleId":"y-plurales","difficulty":3},
-  {"id":"ly087","word":"bocoyes","masked":"boco_es","answer":"y","ruleId":"y-plurales","difficulty":3},
-  {"id":"ly088","word":"esprayes","masked":"espra_es","answer":"y","ruleId":"y-plurales","difficulty":3},
-
-  {"id":"ly089","word":"rayito","masked":"ra_ito","answer":"y","ruleId":"y-familias","difficulty":1},
-  {"id":"ly090","word":"playero","masked":"pla_ero","answer":"y","ruleId":"y-familias","difficulty":1},
-  {"id":"ly091","word":"joyero","masked":"jo_ero","answer":"y","ruleId":"y-familias","difficulty":2},
-  {"id":"ly092","word":"apoyar","masked":"apo_ar","answer":"y","ruleId":"y-familias","difficulty":2},
-  {"id":"ly093","word":"ensayar","masked":"ensa_ar","answer":"y","ruleId":"y-familias","difficulty":2},
-  {"id":"ly094","word":"proyectar","masked":"pro_ectar","answer":"y","ruleId":"y-familias","difficulty":2},
-  {"id":"ly095","word":"ayudante","masked":"a_udante","answer":"y","ruleId":"y-familias","difficulty":1},
-  {"id":"ly096","word":"mayorista","masked":"ma_orista","answer":"y","ruleId":"y-familias","difficulty":2},
-  {"id":"ly097","word":"desayuno","masked":"desa_uno","answer":"y","ruleId":"y-familias","difficulty":2},
-  {"id":"ly098","word":"yacimiento","masked":"_acimiento","answer":"y","ruleId":"y-familias","difficulty":3}
+  {
+    "id": "ly001",
+    "word": "anillo",
+    "masked": "ani_o",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 1
+  },
+  {
+    "id": "ly002",
+    "word": "castillo",
+    "masked": "casti_o",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 1
+  },
+  {
+    "id": "ly003",
+    "word": "bolsillo",
+    "masked": "bolsi_o",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 2
+  },
+  {
+    "id": "ly004",
+    "word": "pasillo",
+    "masked": "pasi_o",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 1
+  },
+  {
+    "id": "ly005",
+    "word": "martillo",
+    "masked": "marti_o",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 2
+  },
+  {
+    "id": "ly006",
+    "word": "tornillo",
+    "masked": "torni_o",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 2
+  },
+  {
+    "id": "ly007",
+    "word": "silla",
+    "masked": "si_a",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 1
+  },
+  {
+    "id": "ly008",
+    "word": "semilla",
+    "masked": "semi_a",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 1
+  },
+  {
+    "id": "ly009",
+    "word": "orilla",
+    "masked": "ori_a",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 2
+  },
+  {
+    "id": "ly010",
+    "word": "vajilla",
+    "masked": "vaji_a",
+    "answer": "ll",
+    "ruleId": "ll-illo-illa",
+    "difficulty": 3
+  },
+  {
+    "id": "ly011",
+    "word": "calle",
+    "masked": "ca_e",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 1
+  },
+  {
+    "id": "ly012",
+    "word": "valle",
+    "masked": "va_e",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 1
+  },
+  {
+    "id": "ly013",
+    "word": "detalle",
+    "masked": "deta_e",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 2
+  },
+  {
+    "id": "ly014",
+    "word": "muelle",
+    "masked": "mue_e",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 2
+  },
+  {
+    "id": "ly015",
+    "word": "sello",
+    "masked": "se_o",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 1
+  },
+  {
+    "id": "ly016",
+    "word": "cabello",
+    "masked": "cabe_o",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 2
+  },
+  {
+    "id": "ly017",
+    "word": "aquello",
+    "masked": "aque_o",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 2
+  },
+  {
+    "id": "ly018",
+    "word": "estrella",
+    "masked": "estre_a",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 1
+  },
+  {
+    "id": "ly019",
+    "word": "botella",
+    "masked": "bote_a",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 1
+  },
+  {
+    "id": "ly020",
+    "word": "huella",
+    "masked": "hue_a",
+    "answer": "ll",
+    "ruleId": "ll-alle-elle-ello-ella",
+    "difficulty": 2
+  },
+  {
+    "id": "ly021",
+    "word": "llamo",
+    "masked": "_amo",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ly022",
+    "word": "llenas",
+    "masked": "_enas",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ly023",
+    "word": "llevaba",
+    "masked": "_evaba",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ly024",
+    "word": "hallaron",
+    "masked": "ha_aron",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ly025",
+    "word": "calló",
+    "masked": "ca_ó",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 2,
+    "hint": "callar"
+  },
+  {
+    "id": "ly026",
+    "word": "brillaba",
+    "masked": "bri_aba",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ly027",
+    "word": "sellamos",
+    "masked": "se_amos",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ly028",
+    "word": "detalló",
+    "masked": "deta_ó",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 3
+  },
+  {
+    "id": "ly029",
+    "word": "rellené",
+    "masked": "re_ené",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 3
+  },
+  {
+    "id": "ly030",
+    "word": "atropelló",
+    "masked": "atrope_ó",
+    "answer": "ll",
+    "ruleId": "ll-verbos-ll",
+    "difficulty": 3
+  },
+  {
+    "id": "ly031",
+    "word": "lluvioso",
+    "masked": "_uvioso",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 1
+  },
+  {
+    "id": "ly032",
+    "word": "llavero",
+    "masked": "_avero",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 1
+  },
+  {
+    "id": "ly033",
+    "word": "callejero",
+    "masked": "ca_ejero",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly034",
+    "word": "caballito",
+    "masked": "caba_ito",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly035",
+    "word": "cabellera",
+    "masked": "cabe_era",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly036",
+    "word": "botellín",
+    "masked": "bote_ín",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly037",
+    "word": "estrellado",
+    "masked": "estre_ado",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly038",
+    "word": "rollito",
+    "masked": "ro_ito",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly039",
+    "word": "sillón",
+    "masked": "si_ón",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly040",
+    "word": "millar",
+    "masked": "mi_ar",
+    "answer": "ll",
+    "ruleId": "ll-familias",
+    "difficulty": 3
+  },
+  {
+    "id": "ly041",
+    "word": "llave",
+    "masked": "_ave",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "ly042",
+    "word": "lluvia",
+    "masked": "_uvia",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "ly043",
+    "word": "llanto",
+    "masked": "_anto",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "ly044",
+    "word": "llegar",
+    "masked": "_egar",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "ly045",
+    "word": "llevar",
+    "masked": "_evar",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "ly046",
+    "word": "lleno",
+    "masked": "_eno",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "ly047",
+    "word": "llama",
+    "masked": "_ama",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "ly048",
+    "word": "llanura",
+    "masked": "_anura",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "ly049",
+    "word": "lloraba",
+    "masked": "_oraba",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "ly050",
+    "word": "llovizna",
+    "masked": "_ovizna",
+    "answer": "ll",
+    "ruleId": "ll-inicial",
+    "difficulty": 3
+  },
+  {
+    "id": "ly051",
+    "word": "rey",
+    "masked": "re_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly052",
+    "word": "ley",
+    "masked": "le_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly053",
+    "word": "hoy",
+    "masked": "ho_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly054",
+    "word": "muy",
+    "masked": "mu_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly055",
+    "word": "soy",
+    "masked": "so_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly056",
+    "word": "estoy",
+    "masked": "esto_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly057",
+    "word": "doy",
+    "masked": "do_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 1
+  },
+  {
+    "id": "ly058",
+    "word": "buey",
+    "masked": "bue_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 2
+  },
+  {
+    "id": "ly059",
+    "word": "convoy",
+    "masked": "convo_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 2
+  },
+  {
+    "id": "ly060",
+    "word": "virrey",
+    "masked": "virre_",
+    "answer": "y",
+    "ruleId": "y-final",
+    "difficulty": 3
+  },
+  {
+    "id": "ly061",
+    "word": "yerba",
+    "masked": "_erba",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 2
+  },
+  {
+    "id": "ly062",
+    "word": "yerno",
+    "masked": "_erno",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 1
+  },
+  {
+    "id": "ly063",
+    "word": "yermo",
+    "masked": "_ermo",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 2
+  },
+  {
+    "id": "ly064",
+    "word": "yerto",
+    "masked": "_erto",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 3
+  },
+  {
+    "id": "ly065",
+    "word": "proyecto",
+    "masked": "pro_ecto",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 1
+  },
+  {
+    "id": "ly066",
+    "word": "trayecto",
+    "masked": "tra_ecto",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 2
+  },
+  {
+    "id": "ly067",
+    "word": "inyección",
+    "masked": "in_ección",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 2
+  },
+  {
+    "id": "ly068",
+    "word": "proyectil",
+    "masked": "pro_ectil",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 2
+  },
+  {
+    "id": "ly069",
+    "word": "inyectar",
+    "masked": "in_ectar",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 2
+  },
+  {
+    "id": "ly070",
+    "word": "subyace",
+    "masked": "sub_ace",
+    "answer": "y",
+    "ruleId": "y-yer-yec",
+    "difficulty": 3
+  },
+  {
+    "id": "ly071",
+    "word": "cayó",
+    "masked": "ca_ó",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 1,
+    "hint": "caer"
+  },
+  {
+    "id": "ly072",
+    "word": "cayeron",
+    "masked": "ca_eron",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "ly073",
+    "word": "leyó",
+    "masked": "le_ó",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 1,
+    "hint": "leer"
+  },
+  {
+    "id": "ly074",
+    "word": "leyeron",
+    "masked": "le_eron",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "ly075",
+    "word": "oyó",
+    "masked": "o_ó",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 1
+  },
+  {
+    "id": "ly076",
+    "word": "oyeron",
+    "masked": "o_eron",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "ly077",
+    "word": "huyó",
+    "masked": "hu_ó",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "ly078",
+    "word": "huyeron",
+    "masked": "hu_eron",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 3
+  },
+  {
+    "id": "ly079",
+    "word": "creyó",
+    "masked": "cre_ó",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "ly080",
+    "word": "construyeron",
+    "masked": "constru_eron",
+    "answer": "y",
+    "ruleId": "y-verbos",
+    "difficulty": 3
+  },
+  {
+    "id": "ly081",
+    "word": "reyes",
+    "masked": "re_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 1
+  },
+  {
+    "id": "ly082",
+    "word": "leyes",
+    "masked": "le_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 1
+  },
+  {
+    "id": "ly083",
+    "word": "bueyes",
+    "masked": "bue_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 2
+  },
+  {
+    "id": "ly084",
+    "word": "virreyes",
+    "masked": "virre_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 3
+  },
+  {
+    "id": "ly085",
+    "word": "convoyes",
+    "masked": "convo_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 3
+  },
+  {
+    "id": "ly086",
+    "word": "jerseys",
+    "masked": "jerse_s",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 3
+  },
+  {
+    "id": "ly087",
+    "word": "bocoyes",
+    "masked": "boco_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 3
+  },
+  {
+    "id": "ly088",
+    "word": "esprayes",
+    "masked": "espra_es",
+    "answer": "y",
+    "ruleId": "y-plurales",
+    "difficulty": 3
+  },
+  {
+    "id": "ly089",
+    "word": "rayito",
+    "masked": "ra_ito",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 1
+  },
+  {
+    "id": "ly090",
+    "word": "playero",
+    "masked": "pla_ero",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 1
+  },
+  {
+    "id": "ly091",
+    "word": "joyero",
+    "masked": "jo_ero",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly092",
+    "word": "apoyar",
+    "masked": "apo_ar",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly093",
+    "word": "ensayar",
+    "masked": "ensa_ar",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly094",
+    "word": "proyectar",
+    "masked": "pro_ectar",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly095",
+    "word": "ayudante",
+    "masked": "a_udante",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 1
+  },
+  {
+    "id": "ly096",
+    "word": "mayorista",
+    "masked": "ma_orista",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly097",
+    "word": "desayuno",
+    "masked": "desa_uno",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "ly098",
+    "word": "yacimiento",
+    "masked": "_acimiento",
+    "answer": "y",
+    "ruleId": "y-familias",
+    "difficulty": 3
+  }
 ]

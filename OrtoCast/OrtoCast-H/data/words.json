@@ -1,101 +1,779 @@
 [
-  {"id":"hw001","word":"hielo","masked":"_ielo","answer":"h","ruleId":"h-hie-hue","difficulty":1},
-  {"id":"hw002","word":"hierro","masked":"_ierro","answer":"h","ruleId":"h-hie-hue","difficulty":1},
-  {"id":"hw003","word":"hierba","masked":"_ierba","answer":"h","ruleId":"h-hie-hue","difficulty":1},
-  {"id":"hw004","word":"hiena","masked":"_iena","answer":"h","ruleId":"h-hie-hue","difficulty":2},
-  {"id":"hw005","word":"hueso","masked":"_ueso","answer":"h","ruleId":"h-hie-hue","difficulty":1},
-  {"id":"hw006","word":"huevo","masked":"_uevo","answer":"h","ruleId":"h-hie-hue","difficulty":1},
-  {"id":"hw007","word":"huella","masked":"_uella","answer":"h","ruleId":"h-hie-hue","difficulty":2},
-  {"id":"hw008","word":"huerto","masked":"_uerto","answer":"h","ruleId":"h-hie-hue","difficulty":2},
-  {"id":"hw009","word":"hueco","masked":"_ueco","answer":"h","ruleId":"h-hie-hue","difficulty":2},
-  {"id":"hw010","word":"huésped","masked":"_uésped","answer":"h","ruleId":"h-hie-hue","difficulty":3},
-
-  {"id":"hw011","word":"humano","masked":"_umano","answer":"h","ruleId":"h-hum","difficulty":1},
-  {"id":"hw012","word":"humedad","masked":"_umedad","answer":"h","ruleId":"h-hum","difficulty":1},
-  {"id":"hw013","word":"humo","masked":"_umo","answer":"h","ruleId":"h-hum","difficulty":1},
-  {"id":"hw014","word":"humilde","masked":"_umilde","answer":"h","ruleId":"h-hum","difficulty":2},
-  {"id":"hw015","word":"humor","masked":"_umor","answer":"h","ruleId":"h-hum","difficulty":1},
-  {"id":"hw016","word":"humareda","masked":"_umareda","answer":"h","ruleId":"h-hum","difficulty":2},
-  {"id":"hw017","word":"húmedo","masked":"_úmedo","answer":"h","ruleId":"h-hum","difficulty":2},
-  {"id":"hw018","word":"humillar","masked":"_umillar","answer":"h","ruleId":"h-hum","difficulty":3},
-  {"id":"hw019","word":"umbral","masked":"_umbral","answer":" ","ruleId":"h-hum","difficulty":3,"exception":true},
-  {"id":"hw020","word":"umbrío","masked":"_umbrío","answer":" ","ruleId":"h-hum","difficulty":3,"exception":true},
-
-  {"id":"hw021","word":"hemisferio","masked":"_emisferio","answer":"h","ruleId":"h-prefijos","difficulty":2},
-  {"id":"hw022","word":"hexágono","masked":"_exágono","answer":"h","ruleId":"h-prefijos","difficulty":2},
-  {"id":"hw023","word":"heptasílabo","masked":"_eptasílabo","answer":"h","ruleId":"h-prefijos","difficulty":3},
-  {"id":"hw024","word":"heterogéneo","masked":"_eterogéneo","answer":"h","ruleId":"h-prefijos","difficulty":3},
-  {"id":"hw025","word":"homónimo","masked":"_omónimo","answer":"h","ruleId":"h-prefijos","difficulty":2},
-  {"id":"hw026","word":"hiperactivo","masked":"_iperactivo","answer":"h","ruleId":"h-prefijos","difficulty":2},
-  {"id":"hw027","word":"hipopótamo","masked":"_ipopótamo","answer":"h","ruleId":"h-prefijos","difficulty":1},
-  {"id":"hw028","word":"hidrógeno","masked":"_idrógeno","answer":"h","ruleId":"h-prefijos","difficulty":2},
-  {"id":"hw029","word":"hipótesis","masked":"_ipótesis","answer":"h","ruleId":"h-prefijos","difficulty":3},
-  {"id":"hw030","word":"homogéneo","masked":"_omogéneo","answer":"h","ruleId":"h-prefijos","difficulty":3},
-
-  {"id":"hw031","word":"había","masked":"_abía","answer":"h","ruleId":"h-verbos","difficulty":1},
-  {"id":"hw032","word":"hay","masked":"_ay","answer":"h","ruleId":"h-verbos","difficulty":1},
-  {"id":"hw033","word":"hice","masked":"_ice","answer":"h","ruleId":"h-verbos","difficulty":1},
-  {"id":"hw034","word":"hacemos","masked":"_acemos","answer":"h","ruleId":"h-verbos","difficulty":1},
-  {"id":"hw035","word":"hablaron","masked":"_ablaron","answer":"h","ruleId":"h-verbos","difficulty":2},
-  {"id":"hw036","word":"habitas","masked":"_abitas","answer":"h","ruleId":"h-verbos","difficulty":2},
-  {"id":"hw037","word":"hallé","masked":"_allé","answer":"h","ruleId":"h-verbos","difficulty":2},
-  {"id":"hw038","word":"hallaron","masked":"_allaron","answer":"h","ruleId":"h-verbos","difficulty":2},
-  {"id":"hw039","word":"haré","masked":"_aré","answer":"h","ruleId":"h-verbos","difficulty":2},
-  {"id":"hw040","word":"hubiera","masked":"_ubiera","answer":"h","ruleId":"h-verbos","difficulty":3},
-
-  {"id":"hw041","word":"ah","masked":"a_","answer":"h","ruleId":"h-interjecciones","difficulty":1},
-  {"id":"hw042","word":"eh","masked":"e_","answer":"h","ruleId":"h-interjecciones","difficulty":1},
-  {"id":"hw043","word":"oh","masked":"o_","answer":"h","ruleId":"h-interjecciones","difficulty":1},
-  {"id":"hw044","word":"bah","masked":"ba_","answer":"h","ruleId":"h-interjecciones","difficulty":2},
-  {"id":"hw045","word":"hola","masked":"_ola","answer":"h","ruleId":"h-interjecciones","difficulty":1},
-  {"id":"hw046","word":"hala","masked":"_ala","answer":"h","ruleId":"h-interjecciones","difficulty":2},
-  {"id":"hw047","word":"hurra","masked":"_urra","answer":"h","ruleId":"h-interjecciones","difficulty":2},
-  {"id":"hw048","word":"huy","masked":"_uy","answer":"h","ruleId":"h-interjecciones","difficulty":2},
-  {"id":"hw049","word":"ay","masked":"_ay","answer":" ","ruleId":"h-interjecciones","difficulty":3,"exception":true},
-  {"id":"hw050","word":"uy","masked":"_uy","answer":" ","ruleId":"h-interjecciones","difficulty":3,"exception":true},
-
-  {"id":"hw051","word":"horario","masked":"_orario","answer":"h","ruleId":"h-familias","difficulty":1},
-  {"id":"hw052","word":"histórico","masked":"_istórico","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw053","word":"honrado","masked":"_onrado","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw054","word":"hospitalario","masked":"_ospitalario","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw055","word":"horroroso","masked":"_orroroso","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw056","word":"heredero","masked":"_eredero","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw057","word":"hormiguero","masked":"_ormiguero","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw058","word":"hogareño","masked":"_ogareño","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw059","word":"hondo","masked":"_ondo","answer":"h","ruleId":"h-familias","difficulty":2},
-  {"id":"hw060","word":"huérfano","masked":"_uérfano","answer":"h","ruleId":"h-familias","difficulty":3},
-
-  {"id":"hw061","word":"a","masked":"_a","answer":" ","ruleId":"no-h-a-ha","difficulty":1,"explanation":"A se escribe sin h cuando es una preposición."},
-  {"id":"hw062","word":"ha","masked":"_a","answer":"h","ruleId":"no-h-a-ha","difficulty":1,"explanation":"Ha se escribe con h cuando es una forma del verbo haber."},
-  {"id":"hw063","word":"aquí","masked":"_aquí","answer":" ","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Aquí no empieza por h."},
-  {"id":"hw064","word":"ahora","masked":"_ahora","answer":" ","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Ahora se escribe sin h inicial."},
-  {"id":"hw065","word":"hacia","masked":"_acia","answer":"h","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Hacia se escribe con h inicial."},
-  {"id":"hw066","word":"hasta","masked":"_asta","answer":"h","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Hasta se escribe con h inicial."},
-  {"id":"hw067","word":"ala","masked":"_ala","answer":" ","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Ala se escribe sin h cuando significa extremidad o parte de un edificio."},
-  {"id":"hw068","word":"haba","masked":"_aba","answer":"h","ruleId":"no-h-a-ha","difficulty":3,"explanation":"Haba se escribe con h."},
-
-  {"id":"hw069","word":"e","masked":"_e","answer":" ","ruleId":"no-h-e-he","difficulty":1,"explanation":"E se escribe sin h cuando une palabras."},
-  {"id":"hw070","word":"he","masked":"_e","answer":"h","ruleId":"no-h-e-he","difficulty":1,"explanation":"He se escribe con h cuando es una forma del verbo haber."},
-  {"id":"hw071","word":"edad","masked":"_edad","answer":" ","ruleId":"no-h-e-he","difficulty":1,"explanation":"Edad se escribe sin h inicial."},
-  {"id":"hw072","word":"enorme","masked":"_enorme","answer":" ","ruleId":"no-h-e-he","difficulty":1,"explanation":"Enorme se escribe sin h inicial."},
-  {"id":"hw073","word":"hermano","masked":"_ermano","answer":"h","ruleId":"no-h-e-he","difficulty":1,"explanation":"Hermano se escribe con h inicial."},
-  {"id":"hw074","word":"herida","masked":"_erida","answer":"h","ruleId":"no-h-e-he","difficulty":2,"explanation":"Herida se escribe con h inicial."},
-  {"id":"hw075","word":"errar","masked":"_errar","answer":" ","ruleId":"no-h-e-he","difficulty":3,"explanation":"Errar se escribe sin h cuando significa equivocarse."},
-  {"id":"hw076","word":"herrar","masked":"_errar","answer":"h","ruleId":"no-h-e-he","difficulty":3,"explanation":"Herrar se escribe con h cuando significa poner herraduras."},
-
-  {"id":"hw077","word":"ay","masked":"_ay","answer":" ","ruleId":"no-h-ay-hay","difficulty":1,"explanation":"Ay se escribe sin h cuando expresa dolor o sorpresa."},
-  {"id":"hw078","word":"hay","masked":"_ay","answer":"h","ruleId":"no-h-ay-hay","difficulty":1,"explanation":"Hay se escribe con h cuando es una forma del verbo haber."},
-  {"id":"hw079","word":"ayer","masked":"_ayer","answer":" ","ruleId":"no-h-ay-hay","difficulty":1,"explanation":"Ayer se escribe sin h inicial."},
-  {"id":"hw080","word":"hallar","masked":"_allar","answer":"h","ruleId":"no-h-ay-hay","difficulty":2,"explanation":"Hallar se escribe con h inicial."},
-  {"id":"hw081","word":"asta","masked":"_asta","answer":" ","ruleId":"no-h-ay-hay","difficulty":3,"explanation":"Asta se escribe sin h cuando significa palo, cuerno o bandera."},
-  {"id":"hw082","word":"hasta","masked":"_asta","answer":"h","ruleId":"no-h-ay-hay","difficulty":3,"explanation":"Hasta se escribe con h cuando es preposición."},
-
-  {"id":"hw083","word":"echo","masked":"_echo","answer":" ","ruleId":"no-h-echo-hecho","difficulty":1,"explanation":"Echo se escribe sin h cuando procede del verbo echar."},
-  {"id":"hw084","word":"hecho","masked":"_echo","answer":"h","ruleId":"no-h-echo-hecho","difficulty":1,"explanation":"Hecho se escribe con h cuando procede del verbo hacer o significa suceso."},
-  {"id":"hw085","word":"echar","masked":"_echar","answer":" ","ruleId":"no-h-echo-hecho","difficulty":1,"explanation":"Echar se escribe sin h."},
-  {"id":"hw086","word":"hacer","masked":"_acer","answer":"h","ruleId":"no-h-echo-hecho","difficulty":1,"explanation":"Hacer se escribe con h."},
-  {"id":"hw087","word":"echo","masked":"_echo","answer":" ","ruleId":"no-h-echo-hecho","difficulty":2,"explanation":"Echo sin h puede significar tiro, pongo o expulso."},
-  {"id":"hw088","word":"hechizo","masked":"_echizo","answer":"h","ruleId":"no-h-echo-hecho","difficulty":3,"explanation":"Hechizo se escribe con h."},
-  {"id":"hw089","word":"errar","masked":"_errar","answer":" ","ruleId":"no-h-echo-hecho","difficulty":3,"explanation":"Errar se escribe sin h cuando significa equivocarse."},
-  {"id":"hw090","word":"herrar","masked":"_errar","answer":"h","ruleId":"no-h-echo-hecho","difficulty":3,"explanation":"Herrar se escribe con h cuando significa poner herraduras."}
+  {
+    "id": "hw001",
+    "word": "hielo",
+    "masked": "_ielo",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 1
+  },
+  {
+    "id": "hw002",
+    "word": "hierro",
+    "masked": "_ierro",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 1
+  },
+  {
+    "id": "hw003",
+    "word": "hierba",
+    "masked": "_ierba",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 1
+  },
+  {
+    "id": "hw004",
+    "word": "hiena",
+    "masked": "_iena",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 2
+  },
+  {
+    "id": "hw005",
+    "word": "hueso",
+    "masked": "_ueso",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 1
+  },
+  {
+    "id": "hw006",
+    "word": "huevo",
+    "masked": "_uevo",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 1
+  },
+  {
+    "id": "hw007",
+    "word": "huella",
+    "masked": "_uella",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 2
+  },
+  {
+    "id": "hw008",
+    "word": "huerto",
+    "masked": "_uerto",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 2
+  },
+  {
+    "id": "hw009",
+    "word": "hueco",
+    "masked": "_ueco",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 2
+  },
+  {
+    "id": "hw010",
+    "word": "huésped",
+    "masked": "_uésped",
+    "answer": "h",
+    "ruleId": "h-hie-hue",
+    "difficulty": 3
+  },
+  {
+    "id": "hw011",
+    "word": "humano",
+    "masked": "_umano",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 1
+  },
+  {
+    "id": "hw012",
+    "word": "humedad",
+    "masked": "_umedad",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 1
+  },
+  {
+    "id": "hw013",
+    "word": "humo",
+    "masked": "_umo",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 1
+  },
+  {
+    "id": "hw014",
+    "word": "humilde",
+    "masked": "_umilde",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 2
+  },
+  {
+    "id": "hw015",
+    "word": "humor",
+    "masked": "_umor",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 1
+  },
+  {
+    "id": "hw016",
+    "word": "humareda",
+    "masked": "_umareda",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 2
+  },
+  {
+    "id": "hw017",
+    "word": "húmedo",
+    "masked": "_úmedo",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 2
+  },
+  {
+    "id": "hw018",
+    "word": "humillar",
+    "masked": "_umillar",
+    "answer": "h",
+    "ruleId": "h-hum",
+    "difficulty": 3
+  },
+  {
+    "id": "hw019",
+    "word": "umbral",
+    "masked": "_umbral",
+    "answer": " ",
+    "ruleId": "h-hum",
+    "difficulty": 3,
+    "exception": true
+  },
+  {
+    "id": "hw020",
+    "word": "umbrío",
+    "masked": "_umbrío",
+    "answer": " ",
+    "ruleId": "h-hum",
+    "difficulty": 3,
+    "exception": true
+  },
+  {
+    "id": "hw021",
+    "word": "hemisferio",
+    "masked": "_emisferio",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw022",
+    "word": "hexágono",
+    "masked": "_exágono",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw023",
+    "word": "heptasílabo",
+    "masked": "_eptasílabo",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 3
+  },
+  {
+    "id": "hw024",
+    "word": "heterogéneo",
+    "masked": "_eterogéneo",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 3
+  },
+  {
+    "id": "hw025",
+    "word": "homónimo",
+    "masked": "_omónimo",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw026",
+    "word": "hiperactivo",
+    "masked": "_iperactivo",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw027",
+    "word": "hipopótamo",
+    "masked": "_ipopótamo",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 1
+  },
+  {
+    "id": "hw028",
+    "word": "hidrógeno",
+    "masked": "_idrógeno",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw029",
+    "word": "hipótesis",
+    "masked": "_ipótesis",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 3
+  },
+  {
+    "id": "hw030",
+    "word": "homogéneo",
+    "masked": "_omogéneo",
+    "answer": "h",
+    "ruleId": "h-prefijos",
+    "difficulty": 3
+  },
+  {
+    "id": "hw031",
+    "word": "había",
+    "masked": "_abía",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 1
+  },
+  {
+    "id": "hw032",
+    "word": "hay",
+    "masked": "_ay",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 1,
+    "hint": "haber"
+  },
+  {
+    "id": "hw033",
+    "word": "hice",
+    "masked": "_ice",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 1
+  },
+  {
+    "id": "hw034",
+    "word": "hacemos",
+    "masked": "_acemos",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 1
+  },
+  {
+    "id": "hw035",
+    "word": "hablaron",
+    "masked": "_ablaron",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw036",
+    "word": "habitas",
+    "masked": "_abitas",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw037",
+    "word": "hallé",
+    "masked": "_allé",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw038",
+    "word": "hallaron",
+    "masked": "_allaron",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw039",
+    "word": "haré",
+    "masked": "_aré",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 2
+  },
+  {
+    "id": "hw040",
+    "word": "hubiera",
+    "masked": "_ubiera",
+    "answer": "h",
+    "ruleId": "h-verbos",
+    "difficulty": 3
+  },
+  {
+    "id": "hw041",
+    "word": "ah",
+    "masked": "a_",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 1,
+    "hint": "interjecci?n"
+  },
+  {
+    "id": "hw042",
+    "word": "eh",
+    "masked": "e_",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 1
+  },
+  {
+    "id": "hw043",
+    "word": "oh",
+    "masked": "o_",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 1
+  },
+  {
+    "id": "hw044",
+    "word": "bah",
+    "masked": "ba_",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 2
+  },
+  {
+    "id": "hw045",
+    "word": "hola",
+    "masked": "_ola",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 1
+  },
+  {
+    "id": "hw046",
+    "word": "hala",
+    "masked": "_ala",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 2,
+    "hint": "interjecci?n"
+  },
+  {
+    "id": "hw047",
+    "word": "hurra",
+    "masked": "_urra",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 2
+  },
+  {
+    "id": "hw048",
+    "word": "huy",
+    "masked": "_uy",
+    "answer": "h",
+    "ruleId": "h-interjecciones",
+    "difficulty": 2,
+    "hint": "interjecci?n con h"
+  },
+  {
+    "id": "hw049",
+    "word": "ay",
+    "masked": "_ay",
+    "answer": " ",
+    "ruleId": "h-interjecciones",
+    "difficulty": 3,
+    "exception": true,
+    "hint": "dolor o sorpresa"
+  },
+  {
+    "id": "hw050",
+    "word": "uy",
+    "masked": "_uy",
+    "answer": " ",
+    "ruleId": "h-interjecciones",
+    "difficulty": 3,
+    "exception": true,
+    "hint": "sorpresa"
+  },
+  {
+    "id": "hw051",
+    "word": "horario",
+    "masked": "_orario",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 1
+  },
+  {
+    "id": "hw052",
+    "word": "histórico",
+    "masked": "_istórico",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw053",
+    "word": "honrado",
+    "masked": "_onrado",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw054",
+    "word": "hospitalario",
+    "masked": "_ospitalario",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw055",
+    "word": "horroroso",
+    "masked": "_orroroso",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw056",
+    "word": "heredero",
+    "masked": "_eredero",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw057",
+    "word": "hormiguero",
+    "masked": "_ormiguero",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw058",
+    "word": "hogareño",
+    "masked": "_ogareño",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw059",
+    "word": "hondo",
+    "masked": "_ondo",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 2
+  },
+  {
+    "id": "hw060",
+    "word": "huérfano",
+    "masked": "_uérfano",
+    "answer": "h",
+    "ruleId": "h-familias",
+    "difficulty": 3
+  },
+  {
+    "id": "hw061",
+    "word": "a",
+    "masked": "_a",
+    "answer": " ",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 1,
+    "explanation": "A se escribe sin h cuando es una preposición.",
+    "hint": "preposici?n"
+  },
+  {
+    "id": "hw062",
+    "word": "ha",
+    "masked": "_a",
+    "answer": "h",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 1,
+    "explanation": "Ha se escribe con h cuando es una forma del verbo haber.",
+    "hint": "haber"
+  },
+  {
+    "id": "hw063",
+    "word": "aquí",
+    "masked": "_aquí",
+    "answer": " ",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 2,
+    "explanation": "Aquí no empieza por h."
+  },
+  {
+    "id": "hw064",
+    "word": "ahora",
+    "masked": "_ahora",
+    "answer": " ",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 2,
+    "explanation": "Ahora se escribe sin h inicial."
+  },
+  {
+    "id": "hw065",
+    "word": "hacia",
+    "masked": "_acia",
+    "answer": "h",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 2,
+    "explanation": "Hacia se escribe con h inicial."
+  },
+  {
+    "id": "hw066",
+    "word": "hasta",
+    "masked": "_asta",
+    "answer": "h",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 2,
+    "explanation": "Hasta se escribe con h inicial.",
+    "hint": "preposici?n"
+  },
+  {
+    "id": "hw067",
+    "word": "ala",
+    "masked": "_ala",
+    "answer": " ",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 2,
+    "explanation": "Ala se escribe sin h cuando significa extremidad o parte de un edificio.",
+    "hint": "extremidad"
+  },
+  {
+    "id": "hw068",
+    "word": "haba",
+    "masked": "_aba",
+    "answer": "h",
+    "ruleId": "no-h-a-ha",
+    "difficulty": 3,
+    "explanation": "Haba se escribe con h."
+  },
+  {
+    "id": "hw069",
+    "word": "e",
+    "masked": "_e",
+    "answer": " ",
+    "ruleId": "no-h-e-he",
+    "difficulty": 1,
+    "explanation": "E se escribe sin h cuando une palabras.",
+    "hint": "conjunci?n"
+  },
+  {
+    "id": "hw070",
+    "word": "he",
+    "masked": "_e",
+    "answer": "h",
+    "ruleId": "no-h-e-he",
+    "difficulty": 1,
+    "explanation": "He se escribe con h cuando es una forma del verbo haber.",
+    "hint": "haber"
+  },
+  {
+    "id": "hw071",
+    "word": "edad",
+    "masked": "_edad",
+    "answer": " ",
+    "ruleId": "no-h-e-he",
+    "difficulty": 1,
+    "explanation": "Edad se escribe sin h inicial."
+  },
+  {
+    "id": "hw072",
+    "word": "enorme",
+    "masked": "_enorme",
+    "answer": " ",
+    "ruleId": "no-h-e-he",
+    "difficulty": 1,
+    "explanation": "Enorme se escribe sin h inicial."
+  },
+  {
+    "id": "hw073",
+    "word": "hermano",
+    "masked": "_ermano",
+    "answer": "h",
+    "ruleId": "no-h-e-he",
+    "difficulty": 1,
+    "explanation": "Hermano se escribe con h inicial."
+  },
+  {
+    "id": "hw074",
+    "word": "herida",
+    "masked": "_erida",
+    "answer": "h",
+    "ruleId": "no-h-e-he",
+    "difficulty": 2,
+    "explanation": "Herida se escribe con h inicial."
+  },
+  {
+    "id": "hw075",
+    "word": "errar",
+    "masked": "_errar",
+    "answer": " ",
+    "ruleId": "no-h-e-he",
+    "difficulty": 3,
+    "explanation": "Errar se escribe sin h cuando significa equivocarse.",
+    "hint": "equivocarse"
+  },
+  {
+    "id": "hw076",
+    "word": "herrar",
+    "masked": "_errar",
+    "answer": "h",
+    "ruleId": "no-h-e-he",
+    "difficulty": 3,
+    "explanation": "Herrar se escribe con h cuando significa poner herraduras.",
+    "hint": "poner herraduras"
+  },
+  {
+    "id": "hw077",
+    "word": "ay",
+    "masked": "_ay",
+    "answer": " ",
+    "ruleId": "no-h-ay-hay",
+    "difficulty": 1,
+    "explanation": "Ay se escribe sin h cuando expresa dolor o sorpresa.",
+    "hint": "dolor o sorpresa"
+  },
+  {
+    "id": "hw078",
+    "word": "hay",
+    "masked": "_ay",
+    "answer": "h",
+    "ruleId": "no-h-ay-hay",
+    "difficulty": 1,
+    "explanation": "Hay se escribe con h cuando es una forma del verbo haber.",
+    "hint": "haber"
+  },
+  {
+    "id": "hw079",
+    "word": "ayer",
+    "masked": "_ayer",
+    "answer": " ",
+    "ruleId": "no-h-ay-hay",
+    "difficulty": 1,
+    "explanation": "Ayer se escribe sin h inicial."
+  },
+  {
+    "id": "hw080",
+    "word": "hallar",
+    "masked": "_allar",
+    "answer": "h",
+    "ruleId": "no-h-ay-hay",
+    "difficulty": 2,
+    "explanation": "Hallar se escribe con h inicial."
+  },
+  {
+    "id": "hw081",
+    "word": "asta",
+    "masked": "_asta",
+    "answer": " ",
+    "ruleId": "no-h-ay-hay",
+    "difficulty": 3,
+    "explanation": "Asta se escribe sin h cuando significa palo, cuerno o bandera.",
+    "hint": "palo, cuerno o bandera"
+  },
+  {
+    "id": "hw082",
+    "word": "hasta",
+    "masked": "_asta",
+    "answer": "h",
+    "ruleId": "no-h-ay-hay",
+    "difficulty": 3,
+    "explanation": "Hasta se escribe con h cuando es preposición.",
+    "hint": "preposici?n"
+  },
+  {
+    "id": "hw083",
+    "word": "echo",
+    "masked": "_echo",
+    "answer": " ",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 1,
+    "explanation": "Echo se escribe sin h cuando procede del verbo echar.",
+    "hint": "echar"
+  },
+  {
+    "id": "hw084",
+    "word": "hecho",
+    "masked": "_echo",
+    "answer": "h",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 1,
+    "explanation": "Hecho se escribe con h cuando procede del verbo hacer o significa suceso.",
+    "hint": "hacer o suceso"
+  },
+  {
+    "id": "hw085",
+    "word": "echar",
+    "masked": "_echar",
+    "answer": " ",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 1,
+    "explanation": "Echar se escribe sin h."
+  },
+  {
+    "id": "hw086",
+    "word": "hacer",
+    "masked": "_acer",
+    "answer": "h",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 1,
+    "explanation": "Hacer se escribe con h."
+  },
+  {
+    "id": "hw087",
+    "word": "echo",
+    "masked": "_echo",
+    "answer": " ",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 2,
+    "explanation": "Echo sin h puede significar tiro, pongo o expulso.",
+    "hint": "tiro, pongo o expulso"
+  },
+  {
+    "id": "hw088",
+    "word": "hechizo",
+    "masked": "_echizo",
+    "answer": "h",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 3,
+    "explanation": "Hechizo se escribe con h."
+  },
+  {
+    "id": "hw089",
+    "word": "errar",
+    "masked": "_errar",
+    "answer": " ",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 3,
+    "explanation": "Errar se escribe sin h cuando significa equivocarse.",
+    "hint": "equivocarse"
+  },
+  {
+    "id": "hw090",
+    "word": "herrar",
+    "masked": "_errar",
+    "answer": "h",
+    "ruleId": "no-h-echo-hecho",
+    "difficulty": 3,
+    "explanation": "Herrar se escribe con h cuando significa poner herraduras.",
+    "hint": "poner herraduras"
+  }
 ]

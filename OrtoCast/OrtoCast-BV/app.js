@@ -37,7 +37,7 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=visual19").then((response) => response.json()),
+    fetch("data/rules.json?v=visual20").then((response) => response.json()),
     fetch("data/words.json?v=visual19").then((response) => response.json()),
     fetch("data/homophones.json?v=visual18").then((response) => response.json()),
   ]);
@@ -256,7 +256,7 @@ function renderPractice(container, items, mode, isSentence = false) {
 }
 
 function questionTemplate(item, mode, isSentence) {
-  const prompt = isSentence ? item.sentence : item.masked;
+  const prompt = promptForItem(item, isSentence);
   const promptClass = isSentence ? "word-prompt sentence-prompt" : "word-prompt";
   return `
     <article class="question-card" data-mode="${mode}" data-id="${item.id}">
@@ -268,6 +268,11 @@ function questionTemplate(item, mode, isSentence) {
       <div class="feedback" aria-live="polite"></div>
     </article>
   `;
+}
+
+function promptForItem(item, isSentence = false) {
+  if (isSentence) return item.sentence;
+  return item.hint ? `${item.masked} (${item.hint})` : item.masked;
 }
 
 function renderMasked(text, item, isSentence = false) {
@@ -366,12 +371,12 @@ function shouldUseUppercase(text, isSentence) {
 }
 
 function displayLetterForItem(item) {
-  const prompt = item.sentence || item.masked;
+  const prompt = promptForItem(item, Boolean(item.sentence));
   return shouldUseUppercase(prompt, Boolean(item.sentence)) ? item.answer.toUpperCase() : item.answer;
 }
 
 function renderSolvedPrompt(item, isSentence) {
-  const prompt = isSentence ? item.sentence : item.masked;
+  const prompt = promptForItem(item, isSentence);
   const solved = prompt.replace("_", displayLetterForItem(item));
   if (isSentence) {
     return highlightNorm(solved, item.ruleId || "homophones", item.word);
@@ -381,13 +386,23 @@ function renderSolvedPrompt(item, isSentence) {
 
 function highlightRuleText(text, ruleId, letter = "") {
   let html = escapeHtml(text);
-  if (letter) {
+  if (letter && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
-      new RegExp(`\\b${escapedLetter}\\b`, "i"),
+      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
       (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
     );
   }
+  const ruleLetters = {
+    "bv-mb-nv": ["b", "v"],
+  };
+  (ruleLetters[ruleId] || []).forEach((part) => {
+    const escaped = escapeRegExp(escapeHtml(part));
+    html = html.replace(
+      new RegExp(`\\b${escaped}\\b`, "gi"),
+      (match) => `<strong class="rule-letter rule-letter-${match.toLowerCase()}">${match}</strong>`
+    );
+  });
   const replacements = {
     "b-bl-br": ["bl", "br"],
     "b-bu-bur-bus": ["bu-", "bur-", "bus-"],
@@ -395,24 +410,29 @@ function highlightRuleText(text, ruleId, letter = "") {
     "b-bilidad": ["-bilidad"],
     "b-bir": ["-bir"],
     "b-buir": ["-buir"],
-    "b-aba": ["-aba", "-abas", "-ábamos", "-abais", "-aban"],
+    "b-verbos-b": ["beber", "subir", "recibir", "escribir"],
+    "b-aba": ["-ábamos", "-abas", "-abais", "-aban", "-aba", "ir", "íbamos", "iba", "ibas", "iban"],
     "b-bundo": ["-bundo", "-bunda"],
-    "b-ante-consonante": ["b delante de otra consonante"],
-    "bv-mb-nv": ["después de m", "grupo mb", "después de n", "grupo nv"],
+    "b-ante-consonante": ["ob-", "ab-", "sub-"],
+    "bv-mb-nv": ["mb", "nv", "m", "n"],
     "v-eva-eve-evi-evo": ["eva-", "eve-", "evi-", "evo-"],
     "v-vice-villa": ["vice-", "villa-", "villar-"],
     "v-adjetivos": ["-ava", "-ave", "-avo", "-eva", "-eve", "-evo", "-iva", "-ivo"],
     "v-ivoro": ["-ívoro", "-ívora"],
-    "v-andar-estar-tener": ["anduve", "estuve", "tuve", "mantuve"],
+    "v-andar-estar-tener": ["andar", "estar", "tener", "anduve", "estuve", "tuve", "mantuve"],
     "v-adv": ["adv"],
     "v-despues-di": ["di-"],
   };
-  (replacements[ruleId] || []).forEach((part) => {
-    const pattern = part.includes("-")
-      ? new RegExp(escapeRegExp(escapeHtml(part)), "gi")
-      : new RegExp(`\\b${escapeRegExp(escapeHtml(part))}\\b`, "gi");
-    html = html.replace(pattern, (match) => `<strong class="norm-chip">${match}</strong>`);
-  });
+  const parts = replacements[ruleId] || [];
+  if (parts.length) {
+    const alternatives = parts
+      .map((part) => {
+        const escaped = escapeRegExp(escapeHtml(part));
+        return part.includes("-") || /[^\x00-\x7F]/.test(part) ? escaped : `\\b${escaped}\\b`;
+      })
+      .sort((a, b) => b.length - a.length);
+    html = html.replace(new RegExp(alternatives.join("|"), "gi"), (match) => `<strong class="norm-chip">${match}</strong>`);
+  }
   return html;
 }
 

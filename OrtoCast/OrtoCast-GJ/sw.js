@@ -1,9 +1,9 @@
-const CACHE_NAME = "ortocast-gj-v2";
+const CACHE_NAME = "ortocast-gj-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css?v=visual21",
-  "./app.js?v=visual20",
+  "./app.js?v=visual22",
   "./manifest.webmanifest",
   "./data/rules.json?v=visual18",
   "./data/words.json?v=visual18",
