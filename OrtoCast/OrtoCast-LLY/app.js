@@ -400,12 +400,17 @@ function highlightRuleText(text, ruleId, letter = "") {
     "y-plurales": ["-yes"],
     "y-familias": [],
   };
-  (replacements[ruleId] || []).forEach((part) => {
-    const pattern = part.includes("-")
-      ? new RegExp(escapeRegExp(escapeHtml(part)), "gi")
-      : new RegExp(`\\b${escapeRegExp(escapeHtml(part))}\\b`, "gi");
+  const parts = replacements[ruleId] || [];
+  if (parts.length) {
+    const pattern = new RegExp(
+      parts
+        .map((part) => escapeRegExp(escapeHtml(part)))
+        .sort((a, b) => b.length - a.length)
+        .join("|"),
+      "gi"
+    );
     html = html.replace(pattern, (match) => `<strong class="norm-chip">${match}</strong>`);
-  });
+  }
   return html;
 }
 
