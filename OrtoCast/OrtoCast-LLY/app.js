@@ -389,7 +389,7 @@ function highlightRuleText(text, ruleId, letter = "") {
     );
   }
   const replacements = {
-    "ll-illo-illa": ["-illo", "-illa"],
+    "ll-illo-illa": ["-illos", "-illas", "-illo", "-illa"],
     "ll-alle-elle-ello-ella": ["-alle", "-elle", "-ello", "-ella"],
     "ll-verbos-ll": [],
     "ll-familias": [],
