@@ -1,0 +1,8 @@
+[
+  {"id":"ch001","sentence":"La ca_a del jabalí está regulada.","answer":"z","word":"caza","contrast":"casa","explanation":"Caza se escribe con z cuando significa acción de cazar."},
+  {"id":"ch002","sentence":"Vamos a co_er las verduras para la cena.","answer":"c","word":"cocer","contrast":"coser","explanation":"Cocer se escribe con c cuando significa cocinar en agua o al vapor."},
+  {"id":"ch003","sentence":"El número _ien va después del noventa y nueve.","answer":"c","word":"cien","contrast":"sien","explanation":"Cien se escribe con c cuando se refiere al número 100."},
+  {"id":"ch004","sentence":"Llegamos a la _ima de la montaña al mediodía.","answer":"c","word":"cima","contrast":"sima","explanation":"Cima se escribe con c cuando significa parte más alta."},
+  {"id":"ch005","sentence":"Tomó un vaso de _umo de naranja.","answer":"z","word":"zumo","contrast":"sumo","explanation":"Zumo se escribe con z cuando significa jugo de fruta."},
+  {"id":"ch006","sentence":"La letra _eta es la última del abecedario.","answer":"z","word":"zeta","contrast":"seta","explanation":"Zeta se escribe con z cuando nombra la letra."}
+]

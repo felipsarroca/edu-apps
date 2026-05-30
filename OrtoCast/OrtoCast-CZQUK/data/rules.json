@@ -1,0 +1,82 @@
+[
+  {
+    "id": "c-ca-co-cu",
+    "letter": "c",
+    "title": "Sonido /k/ con ca, co y cu",
+    "summary": "Para representar el sonido /k/ ante a, o y u se escribe c: ca, co, cu.",
+    "examples": ["casa", "camino", "copa", "comida", "cuento", "cuna", "cuchara", "cuidado"],
+    "exceptions": []
+  },
+  {
+    "id": "qu-que-qui",
+    "letter": "qu",
+    "title": "Sonido /k/ con que y qui",
+    "summary": "Para representar el sonido /k/ ante e o i se escribe qu: que, qui.",
+    "examples": ["queso", "querer", "pequeño", "quince", "quitar", "equipo", "máquina", "esquina"],
+    "exceptions": []
+  },
+  {
+    "id": "c-ce-ci",
+    "letter": "c",
+    "title": "Sonido de ce y ci",
+    "summary": "Se escriben con c muchas palabras que llevan ce o ci.",
+    "examples": ["cena", "cereza", "cero", "cine", "ciudad", "cielo", "paciencia", "receta"],
+    "exceptions": []
+  },
+  {
+    "id": "z-za-zo-zu",
+    "letter": "z",
+    "title": "Sonido de za, zo y zu",
+    "summary": "Se escriben con z muchas palabras que llevan za, zo o zu.",
+    "examples": ["zapato", "zanahoria", "zorro", "zona", "azúcar", "zumo", "azul", "cazuela"],
+    "exceptions": []
+  },
+  {
+    "id": "z-final-ces",
+    "letter": "z",
+    "title": "Palabras acabadas en -z y plural en -ces",
+    "summary": "Muchas palabras terminan en -z en singular y cambian a -ces en plural: luz > luces, voz > voces.",
+    "examples": ["luz", "luces", "voz", "voces", "pez", "peces", "raíz", "raíces"],
+    "exceptions": []
+  },
+  {
+    "id": "z-azo-aza",
+    "letter": "z",
+    "title": "Terminaciones -azo y -aza",
+    "summary": "Se escriben con z muchas palabras terminadas en -azo y -aza, especialmente aumentativos y golpes.",
+    "examples": ["golazo", "portazo", "codazo", "pelotazo", "manaza", "perrazo", "cochazo", "cabezazo"],
+    "exceptions": []
+  },
+  {
+    "id": "z-ez-eza",
+    "letter": "z",
+    "title": "Terminaciones -ez y -eza",
+    "summary": "Se escriben con z muchos sustantivos abstractos terminados en -ez y -eza.",
+    "examples": ["vejez", "niñez", "madurez", "rapidez", "belleza", "pobreza", "tristeza", "riqueza"],
+    "exceptions": []
+  },
+  {
+    "id": "z-c-verbos-zar",
+    "letter": "z",
+    "title": "Verbos terminados en -zar",
+    "summary": "Los verbos terminados en -zar se escriben con z, pero cambian z por c ante e: empezar > empecé, comenzar > comencé.",
+    "examples": ["empezar", "empecé", "comenzar", "comencé", "cruzar", "crucé", "alcanzar", "alcancé"],
+    "exceptions": []
+  },
+  {
+    "id": "c-cion",
+    "letter": "c",
+    "title": "Terminación -ción",
+    "summary": "Se escriben con c muchas palabras terminadas en -ción.",
+    "examples": ["canción", "oración", "atención", "emoción", "información", "tradición", "situación", "operación"],
+    "exceptions": []
+  },
+  {
+    "id": "k-prestamos",
+    "letter": "k",
+    "title": "Uso de k en préstamos y símbolos",
+    "summary": "La k aparece sobre todo en préstamos, nombres propios, símbolos y palabras con kilo-.",
+    "examples": ["kilo", "kilómetro", "kilogramo", "kiwi", "kárate", "koala", "kiosco", "karaoke"],
+    "exceptions": []
+  }
+]

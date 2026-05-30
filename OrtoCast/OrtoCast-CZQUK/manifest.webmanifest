@@ -1,0 +1,20 @@
+{
+  "name": "OrtoCast C/Z/QU/K",
+  "short_name": "OrtoCast",
+  "description": "Aplicación para estudiar y practicar el uso de C, Z, QU y K en castellano.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#edf1f5",
+  "theme_color": "#236f6b",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
