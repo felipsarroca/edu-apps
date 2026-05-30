@@ -497,7 +497,7 @@
     "ruleId": "no-h-a-ha",
     "difficulty": 1,
     "explanation": "A se escribe sin h cuando es una preposición.",
-    "hint": "preposici?n"
+    "hint": "preposición"
   },
   {
     "id": "hw062",
@@ -544,7 +544,7 @@
     "ruleId": "no-h-a-ha",
     "difficulty": 2,
     "explanation": "Hasta se escribe con h inicial.",
-    "hint": "preposici?n"
+    "hint": "preposición"
   },
   {
     "id": "hw067",
@@ -697,7 +697,7 @@
     "ruleId": "no-h-ay-hay",
     "difficulty": 3,
     "explanation": "Hasta se escribe con h cuando es preposición.",
-    "hint": "preposici?n"
+    "hint": "preposición"
   },
   {
     "id": "hw083",
