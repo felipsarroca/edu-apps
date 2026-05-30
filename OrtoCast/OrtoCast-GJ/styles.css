@@ -428,10 +428,12 @@ select {
 }
 
 .rule-text {
-  max-width: 78ch;
+  max-width: none;
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.5;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .rule-letter {
@@ -488,9 +490,9 @@ select {
 
 .question-card {
   display: grid;
-  gap: 10px;
-  min-height: 184px;
-  padding: 14px;
+  gap: 8px;
+  min-height: 138px;
+  padding: 14px 14px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--paper);
@@ -629,7 +631,7 @@ select {
 }
 
 .feedback {
-  min-height: 50px;
+  min-height: 24px;
   color: var(--muted);
   line-height: 1.42;
 }
