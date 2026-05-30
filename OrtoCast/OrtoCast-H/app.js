@@ -226,19 +226,26 @@ function createRandomSet() {
   const level = currentLevel();
   const candidates = randomCandidatesForLevel(level);
   const chosen = [];
-  const pool = [...candidates];
+  const recentLimit = Math.min(24, Math.max(8, Math.floor(candidates.length * 0.35)));
+  const recentIds = new Set((state.stats.randomHistory.recentIds || []).slice(-recentLimit));
+  let pool = candidates.filter((item) => !recentIds.has(item.id));
+
+  if (pool.length < Math.min(8, candidates.length)) {
+    pool = [...candidates];
+  }
 
   while (chosen.length < 8 && pool.length) {
     pool.sort((a, b) => adaptiveWeight(b, chosen) - adaptiveWeight(a, chosen));
-    const tied = pool.slice(0, 4);
+    const tied = pool.slice(0, Math.min(8, pool.length));
     const pick = tied[Math.floor(Math.random() * tied.length)];
     chosen.push(pick);
     pool.splice(pool.findIndex((item) => item.id === pick.id), 1);
   }
 
   state.randomItems = chosen;
+  rememberRandomSelection(chosen);
   const exceptionCount = chosen.filter((item) => item.exception).length;
-  els.adaptiveNote.textContent = `La tanda se ha generado con nivel estimado ${level.label.toLowerCase()} y confianza ${Math.round(level.confidence * 100)} %. La selección prioriza la ganancia de información y añade más excepciones cuando sube el nivel. Excepciones en esta tanda: ${exceptionCount}.`;
+  els.adaptiveNote.textContent = `La tanda se ha generado con nivel estimado ${level.label.toLowerCase()} y confianza ${Math.round(level.confidence * 100)} %. La selección evita repetir palabras recientes, prioriza la ganancia de información y añade más excepciones cuando sube el nivel. Excepciones en esta tanda: ${exceptionCount}.`;
   renderPractice(els.randomPractice, state.randomItems, "random");
 }
 
@@ -513,11 +520,16 @@ function updateAttempt(item, isCorrect, mode) {
 function adaptiveWeight(item, alreadyChosen = []) {
   const belief = getBelief(item.ruleId);
   const level = currentLevel();
+  const history = state.stats.randomHistory || { recentIds: [], seenCounts: {} };
   const infoGain = expectedInformationGain(belief, item);
   const repeatedConceptPenalty = alreadyChosen.filter((chosen) => chosen.ruleId === item.ruleId).length * 0.08;
   const mistakeBoost = state.stats.recentMistakes[item.id] || 0;
   const exceptionBoost = item.exception ? exceptionBoostForLevel(level) : 0;
-  return infoGain + mistakeBoost + exceptionBoost - repeatedConceptPenalty + Math.random() * 0.03;
+  const seenCount = history.seenCounts[item.id] || 0;
+  const recentIndex = history.recentIds.lastIndexOf(item.id);
+  const recencyPenalty = recentIndex === -1 ? 0 : ((recentIndex + 1) / Math.max(1, history.recentIds.length)) * 0.45;
+  const exposurePenalty = Math.min(seenCount, 8) * 0.07;
+  return infoGain + mistakeBoost + exceptionBoost - repeatedConceptPenalty - recencyPenalty - exposurePenalty + Math.random() * 0.16;
 }
 
 function currentLevel() {
@@ -587,6 +599,9 @@ function ensureRuleStats() {
   }
   if (!state.stats.beliefs.global) state.stats.beliefs.global = [1 / 3, 1 / 3, 1 / 3];
   if (!state.stats.beliefs.homophones) state.stats.beliefs.homophones = [1 / 3, 1 / 3, 1 / 3];
+  if (!state.stats.randomHistory) state.stats.randomHistory = { recentIds: [], seenCounts: {} };
+  if (!Array.isArray(state.stats.randomHistory.recentIds)) state.stats.randomHistory.recentIds = [];
+  if (!state.stats.randomHistory.seenCounts) state.stats.randomHistory.seenCounts = {};
 }
 
 function loadStats() {
@@ -601,6 +616,7 @@ function loadStats() {
     errors: {},
     errorItems: {},
     recentMistakes: {},
+    randomHistory: { recentIds: [], seenCounts: {} },
   };
   try {
     return { ...fallback, ...JSON.parse(localStorage.getItem("ortocast-h-stats")) };
@@ -627,6 +643,17 @@ function randomCandidatesForLevel(level) {
   if (level.label === "Inicial") return ordinary.concat(mistakenExceptions);
   if (level.label === "Intermedio") return ordinary.concat(sample(exceptions, 10), mistakenExceptions);
   return ordinary.concat(exceptions);
+}
+
+function rememberRandomSelection(items) {
+  const history = state.stats.randomHistory;
+  const maxRecent = Math.min(60, Math.max(24, state.words.length));
+  items.forEach((item) => {
+    history.seenCounts[item.id] = (history.seenCounts[item.id] || 0) + 1;
+    history.recentIds.push(item.id);
+  });
+  history.recentIds = history.recentIds.slice(-maxRecent);
+  saveStats();
 }
 
 function exceptionBoostForLevel(level) {
