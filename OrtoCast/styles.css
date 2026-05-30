@@ -56,11 +56,16 @@ a {
 }
 
 .menu-logo {
-  width: clamp(110px, 19.2vw, 178px);
-  height: clamp(110px, 19.2vw, 178px);
+  width: clamp(72px, 10.2vw, 106px);
+  height: clamp(72px, 10.2vw, 106px);
   border: 5px solid #fff;
-  border-radius: 22px;
+  border-radius: 18px;
   box-shadow: 0 18px 38px rgba(24, 82, 79, 0.22);
+}
+
+.menu-copy {
+  display: grid;
+  align-content: center;
 }
 
 .eyebrow {
@@ -75,15 +80,8 @@ a {
 h1 {
   margin: 0;
   color: var(--accent-dark);
-  font-size: clamp(2.7rem, 8.1vw, 5.85rem);
+  font-size: clamp(2.16rem, 6.48vw, 4.68rem);
   line-height: 1.1;
-}
-
-.menu-lead {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: clamp(0.95rem, 1.8vw, 1.19rem);
-  line-height: 1.4;
 }
 
 .module-grid {
@@ -146,7 +144,7 @@ h1 {
 
 .module-card strong {
   color: var(--accent-dark);
-  font-size: clamp(1.8rem, 4.5vw, 2.79rem);
+  font-size: clamp(1.44rem, 3.6vw, 2.23rem);
   line-height: 1;
 }
 
@@ -236,9 +234,9 @@ a:focus-visible {
   }
 
   .menu-logo {
-    width: 103px;
-    height: 103px;
-    border-radius: 18px;
+    width: 72px;
+    height: 72px;
+    border-radius: 15px;
   }
 
   .module-grid {
