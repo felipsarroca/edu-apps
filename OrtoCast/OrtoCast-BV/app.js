@@ -12,8 +12,6 @@ const state = {
 };
 
 const els = {
-  courseMenu: document.querySelector("#courseMenu"),
-  moduleStatus: document.querySelector("#moduleStatus"),
   backToMenu: document.querySelector("#backToMenu"),
   totalHits: document.querySelector("#totalHits"),
   totalMisses: document.querySelector("#totalMisses"),
@@ -49,7 +47,6 @@ async function init() {
   state.homophones = homophones;
   ensureRuleStats();
   bindEvents();
-  restoreRoute();
   renderRuleSelect();
   renderStudy();
   createGuidedSet();
@@ -60,16 +57,6 @@ async function init() {
 }
 
 function bindEvents() {
-  document.querySelectorAll(".module-card").forEach((button) => {
-    button.addEventListener("click", () => {
-      if (button.dataset.module === "bv") {
-        openBvModule();
-        return;
-      }
-      els.moduleStatus.textContent = `El apartado ${button.querySelector("strong").textContent} todavía no está disponible. Ya queda preparado en el menú.`;
-    });
-  });
-
   els.backToMenu.addEventListener("click", showCourseMenu);
 
   document.querySelectorAll(".tab-button").forEach((button) => {
@@ -124,31 +111,8 @@ function bindEvents() {
   });
 }
 
-function restoreRoute() {
-  if (isEmbedMode() || window.location.hash.toLowerCase() === "#bv") {
-    openBvModule(false);
-  }
-}
-
-function openBvModule(updateHash = true) {
-  document.body.classList.remove("menu-mode");
-  if (updateHash) window.history.replaceState(null, "", "#bv");
-  document.querySelector(".app-header").scrollIntoView({ block: "start" });
-}
-
 function showCourseMenu() {
-  if (isEmbedMode() && window.parent !== window) {
-    window.parent.postMessage({ type: "ortocast:navigate-menu" }, "*");
-    return;
-  }
-  document.body.classList.add("menu-mode");
-  window.history.replaceState(null, "", window.location.pathname + window.location.search);
-  els.moduleStatus.textContent = "El apartado B / V ya se puede abrir.";
-  els.courseMenu.scrollIntoView({ block: "start" });
-}
-
-function isEmbedMode() {
-  return new URLSearchParams(window.location.search).get("embed") === "1";
+  window.location.href = "../";
 }
 
 function setupInstallSupport() {

@@ -1,9 +1,9 @@
-const CACHE_NAME = "ortocast-bv-v19";
+const CACHE_NAME = "ortocast-bv-v20";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=visual19",
-  "./app.js?v=visual19",
+  "./styles.css?v=visual20",
+  "./app.js?v=visual20",
   "./manifest.webmanifest",
   "./data/rules.json?v=visual18",
   "./data/words.json?v=visual18",
