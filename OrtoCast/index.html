@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#236f6b">
+    <meta name="description" content="OrtoCast, aplicación para estudiar y practicar ortografía castellana.">
+    <link rel="icon" href="OrtoCast-BV/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="OrtoCast-BV/favicon.svg">
+    <title>OrtoCast</title>
+    <link rel="stylesheet" href="styles.css?v=1">
+  </head>
+  <body>
+    <main id="menuView" class="course-menu" aria-labelledby="menuTitle">
+      <section class="menu-hero">
+        <img class="menu-logo" src="OrtoCast-BV/favicon.svg" alt="OrtoCast">
+        <div class="menu-copy">
+          <p class="eyebrow">Ortografía castellana</p>
+          <h1 id="menuTitle">OrtoCast</h1>
+          <p class="menu-lead">Elige el apartado que quieres practicar.</p>
+        </div>
+      </section>
+
+      <section class="module-grid" aria-label="Apartados de OrtoCast">
+        <a class="module-card is-ready" href="#BV" data-module="BV">
+          <span class="module-kicker">Disponible</span>
+          <strong>B / V</strong>
+          <span>Estudio, práctica adaptativa y repaso de errores.</span>
+        </a>
+        <button class="module-card" type="button" data-module="GJ">
+          <span class="module-kicker">Próximamente</span>
+          <strong>G / J</strong>
+          <span>Preparado para añadir actividades.</span>
+        </button>
+        <button class="module-card" type="button" data-module="H">
+          <span class="module-kicker">Próximamente</span>
+          <strong>H</strong>
+          <span>Normas y palabras con hache.</span>
+        </button>
+        <button class="module-card" type="button" data-module="LLY">
+          <span class="module-kicker">Próximamente</span>
+          <strong>LL / Y</strong>
+          <span>Contrastes y confusiones habituales.</span>
+        </button>
+        <button class="module-card" type="button" data-module="GUG">
+          <span class="module-kicker">Próximamente</span>
+          <strong>GU / G</strong>
+          <span>Sonidos suaves y uso de la diéresis.</span>
+        </button>
+      </section>
+
+      <p id="moduleStatus" class="module-status" aria-live="polite">El apartado B / V ya se puede abrir.</p>
+    </main>
+
+    <section id="moduleView" class="module-view" aria-label="Módulo B / V" hidden>
+      <iframe id="moduleFrame" title="OrtoCast B / V" src="about:blank"></iframe>
+    </section>
+
+    <footer class="felip-app-footer">
+      <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image" src="OrtoCast-BV/assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA">
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+      </div>
+    </footer>
+
+    <script src="app.js?v=1" type="module"></script>
+  </body>
+</html>

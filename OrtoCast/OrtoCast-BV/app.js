@@ -125,7 +125,7 @@ function bindEvents() {
 }
 
 function restoreRoute() {
-  if (window.location.hash === "#bv") {
+  if (isEmbedMode() || window.location.hash.toLowerCase() === "#bv") {
     openBvModule(false);
   }
 }
@@ -137,10 +137,18 @@ function openBvModule(updateHash = true) {
 }
 
 function showCourseMenu() {
+  if (isEmbedMode() && window.parent !== window) {
+    window.parent.postMessage({ type: "ortocast:navigate-menu" }, "*");
+    return;
+  }
   document.body.classList.add("menu-mode");
   window.history.replaceState(null, "", window.location.pathname + window.location.search);
   els.moduleStatus.textContent = "El apartado B / V ya se puede abrir.";
   els.courseMenu.scrollIntoView({ block: "start" });
+}
+
+function isEmbedMode() {
+  return new URLSearchParams(window.location.search).get("embed") === "1";
 }
 
 function setupInstallSupport() {
