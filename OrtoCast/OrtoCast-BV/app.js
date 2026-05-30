@@ -37,8 +37,8 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=visual18").then((response) => response.json()),
-    fetch("data/words.json?v=visual18").then((response) => response.json()),
+    fetch("data/rules.json?v=visual19").then((response) => response.json()),
+    fetch("data/words.json?v=visual19").then((response) => response.json()),
     fetch("data/homophones.json?v=visual18").then((response) => response.json()),
   ]);
 
@@ -398,6 +398,7 @@ function highlightRuleText(text, ruleId, letter = "") {
     "b-aba": ["-aba", "-abas", "-ábamos", "-abais", "-aban"],
     "b-bundo": ["-bundo", "-bunda"],
     "b-ante-consonante": ["b delante de otra consonante"],
+    "bv-mb-nv": ["después de m", "grupo mb", "después de n", "grupo nv"],
     "v-eva-eve-evi-evo": ["eva-", "eve-", "evi-", "evo-"],
     "v-vice-villa": ["vice-", "villa-", "villar-"],
     "v-adjetivos": ["-ava", "-ave", "-avo", "-eva", "-eve", "-evo", "-iva", "-ivo"],
@@ -435,6 +436,7 @@ function highlightNorm(text, ruleId, targetWord = "") {
     "b-aba": /(aba|abas|ábamos|abais|aban)$/i,
     "b-bundo": /(bundo|bunda)$/i,
     "b-ante-consonante": /b(?=[bcdfghjklmnñpqrstvwxyz])/gi,
+    "bv-mb-nv": /(mb|nv)/gi,
     "v-eva-eve-evi-evo": /^(eva|eve|evi|evo|éba)/i,
     "v-vice-villa": /^(vice|villa|villar|vir)/i,
     "v-adjetivos": /(ava|ave|avo|eva|eve|evo|iva|ivo|abe|aba)$/i,

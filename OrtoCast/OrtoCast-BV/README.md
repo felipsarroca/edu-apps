@@ -66,7 +66,7 @@ Archivos PWA incluidos:
 - Repaso de errores con palabras falladas anteriormente.
 - Homófonos contextualizados.
 - Registro de aciertos, errores y errores frecuentes.
-- Banco ampliado de datos: más de 230 palabras y más de 35 frases de homófonos.
+- Banco ampliado de datos: 18 normas, más de 250 palabras y más de 35 frases de homófonos.
 
 ## Estructura del proyecto
 

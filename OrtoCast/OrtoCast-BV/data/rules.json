@@ -80,6 +80,14 @@
     "exceptions": []
   },
   {
+    "id": "bv-mb-nv",
+    "letter": "b/v",
+    "title": "Grupos mb y nv",
+    "summary": "Dentro de una palabra, después de m se escribe b (grupo mb) y después de n se escribe v (grupo nv). No hay excepciones ortográficas en el español estándar.",
+    "examples": ["también", "cambio", "sombra", "hambre", "ambiente", "enviar", "invierno", "conversar", "tranvía", "convivir"],
+    "exceptions": []
+  },
+  {
     "id": "v-eva-eve-evi-evo",
     "letter": "v",
     "title": "Palabras que empiezan por eva-, eve-, evi- y evo-",
