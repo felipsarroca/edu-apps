@@ -260,8 +260,6 @@ a:focus-visible {
   }
 
   .menu-hero {
-    grid-template-columns: 1fr;
-    justify-items: start;
     padding: 18px;
   }
 
