@@ -164,31 +164,6 @@ h1 {
   font-weight: 750;
 }
 
-.module-view {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  background: var(--soft);
-}
-
-.module-view iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: var(--soft);
-}
-
-body.module-open {
-  padding-bottom: 0;
-  overflow: hidden;
-}
-
-body.module-open .course-menu,
-body.module-open .felip-app-footer {
-  display: none;
-}
-
 .felip-app-footer {
   position: fixed;
   right: 0;
