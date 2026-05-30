@@ -37,7 +37,7 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=visual18").then((response) => response.json()),
+    fetch("data/rules.json?v=visual19").then((response) => response.json()),
     fetch("data/words.json?v=visual18").then((response) => response.json()),
     fetch("data/homophones.json?v=visual18").then((response) => response.json()),
   ]);
@@ -397,17 +397,21 @@ function highlightRuleText(text, ruleId, letter = "") {
     "h-verbos": ["haber", "hacer", "hablar", "habitar", "hallar"],
     "h-interjecciones": ["ah", "oh", "eh", "bah"],
     "h-familias": [],
-    "no-h-a-ha": ["a", "ha"],
-    "no-h-e-he": ["e", "he"],
-    "no-h-ay-hay": ["ay", "hay"],
-    "no-h-echo-hecho": ["echo", "hecho"],
+    "no-h-a-ha": ["a", "ha", "h"],
+    "no-h-e-he": ["e", "he", "h"],
+    "no-h-ay-hay": ["ay", "hay", "h"],
+    "no-h-echo-hecho": ["echo", "hecho", "h"],
   };
-  (replacements[ruleId] || []).forEach((part) => {
-    const pattern = part.includes("-")
-      ? new RegExp(escapeRegExp(escapeHtml(part)), "gi")
-      : new RegExp(`\\b${escapeRegExp(escapeHtml(part))}\\b`, "gi");
-    html = html.replace(pattern, (match) => `<strong class="norm-chip">${match}</strong>`);
-  });
+  const parts = replacements[ruleId] || [];
+  if (parts.length) {
+    const alternatives = parts
+      .map((part) => {
+        const escaped = escapeRegExp(escapeHtml(part));
+        return part.includes("-") ? escaped : `\\b${escaped}\\b`;
+      })
+      .sort((a, b) => b.length - a.length);
+    html = html.replace(new RegExp(alternatives.join("|"), "gi"), (match) => `<strong class="norm-chip">${match}</strong>`);
+  }
   return html;
 }
 

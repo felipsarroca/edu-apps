@@ -1,11 +1,11 @@
-const CACHE_NAME = "ortocast-h-v1";
+const CACHE_NAME = "ortocast-h-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css?v=visual21",
-  "./app.js?v=visual20",
+  "./app.js?v=visual22",
   "./manifest.webmanifest",
-  "./data/rules.json?v=visual18",
+  "./data/rules.json?v=visual19",
   "./data/words.json?v=visual18",
   "./data/homophones.json?v=visual18",
   "./assets/CC_BY-NC-SA.png",
