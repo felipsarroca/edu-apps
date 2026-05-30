@@ -1,0 +1,138 @@
+[
+  {
+    "id": "b-bl-br",
+    "letter": "b",
+    "title": "Palabras con bl y br",
+    "summary": "Se escriben con b las palabras que contienen los grupos bl y br.",
+    "examples": ["blanco", "blusa", "bloque", "noble", "brisa", "brazo", "abrigo", "brillar", "bronce", "bruma"],
+    "exceptions": []
+  },
+  {
+    "id": "b-bu-bur-bus",
+    "letter": "b",
+    "title": "Palabras que empiezan por bu-, bur- y bus-",
+    "summary": "Normalmente se escriben con b las palabras que comienzan por bu-, bur- y bus-.",
+    "examples": ["bueno", "bucear", "bufanda", "burla", "burbuja", "buscar", "busto", "buitre", "burlón"],
+    "exceptions": ["vudú", "vulgar", "vulva", "vulnerable", "Vulcano"]
+  },
+  {
+    "id": "b-bio-biblio-bi",
+    "letter": "b",
+    "title": "Prefijos bio-, biblio- y bi-",
+    "summary": "Se escriben con b las palabras con bio- cuando significa vida, biblio- cuando se relaciona con libros y bi- cuando significa dos.",
+    "examples": ["biología", "biodiversidad", "biomasa", "biblioteca", "bibliografía", "bilingüe", "bicicleta", "binomio", "bicolor", "biografía"],
+    "exceptions": []
+  },
+  {
+    "id": "b-bilidad",
+    "letter": "b",
+    "title": "Terminación -bilidad",
+    "summary": "Las palabras terminadas en -bilidad se escriben con b.",
+    "examples": ["amabilidad", "responsabilidad", "estabilidad", "contabilidad", "habilidad", "posibilidad", "sensibilidad", "visibilidad"],
+    "exceptions": ["movilidad", "civilidad"]
+  },
+  {
+    "id": "b-bir",
+    "letter": "b",
+    "title": "Verbos terminados en -bir",
+    "summary": "Los verbos terminados en -bir se escriben con b.",
+    "examples": ["escribir", "recibir", "describir", "percibir", "prohibir", "inscribir", "transcribir"],
+    "exceptions": ["vivir", "servir", "hervir", "convivir", "sobrevivir", "revivir"]
+  },
+  {
+    "id": "b-buir",
+    "letter": "b",
+    "title": "Verbos terminados en -buir",
+    "summary": "Los verbos terminados en -buir se escriben con b.",
+    "examples": ["atribuir", "contribuir", "distribuir", "retribuir", "imbuir", "redistribuir", "atribuimos"],
+    "exceptions": []
+  },
+  {
+    "id": "b-verbos-b",
+    "letter": "b",
+    "title": "Formas derivadas de verbos con b",
+    "summary": "Las formas de un verbo conservan la b de su familia léxica: beber, subir, recibir, escribir...",
+    "examples": ["bebía", "bebemos", "beberán", "subió", "subimos", "subían", "recibimos", "escribía", "bebieron"],
+    "exceptions": []
+  },
+  {
+    "id": "b-aba",
+    "letter": "b",
+    "title": "Pretérito imperfecto de los verbos en -ar",
+    "summary": "Las terminaciones -aba, -abas, -ábamos, -abais y -aban se escriben con b. También se escribe con b el imperfecto del verbo ir: iba, ibas, íbamos, iban.",
+    "examples": ["cantaba", "estudiaba", "trabajábamos", "jugaban", "iba", "íbamos", "miraba", "saltaban", "dibujabais"],
+    "exceptions": []
+  },
+  {
+    "id": "b-bundo",
+    "letter": "b",
+    "title": "Terminaciones -bundo y -bunda",
+    "summary": "Las palabras terminadas en -bundo y -bunda se escriben con b.",
+    "examples": ["vagabundo", "moribundo", "furibundo", "nauseabundo", "meditabundo", "errabundo", "tremebunda", "moribunda"],
+    "exceptions": []
+  },
+  {
+    "id": "b-ante-consonante",
+    "letter": "b",
+    "title": "B delante de consonante",
+    "summary": "Se escribe b delante de otra consonante, como en ob-, ab-, sub- y otros grupos.",
+    "examples": ["absoluto", "obtener", "objeto", "obstrucción", "submarino", "obstáculo", "absorber", "subrayar", "abdicar", "obvio"],
+    "exceptions": []
+  },
+  {
+    "id": "v-eva-eve-evi-evo",
+    "letter": "v",
+    "title": "Palabras que empiezan por eva-, eve-, evi- y evo-",
+    "summary": "Se escriben con v muchas palabras que comienzan por eva-, eve-, evi- y evo-.",
+    "examples": ["evaluar", "evasión", "evento", "evidencia", "evitar", "evolución", "evocar", "evaporar", "eventual"],
+    "exceptions": ["ébano"]
+  },
+  {
+    "id": "v-vice-villa",
+    "letter": "v",
+    "title": "Prefijos vice-, villa- y villar-",
+    "summary": "Se escriben con v las palabras que empiezan por vice-, villa- y villar-. También virrey se escribe con v.",
+    "examples": ["vicepresidente", "vicerrector", "virrey", "villa", "villano", "Villarreal", "viceversa", "vicecónsul", "villancico"],
+    "exceptions": []
+  },
+  {
+    "id": "v-adjetivos",
+    "letter": "v",
+    "title": "Adjetivos acabados en -ava, -ave, -avo, -eva, -eve, -evo, -iva e -ivo",
+    "summary": "Muchos adjetivos con esas terminaciones se escriben con v.",
+    "examples": ["octava", "suave", "esclavo", "nueva", "breve", "longevo", "activa", "creativo"],
+    "exceptions": ["árabe", "sílaba"]
+  },
+  {
+    "id": "v-ivoro",
+    "letter": "v",
+    "title": "Terminaciones -ívoro e -ívora",
+    "summary": "Las palabras terminadas en -ívoro e -ívora se escriben con v.",
+    "examples": ["herbívoro", "carnívoro", "insectívoro", "granívora", "omnívoro", "frugívoro", "piscívora"],
+    "exceptions": ["víbora"]
+  },
+  {
+    "id": "v-andar-estar-tener",
+    "letter": "v",
+    "title": "Formas de andar, estar y tener",
+    "summary": "El pretérito perfecto simple de andar, estar y tener, y sus derivados, se escribe con v: anduve, estuve, tuve, mantuve...",
+    "examples": ["anduve", "anduviste", "anduvieron", "estuve", "estuvieron", "tuve", "tuvieron", "mantuve", "obtuve", "detuve"],
+    "exceptions": []
+  },
+  {
+    "id": "v-adv",
+    "letter": "v",
+    "title": "Grupo adv",
+    "summary": "Las palabras con el grupo adv se escriben con v.",
+    "examples": ["advertir", "advertencia", "adversario", "adverbio", "adversidad", "adviento", "advenedizo", "advertido"],
+    "exceptions": []
+  },
+  {
+    "id": "v-despues-di",
+    "letter": "v",
+    "title": "Después de di-",
+    "summary": "Muchas palabras que empiezan por di- seguido del sonido /b/ se escriben con v.",
+    "examples": ["dividir", "divino", "diversión", "divulgar", "divorcio", "divisa", "divagar"],
+    "exceptions": ["dibujo", "dibujar", "dibujante"]
+  }
+]
