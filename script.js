@@ -119,13 +119,20 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
 
-        // Llengua catalana
+        // Llengües catalana i castellana
         {
             name: "Ara és l'hora",
             path: 'LesHores/',
-            category: 'Llengua catalana',
+            category: 'Llengües catalana i castellana',
             description: "Aprèn a llegir un rellotge analògic i a expressar l'hora correctament en català de manera gamificada",
             icon: 'LesHores/favicon.svg'
+        },
+        {
+            name: "OrtoCast",
+            path: 'http://ja.cat/ortocast',
+            category: 'Llengües catalana i castellana',
+            description: "Aplicació instal·lable per treballar l'ortografia castellana.",
+            icon: 'OrtoCast/favicon.svg'
         },
 
         // Economia i Emprenedoria
