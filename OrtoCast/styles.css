@@ -269,6 +269,10 @@ a:focus-visible {
     border-radius: 15px;
   }
 
+  h1 {
+    font-size: 3rem;
+  }
+
   .module-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 9px;
