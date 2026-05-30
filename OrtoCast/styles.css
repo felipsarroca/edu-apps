@@ -91,16 +91,18 @@ h1 {
 }
 
 .module-card {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   min-height: 204px;
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.9);
   color: var(--ink);
-  text-align: left;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0 14px 32px rgba(23, 32, 42, 0.07);
@@ -182,12 +184,6 @@ h1 {
 
 .module-card[href*="CZQUK"] strong {
   font-size: clamp(1.15rem, 2.8vw, 1.7rem);
-}
-
-.module-card span:last-child {
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.35;
 }
 
 .module-status {
