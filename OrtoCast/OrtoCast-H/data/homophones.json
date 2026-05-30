@@ -1,0 +1,20 @@
+[
+  {"id":"hh001","sentence":"Voy _a clase a las nueve.","answer":" ","word":"a","contrast":"ha","explanation":"A se escribe sin h cuando es preposición."},
+  {"id":"hh002","sentence":"Mi hermana _a terminado el dibujo.","answer":"h","word":"ha","contrast":"a","explanation":"Ha se escribe con h porque es una forma del verbo haber."},
+  {"id":"hh003","sentence":"Padre _e hijo llegaron juntos.","answer":" ","word":"e","contrast":"he","explanation":"E se escribe sin h cuando une palabras."},
+  {"id":"hh004","sentence":"_e visto una película interesante.","answer":"h","word":"he","contrast":"e","explanation":"He se escribe con h porque es una forma del verbo haber."},
+  {"id":"hh005","sentence":"_ay, me he pinchado con la aguja.","answer":" ","word":"ay","contrast":"hay","explanation":"Ay se escribe sin h cuando expresa dolor o sorpresa."},
+  {"id":"hh006","sentence":"_ay tres libros sobre la mesa.","answer":"h","word":"hay","contrast":"ay","explanation":"Hay se escribe con h porque es una forma del verbo haber."},
+  {"id":"hh007","sentence":"Siempre _echo sal al final.","answer":" ","word":"echo","contrast":"hecho","explanation":"Echo se escribe sin h cuando procede del verbo echar."},
+  {"id":"hh008","sentence":"El trabajo está _echo a mano.","answer":"h","word":"hecho","contrast":"echo","explanation":"Hecho se escribe con h cuando procede del verbo hacer."},
+  {"id":"hh009","sentence":"El toro tenía un _asta larga.","answer":" ","word":"asta","contrast":"hasta","explanation":"Asta se escribe sin h cuando significa cuerno, palo o bandera."},
+  {"id":"hh010","sentence":"Caminamos _asta la estación.","answer":"h","word":"hasta","contrast":"asta","explanation":"Hasta se escribe con h cuando es preposición."},
+  {"id":"hh011","sentence":"No debes _errar en el cálculo.","answer":" ","word":"errar","contrast":"herrar","explanation":"Errar se escribe sin h cuando significa equivocarse."},
+  {"id":"hh012","sentence":"El herrero va a _errar al caballo.","answer":"h","word":"herrar","contrast":"errar","explanation":"Herrar se escribe con h cuando significa poner herraduras."},
+  {"id":"hh013","sentence":"El _ala del ave estaba herida.","answer":" ","word":"ala","contrast":"hala","explanation":"Ala se escribe sin h cuando nombra la extremidad de un ave o una parte lateral."},
+  {"id":"hh014","sentence":"_ala, recoge ya tus cosas.","answer":"h","word":"hala","contrast":"ala","explanation":"Hala se escribe con h cuando es una interjección."},
+  {"id":"hh015","sentence":"La _onda del río era peligrosa.","answer":"h","word":"honda","contrast":"onda","explanation":"Honda se escribe con h cuando significa profunda."},
+  {"id":"hh016","sentence":"La _onda sonora llegó muy lejos.","answer":" ","word":"onda","contrast":"honda","explanation":"Onda se escribe sin h cuando significa ondulación o vibración."},
+  {"id":"hh017","sentence":"Llegamos a la _ora exacta.","answer":"h","word":"hora","contrast":"ora","explanation":"Hora se escribe con h cuando se refiere al tiempo."},
+  {"id":"hh018","sentence":"El monje _ora en silencio.","answer":" ","word":"ora","contrast":"hora","explanation":"Ora se escribe sin h cuando es una forma del verbo orar."}
+]
