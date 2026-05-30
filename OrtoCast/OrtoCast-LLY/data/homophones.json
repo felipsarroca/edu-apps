@@ -1,0 +1,20 @@
+[
+  {"id":"lh001","sentence":"Espero que ha_a suficiente comida para todos.","answer":"y","word":"haya","contrast":"halla","explanation":"Haya se escribe con y cuando es una forma del verbo haber o nombra un árbol."},
+  {"id":"lh002","sentence":"El detective ha_a la pista en el jardín.","answer":"ll","word":"halla","contrast":"haya","explanation":"Halla se escribe con ll cuando es una forma del verbo hallar, que significa encontrar."},
+  {"id":"lh003","sentence":"Quizá va_a mañana al museo.","answer":"y","word":"vaya","contrast":"valla","explanation":"Vaya se escribe con y cuando es una forma del verbo ir."},
+  {"id":"lh004","sentence":"La va_a rodea el patio del colegio.","answer":"ll","word":"valla","contrast":"vaya","explanation":"Valla se escribe con ll cuando significa cerca, cartel u obstáculo."},
+  {"id":"lh005","sentence":"El niño ca_ó al suelo sin hacerse daño.","answer":"y","word":"cayó","contrast":"calló","explanation":"Cayó se escribe con y porque es una forma del verbo caer."},
+  {"id":"lh006","sentence":"La clase se ca_ó al empezar el examen.","answer":"ll","word":"calló","contrast":"cayó","explanation":"Calló se escribe con ll porque es una forma del verbo callar."},
+  {"id":"lh007","sentence":"Voy a ra_ar queso para la pasta.","answer":"ll","word":"rallar","contrast":"rayar","explanation":"Rallar se escribe con ll cuando significa desmenuzar algo con un rallador."},
+  {"id":"lh008","sentence":"No debes ra_ar la mesa con el compás.","answer":"y","word":"rayar","contrast":"rallar","explanation":"Rayar se escribe con y cuando significa hacer rayas o líneas."},
+  {"id":"lh009","sentence":"El po_o cruzó el corral detrás de la gallina.","answer":"ll","word":"pollo","contrast":"poyo","explanation":"Pollo se escribe con ll cuando se refiere al animal joven de la gallina o a su carne."},
+  {"id":"lh010","sentence":"Se sentó en el po_o de piedra de la entrada.","answer":"y","word":"poyo","contrast":"pollo","explanation":"Poyo se escribe con y cuando significa banco de piedra u obra junto a una pared."},
+  {"id":"lh011","sentence":"El arro_o llevaba agua después de la tormenta.","answer":"y","word":"arroyo","contrast":"arrollo","explanation":"Arroyo se escribe con y cuando significa corriente pequeña de agua."},
+  {"id":"lh012","sentence":"Si no freno, arro_o las cajas con el carro.","answer":"ll","word":"arrollo","contrast":"arroyo","explanation":"Arrollo se escribe con ll porque es una forma del verbo arrollar."},
+  {"id":"lh013","sentence":"La ho_a del camino estaba llena de barro.","answer":"y","word":"hoya","contrast":"olla","explanation":"Hoya se escribe con y cuando significa depresión o concavidad del terreno."},
+  {"id":"lh014","sentence":"La o_a estaba sobre el fuego.","answer":"ll","word":"olla","contrast":"hoya","explanation":"Olla se escribe con ll cuando significa recipiente para cocinar."},
+  {"id":"lh015","sentence":"Mi madre me le_ó un cuento antes de dormir.","answer":"y","word":"leyó","contrast":"lelló","explanation":"Leyó se escribe con y porque es una forma del verbo leer."},
+  {"id":"lh016","sentence":"El atleta llegó a la ra_a de meta agotado.","answer":"y","word":"raya","contrast":"ralla","explanation":"Raya se escribe con y cuando significa línea."},
+  {"id":"lh017","sentence":"Mi hermana ra_a pan duro para las croquetas.","answer":"ll","word":"ralla","contrast":"raya","explanation":"Ralla se escribe con ll porque es una forma del verbo rallar."},
+  {"id":"lh018","sentence":"El pastor apoyó el ca_ado en la pared.","answer":"y","word":"cayado","contrast":"callado","explanation":"Cayado se escribe con y cuando significa bastón o palo de pastor."}
+]

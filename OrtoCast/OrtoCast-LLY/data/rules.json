@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ll-illo-illa",
+    "letter": "ll",
+    "title": "Terminaciones -illo e -illa",
+    "summary": "Se escriben con ll muchas palabras terminadas en -illo, -illa, -illos e -illas.",
+    "examples": ["anillo", "castillo", "bolsillo", "pasillo", "silla", "semilla", "orilla", "vajilla"],
+    "exceptions": []
+  },
+  {
+    "id": "ll-alle-elle-ello-ella",
+    "letter": "ll",
+    "title": "Terminaciones -alle, -elle, -ello y -ella",
+    "summary": "Se escriben con ll muchas palabras terminadas en -alle, -elle, -ello y -ella.",
+    "examples": ["calle", "valle", "muelle", "sello", "cabello", "estrella", "botella", "huella"],
+    "exceptions": ["plebeyo"]
+  },
+  {
+    "id": "ll-verbos-ll",
+    "letter": "ll",
+    "title": "Verbos con ll en su infinitivo",
+    "summary": "Las formas de los verbos que llevan ll en el infinitivo conservan la ll: llamar, llenar, llevar, hallar...",
+    "examples": ["llamo", "llenas", "llevaba", "hallaron", "calló", "brillaba", "sellamos", "detalló"],
+    "exceptions": []
+  },
+  {
+    "id": "ll-familias",
+    "letter": "ll",
+    "title": "Familias léxicas con ll",
+    "summary": "Muchas palabras conservan la ll de su familia léxica: lluvia, llave, calle, caballo, cabello, botella...",
+    "examples": ["lluvioso", "llavero", "callejero", "caballito", "cabellera", "botellín", "estrellado", "rollito"],
+    "exceptions": []
+  },
+  {
+    "id": "ll-inicial",
+    "letter": "ll",
+    "title": "Palabras que empiezan por ll",
+    "summary": "Se escriben con ll muchas palabras que empiezan por ese sonido: llave, lluvia, llanto, llegar, llevar...",
+    "examples": ["llave", "lluvia", "llanto", "llegar", "llevar", "lleno", "llama", "llanura"],
+    "exceptions": []
+  },
+  {
+    "id": "y-final",
+    "letter": "y",
+    "title": "Y al final de palabra",
+    "summary": "Se escribe y al final de palabra cuando suena como vocal i y forma parte de un diptongo o triptongo.",
+    "examples": ["rey", "ley", "hoy", "muy", "soy", "estoy", "doy", "buey"],
+    "exceptions": ["fui"]
+  },
+  {
+    "id": "y-yer-yec",
+    "letter": "y",
+    "title": "Palabras con yer- y yec-",
+    "summary": "Se escriben con y muchas palabras que empiezan por yer- o contienen la secuencia yec-.",
+    "examples": ["yerba", "yerno", "yermo", "yerto", "proyecto", "trayecto", "inyección", "proyectil"],
+    "exceptions": ["llermo"]
+  },
+  {
+    "id": "y-verbos",
+    "letter": "y",
+    "title": "Formas verbales con y",
+    "summary": "Se escriben con y algunas formas verbales de caer, leer, oír, creer, huir y otros verbos cuando aparece ese sonido entre vocales.",
+    "examples": ["cayó", "cayeron", "leyó", "leyeron", "oyó", "oyeron", "huyó", "huyeron"],
+    "exceptions": []
+  },
+  {
+    "id": "y-plurales",
+    "letter": "y",
+    "title": "Plurales de palabras acabadas en y",
+    "summary": "Los plurales de muchas palabras acabadas en y conservan la y: rey > reyes, ley > leyes, buey > bueyes.",
+    "examples": ["reyes", "leyes", "bueyes", "virreyes", "convoyes", "jerseys"],
+    "exceptions": []
+  },
+  {
+    "id": "y-familias",
+    "letter": "y",
+    "title": "Familias léxicas con y",
+    "summary": "Muchas palabras conservan la y de su familia léxica: rayo, playa, joya, apoyo, ensayo, proyecto...",
+    "examples": ["rayito", "playero", "joyero", "apoyar", "ensayar", "proyectar", "ayudante", "mayorista"],
+    "exceptions": []
+  }
+]
