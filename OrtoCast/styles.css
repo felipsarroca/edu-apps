@@ -92,8 +92,9 @@ h1 {
 
 .module-card {
   display: grid;
+  grid-template-rows: auto 1fr auto;
   gap: 10px;
-  min-height: 188px;
+  min-height: 204px;
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -111,6 +112,37 @@ h1 {
   border-color: #9ab7b3;
   transform: translateY(-2px);
   box-shadow: 0 18px 38px rgba(23, 32, 42, 0.1);
+}
+
+.card-install-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.card-install-btn:hover,
+.card-install-btn:focus-visible {
+  background: var(--accent);
+  color: #fff;
+  outline: none;
+}
+
+.install-icon {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
 }
 
 .module-card.is-ready {
@@ -146,6 +178,10 @@ h1 {
   color: var(--accent-dark);
   font-size: clamp(1.44rem, 3.6vw, 2.23rem);
   line-height: 1;
+}
+
+.module-card[href*="CZQUK"] strong {
+  font-size: clamp(1.15rem, 2.8vw, 1.7rem);
 }
 
 .module-card span:last-child {
@@ -245,7 +281,7 @@ a:focus-visible {
   }
 
   .module-card {
-    min-height: 134px;
+    min-height: 156px;
     padding: 15px;
   }
 

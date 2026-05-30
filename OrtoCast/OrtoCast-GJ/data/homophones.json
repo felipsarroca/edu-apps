@@ -12,7 +12,7 @@
   {"id":"gh011","sentence":"No dejes que el problema te a_enice la tarde.","answer":"j","word":"ajenice","contrast":"agenice","explanation":"Ajenice se escribe con j porque pertenece a la familia de ajeno y ajenizar."},
   {"id":"gh012","sentence":"La empresa necesita que alguien a_encie los viajes.","answer":"g","word":"agencie","contrast":"ajencie","explanation":"Agencie se escribe con g porque procede del verbo agenciar."},
   {"id":"gh013","sentence":"El guía pidió que el grupo _irara a la derecha.","answer":"g","word":"girara","contrast":"jirara","explanation":"Girara se escribe con g porque pertenece a la familia de girar."},
-  {"id":"gh014","sentence":"Si alguien _ira en el campo, comparte una comida al aire libre.","answer":"j","word":"jira","contrast":"gira","explanation":"Jira se escribe con j en el uso poco frecuente de merienda o excursión campestre."},
+  {"id":"gh014","sentence":"Ir de _ira al campo significa compartir una comida al aire libre.","answer":"j","word":"jira","contrast":"gira","explanation":"Jira se escribe con j en el uso poco frecuente de merienda o excursión campestre."},
   {"id":"gh015","sentence":"La atleta se a_itó antes de la salida.","answer":"g","word":"agitó","contrast":"ajito","explanation":"Agitó se escribe con g porque es una forma del verbo agitar."},
   {"id":"gh016","sentence":"El a_ito picado dio aroma al aceite.","answer":"j","word":"ajito","contrast":"agito","explanation":"Ajito se escribe con j porque deriva de ajo."}
 ]

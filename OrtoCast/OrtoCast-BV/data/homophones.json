@@ -19,7 +19,7 @@
   {"id":"h018","sentence":"Ese documento es _álido hasta junio.","answer":"v","word":"válido","contrast":"balido","explanation":"Válido se escribe con v cuando significa que algo tiene valor o eficacia."},
   {"id":"h019","sentence":"El niño aprendió a usar el _arón de madera.","answer":"b","word":"barón","contrast":"varón","explanation":"Barón se escribe con b cuando es un título nobiliario."},
   {"id":"h020","sentence":"En la encuesta participó un _arón adulto.","answer":"v","word":"varón","contrast":"barón","explanation":"Varón se escribe con v cuando significa persona de sexo masculino."},
-  {"id":"h021","sentence":"La _aya rodeaba el jardín de la escuela.","answer":"v","word":"valla","contrast":"baya","explanation":"Valla se escribe con v cuando significa cerca o cartel publicitario."},
+  {"id":"h021","sentence":"La _alla rodeaba el jardín de la escuela.","answer":"v","word":"valla","contrast":"baya","explanation":"Valla se escribe con v cuando significa cerca o cartel publicitario."},
   {"id":"h022","sentence":"La _aya roja era comestible.","answer":"b","word":"baya","contrast":"valla","explanation":"Baya se escribe con b cuando significa fruto pequeño y carnoso."},
   {"id":"h023","sentence":"El _aso estaba lleno de agua.","answer":"v","word":"vaso","contrast":"baso","explanation":"Vaso se escribe con v cuando significa recipiente para beber."},
   {"id":"h024","sentence":"Me _aso en los datos para opinar.","answer":"b","word":"baso","contrast":"vaso","explanation":"Baso se escribe con b porque es una forma del verbo basar."},

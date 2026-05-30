@@ -116,6 +116,13 @@ function showCourseMenu() {
 }
 
 function setupInstallSupport() {
+  const urlParams = new URLSearchParams(window.location.search);
+  let shouldAutoInstall = urlParams.has("install");
+  if (shouldAutoInstall) {
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("sw.js").catch(() => {});
@@ -126,6 +133,15 @@ function setupInstallSupport() {
     event.preventDefault();
     deferredInstallPrompt = event;
     els.installApp.hidden = false;
+
+    if (shouldAutoInstall) {
+      shouldAutoInstall = false;
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(() => {
+        deferredInstallPrompt = null;
+        els.installApp.hidden = true;
+      });
+    }
   });
 
   window.addEventListener("appinstalled", () => {
