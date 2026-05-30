@@ -384,6 +384,13 @@ function renderSolvedPrompt(item, isSentence) {
   return highlightNorm(solved, item.ruleId);
 }
 
+function formatRuleTextMatch(match) {
+  if (Array.from(match).length === 1) {
+    return `<strong class="rule-letter rule-letter-${match.toLowerCase()}">${match}</strong>`;
+  }
+  return `<strong class="norm-chip">${match}</strong>`;
+}
+
 function highlightRuleText(text, ruleId, letter = "") {
   let html = escapeHtml(text);
   if (letter && !letter.includes("/")) {
@@ -431,7 +438,7 @@ function highlightRuleText(text, ruleId, letter = "") {
         return part.includes("-") || /[^\x00-\x7F]/.test(part) ? escaped : `\\b${escaped}\\b`;
       })
       .sort((a, b) => b.length - a.length);
-    html = html.replace(new RegExp(alternatives.join("|"), "gi"), (match) => `<strong class="norm-chip">${match}</strong>`);
+    html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
   }
   return html;
 }
