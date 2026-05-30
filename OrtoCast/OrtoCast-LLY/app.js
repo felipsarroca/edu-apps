@@ -37,7 +37,7 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=visual18").then((response) => response.json()),
+    fetch("data/rules.json?v=visual19").then((response) => response.json()),
     fetch("data/words.json?v=visual18").then((response) => response.json()),
     fetch("data/homophones.json?v=visual18").then((response) => response.json()),
   ]);
@@ -391,14 +391,14 @@ function highlightRuleText(text, ruleId, letter = "") {
   const replacements = {
     "ll-illo-illa": ["-illo", "-illa"],
     "ll-alle-elle-ello-ella": ["-alle", "-elle", "-ello", "-ella"],
-    "ll-verbos-ll": ["ll"],
-    "ll-familias": ["ll"],
-    "ll-inicial": ["ll"],
+    "ll-verbos-ll": [],
+    "ll-familias": [],
+    "ll-inicial": [],
     "y-final": ["y al final"],
     "y-yer-yec": ["yer-", "yec-"],
     "y-verbos": ["cayó", "leyó", "oyó", "huyó"],
     "y-plurales": ["-yes"],
-    "y-familias": ["y"],
+    "y-familias": [],
   };
   (replacements[ruleId] || []).forEach((part) => {
     const pattern = part.includes("-")
