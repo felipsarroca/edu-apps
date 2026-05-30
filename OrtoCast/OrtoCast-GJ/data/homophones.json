@@ -1,0 +1,18 @@
+[
+  {"id":"gh001","sentence":"La banda inició una _ira por varias ciudades.","answer":"g","word":"gira","contrast":"jira","explanation":"Gira se escribe con g cuando significa viaje o serie de actuaciones."},
+  {"id":"gh002","sentence":"Prepararon una _ira campestre con comida y juegos.","answer":"j","word":"jira","contrast":"gira","explanation":"Jira se escribe con j cuando significa merienda o excursión campestre; es una palabra poco frecuente."},
+  {"id":"gh003","sentence":"Debes in_erir el medicamento con agua.","answer":"g","word":"ingerir","contrast":"injerir","explanation":"Ingerir se escribe con g cuando significa introducir alimentos, bebidas o medicinas en el cuerpo."},
+  {"id":"gh004","sentence":"No conviene in_erir en decisiones ajenas.","answer":"j","word":"injerir","contrast":"ingerir","explanation":"Injerir se escribe con j cuando significa entrometerse o intervenir en un asunto."},
+  {"id":"gh005","sentence":"El vecino es un ve_ete simpático y hablador.","answer":"j","word":"vejete","contrast":"vegete","explanation":"Vejete se escribe con j cuando se usa para referirse coloquialmente a una persona mayor."},
+  {"id":"gh006","sentence":"Aunque ve_ete en ese macetero, la planta no crecerá bien.","answer":"g","word":"vegete","contrast":"vejete","explanation":"Vegete se escribe con g porque es una forma del verbo vegetar."},
+  {"id":"gh007","sentence":"El profesor explicó la letra _e en la pizarra.","answer":"g","word":"ge","contrast":"je","explanation":"Ge se escribe con g cuando nombra la letra g."},
+  {"id":"gh008","sentence":"El cómic usaba _e para marcar la risa.","answer":"j","word":"je","contrast":"ge","explanation":"Je se escribe con j cuando representa una interjección o una risa."},
+  {"id":"gh009","sentence":"Si a_ito la botella, se mezclará mejor.","answer":"g","word":"agito","contrast":"ajito","explanation":"Agito se escribe con g porque es una forma del verbo agitar."},
+  {"id":"gh010","sentence":"El cocinero añadió un a_ito al sofrito.","answer":"j","word":"ajito","contrast":"agito","explanation":"Ajito se escribe con j porque es el diminutivo de ajo."},
+  {"id":"gh011","sentence":"No dejes que el problema te a_enice la tarde.","answer":"j","word":"ajenice","contrast":"agenice","explanation":"Ajenice se escribe con j porque pertenece a la familia de ajeno y ajenizar."},
+  {"id":"gh012","sentence":"La empresa necesita que alguien a_encie los viajes.","answer":"g","word":"agencie","contrast":"ajencie","explanation":"Agencie se escribe con g porque procede del verbo agenciar."},
+  {"id":"gh013","sentence":"El guía pidió que el grupo _irara a la derecha.","answer":"g","word":"girara","contrast":"jirara","explanation":"Girara se escribe con g porque pertenece a la familia de girar."},
+  {"id":"gh014","sentence":"Si alguien _ira en el campo, comparte una comida al aire libre.","answer":"j","word":"jira","contrast":"gira","explanation":"Jira se escribe con j en el uso poco frecuente de merienda o excursión campestre."},
+  {"id":"gh015","sentence":"La atleta se a_itó antes de la salida.","answer":"g","word":"agitó","contrast":"ajito","explanation":"Agitó se escribe con g porque es una forma del verbo agitar."},
+  {"id":"gh016","sentence":"El a_ito picado dio aroma al aceite.","answer":"j","word":"ajito","contrast":"agito","explanation":"Ajito se escribe con j porque deriva de ajo."}
+]

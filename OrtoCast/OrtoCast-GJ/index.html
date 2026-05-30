@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#236f6b">
+    <meta name="description" content="Aplicación para estudiar y practicar el uso de la G y la J en castellano.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="OrtoCast">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <title>OrtoCast</title>
+    <link rel="stylesheet" href="styles.css?v=visual20">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-block">
+        <a class="app-icon-link" href="../" aria-label="Volver al menú de OrtoCast">
+          <img class="app-icon" src="favicon.svg" alt="" aria-hidden="true">
+        </a>
+        <div>
+          <p class="eyebrow">Ortografía castellana</p>
+          <h1>OrtoCast - <span class="title-gj">G / J</span></h1>
+        </div>
+      </div>
+      <div class="score-strip" aria-live="polite">
+        <span>Aciertos: <strong id="totalHits">0</strong></span>
+        <span>Errores: <strong id="totalMisses">0</strong></span>
+        <span>Nivel: <strong id="levelLabel">Inicial</strong></span>
+        <button id="backToMenu" class="secondary-button menu-return-button" type="button">Menú</button>
+        <button id="installApp" class="install-button" type="button" hidden>Instalar app</button>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Secciones de la aplicación">
+      <button class="tab-button is-active" type="button" data-view="study">Estudiar</button>
+      <button class="tab-button" type="button" data-view="guided">Practicar normas</button>
+      <button class="tab-button" type="button" data-view="random">Práctica aleatoria</button>
+      <button class="tab-button" type="button" data-view="review">Repaso de errores</button>
+      <button class="tab-button" type="button" data-view="homophones">Homófonos</button>
+      <button class="tab-button" type="button" data-view="progress">Progreso</button>
+    </nav>
+
+    <main>
+      <section id="study" class="view is-active" aria-labelledby="studyTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Paso 1</p>
+            <h2 id="studyTitle">Estudio guiado</h2>
+          </div>
+          <div class="section-actions">
+            <button id="prevRule" class="secondary-button" type="button">Anterior</button>
+            <button id="nextRule" class="primary-button" type="button">Siguiente</button>
+          </div>
+        </div>
+        <article id="ruleCard" class="rule-panel"></article>
+      </section>
+
+      <section id="guided" class="view" aria-labelledby="guidedTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Paso 2</p>
+            <h2 id="guidedTitle">Práctica por norma</h2>
+          </div>
+          <label class="select-label">
+            Norma
+            <select id="ruleSelect"></select>
+          </label>
+        </div>
+        <div id="guidedPractice" class="practice-grid"></div>
+        <div class="correction-bar">
+          <button id="checkGuided" class="primary-button" type="button">Corregir</button>
+          <button id="newGuided" class="secondary-button" type="button">Nuevas palabras</button>
+          <button id="nextGuidedRule" class="secondary-button" type="button">Siguiente norma</button>
+        </div>
+      </section>
+
+      <section id="random" class="view" aria-labelledby="randomTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Paso 3</p>
+            <h2 id="randomTitle">Práctica aleatoria adaptativa</h2>
+          </div>
+          <div class="section-actions">
+            <button id="resetSession" class="secondary-button" type="button">Reiniciar sesión</button>
+            <button id="newRandom" class="primary-button" type="button">Nueva tanda</button>
+          </div>
+        </div>
+        <div class="adaptive-note" id="adaptiveNote"></div>
+        <div id="randomPractice" class="practice-grid"></div>
+        <div class="correction-bar">
+          <button id="checkRandom" class="primary-button" type="button">Corregir</button>
+        </div>
+      </section>
+
+      <section id="review" class="view" aria-labelledby="reviewTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Refuerzo</p>
+            <h2 id="reviewTitle">Repaso de errores</h2>
+          </div>
+          <button id="newReview" class="primary-button" type="button">Nueva tanda</button>
+        </div>
+        <div class="adaptive-note" id="reviewNote"></div>
+        <div id="reviewPractice" class="practice-grid"></div>
+        <div class="correction-bar">
+          <button id="checkReview" class="primary-button" type="button">Corregir</button>
+        </div>
+      </section>
+
+      <section id="homophones" class="view" aria-labelledby="homophonesTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Paso 4</p>
+            <h2 id="homophonesTitle">Homófonos por contexto</h2>
+          </div>
+          <button id="newHomophones" class="primary-button" type="button">Nuevas frases</button>
+        </div>
+        <div id="homophonePractice" class="practice-grid"></div>
+        <div class="correction-bar">
+          <button id="checkHomophones" class="primary-button" type="button">Corregir</button>
+        </div>
+      </section>
+
+      <section id="progress" class="view" aria-labelledby="progressTitle">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Seguimiento</p>
+            <h2 id="progressTitle">Progreso y errores frecuentes</h2>
+          </div>
+          <button id="clearProgress" class="danger-button" type="button">Borrar progreso</button>
+        </div>
+        <div id="progressPanel" class="progress-panel"></div>
+      </section>
+    </main>
+
+    <footer class="felip-app-footer">
+      <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image" src="assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA">
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+      </div>
+    </footer>
+
+    <script src="app.js?v=visual20" type="module"></script>
+  </body>
+</html>

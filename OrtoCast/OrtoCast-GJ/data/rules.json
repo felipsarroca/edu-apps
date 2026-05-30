@@ -1,0 +1,98 @@
+[
+  {
+    "id": "g-geo-gen-gest",
+    "letter": "g",
+    "title": "Palabras que empiezan por geo-, gen- y gest-",
+    "summary": "Se escriben con g muchas palabras que empiezan por geo-, gen- y gest-, aunque hay excepciones frecuentes que conviene memorizar.",
+    "examples": ["geografía", "geometría", "generoso", "general", "gente", "genial", "gesto", "gestionar", "gestación"],
+    "exceptions": ["jengibre", "ajeno", "ajenjo", "berenjena"]
+  },
+  {
+    "id": "g-gia-gio-gion",
+    "letter": "g",
+    "title": "Terminaciones -gia, -gio, -gión y -gional",
+    "summary": "Se escriben con g muchas palabras terminadas en -gia, -gio, -gión y -gional.",
+    "examples": ["magia", "energía", "colegio", "prestigio", "región", "religión", "regional"],
+    "exceptions": ["bujía", "lejía", "herejía"]
+  },
+  {
+    "id": "g-ger-gir",
+    "letter": "g",
+    "title": "Verbos terminados en -ger y -gir",
+    "summary": "Los verbos terminados en -ger y -gir se escriben con g, salvo algunas excepciones como tejer y crujir.",
+    "examples": ["recoger", "proteger", "escoger", "dirigir", "exigir", "corregir", "surgir"],
+    "exceptions": ["tejer", "crujir"]
+  },
+  {
+    "id": "g-gente-gencia",
+    "letter": "g",
+    "title": "Terminaciones -gente y -gencia",
+    "summary": "Las palabras terminadas en -gente y -gencia suelen escribirse con g.",
+    "examples": ["urgente", "exigente", "inteligente", "vigente", "agencia", "urgencia", "inteligencia"],
+    "exceptions": []
+  },
+  {
+    "id": "g-logia",
+    "letter": "g",
+    "title": "Palabras terminadas en -logía",
+    "summary": "Las palabras terminadas en -logía se escriben con g.",
+    "examples": ["biología", "geología", "psicología", "tecnología", "ecología", "mitología", "sociología"],
+    "exceptions": []
+  },
+  {
+    "id": "g-gue-gui",
+    "letter": "g",
+    "title": "Sonido suave con gue, gui, güe y güi",
+    "summary": "Para representar el sonido suave de g ante e o i se escribe gue o gui; si la u suena, se escribe güe o güi.",
+    "examples": ["guerra", "guitarra", "guerrero", "guía", "vergüenza", "pingüino", "lingüística"],
+    "exceptions": []
+  },
+  {
+    "id": "j-aje-eje",
+    "letter": "j",
+    "title": "Terminaciones -aje y -eje",
+    "summary": "Se escriben con j muchas palabras terminadas en -aje y -eje.",
+    "examples": ["viaje", "paisaje", "equipaje", "mensaje", "aprendizaje", "garaje", "eje"],
+    "exceptions": ["ambages"]
+  },
+  {
+    "id": "j-jero-jera-jeria",
+    "letter": "j",
+    "title": "Terminaciones -jero, -jera y -jería",
+    "summary": "Se escriben con j las palabras terminadas en -jero, -jera y -jería.",
+    "examples": ["viajero", "extranjero", "consejera", "relojero", "cerrajero", "mensajería", "relojería"],
+    "exceptions": ["ligero"]
+  },
+  {
+    "id": "j-jar-jear",
+    "letter": "j",
+    "title": "Verbos terminados en -jar y -jear",
+    "summary": "Los verbos terminados en -jar y -jear se escriben con j.",
+    "examples": ["trabajar", "viajar", "dibujar", "aconsejar", "hojear", "callejear", "canjear"],
+    "exceptions": []
+  },
+  {
+    "id": "j-ja-jo-ju",
+    "letter": "j",
+    "title": "Sonido fuerte ante a, o, u",
+    "summary": "El sonido fuerte de la jota ante a, o y u se escribe normalmente con j: ja, jo, ju.",
+    "examples": ["jamón", "jardín", "joven", "juego", "jueves", "jurado", "justicia"],
+    "exceptions": []
+  },
+  {
+    "id": "j-preteritos",
+    "letter": "j",
+    "title": "Pretéritos con j",
+    "summary": "Algunas formas del pretérito perfecto simple de verbos como decir, traer y los terminados en -ducir se escriben con j.",
+    "examples": ["dije", "dijeron", "traje", "trajeron", "conduje", "produjeron", "tradujiste"],
+    "exceptions": []
+  },
+  {
+    "id": "j-final",
+    "letter": "j",
+    "title": "Familias con j conservada",
+    "summary": "Muchas palabras conservan la j de su familia léxica: caja, hoja, ojo, bajo, consejo...",
+    "examples": ["cajero", "hojita", "ojera", "bajito", "consejero", "rojizo", "tejido"],
+    "exceptions": []
+  }
+]
