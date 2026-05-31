@@ -19,7 +19,7 @@
     "id": "b-bio-biblio-bi",
     "letter": "b",
     "title": "Prefijos bio-, biblio- y bi-",
-    "summary": "Se escriben con b las palabras con bio- cuando significa vida, biblio- cuando se relaciona con libros y bi- cuando significa dos.",
+    "summary": "Se escriben con b las palabras con bio- cuando significa «vida», biblio- cuando se relaciona con «libros» y bi- cuando significa «dos».",
     "examples": ["biología", "biodiversidad", "biomasa", "biblioteca", "bibliografía", "bilingüe", "bicicleta", "binomio", "bicolor", "biografía"],
     "exceptions": []
   },
@@ -51,7 +51,7 @@
     "id": "b-verbos-b",
     "letter": "b",
     "title": "Formas derivadas de verbos con b",
-    "summary": "Las formas de un verbo conservan la b de su familia léxica: beber, subir, recibir, escribir...",
+    "summary": "Las formas de un verbo conservan la b de su familia léxica: «beber», «subir», «recibir», «escribir»...",
     "examples": ["bebía", "bebemos", "beberán", "subió", "subimos", "subían", "recibimos", "escribía", "bebieron"],
     "exceptions": []
   },
@@ -59,7 +59,7 @@
     "id": "b-aba",
     "letter": "b",
     "title": "Pretérito imperfecto de los verbos en -ar",
-    "summary": "Las terminaciones -aba, -abas, -ábamos, -abais y -aban se escriben con b. También se escribe con b el imperfecto del verbo ir: iba, ibas, íbamos, iban.",
+    "summary": "Las terminaciones -aba, -abas, -ábamos, -abais y -aban se escriben con b. También se escribe con b el imperfecto del verbo «ir»: «iba», «ibas», «íbamos», «iban».",
     "examples": ["cantaba", "estudiaba", "trabajábamos", "jugaban", "iba", "íbamos", "miraba", "saltaban", "dibujabais"],
     "exceptions": []
   },
@@ -123,7 +123,7 @@
     "id": "v-andar-estar-tener",
     "letter": "v",
     "title": "Formas de andar, estar y tener",
-    "summary": "El pretérito perfecto simple de andar, estar y tener, y sus derivados, se escribe con v: anduve, estuve, tuve, mantuve...",
+    "summary": "El pretérito perfecto simple de los verbos «andar», «estar» y «tener», y sus derivados, se escribe con v: «anduve», «estuve», «tuve», «mantuve»...",
     "examples": ["anduve", "anduviste", "anduvieron", "estuve", "estuvieron", "tuve", "tuvieron", "mantuve", "obtuve", "detuve"],
     "exceptions": []
   },

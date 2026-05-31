@@ -414,8 +414,23 @@ function formatRuleTextMatch(match) {
   return `<strong class="norm-chip">${match}</strong>`;
 }
 
+function protectMetaWords(html) {
+  const protectedWords = [];
+  const text = html.replace(/«([^»]+)»/g, (_, word) => {
+    const token = `%%META${protectedWords.length}%%`;
+    protectedWords.push({ token, html: `<strong class="meta-word">«${word}»</strong>` });
+    return token;
+  });
+  return { text, protectedWords };
+}
+
+function restoreMetaWords(html, protectedWords) {
+  return protectedWords.reduce((current, item) => current.replace(item.token, item.html), html);
+}
+
 function highlightRuleText(text, ruleId, letter = "") {
-  let html = escapeHtml(text);
+  const meta = protectMetaWords(escapeHtml(text));
+  let html = meta.text;
   if (letter && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
@@ -447,7 +462,7 @@ function highlightRuleText(text, ruleId, letter = "") {
       .sort((a, b) => b.length - a.length);
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
   }
-  return html;
+  return restoreMetaWords(html, meta.protectedWords);
 }
 
 function highlightNorm(text, ruleId, targetWord = "") {

@@ -27,7 +27,7 @@
     "id": "h-verbos",
     "letter": "h",
     "title": "Verbos frecuentes con h",
-    "summary": "Conservan la h las formas de verbos como haber, hacer, hablar, habitar y hallar.",
+    "summary": "Conservan la h las formas de verbos como «haber», «hacer», «hablar», «habitar» y «hallar».",
     "examples": ["había", "hay", "hice", "hacemos", "hablaron", "habitas", "hallé", "hallaron"],
     "exceptions": []
   },
@@ -35,7 +35,7 @@
     "id": "h-interjecciones",
     "letter": "h",
     "title": "Interjecciones con h",
-    "summary": "Algunas interjecciones se escriben con h: ah, eh, oh, bah, hola...",
+    "summary": "Algunas interjecciones se escriben con h: «ah», «eh», «oh», «bah», «hola»...",
     "examples": ["ah", "eh", "oh", "bah", "hola", "hala", "hurra", "huy"],
     "exceptions": []
   },
@@ -43,7 +43,7 @@
     "id": "h-familias",
     "letter": "h",
     "title": "Familias léxicas con h",
-    "summary": "Muchas palabras conservan la h de su familia léxica: hora, historia, honor, hospital, horror, herencia...",
+    "summary": "Muchas palabras conservan la h de su familia léxica: «hora», «historia», «honor», «hospital», «horror», «herencia»...",
     "examples": ["horario", "histórico", "honrado", "hospitalario", "horroroso", "heredero", "hormiguero", "hogareño"],
     "exceptions": []
   },
@@ -51,7 +51,7 @@
     "id": "no-h-a-ha",
     "letter": " ",
     "title": "A sin h frente a ha",
-    "summary": "Se escribe a sin h cuando es preposición; ha lleva h cuando es una forma del verbo haber.",
+    "summary": "Se escribe «a» sin h cuando es preposición; «ha» lleva h cuando es una forma del verbo «haber».",
     "examples": ["a clase", "a casa", "a tiempo", "ha venido", "ha terminado", "ha sido"],
     "exceptions": []
   },
@@ -59,7 +59,7 @@
     "id": "no-h-e-he",
     "letter": " ",
     "title": "E sin h frente a he",
-    "summary": "Se escribe e sin h cuando une palabras; he lleva h cuando es una forma del verbo haber.",
+    "summary": "Se escribe «e» sin h cuando une palabras; «he» lleva h cuando es una forma del verbo «haber».",
     "examples": ["padre e hijo", "lengua e historia", "he visto", "he dicho", "he leído"],
     "exceptions": []
   },
@@ -67,7 +67,7 @@
     "id": "no-h-ay-hay",
     "letter": " ",
     "title": "Ay sin h frente a hay",
-    "summary": "Se escribe ay sin h cuando expresa dolor o sorpresa; hay lleva h cuando es una forma del verbo haber.",
+    "summary": "Se escribe «ay» sin h cuando expresa dolor o sorpresa; «hay» lleva h cuando es una forma del verbo «haber».",
     "examples": ["ay de mí", "ay, qué susto", "hay pan", "hay tiempo", "hay muchas dudas"],
     "exceptions": []
   },
@@ -75,7 +75,7 @@
     "id": "no-h-echo-hecho",
     "letter": " ",
     "title": "Echo sin h frente a hecho",
-    "summary": "Se escribe echo sin h cuando procede del verbo echar; hecho lleva h cuando procede del verbo hacer o significa suceso.",
+    "summary": "Se escribe «echo» sin h cuando procede del verbo «echar»; «hecho» lleva h cuando procede del verbo «hacer» o significa «suceso».",
     "examples": ["echo sal", "echo la carta", "hecho importante", "hecho a mano", "hecho el trabajo"],
     "exceptions": []
   }

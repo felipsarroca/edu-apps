@@ -459,6 +459,11 @@ select {
   font-weight: 900;
 }
 
+.meta-word {
+  color: var(--ink);
+  font-weight: 900;
+}
+
 .examples {
   display: flex;
   flex-wrap: wrap;

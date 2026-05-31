@@ -3,7 +3,7 @@
     "id": "c-ca-co-cu",
     "letter": "c",
     "title": "Sonido /k/ con ca, co y cu",
-    "summary": "Para representar el sonido /k/ ante a, o y u se escribe c: ca, co, cu.",
+    "summary": "Para representar el sonido /k/ ante «a», «o» y «u» se escribe c: ca, co, cu.",
     "examples": ["casa", "camino", "copa", "comida", "cuento", "cuna", "cuchara", "cuidado"],
     "exceptions": []
   },
@@ -11,7 +11,7 @@
     "id": "qu-que-qui",
     "letter": "qu",
     "title": "Sonido /k/ con que y qui",
-    "summary": "Para representar el sonido /k/ ante e o i se escribe qu: que, qui.",
+    "summary": "Para representar el sonido /k/ ante «e» o «i» se escribe qu: que, qui.",
     "examples": ["queso", "querer", "pequeño", "quince", "quitar", "equipo", "máquina", "esquina"],
     "exceptions": []
   },
@@ -35,7 +35,7 @@
     "id": "z-final-ces",
     "letter": "z",
     "title": "Palabras acabadas en -z y plural en -ces",
-    "summary": "Muchas palabras terminan en -z en singular y cambian a -ces en plural: luz > luces, voz > voces.",
+    "summary": "Muchas palabras terminan en -z en singular y cambian a -ces en plural: «luz» > «luces», «voz» > «voces».",
     "examples": ["luz", "luces", "voz", "voces", "pez", "peces", "raíz", "raíces"],
     "exceptions": []
   },
@@ -59,7 +59,7 @@
     "id": "z-c-verbos-zar",
     "letter": "z",
     "title": "Verbos terminados en -zar",
-    "summary": "Los verbos terminados en -zar se escriben con z, pero cambian z por c ante e: empezar > empecé, comenzar > comencé.",
+    "summary": "Los verbos terminados en -zar se escriben con z, pero cambian z por c ante «e»: «empezar» > «empecé», «comenzar» > «comencé».",
     "examples": ["empezar", "empecé", "comenzar", "comencé", "cruzar", "crucé", "alcanzar", "alcancé"],
     "exceptions": []
   },
@@ -75,7 +75,7 @@
     "id": "k-prestamos",
     "letter": "k",
     "title": "Uso de k en préstamos y símbolos",
-    "summary": "La k aparece sobre todo en préstamos, nombres propios, símbolos y palabras con kilo-.",
+    "summary": "La k aparece sobre todo en préstamos, nombres propios, símbolos y palabras con «kilo-».",
     "examples": ["kilo", "kilómetro", "kilogramo", "kiwi", "kárate", "koala", "kiosco", "karaoke"],
     "exceptions": []
   }

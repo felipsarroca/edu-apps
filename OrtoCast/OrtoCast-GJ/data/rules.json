@@ -19,7 +19,7 @@
     "id": "g-ger-gir",
     "letter": "g",
     "title": "Verbos terminados en -ger y -gir",
-    "summary": "Los verbos terminados en -ger y -gir se escriben con g, salvo algunas excepciones como tejer y crujir.",
+    "summary": "Los verbos terminados en -ger y -gir se escriben con g, salvo algunas excepciones como «tejer» y «crujir».",
     "examples": ["recoger", "proteger", "escoger", "dirigir", "exigir", "corregir", "surgir"],
     "exceptions": ["tejer", "crujir"]
   },
@@ -43,7 +43,7 @@
     "id": "g-gue-gui",
     "letter": "g",
     "title": "Sonido suave con gue, gui, güe y güi",
-    "summary": "Para representar el sonido suave de g ante e o i se escribe gue o gui; si la u suena, se escribe güe o güi.",
+    "summary": "Para representar el sonido suave de g ante «e» o «i» se escribe gue o gui; si la «u» suena, se escribe güe o güi.",
     "examples": ["guerra", "guitarra", "guerrero", "guía", "vergüenza", "pingüino", "lingüística"],
     "exceptions": []
   },
@@ -75,7 +75,7 @@
     "id": "j-ja-jo-ju",
     "letter": "j",
     "title": "Sonido fuerte ante a, o, u",
-    "summary": "El sonido fuerte de la jota ante a, o y u se escribe normalmente con j: ja, jo, ju.",
+    "summary": "El sonido fuerte de la «jota» ante «a», «o» y «u» se escribe normalmente con j: ja, jo, ju.",
     "examples": ["jamón", "jardín", "joven", "juego", "jueves", "jurado", "justicia"],
     "exceptions": []
   },
@@ -83,7 +83,7 @@
     "id": "j-preteritos",
     "letter": "j",
     "title": "Pretéritos con j",
-    "summary": "Algunas formas del pretérito perfecto simple de verbos como decir, traer y los terminados en -ducir se escriben con j.",
+    "summary": "Algunas formas del pretérito perfecto simple de verbos como «decir», «traer» y los terminados en -ducir se escriben con j.",
     "examples": ["dije", "dijeron", "traje", "trajeron", "conduje", "produjeron", "tradujiste"],
     "exceptions": []
   },
@@ -91,7 +91,7 @@
     "id": "j-final",
     "letter": "j",
     "title": "Familias con j conservada",
-    "summary": "Muchas palabras conservan la j de su familia léxica: caja, hoja, ojo, bajo, consejo...",
+    "summary": "Muchas palabras conservan la j de su familia léxica: «caja», «hoja», «ojo», «bajo», «consejo»...",
     "examples": ["cajero", "hojita", "ojera", "bajito", "consejero", "rojizo", "tejido"],
     "exceptions": []
   }
