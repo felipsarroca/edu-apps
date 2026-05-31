@@ -414,10 +414,14 @@ function formatRuleTextMatch(match) {
   return `<strong class="norm-chip">${match}</strong>`;
 }
 
+function formatRuleException(match) {
+  return `<strong>${match}</strong>`;
+}
+
 function protectMetaWords(html) {
   const protectedWords = [];
   const text = html.replace(/«([^»]+)»/g, (_, word) => {
-    const token = `%%META${protectedWords.length}%%`;
+    const token = `%%${protectedWords.length}%%`;
     protectedWords.push({ token, html: `<strong class="meta-word">«${word}»</strong>` });
     return token;
   });
@@ -431,28 +435,28 @@ function restoreMetaWords(html, protectedWords) {
 function highlightRuleText(text, ruleId, letter = "") {
   const meta = protectMetaWords(escapeHtml(text));
   let html = meta.text;
-  if (letter && !letter.includes("/")) {
+  const replacements = {
+    "g-geo-gen-gest": ["g", "geo-", "gen-", "gest-"],
+    "g-gia-gio-gion": ["g", "-gia", "-gio", "-gión", "-gional"],
+    "g-ger-gir": ["g", "-ger", "-gir"],
+    "g-gente-gencia": ["g", "-gente", "-gencia"],
+    "g-logia": ["g", "-logía"],
+    "g-gue-gui": ["g", "e", "i", "u", "ü", "gue", "gui"],
+    "j-aje-eje": ["j", "-aje", "-eje"],
+    "j-jero-jera-jeria": ["j", "-jero", "-jera", "-jería"],
+    "j-jar-jear": ["j", "-jar", "-jear"],
+    "j-ja-jo-ju": ["jota", "a", "o", "u", "ja", "jo", "ju"],
+    "j-preteritos": ["j", "decir", "traer", "-ducir", "dije", "traje", "conduje", "produje"],
+    "j-final": ["j", "caja", "hoja", "ojo", "bajo", "consejo"],
+  };
+  const parts = replacements[ruleId] || [];
+  if (!parts.length && letter && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
       new RegExp(`\\b${escapedLetter}\\b`, "gi"),
       (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
     );
   }
-  const replacements = {
-    "g-geo-gen-gest": ["geo-", "gen-", "gest-"],
-    "g-gia-gio-gion": ["-gia", "-gio", "-gión", "-gional"],
-    "g-ger-gir": ["-ger", "-gir"],
-    "g-gente-gencia": ["-gente", "-gencia"],
-    "g-logia": ["-logía"],
-    "g-gue-gui": ["e", "i", "u", "gue", "gui", "güe", "güi"],
-    "j-aje-eje": ["-aje", "-eje"],
-    "j-jero-jera-jeria": ["-jero", "-jera", "-jería"],
-    "j-jar-jear": ["-jar", "-jear"],
-    "j-ja-jo-ju": ["jota", "a", "o", "u", "ja", "jo", "ju"],
-    "j-preteritos": ["decir", "traer", "-ducir", "dije", "traje", "conduje", "produje"],
-    "j-final": ["caja", "hoja", "ojo", "bajo", "consejo"],
-  };
-  const parts = replacements[ruleId] || [];
   if (parts.length) {
     const alternatives = parts
       .map((part) => {
@@ -461,6 +465,9 @@ function highlightRuleText(text, ruleId, letter = "") {
       })
       .sort((a, b) => b.length - a.length);
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
+  }
+  if (ruleId === "g-ger-gir") {
+    html = html.replace(/\b(tejer|crujir)\b/gi, formatRuleException);
   }
   return restoreMetaWords(html, meta.protectedWords);
 }

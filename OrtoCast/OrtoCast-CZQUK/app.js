@@ -421,7 +421,7 @@ function formatRuleTextMatch(match) {
 function protectMetaWords(html) {
   const protectedWords = [];
   const text = html.replace(/«([^»]+)»/g, (_, word) => {
-    const token = `%%META${protectedWords.length}%%`;
+    const token = `%%${protectedWords.length}%%`;
     protectedWords.push({ token, html: `<strong class="meta-word">«${word}»</strong>` });
     return token;
   });
@@ -435,18 +435,11 @@ function restoreMetaWords(html, protectedWords) {
 function highlightRuleText(text, ruleId, letter = "") {
   const meta = protectMetaWords(escapeHtml(text));
   let html = meta.text;
-  if (letter && !letter.includes("/")) {
-    const escapedLetter = escapeHtml(letter);
-    html = html.replace(
-      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
-      (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
-    );
-  }
   const replacements = {
-    "c-ca-co-cu": ["ca", "co", "cu"],
+    "c-ca-co-cu": ["c", "ca", "co", "cu"],
     "qu-que-qui": ["e", "i", "que", "qui", "qu"],
-    "c-ce-ci": ["ce", "ci"],
-    "z-za-zo-zu": ["za", "zo", "zu"],
+    "c-ce-ci": ["c", "ce", "ci"],
+    "z-za-zo-zu": ["z", "za", "zo", "zu"],
     "z-final-ces": ["-z", "-ces", "luz", "luces", "voz", "voces"],
     "z-azo-aza": ["-azo", "-aza"],
     "z-ez-eza": ["-ez", "-eza"],
@@ -455,6 +448,13 @@ function highlightRuleText(text, ruleId, letter = "") {
     "k-prestamos": ["k", "kilo-", "kiwi", "kárate", "koala", "kiosco"],
   };
   const parts = replacements[ruleId] || [];
+  if (!parts.length && letter && !letter.includes("/")) {
+    const escapedLetter = escapeHtml(letter);
+    html = html.replace(
+      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
+      (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
+    );
+  }
   if (parts.length) {
     const alternatives = parts
       .map((part) => {

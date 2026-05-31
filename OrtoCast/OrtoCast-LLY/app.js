@@ -417,7 +417,7 @@ function formatRuleTextMatch(match) {
 function protectMetaWords(html) {
   const protectedWords = [];
   const text = html.replace(/«([^»]+)»/g, (_, word) => {
-    const token = `%%META${protectedWords.length}%%`;
+    const token = `%%${protectedWords.length}%%`;
     protectedWords.push({ token, html: `<strong class="meta-word">«${word}»</strong>` });
     return token;
   });
@@ -431,16 +431,9 @@ function restoreMetaWords(html, protectedWords) {
 function highlightRuleText(text, ruleId, letter = "") {
   const meta = protectMetaWords(escapeHtml(text));
   let html = meta.text;
-  if (letter && !letter.includes("/")) {
-    const escapedLetter = escapeHtml(letter);
-    html = html.replace(
-      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
-      (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
-    );
-  }
   const replacements = {
-    "ll-illo-illa": ["-illos", "-illas", "-illo", "-illa"],
-    "ll-alle-elle-ello-ella": ["-alle", "-elle", "-ello", "-ella"],
+    "ll-illo-illa": ["ll", "-illos", "-illas", "-illo", "-illa"],
+    "ll-alle-elle-ello-ella": ["ll", "-alle", "-elle", "-ello", "-ella"],
     "ll-verbos-ll": ["llamar", "llenar", "llevar", "hallar"],
     "ll-familias": ["lluvia", "llave", "calle", "caballo", "cabello", "botella"],
     "ll-inicial": ["llave", "lluvia", "llanto", "llegar", "llevar"],
@@ -451,6 +444,13 @@ function highlightRuleText(text, ruleId, letter = "") {
     "y-familias": ["rayo", "playa", "joya", "apoyo", "ensayo", "proyecto"],
   };
   const parts = replacements[ruleId] || [];
+  if (!parts.length && letter && !letter.includes("/")) {
+    const escapedLetter = escapeHtml(letter);
+    html = html.replace(
+      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
+      (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
+    );
+  }
   if (parts.length) {
     const alternatives = parts
       .map((part) => {
@@ -459,6 +459,12 @@ function highlightRuleText(text, ruleId, letter = "") {
       })
       .sort((a, b) => b.length - a.length);
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
+  }
+  if (letter === "y") {
+    html = html.replace(
+      /\by\b/i,
+      (match) => `<strong class="rule-letter rule-letter-y">${match}</strong>`
+    );
   }
   return restoreMetaWords(html, meta.protectedWords);
 }
