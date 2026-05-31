@@ -408,7 +408,7 @@ function renderSolvedPrompt(item, isSentence) {
 }
 
 function formatRuleTextMatch(match) {
-  if (/ll/i.test(match)) {
+  if (/^ll$/i.test(match)) {
     return highlightLl(match);
   }
   if (Array.from(match).length === 1) {
@@ -418,7 +418,7 @@ function formatRuleTextMatch(match) {
 }
 
 function formatNormMatch(match) {
-  return /ll/i.test(match) ? highlightLl(match) : match;
+  return /^ll$/i.test(match) ? highlightLl(match) : match;
 }
 
 function highlightLl(text) {
@@ -510,7 +510,7 @@ function highlightNorm(text, ruleId, targetWord = "") {
     pattern.lastIndex = 0;
     return `<span class="highlighted-word">${word.replace(pattern, (match) => {
       const formattedMatch = formatNormMatch(match);
-      return /ll/i.test(match) ? formattedMatch : `<span class="norm-highlight">${formattedMatch}</span>`;
+      return /^ll$/i.test(match) ? formattedMatch : `<span class="norm-highlight">${formattedMatch}</span>`;
     })}</span>`;
   });
 }
