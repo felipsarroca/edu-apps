@@ -408,10 +408,21 @@ function renderSolvedPrompt(item, isSentence) {
 }
 
 function formatRuleTextMatch(match) {
+  if (/ll/i.test(match)) {
+    return highlightLl(match);
+  }
   if (Array.from(match).length === 1) {
     return `<strong class="rule-letter rule-letter-${match.toLowerCase()}">${match}</strong>`;
   }
   return `<strong class="norm-chip">${match}</strong>`;
+}
+
+function formatNormMatch(match) {
+  return /ll/i.test(match) ? highlightLl(match) : match;
+}
+
+function highlightLl(text) {
+  return text.replace(/ll/gi, (match) => `<span class="rule-letter rule-letter-ll">${match}</span>`);
 }
 
 function protectMetaWords(html) {
@@ -497,7 +508,10 @@ function highlightNorm(text, ruleId, targetWord = "") {
     pattern.lastIndex = 0;
     if (!pattern.test(word)) return word;
     pattern.lastIndex = 0;
-    return `<span class="highlighted-word">${word.replace(pattern, (match) => `<span class="norm-highlight">${match}</span>`)}</span>`;
+    return `<span class="highlighted-word">${word.replace(pattern, (match) => {
+      const formattedMatch = formatNormMatch(match);
+      return /ll/i.test(match) ? formattedMatch : `<span class="norm-highlight">${formattedMatch}</span>`;
+    })}</span>`;
   });
 }
 
