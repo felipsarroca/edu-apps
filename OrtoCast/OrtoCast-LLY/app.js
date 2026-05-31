@@ -434,9 +434,9 @@ function highlightRuleText(text, ruleId, letter = "") {
   const replacements = {
     "ll-illo-illa": ["ll", "-illos", "-illas", "-illo", "-illa"],
     "ll-alle-elle-ello-ella": ["ll", "-alle", "-elle", "-ello", "-ella"],
-    "ll-verbos-ll": ["llamar", "llenar", "llevar", "hallar"],
-    "ll-familias": ["lluvia", "llave", "calle", "caballo", "cabello", "botella"],
-    "ll-inicial": ["llave", "lluvia", "llanto", "llegar", "llevar"],
+    "ll-verbos-ll": ["ll", "llamar", "llenar", "llevar", "hallar"],
+    "ll-familias": ["ll", "lluvia", "llave", "calle", "caballo", "cabello", "botella"],
+    "ll-inicial": ["ll", "llave", "lluvia", "llanto", "llegar", "llevar"],
     "y-final": ["i", "diptongo", "triptongo"],
     "y-yer-yec": ["yer-", "yec-"],
     "y-verbos": ["caer", "leer", "oír", "creer", "huir"],

@@ -441,10 +441,10 @@ function highlightRuleText(text, ruleId, letter = "") {
     "c-ce-ci": ["c", "ce", "ci"],
     "z-za-zo-zu": ["z", "za", "zo", "zu"],
     "z-final-ces": ["-z", "-ces", "luz", "luces", "voz", "voces"],
-    "z-azo-aza": ["-azo", "-aza"],
-    "z-ez-eza": ["-ez", "-eza"],
+    "z-azo-aza": ["z", "-azo", "-aza"],
+    "z-ez-eza": ["z", "-ez", "-eza"],
     "z-c-verbos-zar": ["-zar", "z", "c", "empezar", "empecé", "comenzar", "comencé"],
-    "c-cion": ["-ción"],
+    "c-cion": ["c", "-ción"],
     "k-prestamos": ["k", "kilo-", "kiwi", "kárate", "koala", "kiosco"],
   };
   const parts = replacements[ruleId] || [];

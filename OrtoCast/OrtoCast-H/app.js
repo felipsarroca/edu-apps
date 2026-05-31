@@ -430,9 +430,20 @@ function restoreMetaWords(html, protectedWords) {
   return protectedWords.reduce((current, item) => current.replace(item.token, item.html), html);
 }
 
+function protectNoH(html) {
+  const protectedWords = [];
+  const text = html.replace(/\bsin h\b/gi, (match) => {
+    const token = `%%NOH${protectedWords.length}%%`;
+    protectedWords.push({ token, html: `<strong class="rule-letter rule-letter-none">${match}</strong>` });
+    return token;
+  });
+  return { text, protectedWords };
+}
+
 function highlightRuleText(text, ruleId, letter = "") {
   const meta = protectMetaWords(escapeHtml(text));
-  let html = meta.text;
+  const noH = ruleId.startsWith("no-h-") ? protectNoH(meta.text) : { text: meta.text, protectedWords: [] };
+  let html = noH.text;
   if (letter && letter.trim() && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
@@ -462,7 +473,7 @@ function highlightRuleText(text, ruleId, letter = "") {
       .sort((a, b) => b.length - a.length);
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
   }
-  return restoreMetaWords(html, meta.protectedWords);
+  return restoreMetaWords(restoreMetaWords(html, noH.protectedWords), meta.protectedWords);
 }
 
 function highlightNorm(text, ruleId, targetWord = "") {

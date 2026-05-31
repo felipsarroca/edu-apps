@@ -478,6 +478,9 @@ function highlightRuleText(text, ruleId, letter = "") {
       .sort((a, b) => b.length - a.length);
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
   }
+  if (ruleId === "v-vice-villa") {
+    html = html.replace(/\bvirrey\b/gi, (match) => `<strong>${match}</strong>`);
+  }
   return restoreMetaWords(html, meta.protectedWords);
 }
 
