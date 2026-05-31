@@ -13,7 +13,7 @@
   {"id":"hh012","sentence":"El herrero va a _errar al caballo.","answer":"h","word":"herrar","contrast":"errar","explanation":"Herrar se escribe con h cuando significa poner herraduras."},
   {"id":"hh013","sentence":"El _ala del ave estaba herida.","answer":" ","word":"ala","contrast":"hala","explanation":"Ala se escribe sin h cuando nombra la extremidad de un ave o una parte lateral."},
   {"id":"hh014","sentence":"_ala, recoge ya tus cosas.","answer":"h","word":"hala","contrast":"ala","explanation":"Hala se escribe con h cuando es una interjección."},
-  {"id":"hh015","sentence":"La _onda del río era peligrosa.","answer":"h","word":"honda","contrast":"onda","explanation":"Honda se escribe con h cuando significa profunda."},
+  {"id":"hh015","sentence":"La zona _onda del río era peligrosa.","answer":"h","word":"honda","contrast":"onda","explanation":"Honda se escribe con h cuando significa profunda."},
   {"id":"hh016","sentence":"La _onda sonora llegó muy lejos.","answer":" ","word":"onda","contrast":"honda","explanation":"Onda se escribe sin h cuando significa ondulación o vibración."},
   {"id":"hh017","sentence":"Llegamos a la _ora exacta.","answer":"h","word":"hora","contrast":"ora","explanation":"Hora se escribe con h cuando se refiere al tiempo."},
   {"id":"hh018","sentence":"El monje _ora en silencio.","answer":" ","word":"ora","contrast":"hora","explanation":"Ora se escribe sin h cuando es una forma del verbo orar."}

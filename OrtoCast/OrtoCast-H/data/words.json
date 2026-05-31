@@ -329,7 +329,7 @@
     "answer": "h",
     "ruleId": "h-interjecciones",
     "difficulty": 1,
-    "hint": "interjecci?n"
+    "hint": "interjección"
   },
   {
     "id": "hw042",
@@ -370,7 +370,7 @@
     "answer": "h",
     "ruleId": "h-interjecciones",
     "difficulty": 2,
-    "hint": "interjecci?n"
+    "hint": "interjección"
   },
   {
     "id": "hw047",
@@ -387,7 +387,7 @@
     "answer": "h",
     "ruleId": "h-interjecciones",
     "difficulty": 2,
-    "hint": "interjecci?n con h"
+    "hint": "interjección con h"
   },
   {
     "id": "hw049",
@@ -573,7 +573,7 @@
     "ruleId": "no-h-e-he",
     "difficulty": 1,
     "explanation": "E se escribe sin h cuando une palabras.",
-    "hint": "conjunci?n"
+    "hint": "conjunción"
   },
   {
     "id": "hw070",
@@ -775,5 +775,34 @@
     "difficulty": 3,
     "explanation": "Herrar se escribe con h cuando significa poner herraduras.",
     "hint": "poner herraduras"
-  }
+  },
+  {"id":"hw091","word":"hiedra","masked":"_iedra","answer":"h","ruleId":"h-hie-hue","difficulty":2},
+  {"id":"hw092","word":"hiel","masked":"_iel","answer":"h","ruleId":"h-hie-hue","difficulty":3},
+  {"id":"hw093","word":"hierve","masked":"_ierve","answer":"h","ruleId":"h-hie-hue","difficulty":2},
+  {"id":"hw094","word":"huevera","masked":"_uevera","answer":"h","ruleId":"h-hie-hue","difficulty":2},
+  {"id":"hw095","word":"humanidad","masked":"_umanidad","answer":"h","ruleId":"h-hum","difficulty":2},
+  {"id":"hw096","word":"humedecer","masked":"_umedecer","answer":"h","ruleId":"h-hum","difficulty":3},
+  {"id":"hw097","word":"humeante","masked":"_umeante","answer":"h","ruleId":"h-hum","difficulty":3},
+  {"id":"hw098","word":"hipertensión","masked":"_ipertensión","answer":"h","ruleId":"h-prefijos","difficulty":3},
+  {"id":"hw099","word":"hidroeléctrico","masked":"_idroeléctrico","answer":"h","ruleId":"h-prefijos","difficulty":3},
+  {"id":"hw100","word":"homófono","masked":"_omófono","answer":"h","ruleId":"h-prefijos","difficulty":2},
+  {"id":"hw101","word":"hemiciclo","masked":"_emiciclo","answer":"h","ruleId":"h-prefijos","difficulty":3},
+  {"id":"hw102","word":"haremos","masked":"_aremos","answer":"h","ruleId":"h-verbos","difficulty":2},
+  {"id":"hw103","word":"has","masked":"_as","answer":"h","ruleId":"h-verbos","difficulty":1},
+  {"id":"hw104","word":"hemos","masked":"_emos","answer":"h","ruleId":"h-verbos","difficulty":1},
+  {"id":"hw105","word":"hicimos","masked":"_icimos","answer":"h","ruleId":"h-verbos","difficulty":2},
+  {"id":"hw106","word":"ahá","masked":"a_á","answer":"h","ruleId":"h-interjecciones","difficulty":2},
+  {"id":"hw107","word":"historiador","masked":"_istoriador","answer":"h","ruleId":"h-familias","difficulty":2},
+  {"id":"hw108","word":"honorable","masked":"_onorable","answer":"h","ruleId":"h-familias","difficulty":2},
+  {"id":"hw109","word":"hospital","masked":"_ospital","answer":"h","ruleId":"h-familias","difficulty":1},
+  {"id":"hw110","word":"horror","masked":"_orror","answer":"h","ruleId":"h-familias","difficulty":2},
+  {"id":"hw111","word":"alba","masked":"_alba","answer":" ","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Alba se escribe sin h inicial."},
+  {"id":"hw112","word":"alto","masked":"_alto","answer":" ","ruleId":"no-h-a-ha","difficulty":1,"explanation":"Alto se escribe sin h inicial."},
+  {"id":"hw113","word":"habrá","masked":"_abrá","answer":"h","ruleId":"no-h-a-ha","difficulty":2,"explanation":"Habrá se escribe con h porque es una forma del verbo haber.","hint":"haber"},
+  {"id":"hw114","word":"elefante","masked":"_elefante","answer":" ","ruleId":"no-h-e-he","difficulty":1,"explanation":"Elefante se escribe sin h inicial."},
+  {"id":"hw115","word":"hermoso","masked":"_ermoso","answer":"h","ruleId":"no-h-e-he","difficulty":1,"explanation":"Hermoso se escribe con h inicial."},
+  {"id":"hw116","word":"desecho","masked":"_desecho","answer":" ","ruleId":"no-h-echo-hecho","difficulty":3,"explanation":"Desecho se escribe sin h cuando significa residuo o desperdicio."},
+  {"id":"hw117","word":"deshecho","masked":"des_echo","answer":"h","ruleId":"no-h-echo-hecho","difficulty":3,"explanation":"Deshecho se escribe con h cuando procede de deshacer."},
+  {"id":"hw118","word":"echaron","masked":"_echaron","answer":" ","ruleId":"no-h-echo-hecho","difficulty":2,"explanation":"Echaron se escribe sin h porque procede del verbo echar."},
+  {"id":"hw119","word":"rehacer","masked":"re_acer","answer":"h","ruleId":"no-h-echo-hecho","difficulty":3,"explanation":"Rehacer se escribe con h porque pertenece a la familia de hacer."}
 ]
