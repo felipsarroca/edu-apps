@@ -35,7 +35,7 @@
     "id": "h-interjecciones",
     "letter": "h",
     "title": "Interjecciones con h",
-    "summary": "Algunas interjecciones se escriben con h: «ah», «eh», «oh», «bah», «hola»...",
+    "summary": "Algunas interjecciones se escriben con h: ah, eh, oh, bah, hola...",
     "examples": ["ah", "eh", "oh", "bah", "hola", "hala", "hurra", "huy"],
     "exceptions": []
   },
@@ -43,7 +43,7 @@
     "id": "h-familias",
     "letter": "h",
     "title": "Familias léxicas con h",
-    "summary": "Muchas palabras conservan la h de su familia léxica: «hora», «historia», «honor», «hospital», «horror», «herencia»...",
+    "summary": "Muchas palabras conservan la h de su familia léxica: hora, historia, honor, hospital, horror, herencia...",
     "examples": ["horario", "histórico", "honrado", "hospitalario", "horroroso", "heredero", "hormiguero", "hogareño"],
     "exceptions": []
   },

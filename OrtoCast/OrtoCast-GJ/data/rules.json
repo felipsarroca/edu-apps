@@ -19,7 +19,7 @@
     "id": "g-ger-gir",
     "letter": "g",
     "title": "Verbos terminados en -ger y -gir",
-    "summary": "Los verbos terminados en -ger y -gir se escriben con g, salvo algunas excepciones como «tejer» y «crujir».",
+    "summary": "Los verbos terminados en -ger y -gir se escriben con g, salvo algunas excepciones como tejer y crujir.",
     "examples": ["recoger", "proteger", "escoger", "dirigir", "exigir", "corregir", "surgir"],
     "exceptions": ["tejer", "crujir"]
   },
@@ -91,7 +91,7 @@
     "id": "j-final",
     "letter": "j",
     "title": "Familias con j conservada",
-    "summary": "Muchas palabras conservan la j de su familia léxica: «caja», «hoja», «ojo», «bajo», «consejo»...",
+    "summary": "Muchas palabras conservan la j de su familia léxica: caja, hoja, ojo, bajo, consejo...",
     "examples": ["cajero", "hojita", "ojera", "bajito", "consejero", "rojizo", "tejido"],
     "exceptions": []
   }
