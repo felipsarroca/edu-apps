@@ -19,15 +19,15 @@
   {
     "id": "ix",
     "letter": "ix",
-    "title": "El d?graf ix",
-    "summary": "Despr?s de vocal, el so de xeix sovint s'escriu ix: caixa, peix, baixar, cr?ixer.",
+    "title": "El dígraf ix",
+    "summary": "Després de vocal, el so de xeix sovint s'escriu ix: caixa, peix, baixar, créixer.",
     "examples": [
       "caixa",
       "peix",
       "baix",
       "deixar",
-      "cr?ixer",
-      "aix?",
+      "créixer",
+      "això",
       "coix",
       "mateix"
     ],
@@ -37,12 +37,12 @@
     "id": "x-cs-gz",
     "letter": "x",
     "title": "X amb so de cs o gz",
-    "summary": "La x tamb? pot representar sons com cs o gz en paraules com taxi, examen o exercici.",
+    "summary": "La x també pot representar sons com cs o gz en paraules com taxi, examen o exercici.",
     "examples": [
       "taxi",
       "examen",
       "exercici",
-      "?xit",
+      "èxit",
       "exacte",
       "explicar",
       "text",
@@ -53,8 +53,8 @@
   {
     "id": "tx",
     "letter": "tx",
-    "title": "El d?graf tx",
-    "summary": "El so africat de paraules com cotxe o despatx s'escriu tx. Sovint es mant? en derivats: despatx, despatxar.",
+    "title": "El dígraf tx",
+    "summary": "El so africat de paraules com cotxe o despatx s'escriu tx. Sovint es manté en derivats: despatx, despatxar.",
     "examples": [
       "cotxe",
       "dutxa",

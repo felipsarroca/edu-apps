@@ -495,7 +495,7 @@ select {
 
 .practice-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: 10px;
   margin-bottom: 12px;
 }
@@ -509,6 +509,8 @@ select {
   border-radius: 8px;
   background: var(--paper);
   box-shadow: 0 12px 28px rgba(23, 32, 42, 0.06);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .empty-state {
@@ -545,6 +547,8 @@ select {
   min-height: auto;
   font-size: 1.08rem;
   line-height: 1.45;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .masked-word {
@@ -609,6 +613,7 @@ select {
 .mini-actions {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .pick-button {
@@ -619,6 +624,8 @@ select {
   color: #fff;
   cursor: pointer;
   font-weight: 850;
+  flex: 0 0 auto;
+  min-width: 38px;
 }
 
 .pick-l,
@@ -884,7 +891,7 @@ a:focus-visible {
   }
 
   .sentence-prompt {
-    font-size: 1rem;
+    font-size: clamp(0.92rem, 3.8vw, 1rem);
   }
 
   .blank {

@@ -1,7 +1,7 @@
 [
   {
     "id": "lh001",
-    "sentence": "La _una il?lumina la nit.",
+    "sentence": "La _una il·lumina la nit.",
     "answer": "ll",
     "word": "lluna",
     "contrast": "luna",
@@ -9,15 +9,15 @@
   },
   {
     "id": "lh002",
-    "sentence": "El co_egi ?s al centre del barri.",
-    "answer": "l?l",
-    "word": "col?legi",
+    "sentence": "El co_egi és al centre del barri.",
+    "answer": "l·l",
+    "word": "col·legi",
     "contrast": "colegi",
-    "explanation": "Col?legi s'escriu amb ela geminada."
+    "explanation": "Col·legi s'escriu amb ela geminada."
   },
   {
     "id": "lh003",
-    "sentence": "La pi_ota ?s al pati.",
+    "sentence": "La pi_ota és al pati.",
     "answer": "l",
     "word": "pilota",
     "contrast": "pillota",
@@ -25,11 +25,11 @@
   },
   {
     "id": "lh004",
-    "sentence": "He vist una pe_?cula en catal?.",
-    "answer": "l?l",
-    "word": "pel?l?cula",
-    "contrast": "pel?cula",
-    "explanation": "Pel?l?cula s'escriu amb ela geminada."
+    "sentence": "He vist una pe_ícula en català.",
+    "answer": "l·l",
+    "word": "pel·lícula",
+    "contrast": "película",
+    "explanation": "Pel·lícula s'escriu amb ela geminada."
   },
   {
     "id": "lh005",
@@ -38,5 +38,85 @@
     "word": "cavall",
     "contrast": "caval",
     "explanation": "Cavall s'escriu amb ll final."
+  },
+  {
+    "id": "lh006",
+    "sentence": "Cal ca_ar abans de parlar.",
+    "answer": "ll",
+    "word": "callar",
+    "contrast": "calar",
+    "explanation": "Callar s'escriu amb ll quan vol dir no parlar."
+  },
+  {
+    "id": "lh007",
+    "sentence": "L'aigua pot ca_ar per la paret.",
+    "answer": "l",
+    "word": "calar",
+    "contrast": "callar",
+    "explanation": "Calar s'escriu amb l quan vol dir penetrar o mullar."
+  },
+  {
+    "id": "lh008",
+    "sentence": "El ba_ comença a les sis.",
+    "answer": "ll",
+    "word": "ball",
+    "contrast": "bal",
+    "explanation": "Ball s'escriu amb ll quan és una dansa."
+  },
+  {
+    "id": "lh009",
+    "sentence": "El va_ és profund i verd.",
+    "answer": "ll",
+    "word": "vall",
+    "contrast": "val",
+    "explanation": "Vall s'escriu amb ll quan és una depressió entre muntanyes."
+  },
+  {
+    "id": "lh010",
+    "sentence": "La co_isió va ser lleu.",
+    "answer": "l·l",
+    "word": "col·lisió",
+    "contrast": "colisió",
+    "explanation": "Col·lisió s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh011",
+    "sentence": "Aquesta resposta és nu_a.",
+    "answer": "l·l",
+    "word": "nul·la",
+    "contrast": "nula",
+    "explanation": "Nul·la s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh012",
+    "sentence": "Té molta a_egria.",
+    "answer": "l",
+    "word": "alegria",
+    "contrast": "al·legria",
+    "explanation": "Alegria s'escriu amb l simple, sense punt volat."
+  },
+  {
+    "id": "lh013",
+    "sentence": "La ba_ena viu al mar.",
+    "answer": "l",
+    "word": "balena",
+    "contrast": "ballena",
+    "explanation": "Balena s'escriu amb l simple; ballena és un castellanisme."
+  },
+  {
+    "id": "lh016",
+    "sentence": "és i_egal copiar en un examen.",
+    "answer": "l·l",
+    "word": "il·legal",
+    "contrast": "ilegal",
+    "explanation": "Il·legal s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh017",
+    "sentence": "Una mi_ésima part és molt petita.",
+    "answer": "l·l",
+    "word": "mil·lésima",
+    "contrast": "milésima",
+    "explanation": "Mil·lésima s'escriu amb ela geminada."
   }
 ]

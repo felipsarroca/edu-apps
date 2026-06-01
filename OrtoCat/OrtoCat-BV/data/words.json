@@ -33,8 +33,8 @@
   },
   {
     "id": "bv005",
-    "word": "bra?",
-    "masked": "_ra?",
+    "word": "braç",
+    "masked": "_raç",
     "answer": "b",
     "ruleId": "b-bl-br",
     "difficulty": 1
@@ -105,8 +105,8 @@
   },
   {
     "id": "bv014",
-    "word": "b?stia",
-    "masked": "_?stia",
+    "word": "béstia",
+    "masked": "_éstia",
     "answer": "b",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 2
@@ -118,7 +118,7 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "excepci?"
+    "hint": "excepció"
   },
   {
     "id": "bv016",
@@ -127,12 +127,12 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "excepci?"
+    "hint": "excepció"
   },
   {
     "id": "bv017",
-    "word": "tamb?",
-    "masked": "tam_?",
+    "word": "també",
+    "masked": "tam_é",
     "answer": "b",
     "ruleId": "bv-mb-nv",
     "difficulty": 1
@@ -228,16 +228,16 @@
   },
   {
     "id": "bv029",
-    "word": "biling?e",
-    "masked": "_iling?e",
+    "word": "bilingüe",
+    "masked": "_ilingüe",
     "answer": "b",
     "ruleId": "b-bio-biblio-bi",
     "difficulty": 2
   },
   {
     "id": "bv030",
-    "word": "bis?l?lab",
-    "masked": "_is?l?lab",
+    "word": "bisíl·llab",
+    "masked": "_isíl·llab",
     "answer": "b",
     "ruleId": "b-bio-biblio-bi",
     "difficulty": 3
@@ -324,16 +324,16 @@
   },
   {
     "id": "bv041",
-    "word": "mir?vem",
-    "masked": "mir?_em",
+    "word": "miràvem",
+    "masked": "mirà_em",
     "answer": "v",
     "ruleId": "v-imperfet-ava",
     "difficulty": 2
   },
   {
     "id": "bv042",
-    "word": "jug?veu",
-    "masked": "jug?_eu",
+    "word": "jugàveu",
+    "masked": "jugà_eu",
     "answer": "v",
     "ruleId": "v-imperfet-ava",
     "difficulty": 2
@@ -379,7 +379,7 @@
     "answer": "v",
     "ruleId": "v-frequents",
     "difficulty": 1,
-    "hint": "d'edat avan?ada"
+    "hint": "d'edat avançada"
   },
   {
     "id": "bv048",
@@ -397,7 +397,7 @@
     "answer": "b",
     "ruleId": "b-frequents",
     "difficulty": 2,
-    "hint": "prendre un l?quid"
+    "hint": "prendre un líquid"
   },
   {
     "id": "bv050",
@@ -425,5 +425,342 @@
     "ruleId": "v-frequents",
     "difficulty": 2,
     "hint": "emetre un vot"
+  },
+  {
+    "id": "bv053",
+    "word": "brusa",
+    "masked": "_rusa",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv054",
+    "word": "broma",
+    "masked": "_roma",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 1
+  },
+  {
+    "id": "bv055",
+    "word": "bronze",
+    "masked": "_ronze",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv056",
+    "word": "moble",
+    "masked": "mo_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv057",
+    "word": "poble",
+    "masked": "po_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv058",
+    "word": "bibliobés",
+    "masked": "_ibliobés",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 3
+  },
+  {
+    "id": "bv059",
+    "word": "bimotor",
+    "masked": "_imotor",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 3
+  },
+  {
+    "id": "bv060",
+    "word": "bicolor",
+    "masked": "_icolor",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv061",
+    "word": "bípede",
+    "masked": "_ípede",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 3
+  },
+  {
+    "id": "bv062",
+    "word": "bimensual",
+    "masked": "_imensual",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 3
+  },
+  {
+    "id": "bv063",
+    "word": "buidar",
+    "masked": "_uidar",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv064",
+    "word": "butlleta",
+    "masked": "_utlleta",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3
+  },
+  {
+    "id": "bv065",
+    "word": "butaca",
+    "masked": "_utaca",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv066",
+    "word": "vudú",
+    "masked": "_udú",
+    "answer": "v",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3,
+    "hint": "excepció: comença per vu-",
+    "exception": true
+  },
+  {
+    "id": "bv067",
+    "word": "vulnerar",
+    "masked": "_ulnerar",
+    "answer": "v",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3,
+    "hint": "excepció: comença per vu-",
+    "exception": true
+  },
+  {
+    "id": "bv068",
+    "word": "vuit",
+    "masked": "_uit",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1,
+    "hint": "nombre"
+  },
+  {
+    "id": "bv069",
+    "word": "vuitanta",
+    "masked": "_uitanta",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2,
+    "hint": "nombre"
+  },
+  {
+    "id": "bv070",
+    "word": "avui",
+    "masked": "a_ui",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv071",
+    "word": "avió",
+    "masked": "a_ió",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv072",
+    "word": "núvol",
+    "masked": "nú_ol",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv073",
+    "word": "llavi",
+    "masked": "lla_i",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv074",
+    "word": "nevar",
+    "masked": "ne_ar",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv075",
+    "word": "haver",
+    "masked": "ha_er",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv076",
+    "word": "govern",
+    "masked": "go_ern",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv077",
+    "word": "cavall",
+    "masked": "ca_all",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv078",
+    "word": "cantàvem",
+    "masked": "cantà_em",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv079",
+    "word": "arribava",
+    "masked": "arri_ava",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2,
+    "hint": "del verb arribar"
+  },
+  {
+    "id": "bv080",
+    "word": "arribàvem",
+    "masked": "arri_àvem",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 3,
+    "hint": "del verb arribar"
+  },
+  {
+    "id": "bv081",
+    "word": "bena",
+    "masked": "_ena",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 3,
+    "hint": "tira de roba per embenar"
+  },
+  {
+    "id": "bv082",
+    "word": "vena",
+    "masked": "_ena",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 3,
+    "hint": "vas sanguini"
+  },
+  {
+    "id": "bv083",
+    "word": "buit",
+    "masked": "_uit",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2,
+    "hint": "sense res a dins"
+  },
+  {
+    "id": "bv084",
+    "word": "vast",
+    "masked": "_ast",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 3,
+    "hint": "molt extens"
+  },
+  {
+    "id": "bv085",
+    "word": "bast",
+    "masked": "_ast",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 3,
+    "hint": "groller, poc fi"
+  },
+  {
+    "id": "bv086",
+    "word": "bola",
+    "masked": "_ola",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2,
+    "hint": "objecte rodó"
+  },
+  {
+    "id": "bv087",
+    "word": "vola",
+    "masked": "_ola",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2,
+    "hint": "forma del verb volar"
+  },
+  {
+    "id": "bv088",
+    "word": "bellesa",
+    "masked": "_ellesa",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 3,
+    "hint": "qualitat de bell"
+  },
+  {
+    "id": "bv089",
+    "word": "vellesa",
+    "masked": "_ellesa",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 3,
+    "hint": "edat avançada"
+  },
+  {
+    "id": "bv090",
+    "word": "conviure",
+    "masked": "con_iure",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv091",
+    "word": "embolic",
+    "masked": "em_olic",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv092",
+    "word": "enveja",
+    "masked": "en_eja",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
   }
 ]

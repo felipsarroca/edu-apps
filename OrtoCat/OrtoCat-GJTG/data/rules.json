@@ -7,17 +7,23 @@
     "examples": [
       "gent",
       "gel",
-      "germ?",
+      "germà",
       "gerani",
       "girar",
-      "gimn?s",
-      "p?gina",
+      "gimnés",
+      "pàgina",
       "energia"
     ],
     "exceptions": [
       "jersei",
       "jerarquia",
-      "Jes?s"
+      "Jesés",
+      "jeure",
+      "projecte",
+      "objecte",
+      "subjecte",
+      "adjectiu",
+      "injecció"
     ]
   },
   {
@@ -27,7 +33,7 @@
     "summary": "Davant a, o i u, moltes paraules amb el so de ge s'escriuen amb j: jaqueta, joc, juliol.",
     "examples": [
       "jaqueta",
-      "jard?",
+      "jardí",
       "joc",
       "jove",
       "juliol",
@@ -75,11 +81,11 @@
     "id": "j-excepcions-e-i",
     "letter": "j",
     "title": "J davant e i i en alguns mots",
-    "summary": "Algunes paraules s'escriuen amb j davant e o i i cal memoritzar-les: jersei, jerarquia, Jes?s.",
+    "summary": "Algunes paraules s'escriuen amb j davant e o i i cal memoritzar-les: jersei, jerarquia, Jesés.",
     "examples": [
       "jersei",
       "jerarquia",
-      "Jes?s",
+      "Jesés",
       "jeure",
       "majestat"
     ],

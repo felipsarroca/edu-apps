@@ -17,8 +17,8 @@
   },
   {
     "id": "gj003",
-    "word": "germ?",
-    "masked": "_erm?",
+    "word": "germà",
+    "masked": "_ermà",
     "answer": "g",
     "ruleId": "g-e-i",
     "difficulty": 1
@@ -41,16 +41,16 @@
   },
   {
     "id": "gj006",
-    "word": "gimn?s",
-    "masked": "_imn?s",
+    "word": "gimnés",
+    "masked": "_imnés",
     "answer": "g",
     "ruleId": "g-e-i",
     "difficulty": 2
   },
   {
     "id": "gj007",
-    "word": "p?gina",
-    "masked": "p?_ina",
+    "word": "pàgina",
+    "masked": "pà_ina",
     "answer": "g",
     "ruleId": "g-e-i",
     "difficulty": 2
@@ -73,8 +73,8 @@
   },
   {
     "id": "gj010",
-    "word": "jard?",
-    "masked": "_ard?",
+    "word": "jardí",
+    "masked": "_ardí",
     "answer": "j",
     "ruleId": "j-a-o-u",
     "difficulty": 1
@@ -262,7 +262,7 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
-    "hint": "pe?a de roba"
+    "hint": "peça de roba"
   },
   {
     "id": "gj034",
@@ -274,8 +274,8 @@
   },
   {
     "id": "gj035",
-    "word": "Jes?s",
-    "masked": "_es?s",
+    "word": "Jesés",
+    "masked": "_esés",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
@@ -295,6 +295,261 @@
     "masked": "ma_estat",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj038",
+    "word": "gènere",
+    "masked": "_énere",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj039",
+    "word": "genoll",
+    "masked": "_enoll",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj040",
+    "word": "gessamí",
+    "masked": "_essamí",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj041",
+    "word": "girafa",
+    "masked": "_irafa",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj042",
+    "word": "gira-sol",
+    "masked": "_ira-sol",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj043",
+    "word": "àngel",
+    "masked": "àn_el",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj044",
+    "word": "marge",
+    "masked": "mar_e",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj045",
+    "word": "taronja",
+    "masked": "taron_a",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj046",
+    "word": "pluja",
+    "masked": "plu_a",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 1
+  },
+  {
+    "id": "gj047",
+    "word": "enveja",
+    "masked": "enve_a",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj048",
+    "word": "rajola",
+    "masked": "ra_ola",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj049",
+    "word": "boja",
+    "masked": "bo_a",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj050",
+    "word": "projecte",
+    "masked": "pro_ecte",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3,
+    "hint": "j davant e"
+  },
+  {
+    "id": "gj051",
+    "word": "objecte",
+    "masked": "ob_ecte",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3,
+    "hint": "j davant e"
+  },
+  {
+    "id": "gj052",
+    "word": "subjecte",
+    "masked": "sub_ecte",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3,
+    "hint": "j davant e"
+  },
+  {
+    "id": "gj053",
+    "word": "adjectiu",
+    "masked": "ad_ectiu",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3,
+    "hint": "j davant e"
+  },
+  {
+    "id": "gj054",
+    "word": "injecció",
+    "masked": "in_ecció",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3,
+    "hint": "j davant e"
+  },
+  {
+    "id": "gj056",
+    "word": "jutge",
+    "masked": "ju_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj057",
+    "word": "salvatge",
+    "masked": "salva_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj058",
+    "word": "avantatge",
+    "masked": "avanta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj059",
+    "word": "personatge",
+    "masked": "persona_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj060",
+    "word": "paisatge",
+    "masked": "paisa_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj061",
+    "word": "equipatge",
+    "masked": "equipa_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj062",
+    "word": "platges",
+    "masked": "pla_es",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3,
+    "hint": "plural de platja"
+  },
+  {
+    "id": "gj063",
+    "word": "mitges",
+    "masked": "mi_es",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3,
+    "hint": "plural de mitja"
+  },
+  {
+    "id": "gj064",
+    "word": "allotjar",
+    "masked": "allo_ar",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj065",
+    "word": "rebutjar",
+    "masked": "rebu_ar",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj066",
+    "word": "mitjons",
+    "masked": "mi_ons",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj067",
+    "word": "platjot",
+    "masked": "pla_ot",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj068",
+    "word": "allotjament",
+    "masked": "allo_ament",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj069",
+    "word": "trepitjada",
+    "masked": "trepi_ada",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
     "difficulty": 3
   }
 ]

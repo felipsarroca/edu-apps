@@ -1,7 +1,7 @@
 [
   {
     "id": "gh001",
-    "sentence": "El _el ?s molt fred.",
+    "sentence": "El _el és molt fred.",
     "answer": "g",
     "word": "gel",
     "contrast": "jel",
@@ -37,6 +37,38 @@
     "answer": "j",
     "word": "jersei",
     "contrast": "gersei",
-    "explanation": "Jersei ?s una excepci? amb j davant e."
+    "explanation": "Jersei és una excepció amb j davant e."
+  },
+  {
+    "id": "gh006",
+    "sentence": "El pro_ecte de classe és cooperatiu.",
+    "answer": "j",
+    "word": "projecte",
+    "contrast": "progecte",
+    "explanation": "Projecte s'escriu amb j davant e."
+  },
+  {
+    "id": "gh007",
+    "sentence": "El ju_e ha dictat sentència.",
+    "answer": "tg",
+    "word": "jutge",
+    "contrast": "jutje",
+    "explanation": "Jutge s'escriu amb tg davant e."
+  },
+  {
+    "id": "gh009",
+    "sentence": "Les pla_es són plenes a l'estiu.",
+    "answer": "tg",
+    "word": "platges",
+    "contrast": "platjes",
+    "explanation": "Platges s'escriu amb tg davant e."
+  },
+  {
+    "id": "gh010",
+    "sentence": "Vols rebut_ar aquesta proposta?",
+    "answer": "tj",
+    "word": "rebutjar",
+    "contrast": "rebugar",
+    "explanation": "Rebutjar s'escriu amb tj davant a."
   }
 ]

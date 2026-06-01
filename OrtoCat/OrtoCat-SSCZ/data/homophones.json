@@ -1,11 +1,11 @@
 [
   {
     "id": "sh001",
-    "sentence": "La _opa ?s calenta.",
+    "sentence": "La _opa és calenta.",
     "answer": "s",
     "word": "sopa",
     "contrast": "copa",
-    "explanation": "Sopa s'escriu amb s quan ?s el menjar l?quid."
+    "explanation": "Sopa s'escriu amb s quan és el menjar líquid."
   },
   {
     "id": "sh002",
@@ -13,19 +13,19 @@
     "answer": "c",
     "word": "copa",
     "contrast": "sopa",
-    "explanation": "Copa s'escriu amb c quan ?s el recipient per beure."
+    "explanation": "Copa s'escriu amb c quan és el recipient per beure."
   },
   {
     "id": "sh003",
-    "sentence": "El n?mero _ero no ?s positiu ni negatiu.",
+    "sentence": "El número _ero no és positiu ni negatiu.",
     "answer": "z",
     "word": "zero",
     "contrast": "cero",
-    "explanation": "Zero s'escriu amb z en catal?."
+    "explanation": "Zero s'escriu amb z en català."
   },
   {
     "id": "sh004",
-    "sentence": "La cla_e comen?a a les nou.",
+    "sentence": "La cla_e comença a les nou.",
     "answer": "ss",
     "word": "classe",
     "contrast": "clase",
@@ -34,17 +34,113 @@
   {
     "id": "sh005",
     "sentence": "Ens trobem a la pla_a del barri.",
-    "answer": "?",
-    "word": "pla?a",
+    "answer": "ç",
+    "word": "plaça",
     "contrast": "plasa",
-    "explanation": "Pla?a s'escriu amb ? davant a."
+    "explanation": "Plaça s'escriu amb ç davant a."
   },
   {
     "id": "sh006",
-    "sentence": "La pi_ina ?s oberta a l?estiu.",
+    "sentence": "La pi_ina és oberta a l'estiu.",
     "answer": "sc",
     "word": "piscina",
     "contrast": "picina",
     "explanation": "Piscina s'escriu amb sc."
+  },
+  {
+    "id": "sh007",
+    "sentence": "Aquesta ma_a és massa pesada per penjar un quadre.",
+    "answer": "ç",
+    "word": "maça",
+    "contrast": "massa",
+    "explanation": "Maça s'escriu amb ç quan és una eina per colpejar."
+  },
+  {
+    "id": "sh008",
+    "sentence": "Hi ha ma_a gent al passadés.",
+    "answer": "ss",
+    "word": "massa",
+    "contrast": "maça",
+    "explanation": "Massa s'escriu amb ss quan vol dir quantitat excessiva."
+  },
+  {
+    "id": "sh009",
+    "sentence": "La ca_a és al costat de l'escola.",
+    "answer": "s",
+    "word": "casa",
+    "contrast": "caça",
+    "explanation": "Casa s'escriu amb s sonora entre vocals."
+  },
+  {
+    "id": "sh010",
+    "sentence": "La ca_a del senglar està regulada.",
+    "answer": "ç",
+    "word": "caça",
+    "contrast": "casa",
+    "explanation": "Caça s'escriu amb ç quan es refereix a l'acció de caçar."
+  },
+  {
+    "id": "sh011",
+    "sentence": "Necessito una ta_a per al cafè.",
+    "answer": "ss",
+    "word": "tassa",
+    "contrast": "taça",
+    "explanation": "Tassa s'escriu amb ss quan és un recipient."
+  },
+  {
+    "id": "sh013",
+    "sentence": "El pin_ell és massa prim.",
+    "answer": "z",
+    "word": "pinzell",
+    "contrast": "pinsell",
+    "explanation": "Pinzell s'escriu amb z."
+  },
+  {
+    "id": "sh014",
+    "sentence": "La _eba és dolça.",
+    "answer": "c",
+    "word": "ceba",
+    "contrast": "seba",
+    "explanation": "Ceba s'escriu amb c davant e."
+  },
+  {
+    "id": "sh015",
+    "sentence": "El _igne és un ocell blanc.",
+    "answer": "c",
+    "word": "cigne",
+    "contrast": "signe",
+    "explanation": "Cigne s'escriu amb c quan és l'ocell."
+  },
+  {
+    "id": "sh016",
+    "sentence": "Aquest _igne indica perill.",
+    "answer": "s",
+    "word": "signe",
+    "contrast": "cigne",
+    "explanation": "Signe s'escriu amb s quan vol dir senyal."
+  },
+  {
+    "id": "sh017",
+    "sentence": "La _era de l'espelma s'ha fos.",
+    "answer": "c",
+    "word": "cera",
+    "contrast": "sera",
+    "explanation": "Cera s'escriu amb c quan és el material de les espelmes."
+  },
+  {
+    "id": "sh018",
+    "sentence": "Hem de _egar el camp abans de l'estiu.",
+    "answer": "s",
+    "word": "segar",
+    "contrast": "cegar",
+    "explanation": "Segar s'escriu amb s quan vol dir tallar cereals o herba."
+  },
+  {
+    "id": "sh019",
+    "sentence": "La llum pot _egar si és massa forta.",
+    "answer": "c",
+    "word": "cegar",
+    "contrast": "segar",
+    "explanation": "Cegar s'escriu amb c quan vol dir deixar sense visió."
   }
 ]

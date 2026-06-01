@@ -2,8 +2,8 @@
   {
     "id": "s-inicial-final",
     "letter": "s",
-    "title": "S sorda a principi, final i despr?s de consonant",
-    "summary": "El so d'essa sorda sovint s'escriu s a principi de paraula, a final de paraula o despr?s de consonant.",
+    "title": "S sorda a principi, final i després de consonant",
+    "summary": "El so d'essa sorda sovint s'escriu s a principi de paraula, a final de paraula o després de consonant.",
     "examples": [
       "sol",
       "sopa",
@@ -11,7 +11,7 @@
       "sis",
       "gos",
       "mes",
-      "arr?s",
+      "arrés",
       "pensar"
     ],
     "exceptions": []
@@ -44,7 +44,7 @@
       "posar",
       "camisa",
       "cosina",
-      "m?sica",
+      "mésica",
       "visita",
       "desembre"
     ],
@@ -69,18 +69,18 @@
   },
   {
     "id": "c-trencada",
-    "letter": "?",
-    "title": "? davant a, o, u i a final de mot",
-    "summary": "La ? representa el so d'essa sorda davant a, o, u i tamb? en alguns finals de paraula: pla?a, can??, dol?.",
+    "letter": "ç",
+    "title": "Ç davant a, o, u i a final de mot",
+    "summary": "La ç representa el so d'essa sorda davant a, o, u i també en alguns finals de paraula: plaça, cançó, dolç.",
     "examples": [
-      "pla?a",
-      "bra?",
-      "can??",
-      "dol?",
-      "for?a",
-      "lli??",
-      "ven?ut",
-      "comen?ar"
+      "plaça",
+      "braç",
+      "cançó",
+      "dolç",
+      "força",
+      "lliçó",
+      "vençut",
+      "començar"
     ],
     "exceptions": []
   },
@@ -88,12 +88,12 @@
     "id": "z-sonora",
     "letter": "z",
     "title": "Z sonora",
-    "summary": "La z representa sovint el so d'essa sonora a principi de paraula o despr?s de consonant: zero, zona, dotze.",
+    "summary": "La z representa sovint el so d'essa sonora a principi de paraula o després de consonant: zero, zona, dotze.",
     "examples": [
       "zero",
       "zona",
       "zebra",
-      "zool?gic",
+      "zoològic",
       "dotze",
       "tretze",
       "atzar",
@@ -113,7 +113,7 @@
       "descens",
       "disciplina",
       "adolescent",
-      "consci?ncia",
+      "consciència",
       "fascinar"
     ],
     "exceptions": []

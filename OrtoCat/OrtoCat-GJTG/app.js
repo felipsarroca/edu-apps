@@ -193,7 +193,7 @@ function renderStudy() {
         <strong>Excepciones:</strong> ${rule.exceptions.map(escapeHtml).join(", ")}.
       </div>` : ""}
     <div class="section-actions">
-      <button class="primary-button" type="button" data-practice-rule="${rule.id}">Practicar esta norma</button>
+      <button class="primary-button" type="button" data-practice-rule="${rule.id}">Practicar aquesta norma</button>
     </div>
   `;
 
@@ -244,7 +244,7 @@ function createRandomSet() {
   state.randomItems = chosen;
   rememberRandomSelection(chosen);
   const exceptionCount = chosen.filter((item) => item.exception).length;
-  els.adaptiveNote.textContent = `La tanda s'ha generat amb nivell estimat ${level.label.toLowerCase()} i confiança ${Math.round(level.confidence * 100)} %. La selección evita repetir palabras recientes, prioriza la ganancia de información y añade más excepciones cuando sube el nivel. Excepciones en esta tanda: ${exceptionCount}.`;
+  els.adaptiveNote.textContent = `La tanda s'ha generat amb nivell estimat ${level.label.toLowerCase()} i confiança ${Math.round(level.confidence * 100)} %. La selecció evita repetir paraules recents, prioritza el guany d'informació i afegeix més excepcions quan puja el nivell. Excepcions en aquesta tanda: ${exceptionCount}.`;
   renderPractice(els.randomPractice, state.randomItems, "random");
 }
 
@@ -490,7 +490,7 @@ function highlightNorm(text, ruleId, targetWord = "") {
 function explainItem(item) {
   if (item.explanation) return highlightNorm(item.explanation, item.ruleId || "homophones", item.word || "");
   const rule = ruleById(item.ruleId);
-  const exception = item.exception ? " Es una excepción que conviene memorizar." : "";
+  const exception = item.exception ? " És una excepció que convé memoritzar." : "";
   return `${highlightRuleText(rule.summary, rule.id, rule.letter)}${escapeHtml(exception)}`;
 }
 
@@ -583,9 +583,9 @@ function renderProgress() {
     .join("");
 
   els.progressPanel.innerHTML = `
-    <h3>Diagnóstico global</h3>
-    <p>Nivel estimado: <strong>${globalLevel.label}</strong>. Confianza: <strong>${Math.round(globalLevel.confidence * 100)} %</strong>. Incertidumbre: <strong>${globalLevel.entropy.toFixed(2)}</strong>. ${globalLevel.confidence >= 0.8 ? "El resultado es bastante estable." : "El resultado aún es provisional: conviene practicar más preguntas."}</p>
-    <h3>Dominio por norma</h3>
+    <h3>Diagnòstic global</h3>
+    <p>Nivell estimat: <strong>${globalLevel.label}</strong>. Confiança: <strong>${Math.round(globalLevel.confidence * 100)} %</strong>. Incertesa: <strong>${globalLevel.entropy.toFixed(2)}</strong>. ${globalLevel.confidence >= 0.8 ? "El resultat és força estable." : "El resultat encara és provisional: convé practicar més preguntes."}</p>
+    <h3>Domini per norma</h3>
     ${rows}
     <h3>Errors más frecuentes</h3>
     ${commonErrors ? `<ul>${commonErrors}</ul>` : "<p>Encara no hi ha errors registrats.</p>"}

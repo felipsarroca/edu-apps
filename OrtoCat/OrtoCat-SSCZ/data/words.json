@@ -5,7 +5,8 @@
     "masked": "_ol",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "astre"
   },
   {
     "id": "sz002",
@@ -49,8 +50,8 @@
   },
   {
     "id": "sz007",
-    "word": "arr?s",
-    "masked": "arr?_",
+    "word": "arrés",
+    "masked": "arrò_",
     "answer": "s",
     "ruleId": "s-inicial-final",
     "difficulty": 2
@@ -85,7 +86,8 @@
     "masked": "ma_a",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "quantitat excessiva"
   },
   {
     "id": "sz012",
@@ -133,7 +135,8 @@
     "masked": "ca_a",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "edifici per viure-hi"
   },
   {
     "id": "sz018",
@@ -169,8 +172,8 @@
   },
   {
     "id": "sz022",
-    "word": "m?sica",
-    "masked": "m?_ica",
+    "word": "mésica",
+    "masked": "mú_ica",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
@@ -197,7 +200,8 @@
     "masked": "_el",
     "answer": "c",
     "ruleId": "c-e-i",
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "part del paisatge"
   },
   {
     "id": "sz026",
@@ -245,7 +249,8 @@
     "masked": "_inc",
     "answer": "c",
     "ruleId": "c-e-i",
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "nombre"
   },
   {
     "id": "sz032",
@@ -257,65 +262,65 @@
   },
   {
     "id": "sz033",
-    "word": "pla?a",
+    "word": "plaça",
     "masked": "pla_a",
-    "answer": "?",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 1
   },
   {
     "id": "sz034",
-    "word": "bra?",
+    "word": "braç",
     "masked": "bra_",
-    "answer": "?",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 1
   },
   {
     "id": "sz035",
-    "word": "can??",
-    "masked": "can_?",
-    "answer": "?",
+    "word": "cançó",
+    "masked": "can_ó",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 1
   },
   {
     "id": "sz036",
-    "word": "dol?",
+    "word": "dolç",
     "masked": "dol_",
-    "answer": "?",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 2
   },
   {
     "id": "sz037",
-    "word": "for?a",
+    "word": "força",
     "masked": "for_a",
-    "answer": "?",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 1
   },
   {
     "id": "sz038",
-    "word": "lli??",
-    "masked": "lli_?",
-    "answer": "?",
+    "word": "lliçó",
+    "masked": "lli_ó",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 2
   },
   {
     "id": "sz039",
-    "word": "ven?ut",
+    "word": "vençut",
     "masked": "ven_ut",
-    "answer": "?",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 3
   },
   {
     "id": "sz040",
-    "word": "comen?ar",
+    "word": "començar",
     "masked": "comen_ar",
-    "answer": "?",
+    "answer": "ç",
     "ruleId": "c-trencada",
     "difficulty": 2
   },
@@ -345,8 +350,8 @@
   },
   {
     "id": "sz044",
-    "word": "zool?gic",
-    "masked": "_ool?gic",
+    "word": "zoològic",
+    "masked": "_oològic",
     "answer": "z",
     "ruleId": "z-sonora",
     "difficulty": 2
@@ -389,7 +394,8 @@
     "masked": "e_ena",
     "answer": "sc",
     "ruleId": "sc-cultismes",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "cultisme amb sc"
   },
   {
     "id": "sz050",
@@ -397,7 +403,8 @@
     "masked": "pi_ina",
     "answer": "sc",
     "ruleId": "sc-cultismes",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "cultisme amb sc"
   },
   {
     "id": "sz051",
@@ -405,7 +412,8 @@
     "masked": "a_ensor",
     "answer": "sc",
     "ruleId": "sc-cultismes",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "cultisme amb sc"
   },
   {
     "id": "sz052",
@@ -433,11 +441,12 @@
   },
   {
     "id": "sz055",
-    "word": "consci?ncia",
-    "masked": "con_i?ncia",
+    "word": "consciència",
+    "masked": "con_iència",
     "answer": "sc",
     "ruleId": "sc-cultismes",
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "cultisme amb sc"
   },
   {
     "id": "sz056",
@@ -446,5 +455,363 @@
     "answer": "sc",
     "ruleId": "sc-cultismes",
     "difficulty": 3
+  },
+  {
+    "id": "sz057",
+    "word": "setmana",
+    "masked": "_etmana",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 1
+  },
+  {
+    "id": "sz058",
+    "word": "salut",
+    "masked": "_alut",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 1
+  },
+  {
+    "id": "sz059",
+    "word": "somriure",
+    "masked": "_omriure",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2
+  },
+  {
+    "id": "sz060",
+    "word": "fals",
+    "masked": "fal_",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2
+  },
+  {
+    "id": "sz061",
+    "word": "curs",
+    "masked": "cur_",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2
+  },
+  {
+    "id": "sz062",
+    "word": "ansa",
+    "masked": "an_a",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2
+  },
+  {
+    "id": "sz063",
+    "word": "bossa",
+    "masked": "bo_a",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 1
+  },
+  {
+    "id": "sz064",
+    "word": "pissarra",
+    "masked": "pi_arra",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz065",
+    "word": "assajar",
+    "masked": "a_ajar",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz066",
+    "word": "arrissar",
+    "masked": "arri_ar",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 3
+  },
+  {
+    "id": "sz067",
+    "word": "missió",
+    "masked": "mi_ió",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 3
+  },
+  {
+    "id": "sz068",
+    "word": "passadés",
+    "masked": "pa_adés",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz069",
+    "word": "tesi",
+    "masked": "te_i",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3,
+    "hint": "s sonora entre vocals"
+  },
+  {
+    "id": "sz070",
+    "word": "presó",
+    "masked": "pre_ó",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3,
+    "hint": "s sonora entre vocals"
+  },
+  {
+    "id": "sz071",
+    "word": "paésos",
+    "masked": "paï_os",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3,
+    "hint": "s sonora entre vocals"
+  },
+  {
+    "id": "sz072",
+    "word": "casino",
+    "masked": "ca_ino",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3,
+    "hint": "s sonora entre vocals"
+  },
+  {
+    "id": "sz073",
+    "word": "desert",
+    "masked": "de_ert",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 2
+  },
+  {
+    "id": "sz075",
+    "word": "zinc",
+    "masked": "_inc",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 2,
+    "hint": "element químic"
+  },
+  {
+    "id": "sz076",
+    "word": "pinzell",
+    "masked": "pin_ell",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz077",
+    "word": "alzina",
+    "masked": "al_ina",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz078",
+    "word": "calze",
+    "masked": "cal_e",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz079",
+    "word": "ceba",
+    "masked": "_eba",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 1,
+    "hint": "hortalissa"
+  },
+  {
+    "id": "sz080",
+    "word": "cercle",
+    "masked": "_ercle",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz081",
+    "word": "cigró",
+    "masked": "_igró",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz082",
+    "word": "ciment",
+    "masked": "_iment",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz083",
+    "word": "dolça",
+    "masked": "dol_a",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz084",
+    "word": "caçador",
+    "masked": "ca_ador",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz085",
+    "word": "adreça",
+    "masked": "adre_a",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz086",
+    "word": "calçot",
+    "masked": "cal_ot",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz087",
+    "word": "ciència",
+    "masked": "_iència",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz088",
+    "word": "paciència",
+    "masked": "pa_iència",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "sz089",
+    "word": "escèptic",
+    "masked": "e_èptic",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz090",
+    "word": "discernir",
+    "masked": "di_ernir",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz091",
+    "word": "descendent",
+    "masked": "de_endent",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz092",
+    "word": "fascicle",
+    "masked": "fa_icle",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz093",
+    "word": "maça",
+    "masked": "ma_a",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 3,
+    "hint": "eina per colpejar"
+  },
+  {
+    "id": "sz094",
+    "word": "cigne",
+    "masked": "_igne",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 3,
+    "hint": "ocell"
+  },
+  {
+    "id": "sz095",
+    "word": "signe",
+    "masked": "_igne",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 3,
+    "hint": "marca o senyal"
+  },
+  {
+    "id": "sz096",
+    "word": "seure",
+    "masked": "_eure",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2,
+    "hint": "posar-se assegut"
+  },
+  {
+    "id": "sz097",
+    "word": "cera",
+    "masked": "_era",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2,
+    "hint": "material de les espelmes"
+  },
+  {
+    "id": "sz098",
+    "word": "seda",
+    "masked": "_eda",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2,
+    "hint": "teixit fi"
+  },
+  {
+    "id": "sz099",
+    "word": "cegar",
+    "masked": "_egar",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 3,
+    "hint": "deixar sense visió"
+  },
+  {
+    "id": "sz100",
+    "word": "segar",
+    "masked": "_egar",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 3,
+    "hint": "tallar cereals o herba"
   }
 ]

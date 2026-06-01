@@ -13,11 +13,11 @@
     "answer": "b",
     "word": "baca",
     "contrast": "vaca",
-    "explanation": "Baca s'escriu amb b quan ?s el suport del sostre d'un vehicle."
+    "explanation": "Baca s'escriu amb b quan és el suport del sostre d'un vehicle."
   },
   {
     "id": "bh003",
-    "sentence": "Aquest paisatge ?s molt _ell.",
+    "sentence": "Aquest paisatge és molt _ell.",
     "answer": "b",
     "word": "bell",
     "contrast": "vell",
@@ -25,19 +25,19 @@
   },
   {
     "id": "bh004",
-    "sentence": "El meu avi ?s molt _ell.",
+    "sentence": "El meu avi és molt _ell.",
     "answer": "v",
     "word": "vell",
     "contrast": "bell",
-    "explanation": "Vell s'escriu amb v quan vol dir d'edat avan?ada."
+    "explanation": "Vell s'escriu amb v quan vol dir d'edat avançada."
   },
   {
     "id": "bh005",
-    "sentence": "La J?lia ha de _eure m?s aigua.",
+    "sentence": "La Júlia ha de _eure més aigua.",
     "answer": "b",
     "word": "beure",
     "contrast": "veure",
-    "explanation": "Beure s'escriu amb b quan vol dir prendre un l?quid."
+    "explanation": "Beure s'escriu amb b quan vol dir prendre un líquid."
   },
   {
     "id": "bh006",
@@ -62,5 +62,85 @@
     "word": "votar",
     "contrast": "botar",
     "explanation": "Votar s'escriu amb v quan vol dir emetre un vot."
+  },
+  {
+    "id": "bh009",
+    "sentence": "La infermera li posa una _ena al braç.",
+    "answer": "b",
+    "word": "bena",
+    "contrast": "vena",
+    "explanation": "Bena s'escriu amb b quan és una tira de roba per embenar."
+  },
+  {
+    "id": "bh010",
+    "sentence": "La sang circula per una _ena.",
+    "answer": "v",
+    "word": "vena",
+    "contrast": "bena",
+    "explanation": "Vena s'escriu amb v quan és un vas sanguini."
+  },
+  {
+    "id": "bh011",
+    "sentence": "El got és _uit.",
+    "answer": "b",
+    "word": "buit",
+    "contrast": "vuit",
+    "explanation": "Buit s'escriu amb b quan vol dir que no hi ha res dins."
+  },
+  {
+    "id": "bh012",
+    "sentence": "El número _uit va després del set.",
+    "answer": "v",
+    "word": "vuit",
+    "contrast": "buit",
+    "explanation": "Vuit s'escriu amb v quan és el nombre."
+  },
+  {
+    "id": "bh013",
+    "sentence": "La plana era molt _asta.",
+    "answer": "v",
+    "word": "vasta",
+    "contrast": "basta",
+    "explanation": "Vasta s'escriu amb v quan vol dir molt extensa."
+  },
+  {
+    "id": "bh014",
+    "sentence": "La tela era massa _asta.",
+    "answer": "b",
+    "word": "basta",
+    "contrast": "vasta",
+    "explanation": "Basta s'escriu amb b quan vol dir poc fina o grollera."
+  },
+  {
+    "id": "bh015",
+    "sentence": "La pilota és una _ola vermella.",
+    "answer": "b",
+    "word": "bola",
+    "contrast": "vola",
+    "explanation": "Bola s'escriu amb b quan és un objecte rodó."
+  },
+  {
+    "id": "bh016",
+    "sentence": "L'ocell _ola molt alt.",
+    "answer": "v",
+    "word": "vola",
+    "contrast": "bola",
+    "explanation": "Vola s'escriu amb v quan és una forma del verb volar."
+  },
+  {
+    "id": "bh017",
+    "sentence": "La _ellesa del paisatge impressiona.",
+    "answer": "b",
+    "word": "bellesa",
+    "contrast": "vellesa",
+    "explanation": "Bellesa s'escriu amb b quan parla de la qualitat de bell."
+  },
+  {
+    "id": "bh018",
+    "sentence": "La _ellesa no impedeix aprendre coses noves.",
+    "answer": "v",
+    "word": "vellesa",
+    "contrast": "bellesa",
+    "explanation": "Vellesa s'escriu amb v quan parla de l'edat avançada."
   }
 ]

@@ -17,7 +17,7 @@
   },
   {
     "id": "xh003",
-    "sentence": "El co_e ?s vermell.",
+    "sentence": "El co_e és vermell.",
     "answer": "tx",
     "word": "cotxe",
     "contrast": "coixe",
@@ -25,7 +25,7 @@
   },
   {
     "id": "xh004",
-    "sentence": "El mes de ma_ t? trenta-un dies.",
+    "sentence": "El mes de ma_ té trenta-un dies.",
     "answer": "ig",
     "word": "maig",
     "contrast": "maix",
@@ -33,10 +33,58 @@
   },
   {
     "id": "xh005",
-    "sentence": "Tinc un e_amen dem?.",
+    "sentence": "Tinc un e_amen demà.",
     "answer": "x",
     "word": "examen",
     "contrast": "ecsamen",
     "explanation": "Examen s'escriu amb x."
+  },
+  {
+    "id": "xh006",
+    "sentence": "La madui_a és madura.",
+    "answer": "ix",
+    "word": "maduixa",
+    "contrast": "madutxa",
+    "explanation": "Maduixa s'escriu amb ix."
+  },
+  {
+    "id": "xh007",
+    "sentence": "He perdut la fi_a de lectura.",
+    "answer": "tx",
+    "word": "fitxa",
+    "contrast": "fixa",
+    "explanation": "Fitxa s'escriu amb tx quan és un full o document."
+  },
+  {
+    "id": "xh008",
+    "sentence": "La resposta és fi_a i no canvia.",
+    "answer": "x",
+    "word": "fixa",
+    "contrast": "fitxa",
+    "explanation": "Fixa s'escriu amb x quan vol dir estable."
+  },
+  {
+    "id": "xh009",
+    "sentence": "Anirem en ta_i fins al museu.",
+    "answer": "x",
+    "word": "taxi",
+    "contrast": "tacsi",
+    "explanation": "Taxi s'escriu amb x."
+  },
+  {
+    "id": "xh010",
+    "sentence": "He guardat els llapis a l'esto_.",
+    "answer": "ig",
+    "word": "estoig",
+    "contrast": "estoix",
+    "explanation": "Estoig s'escriu amb ig final."
+  },
+  {
+    "id": "xh011",
+    "sentence": "La mo_illa pesa massa.",
+    "answer": "tx",
+    "word": "motxilla",
+    "contrast": "moixilla",
+    "explanation": "Motxilla s'escriu amb tx."
   }
 ]

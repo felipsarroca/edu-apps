@@ -129,129 +129,433 @@
   },
   {
     "id": "ll017",
-    "word": "col?legi",
+    "word": "col·legi",
     "masked": "co_egi",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "ela geminada"
   },
   {
     "id": "ll018",
-    "word": "novel?la",
+    "word": "novel·la",
     "masked": "nove_a",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "ela geminada"
   },
   {
     "id": "ll019",
-    "word": "intel?ligent",
+    "word": "intel·ligent",
     "masked": "inte_igent",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "ela geminada"
   },
   {
     "id": "ll020",
-    "word": "paral?lel",
+    "word": "paral·lel",
     "masked": "para_el",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll021",
-    "word": "pel?l?cula",
-    "masked": "pe_?cula",
-    "answer": "l?l",
+    "word": "pel·lícula",
+    "masked": "pe_ícula",
+    "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "ela geminada"
   },
   {
     "id": "ll022",
-    "word": "il?lusi?",
-    "masked": "i_usi?",
-    "answer": "l?l",
+    "word": "il·lusió",
+    "masked": "i_usió",
+    "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 2
   },
   {
     "id": "ll023",
-    "word": "col?laborar",
+    "word": "col·laborar",
     "masked": "co_aborar",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll024",
-    "word": "excel?lent",
+    "word": "excel·lent",
     "masked": "exce_ent",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll025",
-    "word": "al?l?rgia",
-    "masked": "a_?rgia",
-    "answer": "l?l",
+    "word": "al·lèrgia",
+    "masked": "a_èrgia",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "família al·l-"
   },
   {
     "id": "ll026",
-    "word": "al?lucinar",
+    "word": "al·lucinar",
     "masked": "a_ucinar",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   },
   {
     "id": "ll027",
-    "word": "col?lecci?",
-    "masked": "co_ecci?",
-    "answer": "l?l",
+    "word": "col·lecció",
+    "masked": "co_ecció",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "família col·l-"
   },
   {
     "id": "ll028",
-    "word": "col?lectiu",
+    "word": "col·lectiu",
     "masked": "co_ectiu",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 2
   },
   {
     "id": "ll029",
-    "word": "il?legal",
+    "word": "il·legal",
     "masked": "i_egal",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "família il·l-"
   },
   {
     "id": "ll030",
-    "word": "il?luminar",
+    "word": "il·luminar",
     "masked": "i_uminar",
-    "answer": "l?l",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   },
   {
     "id": "ll031",
-    "word": "mil?l?metre",
-    "masked": "mi_?metre",
-    "answer": "l?l",
+    "word": "mil·límetre",
+    "masked": "mi_ímetre",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3,
+    "hint": "família mil·l-"
+  },
+  {
+    "id": "ll032",
+    "word": "mil·lenni",
+    "masked": "mi_enni",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   },
   {
-    "id": "ll032",
-    "word": "mil?lenni",
-    "masked": "mi_enni",
-    "answer": "l?l",
+    "id": "ll033",
+    "word": "milió",
+    "masked": "mi_ió",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 3,
+    "hint": "no porta punt volat"
+  },
+  {
+    "id": "ll034",
+    "word": "alegria",
+    "masked": "a_egria",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2,
+    "hint": "l simple"
+  },
+  {
+    "id": "ll035",
+    "word": "selecció",
+    "masked": "se_ecció",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 3,
+    "hint": "l simple; no ela geminada"
+  },
+  {
+    "id": "ll036",
+    "word": "literatura",
+    "masked": "_iteratura",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2,
+    "hint": "l simple"
+  },
+  {
+    "id": "ll037",
+    "word": "celebrar",
+    "masked": "ce_ebrar",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2,
+    "hint": "l simple; no ela geminada"
+  },
+  {
+    "id": "ll038",
+    "word": "solució",
+    "masked": "so_ució",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll039",
+    "word": "pallasso",
+    "masked": "pa_asso",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll040",
+    "word": "llibre",
+    "masked": "_ibre",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll041",
+    "word": "llengua",
+    "masked": "_engua",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll042",
+    "word": "llop",
+    "masked": "_op",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll043",
+    "word": "ocell",
+    "masked": "oce_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll044",
+    "word": "cabell",
+    "masked": "cabe_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll045",
+    "word": "al·legar",
+    "masked": "a_egar",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll046",
+    "word": "al·licient",
+    "masked": "a_icient",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll047",
+    "word": "col·locar",
+    "masked": "co_ocar",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 2
+  },
+  {
+    "id": "ll048",
+    "word": "col·lisió",
+    "masked": "co_isió",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll049",
+    "word": "il·lustrar",
+    "masked": "i_ustrar",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll050",
+    "word": "il·lés",
+    "masked": "i_és",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll051",
+    "word": "nul·la",
+    "masked": "nu_a",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll052",
+    "word": "tranquil·la",
+    "masked": "tranqui_a",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll053",
+    "word": "satèl·llit",
+    "masked": "satè_it",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll054",
+    "word": "cristal·lí",
+    "masked": "crista_í",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll055",
+    "word": "instal·lar",
+    "masked": "insta_ar",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll056",
+    "word": "cancel·lar",
+    "masked": "cance_ar",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll057",
+    "word": "calor",
+    "masked": "ca_or",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll058",
+    "word": "calar",
+    "masked": "ca_ar",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 3,
+    "hint": "penetrar o mullar"
+  },
+  {
+    "id": "ll059",
+    "word": "callar",
+    "masked": "ca_ar",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 3,
+    "hint": "no parlar"
+  },
+  {
+    "id": "ll060",
+    "word": "balena",
+    "masked": "ba_ena",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll061",
+    "word": "llavor",
+    "masked": "_avor",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll062",
+    "word": "llest",
+    "masked": "_est",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll063",
+    "word": "il·lògic",
+    "masked": "i_ògic",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll064",
+    "word": "il·limitat",
+    "masked": "i_imitat",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll065",
+    "word": "col·loqui",
+    "masked": "co_oqui",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll066",
+    "word": "al·literació",
+    "masked": "a_iteració",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll067",
+    "word": "gal·la",
+    "masked": "ga_a",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3,
+    "hint": "festa solemne"
+  },
+  {
+    "id": "ll068",
+    "word": "mil·lésima",
+    "masked": "mi_ésima",
+    "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   }

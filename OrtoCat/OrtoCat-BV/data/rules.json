@@ -3,13 +3,13 @@
     "id": "b-bl-br",
     "letter": "b",
     "title": "Grups bl i br",
-    "summary": "S'escriuen amb b els grups bl i br en paraules com blanc, problema, bra? o arbre.",
+    "summary": "S'escriuen amb b els grups bl i br en paraules com blanc, problema, braç o arbre.",
     "examples": [
       "blanc",
       "blau",
       "noble",
       "problema",
-      "bra?",
+      "braç",
       "brillant",
       "obrir",
       "arbre"
@@ -27,23 +27,25 @@
       "bufanda",
       "burla",
       "burgesia",
-      "b?stia",
+      "béstia",
       "buit",
       "bumerang"
     ],
     "exceptions": [
       "vulgar",
       "vulnerable",
-      "vulcanisme"
+      "vulcanisme",
+      "vudú",
+      "vulnerar"
     ]
   },
   {
     "id": "bv-mb-nv",
     "letter": "b/v",
-    "title": "Despr?s de m i de n",
-    "summary": "Davant de b sol apar?ixer m; davant de v sol apar?ixer n. Per aix? escrivim ambient i tamb?, per? canvi i enviar.",
+    "title": "Després de m i de n",
+    "summary": "Davant de b sol aparèixer m; davant de v sol aparèixer n. Per això escrivim ambient i també, però canvi i enviar.",
     "examples": [
-      "tamb?",
+      "també",
       "tombar",
       "ambient",
       "embut",
@@ -66,8 +68,8 @@
       "biodiversitat",
       "biblioteca",
       "bibliografia",
-      "biling?e",
-      "bis?l?lab",
+      "bilingüe",
+      "bisíl·llab",
       "bicicleta",
       "binomi"
     ],
@@ -107,13 +109,13 @@
     "id": "v-imperfet-ava",
     "letter": "v",
     "title": "Imperfet en -ava",
-    "summary": "L'imperfet dels verbs de la primera conjugaci? s'escriu amb v: cantava, parlaves, mir?vem.",
+    "summary": "L'imperfet dels verbs de la primera conjugació s'escriu amb v: cantava, parlaves, miràvem.",
     "examples": [
       "cantava",
       "parlava",
       "miraves",
-      "jug?vem",
-      "treball?veu",
+      "jugàvem",
+      "treballàveu",
       "estudiaven"
     ],
     "exceptions": []
@@ -121,8 +123,8 @@
   {
     "id": "v-frequents",
     "letter": "v",
-    "title": "Paraules freq?ents amb v",
-    "summary": "Hi ha paraules molt freq?ents amb v que conv? memoritzar per fam?lia l?xica.",
+    "title": "Paraules freqüents amb v",
+    "summary": "Hi ha paraules molt freqüents amb v que convé memoritzar per família lèxica.",
     "examples": [
       "veu",
       "veure",
@@ -138,8 +140,8 @@
   {
     "id": "b-frequents",
     "letter": "b",
-    "title": "Paraules freq?ents amb b",
-    "summary": "Hi ha paraules freq?ents amb b que conv? memoritzar pel significat i per fam?lia l?xica.",
+    "title": "Paraules freqüents amb b",
+    "summary": "Hi ha paraules freqüents amb b que convé memoritzar pel significat i per família lèxica.",
     "examples": [
       "baca",
       "bell",
