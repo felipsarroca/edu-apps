@@ -180,17 +180,17 @@ function renderStudy() {
   els.ruleCard.innerHTML = `
     <div class="rule-meta">
       <span class="badge">${state.ruleIndex + 1} / ${state.rules.length}</span>
-      <span class="badge">Se escribe con ${rule.letter.toUpperCase()}</span>
+      <span class="badge">S'escriu amb ${rule.letter.toUpperCase()}</span>
     </div>
     <h3>${escapeHtml(rule.title)}</h3>
     <p class="rule-text">${highlightRuleText(rule.summary, rule.id, rule.letter)}</p>
     <div>
-      <h3>Ejemplos</h3>
+      <h3>Exemples</h3>
       <ul class="examples">${rule.examples.map((word) => `<li>${highlightNorm(word, rule.id)}</li>`).join("")}</ul>
     </div>
     ${rule.exceptions.length ? `
       <div class="exception-box">
-        <strong>Excepciones:</strong> ${rule.exceptions.map(escapeHtml).join(", ")}.
+        <strong>Excepcions:</strong> ${rule.exceptions.map(escapeHtml).join(", ")}.
       </div>` : ""}
     <div class="section-actions">
       <button class="primary-button" type="button" data-practice-rule="${rule.id}">Practicar aquesta norma</button>
@@ -603,7 +603,7 @@ function renderProgress() {
     <p>Nivell estimat: <strong>${globalLevel.label}</strong>. Confiança: <strong>${Math.round(globalLevel.confidence * 100)} %</strong>. Incertesa: <strong>${globalLevel.entropy.toFixed(2)}</strong>. ${globalLevel.confidence >= 0.8 ? "El resultat és força estable." : "El resultat encara és provisional: convé practicar més preguntes."}</p>
     <h3>Domini per norma</h3>
     ${rows}
-    <h3>Errors más frecuentes</h3>
+    <h3>Errors més freqüents</h3>
     ${commonErrors ? `<ul>${commonErrors}</ul>` : "<p>Encara no hi ha errors registrats.</p>"}
   `;
 }
@@ -729,9 +729,9 @@ function nextItemsForRule(ruleId, pool, amount) {
 function rulePracticeStatus(ruleId) {
   const result = state.stats.rulePractice[ruleId];
   if (!result?.completed) return { className: "", label: "", mark: "" };
-  if (result.misses === 0) return { className: "rule-ok", label: "sin fallos", mark: "✓" };
-  if (result.misses <= 2) return { className: "rule-mid", label: "1-2 fallos", mark: "●" };
-  return { className: "rule-low", label: "más de 2 fallos", mark: "▲" };
+  if (result.misses === 0) return { className: "rule-ok", label: "sense errors", mark: "✓" };
+  if (result.misses <= 2) return { className: "rule-mid", label: "1-2 errors", mark: "●" };
+  return { className: "rule-low", label: "més de 2 errors", mark: "▲" };
 }
 
 function getBelief(key) {
@@ -807,4 +807,6 @@ function escapeHtml(value) {
 
 function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+}
 }

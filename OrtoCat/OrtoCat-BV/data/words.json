@@ -236,8 +236,8 @@
   },
   {
     "id": "bv030",
-    "word": "bisíl·llab",
-    "masked": "_isíl·llab",
+    "word": "bisíl·lab",
+    "masked": "_isíl·lab",
     "answer": "b",
     "ruleId": "b-bio-biblio-bi",
     "difficulty": 3

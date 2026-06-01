@@ -1,4 +1,4 @@
-// El índice general contiene enlaces directos y la lógica de instalación de los módulos.
+// L'índex general conté enllaços directes i la lògica d'instal·lació dels mòduls.
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".card-install-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
