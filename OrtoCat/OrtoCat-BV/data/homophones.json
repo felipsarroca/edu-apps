@@ -1,0 +1,66 @@
+[
+  {
+    "id": "bh001",
+    "sentence": "La _aca menja herba al prat.",
+    "answer": "v",
+    "word": "vaca",
+    "contrast": "baca",
+    "explanation": "Vaca s'escriu amb v quan designa l'animal."
+  },
+  {
+    "id": "bh002",
+    "sentence": "Hem posat les maletes a la _aca del cotxe.",
+    "answer": "b",
+    "word": "baca",
+    "contrast": "vaca",
+    "explanation": "Baca s'escriu amb b quan ?s el suport del sostre d'un vehicle."
+  },
+  {
+    "id": "bh003",
+    "sentence": "Aquest paisatge ?s molt _ell.",
+    "answer": "b",
+    "word": "bell",
+    "contrast": "vell",
+    "explanation": "Bell s'escriu amb b quan vol dir bonic."
+  },
+  {
+    "id": "bh004",
+    "sentence": "El meu avi ?s molt _ell.",
+    "answer": "v",
+    "word": "vell",
+    "contrast": "bell",
+    "explanation": "Vell s'escriu amb v quan vol dir d'edat avan?ada."
+  },
+  {
+    "id": "bh005",
+    "sentence": "La J?lia ha de _eure m?s aigua.",
+    "answer": "b",
+    "word": "beure",
+    "contrast": "veure",
+    "explanation": "Beure s'escriu amb b quan vol dir prendre un l?quid."
+  },
+  {
+    "id": "bh006",
+    "sentence": "Des de la finestra puc _eure el pati.",
+    "answer": "v",
+    "word": "veure",
+    "contrast": "beure",
+    "explanation": "Veure s'escriu amb v quan vol dir percebre amb els ulls."
+  },
+  {
+    "id": "bh007",
+    "sentence": "Hem de _otar la pilota contra la paret.",
+    "answer": "b",
+    "word": "botar",
+    "contrast": "votar",
+    "explanation": "Botar s'escriu amb b quan vol dir fer un bot o rebotar."
+  },
+  {
+    "id": "bh008",
+    "sentence": "Diumenge anirem a _otar.",
+    "answer": "v",
+    "word": "votar",
+    "contrast": "botar",
+    "explanation": "Votar s'escriu amb v quan vol dir emetre un vot."
+  }
+]

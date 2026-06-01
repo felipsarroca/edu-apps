@@ -1,0 +1,429 @@
+[
+  {
+    "id": "bv001",
+    "word": "blanc",
+    "masked": "_lanc",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 1
+  },
+  {
+    "id": "bv002",
+    "word": "blau",
+    "masked": "_lau",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 1
+  },
+  {
+    "id": "bv003",
+    "word": "noble",
+    "masked": "no_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv004",
+    "word": "problema",
+    "masked": "pro_lema",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv005",
+    "word": "bra?",
+    "masked": "_ra?",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 1
+  },
+  {
+    "id": "bv006",
+    "word": "brillant",
+    "masked": "_rillant",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv007",
+    "word": "obrir",
+    "masked": "o_rir",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv008",
+    "word": "arbre",
+    "masked": "ar_re",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv009",
+    "word": "buscar",
+    "masked": "_uscar",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 1
+  },
+  {
+    "id": "bv010",
+    "word": "butxaca",
+    "masked": "_utxaca",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 1
+  },
+  {
+    "id": "bv011",
+    "word": "bufanda",
+    "masked": "_ufanda",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 1
+  },
+  {
+    "id": "bv012",
+    "word": "burla",
+    "masked": "_urla",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv013",
+    "word": "burgesia",
+    "masked": "_urgesia",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3
+  },
+  {
+    "id": "bv014",
+    "word": "b?stia",
+    "masked": "_?stia",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv015",
+    "word": "vulgar",
+    "masked": "_ulgar",
+    "answer": "v",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3,
+    "hint": "excepci?"
+  },
+  {
+    "id": "bv016",
+    "word": "vulnerable",
+    "masked": "_ulnerable",
+    "answer": "v",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3,
+    "hint": "excepci?"
+  },
+  {
+    "id": "bv017",
+    "word": "tamb?",
+    "masked": "tam_?",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 1
+  },
+  {
+    "id": "bv018",
+    "word": "tombar",
+    "masked": "tom_ar",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv019",
+    "word": "ambient",
+    "masked": "am_ient",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv020",
+    "word": "embut",
+    "masked": "em_ut",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv021",
+    "word": "canvi",
+    "masked": "can_i",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 1
+  },
+  {
+    "id": "bv022",
+    "word": "enviar",
+    "masked": "en_iar",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv023",
+    "word": "invent",
+    "masked": "in_ent",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv024",
+    "word": "tramvia",
+    "masked": "tram_ia",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 3,
+    "hint": "vehicle que circula sobre rails"
+  },
+  {
+    "id": "bv025",
+    "word": "biologia",
+    "masked": "_iologia",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 1
+  },
+  {
+    "id": "bv026",
+    "word": "biodiversitat",
+    "masked": "_iodiversitat",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv027",
+    "word": "biblioteca",
+    "masked": "_iblioteca",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 1
+  },
+  {
+    "id": "bv028",
+    "word": "bibliografia",
+    "masked": "_ibliografia",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv029",
+    "word": "biling?e",
+    "masked": "_iling?e",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv030",
+    "word": "bis?l?lab",
+    "masked": "_is?l?lab",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 3
+  },
+  {
+    "id": "bv031",
+    "word": "vicepresident",
+    "masked": "_icepresident",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv032",
+    "word": "vicedirectora",
+    "masked": "_icedirectora",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv033",
+    "word": "vicerector",
+    "masked": "_icerector",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 3
+  },
+  {
+    "id": "bv034",
+    "word": "viceversa",
+    "masked": "_iceversa",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv035",
+    "word": "advertir",
+    "masked": "ad_ertir",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv036",
+    "word": "adverbi",
+    "masked": "ad_erbi",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv037",
+    "word": "advocat",
+    "masked": "ad_ocat",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv038",
+    "word": "adversari",
+    "masked": "ad_ersari",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 3
+  },
+  {
+    "id": "bv039",
+    "word": "cantava",
+    "masked": "canta_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 1
+  },
+  {
+    "id": "bv040",
+    "word": "parlaves",
+    "masked": "parla_es",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 1
+  },
+  {
+    "id": "bv041",
+    "word": "mir?vem",
+    "masked": "mir?_em",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv042",
+    "word": "jug?veu",
+    "masked": "jug?_eu",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv043",
+    "word": "treballaven",
+    "masked": "treballa_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv044",
+    "word": "estudiava",
+    "masked": "estudia_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv045",
+    "word": "vaca",
+    "masked": "_aca",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1,
+    "hint": "animal"
+  },
+  {
+    "id": "bv046",
+    "word": "baca",
+    "masked": "_aca",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 3,
+    "hint": "suport del sostre del cotxe"
+  },
+  {
+    "id": "bv047",
+    "word": "vell",
+    "masked": "_ell",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1,
+    "hint": "d'edat avan?ada"
+  },
+  {
+    "id": "bv048",
+    "word": "bell",
+    "masked": "_ell",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2,
+    "hint": "bonic"
+  },
+  {
+    "id": "bv049",
+    "word": "beure",
+    "masked": "_eure",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2,
+    "hint": "prendre un l?quid"
+  },
+  {
+    "id": "bv050",
+    "word": "veure",
+    "masked": "_eure",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1,
+    "hint": "percebre amb els ulls"
+  },
+  {
+    "id": "bv051",
+    "word": "botar",
+    "masked": "_otar",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2,
+    "hint": "fer un bot"
+  },
+  {
+    "id": "bv052",
+    "word": "votar",
+    "masked": "_otar",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2,
+    "hint": "emetre un vot"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "lh001",
+    "sentence": "La _una il?lumina la nit.",
+    "answer": "ll",
+    "word": "lluna",
+    "contrast": "luna",
+    "explanation": "Lluna s'escriu amb ll."
+  },
+  {
+    "id": "lh002",
+    "sentence": "El co_egi ?s al centre del barri.",
+    "answer": "l?l",
+    "word": "col?legi",
+    "contrast": "colegi",
+    "explanation": "Col?legi s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh003",
+    "sentence": "La pi_ota ?s al pati.",
+    "answer": "l",
+    "word": "pilota",
+    "contrast": "pillota",
+    "explanation": "Pilota s'escriu amb l simple."
+  },
+  {
+    "id": "lh004",
+    "sentence": "He vist una pe_?cula en catal?.",
+    "answer": "l?l",
+    "word": "pel?l?cula",
+    "contrast": "pel?cula",
+    "explanation": "Pel?l?cula s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh005",
+    "sentence": "El cava_ corre pel camp.",
+    "answer": "ll",
+    "word": "cavall",
+    "contrast": "caval",
+    "explanation": "Cavall s'escriu amb ll final."
+  }
+]

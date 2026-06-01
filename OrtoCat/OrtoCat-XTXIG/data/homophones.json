@@ -1,0 +1,42 @@
+[
+  {
+    "id": "xh001",
+    "sentence": "Menjo _ocolata per berenar.",
+    "answer": "x",
+    "word": "xocolata",
+    "contrast": "txocolata",
+    "explanation": "Xocolata s'escriu amb x inicial."
+  },
+  {
+    "id": "xh002",
+    "sentence": "El pe_ viu al riu.",
+    "answer": "ix",
+    "word": "peix",
+    "contrast": "pex",
+    "explanation": "Peix s'escriu amb ix."
+  },
+  {
+    "id": "xh003",
+    "sentence": "El co_e ?s vermell.",
+    "answer": "tx",
+    "word": "cotxe",
+    "contrast": "coixe",
+    "explanation": "Cotxe s'escriu amb tx."
+  },
+  {
+    "id": "xh004",
+    "sentence": "El mes de ma_ t? trenta-un dies.",
+    "answer": "ig",
+    "word": "maig",
+    "contrast": "maix",
+    "explanation": "Maig s'escriu amb ig final."
+  },
+  {
+    "id": "xh005",
+    "sentence": "Tinc un e_amen dem?.",
+    "answer": "x",
+    "word": "examen",
+    "contrast": "ecsamen",
+    "explanation": "Examen s'escriu amb x."
+  }
+]

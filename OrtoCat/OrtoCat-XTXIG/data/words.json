@@ -1,0 +1,322 @@
+[
+  {
+    "id": "xt001",
+    "word": "xocolata",
+    "masked": "_ocolata",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "xt002",
+    "word": "xarxa",
+    "masked": "_arxa",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "xt003",
+    "word": "xemeneia",
+    "masked": "_emeneia",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt004",
+    "word": "xifra",
+    "masked": "_ifra",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "xt005",
+    "word": "ximple",
+    "masked": "_imple",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt006",
+    "word": "xutar",
+    "masked": "_utar",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "xt007",
+    "word": "xiulet",
+    "masked": "_iulet",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt008",
+    "word": "xeringa",
+    "masked": "_eringa",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 3
+  },
+  {
+    "id": "xt009",
+    "word": "caixa",
+    "masked": "ca_a",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 1
+  },
+  {
+    "id": "xt010",
+    "word": "peix",
+    "masked": "pe_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 1
+  },
+  {
+    "id": "xt011",
+    "word": "baix",
+    "masked": "ba_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 1
+  },
+  {
+    "id": "xt012",
+    "word": "deixar",
+    "masked": "de_ar",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt013",
+    "word": "cr?ixer",
+    "masked": "cr?_er",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 3
+  },
+  {
+    "id": "xt014",
+    "word": "aix?",
+    "masked": "a_?",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 1
+  },
+  {
+    "id": "xt015",
+    "word": "coix",
+    "masked": "co_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt016",
+    "word": "mateix",
+    "masked": "mate_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt017",
+    "word": "taxi",
+    "masked": "ta_i",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 1
+  },
+  {
+    "id": "xt018",
+    "word": "examen",
+    "masked": "e_amen",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt019",
+    "word": "exercici",
+    "masked": "e_ercici",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt020",
+    "word": "?xit",
+    "masked": "?_it",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt021",
+    "word": "exacte",
+    "masked": "e_acte",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt022",
+    "word": "explicar",
+    "masked": "e_plicar",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt023",
+    "word": "text",
+    "masked": "te_t",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt024",
+    "word": "fixar",
+    "masked": "fi_ar",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt025",
+    "word": "cotxe",
+    "masked": "co_e",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 1
+  },
+  {
+    "id": "xt026",
+    "word": "dutxa",
+    "masked": "du_a",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 1
+  },
+  {
+    "id": "xt027",
+    "word": "butxaca",
+    "masked": "bu_aca",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 2
+  },
+  {
+    "id": "xt028",
+    "word": "fitxa",
+    "masked": "fi_a",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 1
+  },
+  {
+    "id": "xt029",
+    "word": "despatx",
+    "masked": "despa_",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 2
+  },
+  {
+    "id": "xt030",
+    "word": "empatx",
+    "masked": "empa_",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 3
+  },
+  {
+    "id": "xt031",
+    "word": "petxina",
+    "masked": "pe_ina",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 2
+  },
+  {
+    "id": "xt032",
+    "word": "motxilla",
+    "masked": "mo_illa",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 2
+  },
+  {
+    "id": "xt033",
+    "word": "maig",
+    "masked": "ma_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 1
+  },
+  {
+    "id": "xt034",
+    "word": "raig",
+    "masked": "ra_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 1
+  },
+  {
+    "id": "xt035",
+    "word": "faig",
+    "masked": "fa_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 1
+  },
+  {
+    "id": "xt036",
+    "word": "boig",
+    "masked": "bo_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 1
+  },
+  {
+    "id": "xt037",
+    "word": "goig",
+    "masked": "go_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 2
+  },
+  {
+    "id": "xt038",
+    "word": "mig",
+    "masked": "m_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 1
+  },
+  {
+    "id": "xt039",
+    "word": "desig",
+    "masked": "des_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 2
+  },
+  {
+    "id": "xt040",
+    "word": "passeig",
+    "masked": "passe_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 2
+  }
+]

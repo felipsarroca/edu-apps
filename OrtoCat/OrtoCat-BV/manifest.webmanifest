@@ -1,0 +1,20 @@
+{
+    "description":  "Aplicació per estudiar i practicar B i V en català.",
+    "short_name":  "OrtoCat BV",
+    "background_color":  "#edf1f5",
+    "icons":  [
+                  {
+                      "purpose":  "any maskable",
+                      "type":  "image/svg+xml",
+                      "sizes":  "any",
+                      "src":  "favicon.svg"
+                  }
+              ],
+    "lang":  "ca",
+    "orientation":  "portrait-primary",
+    "theme_color":  "#9f4f59",
+    "display":  "standalone",
+    "name":  "OrtoCat BV",
+    "scope":  ".",
+    "start_url":  "."
+}

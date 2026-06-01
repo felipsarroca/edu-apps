@@ -1,0 +1,155 @@
+[
+  {
+    "id": "b-bl-br",
+    "letter": "b",
+    "title": "Grups bl i br",
+    "summary": "S'escriuen amb b els grups bl i br en paraules com blanc, problema, bra? o arbre.",
+    "examples": [
+      "blanc",
+      "blau",
+      "noble",
+      "problema",
+      "bra?",
+      "brillant",
+      "obrir",
+      "arbre"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "b-bu-bur-bus",
+    "letter": "b",
+    "title": "Paraules amb bu-, bur- i bus-",
+    "summary": "Normalment s'escriuen amb b les paraules que comencen per bu-, bur- i bus-.",
+    "examples": [
+      "buscar",
+      "butxaca",
+      "bufanda",
+      "burla",
+      "burgesia",
+      "b?stia",
+      "buit",
+      "bumerang"
+    ],
+    "exceptions": [
+      "vulgar",
+      "vulnerable",
+      "vulcanisme"
+    ]
+  },
+  {
+    "id": "bv-mb-nv",
+    "letter": "b/v",
+    "title": "Despr?s de m i de n",
+    "summary": "Davant de b sol apar?ixer m; davant de v sol apar?ixer n. Per aix? escrivim ambient i tamb?, per? canvi i enviar.",
+    "examples": [
+      "tamb?",
+      "tombar",
+      "ambient",
+      "embut",
+      "canvi",
+      "enviar",
+      "invent",
+      "convidar"
+    ],
+    "exceptions": [
+      "tramvia"
+    ]
+  },
+  {
+    "id": "b-bio-biblio-bi",
+    "letter": "b",
+    "title": "Prefixos bio-, biblio- i bi-",
+    "summary": "S'escriuen amb b els prefixos bio-, biblio- i bi- quan indiquen vida, llibres o dos.",
+    "examples": [
+      "biologia",
+      "biodiversitat",
+      "biblioteca",
+      "bibliografia",
+      "biling?e",
+      "bis?l?lab",
+      "bicicleta",
+      "binomi"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "v-vice-villa",
+    "letter": "v",
+    "title": "Prefix vice-",
+    "summary": "S'escriuen amb v moltes paraules que comencen pel prefix vice-.",
+    "examples": [
+      "vicepresident",
+      "vicedirectora",
+      "vicerector",
+      "viceversa",
+      "viceconseller",
+      "vicealcaldessa"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "v-adv",
+    "letter": "v",
+    "title": "Grup adv",
+    "summary": "S'escriuen amb v moltes paraules que contenen el grup adv.",
+    "examples": [
+      "advertir",
+      "adverbi",
+      "advocat",
+      "adversari",
+      "adversitat",
+      "advent"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "v-imperfet-ava",
+    "letter": "v",
+    "title": "Imperfet en -ava",
+    "summary": "L'imperfet dels verbs de la primera conjugaci? s'escriu amb v: cantava, parlaves, mir?vem.",
+    "examples": [
+      "cantava",
+      "parlava",
+      "miraves",
+      "jug?vem",
+      "treball?veu",
+      "estudiaven"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "v-frequents",
+    "letter": "v",
+    "title": "Paraules freq?ents amb v",
+    "summary": "Hi ha paraules molt freq?ents amb v que conv? memoritzar per fam?lia l?xica.",
+    "examples": [
+      "veu",
+      "veure",
+      "vida",
+      "viure",
+      "venir",
+      "verd",
+      "vell",
+      "vent"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "b-frequents",
+    "letter": "b",
+    "title": "Paraules freq?ents amb b",
+    "summary": "Hi ha paraules freq?ents amb b que conv? memoritzar pel significat i per fam?lia l?xica.",
+    "examples": [
+      "baca",
+      "bell",
+      "beure",
+      "botar",
+      "bo",
+      "boca",
+      "barri",
+      "baix"
+    ],
+    "exceptions": []
+  }
+]

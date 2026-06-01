@@ -1,0 +1,20 @@
+{
+  "description": "Aplicaci? per estudiar i practicar S, SS, C, ?, Z i SC en catal?.",
+  "short_name": "OrtoCat SSCZ",
+  "background_color": "#edf1f5",
+  "icons": [
+    {
+      "purpose": "any maskable",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "src": "favicon.svg"
+    }
+  ],
+  "lang": "ca",
+  "orientation": "portrait-primary",
+  "theme_color": "#9f4f59",
+  "display": "standalone",
+  "name": "OrtoCat SSCZSC",
+  "scope": ".",
+  "start_url": "."
+}

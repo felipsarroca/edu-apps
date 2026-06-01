@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sh001",
+    "sentence": "La _opa ?s calenta.",
+    "answer": "s",
+    "word": "sopa",
+    "contrast": "copa",
+    "explanation": "Sopa s'escriu amb s quan ?s el menjar l?quid."
+  },
+  {
+    "id": "sh002",
+    "sentence": "Ha begut aigua amb una _opa.",
+    "answer": "c",
+    "word": "copa",
+    "contrast": "sopa",
+    "explanation": "Copa s'escriu amb c quan ?s el recipient per beure."
+  },
+  {
+    "id": "sh003",
+    "sentence": "El n?mero _ero no ?s positiu ni negatiu.",
+    "answer": "z",
+    "word": "zero",
+    "contrast": "cero",
+    "explanation": "Zero s'escriu amb z en catal?."
+  },
+  {
+    "id": "sh004",
+    "sentence": "La cla_e comen?a a les nou.",
+    "answer": "ss",
+    "word": "classe",
+    "contrast": "clase",
+    "explanation": "Classe s'escriu amb ss entre vocals."
+  },
+  {
+    "id": "sh005",
+    "sentence": "Ens trobem a la pla_a del barri.",
+    "answer": "?",
+    "word": "pla?a",
+    "contrast": "plasa",
+    "explanation": "Pla?a s'escriu amb ? davant a."
+  },
+  {
+    "id": "sh006",
+    "sentence": "La pi_ina ?s oberta a l?estiu.",
+    "answer": "sc",
+    "word": "piscina",
+    "contrast": "picina",
+    "explanation": "Piscina s'escriu amb sc."
+  }
+]

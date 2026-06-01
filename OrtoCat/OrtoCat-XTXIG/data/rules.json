@@ -1,0 +1,87 @@
+[
+  {
+    "id": "x-inicial",
+    "letter": "x",
+    "title": "X a principi de paraula",
+    "summary": "Moltes paraules que comencen pel so de xeix s'escriuen amb x: xocolata, xarxa, xemeneia.",
+    "examples": [
+      "xocolata",
+      "xarxa",
+      "xemeneia",
+      "xifra",
+      "ximple",
+      "xutar",
+      "xiulet",
+      "xeringa"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "ix",
+    "letter": "ix",
+    "title": "El d?graf ix",
+    "summary": "Despr?s de vocal, el so de xeix sovint s'escriu ix: caixa, peix, baixar, cr?ixer.",
+    "examples": [
+      "caixa",
+      "peix",
+      "baix",
+      "deixar",
+      "cr?ixer",
+      "aix?",
+      "coix",
+      "mateix"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "x-cs-gz",
+    "letter": "x",
+    "title": "X amb so de cs o gz",
+    "summary": "La x tamb? pot representar sons com cs o gz en paraules com taxi, examen o exercici.",
+    "examples": [
+      "taxi",
+      "examen",
+      "exercici",
+      "?xit",
+      "exacte",
+      "explicar",
+      "text",
+      "fixar"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "tx",
+    "letter": "tx",
+    "title": "El d?graf tx",
+    "summary": "El so africat de paraules com cotxe o despatx s'escriu tx. Sovint es mant? en derivats: despatx, despatxar.",
+    "examples": [
+      "cotxe",
+      "dutxa",
+      "butxaca",
+      "fitxa",
+      "despatx",
+      "empatx",
+      "petxina",
+      "motxilla"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "ig-final",
+    "letter": "ig",
+    "title": "IG a final de paraula",
+    "summary": "Algunes paraules acaben amb ig quan els derivats tenen g, j, tg o tj: maig, major; passeig, passejar; desig, desitjar.",
+    "examples": [
+      "maig",
+      "raig",
+      "faig",
+      "boig",
+      "goig",
+      "mig",
+      "desig",
+      "passeig"
+    ],
+    "exceptions": []
+  }
+]

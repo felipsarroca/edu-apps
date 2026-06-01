@@ -1,0 +1,258 @@
+[
+  {
+    "id": "ll001",
+    "word": "lila",
+    "masked": "_ila",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll002",
+    "word": "ala",
+    "masked": "a_a",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll003",
+    "word": "escola",
+    "masked": "esco_a",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll004",
+    "word": "sol",
+    "masked": "so_",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll005",
+    "word": "mel",
+    "masked": "me_",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll006",
+    "word": "cel",
+    "masked": "ce_",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll007",
+    "word": "pilota",
+    "masked": "pi_ota",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll008",
+    "word": "color",
+    "masked": "co_or",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll009",
+    "word": "lluna",
+    "masked": "_una",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll010",
+    "word": "llum",
+    "masked": "_um",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll011",
+    "word": "llapis",
+    "masked": "_apis",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll012",
+    "word": "fulla",
+    "masked": "fu_a",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll013",
+    "word": "cavall",
+    "masked": "cava_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll014",
+    "word": "colla",
+    "masked": "co_a",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll015",
+    "word": "vell",
+    "masked": "ve_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll016",
+    "word": "treball",
+    "masked": "treba_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll017",
+    "word": "col?legi",
+    "masked": "co_egi",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 2
+  },
+  {
+    "id": "ll018",
+    "word": "novel?la",
+    "masked": "nove_a",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 2
+  },
+  {
+    "id": "ll019",
+    "word": "intel?ligent",
+    "masked": "inte_igent",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll020",
+    "word": "paral?lel",
+    "masked": "para_el",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll021",
+    "word": "pel?l?cula",
+    "masked": "pe_?cula",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 2
+  },
+  {
+    "id": "ll022",
+    "word": "il?lusi?",
+    "masked": "i_usi?",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 2
+  },
+  {
+    "id": "ll023",
+    "word": "col?laborar",
+    "masked": "co_aborar",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll024",
+    "word": "excel?lent",
+    "masked": "exce_ent",
+    "answer": "l?l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll025",
+    "word": "al?l?rgia",
+    "masked": "a_?rgia",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll026",
+    "word": "al?lucinar",
+    "masked": "a_ucinar",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll027",
+    "word": "col?lecci?",
+    "masked": "co_ecci?",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 2
+  },
+  {
+    "id": "ll028",
+    "word": "col?lectiu",
+    "masked": "co_ectiu",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 2
+  },
+  {
+    "id": "ll029",
+    "word": "il?legal",
+    "masked": "i_egal",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll030",
+    "word": "il?luminar",
+    "masked": "i_uminar",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll031",
+    "word": "mil?l?metre",
+    "masked": "mi_?metre",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll032",
+    "word": "mil?lenni",
+    "masked": "mi_enni",
+    "answer": "l?l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  }
+]

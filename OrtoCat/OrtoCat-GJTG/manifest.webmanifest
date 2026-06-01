@@ -1,0 +1,20 @@
+{
+    "description":  "Aplicació per estudiar i practicar G, J, TG i TJ en català.",
+    "short_name":  "OrtoCat GJTG",
+    "background_color":  "#edf1f5",
+    "icons":  [
+                  {
+                      "purpose":  "any maskable",
+                      "type":  "image/svg+xml",
+                      "sizes":  "any",
+                      "src":  "favicon.svg"
+                  }
+              ],
+    "lang":  "ca",
+    "orientation":  "portrait-primary",
+    "theme_color":  "#9f4f59",
+    "display":  "standalone",
+    "name":  "OrtoCat GJTG",
+    "scope":  ".",
+    "start_url":  "."
+}

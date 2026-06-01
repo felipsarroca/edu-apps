@@ -1,0 +1,121 @@
+[
+  {
+    "id": "s-inicial-final",
+    "letter": "s",
+    "title": "S sorda a principi, final i despr?s de consonant",
+    "summary": "El so d'essa sorda sovint s'escriu s a principi de paraula, a final de paraula o despr?s de consonant.",
+    "examples": [
+      "sol",
+      "sopa",
+      "saber",
+      "sis",
+      "gos",
+      "mes",
+      "arr?s",
+      "pensar"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "ss-entre-vocals",
+    "letter": "ss",
+    "title": "Essa sorda entre vocals",
+    "summary": "Entre vocals, el so d'essa sorda sovint s'escriu ss: classe, passar, massa.",
+    "examples": [
+      "classe",
+      "passar",
+      "massa",
+      "tassa",
+      "possible",
+      "necessari",
+      "pressa",
+      "rossa"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "s-sonora",
+    "letter": "s",
+    "title": "S sonora entre vocals",
+    "summary": "Entre vocals, el so d'essa sonora sovint s'escriu s: casa, rosa, posar.",
+    "examples": [
+      "casa",
+      "rosa",
+      "posar",
+      "camisa",
+      "cosina",
+      "m?sica",
+      "visita",
+      "desembre"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "c-e-i",
+    "letter": "c",
+    "title": "C davant e i i",
+    "summary": "Davant e o i, el so d'essa sorda es pot escriure c: cel, cirera, ciutat.",
+    "examples": [
+      "cel",
+      "cendra",
+      "cirera",
+      "cinema",
+      "ciutat",
+      "cent",
+      "cinc",
+      "civisme"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "c-trencada",
+    "letter": "?",
+    "title": "? davant a, o, u i a final de mot",
+    "summary": "La ? representa el so d'essa sorda davant a, o, u i tamb? en alguns finals de paraula: pla?a, can??, dol?.",
+    "examples": [
+      "pla?a",
+      "bra?",
+      "can??",
+      "dol?",
+      "for?a",
+      "lli??",
+      "ven?ut",
+      "comen?ar"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "z-sonora",
+    "letter": "z",
+    "title": "Z sonora",
+    "summary": "La z representa sovint el so d'essa sonora a principi de paraula o despr?s de consonant: zero, zona, dotze.",
+    "examples": [
+      "zero",
+      "zona",
+      "zebra",
+      "zool?gic",
+      "dotze",
+      "tretze",
+      "atzar",
+      "magatzem"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "sc-cultismes",
+    "letter": "sc",
+    "title": "SC davant e i i",
+    "summary": "En alguns cultismes, el so d'essa sorda davant e o i s'escriu sc: escena, piscina, ascensor.",
+    "examples": [
+      "escena",
+      "piscina",
+      "ascensor",
+      "descens",
+      "disciplina",
+      "adolescent",
+      "consci?ncia",
+      "fascinar"
+    ],
+    "exceptions": []
+  }
+]

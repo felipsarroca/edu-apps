@@ -1,0 +1,70 @@
+[
+  {
+    "id": "l-simple",
+    "letter": "l",
+    "title": "L simple",
+    "summary": "Moltes paraules s'escriuen amb l simple quan el so no ?s palatal ni geminat: escola, sol, pilota.",
+    "examples": [
+      "lila",
+      "ala",
+      "escola",
+      "sol",
+      "mel",
+      "cel",
+      "pilota",
+      "color"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "ll",
+    "letter": "ll",
+    "title": "D?graf ll",
+    "summary": "El d?graf ll representa el so palatal de paraules com lluna, fulla, cavall o treball.",
+    "examples": [
+      "lluna",
+      "llum",
+      "llapis",
+      "fulla",
+      "cavall",
+      "colla",
+      "vell",
+      "treball"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "l-geminada",
+    "letter": "l?l",
+    "title": "Ela geminada",
+    "summary": "La ela geminada s'escriu l?l, amb punt volat, en paraules com col?legi, novel?la o intel?ligent.",
+    "examples": [
+      "col?legi",
+      "novel?la",
+      "intel?ligent",
+      "paral?lel",
+      "pel?l?cula",
+      "il?lusi?",
+      "col?laborar",
+      "excel?lent"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "l-geminada-prefixos",
+    "letter": "l?l",
+    "title": "Ela geminada en fam?lies i prefixos",
+    "summary": "Moltes paraules amb al?l-, col?l-, il?l- o mil?l- porten ela geminada i conv? memoritzar-les per fam?lia l?xica.",
+    "examples": [
+      "al?l?rgia",
+      "al?lucinar",
+      "col?lecci?",
+      "col?lectiu",
+      "il?legal",
+      "il?luminar",
+      "mil?l?metre",
+      "mil?lenni"
+    ],
+    "exceptions": []
+  }
+]

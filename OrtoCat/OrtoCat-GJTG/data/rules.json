@@ -1,0 +1,88 @@
+[
+  {
+    "id": "g-e-i",
+    "letter": "g",
+    "title": "G davant e i i",
+    "summary": "Davant e o i, moltes paraules amb el so de ge s'escriuen amb g: gent, gel, girar.",
+    "examples": [
+      "gent",
+      "gel",
+      "germ?",
+      "gerani",
+      "girar",
+      "gimn?s",
+      "p?gina",
+      "energia"
+    ],
+    "exceptions": [
+      "jersei",
+      "jerarquia",
+      "Jes?s"
+    ]
+  },
+  {
+    "id": "j-a-o-u",
+    "letter": "j",
+    "title": "J davant a, o i u",
+    "summary": "Davant a, o i u, moltes paraules amb el so de ge s'escriuen amb j: jaqueta, joc, juliol.",
+    "examples": [
+      "jaqueta",
+      "jard?",
+      "joc",
+      "jove",
+      "juliol",
+      "ajuda",
+      "menjar",
+      "pujar"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "tg-e-i",
+    "letter": "tg",
+    "title": "TG davant e i i",
+    "summary": "Davant e o i, el so africat sonor s'escriu sovint tg: metge, formatge, imatge.",
+    "examples": [
+      "metge",
+      "fetge",
+      "formatge",
+      "imatge",
+      "viatge",
+      "rellotge",
+      "missatge",
+      "heretgia"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "tj-a-o-u",
+    "letter": "tj",
+    "title": "TJ davant a, o i u",
+    "summary": "Davant a, o i u, el so africat sonor s'escriu sovint tj: platja, mitja, desitjar.",
+    "examples": [
+      "platja",
+      "mitja",
+      "desitjar",
+      "pitjor",
+      "jutjat",
+      "viatjar",
+      "assetjar",
+      "trepitjar"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "j-excepcions-e-i",
+    "letter": "j",
+    "title": "J davant e i i en alguns mots",
+    "summary": "Algunes paraules s'escriuen amb j davant e o i i cal memoritzar-les: jersei, jerarquia, Jes?s.",
+    "examples": [
+      "jersei",
+      "jerarquia",
+      "Jes?s",
+      "jeure",
+      "majestat"
+    ],
+    "exceptions": []
+  }
+]

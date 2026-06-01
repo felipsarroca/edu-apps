@@ -1,0 +1,42 @@
+[
+  {
+    "id": "gh001",
+    "sentence": "El _el ?s molt fred.",
+    "answer": "g",
+    "word": "gel",
+    "contrast": "jel",
+    "explanation": "Gel s'escriu amb g."
+  },
+  {
+    "id": "gh002",
+    "sentence": "Porta una _aqueta blava.",
+    "answer": "j",
+    "word": "jaqueta",
+    "contrast": "gaqueta",
+    "explanation": "Jaqueta s'escriu amb j."
+  },
+  {
+    "id": "gh003",
+    "sentence": "El me_e visita els pacients.",
+    "answer": "tg",
+    "word": "metge",
+    "contrast": "metje",
+    "explanation": "Metge s'escriu amb tg."
+  },
+  {
+    "id": "gh004",
+    "sentence": "A la pla_a hi ha molta sorra.",
+    "answer": "tj",
+    "word": "platja",
+    "contrast": "plagja",
+    "explanation": "Platja s'escriu amb tj."
+  },
+  {
+    "id": "gh005",
+    "sentence": "Porta un _ersei verd.",
+    "answer": "j",
+    "word": "jersei",
+    "contrast": "gersei",
+    "explanation": "Jersei ?s una excepci? amb j davant e."
+  }
+]
