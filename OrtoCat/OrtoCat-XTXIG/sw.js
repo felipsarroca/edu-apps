@@ -1,13 +1,13 @@
-const CACHE_NAME = "ortocat-xtxig-v3";
+const CACHE_NAME = "ortocat-xtxig-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=review27",
-  "./app.js?v=review27",
+  "./styles.css?v=review28",
+  "./app.js?v=review28",
   "./manifest.webmanifest",
-  "./data/rules.json?v=review27",
-  "./data/words.json?v=review27",
-  "./data/homophones.json?v=review27",
+  "./data/rules.json?v=review28",
+  "./data/words.json?v=review28",
+  "./data/homophones.json?v=review28",
   "./assets/CC_BY-NC-SA.png",
   "./favicon.svg"
 ];

@@ -37,9 +37,9 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=review27").then((response) => response.json()),
-    fetch("data/words.json?v=review27").then((response) => response.json()),
-    fetch("data/homophones.json?v=review27").then((response) => response.json()),
+    fetch("data/rules.json?v=review28").then((response) => response.json()),
+    fetch("data/words.json?v=review28").then((response) => response.json()),
+    fetch("data/homophones.json?v=review28").then((response) => response.json()),
   ]);
 
   state.rules = rules;
@@ -390,7 +390,7 @@ function checkSet(mode) {
 function isWordInitialBlank(text) {
   const index = text.indexOf("_");
   if (index <= 0) return true;
-  return !/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(text[index - 1]);
+  return !/\p{L}/u.test(text[index - 1]);
 }
 
 function shouldUseUppercase(text, isSentence) {
@@ -511,7 +511,7 @@ function highlightNorm(text, ruleId, targetWord = "") {
   };
 
   const pattern = rules[ruleId] || /(tx|ix|ig|x)/gi;
-  return escaped.replace(/[\wÁÉÍÓÚÜÑáéíóúüñ]+/g, (word) => {
+  return escaped.replace(/[\p{L}\p{M}]+/gu, (word) => {
     pattern.lastIndex = 0;
     if (!pattern.test(word)) return word;
     pattern.lastIndex = 0;

@@ -134,7 +134,7 @@
     "answer": "x",
     "ruleId": "x-cs-gz",
     "difficulty": 1,
-    "hint": "x amb so de cs"
+    "hint": "vehicle de servei públic"
   },
   {
     "id": "xt018",
@@ -143,7 +143,7 @@
     "answer": "x",
     "ruleId": "x-cs-gz",
     "difficulty": 2,
-    "hint": "x amb so de gz"
+    "hint": "prova escrita o oral"
   },
   {
     "id": "xt019",
@@ -152,7 +152,7 @@
     "answer": "x",
     "ruleId": "x-cs-gz",
     "difficulty": 2,
-    "hint": "x amb so de gz"
+    "hint": "activitat per practicar"
   },
   {
     "id": "xt020",
@@ -185,7 +185,7 @@
     "answer": "x",
     "ruleId": "x-cs-gz",
     "difficulty": 2,
-    "hint": "x amb so de cs"
+    "hint": "escrit o fragment de lectura"
   },
   {
     "id": "xt024",
@@ -194,7 +194,7 @@
     "answer": "x",
     "ruleId": "x-cs-gz",
     "difficulty": 2,
-    "hint": "x amb so de cs"
+    "hint": "subjectar o deixar estable"
   },
   {
     "id": "xt025",
@@ -575,7 +575,7 @@
     "answer": "x",
     "ruleId": "x-cs-gz",
     "difficulty": 3,
-    "hint": "estable; no és fitxa"
+    "hint": "estable"
   },
   {
     "id": "xt072",

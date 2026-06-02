@@ -108,7 +108,7 @@
     "word": "béstia",
     "masked": "_éstia",
     "answer": "b",
-    "ruleId": "b-bu-bur-bus",
+    "ruleId": "b-frequents",
     "difficulty": 2
   },
   {
@@ -118,7 +118,7 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "excepció"
+    "hint": "no és culte ni refinat"
   },
   {
     "id": "bv016",
@@ -127,7 +127,7 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "excepció"
+    "hint": "fràgil o que pot rebre dany"
   },
   {
     "id": "bv017",
@@ -415,7 +415,7 @@
     "answer": "b",
     "ruleId": "b-frequents",
     "difficulty": 2,
-    "hint": "fer un bot"
+    "hint": "saltar o rebotar"
   },
   {
     "id": "bv052",
@@ -424,7 +424,7 @@
     "answer": "v",
     "ruleId": "v-frequents",
     "difficulty": 2,
-    "hint": "emetre un vot"
+    "hint": "participar en unes eleccions"
   },
   {
     "id": "bv053",
@@ -537,7 +537,7 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "excepció: comença per vu-",
+    "hint": "religió i pràctica d'origen africà",
     "exception": true
   },
   {
@@ -547,7 +547,7 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "excepció: comença per vu-",
+    "hint": "fer tornar fràgil o exposat a dany",
     "exception": true
   },
   {
@@ -645,18 +645,18 @@
     "word": "arribava",
     "masked": "arri_ava",
     "answer": "b",
-    "ruleId": "b-frequents",
+    "ruleId": "b-radical-ava",
     "difficulty": 2,
-    "hint": "del verb arribar"
+    "hint": "verb de moviment"
   },
   {
     "id": "bv080",
     "word": "arribàvem",
     "masked": "arri_àvem",
     "answer": "b",
-    "ruleId": "b-frequents",
+    "ruleId": "b-radical-ava",
     "difficulty": 3,
-    "hint": "del verb arribar"
+    "hint": "verb de moviment"
   },
   {
     "id": "bv081",
@@ -719,7 +719,7 @@
     "answer": "v",
     "ruleId": "v-frequents",
     "difficulty": 2,
-    "hint": "forma del verb volar"
+    "hint": "es desplaça per l'aire"
   },
   {
     "id": "bv088",
@@ -728,7 +728,7 @@
     "answer": "b",
     "ruleId": "b-frequents",
     "difficulty": 3,
-    "hint": "qualitat de bell"
+    "hint": "qualitat estètica"
   },
   {
     "id": "bv089",

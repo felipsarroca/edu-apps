@@ -27,7 +27,7 @@
       "bufanda",
       "burla",
       "burgesia",
-      "béstia",
+      "butaca",
       "buit",
       "bumerang"
     ],
@@ -43,7 +43,7 @@
     "id": "bv-mb-nv",
     "letter": "b/v",
     "title": "Després de m i de n",
-    "summary": "Davant de b sol aparèixer m; davant de v sol aparèixer n. Per això escrivim ambient i també, però canvi i enviar.",
+    "summary": "Generalment, davant de b s'escriu m i davant de v s'escriu n. Per això escrivim ambient i també, però canvi i enviar.",
     "examples": [
       "també",
       "tombar",
@@ -117,6 +117,19 @@
       "jugàvem",
       "treballàveu",
       "estudiaven"
+    ],
+    "exceptions": []
+  },
+  {
+    "id": "b-radical-ava",
+    "letter": "b",
+    "title": "Radicals acabats en b davant -ava",
+    "summary": "En formes com arribava o arribàvem, la b pertany al radical arrib-; la v de l'imperfet és la de la terminació -ava.",
+    "examples": [
+      "arribava",
+      "arribaves",
+      "arribàvem",
+      "arribàveu"
     ],
     "exceptions": []
   },

@@ -134,7 +134,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 2,
-    "hint": "ela geminada"
+    "hint": "centre educatiu"
   },
   {
     "id": "ll018",
@@ -143,7 +143,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 2,
-    "hint": "ela geminada"
+    "hint": "obra narrativa"
   },
   {
     "id": "ll019",
@@ -152,7 +152,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3,
-    "hint": "ela geminada"
+    "hint": "que entén les coses amb facilitat"
   },
   {
     "id": "ll020",
@@ -169,7 +169,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 2,
-    "hint": "ela geminada"
+    "hint": "obra cinematogràfica"
   },
   {
     "id": "ll022",
@@ -202,7 +202,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3,
-    "hint": "família al·l-"
+    "hint": "reacció a una substància"
   },
   {
     "id": "ll026",
@@ -219,7 +219,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 2,
-    "hint": "família col·l-"
+    "hint": "conjunt d'elements reunits"
   },
   {
     "id": "ll028",
@@ -236,7 +236,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3,
-    "hint": "família il·l-"
+    "hint": "contrari de legal"
   },
   {
     "id": "ll030",
@@ -253,7 +253,7 @@
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3,
-    "hint": "família mil·l-"
+    "hint": "unitat de longitud"
   },
   {
     "id": "ll032",
@@ -270,7 +270,7 @@
     "answer": "l",
     "ruleId": "l-simple",
     "difficulty": 3,
-    "hint": "no porta punt volat"
+    "hint": "nombre molt gran"
   },
   {
     "id": "ll034",
@@ -279,7 +279,7 @@
     "answer": "l",
     "ruleId": "l-simple",
     "difficulty": 2,
-    "hint": "l simple"
+    "hint": "sentiment de joia"
   },
   {
     "id": "ll035",
@@ -288,7 +288,7 @@
     "answer": "l",
     "ruleId": "l-simple",
     "difficulty": 3,
-    "hint": "l simple; no ela geminada"
+    "hint": "tria d'elements"
   },
   {
     "id": "ll036",
@@ -297,7 +297,7 @@
     "answer": "l",
     "ruleId": "l-simple",
     "difficulty": 2,
-    "hint": "l simple"
+    "hint": "art d'escriure textos"
   },
   {
     "id": "ll037",
@@ -306,7 +306,7 @@
     "answer": "l",
     "ruleId": "l-simple",
     "difficulty": 2,
-    "hint": "l simple; no ela geminada"
+    "hint": "fer una festa o un acte"
   },
   {
     "id": "ll038",

@@ -20,7 +20,7 @@
     "id": "ix",
     "letter": "ix",
     "title": "El dígraf ix",
-    "summary": "Després de vocal, el so de xeix sovint s'escriu ix: caixa, peix, baixar, créixer.",
+    "summary": "Darrere de les vocals a, e, o i u, el so de xeix sovint s'escriu ix: caixa, peix, baixar, créixer.",
     "examples": [
       "caixa",
       "peix",
@@ -71,7 +71,7 @@
     "id": "ig-final",
     "letter": "ig",
     "title": "IG a final de paraula",
-    "summary": "Algunes paraules acaben amb ig quan els derivats tenen g, j, tg o tj: maig, major; passeig, passejar; desig, desitjar.",
+    "summary": "Algunes paraules acaben amb el grup gràfic ig. Sovint es relacionen amb formes de la mateixa família que tenen g, j, tg o tj: maig, major; passeig, passejar; desig, desitjar.",
     "examples": [
       "maig",
       "raig",
