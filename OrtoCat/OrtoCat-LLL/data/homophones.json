@@ -158,5 +158,69 @@
     "word": "llit",
     "contrast": "lit",
     "explanation": "Llit s'escriu amb ll inicial."
+  },
+  {
+    "id": "lh023",
+    "sentence": "El _ibre és a la motxilla.",
+    "answer": "ll",
+    "word": "llibre",
+    "contrast": "libre",
+    "explanation": "Llibre s'escriu amb ll inicial."
+  },
+  {
+    "id": "lh024",
+    "sentence": "La ga_eta és cruixent.",
+    "answer": "l",
+    "word": "galeta",
+    "contrast": "gallleta",
+    "explanation": "Galeta s'escriu amb l simple."
+  },
+  {
+    "id": "lh025",
+    "sentence": "La ce_a és petita.",
+    "answer": "l·l",
+    "word": "cel·la",
+    "contrast": "cela",
+    "explanation": "Cel·la s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh026",
+    "sentence": "Té un cabe_ molt llarg.",
+    "answer": "ll",
+    "word": "cabell",
+    "contrast": "cabel",
+    "explanation": "Cabell s'escriu amb ll final."
+  },
+  {
+    "id": "lh027",
+    "sentence": "El fana_ il·lumina el carrer.",
+    "answer": "l",
+    "word": "fanal",
+    "contrast": "fanall",
+    "explanation": "Fanal s'escriu amb l final."
+  },
+  {
+    "id": "lh028",
+    "sentence": "Van fer un co_oqui després de la xerrada.",
+    "answer": "l·l",
+    "word": "col·loqui",
+    "contrast": "coloqui",
+    "explanation": "Col·loqui s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh029",
+    "sentence": "La _avor ha germinat.",
+    "answer": "ll",
+    "word": "llavor",
+    "contrast": "lavor",
+    "explanation": "Llavor s'escriu amb ll inicial."
+  },
+  {
+    "id": "lh030",
+    "sentence": "El reto_ador és blau.",
+    "answer": "l",
+    "word": "retolador",
+    "contrast": "retollador",
+    "explanation": "Retolador s'escriu amb l simple."
   }
 ]

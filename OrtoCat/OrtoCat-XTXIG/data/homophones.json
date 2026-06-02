@@ -126,5 +126,69 @@
     "word": "faixa",
     "contrast": "fatxa",
     "explanation": "Faixa s'escriu amb ix."
+  },
+  {
+    "id": "xh017",
+    "sentence": "El _arop calma la tos.",
+    "answer": "x",
+    "word": "xarop",
+    "contrast": "txarop",
+    "explanation": "Xarop s'escriu amb x inicial."
+  },
+  {
+    "id": "xh018",
+    "sentence": "La bru_a vola amb una escombra.",
+    "answer": "ix",
+    "word": "bruixa",
+    "contrast": "brutxa",
+    "explanation": "Bruixa s'escriu amb ix."
+  },
+  {
+    "id": "xh019",
+    "sentence": "Porta una capu_a vermella.",
+    "answer": "tx",
+    "word": "caputxa",
+    "contrast": "capuixa",
+    "explanation": "Caputxa s'escriu amb tx."
+  },
+  {
+    "id": "xh020",
+    "sentence": "Aquest text és comple_.",
+    "answer": "x",
+    "word": "complex",
+    "contrast": "complecs",
+    "explanation": "Complex s'escriu amb x final."
+  },
+  {
+    "id": "xh021",
+    "sentence": "El bate_ serà diumenge.",
+    "answer": "ig",
+    "word": "bateig",
+    "contrast": "bateix",
+    "explanation": "Bateig s'escriu amb ig final."
+  },
+  {
+    "id": "xh022",
+    "sentence": "El gre_ de la paella costa de netejar.",
+    "answer": "ix",
+    "word": "greix",
+    "contrast": "grex",
+    "explanation": "Greix s'escriu amb ix final."
+  },
+  {
+    "id": "xh023",
+    "sentence": "La ra_a de vent ha tancat la porta.",
+    "answer": "tx",
+    "word": "ratxa",
+    "contrast": "raixa",
+    "explanation": "Ratxa s'escriu amb tx."
+  },
+  {
+    "id": "xh024",
+    "sentence": "La pro_imitat de l'escola ens ajuda.",
+    "answer": "x",
+    "word": "proximitat",
+    "contrast": "procsimitat",
+    "explanation": "Proximitat s'escriu amb x."
   }
 ]

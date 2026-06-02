@@ -190,5 +190,69 @@
     "word": "consciència",
     "contrast": "conciència",
     "explanation": "Consciència s'escriu amb sc."
+  },
+  {
+    "id": "sh026",
+    "sentence": "La _ort del sorteig ha estat bona.",
+    "answer": "s",
+    "word": "sort",
+    "contrast": "cort",
+    "explanation": "Sort s'escriu amb s inicial."
+  },
+  {
+    "id": "sh027",
+    "sentence": "La _ort reial era plena de gent.",
+    "answer": "c",
+    "word": "cort",
+    "contrast": "sort",
+    "explanation": "Cort s'escriu amb c quan vol dir cort reial."
+  },
+  {
+    "id": "sh028",
+    "sentence": "La bru_a és de color blau.",
+    "answer": "s",
+    "word": "brusa",
+    "contrast": "bruza",
+    "explanation": "Brusa s'escriu amb s sonora."
+  },
+  {
+    "id": "sh029",
+    "sentence": "El quin_e va després del catorze.",
+    "answer": "z",
+    "word": "quinze",
+    "contrast": "quinse",
+    "explanation": "Quinze s'escriu amb z."
+  },
+  {
+    "id": "sh030",
+    "sentence": "La tra_a del llapis és fina.",
+    "answer": "ç",
+    "word": "traça",
+    "contrast": "trassa",
+    "explanation": "Traça s'escriu amb ç."
+  },
+  {
+    "id": "sh031",
+    "sentence": "Els tro_os de pa són petits.",
+    "answer": "ss",
+    "word": "trossos",
+    "contrast": "trozos",
+    "explanation": "Trossos s'escriu amb ss."
+  },
+  {
+    "id": "sh032",
+    "sentence": "Cal pre_indir d'aquesta despesa.",
+    "answer": "sc",
+    "word": "prescindir",
+    "contrast": "precindir",
+    "explanation": "Prescindir s'escriu amb sc."
+  },
+  {
+    "id": "sh033",
+    "sentence": "El _ereal és a l'armari.",
+    "answer": "c",
+    "word": "cereal",
+    "contrast": "sereal",
+    "explanation": "Cereal s'escriu amb c davant e."
   }
 ]

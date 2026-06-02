@@ -190,5 +190,69 @@
     "word": "varó",
     "contrast": "baró",
     "explanation": "Varó s'escriu amb v quan vol dir home."
+  },
+  {
+    "id": "bh025",
+    "sentence": "El _aixell ha arribat al port.",
+    "answer": "v",
+    "word": "vaixell",
+    "contrast": "baixell",
+    "explanation": "Vaixell s'escriu amb v."
+  },
+  {
+    "id": "bh026",
+    "sentence": "Aquest barri queda _aix del turó.",
+    "answer": "b",
+    "word": "baix",
+    "contrast": "vaix",
+    "explanation": "Baix s'escriu amb b quan indica posició inferior."
+  },
+  {
+    "id": "bh027",
+    "sentence": "La noia _a venir ahir.",
+    "answer": "v",
+    "word": "va",
+    "contrast": "ba",
+    "explanation": "Va s'escriu amb v quan és del verb anar."
+  },
+  {
+    "id": "bh028",
+    "sentence": "El _anc del parc és de fusta.",
+    "answer": "b",
+    "word": "banc",
+    "contrast": "vanc",
+    "explanation": "Banc s'escriu amb b."
+  },
+  {
+    "id": "bh029",
+    "sentence": "El _ent mou les fulles.",
+    "answer": "v",
+    "word": "vent",
+    "contrast": "bent",
+    "explanation": "Vent s'escriu amb v."
+  },
+  {
+    "id": "bh030",
+    "sentence": "Aquest pa és molt _o.",
+    "answer": "b",
+    "word": "bo",
+    "contrast": "vo",
+    "explanation": "Bo s'escriu amb b."
+  },
+  {
+    "id": "bh031",
+    "sentence": "La _ida al barri ha canviat.",
+    "answer": "v",
+    "word": "vida",
+    "contrast": "bida",
+    "explanation": "Vida s'escriu amb v."
+  },
+  {
+    "id": "bh032",
+    "sentence": "La _oca del riu és ampla.",
+    "answer": "b",
+    "word": "boca",
+    "contrast": "voca",
+    "explanation": "Boca s'escriu amb b."
   }
 ]

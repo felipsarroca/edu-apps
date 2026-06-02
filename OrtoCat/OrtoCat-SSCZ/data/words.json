@@ -1072,5 +1072,341 @@
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 3
+  },
+  {
+    "id": "sz135",
+    "word": "sort",
+    "masked": "_ort",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 1
+  },
+  {
+    "id": "sz136",
+    "word": "senyor",
+    "masked": "_enyor",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 1
+  },
+  {
+    "id": "sz137",
+    "word": "fins",
+    "masked": "fin_",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 1
+  },
+  {
+    "id": "sz138",
+    "word": "llapis",
+    "masked": "llapi_",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 1
+  },
+  {
+    "id": "sz139",
+    "word": "dins",
+    "masked": "din_",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2
+  },
+  {
+    "id": "sz140",
+    "word": "costat",
+    "masked": "co_tat",
+    "answer": "s",
+    "ruleId": "s-inicial-final",
+    "difficulty": 2
+  },
+  {
+    "id": "sz141",
+    "word": "carrossa",
+    "masked": "carro_a",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz142",
+    "word": "trossos",
+    "masked": "tro_os",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz143",
+    "word": "dissort",
+    "masked": "di_ort",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 3
+  },
+  {
+    "id": "sz144",
+    "word": "assistent",
+    "masked": "a_istent",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz145",
+    "word": "ressò",
+    "masked": "re_ò",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 2
+  },
+  {
+    "id": "sz146",
+    "word": "grossa",
+    "masked": "gro_a",
+    "answer": "ss",
+    "ruleId": "ss-entre-vocals",
+    "difficulty": 1
+  },
+  {
+    "id": "sz147",
+    "word": "nasal",
+    "masked": "na_al",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 2
+  },
+  {
+    "id": "sz148",
+    "word": "brusa",
+    "masked": "bru_a",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 2
+  },
+  {
+    "id": "sz149",
+    "word": "alosa",
+    "masked": "alo_a",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz150",
+    "word": "adhesiu",
+    "masked": "adhe_iu",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz151",
+    "word": "gasela",
+    "masked": "ga_ela",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 2
+  },
+  {
+    "id": "sz152",
+    "word": "medusa",
+    "masked": "medu_a",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 2
+  },
+  {
+    "id": "sz153",
+    "word": "cereal",
+    "masked": "_ereal",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz154",
+    "word": "civada",
+    "masked": "_ivada",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz155",
+    "word": "cèntim",
+    "masked": "_èntim",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 1
+  },
+  {
+    "id": "sz156",
+    "word": "cirurgia",
+    "masked": "_irurgia",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "sz157",
+    "word": "cigonya",
+    "masked": "_igonya",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz158",
+    "word": "ciclista",
+    "masked": "_iclista",
+    "answer": "c",
+    "ruleId": "c-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "sz159",
+    "word": "traça",
+    "masked": "tra_a",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz160",
+    "word": "capaç",
+    "masked": "capa_",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz161",
+    "word": "venç",
+    "masked": "ven_",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 3
+  },
+  {
+    "id": "sz162",
+    "word": "alçar",
+    "masked": "al_ar",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz163",
+    "word": "braçal",
+    "masked": "bra_al",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz164",
+    "word": "forçut",
+    "masked": "for_ut",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2
+  },
+  {
+    "id": "sz165",
+    "word": "atzavara",
+    "masked": "at_avara",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz166",
+    "word": "quinze",
+    "masked": "quin_e",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 1
+  },
+  {
+    "id": "sz167",
+    "word": "amazona",
+    "masked": "ama_ona",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz168",
+    "word": "zelós",
+    "masked": "_elós",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 2
+  },
+  {
+    "id": "sz169",
+    "word": "alzinar",
+    "masked": "al_inar",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz170",
+    "word": "donzella",
+    "masked": "don_ella",
+    "answer": "z",
+    "ruleId": "z-sonora",
+    "difficulty": 3
+  },
+  {
+    "id": "sz171",
+    "word": "prescindir",
+    "masked": "pre_indir",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz172",
+    "word": "adolescència",
+    "masked": "adole_ència",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz173",
+    "word": "convalescència",
+    "masked": "convale_ència",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz174",
+    "word": "reminiscència",
+    "masked": "remini_ència",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz175",
+    "word": "ascensió",
+    "masked": "a_ensió",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
+  },
+  {
+    "id": "sz176",
+    "word": "efervescent",
+    "masked": "eferve_ent",
+    "answer": "sc",
+    "ruleId": "sc-cultismes",
+    "difficulty": 3
   }
 ]

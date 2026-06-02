@@ -641,5 +641,197 @@
     "answer": "tj",
     "ruleId": "tj-a-o-u",
     "difficulty": 3
+  },
+  {
+    "id": "gj081",
+    "word": "gegant",
+    "masked": "_egant",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 1
+  },
+  {
+    "id": "gj082",
+    "word": "ginesta",
+    "masked": "_inesta",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj083",
+    "word": "gessamí",
+    "masked": "_essamí",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj084",
+    "word": "gerro",
+    "masked": "_erro",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj085",
+    "word": "ginjoler",
+    "masked": "_injoler",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj086",
+    "word": "jugar",
+    "masked": "_ugar",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 1
+  },
+  {
+    "id": "gj087",
+    "word": "joia",
+    "masked": "_oia",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 1
+  },
+  {
+    "id": "gj088",
+    "word": "juny",
+    "masked": "_uny",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 1
+  },
+  {
+    "id": "gj089",
+    "word": "ajuntament",
+    "masked": "a_untament",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj090",
+    "word": "jubilat",
+    "masked": "_ubilat",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj091",
+    "word": "coratge",
+    "masked": "cora_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj092",
+    "word": "mitger",
+    "masked": "mi_er",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj093",
+    "word": "oratge",
+    "masked": "ora_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj094",
+    "word": "allotger",
+    "masked": "allo_er",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj095",
+    "word": "metja",
+    "masked": "me_a",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj096",
+    "word": "enutjar",
+    "masked": "enu_ar",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj097",
+    "word": "despatjar",
+    "masked": "despa_ar",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj098",
+    "word": "mitjana",
+    "masked": "mi_ana",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj099",
+    "word": "petjada",
+    "masked": "pe_ada",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj100",
+    "word": "Jeroni",
+    "masked": "_eroni",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj101",
+    "word": "jeroglífic",
+    "masked": "_eroglífic",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj102",
+    "word": "injecció",
+    "masked": "in_ecció",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj103",
+    "word": "trajecte",
+    "masked": "tra_ecte",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj104",
+    "word": "objectiu",
+    "masked": "ob_ectiu",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
   }
 ]

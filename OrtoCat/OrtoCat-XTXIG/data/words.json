@@ -736,5 +736,109 @@
     "answer": "ig",
     "ruleId": "ig-final",
     "difficulty": 3
+  },
+  {
+    "id": "xt093",
+    "word": "xic",
+    "masked": "_ic",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "xt094",
+    "word": "xerraire",
+    "masked": "_erraire",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt095",
+    "word": "xampú",
+    "masked": "_ampú",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 1
+  },
+  {
+    "id": "xt096",
+    "word": "xiprer",
+    "masked": "_iprer",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt097",
+    "word": "bruixa",
+    "masked": "bru_a",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 1
+  },
+  {
+    "id": "xt098",
+    "word": "greix",
+    "masked": "gre_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt099",
+    "word": "màxim",
+    "masked": "mà_im",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt100",
+    "word": "lèxic",
+    "masked": "lè_ic",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 3
+  },
+  {
+    "id": "xt101",
+    "word": "auxili",
+    "masked": "au_ili",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 3
+  },
+  {
+    "id": "xt102",
+    "word": "exterior",
+    "masked": "e_terior",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt103",
+    "word": "proximitat",
+    "masked": "pro_imitat",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 3
+  },
+  {
+    "id": "xt104",
+    "word": "bitxo",
+    "masked": "bi_o",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 2
+  },
+  {
+    "id": "xt105",
+    "word": "estoig",
+    "masked": "esto_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 1
   }
 ]

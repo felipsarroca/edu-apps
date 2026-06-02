@@ -110,5 +110,69 @@
     "word": "jeure",
     "contrast": "geure",
     "explanation": "Jeure és un dels verbs que s'escriuen amb j davant e."
+  },
+  {
+    "id": "gh016",
+    "sentence": "El _egant del conte era altíssim.",
+    "answer": "g",
+    "word": "gegant",
+    "contrast": "jejant",
+    "explanation": "Gegant s'escriu amb g davant e."
+  },
+  {
+    "id": "gh017",
+    "sentence": "La _oia de la corona brilla.",
+    "answer": "j",
+    "word": "joia",
+    "contrast": "goia",
+    "explanation": "Joia s'escriu amb j."
+  },
+  {
+    "id": "gh018",
+    "sentence": "El ju_e escolta les parts.",
+    "answer": "tg",
+    "word": "jutge",
+    "contrast": "jutje",
+    "explanation": "Jutge s'escriu amb tg davant e."
+  },
+  {
+    "id": "gh019",
+    "sentence": "Porta una me_a gruixuda.",
+    "answer": "tj",
+    "word": "metja",
+    "contrast": "megja",
+    "explanation": "Metja s'escriu amb tj davant a."
+  },
+  {
+    "id": "gh020",
+    "sentence": "Han tallat la corre_a vella.",
+    "answer": "tj",
+    "word": "corretja",
+    "contrast": "corregja",
+    "explanation": "Corretja s'escriu amb tj."
+  },
+  {
+    "id": "gh021",
+    "sentence": "El _enoll li fa mal.",
+    "answer": "g",
+    "word": "genoll",
+    "contrast": "jenoll",
+    "explanation": "Genoll s'escriu amb g davant e."
+  },
+  {
+    "id": "gh022",
+    "sentence": "El tra_ecte és llarg.",
+    "answer": "j",
+    "word": "trajecte",
+    "contrast": "tragtecte",
+    "explanation": "Trajecte conté el grup -ject-."
+  },
+  {
+    "id": "gh023",
+    "sentence": "El cora_e ens ajuda a actuar.",
+    "answer": "tg",
+    "word": "coratge",
+    "contrast": "coratje",
+    "explanation": "Coratge s'escriu amb tg davant e."
   }
 ]

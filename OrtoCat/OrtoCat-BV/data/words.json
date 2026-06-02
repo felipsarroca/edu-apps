@@ -858,5 +858,261 @@
     "answer": "v",
     "ruleId": "v-imperfet-ava",
     "difficulty": 2
+  },
+  {
+    "id": "bv106",
+    "word": "cabra",
+    "masked": "ca_ra",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 1
+  },
+  {
+    "id": "bv107",
+    "word": "bressol",
+    "masked": "_ressol",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv108",
+    "word": "branca",
+    "masked": "_ranca",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 1
+  },
+  {
+    "id": "bv109",
+    "word": "bussejar",
+    "masked": "_ussejar",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv110",
+    "word": "burxar",
+    "masked": "_urxar",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv111",
+    "word": "bústia",
+    "masked": "_ústia",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv112",
+    "word": "burocràcia",
+    "masked": "_urocràcia",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 3
+  },
+  {
+    "id": "bv113",
+    "word": "bombolla",
+    "masked": "bom_olla",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv114",
+    "word": "conveni",
+    "masked": "con_eni",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv115",
+    "word": "envellir",
+    "masked": "en_ellir",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 3
+  },
+  {
+    "id": "bv116",
+    "word": "biografia",
+    "masked": "_iografia",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv117",
+    "word": "bibliotecari",
+    "masked": "_ibliotecari",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv118",
+    "word": "vicedegà",
+    "masked": "_icedegà",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv119",
+    "word": "vicesecretari",
+    "masked": "_icesecretari",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 3
+  },
+  {
+    "id": "bv120",
+    "word": "vicepresidència",
+    "masked": "_icepresidència",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 3
+  },
+  {
+    "id": "bv121",
+    "word": "advocacia",
+    "masked": "ad_ocacia",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv122",
+    "word": "adventici",
+    "masked": "ad_entici",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 3
+  },
+  {
+    "id": "bv123",
+    "word": "advers",
+    "masked": "ad_ers",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv124",
+    "word": "nedava",
+    "masked": "neda_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 1
+  },
+  {
+    "id": "bv125",
+    "word": "cantaven",
+    "masked": "canta_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 1
+  },
+  {
+    "id": "bv126",
+    "word": "saltaves",
+    "masked": "salta_es",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 1
+  },
+  {
+    "id": "bv127",
+    "word": "dibuixàvem",
+    "masked": "dibuixà_em",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv128",
+    "word": "robava",
+    "masked": "ro_ava",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv129",
+    "word": "acabava",
+    "masked": "aca_ava",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv130",
+    "word": "reblava",
+    "masked": "re_lava",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv131",
+    "word": "valent",
+    "masked": "_alent",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv132",
+    "word": "voler",
+    "masked": "_oler",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv133",
+    "word": "visitar",
+    "masked": "_isitar",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv134",
+    "word": "vapor",
+    "masked": "_apor",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv135",
+    "word": "bonic",
+    "masked": "_onic",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv136",
+    "word": "bressolar",
+    "masked": "_ressolar",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv137",
+    "word": "banyar",
+    "masked": "_anyar",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 1
   }
 ]

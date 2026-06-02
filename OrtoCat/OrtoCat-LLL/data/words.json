@@ -648,5 +648,133 @@
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
+  },
+  {
+    "id": "ll082",
+    "word": "maleta",
+    "masked": "ma_eta",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll083",
+    "word": "galeta",
+    "masked": "ga_eta",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll084",
+    "word": "fanal",
+    "masked": "fana_",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll085",
+    "word": "palmera",
+    "masked": "pa_mera",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll086",
+    "word": "olivera",
+    "masked": "o_ivera",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll087",
+    "word": "retolador",
+    "masked": "reto_ador",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll088",
+    "word": "rellotge",
+    "masked": "re_otge",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll089",
+    "word": "molla",
+    "masked": "mo_a",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll090",
+    "word": "cel·la",
+    "masked": "ce_a",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll091",
+    "word": "al·lel",
+    "masked": "a_el",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll092",
+    "word": "pupil·la",
+    "masked": "pupi_a",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll093",
+    "word": "destil·lar",
+    "masked": "desti_ar",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll094",
+    "word": "cristal·li",
+    "masked": "crista_i",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll095",
+    "word": "metal·lic",
+    "masked": "meta_ic",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll096",
+    "word": "mil·lèsim",
+    "masked": "mi_èsim",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll097",
+    "word": "al·ludir",
+    "masked": "a_udir",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
   }
 ]
