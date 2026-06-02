@@ -1,13 +1,13 @@
-const CACHE_NAME = "ortocat-sscz-v2";
+const CACHE_NAME = "ortocat-sscz-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=review26",
-  "./app.js?v=review26",
+  "./styles.css?v=review27",
+  "./app.js?v=review27",
   "./manifest.webmanifest",
-  "./data/rules.json?v=review26",
-  "./data/words.json?v=review26",
-  "./data/homophones.json?v=review26",
+  "./data/rules.json?v=review27",
+  "./data/words.json?v=review27",
+  "./data/homophones.json?v=review27",
   "./assets/CC_BY-NC-SA.png",
   "./favicon.svg"
 ];

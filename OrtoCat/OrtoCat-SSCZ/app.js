@@ -37,9 +37,9 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=review26").then((response) => response.json()),
-    fetch("data/words.json?v=review26").then((response) => response.json()),
-    fetch("data/homophones.json?v=review26").then((response) => response.json()),
+    fetch("data/rules.json?v=review27").then((response) => response.json()),
+    fetch("data/words.json?v=review27").then((response) => response.json()),
+    fetch("data/homophones.json?v=review27").then((response) => response.json()),
   ]);
 
   state.rules = rules;
@@ -205,11 +205,7 @@ function renderStudy() {
 }
 
 function formatRuleTitle(title) {
-  const escaped = escapeHtml(title);
-  return escaped.replace(
-    /davant e i i/,
-    'davant <strong>"e"</strong> i <strong>"i"</strong>'
-  );
+  return formatMetaReferences(escapeHtml(title));
 }
 
 function createGuidedSet() {
@@ -423,13 +419,38 @@ function renderSolvedPrompt(item, isSentence) {
   return highlightNorm(solved, item.ruleId);
 }
 
+function formatMetaLetter(letter) {
+  return `<strong class="meta-word">"${letter}"</strong>`;
+}
+
+function formatMetaReferences(html) {
+  return html
+    .replace(/davant e i i/gi, () => `davant ${formatMetaLetter("e")} i ${formatMetaLetter("i")}`)
+    .replace(/davant e o i/gi, () => `davant ${formatMetaLetter("e")} o ${formatMetaLetter("i")}`)
+    .replace(/davant a, o i u/gi, () => `davant ${formatMetaLetter("a")}, ${formatMetaLetter("o")} i ${formatMetaLetter("u")}`)
+    .replace(/davant a, o, u/gi, () => `davant ${formatMetaLetter("a")}, ${formatMetaLetter("o")}, ${formatMetaLetter("u")}`)
+    .replace(/després de m i de n/gi, () => `després de ${formatMetaLetter("m")} i de ${formatMetaLetter("n")}`)
+    .replace(/després de consonant/gi, 'despr?s de consonant');
+}
+
+function ruleLetterClass(value) {
+  return value
+    .toLowerCase()
+    .replaceAll("·", "-")
+    .replaceAll("ç", "c-trencada")
+    .replace(/[^a-z0-9-]/g, "-");
+}
+
+function isStudiedGrapheme(value) {
+  return ["b", "v", "g", "j", "tg", "tj", "l", "ll", "l·l", "x", "ix", "tx", "ig", "s", "ss", "c", "ç", "z", "sc"].includes(value.toLowerCase());
+}
+
 function formatRuleTextMatch(match) {
-  if (Array.from(match).length === 1) {
-    return `<strong class="rule-letter rule-letter-${match.toLowerCase()}">${match}</strong>`;
+  if (isStudiedGrapheme(match)) {
+    return `<strong class="rule-letter rule-letter-${ruleLetterClass(match)}">${match}</strong>`;
   }
   return `<strong class="norm-chip">${match}</strong>`;
 }
-
 function protectMetaWords(html) {
   const protectedWords = [];
   const text = html.replace(/«([^»]+)»/g, (_, word) => {
@@ -461,7 +482,7 @@ function highlightRuleText(text, ruleId, letter = "") {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
       new RegExp(`\\b${escapedLetter}\\b`, "gi"),
-      (match) => `<strong class="rule-letter rule-letter-${escapedLetter.toLowerCase()}">${match}</strong>`
+      (match) => `<strong class="rule-letter rule-letter-${ruleLetterClass(match)}">${match}</strong>`
     );
   }
   if (parts.length) {
@@ -473,6 +494,7 @@ function highlightRuleText(text, ruleId, letter = "") {
       .sort((a, b) => b.length - a.length);
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
   }
+  html = formatMetaReferences(html);
   return restoreMetaWords(html, meta.protectedWords);
 }
 
