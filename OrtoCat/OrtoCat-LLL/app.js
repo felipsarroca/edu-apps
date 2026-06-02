@@ -20,6 +20,7 @@ const els = {
   prevRule: document.querySelector("#prevRule"),
   nextRule: document.querySelector("#nextRule"),
   ruleSelect: document.querySelector("#ruleSelect"),
+  ruleSelectPreview: document.querySelector("#ruleSelectPreview"),
   guidedPractice: document.querySelector("#guidedPractice"),
   randomPractice: document.querySelector("#randomPractice"),
   reviewPractice: document.querySelector("#reviewPractice"),
@@ -73,7 +74,10 @@ function bindEvents() {
     renderStudy();
   });
 
-  els.ruleSelect.addEventListener("change", createGuidedSet);
+  els.ruleSelect.addEventListener("change", () => {
+    createGuidedSet();
+    renderRuleSelectPreview();
+  });
   document.querySelector("#checkGuided").addEventListener("click", () => checkSet("guided"));
   document.querySelector("#newGuided").addEventListener("click", createGuidedSet);
   document.querySelector("#nextGuidedRule").addEventListener("click", nextGuidedRule);
@@ -166,13 +170,20 @@ function renderRuleSelect() {
   els.ruleSelect.innerHTML = state.rules
     .map((rule) => {
       const status = rulePracticeStatus(rule.id);
-      const label = status.label ? `${status.mark} ${rule.title}` : rule.title;
+      const label = status.label ? `${status.mark} ${plainRuleTitle(rule)}` : plainRuleTitle(rule);
       return `<option class="${status.className}" value="${rule.id}">${escapeHtml(label)}</option>`;
     })
     .join("");
   if (currentValue && state.rules.some((rule) => rule.id === currentValue)) {
     els.ruleSelect.value = currentValue;
   }
+  renderRuleSelectPreview();
+}
+
+function renderRuleSelectPreview() {
+  if (!els.ruleSelectPreview) return;
+  const rule = ruleById(els.ruleSelect.value) || state.rules[0];
+  els.ruleSelectPreview.innerHTML = rule ? highlightRuleText(rule.title, rule.id, rule.letter) : "";
 }
 
 function renderStudy() {
@@ -180,13 +191,13 @@ function renderStudy() {
   els.ruleCard.innerHTML = `
     <div class="rule-meta">
       <span class="badge">${state.ruleIndex + 1} / ${state.rules.length}</span>
-      <span class="badge">S'escriu amb ${rule.letter.toUpperCase()}</span>
+      <span class="badge">S'escriu amb ${plainMetaLetter(rule.letter.toUpperCase())}</span>
     </div>
-    <h3>${formatRuleTitle(rule.title)}</h3>
+    <h3>${highlightRuleText(rule.title, rule.id, rule.letter)}</h3>
     <p class="rule-text">${highlightRuleText(rule.summary, rule.id, rule.letter)}</p>
     <div>
       <h3>Exemples</h3>
-      <ul class="examples">${rule.examples.map((word) => `<li>${highlightNorm(word, rule.id)}</li>`).join("")}</ul>
+      <ul class="examples">${rule.examples.map((word) => `<li>${highlightWordByRule(word, rule.id)}</li>`).join("")}</ul>
     </div>
     ${rule.exceptions.length ? `
       <div class="exception-box">
@@ -208,6 +219,14 @@ function formatRuleTitle(title) {
   return formatMetaReferences(escapeHtml(title));
 }
 
+function plainMetaLetter(letter) {
+  return `«${letter}»`;
+}
+
+function plainRuleTitle(rule) {
+  return formatMetaReferences(escapeHtml(rule.title)).replace(/<[^>]+>/g, "");
+}
+
 function createGuidedSet() {
   const ruleId = els.ruleSelect.value || state.rules[0].id;
   const pool = eligibleGuidedWords(ruleId);
@@ -215,6 +234,7 @@ function createGuidedSet() {
   const amount = Math.min(5, Math.max(3, pool.length - previous.length || 5));
   state.guidedItems = nextItemsForRule(ruleId, pool, amount);
   renderPractice(els.guidedPractice, state.guidedItems, "guided");
+  renderRuleSelectPreview();
 }
 
 function nextGuidedRule() {
@@ -414,7 +434,7 @@ function renderSolvedPrompt(item, isSentence) {
 }
 
 function formatMetaLetter(letter) {
-  return `<strong class="meta-word">"${letter}"</strong>`;
+  return `<strong class="meta-word">«${letter}»</strong>`;
 }
 
 function formatMetaReferences(html) {
@@ -424,7 +444,6 @@ function formatMetaReferences(html) {
     .replace(/davant a, o i u/gi, () => `davant ${formatMetaLetter("a")}, ${formatMetaLetter("o")} i ${formatMetaLetter("u")}`)
     .replace(/davant a, o, u/gi, () => `davant ${formatMetaLetter("a")}, ${formatMetaLetter("o")}, ${formatMetaLetter("u")}`)
     .replace(/després de m i de n/gi, () => `després de ${formatMetaLetter("m")} i de ${formatMetaLetter("n")}`)
-    .replace(/després de consonant/gi, 'despr?s de consonant');
 }
 
 function ruleLetterClass(value) {
@@ -462,6 +481,8 @@ function restoreMetaWords(html, protectedWords) {
 function highlightRuleText(text, ruleId, letter = "") {
   const meta = protectMetaWords(escapeHtml(text));
   let html = meta.text;
+  const exampleHighlights = protectedHtmlHighlights(ruleExampleHighlights(ruleId));
+  html = protectExactHtmlMatches(html, exampleHighlights);
   const replacements = {
     "l-simple": ["l"],
     "ll": ["ll"],
@@ -486,6 +507,7 @@ function highlightRuleText(text, ruleId, letter = "") {
     html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
   }
   html = formatMetaReferences(html);
+  html = restoreProtectedHtml(html, exampleHighlights);
   return restoreMetaWords(html, meta.protectedWords);
 }
 
@@ -494,10 +516,63 @@ function highlightNorm(text, ruleId, targetWord = "") {
   if (targetWord) {
     return escaped.replace(
       new RegExp(escapeRegExp(escapeHtml(targetWord)), "i"),
-      (match) => highlightNorm(match, ruleId)
+      (match) => highlightWordByRule(match, ruleId)
     );
   }
 
+  return escaped.replace(/[\p{L}\p{M}\u00b7]+/gu, (word) => highlightWordByRule(word, ruleId));
+}
+
+function protectedHtmlHighlights(highlights) {
+  return highlights.map((item, index) => ({ ...item, token: `%%HIGHLIGHT${index}%%` }));
+}
+
+function protectExactHtmlMatches(html, highlights) {
+  return highlights.reduce((current, item) => {
+    const pattern = new RegExp(`(?<![\p{L}\p{M}\u00b7])${escapeRegExp(item.text)}(?![\p{L}\p{M}\u00b7])`, "giu");
+    return current.replace(pattern, item.token);
+  }, html);
+}
+
+function restoreProtectedHtml(html, highlights) {
+  return highlights.reduce((current, item) => current.replaceAll(item.token, item.html), html);
+}
+
+function itemForWord(word, ruleId = "") {
+  const lowerWord = word.toLocaleLowerCase("ca");
+  return state.words.find((item) =>
+    item.word.toLocaleLowerCase("ca") === lowerWord && (!ruleId || item.ruleId === ruleId)
+  ) || state.words.find((item) => item.word.toLocaleLowerCase("ca") === lowerWord);
+}
+
+function highlightItemWord(word, item) {
+  if (!item?.masked || !item?.answer) return null;
+  const answerIndex = item.masked.indexOf("_");
+  if (answerIndex < 0) return null;
+  const answerLength = item.answer.length;
+  const before = escapeHtml(word.slice(0, answerIndex));
+  const marked = escapeHtml(word.slice(answerIndex, answerIndex + answerLength));
+  const after = escapeHtml(word.slice(answerIndex + answerLength));
+  return `<span class="highlighted-word">${before}<span class="norm-highlight rule-letter-${ruleLetterClass(item.answer)}">${marked}</span>${after}</span>`;
+}
+
+function highlightWordByRule(word, ruleId) {
+  const item = itemForWord(word, ruleId);
+  const highlighted = highlightItemWord(word, item);
+  if (highlighted) return highlighted;
+  return highlightByPattern(word, ruleId);
+}
+
+function ruleExampleHighlights(ruleId) {
+  const rule = ruleById(ruleId);
+  if (!rule) return [];
+  return rule.examples.map((word) => ({
+    text: escapeHtml(word),
+    html: highlightWordByRule(word, ruleId),
+  }));
+}
+
+function highlightByPattern(text, ruleId) {
   const rules = {
     "l-simple": /l/gi,
     "ll": /ll/gi,
@@ -505,13 +580,12 @@ function highlightNorm(text, ruleId, targetWord = "") {
     "l-geminada-prefixos": /l·l/gi,
     "homophones": /(l·l|ll|l)/gi,
   };
-
-  const pattern = rules[ruleId] || /(l·l|ll|l)/gi;
-  return escaped.replace(/[\p{L}\p{M}]+/gu, (word) => {
+  const pattern = rules[ruleId] || Object.values(rules)[0];
+  return escapeHtml(text).replace(/[\p{L}\p{M}\u00b7]+/gu, (word) => {
     pattern.lastIndex = 0;
     if (!pattern.test(word)) return word;
     pattern.lastIndex = 0;
-    return `<span class="highlighted-word">${word.replace(pattern, (match) => `<span class="norm-highlight">${match}</span>`)}</span>`;
+    return `<span class="highlighted-word">${word.replace(pattern, (match) => `<span class="norm-highlight rule-letter-${ruleLetterClass(match)}">${match}</span>`)}</span>`;
   });
 }
 
@@ -597,7 +671,7 @@ function renderProgress() {
     const confidence = Math.round(Math.max(...belief) * 100);
     return `
       <div class="progress-row">
-        <strong>${escapeHtml(rule.title)}</strong>
+        <strong>${highlightRuleText(rule.title, rule.id, rule.letter)}</strong>
         <div class="meter" aria-label="Dominio ${mastery}%"><span style="width: ${mastery}%"></span></div>
         <span>${stat.hits} ac. / ${stat.misses} err. · ${confidence}% conf.</span>
       </div>
