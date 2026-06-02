@@ -2,8 +2,8 @@
   {
     "id": "s-inicial-final",
     "letter": "s",
-    "title": "S sorda a principi, final i després de consonant",
-    "summary": "El so d'essa sorda sovint s'escriu s a principi de paraula, a final de paraula o després de consonant.",
+    "title": "S sorda a principi, final i sovint després de consonant",
+    "summary": "El so d'essa sorda sovint s'escriu s a principi de paraula, a final de paraula o després de consonant. Cal vigilar alguns mots com endinsar i enfonsar, on la s és sonora.",
     "examples": [
       "sol",
       "sopa",
@@ -14,7 +14,10 @@
       "arròs",
       "pensar"
     ],
-    "exceptions": []
+    "exceptions": [
+      "endinsar",
+      "enfonsar"
+    ]
   },
   {
     "id": "ss-entre-vocals",
@@ -36,8 +39,8 @@
   {
     "id": "s-sonora",
     "letter": "s",
-    "title": "S sonora entre vocals",
-    "summary": "Entre vocals, el so d'essa sonora sovint s'escriu s: casa, rosa, posar.",
+    "title": "S sonora amb s",
+    "summary": "Entre vocals, el so d'essa sonora sovint s'escriu s: casa, rosa, posar. També passa en alguns mots després de n, com endinsar i enfonsar.",
     "examples": [
       "casa",
       "rosa",
@@ -46,7 +49,9 @@
       "cosina",
       "música",
       "visita",
-      "desembre"
+      "desembre",
+      "endinsar",
+      "enfonsar"
     ],
     "exceptions": []
   },

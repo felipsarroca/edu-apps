@@ -486,7 +486,7 @@ function highlightRuleText(text, ruleId, letter = "") {
   const replacements = {
     "l-simple": ["l"],
     "ll": ["ll"],
-    "l-geminada": ["l·l", "ela geminada", "punt volat"],
+    "l-geminada": ["l·l"],
     "l-geminada-prefixos": ["l·l", "al·l-", "col·l-", "il·l-", "mil·l-"],
   };
   const parts = replacements[ruleId] || [];
@@ -894,4 +894,3 @@ function escapeHtml(value) {
 function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
-

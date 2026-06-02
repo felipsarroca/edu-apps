@@ -491,11 +491,11 @@ function highlightRuleText(text, ruleId, letter = "") {
   html = protectExactHtmlMatches(html, exampleHighlights);
   const replacements = {
     "s-inicial-final": ["s"],
-    "ss-entre-vocals": ["ss", "vocal"],
-    "s-sonora": ["s", "z sonora", "entre vocals"],
+    "ss-entre-vocals": ["ss"],
+    "s-sonora": ["s"],
     "c-e-i": ["c", "ce", "ci"],
     "c-trencada": ["ç", "ça", "ço", "çu"],
-    "z-sonora": ["z", "zero", "zona"],
+    "z-sonora": ["z"],
     "sc-cultismes": ["sc", "sce", "sci"],
   };
   const parts = replacements[ruleId] || [];

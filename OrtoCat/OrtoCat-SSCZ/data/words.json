@@ -1074,5 +1074,23 @@
     "answer": "sc",
     "ruleId": "sc-cultismes",
     "difficulty": 3
+  },
+  {
+    "id": "sz133",
+    "word": "endinsar",
+    "masked": "endin_ar",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3,
+    "hint": "fer entrar cap a dins"
+  },
+  {
+    "id": "sz134",
+    "word": "enfonsar",
+    "masked": "enfon_ar",
+    "answer": "s",
+    "ruleId": "s-sonora",
+    "difficulty": 3,
+    "hint": "fer anar cap al fons"
   }
 ]
