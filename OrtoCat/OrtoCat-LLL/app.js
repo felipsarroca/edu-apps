@@ -374,13 +374,13 @@ function checkSet(mode) {
       return;
     }
     answeredCards += 1;
-    const isCorrect = selected === item.answer;
+    const isCorrect = normalizeAnswer(selected) === normalizeAnswer(item.answer);
     if (!isCorrect) setMisses += 1;
     card.dataset.checked = "true";
     checkedCards += 1;
     card.classList.toggle("is-correct", isCorrect);
     card.classList.toggle("is-wrong", !isCorrect);
-    card.querySelector(".word-prompt").innerHTML = renderSolvedPrompt(item, mode === "homophones" || Boolean(item.sentence));
+    card.querySelector(".word-prompt").innerHTML = renderSolvedPrompt(item, mode === "homophones" || Boolean(item.sentence), isCorrect ? "" : selected);
 
     updateAttempt(item, isCorrect, mode);
     feedback.innerHTML = isCorrect
@@ -420,18 +420,36 @@ function shouldUseUppercase(text, isSentence) {
   return prefix.length === 0;
 }
 
+function normalizeAnswer(value) {
+  return String(value || "").trim().toLocaleLowerCase("ca");
+}
+
+function displayChoice(value, item) {
+  const prompt = promptForItem(item, Boolean(item.sentence));
+  const normalized = normalizeAnswer(value);
+  return shouldUseUppercase(prompt, Boolean(item.sentence)) ? normalized.toUpperCase() : normalized;
+}
+
 function displayLetterForItem(item) {
   const prompt = promptForItem(item, Boolean(item.sentence));
   return shouldUseUppercase(prompt, Boolean(item.sentence)) ? item.answer.toUpperCase() : item.answer;
 }
 
-function renderSolvedPrompt(item, isSentence) {
+function renderSolvedPrompt(item, isSentence, selected = "") {
+  if (selected) return renderSelectedPrompt(item, isSentence, selected);
   const prompt = promptForItem(item, isSentence);
   const solved = prompt.replace("_", displayLetterForItem(item));
   if (isSentence) {
     return highlightNorm(solved, item.ruleId || "homophones", item.word);
   }
   return highlightNorm(solved, item.ruleId);
+}
+
+function renderSelectedPrompt(item, isSentence, selected) {
+  const prompt = promptForItem(item, isSentence);
+  const letter = `<span class="wrong-choice">${escapeHtml(displayChoice(selected, item))}</span>`;
+  if (!isSentence) return escapeHtml(prompt).replace("_", letter);
+  return escapeHtml(prompt).replace(/(\S*_\S*)/, (word) => word.replace("_", letter));
 }
 
 function formatMetaLetter(letter) {

@@ -735,6 +735,17 @@ select {
 .pick-z, .blank.is-z { background-color: #b3261e; border-color: #b3261e; color: #fff; }
 .pick-sc, .blank.is-sc { background-color: #6d6d00; border-color: #6d6d00; color: #fff; }
 
+.wrong-choice {
+  display: inline-block;
+  padding: 0 3px;
+  border-radius: 5px;
+  background: #ffe0dc;
+  color: #8a211a;
+  font-weight: 950;
+  text-decoration: line-through;
+  box-shadow: inset 0 -2px 0 rgba(179, 38, 30, 0.35);
+}
+
 .feedback {
   min-height: 24px;
   color: var(--muted);
