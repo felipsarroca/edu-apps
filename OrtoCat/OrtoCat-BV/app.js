@@ -484,7 +484,7 @@ function highlightRuleText(text, ruleId, letter = "") {
   if (letter && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
-      new RegExp(`\\b${escapedLetter}\\b`, "gi"),
+      new RegExp(`(?<![\\p{L}\\p{M}'\u2019&])${escapedLetter}(?![\\p{L}\\p{M}'\u2019&])`, "giu"),
       (match) => `<strong class="rule-letter rule-letter-${ruleLetterClass(match)}">${match}</strong>`
     );
   }
@@ -494,7 +494,7 @@ function highlightRuleText(text, ruleId, letter = "") {
   (ruleLetters[ruleId] || []).forEach((part) => {
     const escaped = escapeRegExp(escapeHtml(part));
     html = html.replace(
-      new RegExp(`\\b${escaped}\\b`, "gi"),
+      new RegExp(`(?<![\\p{L}\\p{M}'\u2019&])${escaped}(?![\\p{L}\\p{M}'\u2019&])`, "giu"),
       (match) => `<strong class="rule-letter rule-letter-${ruleLetterClass(match)}">${match}</strong>`
     );
   });
@@ -514,10 +514,10 @@ function highlightRuleText(text, ruleId, letter = "") {
     const alternatives = parts
       .map((part) => {
         const escaped = escapeRegExp(escapeHtml(part));
-        return part.includes("-") || /[^\x00-\x7F]/.test(part) ? escaped : `\\b${escaped}\\b`;
+        return part.includes("-") || /[^\x00-\x7F]/.test(part) ? escaped : `(?<![\\p{L}\\p{M}'\u2019&])${escaped}(?![\\p{L}\\p{M}'\u2019&])`;
       })
       .sort((a, b) => b.length - a.length);
-    html = html.replace(new RegExp(alternatives.join("|"), "gi"), formatRuleTextMatch);
+    html = html.replace(new RegExp(alternatives.join("|"), "giu"), formatRuleTextMatch);
   }
   html = formatMetaReferences(html);
   html = restoreProtectedHtml(html, exampleHighlights);
