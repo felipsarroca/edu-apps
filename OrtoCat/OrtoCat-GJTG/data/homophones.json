@@ -37,7 +37,7 @@
     "answer": "j",
     "word": "jersei",
     "contrast": "gersei",
-    "explanation": "Jersei és una excepció amb j davant e."
+    "explanation": "Jersei és un manlleu que s'escriu amb j davant e."
   },
   {
     "id": "gh006",
@@ -45,7 +45,7 @@
     "answer": "j",
     "word": "projecte",
     "contrast": "progecte",
-    "explanation": "Projecte s'escriu amb j davant e."
+    "explanation": "Projecte s'escriu amb j perquè conté el grup -ject-."
   },
   {
     "id": "gh007",
@@ -61,7 +61,7 @@
     "answer": "tg",
     "word": "platges",
     "contrast": "platjes",
-    "explanation": "Platges s'escriu amb tg davant e."
+    "explanation": "Platges s'escriu amb tg davant e: alterna amb platja."
   },
   {
     "id": "gh010",
@@ -109,6 +109,6 @@
     "answer": "j",
     "word": "jeure",
     "contrast": "geure",
-    "explanation": "Jeure és una paraula amb j davant e."
+    "explanation": "Jeure és un dels verbs que s'escriuen amb j davant e."
   }
 ]

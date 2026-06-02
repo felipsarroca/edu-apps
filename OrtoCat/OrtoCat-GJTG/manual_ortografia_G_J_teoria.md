@@ -1,7 +1,7 @@
 # Manual breu: G / J / TG / TJ
 
-- G davant **"e"** i **"i"**: gent, gel, girar.
-- J davant a, o i u: jaqueta, joc, juliol.
-- TG davant **"e"** i **"i"**: metge, formatge, imatge.
-- TJ davant a, o i u: platja, mitja, desitjar.
-- Algunes paraules duen j davant e o i: jersei, jerarquia, Jesús.
+- Generalment, G davant **"e"** i **"i"**: gent, gel, girar.
+- Generalment, J davant **"a"**, **"o"** i **"u"**: jaqueta, joc, juliol.
+- Generalment, TG davant **"e"** i **"i"**: metge, formatge, imatge.
+- Generalment, TJ davant **"a"**, **"o"** i **"u"**: platja, mitja, desitjar.
+- S'escriu J davant **"e"** o **"i"** en el verb **jeure**, en els grups **-jecc-** i **-ject-** (injecció, projecte, objecte, subjecte, adjectiu), en cultismes i noms propis (jerarquia, jeroglífic, majestat, Jesús, Jerusalem) i en manlleus (jersei).

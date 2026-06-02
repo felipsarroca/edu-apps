@@ -262,7 +262,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
-    "hint": "peça de roba"
+    "hint": "peça de roba",
+    "exception": true
   },
   {
     "id": "gj034",
@@ -270,7 +271,8 @@
     "masked": "_erarquia",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
-    "difficulty": 3
+    "difficulty": 3,
+    "exception": true
   },
   {
     "id": "gj035",
@@ -279,7 +281,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
-    "hint": "nom propi"
+    "hint": "nom propi",
+    "exception": true
   },
   {
     "id": "gj036",
@@ -287,7 +290,8 @@
     "masked": "_eure",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
-    "difficulty": 3
+    "difficulty": 3,
+    "exception": true
   },
   {
     "id": "gj037",
@@ -295,7 +299,8 @@
     "masked": "ma_estat",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
-    "difficulty": 3
+    "difficulty": 3,
+    "exception": true
   },
   {
     "id": "gj038",
@@ -400,7 +405,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "j davant e"
+    "hint": "pla o treball que es vol fer",
+    "exception": true
   },
   {
     "id": "gj051",
@@ -409,7 +415,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "j davant e"
+    "hint": "cosa o element",
+    "exception": true
   },
   {
     "id": "gj052",
@@ -418,7 +425,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "j davant e"
+    "hint": "persona o cosa de què es parla",
+    "exception": true
   },
   {
     "id": "gj053",
@@ -427,7 +435,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "j davant e"
+    "hint": "qualitat que acompanya un nom",
+    "exception": true
   },
   {
     "id": "gj054",
@@ -436,7 +445,8 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "j davant e"
+    "hint": "acció d'introduir un líquid",
+    "exception": true
   },
   {
     "id": "gj056",
@@ -606,7 +616,8 @@
     "masked": "_eroglífic",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
-    "difficulty": 3
+    "difficulty": 3,
+    "exception": true
   },
   {
     "id": "gj077",
