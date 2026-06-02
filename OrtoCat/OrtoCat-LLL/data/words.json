@@ -133,8 +133,7 @@
     "masked": "co_egi",
     "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 2,
-    "hint": "centre educatiu"
+    "difficulty": 2
   },
   {
     "id": "ll018",
@@ -142,8 +141,7 @@
     "masked": "nove_a",
     "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 2,
-    "hint": "obra narrativa"
+    "difficulty": 2
   },
   {
     "id": "ll019",
@@ -151,8 +149,7 @@
     "masked": "inte_igent",
     "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 3,
-    "hint": "que entén les coses amb facilitat"
+    "difficulty": 3
   },
   {
     "id": "ll020",
@@ -168,8 +165,7 @@
     "masked": "pe_ícula",
     "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 2,
-    "hint": "obra cinematogràfica"
+    "difficulty": 2
   },
   {
     "id": "ll022",
@@ -201,8 +197,7 @@
     "masked": "a_èrgia",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 3,
-    "hint": "reacció a una substància"
+    "difficulty": 3
   },
   {
     "id": "ll026",
@@ -218,8 +213,7 @@
     "masked": "co_ecció",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 2,
-    "hint": "conjunt d'elements reunits"
+    "difficulty": 2
   },
   {
     "id": "ll028",
@@ -235,8 +229,7 @@
     "masked": "i_egal",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 3,
-    "hint": "contrari de legal"
+    "difficulty": 3
   },
   {
     "id": "ll030",
@@ -252,8 +245,7 @@
     "masked": "mi_ímetre",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
-    "difficulty": 3,
-    "hint": "unitat de longitud"
+    "difficulty": 3
   },
   {
     "id": "ll032",
@@ -269,8 +261,7 @@
     "masked": "mi_ió",
     "answer": "l",
     "ruleId": "l-simple",
-    "difficulty": 3,
-    "hint": "nombre molt gran"
+    "difficulty": 3
   },
   {
     "id": "ll034",
@@ -278,8 +269,7 @@
     "masked": "a_egria",
     "answer": "l",
     "ruleId": "l-simple",
-    "difficulty": 2,
-    "hint": "sentiment de joia"
+    "difficulty": 2
   },
   {
     "id": "ll035",
@@ -287,8 +277,7 @@
     "masked": "se_ecció",
     "answer": "l",
     "ruleId": "l-simple",
-    "difficulty": 3,
-    "hint": "tria d'elements"
+    "difficulty": 3
   },
   {
     "id": "ll036",
@@ -296,8 +285,7 @@
     "masked": "_iteratura",
     "answer": "l",
     "ruleId": "l-simple",
-    "difficulty": 2,
-    "hint": "art d'escriure textos"
+    "difficulty": 2
   },
   {
     "id": "ll037",
@@ -305,8 +293,7 @@
     "masked": "ce_ebrar",
     "answer": "l",
     "ruleId": "l-simple",
-    "difficulty": 2,
-    "hint": "fer una festa o un acte"
+    "difficulty": 2
   },
   {
     "id": "ll038",
@@ -548,8 +535,7 @@
     "masked": "ga_a",
     "answer": "l·l",
     "ruleId": "l-geminada",
-    "difficulty": 3,
-    "hint": "festa solemne"
+    "difficulty": 3
   },
   {
     "id": "ll068",

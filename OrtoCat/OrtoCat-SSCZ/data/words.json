@@ -5,8 +5,7 @@
     "masked": "_ol",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 1,
-    "hint": "astre"
+    "difficulty": 1
   },
   {
     "id": "sz002",
@@ -135,8 +134,7 @@
     "masked": "ca_a",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 1,
-    "hint": "edifici per viure-hi"
+    "difficulty": 1
   },
   {
     "id": "sz018",
@@ -554,8 +552,7 @@
     "masked": "te_i",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 3,
-    "hint": "treball acadèmic"
+    "difficulty": 3
   },
   {
     "id": "sz070",
@@ -563,8 +560,7 @@
     "masked": "pre_ó",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 3,
-    "hint": "lloc on es compleix una pena"
+    "difficulty": 3
   },
   {
     "id": "sz071",
@@ -572,8 +568,7 @@
     "masked": "paï_os",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 3,
-    "hint": "plural de país"
+    "difficulty": 3
   },
   {
     "id": "sz072",
@@ -581,8 +576,7 @@
     "masked": "ca_ino",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 3,
-    "hint": "sala de joc"
+    "difficulty": 3
   },
   {
     "id": "sz073",
@@ -631,8 +625,7 @@
     "masked": "_eba",
     "answer": "c",
     "ruleId": "c-e-i",
-    "difficulty": 1,
-    "hint": "hortalissa"
+    "difficulty": 1
   },
   {
     "id": "sz080",
@@ -771,8 +764,7 @@
     "masked": "_eure",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 2,
-    "hint": "posar-se assegut"
+    "difficulty": 2
   },
   {
     "id": "sz097",
@@ -780,8 +772,7 @@
     "masked": "_era",
     "answer": "c",
     "ruleId": "c-e-i",
-    "difficulty": 2,
-    "hint": "material de les espelmes"
+    "difficulty": 2
   },
   {
     "id": "sz098",
@@ -789,8 +780,7 @@
     "masked": "_eda",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 2,
-    "hint": "teixit fi"
+    "difficulty": 2
   },
   {
     "id": "sz099",
@@ -816,8 +806,7 @@
     "masked": "_erp",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 1,
-    "hint": "rèptil"
+    "difficulty": 1
   },
   {
     "id": "sz102",
@@ -825,8 +814,7 @@
     "masked": "_afata",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 2,
-    "hint": "plat ample"
+    "difficulty": 2
   },
   {
     "id": "sz103",
@@ -834,8 +822,7 @@
     "masked": "_enyal",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 2,
-    "hint": "marca o avís"
+    "difficulty": 2
   },
   {
     "id": "sz104",
@@ -843,8 +830,7 @@
     "masked": "_ilenci",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 2,
-    "hint": "absència de soroll"
+    "difficulty": 2
   },
   {
     "id": "sz105",
@@ -876,8 +862,7 @@
     "masked": "ba_ar",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 2,
-    "hint": "mercat"
+    "difficulty": 2
   },
   {
     "id": "sz109",
@@ -885,8 +870,7 @@
     "masked": "_eller",
     "answer": "c",
     "ruleId": "c-e-i",
-    "difficulty": 2,
-    "hint": "lloc per guardar vi"
+    "difficulty": 2
   },
   {
     "id": "sz110",
@@ -894,8 +878,7 @@
     "masked": "_ervell",
     "answer": "c",
     "ruleId": "c-e-i",
-    "difficulty": 2,
-    "hint": "òrgan"
+    "difficulty": 2
   },
   {
     "id": "sz111",
@@ -919,8 +902,7 @@
     "masked": "_odíac",
     "answer": "z",
     "ruleId": "z-sonora",
-    "difficulty": 1,
-    "hint": "conjunt de signes"
+    "difficulty": 1
   },
   {
     "id": "sz114",
@@ -1081,8 +1063,7 @@
     "masked": "endin_ar",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 3,
-    "hint": "fer entrar cap a dins"
+    "difficulty": 3
   },
   {
     "id": "sz134",
@@ -1090,7 +1071,6 @@
     "masked": "enfon_ar",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 3,
-    "hint": "fer anar cap al fons"
+    "difficulty": 3
   }
 ]

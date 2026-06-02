@@ -555,6 +555,14 @@ select {
   word-break: normal;
 }
 
+.word-hint {
+  margin-top: -2px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
 .sentence-prompt {
   display: block;
   min-height: auto;

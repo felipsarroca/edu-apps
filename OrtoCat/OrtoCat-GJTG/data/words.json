@@ -262,7 +262,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
-    "hint": "peça de roba",
     "exception": true
   },
   {
@@ -281,7 +280,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
-    "hint": "nom propi",
     "exception": true
   },
   {
@@ -405,7 +403,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "pla o treball que es vol fer",
     "exception": true
   },
   {
@@ -415,7 +412,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "cosa o element",
     "exception": true
   },
   {
@@ -425,7 +421,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "persona o cosa de què es parla",
     "exception": true
   },
   {
@@ -435,7 +430,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "qualitat que acompanya un nom",
     "exception": true
   },
   {
@@ -445,7 +439,6 @@
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3,
-    "hint": "acció d'introduir un líquid",
     "exception": true
   },
   {
@@ -502,8 +495,7 @@
     "masked": "pla_es",
     "answer": "tg",
     "ruleId": "tg-e-i",
-    "difficulty": 3,
-    "hint": "plural de platja"
+    "difficulty": 3
   },
   {
     "id": "gj063",
@@ -511,8 +503,7 @@
     "masked": "mi_es",
     "answer": "tg",
     "ruleId": "tg-e-i",
-    "difficulty": 3,
-    "hint": "plural de mitja"
+    "difficulty": 3
   },
   {
     "id": "gj064",

@@ -133,8 +133,7 @@
     "masked": "ta_i",
     "answer": "x",
     "ruleId": "x-cs-gz",
-    "difficulty": 1,
-    "hint": "vehicle de servei públic"
+    "difficulty": 1
   },
   {
     "id": "xt018",
@@ -142,8 +141,7 @@
     "masked": "e_amen",
     "answer": "x",
     "ruleId": "x-cs-gz",
-    "difficulty": 2,
-    "hint": "prova escrita o oral"
+    "difficulty": 2
   },
   {
     "id": "xt019",
@@ -151,8 +149,7 @@
     "masked": "e_ercici",
     "answer": "x",
     "ruleId": "x-cs-gz",
-    "difficulty": 2,
-    "hint": "activitat per practicar"
+    "difficulty": 2
   },
   {
     "id": "xt020",
@@ -184,8 +181,7 @@
     "masked": "te_t",
     "answer": "x",
     "ruleId": "x-cs-gz",
-    "difficulty": 2,
-    "hint": "escrit o fragment de lectura"
+    "difficulty": 2
   },
   {
     "id": "xt024",
@@ -193,8 +189,7 @@
     "masked": "fi_ar",
     "answer": "x",
     "ruleId": "x-cs-gz",
-    "difficulty": 2,
-    "hint": "subjectar o deixar estable"
+    "difficulty": 2
   },
   {
     "id": "xt025",
@@ -267,8 +262,7 @@
     "masked": "ma_",
     "answer": "ig",
     "ruleId": "ig-final",
-    "difficulty": 1,
-    "hint": "mes de l'any"
+    "difficulty": 1
   },
   {
     "id": "xt034",
@@ -308,8 +302,7 @@
     "masked": "m_",
     "answer": "ig",
     "ruleId": "ig-final",
-    "difficulty": 1,
-    "hint": "meitat"
+    "difficulty": 1
   },
   {
     "id": "xt039",
@@ -317,8 +310,7 @@
     "masked": "des_",
     "answer": "ig",
     "ruleId": "ig-final",
-    "difficulty": 2,
-    "hint": "voler una cosa"
+    "difficulty": 2
   },
   {
     "id": "xt040",
@@ -639,8 +631,7 @@
     "masked": "sa_",
     "answer": "ig",
     "ruleId": "ig-final",
-    "difficulty": 3,
-    "hint": "oficial judicial antic"
+    "difficulty": 3
   },
   {
     "id": "xt080",

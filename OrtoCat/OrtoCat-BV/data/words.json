@@ -117,8 +117,7 @@
     "masked": "_ulgar",
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
-    "difficulty": 3,
-    "hint": "no és culte ni refinat"
+    "difficulty": 3
   },
   {
     "id": "bv016",
@@ -126,8 +125,7 @@
     "masked": "_ulnerable",
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
-    "difficulty": 3,
-    "hint": "fràgil o que pot rebre dany"
+    "difficulty": 3
   },
   {
     "id": "bv017",
@@ -191,8 +189,7 @@
     "masked": "tram_ia",
     "answer": "v",
     "ruleId": "bv-mb-nv",
-    "difficulty": 3,
-    "hint": "vehicle que circula sobre rails"
+    "difficulty": 3
   },
   {
     "id": "bv025",
@@ -537,7 +534,6 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "religió i pràctica d'origen africà",
     "exception": true
   },
   {
@@ -547,7 +543,6 @@
     "answer": "v",
     "ruleId": "b-bu-bur-bus",
     "difficulty": 3,
-    "hint": "fer tornar fràgil o exposat a dany",
     "exception": true
   },
   {
@@ -565,8 +560,7 @@
     "masked": "_uitanta",
     "answer": "v",
     "ruleId": "v-frequents",
-    "difficulty": 2,
-    "hint": "nombre"
+    "difficulty": 2
   },
   {
     "id": "bv070",
@@ -646,8 +640,7 @@
     "masked": "arri_ava",
     "answer": "b",
     "ruleId": "b-radical-ava",
-    "difficulty": 2,
-    "hint": "verb de moviment"
+    "difficulty": 2
   },
   {
     "id": "bv080",
@@ -655,8 +648,7 @@
     "masked": "arri_àvem",
     "answer": "b",
     "ruleId": "b-radical-ava",
-    "difficulty": 3,
-    "hint": "verb de moviment"
+    "difficulty": 3
   },
   {
     "id": "bv081",

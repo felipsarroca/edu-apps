@@ -308,6 +308,7 @@ function questionTemplate(item, mode, isSentence) {
   return `
     <article class="question-card" data-mode="${mode}" data-id="${item.id}">
       <div class="${promptClass}">${renderMasked(prompt, item, isSentence)}</div>
+      ${!isSentence && item.hint ? `<div class="word-hint">${escapeHtml(item.hint)}</div>` : ""}
       <div class="mini-actions" aria-label="Elegir b o v">
         <button class="pick-button pick-b" type="button" data-pick="b">B</button>
         <button class="pick-button pick-v" type="button" data-pick="v">V</button>
@@ -319,7 +320,7 @@ function questionTemplate(item, mode, isSentence) {
 
 function promptForItem(item, isSentence = false) {
   if (isSentence) return item.sentence;
-  return item.hint ? `${item.masked} (${item.hint})` : item.masked;
+  return item.masked;
 }
 
 function renderMasked(text, item, isSentence = false) {
