@@ -430,7 +430,7 @@
   },
   {
     "id": "ll053",
-    "word": "satèl·llit",
+    "word": "satèl·lit",
     "masked": "satè_it",
     "answer": "l·l",
     "ruleId": "l-geminada",
@@ -555,6 +555,110 @@
     "id": "ll068",
     "word": "mil·lésima",
     "masked": "mi_ésima",
+    "answer": "l·l",
+    "ruleId": "l-geminada-prefixos",
+    "difficulty": 3
+  },
+  {
+    "id": "ll069",
+    "word": "aula",
+    "masked": "au_a",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll070",
+    "word": "sal",
+    "masked": "sa_",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 1
+  },
+  {
+    "id": "ll071",
+    "word": "flor",
+    "masked": "f_or",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll072",
+    "word": "família",
+    "masked": "famí_ia",
+    "answer": "l",
+    "ruleId": "l-simple",
+    "difficulty": 2
+  },
+  {
+    "id": "ll073",
+    "word": "llit",
+    "masked": "_it",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll074",
+    "word": "ull",
+    "masked": "u_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 1
+  },
+  {
+    "id": "ll075",
+    "word": "coll",
+    "masked": "co_",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll076",
+    "word": "treballar",
+    "masked": "treba_ar",
+    "answer": "ll",
+    "ruleId": "ll",
+    "difficulty": 2
+  },
+  {
+    "id": "ll077",
+    "word": "mol·lusc",
+    "masked": "mo_usc",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll078",
+    "word": "síl·laba",
+    "masked": "sí_aba",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll079",
+    "word": "til·la",
+    "masked": "ti_a",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll080",
+    "word": "excel·lència",
+    "masked": "exce_ència",
+    "answer": "l·l",
+    "ruleId": "l-geminada",
+    "difficulty": 3
+  },
+  {
+    "id": "ll081",
+    "word": "col·lega",
+    "masked": "co_ega",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3

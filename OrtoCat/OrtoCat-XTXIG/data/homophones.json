@@ -41,7 +41,7 @@
   },
   {
     "id": "xh006",
-    "sentence": "La madui_a és madura.",
+    "sentence": "La madu_a és madura.",
     "answer": "ix",
     "word": "maduixa",
     "contrast": "madutxa",
@@ -86,5 +86,45 @@
     "word": "motxilla",
     "contrast": "moixilla",
     "explanation": "Motxilla s'escriu amb tx."
+  },
+  {
+    "id": "xh012",
+    "sentence": "El mo_ és suau.",
+    "answer": "ix",
+    "word": "moix",
+    "contrast": "mox",
+    "explanation": "Moix s'escriu amb ix final."
+  },
+  {
+    "id": "xh013",
+    "sentence": "Vaig fer un assa_ de ciències.",
+    "answer": "ig",
+    "word": "assaig",
+    "contrast": "assaix",
+    "explanation": "Assaig s'escriu amb ig final."
+  },
+  {
+    "id": "xh014",
+    "sentence": "Hi ha un esqui_ d'aigua al terra.",
+    "answer": "tx",
+    "word": "esquitx",
+    "contrast": "esquix",
+    "explanation": "Esquitx s'escriu amb tx final."
+  },
+  {
+    "id": "xh015",
+    "sentence": "L'o_igen és necessari per respirar.",
+    "answer": "x",
+    "word": "oxigen",
+    "contrast": "ocsigen",
+    "explanation": "Oxigen s'escriu amb x."
+  },
+  {
+    "id": "xh016",
+    "sentence": "Porta una fa_a vermella.",
+    "answer": "ix",
+    "word": "faixa",
+    "contrast": "fatxa",
+    "explanation": "Faixa s'escriu amb ix."
   }
 ]

@@ -118,5 +118,45 @@
     "word": "mil·lésima",
     "contrast": "milésima",
     "explanation": "Mil·lésima s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh018",
+    "sentence": "La sa_ és blanca.",
+    "answer": "l",
+    "word": "sal",
+    "contrast": "sall",
+    "explanation": "Sal s'escriu amb l simple."
+  },
+  {
+    "id": "lh019",
+    "sentence": "El co_ de la camisa és blau.",
+    "answer": "ll",
+    "word": "coll",
+    "contrast": "col",
+    "explanation": "Coll s'escriu amb ll."
+  },
+  {
+    "id": "lh020",
+    "sentence": "La sí_aba tònica és la forta.",
+    "answer": "l·l",
+    "word": "síl·laba",
+    "contrast": "sílaba",
+    "explanation": "Síl·laba s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh021",
+    "sentence": "Van co_aborar en el projecte.",
+    "answer": "l·l",
+    "word": "col·laborar",
+    "contrast": "colaborar",
+    "explanation": "Col·laborar s'escriu amb ela geminada."
+  },
+  {
+    "id": "lh022",
+    "sentence": "El nen dorm en un _it petit.",
+    "answer": "ll",
+    "word": "llit",
+    "contrast": "lit",
+    "explanation": "Llit s'escriu amb ll inicial."
   }
 ]

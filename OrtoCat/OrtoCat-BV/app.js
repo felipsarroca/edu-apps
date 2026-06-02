@@ -37,9 +37,9 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=visual20").then((response) => response.json()),
-    fetch("data/words.json?v=visual19").then((response) => response.json()),
-    fetch("data/homophones.json?v=visual18").then((response) => response.json()),
+    fetch("data/rules.json?v=review26").then((response) => response.json()),
+    fetch("data/words.json?v=review26").then((response) => response.json()),
+    fetch("data/homophones.json?v=review26").then((response) => response.json()),
   ]);
 
   state.rules = rules;
@@ -807,6 +807,4 @@ function escapeHtml(value) {
 
 function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-}
 }

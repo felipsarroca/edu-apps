@@ -37,9 +37,9 @@ setupInstallSupport();
 
 async function init() {
   const [rules, words, homophones] = await Promise.all([
-    fetch("data/rules.json?v=visual19").then((response) => response.json()),
-    fetch("data/words.json?v=visual20").then((response) => response.json()),
-    fetch("data/homophones.json?v=visual18").then((response) => response.json()),
+    fetch("data/rules.json?v=review26").then((response) => response.json()),
+    fetch("data/words.json?v=review26").then((response) => response.json()),
+    fetch("data/homophones.json?v=review26").then((response) => response.json()),
   ]);
 
   state.rules = rules;
@@ -182,7 +182,7 @@ function renderStudy() {
       <span class="badge">${state.ruleIndex + 1} / ${state.rules.length}</span>
       <span class="badge">S'escriu amb ${rule.letter.toUpperCase()}</span>
     </div>
-    <h3>${escapeHtml(rule.title)}</h3>
+    <h3>${formatRuleTitle(rule.title)}</h3>
     <p class="rule-text">${highlightRuleText(rule.summary, rule.id, rule.letter)}</p>
     <div>
       <h3>Exemples</h3>
@@ -202,6 +202,19 @@ function renderStudy() {
     createGuidedSet();
     switchView("guided");
   });
+}
+
+function formatRuleTitle(title) {
+  const escaped = escapeHtml(title);
+  return escaped
+    .replace(
+      /davant e i i/,
+      'davant <strong>"e"</strong> i <strong>"i"</strong>'
+    )
+    .replace(
+      /davant a, o i u/,
+      'davant <strong>"a"</strong>, <strong>"o"</strong> i <strong>"u"</strong>'
+    );
 }
 
 function createGuidedSet() {

@@ -41,8 +41,8 @@
   },
   {
     "id": "gj006",
-    "word": "gimnés",
-    "masked": "_imnés",
+    "word": "gimnàs",
+    "masked": "_imnàs",
     "answer": "g",
     "ruleId": "g-e-i",
     "difficulty": 2
@@ -274,8 +274,8 @@
   },
   {
     "id": "gj035",
-    "word": "Jesés",
-    "masked": "_esés",
+    "word": "Jesús",
+    "masked": "_esús",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 2,
@@ -300,7 +300,7 @@
   {
     "id": "gj038",
     "word": "gènere",
-    "masked": "_énere",
+    "masked": "_ènere",
     "answer": "g",
     "ruleId": "g-e-i",
     "difficulty": 2
@@ -548,6 +548,94 @@
     "id": "gj069",
     "word": "trepitjada",
     "masked": "trepi_ada",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj070",
+    "word": "gest",
+    "masked": "_est",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 1
+  },
+  {
+    "id": "gj071",
+    "word": "gir",
+    "masked": "_ir",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 1
+  },
+  {
+    "id": "gj072",
+    "word": "geografia",
+    "masked": "_eografia",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj073",
+    "word": "agilitat",
+    "masked": "a_ilitat",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj074",
+    "word": "joguina",
+    "masked": "_oguina",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 1
+  },
+  {
+    "id": "gj075",
+    "word": "dijous",
+    "masked": "di_ous",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 1
+  },
+  {
+    "id": "gj076",
+    "word": "jeroglífic",
+    "masked": "_eroglífic",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj077",
+    "word": "corretja",
+    "masked": "corre_a",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj078",
+    "word": "viatger",
+    "masked": "via_er",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj079",
+    "word": "setge",
+    "masked": "se_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj080",
+    "word": "jutjar",
+    "masked": "ju_ar",
     "answer": "tj",
     "ruleId": "tj-a-o-u",
     "difficulty": 3

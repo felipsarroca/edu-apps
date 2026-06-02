@@ -762,5 +762,109 @@
     "answer": "v",
     "ruleId": "bv-mb-nv",
     "difficulty": 2
+  },
+  {
+    "id": "bv093",
+    "word": "brillar",
+    "masked": "_rillar",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv094",
+    "word": "amable",
+    "masked": "ama_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv095",
+    "word": "bosc",
+    "masked": "_osc",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv096",
+    "word": "barba",
+    "masked": "_arba",
+    "answer": "b",
+    "ruleId": "b-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv097",
+    "word": "vida",
+    "masked": "_ida",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 1
+  },
+  {
+    "id": "bv098",
+    "word": "veritat",
+    "masked": "_eritat",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv099",
+    "word": "conversa",
+    "masked": "con_ersa",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv100",
+    "word": "convidar",
+    "masked": "con_idar",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv101",
+    "word": "embalar",
+    "masked": "em_alar",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv102",
+    "word": "ombra",
+    "masked": "om_ra",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv103",
+    "word": "vicepresidència",
+    "masked": "_icepresidència",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 3
+  },
+  {
+    "id": "bv104",
+    "word": "advertència",
+    "masked": "ad_ertència",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 3
+  },
+  {
+    "id": "bv105",
+    "word": "caminava",
+    "masked": "camina_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
   }
 ]

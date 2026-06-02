@@ -142,5 +142,53 @@
     "word": "vellesa",
     "contrast": "bellesa",
     "explanation": "Vellesa s'escriu amb v quan parla de l'edat avançada."
+  },
+  {
+    "id": "bh019",
+    "sentence": "La _ota del jugador és nova.",
+    "answer": "b",
+    "word": "bota",
+    "contrast": "vota",
+    "explanation": "Bota s'escriu amb b quan és el calçat."
+  },
+  {
+    "id": "bh020",
+    "sentence": "Ella _ota a les eleccions.",
+    "answer": "v",
+    "word": "vota",
+    "contrast": "bota",
+    "explanation": "Vota s'escriu amb v quan és del verb votar."
+  },
+  {
+    "id": "bh021",
+    "sentence": "El _ol és ple de sopa.",
+    "answer": "b",
+    "word": "bol",
+    "contrast": "vol",
+    "explanation": "Bol s'escriu amb b quan és un recipient."
+  },
+  {
+    "id": "bh022",
+    "sentence": "Aquest avió _ol molt baix.",
+    "answer": "v",
+    "word": "vol",
+    "contrast": "bol",
+    "explanation": "Vol s'escriu amb v quan és del verb volar."
+  },
+  {
+    "id": "bh023",
+    "sentence": "El _aró va parlar a l'acte.",
+    "answer": "b",
+    "word": "baró",
+    "contrast": "varó",
+    "explanation": "Baró s'escriu amb b quan és un títol nobiliari."
+  },
+  {
+    "id": "bh024",
+    "sentence": "El _aró és adult.",
+    "answer": "v",
+    "word": "varó",
+    "contrast": "baró",
+    "explanation": "Varó s'escriu amb v quan vol dir home."
   }
 ]

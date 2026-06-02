@@ -542,6 +542,13 @@ select {
   font-weight: 850;
 }
 
+.word-prompt:not(.sentence-prompt) {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
 .sentence-prompt {
   display: block;
   min-height: auto;

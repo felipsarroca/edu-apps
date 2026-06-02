@@ -65,10 +65,50 @@
   },
   {
     "id": "gh010",
-    "sentence": "Vols rebut_ar aquesta proposta?",
+    "sentence": "Vols rebu_ar aquesta proposta?",
     "answer": "tj",
     "word": "rebutjar",
     "contrast": "rebugar",
     "explanation": "Rebutjar s'escriu amb tj davant a."
+  },
+  {
+    "id": "gh011",
+    "sentence": "La _irafa menja fulles.",
+    "answer": "g",
+    "word": "girafa",
+    "contrast": "jirafa",
+    "explanation": "Girafa s'escriu amb g davant i."
+  },
+  {
+    "id": "gh012",
+    "sentence": "Avui és di_ous.",
+    "answer": "j",
+    "word": "dijous",
+    "contrast": "digous",
+    "explanation": "Dijous s'escriu amb j."
+  },
+  {
+    "id": "gh013",
+    "sentence": "La corre_a del gos és vermella.",
+    "answer": "tj",
+    "word": "corretja",
+    "contrast": "corregja",
+    "explanation": "Corretja s'escriu amb tj davant a."
+  },
+  {
+    "id": "gh014",
+    "sentence": "El via_er porta una motxilla.",
+    "answer": "tg",
+    "word": "viatger",
+    "contrast": "viatjer",
+    "explanation": "Viatger s'escriu amb tg davant e."
+  },
+  {
+    "id": "gh015",
+    "sentence": "Cal _eure una estona.",
+    "answer": "j",
+    "word": "jeure",
+    "contrast": "geure",
+    "explanation": "Jeure és una paraula amb j davant e."
   }
 ]

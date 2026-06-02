@@ -57,7 +57,7 @@
   },
   {
     "id": "sh008",
-    "sentence": "Hi ha ma_a gent al passadés.",
+    "sentence": "Hi ha ma_a gent al passadís.",
     "answer": "ss",
     "word": "massa",
     "contrast": "maça",
@@ -142,5 +142,53 @@
     "word": "cegar",
     "contrast": "segar",
     "explanation": "Cegar s'escriu amb c quan vol dir deixar sense visió."
+  },
+  {
+    "id": "sh020",
+    "sentence": "El paí_ té moltes comarques.",
+    "answer": "s",
+    "word": "país",
+    "contrast": "païss",
+    "explanation": "País s'escriu amb s sonora."
+  },
+  {
+    "id": "sh021",
+    "sentence": "He posat la sopa a la ca_ola.",
+    "answer": "ss",
+    "word": "cassola",
+    "contrast": "casola",
+    "explanation": "Cassola s'escriu amb ss entre vocals."
+  },
+  {
+    "id": "sh022",
+    "sentence": "El _eller és sota la casa.",
+    "answer": "c",
+    "word": "celler",
+    "contrast": "seller",
+    "explanation": "Celler s'escriu amb c davant e."
+  },
+  {
+    "id": "sh023",
+    "sentence": "La camisa és dol_a.",
+    "answer": "ç",
+    "word": "dolça",
+    "contrast": "dolsa",
+    "explanation": "Dolça s'escriu amb ç davant a."
+  },
+  {
+    "id": "sh024",
+    "sentence": "El bron_e brilla molt.",
+    "answer": "z",
+    "word": "bronze",
+    "contrast": "bronse",
+    "explanation": "Bronze s'escriu amb z."
+  },
+  {
+    "id": "sh025",
+    "sentence": "La con_iència tranquil·la ajuda a decidir.",
+    "answer": "sc",
+    "word": "consciència",
+    "contrast": "conciència",
+    "explanation": "Consciència s'escriu amb sc."
   }
 ]

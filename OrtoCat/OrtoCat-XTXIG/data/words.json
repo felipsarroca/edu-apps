@@ -106,7 +106,7 @@
   {
     "id": "xt014",
     "word": "això",
-    "masked": "a_ó",
+    "masked": "a_ò",
     "answer": "ix",
     "ruleId": "ix",
     "difficulty": 1
@@ -641,5 +641,109 @@
     "ruleId": "ig-final",
     "difficulty": 3,
     "hint": "oficial judicial antic"
+  },
+  {
+    "id": "xt080",
+    "word": "xàfec",
+    "masked": "_àfec",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt081",
+    "word": "xicot",
+    "masked": "_icot",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 2
+  },
+  {
+    "id": "xt082",
+    "word": "xarrupar",
+    "masked": "_arrupar",
+    "answer": "x",
+    "ruleId": "x-inicial",
+    "difficulty": 3
+  },
+  {
+    "id": "xt083",
+    "word": "moix",
+    "masked": "mo_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt084",
+    "word": "gruix",
+    "masked": "gru_",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt085",
+    "word": "faixa",
+    "masked": "fa_a",
+    "answer": "ix",
+    "ruleId": "ix",
+    "difficulty": 2
+  },
+  {
+    "id": "xt086",
+    "word": "exili",
+    "masked": "e_ili",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt087",
+    "word": "oxigen",
+    "masked": "o_igen",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 2
+  },
+  {
+    "id": "xt088",
+    "word": "connexió",
+    "masked": "conne_ió",
+    "answer": "x",
+    "ruleId": "x-cs-gz",
+    "difficulty": 3
+  },
+  {
+    "id": "xt089",
+    "word": "escabetx",
+    "masked": "escabe_",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 3
+  },
+  {
+    "id": "xt090",
+    "word": "esquitx",
+    "masked": "esqui_",
+    "answer": "tx",
+    "ruleId": "tx",
+    "difficulty": 3
+  },
+  {
+    "id": "xt091",
+    "word": "rebuig",
+    "masked": "rebu_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 3
+  },
+  {
+    "id": "xt092",
+    "word": "assaig",
+    "masked": "assa_",
+    "answer": "ig",
+    "ruleId": "ig-final",
+    "difficulty": 3
   }
 ]
