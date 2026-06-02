@@ -134,13 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Aplicació instal·lable per treballar l'ortografia castellana.",
             icon: 'OrtoCast/OrtoCast-BV/favicon.svg'
         },
-        {
-            name: "OrtoCat",
-            path: 'OrtoCat/',
-            category: 'Llengües catalana i castellana',
-            description: "Aplicació instal·lable per treballar l'ortografia catalana.",
-            icon: 'OrtoCat/OrtoCat-BV/favicon.svg'
-        },
+    {
+        name: "OrtoCat",
+        path: 'https://ja.cat/ortocat',
+        category: 'Llengües catalana i castellana',
+        description: "Aplicació instal·lable per treballar l'ortografia catalana.",
+        icon: 'OrtoCat/OrtoCat-BV/favicon.svg'
+    },
 
         // Economia i Emprenedoria
         { 
