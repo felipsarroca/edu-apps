@@ -254,5 +254,261 @@
     "word": "boca",
     "contrast": "voca",
     "explanation": "Boca s'escriu amb b."
+  },
+  {
+    "id": "bh033",
+    "sentence": "La _leda creix a l'hort.",
+    "answer": "b",
+    "word": "bleda",
+    "contrast": "vleda",
+    "explanation": "Bleda s'escriu amb b."
+  },
+  {
+    "id": "bh034",
+    "sentence": "He comprat un _loc de notes.",
+    "answer": "b",
+    "word": "bloc",
+    "contrast": "vloc",
+    "explanation": "Bloc s'escriu amb b."
+  },
+  {
+    "id": "bh035",
+    "sentence": "El _loqueig ha aturat el trànsit.",
+    "answer": "b",
+    "word": "bloqueig",
+    "contrast": "vloqueig",
+    "explanation": "Bloqueig s'escriu amb b."
+  },
+  {
+    "id": "bh036",
+    "sentence": "Volen _lanquejar la paret.",
+    "answer": "b",
+    "word": "blanquejar",
+    "contrast": "vlanquejar",
+    "explanation": "Blanquejar s'escriu amb b."
+  },
+  {
+    "id": "bh037",
+    "sentence": "La _lavor del cel destaca.",
+    "answer": "b",
+    "word": "blavor",
+    "contrast": "vlavor",
+    "explanation": "Blavor s'escriu amb b."
+  },
+  {
+    "id": "bh038",
+    "sentence": "El ca_le connecta la pantalla.",
+    "answer": "b",
+    "word": "cable",
+    "contrast": "cavle",
+    "explanation": "Cable s'escriu amb b."
+  },
+  {
+    "id": "bh039",
+    "sentence": "Aquest argument sembla fe_le.",
+    "answer": "b",
+    "word": "feble",
+    "contrast": "fevle",
+    "explanation": "Feble s'escriu amb b."
+  },
+  {
+    "id": "bh040",
+    "sentence": "Caminar cada dia resulta saluda_le.",
+    "answer": "b",
+    "word": "saludable",
+    "contrast": "saludavle",
+    "explanation": "Saludable s'escriu amb b."
+  },
+  {
+    "id": "bh041",
+    "sentence": "La cadira sembla esta_le.",
+    "answer": "b",
+    "word": "estable",
+    "contrast": "estavle",
+    "explanation": "Estable s'escriu amb b."
+  },
+  {
+    "id": "bh042",
+    "sentence": "La no_lesa del gest emociona.",
+    "answer": "b",
+    "word": "noblesa",
+    "contrast": "novlesa",
+    "explanation": "Noblesa s'escriu amb b."
+  },
+  {
+    "id": "bh043",
+    "sentence": "L'o_lit de la llibreta li ha portat problemes.",
+    "answer": "b",
+    "word": "oblit",
+    "contrast": "ovlit",
+    "explanation": "Oblit s'escriu amb b."
+  },
+  {
+    "id": "bh044",
+    "sentence": "No podem o_ligar ningú.",
+    "answer": "b",
+    "word": "obligar",
+    "contrast": "ovligar",
+    "explanation": "Obligar s'escriu amb b."
+  },
+  {
+    "id": "bh045",
+    "sentence": "El tronc fa d'o_stacle.",
+    "answer": "b",
+    "word": "obstacle",
+    "contrast": "ovstacle",
+    "explanation": "Obstacle s'escriu amb b."
+  },
+  {
+    "id": "bh046",
+    "sentence": "El concert ha estat su_lim.",
+    "answer": "b",
+    "word": "sublim",
+    "contrast": "suvlim",
+    "explanation": "Sublim s'escriu amb b."
+  },
+  {
+    "id": "bh047",
+    "sentence": "L'em_lema identifica el centre.",
+    "answer": "b",
+    "word": "emblema",
+    "contrast": "emvlema",
+    "explanation": "Emblema s'escriu amb b."
+  },
+  {
+    "id": "bh048",
+    "sentence": "Ha sortit un _rot nou.",
+    "answer": "b",
+    "word": "brot",
+    "contrast": "vrot",
+    "explanation": "Brot s'escriu amb b."
+  },
+  {
+    "id": "bh049",
+    "sentence": "El _runzit de l'abella se sent.",
+    "answer": "b",
+    "word": "brunzit",
+    "contrast": "vrunzit",
+    "explanation": "Brunzit s'escriu amb b."
+  },
+  {
+    "id": "bh050",
+    "sentence": "A l'a_ril plou sovint.",
+    "answer": "b",
+    "word": "abril",
+    "contrast": "avril",
+    "explanation": "Abril s'escriu amb b."
+  },
+  {
+    "id": "bh051",
+    "sentence": "Porta l'a_ric al penjador.",
+    "answer": "b",
+    "word": "abric",
+    "contrast": "avric",
+    "explanation": "Abric s'escriu amb b."
+  },
+  {
+    "id": "bh052",
+    "sentence": "Cal co_rir la cassola.",
+    "answer": "b",
+    "word": "cobrir",
+    "contrast": "covrir",
+    "explanation": "Cobrir s'escriu amb b."
+  },
+  {
+    "id": "bh053",
+    "sentence": "Volen desco_rir la resposta.",
+    "answer": "b",
+    "word": "descobrir",
+    "contrast": "descovrir",
+    "explanation": "Descobrir s'escriu amb b."
+  },
+  {
+    "id": "bh054",
+    "sentence": "Demà hem de re_re els convidats.",
+    "answer": "b",
+    "word": "rebre",
+    "contrast": "revre",
+    "explanation": "Rebre s'escriu amb b."
+  },
+  {
+    "id": "bh055",
+    "sentence": "El llibre reposa so_re la taula.",
+    "answer": "b",
+    "word": "sobre",
+    "contrast": "sovre",
+    "explanation": "Sobre s'escriu amb b."
+  },
+  {
+    "id": "bh056",
+    "sentence": "Hem d'es_rinar que ha passat.",
+    "answer": "b",
+    "word": "esbrinar",
+    "contrast": "esvrinar",
+    "explanation": "Esbrinar s'escriu amb b."
+  },
+  {
+    "id": "bh057",
+    "sentence": "El vent fa _ramar la finestra.",
+    "answer": "b",
+    "word": "bramar",
+    "contrast": "vramar",
+    "explanation": "Bramar s'escriu amb b."
+  },
+  {
+    "id": "bh058",
+    "sentence": "La _rillantor del vidre molesta.",
+    "answer": "b",
+    "word": "brillantor",
+    "contrast": "vrillantor",
+    "explanation": "Brillantor s'escriu amb b."
+  },
+  {
+    "id": "bh059",
+    "sentence": "Van _rindar per la victòria.",
+    "answer": "b",
+    "word": "brindar",
+    "contrast": "vrindar",
+    "explanation": "Brindar s'escriu amb b."
+  },
+  {
+    "id": "bh060",
+    "sentence": "La _ugada ja és estesa.",
+    "answer": "b",
+    "word": "bugada",
+    "contrast": "vugada",
+    "explanation": "Bugada s'escriu amb b."
+  },
+  {
+    "id": "bh061",
+    "sentence": "L'aigua comença a _ullir.",
+    "answer": "b",
+    "word": "bullir",
+    "contrast": "vullir",
+    "explanation": "Bullir s'escriu amb b."
+  },
+  {
+    "id": "bh062",
+    "sentence": "Cal _ufar les espelmes.",
+    "answer": "b",
+    "word": "bufar",
+    "contrast": "vufar",
+    "explanation": "Bufar s'escriu amb b."
+  },
+  {
+    "id": "bh063",
+    "sentence": "El programa ha entrat en un _ucle.",
+    "answer": "b",
+    "word": "bucle",
+    "contrast": "vucle",
+    "explanation": "Bucle s'escriu amb b."
+  },
+  {
+    "id": "bh064",
+    "sentence": "El _ulb brota a la primavera.",
+    "answer": "b",
+    "word": "bulb",
+    "contrast": "vulb",
+    "explanation": "Bulb s'escriu amb b."
   }
 ]

@@ -660,8 +660,8 @@
   },
   {
     "id": "gj083",
-    "word": "gessamí",
-    "masked": "_essamí",
+    "word": "gerd",
+    "masked": "_erd",
     "answer": "g",
     "ruleId": "g-e-i",
     "difficulty": 2
@@ -804,16 +804,16 @@
   },
   {
     "id": "gj101",
-    "word": "jeroglífic",
-    "masked": "_eroglífic",
+    "word": "Jeremies",
+    "masked": "_eremies",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3
   },
   {
     "id": "gj102",
-    "word": "injecció",
-    "masked": "in_ecció",
+    "word": "injeccions",
+    "masked": "in_eccions",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
     "difficulty": 3
@@ -832,6 +832,830 @@
     "masked": "ob_ectiu",
     "answer": "j",
     "ruleId": "j-excepcions-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj105",
+    "word": "gestió",
+    "masked": "_estió",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj106",
+    "word": "gestor",
+    "masked": "_estor",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj107",
+    "word": "gemegar",
+    "masked": "_emegar",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj108",
+    "word": "ginebra",
+    "masked": "_inebra",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj109",
+    "word": "ginecòleg",
+    "masked": "_inecòleg",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj110",
+    "word": "giravolt",
+    "masked": "_iravolt",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj111",
+    "word": "girat",
+    "masked": "_irat",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj112",
+    "word": "gelat",
+    "masked": "_elat",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj113",
+    "word": "gelosia",
+    "masked": "_elosia",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj114",
+    "word": "germinar",
+    "masked": "_erminar",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj115",
+    "word": "gènesi",
+    "masked": "_ènesi",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj116",
+    "word": "geòleg",
+    "masked": "_eòleg",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj117",
+    "word": "geometria",
+    "masked": "_eometria",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj118",
+    "word": "genial",
+    "masked": "_enial",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj119",
+    "word": "gimnàstica",
+    "masked": "_imnàstica",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj120",
+    "word": "religió",
+    "masked": "reli_ió",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj121",
+    "word": "regió",
+    "masked": "re_ió",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj122",
+    "word": "llegenda",
+    "masked": "lle_enda",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj123",
+    "word": "règim",
+    "masked": "rè_im",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj124",
+    "word": "registre",
+    "masked": "re_istre",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj125",
+    "word": "agitació",
+    "masked": "a_itació",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj126",
+    "word": "màgia",
+    "masked": "mà_ia",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj127",
+    "word": "original",
+    "masked": "ori_inal",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj128",
+    "word": "gentada",
+    "masked": "_entada",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj129",
+    "word": "gendre",
+    "masked": "_endre",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj130",
+    "word": "gelera",
+    "masked": "_elera",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj131",
+    "word": "giratori",
+    "masked": "_iratori",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj132",
+    "word": "gerent",
+    "masked": "_erent",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj133",
+    "word": "gesticular",
+    "masked": "_esticular",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj134",
+    "word": "digestió",
+    "masked": "di_estió",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj135",
+    "word": "geperut",
+    "masked": "_eperut",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj136",
+    "word": "gerundi",
+    "masked": "_erundi",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj137",
+    "word": "giroscopi",
+    "masked": "_iroscopi",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj138",
+    "word": "gimnasta",
+    "masked": "_imnasta",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj139",
+    "word": "ginecologia",
+    "masked": "_inecologia",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj140",
+    "word": "gemec",
+    "masked": "_emec",
+    "answer": "g",
+    "ruleId": "g-e-i",
+    "difficulty": 2
+  },
+  {
+    "id": "gj141",
+    "word": "jornada",
+    "masked": "_ornada",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj142",
+    "word": "jornal",
+    "masked": "_ornal",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj143",
+    "word": "joventut",
+    "masked": "_oventut",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj144",
+    "word": "joier",
+    "masked": "_oier",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj145",
+    "word": "jurar",
+    "masked": "_urar",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj146",
+    "word": "juntament",
+    "masked": "_untament",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj147",
+    "word": "jardiner",
+    "masked": "_ardiner",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj148",
+    "word": "ajocar",
+    "masked": "a_ocar",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj149",
+    "word": "ajuntar",
+    "masked": "a_untar",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj150",
+    "word": "menjador",
+    "masked": "men_ador",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj151",
+    "word": "menjava",
+    "masked": "men_ava",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj152",
+    "word": "pujava",
+    "masked": "pu_ava",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj153",
+    "word": "ajudava",
+    "masked": "a_udava",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj154",
+    "word": "jutjava",
+    "masked": "_utjava",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj155",
+    "word": "joglar",
+    "masked": "_oglar",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj156",
+    "word": "joguet",
+    "masked": "_oguet",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj157",
+    "word": "jovial",
+    "masked": "_ovial",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj158",
+    "word": "jardineria",
+    "masked": "_ardineria",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj159",
+    "word": "julivert",
+    "masked": "_ulivert",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj160",
+    "word": "jocós",
+    "masked": "_ocós",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj161",
+    "word": "pujada",
+    "masked": "pu_ada",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj162",
+    "word": "jornalera",
+    "masked": "_ornalera",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj163",
+    "word": "jovent",
+    "masked": "_ovent",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj164",
+    "word": "jurat",
+    "masked": "_urat",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj165",
+    "word": "junta",
+    "masked": "_unta",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj166",
+    "word": "jupetí",
+    "masked": "_upetí",
+    "answer": "j",
+    "ruleId": "j-a-o-u",
+    "difficulty": 2
+  },
+  {
+    "id": "gj167",
+    "word": "passatge",
+    "masked": "passa_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj168",
+    "word": "jutgessa",
+    "masked": "ju_essa",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj169",
+    "word": "hostatge",
+    "masked": "hosta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj170",
+    "word": "desavantatge",
+    "masked": "desavanta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj171",
+    "word": "peatge",
+    "masked": "pea_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj172",
+    "word": "missatger",
+    "masked": "missa_er",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj173",
+    "word": "formatgeria",
+    "masked": "forma_eria",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj174",
+    "word": "imatgeria",
+    "masked": "ima_eria",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj175",
+    "word": "rellotger",
+    "masked": "rello_er",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj176",
+    "word": "metgessa",
+    "masked": "me_essa",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj177",
+    "word": "fetgera",
+    "masked": "fe_era",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj178",
+    "word": "carruatge",
+    "masked": "carrua_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj179",
+    "word": "doblatge",
+    "masked": "dobla_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj180",
+    "word": "muntatge",
+    "masked": "munta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj181",
+    "word": "reportatge",
+    "masked": "reporta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj182",
+    "word": "rodatge",
+    "masked": "roda_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj183",
+    "word": "bagatge",
+    "masked": "baga_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj184",
+    "word": "arbitratge",
+    "masked": "arbitra_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj185",
+    "word": "blindatge",
+    "masked": "blinda_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj186",
+    "word": "comptatge",
+    "masked": "compta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj187",
+    "word": "etiquetatge",
+    "masked": "etiqueta_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj188",
+    "word": "garatge",
+    "masked": "gara_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj189",
+    "word": "homenatge",
+    "masked": "homena_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj190",
+    "word": "llenguatge",
+    "masked": "llengua_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj191",
+    "word": "maquillatge",
+    "masked": "maquilla_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj192",
+    "word": "reciclatge",
+    "masked": "recicla_e",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj193",
+    "word": "corretgeria",
+    "masked": "corre_eria",
+    "answer": "tg",
+    "ruleId": "tg-e-i",
+    "difficulty": 3
+  },
+  {
+    "id": "gj194",
+    "word": "mitjancant",
+    "masked": "mi_ancant",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj195",
+    "word": "mitjancer",
+    "masked": "mi_ancer",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj196",
+    "word": "desitjable",
+    "masked": "desi_able",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj197",
+    "word": "desitjós",
+    "masked": "desi_ós",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj198",
+    "word": "pitjaria",
+    "masked": "pi_aria",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj199",
+    "word": "jutjaria",
+    "masked": "ju_aria",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj200",
+    "word": "viatjava",
+    "masked": "via_ava",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj201",
+    "word": "assetjava",
+    "masked": "asse_ava",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj202",
+    "word": "trepitjava",
+    "masked": "trepi_ava",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj203",
+    "word": "petjades",
+    "masked": "pe_ades",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj204",
+    "word": "hostatjar",
+    "masked": "hosta_ar",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj205",
+    "word": "avantatjós",
+    "masked": "avanta_ós",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj206",
+    "word": "desavantatjós",
+    "masked": "desavanta_ós",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
+    "difficulty": 3
+  },
+  {
+    "id": "gj207",
+    "word": "pitjant",
+    "masked": "pi_ant",
+    "answer": "tj",
+    "ruleId": "tj-a-o-u",
     "difficulty": 3
   }
 ]

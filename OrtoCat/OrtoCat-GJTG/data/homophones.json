@@ -65,7 +65,7 @@
   },
   {
     "id": "gh010",
-    "sentence": "Vols rebu_ar aquesta proposta?",
+    "sentence": "Vols rebu_ar aquesta proposta.",
     "answer": "tj",
     "word": "rebutjar",
     "contrast": "rebugar",
@@ -174,5 +174,181 @@
     "word": "coratge",
     "contrast": "coratje",
     "explanation": "Coratge s'escriu amb tg davant e."
+  },
+  {
+    "id": "gh024",
+    "sentence": "La _estió del menjador és complexa.",
+    "answer": "g",
+    "word": "gestió",
+    "contrast": "jestió",
+    "explanation": "Gestió s'escriu amb g."
+  },
+  {
+    "id": "gh025",
+    "sentence": "El _estor envia els documents.",
+    "answer": "g",
+    "word": "gestor",
+    "contrast": "jestor",
+    "explanation": "Gestor s'escriu amb g."
+  },
+  {
+    "id": "gh026",
+    "sentence": "El nen va _emegar pel mal al genoll.",
+    "answer": "g",
+    "word": "gemegar",
+    "contrast": "jemegar",
+    "explanation": "Gemegar s'escriu amb g."
+  },
+  {
+    "id": "gh027",
+    "sentence": "La _inebra és una beguda.",
+    "answer": "g",
+    "word": "ginebra",
+    "contrast": "jinebra",
+    "explanation": "Ginebra s'escriu amb g."
+  },
+  {
+    "id": "gh028",
+    "sentence": "El _inecòleg visita a l'hospital.",
+    "answer": "g",
+    "word": "ginecòleg",
+    "contrast": "jinecòleg",
+    "explanation": "Ginecòleg s'escriu amb g."
+  },
+  {
+    "id": "gh029",
+    "sentence": "El cotxe fa un _iravolt.",
+    "answer": "g",
+    "word": "giravolt",
+    "contrast": "jiravolt",
+    "explanation": "Giravolt s'escriu amb g."
+  },
+  {
+    "id": "gh030",
+    "sentence": "El full esta _irat del revés.",
+    "answer": "g",
+    "word": "girat",
+    "contrast": "jirat",
+    "explanation": "Girat s'escriu amb g."
+  },
+  {
+    "id": "gh031",
+    "sentence": "Vull un _elat de vainilla.",
+    "answer": "g",
+    "word": "gelat",
+    "contrast": "jelat",
+    "explanation": "Gelat s'escriu amb g."
+  },
+  {
+    "id": "gh032",
+    "sentence": "La _elosia no ajuda a confiar.",
+    "answer": "g",
+    "word": "gelosia",
+    "contrast": "jelosia",
+    "explanation": "Gelosia s'escriu amb g."
+  },
+  {
+    "id": "gh033",
+    "sentence": "La llavor comença a _erminar.",
+    "answer": "g",
+    "word": "germinar",
+    "contrast": "jerminar",
+    "explanation": "Germinar s'escriu amb g."
+  },
+  {
+    "id": "gh034",
+    "sentence": "La _ènesi del projecte va ser lenta.",
+    "answer": "g",
+    "word": "gènesi",
+    "contrast": "jènesi",
+    "explanation": "Gènesi s'escriu amb g."
+  },
+  {
+    "id": "gh035",
+    "sentence": "El _eòleg estudia les roques.",
+    "answer": "g",
+    "word": "geòleg",
+    "contrast": "jeòleg",
+    "explanation": "Geòleg s'escriu amb g."
+  },
+  {
+    "id": "gh036",
+    "sentence": "A matemàtiques fem _eometria.",
+    "answer": "g",
+    "word": "geometria",
+    "contrast": "jeometria",
+    "explanation": "Geometria s'escriu amb g."
+  },
+  {
+    "id": "gh037",
+    "sentence": "La idea sembla _enial.",
+    "answer": "g",
+    "word": "genial",
+    "contrast": "jenial",
+    "explanation": "Genial s'escriu amb g."
+  },
+  {
+    "id": "gh038",
+    "sentence": "Fem _imnàstica al pavelló.",
+    "answer": "g",
+    "word": "gimnàstica",
+    "contrast": "jimnàstica",
+    "explanation": "Gimnàstica s'escriu amb g."
+  },
+  {
+    "id": "gh039",
+    "sentence": "La reli_ió forma part de moltes cultures.",
+    "answer": "g",
+    "word": "religió",
+    "contrast": "relijió",
+    "explanation": "Religió s'escriu amb g."
+  },
+  {
+    "id": "gh040",
+    "sentence": "Aquesta re_ió és muntanyosa.",
+    "answer": "g",
+    "word": "regió",
+    "contrast": "rejió",
+    "explanation": "Regió s'escriu amb g."
+  },
+  {
+    "id": "gh041",
+    "sentence": "La lle_enda parla d'un drac.",
+    "answer": "g",
+    "word": "llegenda",
+    "contrast": "llejenda",
+    "explanation": "Llegenda s'escriu amb g."
+  },
+  {
+    "id": "gh042",
+    "sentence": "El metge recomana un rè_im.",
+    "answer": "g",
+    "word": "règim",
+    "contrast": "rèjim",
+    "explanation": "Règim s'escriu amb g."
+  },
+  {
+    "id": "gh043",
+    "sentence": "El re_istre de dades és incomplet.",
+    "answer": "g",
+    "word": "registre",
+    "contrast": "rejistre",
+    "explanation": "Registre s'escriu amb g."
+  },
+  {
+    "id": "gh044",
+    "sentence": "Hi havia molta a_itació al passadés.",
+    "answer": "g",
+    "word": "agitació",
+    "contrast": "ajitació",
+    "explanation": "Agitació s'escriu amb g."
+  },
+  {
+    "id": "gh045",
+    "sentence": "L'espectacle de mà_ia va agradar.",
+    "answer": "g",
+    "word": "màgia",
+    "contrast": "màjia",
+    "explanation": "Màgia s'escriu amb g."
   }
 ]

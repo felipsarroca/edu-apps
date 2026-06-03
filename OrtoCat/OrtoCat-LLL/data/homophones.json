@@ -113,11 +113,11 @@
   },
   {
     "id": "lh017",
-    "sentence": "Una mi_ésima part és molt petita.",
+    "sentence": "Una mi_èsima part és molt petita.",
     "answer": "l·l",
-    "word": "mil·lésima",
-    "contrast": "milésima",
-    "explanation": "Mil·lésima s'escriu amb ela geminada."
+    "word": "mil·lèsima",
+    "contrast": "milèsima",
+    "explanation": "Mil·lèsima s'escriu amb ela geminada."
   },
   {
     "id": "lh018",
@@ -222,5 +222,229 @@
     "word": "retolador",
     "contrast": "retollador",
     "explanation": "Retolador s'escriu amb l simple."
+  },
+  {
+    "id": "lh031",
+    "sentence": "La sa_ut demana bons hàbits.",
+    "answer": "l",
+    "word": "salut",
+    "contrast": "sallut",
+    "explanation": "Salut s'escriu amb l."
+  },
+  {
+    "id": "lh032",
+    "sentence": "Cal sa_udar quan entrem.",
+    "answer": "l",
+    "word": "saludar",
+    "contrast": "salludar",
+    "explanation": "Saludar s'escriu amb l."
+  },
+  {
+    "id": "lh033",
+    "sentence": "El mo_í aprofita la força de l'aigua.",
+    "answer": "l",
+    "word": "molí",
+    "contrast": "mollí",
+    "explanation": "Molí s'escriu amb l."
+  },
+  {
+    "id": "lh034",
+    "sentence": "La pedra és una mo_a antiga.",
+    "answer": "l",
+    "word": "mola",
+    "contrast": "molla",
+    "explanation": "Mola s'escriu amb l."
+  },
+  {
+    "id": "lh035",
+    "sentence": "El re_at acaba bé.",
+    "answer": "l",
+    "word": "relat",
+    "contrast": "rellat",
+    "explanation": "Relat s'escriu amb l."
+  },
+  {
+    "id": "lh036",
+    "sentence": "El fi_er de cosir és a la capsa.",
+    "answer": "l",
+    "word": "filer",
+    "contrast": "filler",
+    "explanation": "Filer s'escriu amb l."
+  },
+  {
+    "id": "lh037",
+    "sentence": "Els alumnes fan una fi_era.",
+    "answer": "l",
+    "word": "filera",
+    "contrast": "fillera",
+    "explanation": "Filera s'escriu amb l."
+  },
+  {
+    "id": "lh038",
+    "sentence": "La c_aror entra per la finestra.",
+    "answer": "l",
+    "word": "claror",
+    "contrast": "cllaror",
+    "explanation": "Claror s'escriu amb l."
+  },
+  {
+    "id": "lh039",
+    "sentence": "La Terra és un p_aneta.",
+    "answer": "l",
+    "word": "planeta",
+    "contrast": "pllaneta",
+    "explanation": "Planeta s'escriu amb l."
+  },
+  {
+    "id": "lh040",
+    "sentence": "La te_a és de cotó.",
+    "answer": "l",
+    "word": "tela",
+    "contrast": "tella",
+    "explanation": "Tela s'escriu amb l."
+  },
+  {
+    "id": "lh041",
+    "sentence": "El te_ó del teatre s'obre.",
+    "answer": "l",
+    "word": "teló",
+    "contrast": "telló",
+    "explanation": "Teló s'escriu amb l."
+  },
+  {
+    "id": "lh042",
+    "sentence": "La ba_dufa gira de pressa.",
+    "answer": "l",
+    "word": "baldufa",
+    "contrast": "balldufa",
+    "explanation": "Baldufa s'escriu amb l."
+  },
+  {
+    "id": "lh043",
+    "sentence": "Hi havia una papero_a a terra.",
+    "answer": "l",
+    "word": "paperola",
+    "contrast": "paperolla",
+    "explanation": "Paperola s'escriu amb l."
+  },
+  {
+    "id": "lh044",
+    "sentence": "Un núvo_ tapa el sol.",
+    "answer": "l",
+    "word": "núvol",
+    "contrast": "núvoll",
+    "explanation": "Núvol s'escriu amb l."
+  },
+  {
+    "id": "lh045",
+    "sentence": "La f_ama tremola.",
+    "answer": "l",
+    "word": "flama",
+    "contrast": "fllama",
+    "explanation": "Flama s'escriu amb l."
+  },
+  {
+    "id": "lh046",
+    "sentence": "Puja per l'esca_a.",
+    "answer": "l",
+    "word": "escala",
+    "contrast": "escalla",
+    "explanation": "Escala s'escriu amb l."
+  },
+  {
+    "id": "lh047",
+    "sentence": "Volen esca_ar una muntanya.",
+    "answer": "l",
+    "word": "escalar",
+    "contrast": "escallar",
+    "explanation": "Escalar s'escriu amb l."
+  },
+  {
+    "id": "lh048",
+    "sentence": "El co_om vola a la plaça.",
+    "answer": "l",
+    "word": "colom",
+    "contrast": "collom",
+    "explanation": "Colom s'escriu amb l."
+  },
+  {
+    "id": "lh049",
+    "sentence": "La co_umna sosté el porxo.",
+    "answer": "l",
+    "word": "columna",
+    "contrast": "collumna",
+    "explanation": "Columna s'escriu amb l."
+  },
+  {
+    "id": "lh050",
+    "sentence": "A la biblioteca hi ha si_enci.",
+    "answer": "l",
+    "word": "silenci",
+    "contrast": "sillenci",
+    "explanation": "Silenci s'escriu amb l."
+  },
+  {
+    "id": "lh051",
+    "sentence": "La me_odia sona suau.",
+    "answer": "l",
+    "word": "melodia",
+    "contrast": "mellodia",
+    "explanation": "Melodia s'escriu amb l."
+  },
+  {
+    "id": "lh052",
+    "sentence": "El xi_òfon sona clar.",
+    "answer": "l",
+    "word": "xilòfon",
+    "contrast": "xillòfon",
+    "explanation": "Xilòfon s'escriu amb l."
+  },
+  {
+    "id": "lh053",
+    "sentence": "Cada a_umne porta el dossier.",
+    "answer": "l",
+    "word": "alumne",
+    "contrast": "allumne",
+    "explanation": "Alumne s'escriu amb l."
+  },
+  {
+    "id": "lh054",
+    "sentence": "Hi ha un pi_ó de llibres.",
+    "answer": "l",
+    "word": "piló",
+    "contrast": "pilló",
+    "explanation": "Piló s'escriu amb l."
+  },
+  {
+    "id": "lh055",
+    "sentence": "La sa_eta és petita.",
+    "answer": "l",
+    "word": "saleta",
+    "contrast": "salleta",
+    "explanation": "Saleta s'escriu amb l."
+  },
+  {
+    "id": "lh056",
+    "sentence": "La ca_ma ajuda a treballar.",
+    "answer": "l",
+    "word": "calma",
+    "contrast": "callma",
+    "explanation": "Calma s'escriu amb l."
+  },
+  {
+    "id": "lh057",
+    "sentence": "La _ibreria ven llibres.",
+    "answer": "ll",
+    "word": "llibreria",
+    "contrast": "libreria",
+    "explanation": "Llibreria s'escriu amb ll."
+  },
+  {
+    "id": "lh058",
+    "sentence": "La _engueta de la sabata s'ha mogut.",
+    "answer": "ll",
+    "word": "llengueta",
+    "contrast": "lengueta",
+    "explanation": "Llengueta s'escriu amb ll."
   }
 ]

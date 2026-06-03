@@ -918,7 +918,7 @@
   {
     "id": "bv113",
     "word": "bombolla",
-    "masked": "bom_olla",
+    "masked": "_ombolla",
     "answer": "b",
     "ruleId": "bv-mb-nv",
     "difficulty": 2
@@ -973,8 +973,8 @@
   },
   {
     "id": "bv120",
-    "word": "vicepresidència",
-    "masked": "_icepresidència",
+    "word": "vicealmirall",
+    "masked": "_icealmirall",
     "answer": "v",
     "ruleId": "v-vice-villa",
     "difficulty": 3
@@ -1114,5 +1114,1101 @@
     "answer": "b",
     "ruleId": "b-frequents",
     "difficulty": 1
+  },
+  {
+    "id": "bv138",
+    "word": "bleda",
+    "masked": "_leda",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv139",
+    "word": "bloc",
+    "masked": "_loc",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv140",
+    "word": "bloqueig",
+    "masked": "_loqueig",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv141",
+    "word": "blanquejar",
+    "masked": "_lanquejar",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv142",
+    "word": "blavor",
+    "masked": "_lavor",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv143",
+    "word": "cable",
+    "masked": "ca_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv144",
+    "word": "feble",
+    "masked": "fe_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv145",
+    "word": "saludable",
+    "masked": "saluda_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv146",
+    "word": "estable",
+    "masked": "esta_le",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv147",
+    "word": "noblesa",
+    "masked": "no_lesa",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv148",
+    "word": "oblit",
+    "masked": "o_lit",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv149",
+    "word": "obligar",
+    "masked": "o_ligar",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv150",
+    "word": "obstacle",
+    "masked": "o_stacle",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv151",
+    "word": "sublim",
+    "masked": "su_lim",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv152",
+    "word": "emblema",
+    "masked": "em_lema",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv153",
+    "word": "brot",
+    "masked": "_rot",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv154",
+    "word": "brunzit",
+    "masked": "_runzit",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv155",
+    "word": "abril",
+    "masked": "a_ril",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv156",
+    "word": "abric",
+    "masked": "a_ric",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv157",
+    "word": "cobrir",
+    "masked": "co_rir",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv158",
+    "word": "descobrir",
+    "masked": "desco_rir",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv159",
+    "word": "rebre",
+    "masked": "re_re",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv160",
+    "word": "sobre",
+    "masked": "so_re",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv161",
+    "word": "esbrinar",
+    "masked": "es_rinar",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv162",
+    "word": "bramar",
+    "masked": "_ramar",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv163",
+    "word": "brillantor",
+    "masked": "_rillantor",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv164",
+    "word": "brindar",
+    "masked": "_rindar",
+    "answer": "b",
+    "ruleId": "b-bl-br",
+    "difficulty": 2
+  },
+  {
+    "id": "bv165",
+    "word": "bugada",
+    "masked": "_ugada",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv166",
+    "word": "bullir",
+    "masked": "_ullir",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv167",
+    "word": "bufar",
+    "masked": "_ufar",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv168",
+    "word": "bucle",
+    "masked": "_ucle",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv169",
+    "word": "bulb",
+    "masked": "_ulb",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv170",
+    "word": "burleta",
+    "masked": "_urleta",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv171",
+    "word": "burgesa",
+    "masked": "_urgesa",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv172",
+    "word": "bus",
+    "masked": "_us",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv173",
+    "word": "bunyol",
+    "masked": "_unyol",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv174",
+    "word": "bufetada",
+    "masked": "_ufetada",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv175",
+    "word": "buròcrata",
+    "masked": "_uròcrata",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv176",
+    "word": "burocràtic",
+    "masked": "_urocràtic",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv177",
+    "word": "bunyoler",
+    "masked": "_unyoler",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv178",
+    "word": "bufador",
+    "masked": "_ufador",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
+    "difficulty": 2
+  },
+  {
+    "id": "bv179",
+    "word": "embassar",
+    "masked": "em_assar",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv180",
+    "word": "embogir",
+    "masked": "em_ogir",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv181",
+    "word": "imbatible",
+    "masked": "im_atible",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv182",
+    "word": "cambra",
+    "masked": "cam_ra",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv183",
+    "word": "combustible",
+    "masked": "com_ustible",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv184",
+    "word": "comboi",
+    "masked": "com_oi",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv185",
+    "word": "ambivalent",
+    "masked": "ambi_alent",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv186",
+    "word": "timbre",
+    "masked": "tim_re",
+    "answer": "b",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv187",
+    "word": "envestir",
+    "masked": "en_estir",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv188",
+    "word": "inventari",
+    "masked": "in_entari",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv189",
+    "word": "renovable",
+    "masked": "reno_able",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv190",
+    "word": "canviar",
+    "masked": "can_iar",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv191",
+    "word": "convidat",
+    "masked": "con_idat",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv192",
+    "word": "desenvolupar",
+    "masked": "desen_olupar",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv193",
+    "word": "envoltar",
+    "masked": "en_oltar",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv194",
+    "word": "canviador",
+    "masked": "can_iador",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv195",
+    "word": "inventor",
+    "masked": "in_entor",
+    "answer": "v",
+    "ruleId": "bv-mb-nv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv196",
+    "word": "biòleg",
+    "masked": "_iòleg",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv197",
+    "word": "biòloga",
+    "masked": "_iòloga",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv198",
+    "word": "biogràfic",
+    "masked": "_iogràfic",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv199",
+    "word": "biodegradable",
+    "masked": "_iodegradable",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv200",
+    "word": "biomassa",
+    "masked": "_iomassa",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv201",
+    "word": "biosfera",
+    "masked": "_iosfera",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv202",
+    "word": "bibliofília",
+    "masked": "_ibliofília",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv203",
+    "word": "bimestre",
+    "masked": "_imestre",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv204",
+    "word": "bilateral",
+    "masked": "_ilateral",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv205",
+    "word": "bifurcació",
+    "masked": "_ifurcació",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv206",
+    "word": "binari",
+    "masked": "_inari",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv207",
+    "word": "bianual",
+    "masked": "_ianual",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv208",
+    "word": "bicentenari",
+    "masked": "_icentenari",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv209",
+    "word": "bipartit",
+    "masked": "_ipartit",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv210",
+    "word": "bisetmanal",
+    "masked": "_isetmanal",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv211",
+    "word": "bilinguisme",
+    "masked": "_ilinguisme",
+    "answer": "b",
+    "ruleId": "b-bio-biblio-bi",
+    "difficulty": 2
+  },
+  {
+    "id": "bv212",
+    "word": "vicegerent",
+    "masked": "_icegerent",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv213",
+    "word": "vicecònsol",
+    "masked": "_icecònsol",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv214",
+    "word": "vicegovernador",
+    "masked": "_icegovernador",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv215",
+    "word": "vicepresidenta",
+    "masked": "_icepresidenta",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv216",
+    "word": "vicesecretària",
+    "masked": "_icesecretària",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv217",
+    "word": "vicecampió",
+    "masked": "_icecampió",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv218",
+    "word": "vicecampiona",
+    "masked": "_icecampiona",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv219",
+    "word": "vicetresorer",
+    "masked": "_icetresorer",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv220",
+    "word": "vicerectora",
+    "masked": "_icerectora",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv221",
+    "word": "viceconsellera",
+    "masked": "_iceconsellera",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv222",
+    "word": "vicedirector",
+    "masked": "_icedirector",
+    "answer": "v",
+    "ruleId": "v-vice-villa",
+    "difficulty": 2
+  },
+  {
+    "id": "bv223",
+    "word": "advertiment",
+    "masked": "ad_ertiment",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv224",
+    "word": "adversatiu",
+    "masked": "ad_ersatiu",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv225",
+    "word": "adveniment",
+    "masked": "ad_eniment",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv226",
+    "word": "advocada",
+    "masked": "ad_ocada",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv227",
+    "word": "adverbial",
+    "masked": "ad_erbial",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv228",
+    "word": "adversaria",
+    "masked": "ad_ersaria",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv229",
+    "word": "advocatessa",
+    "masked": "ad_ocatessa",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv230",
+    "word": "adversament",
+    "masked": "ad_ersament",
+    "answer": "v",
+    "ruleId": "v-adv",
+    "difficulty": 2
+  },
+  {
+    "id": "bv231",
+    "word": "treballaves",
+    "masked": "treballa_es",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv232",
+    "word": "parlàveu",
+    "masked": "parlà_eu",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv233",
+    "word": "pintava",
+    "masked": "pinta_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv234",
+    "word": "escoltaves",
+    "masked": "escolta_es",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv235",
+    "word": "ballaven",
+    "masked": "balla_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv236",
+    "word": "rentàvem",
+    "masked": "rentà_em",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv237",
+    "word": "caminàveu",
+    "masked": "caminà_eu",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv238",
+    "word": "saltava",
+    "masked": "salta_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv239",
+    "word": "dibuixaven",
+    "masked": "dibuixa_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv240",
+    "word": "estudiàvem",
+    "masked": "estudià_em",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv241",
+    "word": "berenàveu",
+    "masked": "berenà_eu",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv242",
+    "word": "somiava",
+    "masked": "somia_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv243",
+    "word": "trucaven",
+    "masked": "truca_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv244",
+    "word": "miràveu",
+    "masked": "mirà_eu",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv245",
+    "word": "ordenava",
+    "masked": "ordena_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv246",
+    "word": "preguntaven",
+    "masked": "pregunta_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv247",
+    "word": "comprava",
+    "masked": "compra_a",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv248",
+    "word": "dinaven",
+    "masked": "dina_en",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
+  },
+  {
+    "id": "bv249",
+    "word": "acabàvem",
+    "masked": "aca_àvem",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv250",
+    "word": "robaves",
+    "masked": "ro_aves",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv251",
+    "word": "esborràveu",
+    "masked": "es_orràveu",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv252",
+    "word": "bufaven",
+    "masked": "_ufaven",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv253",
+    "word": "arribaven",
+    "masked": "arri_aven",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv254",
+    "word": "trobava",
+    "masked": "tro_ava",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv255",
+    "word": "cobraven",
+    "masked": "co_raven",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv256",
+    "word": "rebrien",
+    "masked": "re_rien",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv257",
+    "word": "cabien",
+    "masked": "ca_ien",
+    "answer": "b",
+    "ruleId": "b-radical-ava",
+    "difficulty": 3
+  },
+  {
+    "id": "bv258",
+    "word": "vellut",
+    "masked": "_ellut",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv259",
+    "word": "ventall",
+    "masked": "_entall",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv260",
+    "word": "victòria",
+    "masked": "_ictòria",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv261",
+    "word": "vehicle",
+    "masked": "_ehicle",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv262",
+    "word": "voluntat",
+    "masked": "_oluntat",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv263",
+    "word": "veí",
+    "masked": "_eí",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv264",
+    "word": "veïna",
+    "masked": "_eïna",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv265",
+    "word": "vendre",
+    "masked": "_endre",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv266",
+    "word": "vèncer",
+    "masked": "_èncer",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv267",
+    "word": "vigilant",
+    "masked": "_igilant",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv268",
+    "word": "vila",
+    "masked": "_ila",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv269",
+    "word": "vint",
+    "masked": "_int",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv270",
+    "word": "vaporós",
+    "masked": "_aporós",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv271",
+    "word": "visió",
+    "masked": "_isió",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv272",
+    "word": "vocabulari",
+    "masked": "_ocabulari",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv273",
+    "word": "vocal",
+    "masked": "_ocal",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
+  },
+  {
+    "id": "bv274",
+    "word": "vermell",
+    "masked": "_ermell",
+    "answer": "v",
+    "ruleId": "v-frequents",
+    "difficulty": 2
   }
 ]

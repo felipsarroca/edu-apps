@@ -190,5 +190,197 @@
     "word": "proximitat",
     "contrast": "procsimitat",
     "explanation": "Proximitat s'escriu amb x."
+  },
+  {
+    "id": "xh025",
+    "sentence": "La _arcuteria ven embotits.",
+    "answer": "x",
+    "word": "xarcuteria",
+    "contrast": "csarcuteria",
+    "explanation": "Xarcuteria s'escriu amb x."
+  },
+  {
+    "id": "xh026",
+    "sentence": "Cal _ifrar el missatge.",
+    "answer": "x",
+    "word": "xifrar",
+    "contrast": "csifrar",
+    "explanation": "Xifrar s'escriu amb x."
+  },
+  {
+    "id": "xh027",
+    "sentence": "El _ilòfon sona clar.",
+    "answer": "x",
+    "word": "xilòfon",
+    "contrast": "csilòfon",
+    "explanation": "Xilòfon s'escriu amb x."
+  },
+  {
+    "id": "xh028",
+    "sentence": "La _irivia va a la sopa.",
+    "answer": "x",
+    "word": "xirivia",
+    "contrast": "csirivia",
+    "explanation": "Xirivia s'escriu amb x."
+  },
+  {
+    "id": "xh029",
+    "sentence": "Al pati hi havia _ivarri.",
+    "answer": "x",
+    "word": "xivarri",
+    "contrast": "csivarri",
+    "explanation": "Xivarri s'escriu amb x."
+  },
+  {
+    "id": "xh030",
+    "sentence": "El _oc va ser lleu.",
+    "answer": "x",
+    "word": "xoc",
+    "contrast": "csoc",
+    "explanation": "Xoc s'escriu amb x."
+  },
+  {
+    "id": "xh031",
+    "sentence": "Van _ocar a la cantonada.",
+    "answer": "x",
+    "word": "xocar",
+    "contrast": "csocar",
+    "explanation": "Xocar s'escriu amb x."
+  },
+  {
+    "id": "xh032",
+    "sentence": "El mestre _ocolater fa bombons.",
+    "answer": "x",
+    "word": "xocolater",
+    "contrast": "csocolater",
+    "explanation": "Xocolater s'escriu amb x."
+  },
+  {
+    "id": "xh033",
+    "sentence": "El nadó ha perdut el _umet.",
+    "answer": "x",
+    "word": "xumet",
+    "contrast": "csumet",
+    "explanation": "Xumet s'escriu amb x."
+  },
+  {
+    "id": "xh034",
+    "sentence": "Volen _errar una estona.",
+    "answer": "x",
+    "word": "xerrar",
+    "contrast": "cserrar",
+    "explanation": "Xerrar s'escriu amb x."
+  },
+  {
+    "id": "xh035",
+    "sentence": "No facis el _implet.",
+    "answer": "x",
+    "word": "ximplet",
+    "contrast": "csimplet",
+    "explanation": "Ximplet s'escriu amb x."
+  },
+  {
+    "id": "xh036",
+    "sentence": "No es pot _iular dins la sala.",
+    "answer": "x",
+    "word": "xiular",
+    "contrast": "csiular",
+    "explanation": "Xiular s'escriu amb x."
+  },
+  {
+    "id": "xh037",
+    "sentence": "Van obrir una ampolla de _ampany.",
+    "answer": "x",
+    "word": "xampany",
+    "contrast": "csampany",
+    "explanation": "Xampany s'escriu amb x."
+  },
+  {
+    "id": "xh038",
+    "sentence": "Porta el _andall al gimnés.",
+    "answer": "x",
+    "word": "xandall",
+    "contrast": "csandall",
+    "explanation": "Xandall s'escriu amb x."
+  },
+  {
+    "id": "xh039",
+    "sentence": "La seva _icota estudia.",
+    "answer": "x",
+    "word": "xicota",
+    "contrast": "csicota",
+    "explanation": "Xicota s'escriu amb x."
+  },
+  {
+    "id": "xh040",
+    "sentence": "El _ip és petit.",
+    "answer": "x",
+    "word": "xip",
+    "contrast": "csip",
+    "explanation": "Xip s'escriu amb x."
+  },
+  {
+    "id": "xh041",
+    "sentence": "La _apa de metall és fina.",
+    "answer": "x",
+    "word": "xapa",
+    "contrast": "csapa",
+    "explanation": "Xapa s'escriu amb x."
+  },
+  {
+    "id": "xh042",
+    "sentence": "La _aranga toca al carrer.",
+    "answer": "x",
+    "word": "xaranga",
+    "contrast": "csaranga",
+    "explanation": "Xaranga s'escriu amb x."
+  },
+  {
+    "id": "xh043",
+    "sentence": "Aquest _erigot fa mala olor.",
+    "answer": "x",
+    "word": "xerigot",
+    "contrast": "cserigot",
+    "explanation": "Xerigot s'escriu amb x."
+  },
+  {
+    "id": "xh044",
+    "sentence": "La _errameca distreu.",
+    "answer": "x",
+    "word": "xerrameca",
+    "contrast": "cserrameca",
+    "explanation": "Xerrameca s'escriu amb x."
+  },
+  {
+    "id": "xh045",
+    "sentence": "El _erric de la porta molesta.",
+    "answer": "x",
+    "word": "xerric",
+    "contrast": "cserric",
+    "explanation": "Xerric s'escriu amb x."
+  },
+  {
+    "id": "xh046",
+    "sentence": "Ha quedat _op per la pluja.",
+    "answer": "x",
+    "word": "xop",
+    "contrast": "csop",
+    "explanation": "Xop s'escriu amb x."
+  },
+  {
+    "id": "xh047",
+    "sentence": "El _arampió és una malaltia.",
+    "answer": "x",
+    "word": "xarampió",
+    "contrast": "csarampio",
+    "explanation": "Xarampió s'escriu amb x."
+  },
+  {
+    "id": "xh048",
+    "sentence": "L'a_ada serveix per cavar.",
+    "answer": "ix",
+    "word": "aixada",
+    "contrast": "axada",
+    "explanation": "Aixada s'escriu amb ix."
   }
 ]

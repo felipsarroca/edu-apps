@@ -77,7 +77,7 @@
     "answer": "ç",
     "word": "caça",
     "contrast": "casa",
-    "explanation": "Caça s'escriu amb ç quan es refereix a l'acció de caçar."
+    "explanation": "Caça s'escriu amb ç quan és refereix a l'acció de caçar."
   },
   {
     "id": "sh011",
@@ -254,5 +254,261 @@
     "word": "cereal",
     "contrast": "sereal",
     "explanation": "Cereal s'escriu amb c davant e."
+  },
+  {
+    "id": "sh034",
+    "sentence": "La _abatilla és sota el llit.",
+    "answer": "s",
+    "word": "sabatilla",
+    "contrast": "ssabatilla",
+    "explanation": "Sabatilla s'escriu amb s."
+  },
+  {
+    "id": "sh035",
+    "sentence": "El _almó és un peix.",
+    "answer": "s",
+    "word": "salmó",
+    "contrast": "ssalmo",
+    "explanation": "Salmó s'escriu amb s."
+  },
+  {
+    "id": "sh036",
+    "sentence": "La _amarreta és de cotó.",
+    "answer": "s",
+    "word": "samarreta",
+    "contrast": "ssamarreta",
+    "explanation": "Samarreta s'escriu amb s."
+  },
+  {
+    "id": "sh037",
+    "sentence": "La _ardina és un peix blau.",
+    "answer": "s",
+    "word": "sardina",
+    "contrast": "ssardina",
+    "explanation": "Sardina s'escriu amb s."
+  },
+  {
+    "id": "sh038",
+    "sentence": "Aquest alumne és _incer.",
+    "answer": "s",
+    "word": "sincer",
+    "contrast": "ssincer",
+    "explanation": "Sincer s'escriu amb s."
+  },
+  {
+    "id": "sh039",
+    "sentence": "El _ucre és dins el pot.",
+    "answer": "s",
+    "word": "sucre",
+    "contrast": "ssucre",
+    "explanation": "Sucre s'escriu amb s."
+  },
+  {
+    "id": "sh040",
+    "sentence": "El tap és de _uro.",
+    "answer": "s",
+    "word": "suro",
+    "contrast": "ssuro",
+    "explanation": "Suro s'escriu amb s."
+  },
+  {
+    "id": "sh041",
+    "sentence": "Té el na_ fred.",
+    "answer": "s",
+    "word": "nas",
+    "contrast": "nass",
+    "explanation": "Nas s'escriu amb s."
+  },
+  {
+    "id": "sh042",
+    "sentence": "Viu al tercer pi_.",
+    "answer": "s",
+    "word": "pis",
+    "contrast": "piss",
+    "explanation": "Pis s'escriu amb s."
+  },
+  {
+    "id": "sh043",
+    "sentence": "El passadés és fo_c.",
+    "answer": "s",
+    "word": "fosc",
+    "contrast": "fossc",
+    "explanation": "Fosc s'escriu amb s."
+  },
+  {
+    "id": "sh044",
+    "sentence": "El pa_tís és de xocolata.",
+    "answer": "s",
+    "word": "pastís",
+    "contrast": "passtis",
+    "explanation": "Pastís s'escriu amb s."
+  },
+  {
+    "id": "sh045",
+    "sentence": "Avui estic can_at.",
+    "answer": "s",
+    "word": "cansat",
+    "contrast": "canssat",
+    "explanation": "Cansat s'escriu amb s."
+  },
+  {
+    "id": "sh046",
+    "sentence": "La cap_a és plena de colors.",
+    "answer": "s",
+    "word": "capsa",
+    "contrast": "capssa",
+    "explanation": "Capsa s'escriu amb s."
+  },
+  {
+    "id": "sh047",
+    "sentence": "El _ac pesa molt.",
+    "answer": "s",
+    "word": "sac",
+    "contrast": "ssac",
+    "explanation": "Sac s'escriu amb s."
+  },
+  {
+    "id": "sh048",
+    "sentence": "La frase té _entit.",
+    "answer": "s",
+    "word": "sentit",
+    "contrast": "ssentit",
+    "explanation": "Sentit s'escriu amb s."
+  },
+  {
+    "id": "sh049",
+    "sentence": "L'exercici és _enzill.",
+    "answer": "s",
+    "word": "senzill",
+    "contrast": "ssenzill",
+    "explanation": "Senzill s'escriu amb s."
+  },
+  {
+    "id": "sh050",
+    "sentence": "Mengem _índria a l'estiu.",
+    "answer": "s",
+    "word": "síndria",
+    "contrast": "ssíndria",
+    "explanation": "Síndria s'escriu amb s."
+  },
+  {
+    "id": "sh051",
+    "sentence": "El _istema funciona.",
+    "answer": "s",
+    "word": "sistema",
+    "contrast": "ssistema",
+    "explanation": "Sistema s'escriu amb s."
+  },
+  {
+    "id": "sh052",
+    "sentence": "La _olució és clara.",
+    "answer": "s",
+    "word": "solució",
+    "contrast": "ssolucio",
+    "explanation": "Solució s'escriu amb s."
+  },
+  {
+    "id": "sh053",
+    "sentence": "La _ortida és al final.",
+    "answer": "s",
+    "word": "sortida",
+    "contrast": "ssortida",
+    "explanation": "Sortida s'escriu amb s."
+  },
+  {
+    "id": "sh054",
+    "sentence": "Hi vaig _ovint.",
+    "answer": "s",
+    "word": "sovint",
+    "contrast": "ssovint",
+    "explanation": "Sovint s'escriu amb s."
+  },
+  {
+    "id": "sh055",
+    "sentence": "Cal _ubratllar la paraula clau.",
+    "answer": "s",
+    "word": "subratllar",
+    "contrast": "ssubratllar",
+    "explanation": "Subratllar s'escriu amb s."
+  },
+  {
+    "id": "sh056",
+    "sentence": "Ha quedat _uspens en la prova.",
+    "answer": "s",
+    "word": "suspens",
+    "contrast": "ssuspens",
+    "explanation": "Suspens s'escriu amb s."
+  },
+  {
+    "id": "sh057",
+    "sentence": "El _astre arregla pantalons.",
+    "answer": "s",
+    "word": "sastre",
+    "contrast": "ssastre",
+    "explanation": "Sastre s'escriu amb s."
+  },
+  {
+    "id": "sh058",
+    "sentence": "El _ender puja al cim.",
+    "answer": "s",
+    "word": "sender",
+    "contrast": "ssender",
+    "explanation": "Sender s'escriu amb s."
+  },
+  {
+    "id": "sh059",
+    "sentence": "El vestit és de _etí.",
+    "answer": "s",
+    "word": "setí",
+    "contrast": "sseti",
+    "explanation": "Setí s'escriu amb s."
+  },
+  {
+    "id": "sh060",
+    "sentence": "La to_ no el deixa dormir.",
+    "answer": "s",
+    "word": "tos",
+    "contrast": "toss",
+    "explanation": "Tos s'escriu amb s."
+  },
+  {
+    "id": "sh061",
+    "sentence": "Ha fet un mo_ al pa.",
+    "answer": "s",
+    "word": "mos",
+    "contrast": "moss",
+    "explanation": "Mos s'escriu amb s."
+  },
+  {
+    "id": "sh062",
+    "sentence": "El co_ necessita descans.",
+    "answer": "s",
+    "word": "cos",
+    "contrast": "coss",
+    "explanation": "Cos s'escriu amb s."
+  },
+  {
+    "id": "sh063",
+    "sentence": "La fre_cor del maté agrada.",
+    "answer": "s",
+    "word": "frescor",
+    "contrast": "fresscor",
+    "explanation": "Frescor s'escriu amb s."
+  },
+  {
+    "id": "sh064",
+    "sentence": "L'e_tel brilla al cel.",
+    "answer": "s",
+    "word": "estel",
+    "contrast": "esstel",
+    "explanation": "Estel s'escriu amb s."
+  },
+  {
+    "id": "sh065",
+    "sentence": "Vindré d'aquí a una e_tona.",
+    "answer": "s",
+    "word": "estona",
+    "contrast": "esstona",
+    "explanation": "Estona s'escriu amb s."
   }
 ]
