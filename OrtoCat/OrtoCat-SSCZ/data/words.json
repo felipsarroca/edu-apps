@@ -481,7 +481,8 @@
     "masked": "fal_",
     "answer": "s",
     "ruleId": "s-inicial-final",
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "no vertader"
   },
   {
     "id": "sz061",
@@ -2307,14 +2308,6 @@
     "difficulty": 2
   },
   {
-    "id": "sz289",
-    "word": "musica",
-    "masked": "mu_ica",
-    "answer": "s",
-    "ruleId": "s-sonora",
-    "difficulty": 2
-  },
-  {
     "id": "sz290",
     "word": "visera",
     "masked": "vi_era",
@@ -2804,10 +2797,19 @@
   },
   {
     "id": "sz351",
-    "word": "cinic",
-    "masked": "_inic",
+    "word": "cínic",
+    "masked": "_ínic",
     "answer": "c",
     "ruleId": "c-e-i",
     "difficulty": 2
+  },
+  {
+    "id": "sz352",
+    "word": "falç",
+    "masked": "fal_",
+    "answer": "ç",
+    "ruleId": "c-trencada",
+    "difficulty": 2,
+    "hint": "eina"
   }
 ]
