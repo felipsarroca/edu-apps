@@ -62,7 +62,7 @@
     "id": "b-bio-biblio-bi",
     "letter": "b",
     "title": "Prefixos bio-, biblio- i bi-",
-    "summary": "S'escriuen amb b els prefixos bio-, biblio- i bi- quan indiquen vida, llibres o dos.",
+    "summary": "S'escriuen amb b els prefixos bio-, biblio- i bi- quan indiquen «vida», «llibres» o «dos».",
     "examples": [
       "biologia",
       "biodiversitat",
@@ -113,7 +113,9 @@
     "examples": [
       "cantava",
       "parlava",
+      "parlaves",
       "miraves",
+      "miràvem",
       "jugàvem",
       "treballàveu",
       "estudiaven"

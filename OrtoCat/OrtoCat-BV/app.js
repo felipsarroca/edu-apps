@@ -628,6 +628,12 @@ function ruleExampleHighlights(ruleId) {
       ? escapeHtml(word).replace(/(bl|br)/gi, (match) => `<strong class="norm-chip">${match}</strong>`)
       : ruleId === "bv-mb-nv"
         ? escapeHtml(word).replace(/(mb|nv)/gi, (match) => `<strong class="norm-chip">${match}</strong>`)
+        : ruleId === "v-imperfet-ava"
+          ? escapeHtml(word).replace(/(àveu|àvem|aves|aven|ava)$/i, (match) => `<strong class="norm-chip">${match}</strong>`)
+          : ruleId === "b-radical-ava"
+            ? escapeHtml(word)
+              .replace(/b(?=(?:a|à)v)/i, (match) => `<strong class="norm-chip">${match}</strong>`)
+              .replace(/(àveu|àvem|aves|aven|ava)$/i, (match) => `<strong class="norm-chip">${match}</strong>`)
       : highlightWordByRule(word, ruleId),
   }));
 }

@@ -2402,5 +2402,21 @@
     "answer": "b",
     "ruleId": "b-frequents",
     "difficulty": 1
+  },
+  {
+    "id": "bv299",
+    "word": "parlaves",
+    "masked": "parla_es",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 1
+  },
+  {
+    "id": "bv300",
+    "word": "miràvem",
+    "masked": "mirà_em",
+    "answer": "v",
+    "ruleId": "v-imperfet-ava",
+    "difficulty": 2
   }
 ]
