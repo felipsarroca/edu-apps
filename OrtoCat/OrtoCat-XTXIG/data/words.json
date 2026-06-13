@@ -1018,14 +1018,6 @@
     "difficulty": 1
   },
   {
-    "id": "xt128",
-    "word": "xarampio",
-    "masked": "_arampio",
-    "answer": "x",
-    "ruleId": "x-inicial",
-    "difficulty": 1
-  },
-  {
     "id": "xt129",
     "word": "aixada",
     "masked": "a_ada",

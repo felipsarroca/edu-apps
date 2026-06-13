@@ -539,8 +539,8 @@
   },
   {
     "id": "ll068",
-    "word": "mil·lésima",
-    "masked": "mi_ésima",
+    "word": "mil·lèsima",
+    "masked": "mi_èsima",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
@@ -741,14 +741,6 @@
     "id": "ll093",
     "word": "destil·lar",
     "masked": "desti_ar",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll094",
-    "word": "cristal·li",
-    "masked": "crista_i",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3

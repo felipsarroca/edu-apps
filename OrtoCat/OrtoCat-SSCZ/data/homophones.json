@@ -268,7 +268,7 @@
     "sentence": "El _almó és un peix.",
     "answer": "s",
     "word": "salmó",
-    "contrast": "ssalmo",
+    "contrast": "ssalmó",
     "explanation": "Salmó s'escriu amb s."
   },
   {
@@ -460,7 +460,7 @@
     "sentence": "El vestit és de _etí.",
     "answer": "s",
     "word": "setí",
-    "contrast": "sseti",
+    "contrast": "ssetí",
     "explanation": "Setí s'escriu amb s."
   },
   {

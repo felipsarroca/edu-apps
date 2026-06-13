@@ -1421,8 +1421,8 @@
   },
   {
     "id": "sz178",
-    "word": "salmo",
-    "masked": "_almo",
+    "word": "salmó",
+    "masked": "_almó",
     "answer": "s",
     "ruleId": "s-inicial-final",
     "difficulty": 1
@@ -1613,8 +1613,8 @@
   },
   {
     "id": "sz202",
-    "word": "seti",
-    "masked": "_eti",
+    "word": "setí",
+    "masked": "_etí",
     "answer": "s",
     "ruleId": "s-inicial-final",
     "difficulty": 1
@@ -1685,8 +1685,8 @@
   },
   {
     "id": "sz211",
-    "word": "sabo",
-    "masked": "_abo",
+    "word": "sabó",
+    "masked": "_abó",
     "answer": "s",
     "ruleId": "s-inicial-final",
     "difficulty": 1
@@ -1900,14 +1900,6 @@
     "difficulty": 1
   },
   {
-    "id": "sz238",
-    "word": "passadis",
-    "masked": "pa_adis",
-    "answer": "ss",
-    "ruleId": "ss-entre-vocals",
-    "difficulty": 2
-  },
-  {
     "id": "sz239",
     "word": "rossinyol",
     "masked": "ro_inyol",
@@ -2021,8 +2013,8 @@
   },
   {
     "id": "sz253",
-    "word": "processo",
-    "masked": "proce_o",
+    "word": "processó",
+    "masked": "proce_ó",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2093,8 +2085,8 @@
   },
   {
     "id": "sz262",
-    "word": "besso",
-    "masked": "be_o",
+    "word": "bessó",
+    "masked": "be_ó",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2173,8 +2165,8 @@
   },
   {
     "id": "sz272",
-    "word": "gessami",
-    "masked": "ge_ami",
+    "word": "gessamí",
+    "masked": "ge_amí",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2183,14 +2175,6 @@
     "id": "sz273",
     "word": "tossina",
     "masked": "to_ina",
-    "answer": "ss",
-    "ruleId": "ss-entre-vocals",
-    "difficulty": 2
-  },
-  {
-    "id": "sz274",
-    "word": "resso",
-    "masked": "re_o",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2359,14 +2343,6 @@
     "id": "sz296",
     "word": "enfonsada",
     "masked": "enfon_ada",
-    "answer": "s",
-    "ruleId": "s-sonora",
-    "difficulty": 2
-  },
-  {
-    "id": "sz297",
-    "word": "preso",
-    "masked": "pre_o",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
@@ -2564,14 +2540,6 @@
     "difficulty": 2
   },
   {
-    "id": "sz322",
-    "word": "centim",
-    "masked": "_entim",
-    "answer": "c",
-    "ruleId": "c-e-i",
-    "difficulty": 2
-  },
-  {
     "id": "sz323",
     "word": "cervol",
     "masked": "_ervol",
@@ -2660,14 +2628,6 @@
     "difficulty": 2
   },
   {
-    "id": "sz334",
-    "word": "cinturo",
-    "masked": "_inturo",
-    "answer": "c",
-    "ruleId": "c-e-i",
-    "difficulty": 2
-  },
-  {
     "id": "sz335",
     "word": "ciri",
     "masked": "_iri",
@@ -2717,8 +2677,8 @@
   },
   {
     "id": "sz341",
-    "word": "cedula",
-    "masked": "_edula",
+    "word": "cèdula",
+    "masked": "_èdula",
     "answer": "c",
     "ruleId": "c-e-i",
     "difficulty": 2
@@ -2751,14 +2711,6 @@
     "id": "sz345",
     "word": "cicatriu",
     "masked": "_icatriu",
-    "answer": "c",
-    "ruleId": "c-e-i",
-    "difficulty": 2
-  },
-  {
-    "id": "sz346",
-    "word": "cigro",
-    "masked": "_igro",
     "answer": "c",
     "ruleId": "c-e-i",
     "difficulty": 2
