@@ -624,7 +624,11 @@ function ruleExampleHighlights(ruleId) {
   if (!rule) return [];
   return rule.examples.map((word) => ({
     text: escapeHtml(word),
-    html: highlightWordByRule(word, ruleId),
+    html: ruleId === "b-bl-br"
+      ? escapeHtml(word).replace(/(bl|br)/gi, (match) => `<strong class="norm-chip">${match}</strong>`)
+      : ruleId === "bv-mb-nv"
+        ? escapeHtml(word).replace(/(mb|nv)/gi, (match) => `<strong class="norm-chip">${match}</strong>`)
+      : highlightWordByRule(word, ruleId),
   }));
 }
 
