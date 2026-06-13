@@ -452,6 +452,11 @@ select {
   color: var(--coral);
 }
 
+.explicit-rule-v {
+  color: #b3261e;
+  font-weight: 950;
+}
+
 .norm-chip {
   display: inline-block;
   padding: 1px 6px 2px;

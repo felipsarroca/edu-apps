@@ -217,7 +217,7 @@ function renderStudy() {
     <p class="rule-text">${highlightRuleText(rule.summary, rule.id, rule.letter)}</p>
     <div>
       <h3>Exemples</h3>
-      <ul class="examples">${rule.examples.map((word) => `<li>${highlightWordByRule(word, rule.id)}</li>`).join("")}</ul>
+      <ul class="examples">${rule.examples.map((word) => `<li>${highlightStudyExample(word, rule.id)}</li>`).join("")}</ul>
     </div>
     ${rule.exceptions.length ? `
       <div class="exception-box">
@@ -529,7 +529,7 @@ function highlightRuleText(text, ruleId, letter = "") {
       .replace(/arrib-/gi, (match) => `<strong class="norm-chip">${match}</strong>`)
       .replace(
         /la v de l'imperfet/gi,
-        () => `la <strong class="rule-letter rule-letter-v meta-word">v</strong> de l'imperfet`
+        () => `la <strong class="explicit-rule-v">v</strong> de l'imperfet`
       )
       .replace(/-ava/gi, (match) => `<strong class="norm-chip">${match}</strong>`);
   }
@@ -628,6 +628,13 @@ function highlightWordByRule(word, ruleId) {
   return highlightByPattern(word, ruleId);
 }
 
+function highlightStudyExample(word, ruleId) {
+  if (ruleId !== "b-radical-ava") return highlightWordByRule(word, ruleId);
+  return escapeHtml(word)
+    .replace(/b(?=(?:a|à)v)/i, (match) => `<strong class="norm-highlight rule-letter-b">${match}</strong>`)
+    .replace(/v(?=(?:a|e|é|í|à|i|u))/i, (match) => `<strong class="norm-highlight rule-letter-v">${match}</strong>`);
+}
+
 function ruleExampleHighlights(ruleId) {
   const rule = ruleById(ruleId);
   if (!rule) return [];
@@ -640,9 +647,7 @@ function ruleExampleHighlights(ruleId) {
         : ruleId === "v-imperfet-ava"
           ? escapeHtml(word).replace(/(àveu|àvem|aves|aven|ava)$/i, (match) => `<strong class="norm-chip">${match}</strong>`)
           : ruleId === "b-radical-ava"
-            ? escapeHtml(word)
-              .replace(/b(?=(?:a|à)v)/i, (match) => `<strong class="norm-highlight rule-letter-b">${match}</strong>`)
-              .replace(/v(?=(?:a|e|é|í|à|i|u))/i, (match) => `<strong class="norm-highlight rule-letter-v">${match}</strong>`)
+            ? highlightWordByRule(word, ruleId)
       : highlightWordByRule(word, ruleId),
   }));
 }
