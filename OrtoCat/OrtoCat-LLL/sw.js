@@ -1,9 +1,12 @@
-const CACHE_NAME = "ortocat-lll-v4";
+const CACHE_NAME = "ortocat-lll-v5";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css?v=review28",
   "./app.js?v=review28",
+  "../shared/adaptive.js",
+  "../shared/ui.js",
+  "../shared/common.css?v=2",
   "./manifest.webmanifest",
   "./data/rules.json?v=review28",
   "./data/words.json?v=review28",

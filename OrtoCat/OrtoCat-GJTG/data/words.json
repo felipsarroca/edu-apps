@@ -1657,5 +1657,14 @@
     "answer": "tj",
     "ruleId": "tj-a-o-u",
     "difficulty": 3
+  },
+  {
+    "id": "gj208",
+    "word": "Jerusalem",
+    "masked": "_erusalem",
+    "answer": "j",
+    "ruleId": "j-excepcions-e-i",
+    "difficulty": 2,
+    "exception": true
   }
 ]

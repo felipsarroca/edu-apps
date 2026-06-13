@@ -1,3 +1,13 @@
+import {
+  UNIFORM_BELIEF,
+  estimatedLevel,
+  expectedInformationGain,
+  masteryPercent,
+  normalizeBelief,
+  posteriorFor,
+} from "../shared/adaptive.js";
+import { markSelectedChoice, setupTabs } from "../shared/ui.js";
+
 const state = {
   rules: [],
   words: [],
@@ -8,6 +18,7 @@ const state = {
   reviewItems: [],
   homophoneItems: [],
   guidedSeen: {},
+  optionCount: 4,
   stats: loadStats(),
 };
 
@@ -46,8 +57,10 @@ async function init() {
   state.rules = rules;
   state.words = words;
   state.homophones = homophones;
+  state.optionCount = new Set(words.concat(homophones).map((item) => item.answer)).size;
   ensureRuleStats();
   bindEvents();
+  setupTabs();
   renderRuleSelect();
   renderStudy();
   createGuidedSet();
@@ -90,6 +103,10 @@ function bindEvents() {
   document.querySelector("#resetSession").addEventListener("click", () => {
     state.stats.sessionHits = 0;
     state.stats.sessionMisses = 0;
+    state.stats.beliefs.global = [...UNIFORM_BELIEF];
+    state.stats.diagnosticAttempts = 0;
+    state.stats.randomHistory = { recentIds: [], seenCounts: {} };
+    state.stats.recentMistakes = {};
     saveStats();
     renderStats();
     createRandomSet();
@@ -156,7 +173,10 @@ function setupInstallSupport() {
 
 function switchView(viewName) {
   document.querySelectorAll(".tab-button").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.view === viewName);
+    const isActive = button.dataset.view === viewName;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+    button.tabIndex = isActive ? 0 : -1;
   });
   document.querySelectorAll(".view").forEach((view) => {
     view.classList.toggle("is-active", view.id === viewName);
@@ -298,7 +318,9 @@ function renderPractice(container, items, mode, isSentence = false) {
     button.addEventListener("click", () => {
       const card = button.closest(".question-card");
       setAnswer(card.querySelector(".blank"), button.dataset.pick);
+      markSelectedChoice(button);
     });
+    button.setAttribute("aria-pressed", "false");
   });
 }
 
@@ -361,9 +383,7 @@ function checkSet(mode) {
   };
   const current = map[mode];
 
-  let answeredCards = 0;
   let checkedCards = 0;
-  let setMisses = 0;
   const cards = document.querySelectorAll(`${current.selector} .question-card`);
 
   cards.forEach((card) => {
@@ -375,10 +395,12 @@ function checkSet(mode) {
       feedback.innerHTML = "<strong>Falta respondre.</strong> Tria X, IX, TX o IG abans de corregir aquesta paraula.";
       return;
     }
-    answeredCards += 1;
     const isCorrect = normalizeAnswer(selected) === normalizeAnswer(item.answer);
-    if (!isCorrect) setMisses += 1;
     card.dataset.checked = "true";
+    card.dataset.correct = String(isCorrect);
+    card.querySelectorAll("[data-pick]").forEach((button) => {
+      button.disabled = true;
+    });
     checkedCards += 1;
     card.classList.toggle("is-correct", isCorrect);
     card.classList.toggle("is-wrong", !isCorrect);
@@ -391,9 +413,11 @@ function checkSet(mode) {
   });
 
   saveStats();
-  if (mode === "guided" && checkedCards > 0 && answeredCards === cards.length) {
+  const allChecked = cards.length > 0 && [...cards].every((card) => card.dataset.checked === "true");
+  if (mode === "guided" && checkedCards > 0 && allChecked) {
     const ruleId = current.items[0]?.ruleId;
     if (ruleId) {
+      const setMisses = [...cards].filter((card) => card.dataset.correct === "false").length;
       state.stats.rulePractice[ruleId] = {
         completed: true,
         misses: setMisses,
@@ -626,32 +650,51 @@ function updateAttempt(item, isCorrect, mode) {
   state.stats.sessionMisses += isCorrect ? 0 : 1;
 
   const statKey = item.ruleId || "homophones";
-  if (!state.stats.rules[statKey]) state.stats.rules[statKey] = { alpha: 1, beta: 1, hits: 0, misses: 0 };
+  if (!state.stats.rules[statKey]) state.stats.rules[statKey] = { alpha: 1, beta: 1, hits: 0, misses: 0, attempts: 0 };
   const ruleStat = state.stats.rules[statKey];
   ruleStat.alpha += isCorrect ? 1 : 0;
   ruleStat.beta += isCorrect ? 0 : 1;
   ruleStat.hits += isCorrect ? 1 : 0;
   ruleStat.misses += isCorrect ? 0 : 1;
+  ruleStat.attempts = (ruleStat.attempts || 0) + 1;
 
   if (!isCorrect) {
     const key = item.word || item.id;
     state.stats.errors[key] = (state.stats.errors[key] || 0) + 1;
     state.stats.errorItems[item.id] = (state.stats.errorItems[item.id] || 0) + 1;
+    state.stats.errorRecovery[item.id] = 0;
+  } else if (mode === "review" && state.stats.errorItems[item.id]) {
+    const streak = (state.stats.errorRecovery[item.id] || 0) + 1;
+    state.stats.errorRecovery[item.id] = streak;
+    if (streak >= 2) {
+      const key = item.word || item.id;
+      delete state.stats.errorItems[item.id];
+      delete state.stats.errorRecovery[item.id];
+      delete state.stats.errors[key];
+      delete state.stats.recentMistakes[item.id];
+    }
   }
 
   if (mode === "random" && !isCorrect && item.id) {
     state.stats.recentMistakes[item.id] = (state.stats.recentMistakes[item.id] || 0) + 2;
   }
 
-  updateBayes("global", item, isCorrect);
-  updateBayes(statKey, item, isCorrect);
+  if (mode === "random") {
+    state.stats.diagnosticAttempts += 1;
+    updateBayes("global", item, isCorrect);
+    updateBayes(statKey, item, isCorrect);
+  } else if (mode === "guided") {
+    updateBayes(statKey, item, isCorrect);
+  } else if (mode === "homophones") {
+    updateBayes("homophones", { ...item, difficulty: item.difficulty || 2 }, isCorrect);
+  }
 }
 
 function adaptiveWeight(item, alreadyChosen = []) {
   const belief = getBelief(item.ruleId);
   const level = currentLevel();
   const history = state.stats.randomHistory || { recentIds: [], seenCounts: {} };
-  const infoGain = expectedInformationGain(belief, item);
+  const infoGain = expectedInformationGain(belief, item, state.optionCount);
   const repeatedConceptPenalty = alreadyChosen.filter((chosen) => chosen.ruleId === item.ruleId).length * 0.08;
   const mistakeBoost = state.stats.recentMistakes[item.id] || 0;
   const exceptionBoost = item.exception ? exceptionBoostForLevel(level) : 0;
@@ -663,26 +706,14 @@ function adaptiveWeight(item, alreadyChosen = []) {
 }
 
 function currentLevel() {
-  const belief = getBelief("global");
-  const bestIndex = belief.indexOf(Math.max(...belief));
-  const levels = [
-    { label: "Inicial", maxDifficulty: 1 },
-    { label: "Intermedi", maxDifficulty: 2 },
-    { label: "Avançat", maxDifficulty: 3 },
-  ];
-  return { ...levels[bestIndex], confidence: belief[bestIndex], entropy: entropy(belief) };
+  return estimatedLevel(getBelief("global"));
 }
 
 function renderStats() {
   const level = currentLevel();
   els.totalHits.textContent = state.stats.totalHits;
   els.totalMisses.textContent = state.stats.totalMisses;
-  els.levelLabel.textContent = level.label;
-
-  Object.keys(state.stats.recentMistakes).forEach((id) => {
-    state.stats.recentMistakes[id] = Math.max(0, state.stats.recentMistakes[id] - 0.15);
-    if (state.stats.recentMistakes[id] === 0) delete state.stats.recentMistakes[id];
-  });
+  els.levelLabel.textContent = state.stats.diagnosticAttempts ? level.label : "Per determinar";
 }
 
 function renderProgress() {
@@ -690,12 +721,12 @@ function renderProgress() {
   const rows = state.rules.map((rule) => {
     const stat = state.stats.rules[rule.id] || { alpha: 1, beta: 1, hits: 0, misses: 0 };
     const belief = getBelief(rule.id);
-    const mastery = Math.round((belief[1] + belief[2]) * 100);
+    const mastery = masteryPercent(belief, stat.attempts || stat.hits + stat.misses);
     const confidence = Math.round(Math.max(...belief) * 100);
     return `
       <div class="progress-row">
         <strong>${highlightRuleText(rule.title, rule.id, rule.letter)}</strong>
-        <div class="meter" aria-label="Dominio ${mastery}%"><span style="width: ${mastery}%"></span></div>
+        <div class="meter" aria-label="Domini ${mastery}%"><span style="width: ${mastery}%"></span></div>
         <span>${stat.hits} ac. / ${stat.misses} err. · ${confidence}% conf.</span>
       </div>
     `;
@@ -709,7 +740,7 @@ function renderProgress() {
 
   els.progressPanel.innerHTML = `
     <h3>Diagnòstic global</h3>
-    <p>Nivell estimat: <strong>${globalLevel.label}</strong>. Confiança: <strong>${Math.round(globalLevel.confidence * 100)} %</strong>. Incertesa: <strong>${globalLevel.entropy.toFixed(2)}</strong>. ${globalLevel.confidence >= 0.8 ? "El resultat és força estable." : "El resultat encara és provisional: convé practicar més preguntes."}</p>
+    <p>Nivell diagnòstic: <strong>${state.stats.diagnosticAttempts ? globalLevel.label : "Encara no estimat"}</strong>. Confiança: <strong>${state.stats.diagnosticAttempts ? `${Math.round(globalLevel.confidence * 100)} %` : "sense evidència"}</strong>. ${state.stats.diagnosticAttempts ? `Incertesa: <strong>${globalLevel.entropy.toFixed(2)}</strong>. ${globalLevel.confidence >= 0.8 ? "El resultat és força estable." : "El resultat encara és provisional: convé completar més pràctica aleatòria."}` : "Completa una tanda de pràctica aleatòria per iniciar el diagnòstic."}</p>
     <h3>Domini per norma</h3>
     ${rows}
     <h3>Errors més freqüents</h3>
@@ -727,8 +758,8 @@ function ensureRuleStats() {
   if (!state.stats.rules.homophones) {
     state.stats.rules.homophones = { alpha: 1, beta: 1, hits: 0, misses: 0 };
   }
-  if (!state.stats.beliefs.global) state.stats.beliefs.global = [1 / 3, 1 / 3, 1 / 3];
-  if (!state.stats.beliefs.homophones) state.stats.beliefs.homophones = [1 / 3, 1 / 3, 1 / 3];
+  if (!state.stats.beliefs.global) state.stats.beliefs.global = [...UNIFORM_BELIEF];
+  if (!state.stats.beliefs.homophones) state.stats.beliefs.homophones = [...UNIFORM_BELIEF];
   if (!state.stats.randomHistory) state.stats.randomHistory = { recentIds: [], seenCounts: {} };
   if (!Array.isArray(state.stats.randomHistory.recentIds)) state.stats.randomHistory.recentIds = [];
   if (!state.stats.randomHistory.seenCounts) state.stats.randomHistory.seenCounts = {};
@@ -745,14 +776,34 @@ function loadStats() {
     rulePractice: {},
     errors: {},
     errorItems: {},
+    errorRecovery: {},
     recentMistakes: {},
+    diagnosticAttempts: 0,
     randomHistory: { recentIds: [], seenCounts: {} },
   };
   try {
-    return { ...fallback, ...JSON.parse(localStorage.getItem("ortocat-xtxig-stats")) };
+    return migrateStats(JSON.parse(localStorage.getItem("ortocat-xtxig-stats")), fallback);
   } catch {
     return fallback;
   }
+}
+
+function migrateStats(stored, fallback) {
+  return {
+    ...fallback,
+    ...(stored || {}),
+    rules: { ...fallback.rules, ...(stored?.rules || {}) },
+    beliefs: { ...fallback.beliefs, ...(stored?.beliefs || {}) },
+    rulePractice: { ...fallback.rulePractice, ...(stored?.rulePractice || {}) },
+    errors: { ...fallback.errors, ...(stored?.errors || {}) },
+    errorItems: { ...fallback.errorItems, ...(stored?.errorItems || {}) },
+    errorRecovery: { ...fallback.errorRecovery, ...(stored?.errorRecovery || {}) },
+    recentMistakes: { ...fallback.recentMistakes, ...(stored?.recentMistakes || {}) },
+    randomHistory: {
+      recentIds: stored?.randomHistory?.recentIds || [],
+      seenCounts: stored?.randomHistory?.seenCounts || {},
+    },
+  };
 }
 
 function eligibleGuidedWords(ruleId) {
@@ -844,53 +895,13 @@ function rulePracticeStatus(ruleId) {
 }
 
 function getBelief(key) {
-  return state.stats.beliefs[key] || [1 / 3, 1 / 3, 1 / 3];
+  return normalizeBelief(state.stats.beliefs[key]);
 }
 
 function updateBayes(key, item, isCorrect) {
   const prior = getBelief(key);
-  const posterior = posteriorFor(prior, item, isCorrect);
+  const posterior = posteriorFor(prior, item, isCorrect, state.optionCount);
   state.stats.beliefs[key] = posterior;
-}
-
-function posteriorFor(prior, item, isCorrect) {
-  const likelihoods = prior.map((_, index) => {
-    const pHit = probabilityCorrect(index, item);
-    return isCorrect ? pHit : 1 - pHit;
-  });
-  const raw = prior.map((probability, index) => probability * likelihoods[index]);
-  const total = raw.reduce((sum, value) => sum + value, 0) || 1;
-  return raw.map((value) => value / total);
-}
-
-function probabilityCorrect(levelIndex, item) {
-  const theta = [-1, 0, 1][levelIndex];
-  const bq = difficultyToB(item.difficulty || 1);
-  const a = 1.5;
-  const c = 0.25;
-  return c + (1 - c) / (1 + Math.exp(-a * (theta - bq)));
-}
-
-function difficultyToB(difficulty) {
-  return { 1: -0.75, 2: 0, 3: 0.75 }[difficulty] ?? 0;
-}
-
-function expectedInformationGain(prior, item) {
-  const pCorrect = marginalCorrect(prior, item);
-  const posteriorHit = posteriorFor(prior, item, true);
-  const posteriorMiss = posteriorFor(prior, item, false);
-  return entropy(prior) - (pCorrect * entropy(posteriorHit) + (1 - pCorrect) * entropy(posteriorMiss));
-}
-
-function marginalCorrect(prior, item) {
-  return prior.reduce((sum, probability, index) => sum + probability * probabilityCorrect(index, item), 0);
-}
-
-function entropy(distribution) {
-  return -distribution.reduce((sum, probability) => {
-    if (probability <= 0) return sum;
-    return sum + probability * Math.log2(probability);
-  }, 0);
 }
 
 function saveStats() {
