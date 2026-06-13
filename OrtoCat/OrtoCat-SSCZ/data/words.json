@@ -1556,8 +1556,8 @@
   },
   {
     "id": "sz195",
-    "word": "solucio",
-    "masked": "_olucio",
+    "word": "solució",
+    "masked": "_olució",
     "answer": "s",
     "ruleId": "s-inicial-final",
     "difficulty": 1
@@ -1956,8 +1956,8 @@
   },
   {
     "id": "sz245",
-    "word": "comissio",
-    "masked": "comi_io",
+    "word": "comissió",
+    "masked": "comi_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2012,8 +2012,8 @@
   },
   {
     "id": "sz252",
-    "word": "professio",
-    "masked": "profe_io",
+    "word": "professió",
+    "masked": "profe_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2108,48 +2108,48 @@
   },
   {
     "id": "sz264",
-    "word": "possessio",
-    "masked": "po_essio",
+    "word": "possessió",
+    "masked": "po_essió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
   },
   {
     "id": "sz265",
-    "word": "discussio",
-    "masked": "discu_io",
+    "word": "discussió",
+    "masked": "discu_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
   },
   {
     "id": "sz266",
-    "word": "impressio",
-    "masked": "impre_io",
+    "word": "impressió",
+    "masked": "impre_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
   },
   {
     "id": "sz267",
-    "word": "expressio",
-    "masked": "expre_io",
+    "word": "expressió",
+    "masked": "expre_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
   },
   {
     "id": "sz268",
-    "word": "agressio",
-    "masked": "agre_io",
+    "word": "agressió",
+    "masked": "agre_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
   },
   {
     "id": "sz269",
-    "word": "cessio",
-    "masked": "ce_io",
+    "word": "cessió",
+    "masked": "ce_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2196,8 +2196,8 @@
   },
   {
     "id": "sz275",
-    "word": "associacio",
-    "masked": "a_ociacio",
+    "word": "associació",
+    "masked": "a_ociació",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2228,8 +2228,8 @@
   },
   {
     "id": "sz279",
-    "word": "pressio",
-    "masked": "pre_io",
+    "word": "pressió",
+    "masked": "pre_ió",
     "answer": "ss",
     "ruleId": "ss-entre-vocals",
     "difficulty": 2
@@ -2292,8 +2292,8 @@
   },
   {
     "id": "sz287",
-    "word": "posicio",
-    "masked": "po_icio",
+    "word": "posició",
+    "masked": "po_ició",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
@@ -2420,48 +2420,48 @@
   },
   {
     "id": "sz303",
-    "word": "decisio",
-    "masked": "deci_io",
+    "word": "decisió",
+    "masked": "deci_ió",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
   },
   {
     "id": "sz304",
-    "word": "divisio",
-    "masked": "divi_io",
+    "word": "divisió",
+    "masked": "divi_ió",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
   },
   {
     "id": "sz305",
-    "word": "evasio",
-    "masked": "eva_io",
+    "word": "evasió",
+    "masked": "eva_ió",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
   },
   {
     "id": "sz306",
-    "word": "lesio",
-    "masked": "le_io",
+    "word": "lesió",
+    "masked": "le_ió",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
   },
   {
     "id": "sz307",
-    "word": "ocasio",
-    "masked": "oca_io",
+    "word": "ocasió",
+    "masked": "oca_ió",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
   },
   {
     "id": "sz308",
-    "word": "televisio",
-    "masked": "televi_io",
+    "word": "televisió",
+    "masked": "televi_ió",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
@@ -2548,8 +2548,8 @@
   },
   {
     "id": "sz319",
-    "word": "situacio",
-    "masked": "_ituacio",
+    "word": "situació",
+    "masked": "_ituació",
     "answer": "s",
     "ruleId": "s-sonora",
     "difficulty": 2
@@ -2612,8 +2612,8 @@
   },
   {
     "id": "sz327",
-    "word": "circulacio",
-    "masked": "_irculacio",
+    "word": "circulació",
+    "masked": "_irculació",
     "answer": "c",
     "ruleId": "c-e-i",
     "difficulty": 2

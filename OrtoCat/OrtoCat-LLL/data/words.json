@@ -1251,304 +1251,232 @@
   },
   {
     "id": "ll157",
-    "word": "call·ligrafia",
-    "masked": "cal_igrafia",
+    "word": "cal·ligrafia",
+    "masked": "ca_igrafia",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll158",
-    "word": "call·lígraf",
-    "masked": "cal_ígraf",
+    "word": "cal·lígraf",
+    "masked": "ca_ígraf",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll159",
-    "word": "cell·lula",
-    "masked": "cel_ula",
+    "word": "cèl·lula",
+    "masked": "cè_ula",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll160",
-    "word": "cell·lular",
-    "masked": "cel_ular",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll161",
-    "word": "coll·locar",
-    "masked": "col_ocar",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll162",
-    "word": "coll·loqui",
-    "masked": "col_oqui",
+    "word": "cel·lular",
+    "masked": "ce_ular",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll163",
-    "word": "coll·lecta",
-    "masked": "col_ecta",
+    "word": "col·lecta",
+    "masked": "co_ecta",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll164",
-    "word": "coll·leccionista",
-    "masked": "col_eccionista",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll165",
-    "word": "excell·lència",
-    "masked": "excel_ència",
+    "word": "col·leccionista",
+    "masked": "co_eccionista",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll166",
-    "word": "excell·lir",
-    "masked": "excel_ir",
+    "word": "excel·lir",
+    "masked": "exce_ir",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll167",
-    "word": "ill·lustre",
-    "masked": "il_ustre",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll168",
-    "word": "ill·lustrar",
-    "masked": "il_ustrar",
+    "word": "il·lustre",
+    "masked": "i_ustre",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll169",
-    "word": "install·lació",
-    "masked": "instal_ació",
+    "word": "instal·lació",
+    "masked": "insta_ació",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll170",
-    "word": "parcell·la",
-    "masked": "parcel_a",
+    "word": "parcel·la",
+    "masked": "parce_a",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll171",
-    "word": "parcell·lar",
-    "masked": "parcel_ar",
+    "word": "parcel·lar",
+    "masked": "parce_ar",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll172",
-    "word": "destill·llador",
-    "masked": "destil_lador",
+    "word": "destil·lador",
+    "masked": "desti_ador",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll173",
-    "word": "soll·licitud",
-    "masked": "sol_icitud",
+    "word": "sol·licitud",
+    "masked": "so_icitud",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll174",
-    "word": "soll·licitar",
-    "masked": "sol_icitar",
+    "word": "sol·licitar",
+    "masked": "so_icitar",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll175",
-    "word": "tranquill·litat",
-    "masked": "tranquil_itat",
+    "word": "tranquil·litat",
+    "masked": "tranqui_itat",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll176",
-    "word": "tranquill·litzar",
-    "masked": "tranquil_itzar",
+    "word": "tranquil·litzar",
+    "masked": "tranqui_itzar",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll177",
-    "word": "vacill·lar",
-    "masked": "vacil_ar",
+    "word": "vacil·lar",
+    "masked": "vaci_ar",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll178",
-    "word": "destill·llació",
-    "masked": "destil_lació",
+    "word": "destil·lació",
+    "masked": "desti_ació",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll179",
-    "word": "metall·llúrgia",
-    "masked": "metal_lúrgia",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll180",
-    "word": "cristall·llí",
-    "masked": "cristal_lí",
+    "word": "metal·lúrgia",
+    "masked": "meta_úrgia",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll181",
-    "word": "protocoll·lari",
-    "masked": "protocol_ari",
+    "word": "protocol·lari",
+    "masked": "protoco_ari",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll182",
-    "word": "ell·lipse",
-    "masked": "el_ipse",
+    "word": "el·lipse",
+    "masked": "e_ipse",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll183",
-    "word": "fall·lera",
-    "masked": "fal_era",
+    "word": "fal·lera",
+    "masked": "fa_era",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll184",
-    "word": "idill·li",
-    "masked": "idil_i",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll185",
-    "word": "moll·lusc",
-    "masked": "mol_usc",
-    "answer": "l·l",
-    "ruleId": "l-geminada",
-    "difficulty": 3
-  },
-  {
-    "id": "ll186",
-    "word": "till·la",
-    "masked": "til_a",
+    "word": "idil·li",
+    "masked": "idi_i",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll187",
-    "word": "caravell·la",
-    "masked": "caravel_a",
+    "word": "caravel·la",
+    "masked": "carave_a",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll188",
-    "word": "medull·la",
-    "masked": "medul_a",
+    "word": "medul·la",
+    "masked": "medu_a",
     "answer": "l·l",
     "ruleId": "l-geminada",
     "difficulty": 3
   },
   {
     "id": "ll189",
-    "word": "all·legoria",
-    "masked": "al_egoria",
-    "answer": "l·l",
-    "ruleId": "l-geminada-prefixos",
-    "difficulty": 3
-  },
-  {
-    "id": "ll190",
-    "word": "all·legar",
-    "masked": "al_egar",
+    "word": "al·legoria",
+    "masked": "a_egoria",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   },
   {
     "id": "ll191",
-    "word": "all·leluia",
-    "masked": "al_eluia",
+    "word": "al·leluia",
+    "masked": "a_eluia",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   },
   {
     "id": "ll192",
-    "word": "all·llèrgic",
-    "masked": "al_lèrgic",
-    "answer": "l·l",
-    "ruleId": "l-geminada-prefixos",
-    "difficulty": 3
-  },
-  {
-    "id": "ll193",
-    "word": "all·lliteració",
-    "masked": "al_literació",
+    "word": "al·lèrgic",
+    "masked": "a_èrgic",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3
   },
   {
     "id": "ll194",
-    "word": "coll·lateral",
-    "masked": "col_ateral",
+    "word": "col·lateral",
+    "masked": "co_ateral",
     "answer": "l·l",
     "ruleId": "l-geminada-prefixos",
     "difficulty": 3

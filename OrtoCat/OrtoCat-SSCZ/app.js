@@ -329,8 +329,10 @@ function questionTemplate(item, mode, isSentence) {
   const promptClass = isSentence ? "word-prompt sentence-prompt" : "word-prompt";
   return `
     <article class="question-card" data-mode="${mode}" data-id="${item.id}">
-      <div class="${promptClass}">${renderMasked(prompt, item, isSentence)}</div>
-      ${!isSentence && item.hint ? `<div class="word-hint">${escapeHtml(item.hint)}</div>` : ""}
+      <div class="${promptClass}">
+        ${renderMasked(prompt, item, isSentence)}
+        ${!isSentence && item.hint ? `<span class="word-hint">${formatHint(item.hint)}</span>` : ""}
+      </div>
       <div class="mini-actions" aria-label="Tria s, ss, c, ç, z o sc">
         <button class="pick-button pick-s" type="button" data-pick="s">S</button>
         <button class="pick-button pick-ss" type="button" data-pick="ss">SS</button>
@@ -342,6 +344,11 @@ function questionTemplate(item, mode, isSentence) {
       <div class="feedback" aria-live="polite"></div>
     </article>
   `;
+}
+
+function formatHint(hint) {
+  const text = String(hint || "").trim().replace(/^\((.*)\)$/, "$1");
+  return `(${escapeHtml(text)})`;
 }
 
 function promptForItem(item, isSentence = false) {

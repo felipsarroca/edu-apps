@@ -1837,8 +1837,8 @@
   },
   {
     "id": "bv228",
-    "word": "adversaria",
-    "masked": "ad_ersaria",
+    "word": "adversària",
+    "masked": "ad_ersària",
     "answer": "v",
     "ruleId": "v-adv",
     "difficulty": 2
@@ -2212,14 +2212,6 @@
     "difficulty": 2
   },
   {
-    "id": "bv275",
-    "word": "buit",
-    "masked": "_uit",
-    "answer": "b",
-    "ruleId": "b-bu-bur-bus",
-    "difficulty": 1
-  },
-  {
     "id": "bv276",
     "word": "bumerang",
     "masked": "_umerang",
@@ -2404,19 +2396,11 @@
     "difficulty": 1
   },
   {
-    "id": "bv299",
-    "word": "parlaves",
-    "masked": "parla_es",
-    "answer": "v",
-    "ruleId": "v-imperfet-ava",
+    "id": "bv301",
+    "word": "buit",
+    "masked": "_uit",
+    "answer": "b",
+    "ruleId": "b-bu-bur-bus",
     "difficulty": 1
-  },
-  {
-    "id": "bv300",
-    "word": "miràvem",
-    "masked": "mirà_em",
-    "answer": "v",
-    "ruleId": "v-imperfet-ava",
-    "difficulty": 2
   }
 ]

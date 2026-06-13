@@ -554,11 +554,11 @@ select {
 }
 
 .word-hint {
-  margin-top: -2px;
   color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 750;
-  line-height: 1.25;
+  font-size: 0.72em;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .sentence-prompt {

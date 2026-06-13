@@ -17,6 +17,7 @@ for (const moduleName of modules) {
   const contrasts = JSON.parse(fs.readFileSync(path.join(dataDir, "homophones.json"), "utf8"));
   const ruleIds = new Set(rules.map((rule) => rule.id));
   const ids = new Set();
+  const normalizedWords = new Map();
 
   for (const item of words.concat(contrasts)) {
     if (!item.id || ids.has(item.id)) report(moduleName, `identificador duplicat o buit: ${item.id}`);
@@ -25,6 +26,12 @@ for (const moduleName of modules) {
   }
 
   for (const word of words) {
+    const normalizedWord = `${word.ruleId}:${word.word.toLocaleLowerCase("ca")}`;
+    if (normalizedWords.has(normalizedWord)) {
+      report(moduleName, `${word.id} duplica la paraula de ${normalizedWords.get(normalizedWord)} dins la mateixa norma: ${word.word}`);
+    } else {
+      normalizedWords.set(normalizedWord, word.id);
+    }
     if (!ruleIds.has(word.ruleId)) report(moduleName, `${word.id} referencia una norma inexistent`);
     if (![1, 2, 3].includes(word.difficulty)) report(moduleName, `${word.id} té dificultat invàlida`);
     if ((word.masked.match(/_/g) || []).length !== 1) report(moduleName, `${word.id} ha de tenir un únic buit`);
