@@ -134,7 +134,8 @@
     "masked": "ca_a",
     "answer": "s",
     "ruleId": "s-sonora",
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "(llar)"
   },
   {
     "id": "sz018",
@@ -1491,8 +1492,8 @@
   },
   {
     "id": "sz187",
-    "word": "pastis",
-    "masked": "pa_tis",
+    "word": "pastís",
+    "masked": "pa_tís",
     "answer": "s",
     "ruleId": "s-inicial-final",
     "difficulty": 1
