@@ -524,6 +524,15 @@ function highlightRuleText(text, ruleId, letter = "") {
   let html = meta.text;
   const exampleHighlights = protectedHtmlHighlights(ruleExampleHighlights(ruleId));
   html = protectExactHtmlMatches(html, exampleHighlights);
+  if (ruleId === "b-radical-ava") {
+    html = html
+      .replace(/arrib-/gi, (match) => `<strong class="norm-chip">${match}</strong>`)
+      .replace(
+        /la v de l'imperfet/gi,
+        () => `la <strong class="rule-letter rule-letter-v">v</strong> de l'imperfet`
+      )
+      .replace(/-ava/gi, (match) => `<strong class="norm-chip">${match}</strong>`);
+  }
   if (letter && !letter.includes("/")) {
     const escapedLetter = escapeHtml(letter);
     html = html.replace(
