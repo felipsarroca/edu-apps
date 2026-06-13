@@ -603,17 +603,22 @@ select {
   vertical-align: -0.22em;
 }
 
-.blank.is-l,
-.blank.is-ll {
-  border-color: var(--blue);
+.blank.is-l {
+  border-color: #146eb4;
   background: #eaf2ff;
-  color: var(--blue);
+  color: #146eb4;
+}
+
+.blank.is-ll {
+  border-color: #207245;
+  background: #e5f4eb;
+  color: #207245;
 }
 
 .blank.is-l_geminada {
-  border-color: var(--accent);
-  background: #fff2f3;
-  color: var(--accent);
+  border-color: #9f3f7c;
+  background: #f7e2f0;
+  color: #9f3f7c;
 }
 
 .blank.is-z,
@@ -646,15 +651,19 @@ select {
   min-width: 38px;
 }
 
-.pick-l,
+.pick-l {
+  background: #146eb4;
+  border-color: #146eb4;
+}
+
 .pick-ll {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: #207245;
+  border-color: #207245;
 }
 
 .pick-l_geminada {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: #9f3f7c;
+  border-color: #9f3f7c;
 }
 
 .pick-z,

@@ -528,6 +528,15 @@ function highlightRuleText(text, ruleId, letter = "") {
   let html = meta.text;
   const exampleHighlights = protectedHtmlHighlights(ruleExampleHighlights(ruleId));
   html = protectExactHtmlMatches(html, exampleHighlights);
+  if (ruleId === "ig-final") {
+    html = html
+      .replace(
+        /que tenen g, j, tg o tj/gi,
+        () => `que tenen ${formatMetaLetter("g")}, ${formatMetaLetter("j")}, ${formatMetaLetter("tg")} o ${formatMetaLetter("tj")}`
+      )
+      .replace(/passejar/gi, (word) => word.replace(/j/i, (match) => `<strong>${match}</strong>`))
+      .replace(/desitjar/gi, (word) => word.replace(/tj/i, (match) => `<strong>${match}</strong>`));
+  }
   const replacements = {
     "x-inicial": ["x", "xa", "xe", "xi", "xo", "xu"],
     "ix": ["ix", "-aix", "-eix", "-oix"],
