@@ -533,6 +533,7 @@ function highlightRuleText(text, ruleId, letter = "") {
     "j-a-o-u": ["j", "ja", "jo", "ju"],
     "tg-e-i": ["tg", "tge", "tgi"],
     "tj-a-o-u": ["tj", "tja", "tjo", "tju"],
+    "j-excepcions-e-i": ["-jecc-", "-ject-"],
   };
   const parts = replacements[ruleId] || [];
   if (!parts.length && letter && !letter.includes("/")) {
