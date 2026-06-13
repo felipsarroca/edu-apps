@@ -59,7 +59,7 @@
     "id": "c-e-i",
     "letter": "c",
     "title": "C davant e i i",
-    "summary": "Davant e o i, el so d'essa sorda es pot escriure c: cel, cirera, ciutat.",
+    "summary": "Davant «e» o «i», el so d'essa sorda es pot escriure c: cel, cirera, ciutat.",
     "examples": [
       "cel",
       "cendra",
@@ -76,7 +76,7 @@
     "id": "c-trencada",
     "letter": "ç",
     "title": "Ç davant a, o, u i a final de mot",
-    "summary": "La ç representa el so d'essa sorda davant a, o, u i també en alguns finals de paraula: plaça, cançó, dolç.",
+    "summary": "La ç representa el so d'essa sorda davant «a», «o», «u» i també en alguns finals de paraula: plaça, cançó, dolç.",
     "examples": [
       "plaça",
       "braç",
@@ -110,7 +110,7 @@
     "id": "sc-cultismes",
     "letter": "sc",
     "title": "SC davant e i i",
-    "summary": "En alguns cultismes, el so d'essa sorda davant e o i s'escriu sc: escena, piscina, ascensor.",
+    "summary": "En alguns cultismes, el so d'essa sorda davant «e» o «i» s'escriu sc: escena, piscina, ascensor.",
     "examples": [
       "escena",
       "piscina",

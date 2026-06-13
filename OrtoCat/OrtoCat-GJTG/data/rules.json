@@ -3,7 +3,7 @@
     "id": "g-e-i",
     "letter": "g",
     "title": "G davant e i i",
-    "summary": "Generalment, davant e o i, el so palatoalveolar sonor s'escriu amb g: gent, gel, girar.",
+    "summary": "Generalment, davant «e» o «i», el so palatoalveolar sonor s'escriu amb g: gent, gel, girar.",
     "examples": [
       "gent",
       "gel",
@@ -30,7 +30,7 @@
     "id": "j-a-o-u",
     "letter": "j",
     "title": "J davant a, o i u",
-    "summary": "Generalment, davant a, o i u, el so palatoalveolar sonor s'escriu amb j: jaqueta, joc, juliol.",
+    "summary": "Generalment, davant «a», «o» i «u», el so palatoalveolar sonor s'escriu amb j: jaqueta, joc, juliol.",
     "examples": [
       "jaqueta",
       "jardí",
@@ -47,7 +47,7 @@
     "id": "tg-e-i",
     "letter": "tg",
     "title": "TG davant e i i",
-    "summary": "Generalment, davant e o i, el so africat palatoalveolar sonor s'escriu amb tg: metge, formatge, imatge.",
+    "summary": "Generalment, davant «e» o «i», el so africat palatoalveolar sonor s'escriu amb tg: metge, formatge, imatge.",
     "examples": [
       "metge",
       "fetge",
@@ -64,7 +64,7 @@
     "id": "tj-a-o-u",
     "letter": "tj",
     "title": "TJ davant a, o i u",
-    "summary": "Generalment, davant a, o i u, el so africat palatoalveolar sonor s'escriu amb tj: platja, mitja, desitjar.",
+    "summary": "Generalment, davant «a», «o» i «u», el so africat palatoalveolar sonor s'escriu amb tj: platja, mitja, desitjar.",
     "examples": [
       "platja",
       "mitja",
@@ -81,7 +81,7 @@
     "id": "j-excepcions-e-i",
     "letter": "j",
     "title": "J davant e i i en alguns mots",
-    "summary": "S'escriu j davant e o i en el verb jeure, en els grups -jecc- i -ject-, en cultismes i noms propis com jerarquia, jeroglífic, majestat, Jesús i Jerusalem, i en manlleus com jersei.",
+    "summary": "S'escriu j davant «e» o «i» en el verb «jeure», en els grups -jecc- i -ject-, en cultismes i noms propis com jerarquia, jeroglífic, majestat, Jesús i Jerusalem, i en manlleus com jersei.",
     "examples": [
       "jersei",
       "jerarquia",

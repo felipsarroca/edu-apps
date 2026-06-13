@@ -611,9 +611,18 @@ function highlightWordByRule(word, ruleId) {
 function ruleExampleHighlights(ruleId) {
   const rule = ruleById(ruleId);
   if (!rule) return [];
+  const patterns = {
+    "g-e-i": /(ge|gi)/gi,
+    "j-a-o-u": /(ja|jo|ju)/gi,
+    "tg-e-i": /(tge|tgi)/gi,
+    "tj-a-o-u": /(tja|tjo|tju)/gi,
+    "j-excepcions-e-i": /(je|ji)/gi,
+  };
   return rule.examples.map((word) => ({
     text: escapeHtml(word),
-    html: highlightWordByRule(word, ruleId),
+    html: patterns[ruleId]
+      ? escapeHtml(word).replace(patterns[ruleId], (match) => `<strong class="norm-chip">${match}</strong>`)
+      : highlightWordByRule(word, ruleId),
   }));
 }
 

@@ -618,9 +618,15 @@ function highlightWordByRule(word, ruleId) {
 function ruleExampleHighlights(ruleId) {
   const rule = ruleById(ruleId);
   if (!rule) return [];
+  const patterns = {
+    "c-e-i": /(ce|ci)/gi,
+    "sc-cultismes": /(sce|sci)/gi,
+  };
   return rule.examples.map((word) => ({
     text: escapeHtml(word),
-    html: highlightWordByRule(word, ruleId),
+    html: patterns[ruleId]
+      ? escapeHtml(word).replace(patterns[ruleId], (match) => `<strong class="norm-chip">${match}</strong>`)
+      : highlightWordByRule(word, ruleId),
   }));
 }
 

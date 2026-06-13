@@ -20,7 +20,7 @@
     "id": "ix",
     "letter": "ix",
     "title": "El dígraf ix",
-    "summary": "Darrere de les vocals a, e, o i u, el so de xeix sovint s'escriu ix: caixa, peix, baixar, créixer.",
+    "summary": "Darrere de les vocals «a», «e», «o» i «u», el so de xeix sovint s'escriu ix: caixa, peix, baixar, créixer.",
     "examples": [
       "caixa",
       "peix",
@@ -37,7 +37,7 @@
     "id": "x-cs-gz",
     "letter": "x",
     "title": "X amb so de cs o gz",
-    "summary": "La x també pot representar sons com cs o gz en paraules com taxi, examen o exercici.",
+    "summary": "La x també pot representar sons com «cs» o «gz» en paraules com taxi, examen o exercici.",
     "examples": [
       "taxi",
       "examen",
