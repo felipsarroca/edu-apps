@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'GraphMath/', 
             category: 'Matemàtiques', 
             description: "Eina per a representar gràficament funcions matemàtiques.",
-            icon: 'GraphMath/photoapp.PNG'
+            icon: 'GraphMath/favicon.svg'
         },
         { 
             name: "CombinApp", 
