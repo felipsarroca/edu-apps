@@ -3,39 +3,45 @@ document.addEventListener('DOMContentLoaded', () => {
         // Història
         { 
             name: "La Conquesta d'Amèrica", 
-            path: 'ConquestaAmerica/', 
+            path: 'https://ja.cat/conqueridors', 
             category: 'Història', 
-            description: "Un recorregut interactiu per les expedicions dels conqueridors." 
+            description: "Un recorregut interactiu per les expedicions dels conqueridors.",
+            icon: 'ConquestaAmerica/favicon.svg'
         },
         { 
             name: "Els Viatges de Colom", 
-            path: 'ViatgesColom/', 
+            path: 'https://ja.cat/viatgescolom', 
             category: 'Història', 
-            description: "Explora els quatre viatges de Cristòfor Colom al Nou Món." 
+            description: "Explora els quatre viatges de Cristòfor Colom al Nou Món.",
+            icon: 'ViatgesColom/favicon.svg'
         },
         { 
             name: "El Viatge d'Ulisses", 
-            path: 'Ulisses/', 
+            path: 'https://ja.cat/ulisses', 
             category: 'Història', 
-            description: "Una adaptació senzilla de l'Odissea d'Homer." 
+            description: "Una adaptació senzilla de l'Odissea d'Homer.",
+            icon: 'Ulisses/favicon.svg'
         },
         { 
             name: "La Volta al Món", 
-            path: 'voltaalmon/', 
+            path: 'https://ja.cat/magallanes', 
             category: 'Història', 
-            description: "Segueix la primera circumnavegació de la història." 
+            description: "Segueix la primera circumnavegació de la història.",
+            icon: 'voltaalmon/favicon.svg'
         },
         { 
             name: "El Modernisme", 
-            path: '../web/Modernisme/', 
+            path: 'https://ja.cat/elmodernisme', 
             category: 'Història', 
-            description: "Introducció al Modernisme català amb característiques i exemples." 
+            description: "Introducció al Modernisme català amb característiques i exemples.",
+            icon: '../web/Modernisme/favicon.svg'
         },
         { 
             name: "Quiz dels museus", 
-            path: 'Quiz-Museus/', 
+            path: 'https://ja.cat/PradoSofia', 
             category: 'Història', 
-            description: "Quiz interactiu sobre el Museu del Prado i el Reina Sofía." 
+            description: "Quiz interactiu sobre el Museu del Prado i el Reina Sofía.",
+            icon: 'Quiz-Museus/favicon.svg'
         },
 
         // Química
@@ -53,9 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         { 
             name: "Quiz de la Taula Periòdica", 
-            path: 'QuizTaulaPeriodica/', 
+            path: 'https://ja.cat/reptetaula', 
             category: 'Química', 
-            description: "Posa a prova els teus coneixements sobre els elements." 
+            description: "Posa a prova els teus coneixements sobre els elements.",
+            icon: 'QuizTaulaPeriodica/favicon.svg'
         },
         { 
             name: "Taula Periòdica Dinàmica", 
@@ -65,9 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         { 
             name: "Igualació d'Equacions Químiques", 
-            path: 'IgualacioQuimica/', 
+            path: 'https://ja.cat/igualacio', 
             category: 'Química', 
-            description: "Una eina per igualar equacions químiques pas a pas." 
+            description: "Una eina per igualar equacions químiques pas a pas.",
+            icon: 'IgualacioQuimica/favicon.svg'
         },
 
         // Matemàtiques
@@ -75,18 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "GraphMath", 
             path: 'GraphMath/', 
             category: 'Matemàtiques', 
-            description: "Eina per a representar gràficament funcions matemàtiques." 
+            description: "Eina per a representar gràficament funcions matemàtiques.",
+            icon: 'GraphMath/photoapp.PNG'
         },
         { 
             name: "CombinApp", 
-            path: 'CombinApp/', 
+            path: 'https://ja.cat/combinapp', 
             category: 'Matemàtiques', 
             description: "Calculadora guiada de permutacions, variacions i combinacions amb problemes resolts pas a pas.", 
             icon: 'CombinApp/favicon.svg'
         },
         { 
             name: "Calculadora de MCD i mcm", 
-            path: 'MCD-mcm/', 
+            path: 'https://ja.cat/mcd', 
             category: 'Matemàtiques', 
             description: "Calcula el MCD i mcm de forma guiada, amb exercicis i problemes.",
             icon: 'MCD-mcm/assets/logo.svg'
@@ -102,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             name: "KineGraph",
-            path: 'KineGraph/',
+            path: 'https://ja.cat/kinegraph',
             category: 'Física',
             description: "Simulador interactiu per graficar funcions de cinemàtica. També té un repositori de problemes-mostra.",
             icon: 'KineGraph/favicon.svg'
@@ -122,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Llengües catalana i castellana
         {
             name: "Ara és l'hora",
-            path: 'LesHores/',
+            path: 'https://ja.cat/araeslhora',
             category: 'Llengües catalana i castellana',
             description: "Aprèn a llegir un rellotge analògic i a expressar l'hora correctament en català de manera gamificada",
             icon: 'LesHores/favicon.svg'
@@ -134,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Aplicació instal·lable per treballar l'ortografia castellana.",
             icon: 'OrtoCast/OrtoCast-BV/favicon.svg'
         },
-    {
+        {
         name: "OrtoCat",
         path: 'https://ja.cat/ortocat',
         category: 'Llengües catalana i castellana',
