@@ -1,0 +1,1121 @@
+[
+  {
+    "id": "q01",
+    "category": "ECLIPSI",
+    "picture": "🌞",
+    "question": "QUI POT TAPAR EL SOL?",
+    "options": [
+      { "icon": "☁️", "label": "UN NÚVOL" },
+      { "icon": "🌙", "label": "LA LLUNA" },
+      { "icon": "🌍", "label": "LA TERRA" }
+    ],
+    "correct": 1,
+    "explanation": "LA LLUNA PASSA DAVANT DEL SOL."
+  },
+  {
+    "id": "q02",
+    "category": "SEGURETAT",
+    "picture": "🕶️",
+    "question": "QUÈ ENS POSEM PER MIRAR EL SOL?",
+    "options": [
+      { "icon": "🕶️", "label": "ULLERES D’ECLIPSI" },
+      { "icon": "🧢", "label": "UNA GORRA" },
+      { "icon": "🥽", "label": "ULLERES DE PISCINA" }
+    ],
+    "correct": 0,
+    "explanation": "NOMÉS SERVEIXEN LES ULLERES D’ECLIPSI SEGURES."
+  },
+  {
+    "id": "q03",
+    "category": "SEGURETAT",
+    "picture": "👨‍👩‍👧",
+    "question": "AMB QUI MIREM L’ECLIPSI?",
+    "options": [
+      { "icon": "🏃", "label": "SENSE CAP PERSONA ADULTA" },
+      { "icon": "🧸", "label": "AMB UN NINO" },
+      { "icon": "🧑", "label": "AMB UNA PERSONA ADULTA" }
+    ],
+    "correct": 2,
+    "explanation": "UNA PERSONA ADULTA ENS AJUDA A MIRAR AMB SEGURETAT."
+  },
+  {
+    "id": "q04",
+    "category": "SEGURETAT",
+    "picture": "😎",
+    "question": "SERVEIXEN LES ULLERES DE SOL NORMALS?",
+    "options": [
+      { "icon": "✅", "label": "SÍ, SEMPRE" },
+      { "icon": "❌", "label": "NO" },
+      { "icon": "🌙", "label": "NOMÉS DE NIT" }
+    ],
+    "correct": 1,
+    "explanation": "LES ULLERES DE SOL NORMALS NO PROTEGEIXEN."
+  },
+  {
+    "id": "q05",
+    "category": "SEGURETAT",
+    "picture": "💥",
+    "question": "SI LES ULLERES ESTAN TRENCADES…",
+    "options": [
+      { "icon": "🗑️", "label": "NO LES FEM SERVIR" },
+      { "icon": "👀", "label": "MIREM IGUALMENT" },
+      { "icon": "✂️", "label": "LES RETALLEM" }
+    ],
+    "correct": 0,
+    "explanation": "UNES ULLERES TRENCADES NO SÓN SEGURES."
+  },
+  {
+    "id": "q06",
+    "category": "SEGURETAT",
+    "picture": "🌗",
+    "question": "QUAN EL SOL ENCARA ES VEU UNA MICA…",
+    "options": [
+      { "icon": "🙈", "label": "TANQUEM UN ULL" },
+      { "icon": "🕶️", "label": "ULLERES POSADES" },
+      { "icon": "🔍", "label": "FEM SERVIR UNA LUPA" }
+    ],
+    "correct": 1,
+    "explanation": "SI ES VEU SOL, PORTEM LES ULLERES."
+  },
+  {
+    "id": "q07",
+    "category": "TOTALITAT",
+    "picture": "🌑",
+    "question": "QUAN PODEM TREURE LES ULLERES?",
+    "options": [
+      { "icon": "☀️", "label": "QUAN EL SOL BRILLA" },
+      { "icon": "⏰", "label": "A QUALSEVOL HORA" },
+      { "icon": "🌑", "label": "QUAN EL SOL ESTÀ TOT TAPAT" }
+    ],
+    "correct": 2,
+    "explanation": "NOMÉS A LA TOTALITAT, QUAN EL SOL ÉS TOT TAPAT."
+  },
+  {
+    "id": "q08",
+    "category": "SEGURETAT",
+    "picture": "🌅",
+    "question": "QUAN TORNA UN PUNT DE SOL…",
+    "options": [
+      { "icon": "🕶️", "label": "POSEM LES ULLERES" },
+      { "icon": "👏", "label": "APLAUDIM MIRANT" },
+      { "icon": "🔦", "label": "ENCENEM UN LLUM" }
+    ],
+    "correct": 0,
+    "explanation": "AL PRIMER PUNT DE SOL, ULLERES POSADES."
+  },
+  {
+    "id": "q09",
+    "category": "EXPERIMENT",
+    "picture": "🥣",
+    "question": "QUÈ FEM AMB EL COLADOR?",
+    "options": [
+      { "icon": "👀", "label": "MIREM EL SOL PEL FORAT" },
+      { "icon": "📄", "label": "PROJECTEM LA LLUM EN UN PAPER" },
+      { "icon": "⚽", "label": "HI JUGUEM A PILOTA" }
+    ],
+    "correct": 1,
+    "explanation": "PROJECTEM LA LLUM. MAI MIREM EL SOL PEL COLADOR."
+  },
+  {
+    "id": "q10",
+    "category": "SEGURETAT",
+    "picture": "🔭",
+    "question": "PER MIRAR AMB TELESCOPI CAL…",
+    "options": [
+      { "icon": "🧢", "label": "UNA GORRA" },
+      { "icon": "🧻", "label": "UN PAPER" },
+      { "icon": "🟡", "label": "UN FILTRE DAVANT" }
+    ],
+    "correct": 2,
+    "explanation": "EL FILTRE SOLAR VA DAVANT DEL TELESCOPI."
+  },
+  {
+    "id": "q11",
+    "category": "LLOC",
+    "picture": "🌇",
+    "question": "ON VEUREM EL SOL?",
+    "options": [
+      { "icon": "⬆️", "label": "MOLT AMUNT" },
+      { "icon": "🌅", "label": "MOLT BAIX A L’OEST" },
+      { "icon": "⬇️", "label": "SOTA TERRA" }
+    ],
+    "correct": 1,
+    "explanation": "EL SOL SERÀ MOLT BAIX A L’OEST."
+  },
+  {
+    "id": "q12",
+    "category": "LLOC",
+    "picture": "🏞️",
+    "question": "QUÈ NECESSITEM DAVANT DEL SOL?",
+    "options": [
+      { "icon": "🌳", "label": "UN ARBRE GRAN" },
+      { "icon": "🏠", "label": "UNA CASA ALTA" },
+      { "icon": "🌄", "label": "UN HORITZÓ LLIURE" }
+    ],
+    "correct": 2,
+    "explanation": "CAP ARBRE NI MUNTANYA HA DE TAPAR EL SOL."
+  },
+  {
+    "id": "q13",
+    "category": "TOTALITAT",
+    "picture": "🌃",
+    "question": "A LA TOTALITAT, EL CEL ES FA…",
+    "options": [
+      { "icon": "🌃", "label": "MÉS FOSC" },
+      { "icon": "🟢", "label": "TOT VERD" },
+      { "icon": "🌞", "label": "MÉS CLAR" }
+    ],
+    "correct": 0,
+    "explanation": "DURANT UNS SEGONS, EL DIA SEMBLA NIT."
+  },
+  {
+    "id": "q14",
+    "category": "TOTALITAT",
+    "picture": "☀️",
+    "question": "QUÈ BRILLA AL VOLTANT DEL SOL TAPAT?",
+    "options": [
+      { "icon": "🌈", "label": "UN ARC DE SANT MARTÍ" },
+      { "icon": "⭕", "label": "LA CORONA" },
+      { "icon": "☁️", "label": "UN NÚVOL" }
+    ],
+    "correct": 1,
+    "explanation": "LA CORONA ÉS LA LLUM BLANCA DEL VOLTANT."
+  },
+  {
+    "id": "q15",
+    "category": "TOTALITAT",
+    "picture": "⏱️",
+    "question": "QUANT DURA LA TOTALITAT?",
+    "options": [
+      { "icon": "⏱️", "label": "77 SEGONS" },
+      { "icon": "🕐", "label": "UNA HORA" },
+      { "icon": "📅", "label": "TOT EL DIA" }
+    ],
+    "correct": 0,
+    "explanation": "DURA 77 SEGONS: POC MÉS D’UN MINUT."
+  },
+  {
+    "id": "q16",
+    "category": "CIÈNCIA",
+    "picture": "🌡️",
+    "question": "QUÈ POT FER LA TEMPERATURA?",
+    "options": [
+      { "icon": "⬆️", "label": "PUJAR MOLT" },
+      { "icon": "⬇️", "label": "BAIXAR" },
+      { "icon": "🎨", "label": "CANVIAR DE COLOR" }
+    ],
+    "correct": 1,
+    "explanation": "QUAN HI HA MENYS SOL, POT FER MÉS FRESCA."
+  },
+  {
+    "id": "q17",
+    "category": "CIÈNCIA",
+    "picture": "🌡️",
+    "question": "ON POSEM EL TERMÒMETRE?",
+    "options": [
+      { "icon": "🚗", "label": "DINS DEL COTXE" },
+      { "icon": "☀️", "label": "AL SOL" },
+      { "icon": "🌳", "label": "A L’OMBRA" }
+    ],
+    "correct": 2,
+    "explanation": "EL TERMÒMETRE VA A L’OMBRA I LLUNY DEL COTXE."
+  },
+  {
+    "id": "q18",
+    "category": "CIÈNCIA",
+    "picture": "🐦",
+    "question": "SI CANVIEN ELS SONS DELS ANIMALS…",
+    "options": [
+      { "icon": "👂", "label": "ESCOLTEM" },
+      { "icon": "📣", "label": "CRIDEM" },
+      { "icon": "🏃", "label": "ELS PERSEGUIM" }
+    ],
+    "correct": 0,
+    "explanation": "ESCOLTEM EN SILENCI I NO MOLESTEM ELS ANIMALS."
+  },
+  {
+    "id": "q19",
+    "category": "TOTALITAT",
+    "picture": "👀",
+    "question": "QUÈ FEM DURANT ELS 77 SEGONS?",
+    "options": [
+      { "icon": "✏️", "label": "ESCRIVIM MOLT" },
+      { "icon": "👀", "label": "MIREM I GAUDIM" },
+      { "icon": "📱", "label": "JUGUEM AL MÒBIL" }
+    ],
+    "correct": 1,
+    "explanation": "DURANT LA TOTALITAT, NOMÉS MIREM."
+  },
+  {
+    "id": "q20",
+    "category": "RECORD",
+    "picture": "🧠",
+    "question": "QUAN EXPLIQUEM EL QUE HEM VIST?",
+    "options": [
+      { "icon": "🌑", "label": "DURANT LA TOTALITAT" },
+      { "icon": "🏠", "label": "ABANS DE SORTIR" },
+      { "icon": "✅", "label": "QUAN JA HA ACABAT" }
+    ],
+    "correct": 2,
+    "explanation": "PRIMER MIREM. DESPRÉS EXPLIQUEM EL RECORD."
+  },
+  {
+    "id": "q21",
+    "category": "PERSEIDES",
+    "picture": "☄️",
+    "question": "QUÈ SÓN LES PERSEIDES?",
+    "options": [
+      { "icon": "☄️", "label": "ESTELS FUGAÇOS" },
+      { "icon": "🐟", "label": "PEIXOS DEL CEL" },
+      { "icon": "🎈", "label": "GLOBUS" }
+    ],
+    "correct": 0,
+    "explanation": "SÓN RATLLES DE LLUM MOLT RÀPIDES."
+  },
+  {
+    "id": "q22",
+    "category": "PERSEIDES",
+    "picture": "🌌",
+    "question": "COM MIREM LES PERSEIDES?",
+    "options": [
+      { "icon": "🔭", "label": "AMB TELESCOPI" },
+      { "icon": "🌌", "label": "MIRANT UNA ZONA GRAN DEL CEL" },
+      { "icon": "📱", "label": "MIRANT LA PANTALLA" }
+    ],
+    "correct": 1,
+    "explanation": "MIREM UNA ZONA GRAN. NO CAL TELESCOPI."
+  },
+  {
+    "id": "q23",
+    "category": "PERSEIDES",
+    "picture": "🔦",
+    "question": "QUINA LLUM FEM SERVIR DE NIT?",
+    "options": [
+      { "icon": "⚪", "label": "BLANCA I FORTA" },
+      { "icon": "🌈", "label": "DE MOLTS COLORS" },
+      { "icon": "🔴", "label": "VERMELLA I FLUIXA" }
+    ],
+    "correct": 2,
+    "explanation": "LA LLUM VERMELLA MOLESTA MENYS ELS ULLS."
+  },
+  {
+    "id": "q24",
+    "category": "PERSEIDES",
+    "picture": "🛏️",
+    "question": "QUÈ PODEM FER PER VEURE MOLT CEL?",
+    "options": [
+      { "icon": "🧘", "label": "ESTIRAR-NOS EN UNA ESTORA" },
+      { "icon": "🏃", "label": "CORRENT" },
+      { "icon": "🙈", "label": "AMB ELS ULLS TAPATS" }
+    ],
+    "correct": 0,
+    "explanation": "A TERRA VEIEM MÉS CEL I EL COS DESCANSA."
+  },
+  {
+    "id": "q25",
+    "category": "PERSEIDES",
+    "picture": "✈️",
+    "question": "QUÈ NO COMPTA COM A METEOR?",
+    "options": [
+      { "icon": "☄️", "label": "UNA RATLLA RÀPIDA" },
+      { "icon": "✈️", "label": "UN AVIÓ" },
+      { "icon": "🌠", "label": "UN ESTEL FUGAÇ" }
+    ],
+    "correct": 1,
+    "explanation": "UN AVIÓ VA MÉS LENT I DURA MÉS."
+  },
+  {
+    "id": "q26",
+    "category": "PERSEIDES",
+    "picture": "☄️",
+    "question": "D’ON VENEN LES PERSEIDES?",
+    "options": [
+      { "icon": "🌊", "label": "DE L’AIGUA" },
+      { "icon": "🏠", "label": "DE LES CASES" },
+      { "icon": "☄️", "label": "DE LA POLS D’UN COMETA" }
+    ],
+    "correct": 2,
+    "explanation": "SÓN GRANETS DE POLS DEL COMETA SWIFT-TUTTLE."
+  },
+  {
+    "id": "q27",
+    "category": "NATURA",
+    "picture": "🔥",
+    "question": "PODEM FER FOC AL CAMP?",
+    "options": [
+      { "icon": "🔥", "label": "SÍ, UN FOC GRAN" },
+      { "icon": "❌", "label": "NO" },
+      { "icon": "🕯️", "label": "NOMÉS UNA ESPELMA" }
+    ],
+    "correct": 1,
+    "explanation": "NO FEM CAP FOC, ESPELMA NI FOGONET."
+  },
+  {
+    "id": "q28",
+    "category": "CALOR",
+    "picture": "💧",
+    "question": "QUÈ FEM QUAN FA MOLTA CALOR?",
+    "options": [
+      { "icon": "💧", "label": "BEVEM AIGUA" },
+      { "icon": "🏃", "label": "CORREM AL SOL" },
+      { "icon": "🧥", "label": "ENS POSEM UN ABRIC GRUIXUT" }
+    ],
+    "correct": 0,
+    "explanation": "BEVEM AIGUA I BUSQUEM OMBRA."
+  },
+  {
+    "id": "q29",
+    "category": "FAMÍLIA",
+    "picture": "👨‍👩‍👧",
+    "question": "EN UN LLOC AMB MOLTA GENT…",
+    "options": [
+      { "icon": "🏃", "label": "MARXEM SENSE AVISAR" },
+      { "icon": "🙈", "label": "ENS AMAGUEM" },
+      { "icon": "🤝", "label": "ANEM AMB EL GRUP" }
+    ],
+    "correct": 2,
+    "explanation": "ANEM AMB EL GRUP I TENIM UN PUNT DE TROBADA."
+  },
+  {
+    "id": "q30",
+    "category": "TORNADA",
+    "picture": "😴",
+    "question": "SI EL CONDUCTOR TÉ SON…",
+    "options": [
+      { "icon": "🛌", "label": "DESCANSA" },
+      { "icon": "🚗", "label": "CONDUEIX MÉS DE PRESSA" },
+      { "icon": "🎵", "label": "POSA MÚSICA FORTA" }
+    ],
+    "correct": 0,
+    "explanation": "AMB SON NO ES CONDUEIX. PRIMER CAL DESCANSAR."
+  },
+  {
+    "id": "q31",
+    "category": "ECLIPSI",
+    "picture": "🌞",
+    "question": "EL SOL S’APAGA DE VERITAT?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "EL SOL CONTINUA BRILLANT. LA LLUNA EL TAPA UNA ESTONA."
+  },
+  {
+    "id": "q32",
+    "category": "ECLIPSI",
+    "picture": "🌙",
+    "question": "LA LLUNA ES POSA DAVANT DEL SOL?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "EN UN ECLIPSI, LA LLUNA PASSA DAVANT DEL SOL."
+  },
+  {
+    "id": "q33",
+    "category": "CIÈNCIA",
+    "picture": "🌍",
+    "question": "ON ARRIBA L’OMBRA DE LA LLUNA?",
+    "options": [
+      { "icon": "🌍", "label": "A LA TERRA" },
+      { "icon": "🌞", "label": "AL SOL" },
+      { "icon": "🛁", "label": "A LA BANYERA" }
+    ],
+    "correct": 0,
+    "explanation": "L’OMBRA DE LA LLUNA PASSA PER UNA PART DE LA TERRA."
+  },
+  {
+    "id": "q34",
+    "category": "CIÈNCIA",
+    "picture": "📏",
+    "question": "QUÈ ÉS MÉS GRAN DE VERITAT?",
+    "options": [
+      { "icon": "🌙", "label": "LA LLUNA" },
+      { "icon": "🌞", "label": "EL SOL" }
+    ],
+    "correct": 1,
+    "explanation": "EL SOL ÉS MOLT MÉS GRAN, PERÒ TAMBÉ ÉS MOLT MÉS LLUNY."
+  },
+  {
+    "id": "q35",
+    "category": "CIÈNCIA",
+    "picture": "🏠",
+    "question": "QUÈ ÉS MÉS A PROP DE NOSALTRES?",
+    "options": [
+      { "icon": "🌞", "label": "EL SOL" },
+      { "icon": "🌙", "label": "LA LLUNA" }
+    ],
+    "correct": 1,
+    "explanation": "LA LLUNA ÉS MOLT MÉS A PROP DE LA TERRA QUE EL SOL."
+  },
+  {
+    "id": "q36",
+    "category": "ECLIPSI",
+    "picture": "📅",
+    "question": "HI HA UN ECLIPSI CADA MES?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 1,
+    "explanation": "NO. CAL UNA ALINEACIÓ MOLT ESPECIAL."
+  },
+  {
+    "id": "q37",
+    "category": "TOTALITAT",
+    "picture": "💯",
+    "question": "PER VEURE LA TOTALITAT CAL ARRIBAR AL 100%?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "TOTALITAT VOL DIR QUE EL SOL QUEDA TAPAT DEL TOT."
+  },
+  {
+    "id": "q38",
+    "category": "TOTALITAT",
+    "picture": "👑",
+    "question": "LA CORONA ÉS AL VOLTANT DEL SOL?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "LA CORONA ÉS LA PART EXTERIOR I MOLT CALENTA DEL SOL."
+  },
+  {
+    "id": "q39",
+    "category": "TOTALITAT",
+    "picture": "💍",
+    "question": "QUÈ S’ASSEMBLA A UN ANELL BRILLANT?",
+    "options": [
+      { "icon": "💍", "label": "L’ANELL DE DIAMANT" },
+      { "icon": "🍩", "label": "UN DÒNUT" },
+      { "icon": "🛞", "label": "UNA RODA" }
+    ],
+    "correct": 0,
+    "explanation": "UN ÚLTIM RAIG DE SOL POT SEMBLAR UN DIAMANT EN UN ANELL."
+  },
+  {
+    "id": "q40",
+    "category": "TOTALITAT",
+    "picture": "⚪",
+    "question": "LES PERLES DE BAILY SÓN PERLES DE COLLARET?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "SÓN PUNTS DE LLUM DEL SOL ENTRE LES MUNTANYES DE LA LLUNA."
+  },
+  {
+    "id": "q41",
+    "category": "SENTITS",
+    "picture": "👂",
+    "question": "AMB QUÈ ESCOLTEM ELS SONS?",
+    "options": [
+      { "icon": "👂", "label": "AMB LES ORELLES" },
+      { "icon": "👃", "label": "AMB EL NAS" },
+      { "icon": "🦶", "label": "AMB ELS PEUS" }
+    ],
+    "correct": 0,
+    "explanation": "LES ORELLES ENS AJUDEN A NOTAR SI ELS SONS CANVIEN."
+  },
+  {
+    "id": "q42",
+    "category": "SENTITS",
+    "picture": "👀",
+    "question": "AMB QUÈ VEIEM QUE EL CEL S’ENFOSQUEIX?",
+    "options": [
+      { "icon": "👀", "label": "AMB ELS ULLS" },
+      { "icon": "👂", "label": "AMB LES ORELLES" }
+    ],
+    "correct": 0,
+    "explanation": "ELS ULLS NOTEN ELS CANVIS DE LLUM. SEMPRE MIREM AMB SEGURETAT."
+  },
+  {
+    "id": "q43",
+    "category": "SENTITS",
+    "picture": "🤲",
+    "question": "ON PODEM NOTAR EL VENT?",
+    "options": [
+      { "icon": "🤲", "label": "A LA PELL" },
+      { "icon": "🎒", "label": "DINS LA MOTXILLA" }
+    ],
+    "correct": 0,
+    "explanation": "LA PELL POT NOTAR SI EL VENT ÉS SUAU O FORT."
+  },
+  {
+    "id": "q44",
+    "category": "SENTITS",
+    "picture": "❄️",
+    "question": "PODEM NOTAR UNA MICA DE FRESCA?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "QUAN BAIXA LA LLUM, TAMBÉ POT BAIXAR LA TEMPERATURA."
+  },
+  {
+    "id": "q45",
+    "category": "SENTITS",
+    "picture": "🔇",
+    "question": "ELS ANIMALS PODEN QUEDAR MÉS EN SILENCI?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "ALGUNS ANIMALS PODEN CANVIAR ELS SONS O EL COMPORTAMENT."
+  },
+  {
+    "id": "q46",
+    "category": "OMBRES",
+    "picture": "👤",
+    "question": "UNA OMBRA FA SOROLL?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "LES OMBRES ES VEUEN, PERÒ NO FAN SOROLL."
+  },
+  {
+    "id": "q47",
+    "category": "OMBRES",
+    "picture": "🌿",
+    "question": "SOTA UN ARBRE PODEM VEURE MOLTES LLUNETES?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "ELS FORADETS ENTRE LES FULLES PROJECTEN PETITS SOLS PARCIALS."
+  },
+  {
+    "id": "q48",
+    "category": "OMBRES",
+    "picture": "⬛",
+    "question": "LES OMBRES PODEN FER-SE MÉS NÍTIDES?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "DURANT LA FASE PARCIAL, ALGUNES OMBRES SEMBLEN MÉS MARCADES."
+  },
+  {
+    "id": "q49",
+    "category": "EXPERIMENT",
+    "picture": "🥄",
+    "question": "PODEM FER OMBRES AMB LES MANS?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "LES MANS PODEN TAPAR LA LLUM I FER FORMES D’OMBRA."
+  },
+  {
+    "id": "q50",
+    "category": "EXPERIMENT",
+    "picture": "📄",
+    "question": "ON PROJECTEM LA LLUM DEL COLADOR?",
+    "options": [
+      { "icon": "📄", "label": "EN UN PAPER CLAR" },
+      { "icon": "👀", "label": "DINS DELS ULLS" }
+    ],
+    "correct": 0,
+    "explanation": "MIREM LA PROJECCIÓ AL PAPER, NO EL SOL DIRECTAMENT."
+  },
+  {
+    "id": "q51",
+    "category": "EMOCIONS",
+    "picture": "🤩",
+    "question": "SI SENTIM MOLTA EMOCIÓ, QUÈ PODEM FER?",
+    "options": [
+      { "icon": "🌬️", "label": "RESPIRAR I MIRAR" },
+      { "icon": "🏃", "label": "SORTIR CORRENTS" },
+      { "icon": "🙈", "label": "AMAGAR-NOS" }
+    ],
+    "correct": 0,
+    "explanation": "RESPIREM, ENS QUEDEM AMB EL GRUP I GAUDIM DEL MOMENT."
+  },
+  {
+    "id": "q52",
+    "category": "EMOCIONS",
+    "picture": "😟",
+    "question": "SI TENIM POR, A QUI HO DIEM?",
+    "options": [
+      { "icon": "🧑", "label": "A UNA PERSONA ADULTA" },
+      { "icon": "🌳", "label": "A UN ARBRE" },
+      { "icon": "🪨", "label": "A UNA PEDRA" }
+    ],
+    "correct": 0,
+    "explanation": "PODEM EXPLICAR COM ENS SENTIM I DONAR LA MÀ A ALGÚ."
+  },
+  {
+    "id": "q53",
+    "category": "EMOCIONS",
+    "picture": "🤝",
+    "question": "PODEM DONAR LA MÀ SI TENIM NERVIS?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "ESTAR A PROP D’ALGÚ ENS POT AJUDAR A SENTIR-NOS BÉ."
+  },
+  {
+    "id": "q54",
+    "category": "ESPERA",
+    "picture": "🧩",
+    "question": "QUÈ PODEM FER MENTRE ESPEREM?",
+    "options": [
+      { "icon": "🧩", "label": "UN JOC TRANQUIL" },
+      { "icon": "🏃", "label": "CÓRRER ENTRE LA GENT" },
+      { "icon": "📣", "label": "CRIDAR MOLT FORT" }
+    ],
+    "correct": 0,
+    "explanation": "UN JOC, UN CONTE O UN DIBUIX AJUDEN A ESPERAR."
+  },
+  {
+    "id": "q55",
+    "category": "ESPERA",
+    "picture": "🕰️",
+    "question": "L’ECLIPSI DURA TOTA LA TARDA?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "L’ECLIPSI TÉ FASES, PERÒ LA TOTALITAT NOMÉS DURA 77 SEGONS."
+  },
+  {
+    "id": "q56",
+    "category": "RECORD",
+    "picture": "🧠",
+    "question": "PODEM RECORDAR UN COLOR DEL CEL?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "DESPRÉS PODEM EXPLICAR QUIN COLOR ENS HA SORPRÈS."
+  },
+  {
+    "id": "q57",
+    "category": "RECORD",
+    "picture": "💬",
+    "question": "QUAN ÉS MILLOR EXPLICAR EL RECORD?",
+    "options": [
+      { "icon": "👀", "label": "DESPRÉS DE MIRAR" },
+      { "icon": "🌑", "label": "DURANT ELS 77 SEGONS" }
+    ],
+    "correct": 0,
+    "explanation": "DURANT LA TOTALITAT MIREM. DESPRÉS HO EXPLIQUEM."
+  },
+  {
+    "id": "q58",
+    "category": "RECORD",
+    "picture": "❤️",
+    "question": "UN RECORD POT SER UNA EMOCIÓ?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "PODEM RECORDAR QUÈ HEM VIST I COM ENS HEM SENTIT."
+  },
+  {
+    "id": "q59",
+    "category": "RECORD",
+    "picture": "🎨",
+    "question": "PODEM DIBUIXAR L’ECLIPSI DESPRÉS?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "UN DIBUIX ENS AJUDA A GUARDAR EL RECORD."
+  },
+  {
+    "id": "q60",
+    "category": "RECORD",
+    "picture": "3️⃣",
+    "question": "PODEM TRIAR TRES PARAULES DEL DIA?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "TRES PARAULES PODEN EXPLICAR UN RECORD MOLT GRAN."
+  },
+  {
+    "id": "q61",
+    "category": "PERSEIDES",
+    "picture": "🌙",
+    "question": "QUAN MIREM LES PERSEIDES?",
+    "options": [
+      { "icon": "🌙", "label": "DE NIT" },
+      { "icon": "🌞", "label": "AL MIGDIA" }
+    ],
+    "correct": 0,
+    "explanation": "DE NIT EL CEL FOSC ENS DEIXA VEURE ELS METEORS."
+  },
+  {
+    "id": "q62",
+    "category": "PERSEIDES",
+    "picture": "🔭",
+    "question": "CAL TELESCOPI PER VEURE PERSEIDES?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "ÉS MILLOR MIRAR UNA PART BEN GRAN DEL CEL A ULL NU."
+  },
+  {
+    "id": "q63",
+    "category": "PERSEIDES",
+    "picture": "✈️",
+    "question": "UN AVIÓ FA LLUMS QUE PARPELLEGEN?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "UN AVIÓ SOL MOURE’S A POC A POC I FER LLUMS INTERMITENTS."
+  },
+  {
+    "id": "q64",
+    "category": "PERSEIDES",
+    "picture": "☄️",
+    "question": "UN METEOR PASSA RÀPID?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "NORMALMENT VEIEM EL TRAÇ DURANT MOLT POCA ESTONA."
+  },
+  {
+    "id": "q65",
+    "category": "PERSEIDES",
+    "picture": "⭐",
+    "question": "UN ESTEL FUGAÇ ÉS UNA ESTRELLA QUE CAU?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "ÉS UN GRANET DE POLS QUE BRILLA EN ENTRAR A L’ATMOSFERA."
+  },
+  {
+    "id": "q66",
+    "category": "PERSEIDES",
+    "picture": "🪨",
+    "question": "UN GRANET PETIT POT FER UN TRAÇ BRILLANT?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "FINS I TOT UN GRANET MOLT PETIT POT BRILLAR MOLT."
+  },
+  {
+    "id": "q67",
+    "category": "PERSEIDES",
+    "picture": "📱",
+    "question": "LA PANTALLA BLANCA AJUDA A VEURE EL CEL FOSC?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "LA LLUM BLANCA FA QUE ELS ULLS PERDIN L’ADAPTACIÓ A LA FOSCOR."
+  },
+  {
+    "id": "q68",
+    "category": "PERSEIDES",
+    "picture": "👀",
+    "question": "ELS ULLS NECESSITEN UNA ESTONA PER VEURE BÉ DE NIT?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "AL CAP D’UNA ESTONA SENSE LLUM BLANCA VEIEM MILLOR EL CEL."
+  },
+  {
+    "id": "q69",
+    "category": "PERSEIDES",
+    "picture": "🛏️",
+    "question": "QUÈ AJUDA A DESCANSAR EL COLL?",
+    "options": [
+      { "icon": "🛏️", "label": "ESTIRAR-NOS" },
+      { "icon": "🤸", "label": "FENT EL PI" },
+      { "icon": "🏃", "label": "CORRENT" }
+    ],
+    "correct": 0,
+    "explanation": "A TERRA VEIEM MOLT CEL I EL COLL DESCANSA."
+  },
+  {
+    "id": "q70",
+    "category": "PERSEIDES",
+    "picture": "🔢",
+    "question": "PODEM COMPTAR ELS METEORS AMB ELS DITS?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "PODEM SUMAR-NE UN CADA COP QUE EN VEIEM UN."
+  },
+  {
+    "id": "q71",
+    "category": "SEGURETAT",
+    "picture": "🔍",
+    "question": "PODEM MIRAR EL SOL AMB UNA LUPA?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "UNA LUPA CONCENTRA LA LLUM I ÉS MOLT PERILLOSA."
+  },
+  {
+    "id": "q72",
+    "category": "SEGURETAT",
+    "picture": "📷",
+    "question": "PODEM MIRAR EL SOL PER UNA CÀMERA SENSE FILTRE?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "LES CÀMERES I ELS TELESCOPIS NECESSITEN UN FILTRE ESPECIAL DAVANT."
+  },
+  {
+    "id": "q73",
+    "category": "SEGURETAT",
+    "picture": "🕶️",
+    "question": "COMPARTIM UNES ULLERES TRENCADES?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "SI ESTAN TRENCADES, HO DIEM A UNA PERSONA ADULTA I NO LES USEM."
+  },
+  {
+    "id": "q74",
+    "category": "SEGURETAT",
+    "picture": "🧑‍🤝‍🧑",
+    "question": "ENS SEPAREM DEL GRUP SENSE AVISAR?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "ENS QUEDEM AMB EL GRUP I AVISEM ABANS DE MOURE’NS."
+  },
+  {
+    "id": "q75",
+    "category": "SEGURETAT",
+    "picture": "🆘",
+    "question": "SI ENS TROBEM MALAMENT, HO DIEM?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "HO DIEM DE SEGUIDA A UNA PERSONA ADULTA."
+  },
+  {
+    "id": "q76",
+    "category": "CALOR",
+    "picture": "🧢",
+    "question": "QUÈ ENS PROTEGEIX EL CAP DEL SOL?",
+    "options": [
+      { "icon": "🧢", "label": "UNA GORRA" },
+      { "icon": "🧦", "label": "UN MITJÓ" },
+      { "icon": "🥄", "label": "UNA CULLERA" }
+    ],
+    "correct": 0,
+    "explanation": "UNA GORRA I L’OMBRA ENS AJUDEN A PROTEGIR-NOS."
+  },
+  {
+    "id": "q77",
+    "category": "CALOR",
+    "picture": "🌳",
+    "question": "ON DESCANSEM SI FA MOLTA CALOR?",
+    "options": [
+      { "icon": "🌳", "label": "A L’OMBRA" },
+      { "icon": "☀️", "label": "AL SOL" }
+    ],
+    "correct": 0,
+    "explanation": "BUSQUEM OMBRA, AIGUA I UN LLOC TRANQUIL."
+  },
+  {
+    "id": "q78",
+    "category": "CALOR",
+    "picture": "💦",
+    "question": "CAL ESPERAR A TENIR MOLTA SET PER BEURE?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "BEVEM AIGUA SOVINT, ABANS DE TENIR MOLTA SET."
+  },
+  {
+    "id": "q79",
+    "category": "NIT",
+    "picture": "🧥",
+    "question": "DE NIT POT ANAR BÉ UNA JAQUETA FINA?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "DESPRÉS D’UN DIA CALORÓS, A LA NIT PODEM NOTAR FRESCA."
+  },
+  {
+    "id": "q80",
+    "category": "NIT",
+    "picture": "🔦",
+    "question": "APUNTEM LA LLANTERNA ALS ULLS D’ALGÚ?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "LA LLUM VA CAP A TERRA I ÉS VERMELLA I FLUIXA."
+  },
+  {
+    "id": "q81",
+    "category": "LLOC",
+    "picture": "🌄",
+    "question": "SI UNA MUNTANYA TAPA L’OEST, VEUREM BÉ L’ECLIPSI?",
+    "options": [
+      { "icon": "❌", "label": "NO" },
+      { "icon": "✅", "label": "SÍ" }
+    ],
+    "correct": 0,
+    "explanation": "NECESSITEM UN HORITZÓ OEST BEN LLIURE."
+  },
+  {
+    "id": "q82",
+    "category": "LLOC",
+    "picture": "🚗",
+    "question": "GUARDEM ON HEM DEIXAT EL COTXE?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "UNA PERSONA ADULTA POT DESAR LA UBICACIÓ DEL COTXE."
+  },
+  {
+    "id": "q83",
+    "category": "FAMÍLIA",
+    "picture": "📍",
+    "question": "ÉS BO TENIR UN PUNT DE TROBADA?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "AIXÍ SABEM ON ANAR SI ALGÚ ES DESPISTA."
+  },
+  {
+    "id": "q84",
+    "category": "FAMÍLIA",
+    "picture": "👋",
+    "question": "ABANS D’ANAR AL LAVABO, AVISEM?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "SEMPRE AVISEM I HI ANEM AMB UNA PERSONA ADULTA."
+  },
+  {
+    "id": "q85",
+    "category": "JOC",
+    "picture": "🙈",
+    "question": "A QUÈ S’ASSEMBLA UNA MICA UN ECLIPSI?",
+    "options": [
+      { "icon": "🙈", "label": "A TAPAR I DESTAPAR" },
+      { "icon": "🍲", "label": "A FER UNA SOPA" },
+      { "icon": "🧹", "label": "A ESCOMBRAR" }
+    ],
+    "correct": 0,
+    "explanation": "LA LLUNA TAPA EL SOL I DESPRÉS EL DEIXA VEURE DE NOU."
+  },
+  {
+    "id": "q86",
+    "category": "JOC",
+    "picture": "🍪",
+    "question": "EL SOL PARCIAL POT SEMBLAR UNA GALETA MOSSEGADA?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "LA LLUNA VA TAPANT UNA PART RODONA DEL SOL."
+  },
+  {
+    "id": "q87",
+    "category": "JOC",
+    "picture": "🌙",
+    "question": "EL SOL PARCIAL POT SEMBLAR UNA LLUNETA?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "QUAN ESTÀ MIG TAPAT, EL SOL POT TENIR FORMA DE LLUNETA."
+  },
+  {
+    "id": "q88",
+    "category": "JOC",
+    "picture": "🕵️",
+    "question": "PODEM SER DETECTIUS DE SONS I OMBRES?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "PODEM MIRAR I ESCOLTAR QUÈ CANVIA AL NOSTRE VOLTANT."
+  },
+  {
+    "id": "q89",
+    "category": "JOC",
+    "picture": "🗣️",
+    "question": "SI VEIEM UN METEOR, PODEM DIR «UN!»?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "AIXÍ EL PODEM COMPTAR SENSE HAVER D’ESCRIURE."
+  },
+  {
+    "id": "q90",
+    "category": "FINAL",
+    "picture": "🌟",
+    "question": "PODEM APRENDRE MIRANT EL CEL?",
+    "options": [
+      { "icon": "✅", "label": "SÍ" },
+      { "icon": "❌", "label": "NO" }
+    ],
+    "correct": 0,
+    "explanation": "MIRAR, ESCOLTAR I FER PREGUNTES ENS AJUDA A APRENDRE."
+  }
+]

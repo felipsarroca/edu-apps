@@ -1,0 +1,23 @@
+{
+  "name": "Missió eclipsi 2026",
+  "short_name": "Eclipsi 2026",
+  "description": "Guia familiar per viure l'eclipsi total de Sol i les Perseides a Móra la Nova.",
+  "lang": "ca",
+  "id": "./",
+  "start_url": "./#inici",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f1e8",
+  "theme_color": "#07152f",
+  "icons": [
+    { "src": "assets/images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/images/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Pla d'adults", "short_name": "Adults", "url": "./#adults", "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Missió 10–12", "short_name": "10–12", "url": "./#joves", "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Joc de 5 anys", "short_name": "5 anys", "url": "./#infants", "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

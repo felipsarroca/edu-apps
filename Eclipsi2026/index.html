@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#07152f">
+    <meta name="description" content="Guia familiar instal·lable per viure l'eclipsi total de Sol i les Perseides del 12 d'agost de 2026.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Missió eclipsi">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="assets/images/icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Missió eclipsi 2026</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#app">Vés al contingut</a>
+
+    <header class="app-header">
+      <button class="brand" type="button" data-route="inici" aria-label="Anar a l'inici">
+        <img src="assets/images/icon-192.png" alt="" width="42" height="42">
+        <span><strong>Missió eclipsi</strong><small>Móra la Nova · 2026</small></span>
+      </button>
+      <div class="header-actions">
+        <span class="connection-status" id="connection-status" aria-live="polite"><i></i><span>En línia</span></span>
+        <button class="install-button" id="install-button" type="button" aria-label="Instal·lar l'aplicació">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>
+          <span>Instal·la</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1"></main>
+
+    <nav class="bottom-nav" aria-label="Navegació principal">
+      <button type="button" data-route="inici" aria-label="Inici">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+        <span>Inici</span>
+      </button>
+      <button type="button" data-route="adults" aria-label="Espai per a adults">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 9a7 7 0 0 0-14 0"/></svg>
+        <span>Adults</span>
+      </button>
+      <button type="button" data-route="joves" aria-label="Missió de 10 a 12 anys">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 3h6l1 4-4 2-4-2 1-4Zm3 6v12m-6-7h12M8 21h8"/></svg>
+        <span>10–12</span>
+      </button>
+      <button type="button" data-route="infants" aria-label="Joc de 5 anys">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9m-13-1h.01M16 11h.01M9 16c2 1.5 4 1.5 6 0"/></svg>
+        <span>5 anys</span>
+      </button>
+    </nav>
+
+    <footer class="felip-app-footer">
+      <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image" src="assets/images/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA" width="330" height="116">
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+      </div>
+    </footer>
+
+    <dialog id="install-dialog" class="app-dialog">
+      <button class="dialog-close" type="button" aria-label="Tanca">×</button>
+      <div class="dialog-icon" aria-hidden="true">↓</div>
+      <h2>Instal·la l’app</h2>
+      <p>A Android, obre aquesta pàgina amb Chrome, toca <strong>⋮</strong> i tria <strong>Instal·la l'aplicació</strong> o <strong>Afegeix a la pantalla d'inici</strong>.</p>
+      <p class="muted">Un cop oberta una vegada, la guia i les activitats principals funcionen sense cobertura.</p>
+      <button class="primary-button dialog-ok" type="button">Entesos</button>
+    </dialog>
+
+    <dialog id="image-dialog" class="image-dialog" aria-label="Imatge ampliada">
+      <button class="image-dialog-close" type="button" aria-label="Tanca la imatge ampliada">×</button>
+      <img src="assets/images/icon-192.png" alt="" width="960" height="640">
+      <p></p>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
