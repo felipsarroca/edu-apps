@@ -117,6 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: 'KineGraph/favicon.svg'
         },
 
+        // Ciències
+        {
+            name: "Missió eclipsi 2026",
+            path: 'Eclipsi2026/',
+            category: 'Ciències',
+            description: "Guia familiar instal·lable per preparar i viure l’eclipsi total de Sol i les Perseides, amb activitats per a adults i infants.",
+            icon: 'Eclipsi2026/assets/images/icon-192.png'
+        },
+
 
         // Ed. Infantil
         {
