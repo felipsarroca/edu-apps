@@ -122,8 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Missió eclipsi 2026",
             path: 'Eclipsi2026/',
             category: 'Ciències',
-            description: "Guia familiar instal·lable per preparar i viure l’eclipsi total de Sol i les Perseides, amb activitats per a adults i infants.",
-            icon: 'Eclipsi2026/assets/images/icon-192.png'
+            description: "Prepara l’eclipsi i les Perseides en família: logística per a adults, crònica científica de 10–12 anys i joc visual per a infants de 5 anys.",
+            icon: 'Eclipsi2026/assets/images/icon-192.png',
+            imageAlt: "Eclipsi solar amb una Perseida"
         },
 
 
@@ -232,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             col.innerHTML = `
                 <a href="${app.path}" class="card-link" target="_blank" rel="noopener noreferrer">
                     <div class="card h-100">
-                        <img src="${faviconSrc}" class="card-img-top" alt="Icona de ${app.name}" onerror="this.onerror=null;this.src='${fallbackIcon}';">
+                        <img src="${faviconSrc}" class="card-img-top" alt="${app.imageAlt || 'Icona de ' + app.name}" onerror="this.onerror=null;this.src='${fallbackIcon}';">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">${app.name}</h5>
                             <p class="card-text flex-grow-1">${app.description}</p>
