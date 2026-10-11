@@ -5,4 +5,4 @@
 :HL["/edu-apps/NombresReals/_next/static/media/caa3a2e1cccd8315-s.p.3b6cae6d.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/edu-apps/NombresReals/favicon2.svg","image"]
 :HL["/edu-apps/NombresReals/CC_BY-NC-SA.png","image"]
-0:{"buildId":"VgND9HJH6lKYtk7SRSHAK","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"irracionals","paramType":null,"paramKey":"irracionals","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+0:{"buildId":"e1jNnK3zqM3TP-T9p4UX0","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"irracionals","paramType":null,"paramKey":"irracionals","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
