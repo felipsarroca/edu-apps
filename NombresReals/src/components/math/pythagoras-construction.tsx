@@ -138,9 +138,9 @@ export function PythagorasConstruction() {
   const padBottom = 62
   const spanX = Math.sqrt(triangles[triangles.length - 1].result)
   const spanY = Math.max(...triangles.map((t) => t.m))
-  const unitsW = spanX + 0.85
-  const s = Math.max(20, Math.min((W - 24) / unitsW, (H - padTop - padBottom) / spanY))
-  const O = { x: Math.max(12, (W - unitsW * s) / 2) + 0.35 * s, y: H - padBottom }
+  const padLeft = padBottom // el mateix marge a l'esquerra de l'eix vertical que sota la recta
+  const s = Math.max(20, Math.min((W - padLeft - 12) / (spanX + 0.5), (H - padTop - padBottom) / spanY))
+  const O = { x: padLeft, y: H - padBottom }
   const X = (u: number) => O.x + u * s
   const ticks = Array.from({ length: Math.max(0, Math.floor((W - 30 - O.x) / s)) + 1 }, (_, k) => k)
   const yTicks = Array.from({ length: Math.max(0, Math.floor((O.y - 30) / s)) }, (_, k) => k + 1)
