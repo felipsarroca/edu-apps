@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[39756,["/edu-apps/NombresReals/_next/static/chunks/ffaefa2ebfe64c27.js","/edu-apps/NombresReals/_next/static/chunks/d2be314c3ece3fbe.js","/edu-apps/NombresReals/_next/static/chunks/335fce899c346d7e.js"],"default"]
 3:I[37457,["/edu-apps/NombresReals/_next/static/chunks/ffaefa2ebfe64c27.js","/edu-apps/NombresReals/_next/static/chunks/d2be314c3ece3fbe.js","/edu-apps/NombresReals/_next/static/chunks/335fce899c346d7e.js"],"default"]
-0:{"buildId":"OXtgmWozFYZizR-Lz9j3b","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"VgND9HJH6lKYtk7SRSHAK","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}

@@ -143,6 +143,7 @@ export function PythagorasConstruction() {
   const O = { x: Math.max(12, (W - unitsW * s) / 2) + 0.35 * s, y: H - padBottom }
   const X = (u: number) => O.x + u * s
   const ticks = Array.from({ length: Math.max(0, Math.floor((W - 30 - O.x) / s)) + 1 }, (_, k) => k)
+  const yTicks = Array.from({ length: Math.max(0, Math.floor((O.y - 30) / s)) }, (_, k) => k + 1)
 
   /* Quant es dibuixa de cada triangle segons el pas (0 = res, 4 = complet) */
   const stageOf = (index: number) => {
@@ -279,8 +280,20 @@ export function PythagorasConstruction() {
                 </defs>
                 <rect width={W} height={H} fill="url(#pyth-grid)" />
 
+                {/* Eix vertical: mesura els catets perpendiculars */}
+                <line x1={O.x} y1={O.y} x2={O.x} y2={20} stroke="#44403c" strokeWidth={2.4} />
+                <polygon points={`${O.x},6 ${O.x - 7},22 ${O.x + 7},22`} fill="#44403c" />
+                {yTicks.map((k) => (
+                  <g key={`y${k}`}>
+                    <line x1={O.x - 8} y1={O.y - k * s} x2={O.x + 8} y2={O.y - k * s} stroke="#44403c" strokeWidth={2} />
+                    <text x={O.x - 13} y={O.y - k * s + 6} textAnchor="end" fontSize={17} fill="#57534e">
+                      {k}
+                    </text>
+                  </g>
+                ))}
+
                 {/* Recta numèrica */}
-                <line x1={12} y1={O.y} x2={W - 22} y2={O.y} stroke="#44403c" strokeWidth={2.4} />
+                <line x1={O.x} y1={O.y} x2={W - 22} y2={O.y} stroke="#44403c" strokeWidth={2.4} />
                 <polygon points={`${W - 6},${O.y} ${W - 22},${O.y - 7} ${W - 22},${O.y + 7}`} fill="#44403c" />
                 {ticks.map((k) => (
                   <g key={k}>
@@ -371,6 +384,8 @@ function TriangleView({
   const corner = Math.min(14, s * 0.12)
   const h = t.m * s
   const tick = 0.22
+  // Etiqueta de la hipotenusa: al mig, o més amunt si topa amb l'eix vertical
+  const hypT = Math.min(0.92, Math.max(0.5, 120 / Math.max(1, B.x - O.x)))
 
   return (
     <motion.g initial={{ opacity: 0 }} animate={{ opacity: faded ? 0.35 : 1 }} transition={{ duration: 0.35 }}>
@@ -439,7 +454,7 @@ function TriangleView({
             transition={{ duration: 0.6 }}
           />
           {main && (
-            <text x={(O.x + B.x) / 2 - 12} y={(O.y + B.y) / 2 - 10} textAnchor="end" fontSize={20} fontWeight={700} fill={C_HIP_FOSC}>
+            <text x={O.x + hypT * (B.x - O.x) - 12} y={O.y - hypT * (O.y - B.y) - 10} textAnchor="end" fontSize={20} fontWeight={700} fill={C_HIP_FOSC}>
               c = √{t.result}
             </text>
           )}
