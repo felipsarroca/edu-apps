@@ -100,6 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Calcula el MCD i mcm de forma guiada, amb exercicis i problemes.",
             icon: 'MCD-mcm/assets/logo.svg'
         },
+        {
+            name: "La recta numèrica",
+            path: 'https://ja.cat/nombres',
+            category: 'Matemàtiques',
+            description: "Representa fraccions amb Tales i irracionals amb Pitàgores, pas a pas, i classifica els nombres reals.",
+            icon: 'NombresReals/favicon2.svg'
+        },
 
         // Física
         {

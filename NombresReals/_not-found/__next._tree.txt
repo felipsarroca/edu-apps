@@ -1,0 +1,5 @@
+:HL["/edu-apps/NombresReals/_next/static/chunks/f4fcdfacdfc95f41.css","style"]
+:HL["/edu-apps/NombresReals/_next/static/chunks/53f002f21f511509.css","style"]
+:HL["/edu-apps/NombresReals/favicon2.svg","image"]
+:HL["/edu-apps/NombresReals/CC_BY-NC-SA.png","image"]
+0:{"buildId":"OXtgmWozFYZizR-Lz9j3b","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
