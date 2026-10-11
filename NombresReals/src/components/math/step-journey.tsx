@@ -42,7 +42,7 @@ export function StepJourney({ labels, current, onChange, tone, text }: StepJourn
         <div className="grid flex-1 gap-1" style={{ gridTemplateColumns: `repeat(${labels.length}, minmax(0, 1fr))` }}>
           {labels.map((label, index) => (
             <button
-              key={label}
+              key={index}
               type="button"
               onClick={() => onChange(index)}
               aria-label={`Pas ${index}: ${label}`}
