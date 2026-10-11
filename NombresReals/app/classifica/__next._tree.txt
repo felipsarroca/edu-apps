@@ -1,8 +1,0 @@
-:HL["/edu-apps/NombresReals/app/_next/static/chunks/f4fcdfacdfc95f41.css","style"]
-:HL["/edu-apps/NombresReals/app/_next/static/chunks/53f002f21f511509.css","style"]
-:HL["/edu-apps/NombresReals/app/_next/static/media/03bda585a99c6450-s.p.ad37b9d9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/edu-apps/NombresReals/app/_next/static/media/797e433ab948586e-s.p.29207c2f.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/edu-apps/NombresReals/app/_next/static/media/caa3a2e1cccd8315-s.p.3b6cae6d.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/edu-apps/NombresReals/app/favicon2.svg","image"]
-:HL["/edu-apps/NombresReals/app/CC_BY-NC-SA.png","image"]
-0:{"buildId":"m1cpUNvsOBEDkaQnOabp8","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"classifica","paramType":null,"paramKey":"classifica","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}

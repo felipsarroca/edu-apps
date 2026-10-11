@@ -26,16 +26,16 @@ La portada (`/`) obre tres pàgines independents: `/fraccions/`, `/irracionals/`
 
 ## Publicar-la amb GitHub Pages
 
-El repositori `edu-apps` es publica tal com és des de la branca `main` (sense cap pas de compilació), així que cal pujar-hi la versió compilada a `NombresReals/app/`:
+El repositori `edu-apps` es publica tal com és des de la branca `main` (sense cap pas de compilació). Per això la versió compilada conviu amb el codi font a la mateixa carpeta `NombresReals/`:
 
 ```powershell
-$env:NEXT_PUBLIC_BASE_PATH = '/edu-apps/NombresReals/app'
+$env:NEXT_PUBLIC_BASE_PATH = '/edu-apps/NombresReals'
 bun run build
-# Substitueix el contingut de NombresReals/app/ pel de out/
+# Copia el contingut de out/ a l'arrel de NombresReals/ (index.html, _next/, fraccions/, irracionals/, classifica/…)
 ```
 
-- Adreça publicada: <https://felipsarroca.github.io/edu-apps/NombresReals/app/> (enllaç curt: <https://ja.cat/nombres>).
-- `NombresReals/index.html` redirigeix a `app/`.
+- Adreça publicada: <https://felipsarroca.github.io/edu-apps/NombresReals/> (enllaç curt: <https://ja.cat/nombres>).
 - El fitxer `.nojekyll` de l'arrel del repositori és imprescindible: sense ell, GitHub Pages ignora les carpetes que comencen per `_` (com `_next/`).
+- `bun run build` executa `scripts/fix-export.mjs`, que corregeix els noms d'uns fitxers de precàrrega de Next 16.
 - Per executar-la en local a l'arrel, deixa la variable sense definir i torna a compilar.
 - Si la carpeta és en una unitat de Google Drive, `bun install` falla: cal treballar en una còpia en un disc local.
