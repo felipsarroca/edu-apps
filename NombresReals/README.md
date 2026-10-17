@@ -1,83 +1,90 @@
 # La recta numèrica
 
-Recurs educatiu interactiu per explorar com es representen els nombres reals sobre la recta numèrica. L’alumnat construeix fraccions amb el teorema de Tales, situa arrels irracionals amb el teorema de Pitàgores i classifica nombres en els conjunts numèrics.
+Aplicació interactiva de matemàtiques per **situar nombres reals sobre la recta** i entendre les construccions geomètriques que hi ha darrere de fraccions i arrels quadrades. Està pensada per treballar aquests continguts a l’ESO, a classe o de manera autònoma.
 
 **[Obre l’aplicació](https://felipsarroca.github.io/edu-apps/NombresReals/)** · [Enllaç curt](https://ja.cat/nombres)
 
+## Activitats
+
+| Activitat | Què permet fer |
+| --- | --- |
+| [Fraccions amb Tales](https://felipsarroca.github.io/edu-apps/NombresReals/fraccions/) | Triar una fracció positiva o negativa, predir entre quins enters cau i construir-la pas a pas dividint la unitat amb el teorema de Tales. Inclou fraccions pròpies i impròpies. |
+| [Irracionals amb Pitàgores](https://felipsarroca.github.io/edu-apps/NombresReals/irracionals/) | Escollir una arrel quadrada, estudiar els catets d’un triangle rectangle i traslladar la longitud de la hipotenusa a la recta. També inclou una construcció per esglaons de √2 a √6. |
+| [Classifica els nombres](https://felipsarroca.github.io/edu-apps/NombresReals/classifica/) | Situar nombres al conjunt més específic entre naturals, enters, racionals i irracionals. Hi ha tres nivells, pistes després dels errors i un indicador de progrés. Es pot arrossegar cada nombre o seleccionar-lo amb un clic i clicar el conjunt. |
+
+La classificació fa servir la convenció **ℕ = {1, 2, 3, …}**. Les activitats s’executen al navegador, sense registre ni base de dades; el progrés es reinicia en recarregar la pàgina.
+
+### Proposta d’ús a l’aula
+
+1. Predir la posició d’una fracció i justificar-la abans de veure’n la construcció.
+2. Comparar la divisió de la unitat amb Tales i la construcció d’una arrel amb Pitàgores.
+3. Acabar classificant exemples dels conjunts imbricats ℕ ⊂ ℤ ⊂ ℚ i dels irracionals.
+
 ## Captures de pantalla
+
+Les captures mostren l’aplicació en ordinador. Les dues construccions s’han avançat fins al resultat perquè se’n pugui veure el traçat complet.
 
 ### Portada
 
-![Portada de La recta numèrica, amb la recta i les tres activitats](docs/captures/portada.png)
+![Portada amb una recta numèrica i les tres activitats](docs/captures/portada.png)
 
-### Fraccions amb Tales
+### Construcció de 4/7 amb Tales
 
-![Activitat per construir i situar fraccions amb el teorema de Tales](docs/captures/fraccions.png)
+![Fracció 4/7 situada sobre la recta amb marques i paral·leles del teorema de Tales](docs/captures/fraccions.png)
 
-### Irracionals amb Pitàgores
+### Construcció de √5 amb Pitàgores
 
-![Activitat per construir arrels quadrades amb el teorema de Pitàgores](docs/captures/irracionals.png)
+![Triangle rectangle de catets 2 i 1 i trasllat de la hipotenusa √5 a la recta](docs/captures/irracionals.png)
 
-### Classificació dels nombres
+### Classificació dels nombres reals
 
-![Activitat per classificar nombres en els conjunts numèrics](docs/captures/classifica.png)
-
-## Què s’hi pot treballar
-
-- **Fraccions:** construir fraccions positives i negatives, pròpies i impròpies, dividint la unitat en parts iguals. Una seqüència guiada mostra la construcció geomètrica amb Tales; abans de començar, es pot predir entre quins enters cau el resultat.
-- **Nombres irracionals:** construir arrels quadrades amb triangles rectangles i el teorema de Pitàgores, i traslladar-les a la recta numèrica.
-- **Conjunts numèrics:** classificar nombres com a naturals, enters, racionals o irracionals. Tres nivells de dificultat, arrossegar o clicar per col·locar i retroacció amb pistes.
-
-Les activitats s’adapten a diferents amplades de pantalla i funcionen al navegador sense base de dades.
+![Activitat de classificació amb √5 col·locat entre els irracionals i la retroacció visible](docs/captures/classifica.png)
 
 ## Executar en local
 
-Cal tenir [Bun](https://bun.com/) instal·lat. Des de la carpeta del projecte:
+Cal tenir [Bun](https://bun.com/) instal·lat. Des de `NombresReals/`:
 
 ```powershell
 bun install --frozen-lockfile
 bun run dev
 ```
 
-Obre <http://localhost:3000>. Les pàgines són:
+Obre <http://localhost:3000>. Les rutes locals són `/`, `/fraccions/`, `/irracionals/` i `/classifica/`.
 
-| Pàgina | Ruta |
-| --- | --- |
-| Portada | `/` |
-| Fraccions amb Tales | `/fraccions/` |
-| Irracionals amb Pitàgores | `/irracionals/` |
-| Classificació | `/classifica/` |
-
-## Compilar i servir
+Per generar i servir l’exportació estàtica en local:
 
 ```powershell
 bun run build
 bun run start
 ```
 
-La compilació estàtica es desa a `out/`. L’ordre `start` la serveix en local i indica l’adreça al terminal. La configuració d’exportació estàtica permet allotjar l’app en un servidor web sense Node.js.
+El resultat es desa a `out/`. L’ordre `start` mostra al terminal l’adreça on es pot consultar. Si `bun install` falla en una unitat de Google Drive, treballa en una còpia del projecte en un disc local.
 
 ## Publicar a GitHub Pages
 
-El repositori `edu-apps` publica la branca `main` sense un pas de compilació automàtic. Per actualitzar la versió publicada des d’aquesta carpeta:
+Aquest repositori publica el contingut de la branca `main` directament. L’exportació de Next.js s’ha de copiar a l’arrel de `NombresReals/`, juntament amb el codi font, abans de pujar els canvis:
 
 ```powershell
 $env:NEXT_PUBLIC_BASE_PATH = '/edu-apps/NombresReals'
 bun run build
-# Copia el contingut d'out/ a l'arrel de NombresReals/
+Copy-Item -Path .\out\* -Destination . -Recurse -Force
+Remove-Item Env:NEXT_PUBLIC_BASE_PATH
 ```
 
-El fitxer `.nojekyll` de l’arrel del repositori és necessari perquè GitHub Pages publiqui els recursos de `_next/`. `bun run build` també executa `scripts/fix-export.mjs`, que ajusta els noms d’alguns fitxers de precàrrega de Next.js 16. Per tornar a compilar per a l’arrel local, elimina `NEXT_PUBLIC_BASE_PATH` de l’entorn.
+La variable `NEXT_PUBLIC_BASE_PATH` adapta les rutes dels recursos a l’adreça de GitHub Pages. El fitxer `.nojekyll` de l’arrel del repositori permet publicar la carpeta `_next/`. L’ordre `build` executa `scripts/fix-export.mjs` per ajustar els noms d’alguns fitxers de precàrrega de Next.js 16. Per a una compilació local posterior, assegura’t que `NEXT_PUBLIC_BASE_PATH` no estigui definida.
 
-> Si el projecte és en una unitat de Google Drive i `bun install` falla, treballa en una còpia del projecte en un disc local.
+## Estructura i tecnologies
 
-## Tecnologies
+| Element | Funció |
+| --- | --- |
+| `src/app/` | Portada i pàgines de les tres activitats. |
+| `src/components/math/` | Construccions SVG, seqüències de passos i exercici de classificació. |
+| `public/` | Recursos gràfics de l’aplicació. |
+| `docs/captures/` | Captures utilitzades en aquest README. |
+| `scripts/` | Servidor local de l’exportació i ajust dels fitxers exportats. |
 
-- Next.js 16 amb exportació estàtica
-- React 19, TypeScript i Tailwind CSS
-- SVG per a les construccions geomètriques i la recta numèrica
-- Bun per instal·lar dependències i executar les ordres del projecte
+L’aplicació està feta amb **Next.js 16**, **React 19**, **TypeScript**, **Tailwind CSS** i gràfics **SVG**. La configuració `output: 'export'` permet servir-la com a web estàtica.
 
-## Llicència
+## Autoria i llicència
 
-Aplicació creada per [Felip Sarroca](https://ja.cat/felipsarroca) amb assistència de la IA. El projecte s’ofereix sota la llicència [Creative Commons Reconeixement-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca).
+Aplicació creada per [Felip Sarroca](https://ja.cat/felipsarroca) amb assistència de la IA. Publicada sota la llicència [Creative Commons Reconeixement-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca).
