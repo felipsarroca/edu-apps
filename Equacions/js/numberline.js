@@ -7,7 +7,7 @@
 (function (global) {
   'use strict';
   const L = (global.L = global.L || {});
-  const { el, niceStep, fmtTick } = L.GraphUtil;
+  const { el, niceStep, fmtTick, ox } = L.GraphUtil;
   const MINUS = '\u2212';
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const reduceMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -39,18 +39,18 @@
 
       if (!this.readonly) {
         this.svg.addEventListener('click', (e) => {
-          const x = this.pxToX(e.offsetX);
+          const x = this.pxToX(ox(e));
           if (this.onProbe) this.onProbe(this.snapTo(x));
         });
         // arrossegament del marcador
         let dragging = false;
         this.svg.addEventListener('pointerdown', (e) => {
-          if (this.marker && Math.abs(e.offsetX - this.xToPx(this.marker.x)) < 26 && this.onChange) {
+          if (this.marker && Math.abs(ox(e) - this.xToPx(this.marker.x)) < 26 && this.onChange) {
             dragging = true; this.svg.setPointerCapture(e.pointerId);
           }
         });
         this.svg.addEventListener('pointermove', (e) => {
-          if (dragging) { this.onChange(this.snapTo(this.pxToX(e.offsetX), true)); e.preventDefault(); }
+          if (dragging) { this.onChange(this.snapTo(this.pxToX(ox(e)), true)); e.preventDefault(); }
         });
         const up = () => { dragging = false; };
         this.svg.addEventListener('pointerup', up);

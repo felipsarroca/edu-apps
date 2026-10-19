@@ -62,6 +62,12 @@
   --header-h:56px;
   --gap:14px;
 
+  /* escala global en pantalles grans (la calcula app.js; 1 = sense escalar).
+     --vh és 1vh corregit per l'escala, perquè les alçades no desbordin. */
+  --ui-zoom:1;
+  --vh:calc(1vh / var(--ui-zoom));
+  --dvh:calc(1dvh / var(--ui-zoom));
+
   /* amplàries de pantalla */
   --w-tablet:880px;
   --w-desktop:1180px;
@@ -77,7 +83,7 @@ html.projector .only-compact{ display:none !important; }
 
 /* ---------- Reset bàsic ---------- */
 *,*::before,*::after{ box-sizing:border-box; }
-html{ font-size:var(--fs-root); height:100%; }
+html{ font-size:var(--fs-root); height:100%; zoom:var(--ui-zoom); }
 body{
   margin:0; height:100%; overflow:hidden;
   font-family:var(--font-ui); font-size:1rem; line-height:1.5;
@@ -108,7 +114,7 @@ a{ color:var(--teal-deep); }
 }
 
 /* ---------- Carcassa ---------- */
-#app{ height:100vh; height:100dvh; display:flex; flex-direction:column; }
+#app{ height:calc(100 * var(--vh)); height:calc(100 * var(--dvh)); display:flex; flex-direction:column; }
 .app-main{
   flex:1; min-height:0; overflow:hidden; position:relative;
   display:flex; flex-direction:column;
@@ -292,12 +298,12 @@ html.projector .felip-app-footer{ font-size:.62rem; }
 
 /* La portada s'adapta a l'alçada de la pantalla: centrada verticalment quan sobra espai,
    amb espais i il·lustracions que creixen o s'encongeixen segons l'alçada disponible. */
-.home{ padding-block:clamp(10px,3vh,40px) clamp(14px,3.4vh,44px); }
-.home-inner{ margin-block:auto; gap:clamp(10px,3vh,40px); }
+.home{ padding-block:clamp(10px,calc(3 * var(--vh)),40px) clamp(14px,calc(3.4 * var(--vh)),44px); }
+.home-inner{ margin-block:auto; gap:clamp(10px,calc(3 * var(--vh)),40px); }
 .home-hero{ padding-top:0; }
-.home-hero h1{ font-size:clamp(1.4rem,min(4vw,4.6vh),2.6rem); }
-.lab-grid{ gap:clamp(10px,2.2vh,24px) 14px; }
-.lab-card{ padding:clamp(11px,2vh,22px) 18px clamp(10px,1.8vh,18px); gap:clamp(6px,1.3vh,14px); }
+.home-hero h1{ font-size:clamp(1.4rem,min(4vw,calc(4.6 * var(--vh))),2.6rem); }
+.lab-grid{ gap:clamp(10px,calc(2.2 * var(--vh)),24px) 14px; }
+.lab-card{ padding:clamp(11px,calc(2 * var(--vh)),22px) 18px clamp(10px,calc(1.8 * var(--vh)),18px); gap:clamp(6px,calc(1.3 * var(--vh)),14px); }
 
 /* ---------- Estructura genèrica de laboratori ---------- */
 .lab{ flex:1; min-height:0; display:grid; gap:var(--gap); padding:var(--gap); overflow:hidden; }
@@ -436,8 +442,8 @@ body.mask-answers [data-answer].revealed::after{ display:none; }
 body.mask-answers [data-answer].revealed > *{ visibility:visible; }
 
 /* Itinerari discret: una franja lleugera sobre les targetes, que són les protagonistes */
-.home-path.compact{ background:transparent; border:0; box-shadow:none; padding:0 4px; margin-bottom:clamp(0px,1.4vh,16px); }
-.home-path.compact .path-head{ margin-bottom:clamp(8px,1.8vh,18px); }
+.home-path.compact{ background:transparent; border:0; box-shadow:none; padding:0 4px; margin-bottom:clamp(0px,calc(1.4 * var(--vh)),16px); }
+.home-path.compact .path-head{ margin-bottom:clamp(8px,calc(1.8 * var(--vh)),18px); }
 .home-path.compact .path-head .btn{ margin-left:auto; }
 .home-path.compact .path-head h2{ color:var(--ink-faint); font-size:.74rem; }
 .home-path.compact .path-note{ font-size:.82rem; }

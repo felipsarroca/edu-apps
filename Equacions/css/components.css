@@ -106,7 +106,7 @@ input[type="range"]:focus-visible{ outline:3px solid #ffd166; outline-offset:2px
 @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
 .modal{
   background:var(--surface); border-radius:var(--radius-xl); box-shadow:var(--shadow-3);
-  width:min(720px,100%); max-height:min(88vh,88dvh);
+  width:min(720px,100%); max-height:min(calc(88 * var(--vh)),calc(88 * var(--dvh)));
   display:flex; flex-direction:column; overflow:hidden;
   animation:popIn .2s cubic-bezier(.2,.9,.3,1.2);
 }
@@ -436,7 +436,7 @@ button.det-step:hover{ border-color:var(--teal); }
 @keyframes confFall{ to{ transform:translate(var(--dx), 105vh) rotate(var(--rot)); opacity:.2; } }
 
 /* ---------- Il·lustració de les targetes d'inici ---------- */
-.lab-card .lc-art{ height:clamp(52px,10.5vh,116px); display:flex; align-items:center; justify-content:center; background:var(--bg-soft); border-radius:12px; }
+.lab-card .lc-art{ height:clamp(52px,calc(10.5 * var(--vh)),116px); display:flex; align-items:center; justify-content:center; background:var(--bg-soft); border-radius:12px; }
 .lab-card .lc-art svg{ height:80%; width:auto; }
 
 /* ---------- Comptador a les pestanyes i peu dels reptes ---------- */

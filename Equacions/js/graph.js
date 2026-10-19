@@ -18,6 +18,15 @@
     if (parent) parent.appendChild(e);
     return e;
   }
+  /* Posició del punter dins l'element, en píxels CSS de l'element.
+     No fem servir offsetX/offsetY perquè, amb l'escala global de pantalles
+     grans (zoom), no coincideixen amb les coordenades del dibuix. */
+  function ptScale(t) {
+    const r = t.getBoundingClientRect();
+    return { r, k: r.width ? t.clientWidth / r.width : 1 };
+  }
+  function ox(e) { const { r, k } = ptScale(e.currentTarget); return (e.clientX - r.left) * k; }
+  function oy(e) { const { r, k } = ptScale(e.currentTarget); return (e.clientY - r.top) * k; }
   function niceStep(range, targetCount) {
     const raw = range / Math.max(1, targetCount);
     if (!Number.isFinite(raw) || raw <= 0) return 1;
@@ -117,7 +126,7 @@
         this.svg.addEventListener('wheel', (e) => {
           e.preventDefault();
           const f = Math.pow(1.0015, e.deltaY);
-          this.zoomAt(e.offsetX, e.offsetY, f);
+          this.zoomAt(ox(e), oy(e), f);
         }, { passive: false });
       }
 
@@ -251,16 +260,16 @@
       let last = null, pinchD = 0;
       this.svg.style.cursor = 'grab';
       this.svg.addEventListener('pointerdown', (e) => {
-        pointers.set(e.pointerId, { x: e.offsetX, y: e.offsetY });
+        pointers.set(e.pointerId, { x: ox(e), y: oy(e) });
         this.svg.setPointerCapture(e.pointerId);
-        if (pointers.size === 1) { last = { x: e.offsetX, y: e.offsetY }; this.svg.style.cursor = 'grabbing'; }
+        if (pointers.size === 1) { last = { x: ox(e), y: oy(e) }; this.svg.style.cursor = 'grabbing'; }
         if (pointers.size === 2) {
           const [p1, p2] = [...pointers.values()];
           pinchD = Math.hypot(p1.x - p2.x, p1.y - p2.y);
         }
       });
       this.svg.addEventListener('pointermove', (e) => {
-        if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.offsetX, y: e.offsetY });
+        if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: ox(e), y: oy(e) });
         if (pointers.size === 2) {
           const [p1, p2] = [...pointers.values()];
           const d = Math.hypot(p1.x - p2.x, p1.y - p2.y);
@@ -272,12 +281,12 @@
           return;
         }
         if (pointers.size === 1 && last) {
-          const dx = e.offsetX - last.x, dy = e.offsetY - last.y;
-          last = { x: e.offsetX, y: e.offsetY };
+          const dx = ox(e) - last.x, dy = oy(e) - last.y;
+          last = { x: ox(e), y: oy(e) };
           this.panBy(dx, dy);
           this._hideHover();
         } else {
-          this._showHover(e.offsetX, e.offsetY);
+          this._showHover(ox(e), oy(e));
         }
       });
       const up = (e) => {
@@ -610,5 +619,5 @@
   }
 
   L.Graph = Graph;
-  L.GraphUtil = { niceStep, fmtTick, el, SVG_NS };
+  L.GraphUtil = { niceStep, fmtTick, el, SVG_NS, ox, oy };
 })(typeof window !== 'undefined' ? window : globalThis);

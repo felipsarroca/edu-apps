@@ -509,13 +509,13 @@
     /* clic al gràfic = punt candidat */
     (function bindGraphClick() {
       let down = null;
-      st.graph.svg.addEventListener('pointerdown', (e) => { down = { x: e.offsetX, y: e.offsetY }; });
+      st.graph.svg.addEventListener('pointerdown', (e) => { down = { x: L.GraphUtil.ox(e), y: L.GraphUtil.oy(e) }; });
       st.graph.svg.addEventListener('pointerup', (e) => {
         if (!down) return;
-        const moved = Math.hypot(e.offsetX - down.x, e.offsetY - down.y);
+        const moved = Math.hypot(L.GraphUtil.ox(e) - down.x, L.GraphUtil.oy(e) - down.y);
         down = null;
         if (moved > 6) return; // era un arrossegament (pan)
-        const gx = st.graph.Xinv(e.offsetX), gy = st.graph.Yinv(e.offsetY);
+        const gx = st.graph.Xinv(L.GraphUtil.ox(e)), gy = st.graph.Yinv(L.GraphUtil.oy(e));
         const snap = (v) => R.num(Math.round(v * 2) / 2);
         el('l4-px').value = F.fmtValPlain(snap(gx));
         el('l4-py').value = F.fmtValPlain(snap(gy));

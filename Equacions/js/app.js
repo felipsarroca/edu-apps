@@ -30,6 +30,19 @@
   function applySettings() {
     document.documentElement.classList.toggle('projector', settings.projector);
     document.body.classList.toggle('mask-answers', settings.mask);
+    fitScale();
+  }
+
+  /* ---------- escala en pantalles grans ----------
+     La interfície està pensada per a uns 1440 × 730 px útils. En pantalles més
+     grans (p. ex. 1920 × 1080) s'amplia tota sencera perquè no quedi petita i
+     plena d'espai buit. El mode projector ja fa la lletra gran: no s'hi suma. */
+  const BASE_W = 1440, BASE_H = 730, MAX_ZOOM = 1.35;
+  function fitScale() {
+    let z = Math.min(window.innerWidth / BASE_W, window.innerHeight / BASE_H, MAX_ZOOM);
+    z = Math.floor(z * 20) / 20;
+    if (settings.projector || !(z > 1)) z = 1;
+    document.documentElement.style.setProperty('--ui-zoom', String(z));
   }
 
   /* ---------- progrés de l'alumne (només al navegador) ----------
@@ -362,6 +375,7 @@
   /* ---------- inicialització ---------- */
   function init() {
     loadSettings();
+    window.addEventListener('resize', fitScale);
     bindMaskClicks();
     watchVars();
     window.addEventListener('hashchange', route);
