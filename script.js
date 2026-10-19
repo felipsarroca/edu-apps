@@ -107,6 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Representa fraccions amb Tales i irracionals amb Pitàgores, pas a pas, i classifica els nombres reals.",
             icon: 'NombresReals/favicon2.svg'
         },
+        {
+            name: "Laboratori d'equacions",
+            path: 'https://ja.cat/labequacions',
+            category: 'Matemàtiques',
+            description: "Explora equacions, inequacions i sistemes amb gràfics, reptes i comprovacions per a 4t d'ESO.",
+            icon: 'Equacions/favicon.svg'
+        },
 
         // Física
         {
