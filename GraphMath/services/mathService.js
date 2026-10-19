@@ -724,6 +724,9 @@ function analyzeUncached(expression) {
         result.facts.push({ label: "Discriminant", value: `Δ = b² − 4ac = ${formatNumber(q.delta)} → ${q.delta > 0 ? "dues solucions" : q.delta === 0 ? "una solució doble" : "cap solució real"}` });
         result.solutions = q.roots;
         if (q.exact) result.exactRoots = q.exact;
+        // Vèrtex de la paràbola auxiliar y = (1r membre − 2n membre)
+        result.vertex = { x: snapNumber(-b / (2 * a)), y: snapNumber(c - b * b / (4 * a)) };
+        result.facts.push({ label: "Vèrtex", value: `${formatPoint(result.vertex)} (de la paràbola auxiliar)` });
       } else if (deg === 1) {
         result.facts.push({ label: "Tipus", value: "Equació de primer grau" });
         result.solutions = [snapNumber(-c / b)];

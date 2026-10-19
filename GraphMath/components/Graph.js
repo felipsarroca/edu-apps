@@ -135,6 +135,10 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
             const name = sols.length > 1 && prep.kind === "equationX" ? `x${"₁₂₃₄₅₆₇₈₉"[k] || ""}` : "x";
             pointLayer.push({ x, y: 0, color, label: `${name} = ${formatNumber(x)}`, open: !inclusive });
           });
+          // Vèrtex de la paràbola auxiliar (si no coincideix amb una solució doble)
+          if (prep.kind === "equationX" && analysis.vertex && isMarkOn(func, "vertex") && Math.abs(analysis.vertex.y) > 1e-9) {
+            pointLayer.push({ ...analysis.vertex, color, label: `V ${formatPoint(analysis.vertex)}` });
+          }
         }
       });
       if (inSystem) {

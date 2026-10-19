@@ -117,7 +117,7 @@ const AnalysisPanel = ({ func, themeClasses, onToggleMark }) => {
   const a = analyzeExpression(func.expressions[0]);
   if (!a.ok) return /* @__PURE__ */ jsx("div", { className: `${box} text-red-500`, children: a.error });
   const FACT_MARKS = { "Vèrtex": "vertex", "Eix de simetria": "axis", "Pendent": "slope" };
-  const facts = a.facts.map((f, i) => /* @__PURE__ */ jsx(Row, { label: f.label, themeClasses, mark: a.kind === "explicitY" && FACT_MARKS[f.label] && (f.label !== "Pendent" || a.slope) ? mark(FACT_MARKS[f.label]) : void 0, children: f.value }, `f${i}`));
+  const facts = a.facts.map((f, i) => /* @__PURE__ */ jsx(Row, { label: f.label, themeClasses, mark: (a.kind === "explicitY" || a.kind === "equationX" && f.label === "Vèrtex") && FACT_MARKS[f.label] && (f.label !== "Pendent" || a.slope) ? mark(FACT_MARKS[f.label]) : void 0, children: f.value }, `f${i}`));
   let body;
   if (a.kind === "explicitY" && a.domain !== void 0) {
     body = [
