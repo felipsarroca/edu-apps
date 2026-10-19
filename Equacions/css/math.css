@@ -1,0 +1,184 @@
+/* ============================================================
+   math.css — tipografia de fórmules: fraccions, radicals,
+   termes interactius, visualització d'equacions
+   ============================================================ */
+
+.math{ font-family:var(--font-math); }
+.math .var{ font-style:italic; }
+.math b{ font-weight:700; }
+
+/* Fracció vertical: la ratlla queda a l'altura del signe = */
+.frac{
+  display:inline-flex; flex-direction:column; align-items:center;
+  vertical-align:middle; line-height:1.2; margin:.1em .15em; text-align:center;
+}
+.frac .fnum{ padding:0 .3em .1em; border-bottom:1.6px solid currentColor; }
+.frac .fden{ padding:.1em .3em 0; }
+/* Dins dels xips de presets, fracció en línia (1/2) perquè el botó no es desquadri */
+.chip .frac{ display:inline; vertical-align:baseline; margin:0; line-height:inherit; }
+.chip .frac .fnum{ border:0; padding:0; }
+.chip .frac .fnum::after{ content:"/"; }
+.chip .frac .fden{ padding:0; }
+
+/* Radical: el traç s'estira amb el radicand i enllaça amb el vincle */
+.sqrt{ position:relative; display:inline-block; white-space:nowrap; padding-left:.62em; margin-left:.06em; line-height:1.15; }
+.sqrt .sq-sym{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.sqrt .sq-svg{ position:absolute; left:0; top:0; width:.62em; height:100%; overflow:visible; }
+.sqrt .sq-body{ display:inline-block; border-top:1.6px solid currentColor; padding:.14em .14em 0 .1em; }
+.chip .sqrt .sq-body, .sol-chip .sqrt .sq-body{ padding-top:.06em; }
+
+/* Cadena d'igualtats alineada (un «=» per fila) */
+.mchain{
+  display:inline-grid; grid-template-columns:auto auto auto; align-items:center;
+  column-gap:.35em; row-gap:.3em; text-align:left; line-height:1.5; vertical-align:middle;
+}
+.mchain .mc-l{ text-align:right; }
+.mchain .mc-op{ text-align:center; }
+
+
+/* Exponent */
+sup.exp{ font-size:.68em; vertical-align:.55em; line-height:0; margin-left:.04em; }
+
+/* Bloc de fórmula destacada */
+.math-block{
+  background:var(--bg-soft); border:1.5px solid var(--line); border-radius:var(--radius-m);
+  padding:12px 16px; text-align:center; font-size:1.15rem; line-height:1.9;
+  overflow-x:auto; overflow-y:hidden;
+}
+.math-block .mb-note{ display:block; font-family:var(--font-ui); font-size:.76rem; color:var(--ink-faint); font-weight:700; margin-bottom:4px; text-transform:uppercase; letter-spacing:.8px; }
+
+/* Visualització gran d'una equació amb termes clicables */
+.eq-display{
+  font-family:var(--font-math); font-size:1.55rem; line-height:1.5;
+  background:var(--bg-soft); border:1.5px solid var(--line); border-radius:var(--radius-m);
+  padding:14px 12px; text-align:center;
+  display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;
+  min-height:76px; overflow-x:auto; overflow-y:hidden;
+}
+.eq-display .eq-side{ display:inline-flex; align-items:center; gap:4px; flex-wrap:wrap; justify-content:center; }
+.eq-display .eq-sign{
+  font-weight:700; padding:0 4px; color:var(--ink);
+  min-width:1.1em; display:inline-flex; justify-content:center;
+}
+.eq-display .eq-sign.cmp{ color:var(--amber-ink); font-weight:800; }
+
+/* Terme clicable */
+.term{
+  border:none; background:transparent; cursor:pointer; border-radius:9px;
+  padding:2px 7px; font:inherit; line-height:inherit;
+  transition:background .13s, box-shadow .13s;
+}
+.eq-display.removable .term:hover{
+  background:#fff; box-shadow:0 0 0 2px var(--teal);
+}
+.term:focus-visible{ outline:3px solid #ffd166; outline-offset:1px; }
+.term .t-sign{ opacity:.85; margin-right:.22em; }
+.term .t-var{ font-style:italic; }
+.term.changed{ animation:termFlash 1.1s ease; }
+@keyframes termFlash{
+  0%{ background:var(--amber-soft); box-shadow:0 0 0 3px var(--amber); }
+  100%{ background:transparent; box-shadow:none; }
+}
+.term.factored{ background:#fff; box-shadow:inset 0 0 0 1.5px var(--blue); color:var(--blue-ink); }
+.term.factored:hover{ box-shadow:inset 0 0 0 1.5px var(--teal), 0 0 0 2px var(--teal); }
+
+/* Colors dels dos membres */
+.member-l{ color:var(--blue-ink); }
+.member-r{ color:var(--green-ink); }
+.eq-display .member-l .term:hover{ box-shadow:0 0 0 2px var(--blue); }
+.eq-display .member-r .term:hover{ box-shadow:0 0 0 2px var(--green); }
+
+/* Línia de comprovació per substitució */
+.check-line{
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px;
+  font-family:var(--font-math); font-size:1.02rem; line-height:1.6;
+}
+.check-line .cl-label{ font-family:var(--font-ui); font-size:.72rem; font-weight:800; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.8px; }
+
+/* Resultat de comprovació */
+.verdict{
+  display:inline-flex; align-items:center; gap:8px; border-radius:11px;
+  padding:7px 14px; font-weight:800; font-size:.95rem;
+}
+.verdict.yes{ background:var(--green-soft); color:var(--green-ink); border:1.5px solid #bfe3d4; }
+.verdict.no{ background:var(--red-soft); color:var(--red-deep); border:1.5px solid #f3c6c6; }
+.verdict svg{ width:18px; height:18px; }
+
+/* Fórmula general pas a pas */
+.formula-steps{ display:flex; flex-direction:column; gap:14px; }
+.fstep{
+  border:1.5px solid var(--line); border-radius:var(--radius-m); padding:12px 16px;
+  background:var(--surface);
+}
+.fstep .fs-label{ font-size:.78rem; font-weight:800; color:var(--teal-deep); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:flex; gap:7px; align-items:center; }
+.fstep .fs-label .fs-n{
+  width:22px; height:22px; border-radius:7px; background:var(--teal); color:#fff;
+  display:inline-flex; align-items:center; justify-content:center; font-size:.75rem;
+}
+.fstep .fs-math{ font-family:var(--font-math); font-size:1.18rem; text-align:center; padding:6px 0; line-height:2; overflow-x:auto; }
+.fstep .fs-why{ font-size:.83rem; color:var(--ink-soft); line-height:1.5; margin-top:4px; }
+
+/* Substitució destacada dins la fórmula */
+.hl{ background:var(--amber-soft); border-radius:5px; padding:0 3px; color:var(--amber-ink); }
+.hl-blue{ background:var(--blue-soft); border-radius:5px; padding:0 3px; color:var(--blue-ink); }
+.hl-green{ background:var(--green-soft); border-radius:5px; padding:0 3px; color:var(--green-ink); }
+
+/* Nivells de biquadrada (3 nivells sincronitzats) */
+.bq-level{
+  border:1.5px solid var(--line); border-radius:var(--radius-m); padding:10px 14px;
+  background:var(--surface); display:flex; flex-direction:column; gap:8px;
+}
+.bq-level .bq-tag{
+  font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;
+  color:var(--ink-faint); display:flex; align-items:center; gap:7px;
+}
+.bq-level .bq-tag .bq-dot{ width:10px; height:10px; border-radius:3px; }
+.bq-level.lvl-x .bq-dot{ background:var(--blue); }
+.bq-level.lvl-t .bq-dot{ background:var(--amber); }
+.bq-level.lvl-roots .bq-dot{ background:var(--green); }
+.bq-vals{ display:flex; flex-wrap:wrap; gap:8px; }
+.bq-val{
+  display:inline-flex; align-items:center; gap:7px;
+  border-radius:10px; padding:6px 12px; font-family:var(--font-math); font-size:1.05rem;
+  border:1.5px solid var(--line); background:var(--bg-soft);
+}
+.bq-val .bq-note{ font-family:var(--font-ui); font-size:.72rem; font-weight:700; }
+.bq-val.ok{ background:var(--green-soft); border-color:#bfe3d4; color:var(--green-ink); }
+.bq-val.ok .bq-note{ color:#0b6b47; }
+.bq-val.zero{ background:var(--amber-soft); border-color:#eed9b0; color:var(--amber-ink); }
+.bq-val.zero .bq-note{ color:#8a5200; }
+.bq-val.discarded{ background:var(--bg-soft); border-color:var(--line); color:var(--ink-faint); text-decoration:line-through; }
+.bq-val.discarded .bq-note{ text-decoration:none; color:var(--red-deep); }
+
+/* Llista de solucions */
+.sol-list{ display:flex; flex-wrap:wrap; gap:8px; }
+.sol-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--amber-soft); border:1.5px solid #eed9b0; color:var(--amber-ink);
+  border-radius:11px; padding:6px 13px; font-family:var(--font-math); font-size:1.06rem; font-weight:600;
+}
+.sol-chip .sc-note{ font-family:var(--font-ui); font-size:.72rem; font-weight:700; color:#8a5200; }
+.sol-chip.none{ background:var(--bg-soft); border-color:var(--line); color:var(--ink-soft); }
+.sol-chip.pending{ background:var(--bg-soft); border:1.5px dashed var(--line); color:var(--ink-faint); min-width:42px; justify-content:center; }
+
+/* Taula de mètodes (sistemes) */
+.method-tabs{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.method-tabs button{
+  border:1.5px solid var(--line); background:var(--surface); border-radius:9px;
+  padding:7px 13px; font-weight:700; font-size:.85rem; cursor:pointer; color:var(--ink-soft);
+}
+.method-tabs button[aria-selected="true"]{ background:var(--navy); color:#fff; border-color:var(--navy); }
+
+/* Mini-gràfics dins de modals */
+.mini-graph-host{ border:1.5px solid var(--line); border-radius:var(--radius-m); background:#fff; padding:6px; margin:10px 0; }
+
+/* Paràgraf d'ajuda contextual */
+.help-note{ font-size:.85rem; color:var(--ink-soft); line-height:1.5; }
+.help-note b{ color:var(--navy-ink); }
+
+/* Resposta màscara */
+.mask-box{ position:relative; display:inline-block; }
+
+/* Diverses línies de fórmula, centrades i separades */
+.mrows{ display:inline-flex; flex-direction:column; align-items:center; gap:.45em; vertical-align:middle; }
+.mrows .mline{ display:block; }

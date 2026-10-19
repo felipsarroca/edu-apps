@@ -1,0 +1,447 @@
+/* ============================================================
+   Laboratori d'equacions · 4t ESO — base.css
+   Tokens de disseny, reset, tipografia, carcassa i pantalla d'inici
+   Paleta (segons especificació §13):
+   - estructura: blau marí / petroli
+   - accions: turquesa
+   - observacions: ocre
+   - errors: vermell (només errors)
+   ============================================================ */
+
+:root{
+  /* colors */
+  --bg:#eef2f7;
+  --bg-soft:#f6f8fb;
+  --surface:#ffffff;
+  --ink:#152738;
+  --ink-soft:#46596c;
+  --ink-faint:#5f6f84;
+  --line:#d8e1ec;
+  --line-soft:#e6ecf4;
+
+  --navy:#123c5e;
+  --navy-deep:#0c2c46;
+  --navy-ink:#0e3a5c;
+
+  --teal:#0f766e;         /* accions */
+  --teal-deep:#0b5f58;
+  --teal-soft:#e0f2ef;
+
+  --amber:#ef9f17;        /* observacions / solucions (gràfics) */
+  --amber-ink:#8a5200;
+  --amber-deep:#b26a05;
+  --amber-soft:#fdf1dc;
+
+  --red:#c22f2f;
+  --red-deep:#9e2323;
+  --red-soft:#fdeaea;
+
+  --blue:#1d5fd6;         /* membre esquerre / funció 1 */
+  --blue-ink:#14418f;
+  --blue-soft:#e7eefb;
+
+  --green:#0d9463;        /* membre dret / funció 2 */
+  --green-ink:#0a6e4a;
+  --green-soft:#e4f4ec;
+
+  /* tipografia */
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  --font-math:Georgia,"Times New Roman",Cambria,"Noto Serif",serif;
+
+  /* mides */
+  --fs-root:16px;
+  --radius-s:8px;
+  --radius-m:12px;
+  --radius-l:16px;
+  --radius-xl:20px;
+
+  --shadow-1:0 1px 2px rgba(18,42,66,.06),0 1px 6px rgba(18,42,66,.05);
+  --shadow-2:0 4px 14px rgba(18,42,66,.10),0 1px 4px rgba(18,42,66,.06);
+  --shadow-3:0 12px 34px rgba(18,42,66,.18);
+
+  --header-h:56px;
+  --gap:14px;
+
+  /* amplàries de pantalla */
+  --w-tablet:880px;
+  --w-desktop:1180px;
+}
+
+/* Mode projector: escala global mitjançant rem */
+html.projector{ --fs-root:21px; }
+html.projector .only-compact{ display:none !important; }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+/* ---------- Reset bàsic ---------- */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ font-size:var(--fs-root); height:100%; }
+body{
+  margin:0; height:100%; overflow:hidden;
+  font-family:var(--font-ui); font-size:1rem; line-height:1.5;
+  color:var(--ink); background:var(--bg);
+  -webkit-font-smoothing:antialiased; text-size-adjust:100%;
+}
+button{ font-family:inherit; font-size:inherit; color:inherit; }
+input,select{ font-family:inherit; font-size:inherit; }
+img,svg{ display:block; max-width:100%; }
+h1,h2,h3,h4,p,ul,ol{ margin:0; }
+ul,ol{ padding:0; list-style:none; }
+a{ color:var(--teal-deep); }
+
+:focus{ outline:none; }
+:focus-visible{ outline:3px solid #ffd166; outline-offset:2px; border-radius:4px; }
+.app-header :focus-visible{ outline-color:#ffd166; }
+
+.skip-link{
+  position:absolute; left:-9999px; top:0; z-index:2000;
+  background:var(--navy); color:#fff; padding:10px 18px; border-radius:0 0 var(--radius-m) 0;
+  font-weight:600; text-decoration:none;
+}
+.skip-link:focus{ left:0; }
+
+.sr-only{
+  position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* ---------- Carcassa ---------- */
+#app{ height:100vh; height:100dvh; display:flex; flex-direction:column; }
+.app-main{
+  flex:1; min-height:0; overflow:hidden; position:relative;
+  display:flex; flex-direction:column;
+}
+.app-main.scrollable{ overflow-y:auto; }
+
+/* ---------- Peu d'autoria i llicència ----------
+   Forma part de la columna flex de #app: queda sempre a baix
+   i el contingut s'hi ajusta sense que el peu el tapi. */
+.felip-app-footer{
+  flex:0 0 auto; display:flex; align-items:center; gap:10px;
+  padding:5px clamp(14px,2vw,22px);
+  background:var(--surface); border-top:1px solid var(--line);
+  color:var(--ink-faint); font-size:.74rem; line-height:1.3; z-index:40;
+}
+.felip-license-image-link{ display:block; line-height:0; border-radius:4px; }
+.felip-license-image{ display:block; width:72px; height:auto; }
+.felip-footer-text{ display:flex; flex-direction:column; gap:1px; }
+.felip-footer-text a{ color:var(--navy-ink); font-weight:700; text-decoration:none; }
+.felip-footer-text a:hover{ color:var(--teal-deep); }
+.felip-footer-text a:focus-visible,.felip-license-image-link:focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+html.projector .felip-app-footer{ font-size:.62rem; }
+@media (max-width:640px){
+  .felip-app-footer{ gap:8px; padding:4px 10px; font-size:.68rem; }
+  .felip-license-image{ width:60px; }
+}
+
+/* ---------- Capçalera ---------- */
+.app-header{
+  flex:0 0 auto; display:flex; align-items:center; gap:10px;
+  min-height:var(--header-h); padding:6px 14px;
+  background:linear-gradient(120deg,var(--navy-deep),var(--navy) 55%,#174973);
+  color:#fff; box-shadow:var(--shadow-1); z-index:50;
+}
+.app-header .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+.brand-mark{
+  width:34px; height:34px; flex:0 0 auto; border-radius:9px;
+  background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center;
+}
+.brand-mark svg{ width:22px; height:22px; }
+.brand-text{ min-width:0; }
+.brand-title{
+  font-weight:700; font-size:1.02rem; letter-spacing:.2px; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.brand-sub{ font-size:.72rem; opacity:.85; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.app-header .spacer{ flex:1; }
+
+.hbtn{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  height:38px; min-width:38px; padding:0 10px;
+  background:rgba(255,255,255,.10); color:#fff;
+  border:1px solid rgba(255,255,255,.16); border-radius:10px;
+  cursor:pointer; font-size:.85rem; font-weight:600;
+  transition:background .15s;
+}
+.hbtn:hover{ background:rgba(255,255,255,.20); }
+.hbtn svg{ width:18px; height:18px; flex:0 0 auto; }
+.hbtn.on{ background:var(--amber); border-color:var(--amber-deep); color:#3a2500; }
+
+.back-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.10); color:#fff; border:1px solid rgba(255,255,255,.16);
+  border-radius:10px; padding:8px 12px; cursor:pointer; font-weight:600; font-size:.85rem;
+}
+.back-btn:hover{ background:rgba(255,255,255,.2); }
+.back-btn svg{ width:16px; height:16px; }
+
+@media (max-width:640px){
+  .app-header{ padding:6px 10px; gap:6px; }
+  .brand-sub{ display:none; }
+  .brand-title{ font-size:.92rem; }
+  .hbtn{ padding:0 8px; }
+  .hbtn .hbtn-label{ display:none; }
+}
+
+/* ---------- Pantalla d'inici ---------- */
+.home{
+  flex:1; min-height:0; overflow-y:auto; padding:22px clamp(14px,4vw,48px) 30px;
+  display:flex; flex-direction:column; align-items:center; gap:20px;
+}
+.home-inner{ width:100%; max-width:1180px; display:flex; flex-direction:column; gap:22px; }
+.home-hero{
+  display:flex; flex-direction:column; gap:8px; align-items:center; text-align:center; padding-top:6px;
+}
+.home-hero h1{
+  font-size:clamp(1.6rem,4vw,2.3rem); font-weight:800; color:var(--navy-deep); letter-spacing:-.5px;
+  font-family:var(--font-math);
+}
+.home-hero h1 .accent{ color:var(--amber-deep); }
+.home-tagline{
+  display:flex; flex-wrap:wrap; gap:8px; justify-content:center; align-items:center;
+  color:var(--ink-soft); font-size:.95rem;
+}
+.tag-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--surface); border:1px solid var(--line); border-radius:999px;
+  padding:5px 13px; font-weight:600; color:var(--navy-ink); box-shadow:var(--shadow-1); font-size:.88rem;
+}
+.tag-chip .dot{ width:8px; height:8px; border-radius:50%; }
+.home-section-title{
+  font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1.4px; color:var(--ink-faint);
+  margin-bottom:-6px; padding:0 4px;
+}
+.lab-grid{
+  display:grid; gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(255px,1fr));
+}
+.lab-card{
+  position:relative; display:flex; flex-direction:column; gap:10px; text-align:left;
+  background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius-l);
+  padding:18px 18px 15px; cursor:pointer; box-shadow:var(--shadow-1);
+  transition:transform .16s, box-shadow .16s, border-color .16s;
+}
+.lab-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); border-color:#b9cfe0; }
+.lab-card:focus-visible{ outline:3px solid var(--amber); outline-offset:3px; }
+.lab-card .lc-top{ display:flex; align-items:center; gap:10px; }
+.lab-card .lc-num{
+  width:40px; height:40px; flex:0 0 auto; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-math); font-weight:700; font-size:1.05rem;
+  background:var(--blue-soft); color:var(--blue-ink);
+}
+.lab-card .lc-title{ font-weight:700; font-size:1.05rem; color:var(--navy-deep); line-height:1.25; }
+.lab-card .lc-desc{ font-size:.85rem; color:var(--ink-soft); line-height:1.45; flex:1; }
+.lab-card .lc-foot{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  font-size:.78rem; color:var(--ink-faint); font-weight:600;
+}
+.lab-card .lc-arrow{ color:var(--teal); font-weight:800; }
+.lab-card .lc-badge{
+  position:absolute; top:-9px; right:14px;
+  background:var(--amber); color:#3a2500; border:1px solid var(--amber-deep);
+  font-size:.7rem; font-weight:800; padding:3px 10px; border-radius:999px; letter-spacing:.4px;
+  box-shadow:var(--shadow-1);
+}
+.lab-card[data-kind="detectiu"] .lc-num{ background:var(--red-soft); color:var(--red-deep); }
+.lab-card[data-kind="practica"] .lc-num{ background:var(--teal-soft); color:var(--teal-deep); }
+.lab-card[data-kind="concept"] .lc-num{ background:var(--amber-soft); color:var(--amber-ink); }
+
+.home-lead{ color:var(--ink-soft); font-size:1rem; max-width:560px; line-height:1.5; }
+
+/* Itinerari recomanat */
+.home-path{
+  background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius-l);
+  box-shadow:var(--shadow-1); padding:14px 18px 16px;
+}
+.path-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-bottom:12px; }
+.path-head h2{ font-size:.8rem; font-weight:800; text-transform:uppercase; letter-spacing:1.3px; color:var(--navy-ink); }
+.path-note{ font-size:.85rem; color:var(--ink-soft); flex:1; min-width:200px; }
+.path-list{ display:flex; gap:0; overflow-x:auto; padding:2px 2px 4px; }
+.path-list li{ flex:1 1 0; min-width:92px; position:relative; }
+/* línia que uneix els passos */
+.path-list li + li::before{
+  content:""; position:absolute; top:19px; left:-50%; right:50%; height:3px;
+  background:var(--line); z-index:0;
+}
+.path-step{
+  position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px;
+  text-decoration:none; color:var(--ink-soft); font-size:.8rem; font-weight:700; text-align:center;
+  padding:0 4px; border-radius:10px;
+}
+.path-step .ps-dot{
+  width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--surface); border:2.5px solid var(--line); color:var(--navy-ink);
+  font-family:var(--font-math); font-weight:700; font-size:1.05rem; transition:transform .15s, border-color .15s;
+}
+.path-step:hover .ps-dot{ transform:scale(1.08); border-color:var(--teal); }
+.path-step:hover .ps-name{ color:var(--teal-deep); }
+.path-step.started .ps-dot{ border-color:var(--teal); background:var(--teal-soft); color:var(--teal-deep); }
+.path-step.done .ps-dot{ border-color:var(--teal-deep); background:var(--teal-deep); color:#fff; }
+.path-step.done .ps-name{ color:var(--teal-deep); }
+.path-step[data-kind="detectiu"] .ps-dot{ color:var(--red-deep); }
+.path-step[data-kind="detectiu"].done .ps-dot{ color:#fff; }
+
+/* Progrés a cada targeta */
+.lab-card .lc-prog{ flex:1; display:flex; align-items:center; gap:8px; font-size:.76rem; font-weight:700; color:var(--ink-soft); }
+.lab-card .lc-bar{ flex:1; height:6px; border-radius:6px; background:var(--line-soft); overflow:hidden; }
+.lab-card .lc-bar i{ display:block; height:100%; background:var(--teal); border-radius:6px; }
+.lab-card .lc-prog.complete{ color:var(--teal-deep); }
+
+/* La portada s'adapta a l'alçada de la pantalla: centrada verticalment quan sobra espai,
+   amb espais i il·lustracions que creixen o s'encongeixen segons l'alçada disponible. */
+.home{ padding-block:clamp(10px,3vh,40px) clamp(14px,3.4vh,44px); }
+.home-inner{ margin-block:auto; gap:clamp(10px,3vh,40px); }
+.home-hero{ padding-top:0; }
+.home-hero h1{ font-size:clamp(1.4rem,min(4vw,4.6vh),2.6rem); }
+.lab-grid{ gap:clamp(10px,2.2vh,24px) 14px; }
+.lab-card{ padding:clamp(11px,2vh,22px) 18px clamp(10px,1.8vh,18px); gap:clamp(6px,1.3vh,14px); }
+
+/* ---------- Estructura genèrica de laboratori ---------- */
+.lab{ flex:1; min-height:0; display:grid; gap:var(--gap); padding:var(--gap); overflow:hidden; }
+.lab.cols{
+  grid-template-columns:minmax(330px,30%) 1fr;
+  grid-template-rows:100%;
+}
+.lab.cols.wide-left{ grid-template-columns:minmax(380px,40%) 1fr; }
+.lab-left,.lab-right{ min-width:0; min-height:0; display:flex; flex-direction:column; gap:var(--gap); overflow:hidden; }
+.lab-left{ overflow-y:auto; padding-right:2px; }
+.lab-left::-webkit-scrollbar{ width:8px; }
+.lab-left::-webkit-scrollbar-thumb{ background:#c4d0de; border-radius:8px; }
+
+/* Barra de pestanyes mòbil (evita scroll vertical) */
+.lab-viewtabs{ display:none; }
+
+@media (max-width:880px){
+  .lab{ display:flex; flex-direction:column; padding:10px; }
+  .lab-viewtabs{
+    display:flex; gap:6px; background:var(--surface); border:1.5px solid var(--line);
+    border-radius:12px; padding:4px; box-shadow:var(--shadow-1); flex:0 0 auto;
+  }
+  .lab-viewtabs button{
+    flex:1; padding:9px 8px; border:none; border-radius:9px; background:transparent;
+    font-weight:700; font-size:.9rem; color:var(--ink-soft); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:7px;
+  }
+  .lab-viewtabs button svg{ width:17px; height:17px; }
+  .lab-left,.lab-right{ flex:1 1 auto; }
+  .lab[data-view="viz"] .lab-left{ display:none; }
+  .lab[data-view="ctrl"] .lab-right{ display:none; }
+  .lab[data-view="ctrl"] .lab-viewtabs button[data-viewtab="ctrl"],
+  .lab[data-view="viz"] .lab-viewtabs button[data-viewtab="viz"]{ background:var(--navy); color:#fff; }
+}
+
+/* Targeta genèrica */
+.card{
+  background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius-l);
+  box-shadow:var(--shadow-1); padding:14px 16px;
+}
+.card.tight{ padding:10px 12px; }
+.card-title{
+  font-size:.8rem; font-weight:800; text-transform:uppercase; letter-spacing:1.1px;
+  color:var(--ink-faint); margin-bottom:8px; display:flex; align-items:center; gap:8px;
+}
+.card-title svg{ width:15px; height:15px; }
+
+/* Barra d'estat sota/damunt el gràfic */
+.statusbar{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px;
+  background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius-m);
+  padding:8px 14px; box-shadow:var(--shadow-1); font-size:.92rem;
+}
+.statusbar .sb-item{ display:inline-flex; align-items:center; gap:7px; min-width:0; }
+.statusbar .sb-label{ font-weight:700; color:var(--ink-faint); font-size:.78rem; text-transform:uppercase; letter-spacing:.6px; }
+
+/* Barra d'insight (explicació contextual) */
+.insight{
+  display:flex; align-items:flex-start; gap:10px;
+  background:var(--amber-soft); border:1.5px solid #eed9b0; border-radius:var(--radius-m);
+  padding:9px 13px; font-size:.88rem; color:#5c3d06; line-height:1.45;
+}
+.insight svg{ width:17px; height:17px; flex:0 0 auto; margin-top:2px; color:var(--amber-deep); }
+.insight b{ color:#4a3000; }
+
+/* Marc del gràfic */
+.viz-card{
+  flex:1; min-height:0; display:flex; flex-direction:column; gap:0;
+  background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius-l);
+  box-shadow:var(--shadow-1); overflow:hidden; position:relative;
+}
+.viz-head{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px;
+  padding:8px 12px; border-bottom:1px solid var(--line-soft); background:var(--bg-soft);
+  min-height:46px;
+}
+.viz-title{ font-weight:800; font-size:.86rem; color:var(--navy-ink); display:flex; align-items:center; gap:7px; }
+.viz-title svg{ width:16px; height:16px; color:var(--teal); }
+.legend{ display:flex; flex-wrap:wrap; gap:6px; margin-left:auto; }
+.legend .lg-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:.8rem; font-weight:600; color:var(--ink-soft);
+  background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:3px 10px 3px 6px;
+}
+.legend .lg-swatch{ width:18px; height:0; border-top:3.5px solid; border-radius:3px; }
+.legend .lg-chip.ghost{ opacity:.75; }
+.legend .lg-chip.ghost .lg-swatch{ border-top-style:dashed; }
+.viz-body{ flex:1; min-height:0; position:relative; }
+.viz-body .graph-host{ position:absolute; inset:0; }
+
+/* Marcador "fora de vista" */
+.outside-note{
+  position:absolute; left:50%; top:10px; transform:translateX(-50%);
+  display:flex; align-items:center; gap:10px; z-index:5; max-width:calc(100% - 20px);
+  background:#fff; border:1.5px solid var(--amber-deep); border-radius:10px;
+  padding:6px 8px 6px 12px; box-shadow:var(--shadow-2); font-size:.82rem; font-weight:600; color:var(--amber-ink);
+}
+.outside-note button{
+  border:none; background:var(--amber); color:#3a2500; font-weight:700;
+  border-radius:7px; padding:5px 10px; cursor:pointer; font-size:.8rem; white-space:nowrap;
+}
+.outside-note button:hover{ background:#f0ad35; }
+
+/* Pestanyes verticals dins d'una columna */
+.vtabs{ display:flex; flex-direction:column; gap:0; min-height:0; flex:1; }
+.vtabs-bar{ display:flex; gap:4px; flex-wrap:wrap; padding:2px; }
+.vtabs-bar button{
+  border:none; background:transparent; border-radius:9px; padding:7px 12px;
+  font-weight:700; font-size:.84rem; color:var(--ink-soft); cursor:pointer;
+}
+.vtabs-bar button[aria-selected="true"]{ background:var(--navy); color:#fff; }
+.vtabs-panel{ flex:1; min-height:0; overflow-y:auto; display:none; padding-top:10px; }
+.vtabs-panel.active{ display:block; }
+.vtabs-panel::-webkit-scrollbar{ width:8px; }
+.vtabs-panel::-webkit-scrollbar-thumb{ background:#c4d0de; border-radius:8px; }
+
+/* Mode projector: grans fórmules */
+html.projector .eq-display{ font-size:2rem; }
+html.projector .statusbar{ font-size:1.1rem; }
+html.projector .viz-title{ font-size:1rem; }
+html.projector .card-title{ font-size:.9rem; }
+
+/* Amaga respostes (mode debat) */
+body.mask-answers [data-answer]{
+  position:relative;
+}
+body.mask-answers [data-answer] > *{ visibility:hidden; }
+body.mask-answers [data-answer]::after{
+  content:"Resposta amagada";
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:repeating-linear-gradient(45deg,#f2f5f9,#f2f5f9 10px,#e8edf4 10px,#e8edf4 20px);
+  border-radius:inherit; color:var(--ink-soft); font-weight:700; font-size:.85rem;
+  cursor:pointer;
+}
+body.mask-answers [data-answer].revealed::after{ display:none; }
+body.mask-answers [data-answer].revealed > *{ visibility:visible; }
+
+/* Itinerari discret: una franja lleugera sobre les targetes, que són les protagonistes */
+.home-path.compact{ background:transparent; border:0; box-shadow:none; padding:0 4px; margin-bottom:clamp(0px,1.4vh,16px); }
+.home-path.compact .path-head{ margin-bottom:clamp(8px,1.8vh,18px); }
+.home-path.compact .path-head .btn{ margin-left:auto; }
+.home-path.compact .path-head h2{ color:var(--ink-faint); font-size:.74rem; }
+.home-path.compact .path-note{ font-size:.82rem; }
+.home-path.compact .path-list li{ min-width:76px; }
+.home-path.compact .path-list li + li::before{ top:13px; height:2px; }
+.home-path.compact .path-step{ font-size:.72rem; font-weight:600; gap:4px; }
+.home-path.compact .path-step .ps-dot{ width:28px; height:28px; font-size:.82rem; border-width:2px; }

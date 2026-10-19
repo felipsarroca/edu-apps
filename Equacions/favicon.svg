@@ -1,0 +1,15 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="800px" height="800px" viewBox="-0.72 -0.72 25.44 25.44" id="parabolic-function" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color" stroke="#000000" stroke-width="0.528">
+<g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+<rect x="-0.72" y="-0.72" width="25.44" height="25.44" rx="3.8160000000000003" fill="#e3c191" strokewidth="0"/>
+</g>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="1.7759999999999998">
+<path id="secondary" d="M14,16c-.89,0-3.58,0-4-13A1,1,0,1,1,12,3c.27,8.47,1.59,10.86,2,11,.38-.17,1.7-2.56,2-11A1,1,0,0,1,18,3C17.58,16,14.89,16,14,16Z" style="fill: #ba2c48;"/>
+<path id="primary" d="M5,22a1,1,0,0,1-1-1V20H3a1,1,0,0,1,0-2H4V3A1,1,0,0,1,6,3V18H21a1,1,0,0,1,0,2H6v1A1,1,0,0,1,5,22Z" style="fill: #1c00f0;"/>
+</g>
+<g id="SVGRepo_iconCarrier">
+<path id="secondary" d="M14,16c-.89,0-3.58,0-4-13A1,1,0,1,1,12,3c.27,8.47,1.59,10.86,2,11,.38-.17,1.7-2.56,2-11A1,1,0,0,1,18,3C17.58,16,14.89,16,14,16Z" style="fill: #ba2c48;"/>
+<path id="primary" d="M5,22a1,1,0,0,1-1-1V20H3a1,1,0,0,1,0-2H4V3A1,1,0,0,1,6,3V18H21a1,1,0,0,1,0,2H6v1A1,1,0,0,1,5,22Z" style="fill: #1c00f0;"/>
+</g>
+</svg>
