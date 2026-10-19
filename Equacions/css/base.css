@@ -62,7 +62,7 @@
   --header-h:56px;
   --gap:14px;
 
-  /* escala global en pantalles grans (la calcula app.js; 1 = sense escalar).
+  /* escala global en portàtils petits (la calcula app.js; 1 = sense escalar).
      --vh és 1vh corregit per l'escala, perquè les alçades no desbordin. */
   --ui-zoom:1;
   --vh:calc(1vh / var(--ui-zoom));

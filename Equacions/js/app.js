@@ -33,16 +33,24 @@
     fitScale();
   }
 
-  /* ---------- escala en pantalles grans ----------
-     La interfície està pensada per a uns 1440 × 730 px útils. En pantalles més
-     grans (p. ex. 1920 × 1080) s'amplia tota sencera perquè no quedi petita i
-     plena d'espai buit. El mode projector ja fa la lletra gran: no s'hi suma. */
-  const BASE_W = 1440, BASE_H = 730, MAX_ZOOM = 1.35;
+  /* ---------- escala en pantalles d'ordinador petites ----------
+     La interfície està pensada per a pantalles de 1440 × 800 px útils o més
+     (p. ex. 1920 × 1080). En portàtils més petits (p. ex. 1366 × 768) es
+     redueix tota sencera perquè hi càpiga com en una pantalla gran.
+     Les classes h-640/h-680/h-700 substitueixen les media queries d'alçada,
+     perquè han de dependre de l'alçada efectiva (ja escalada), no de la real.
+     En tauletes, mòbils i mode projector no s'escala. */
+  const BASE_W = 1440, BASE_H = 800, MIN_ZOOM = 0.75, MIN_DESKTOP_W = 1200;
   function fitScale() {
-    let z = Math.min(window.innerWidth / BASE_W, window.innerHeight / BASE_H, MAX_ZOOM);
-    z = Math.floor(z * 20) / 20;
-    if (settings.projector || !(z > 1)) z = 1;
-    document.documentElement.style.setProperty('--ui-zoom', String(z));
+    const w = window.innerWidth, h = window.innerHeight;
+    let z = Math.min(1, w / BASE_W, h / BASE_H);
+    z = Math.max(MIN_ZOOM, Math.floor(z * 20) / 20);
+    if (settings.projector || w < MIN_DESKTOP_W) z = 1;
+    const root = document.documentElement, eh = h / z;
+    root.style.setProperty('--ui-zoom', String(z));
+    root.classList.toggle('h-700', eh <= 700);
+    root.classList.toggle('h-680', eh <= 680);
+    root.classList.toggle('h-640', eh <= 640);
   }
 
   /* ---------- progrés de l'alumne (només al navegador) ----------

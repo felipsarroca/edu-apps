@@ -553,14 +553,15 @@ details.opt-more[open] > summary::after{ transform:rotate(180deg); }
 .op-note.flip{ background:var(--amber-soft); border-color:#eed9b0; color:#5c3d06; }
 
 /* Pantalles baixes (portàtils petits, projectors a 720p): portada més compacta */
-@media (max-height:680px) and (min-width:641px){
-  .home{ padding-block:8px 10px; }
-  .home-inner{ gap:8px; }
-  .home-hero h1{ font-size:1.35rem; }
-  .home-path.compact{ margin-bottom:0; }
-  .home-path.compact .path-head{ margin-bottom:6px; }
-  .lab-grid{ gap:10px 14px; }
-  .lab-card{ padding:10px 16px 9px; gap:6px; }
-  .lab-card .lc-num{ width:34px; height:34px; }
-  .lab-card .lc-art{ height:46px; }
+/* (html.h-680 l'activa app.js segons l'alçada efectiva) */
+@media (min-width:641px){
+  html.h-680 .home{ padding-block:8px 10px; }
+  html.h-680 .home-inner{ gap:8px; }
+  html.h-680 .home-hero h1{ font-size:1.35rem; }
+  html.h-680 .home-path.compact{ margin-bottom:0; }
+  html.h-680 .home-path.compact .path-head{ margin-bottom:6px; }
+  html.h-680 .lab-grid{ gap:10px 14px; }
+  html.h-680 .lab-card{ padding:10px 16px 9px; gap:6px; }
+  html.h-680 .lab-card .lc-num{ width:34px; height:34px; }
+  html.h-680 .lab-card .lc-art{ height:46px; }
 }

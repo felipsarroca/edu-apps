@@ -139,12 +139,11 @@ body.mask-answers [data-answer]::after{ cursor:pointer; }
 }
 
 /* ---------- Ajustos de densitat per pantalles baixes ---------- */
-@media (max-height:640px){
-  .card{ padding:10px 12px; }
-  .eq-display{ font-size:1.3rem; min-height:60px; padding:9px 8px; }
-  .lab{ gap:10px; padding:10px; }
-  .viz-head{ min-height:38px; padding:5px 10px; }
-}
+/* (html.h-640 l'activa app.js segons l'alçada efectiva) */
+html.h-640 .card{ padding:10px 12px; }
+html.h-640 .eq-display{ font-size:1.3rem; min-height:60px; padding:9px 8px; }
+html.h-640 .lab{ gap:10px; padding:10px; }
+html.h-640 .viz-head{ min-height:38px; padding:5px 10px; }
 
 /* ---------- M2: recta numèrica i gràfic alhora ---------- */
 .viz-body.m2-split{ display:flex; flex-direction:column; }
@@ -155,7 +154,8 @@ body.mask-answers [data-answer]::after{ cursor:pointer; }
   flex:0 0 auto; margin:0 12px; padding:6px 10px; border-radius:8px;
   background:var(--bg-soft); border:1px dashed var(--line); font-size:.8rem; color:var(--ink-soft); text-align:center;
 }
-@media (max-height:700px){ .viz-body.m2-split .m2-recta{ flex-basis:112px; } .m2-split-note{ display:none; } }
+html.h-700 .viz-body.m2-split .m2-recta{ flex-basis:112px; }
+html.h-700 .m2-split-note{ display:none; }
 
 /* ---------- M4: els camps dels coeficients s'obren amb «✎ Edita» ---------- */
 #l4-card:not(.editing) .sys-eq .se-controls{ display:none; }
