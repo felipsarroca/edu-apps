@@ -1,7 +1,8 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { ThemeSwitcher } from "./ThemeSwitcher.js";
+import { ViewMenu } from "./ViewMenu.js";
 import { THEMES } from "../constants.js";
-const Header = ({ theme, setTheme, onAddClick, onToggleSidePanel, isSidePanelOpen, onInfoClick, onDownloadClick }) => {
+const Header = ({ theme, setTheme, onAddClick, onToggleSidePanel, isSidePanelOpen, onInfoClick, onDownloadClick, viewConfig, onViewConfigChange }) => {
   const themeClasses = THEMES[theme];
   return /* @__PURE__ */ jsxs("header", { className: `flex items-center justify-between p-3 border-b ${themeClasses.border} ${themeClasses.headerBg} flex-shrink-0 z-10`, children: [
     /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
@@ -40,6 +41,7 @@ const Header = ({ theme, setTheme, onAddClick, onToggleSidePanel, isSidePanelOpe
           children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-floppy-disk text-2xl", style: { color: themeClasses.accent } })
         }
       ),
+      /* @__PURE__ */ jsx(ViewMenu, { theme, viewConfig, onChange: onViewConfigChange }),
       /* @__PURE__ */ jsx(ThemeSwitcher, { theme, setTheme }),
       /* @__PURE__ */ jsx(
         "button",

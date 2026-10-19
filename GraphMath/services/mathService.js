@@ -1,4 +1,4 @@
-import { MathSyntaxError, compile, parseRelation, polyCoef, polyDegree, relationToTex, toPolynomial, toTex, usesVar } from "./parser.js";
+import { MathSyntaxError, compile, getParameters, paramSignature, parseRelation, polyCoef, polyDegree, relationToTex, toPolynomial, toTex, usesVar } from "./parser.js";
 
 const SEARCH_RANGE = 100;
 const SEARCH_STEPS = 2e4;
@@ -21,6 +21,19 @@ function snapNumber(v) {
   }
   return v;
 }
+// Arrodoniment més tolerant per a valors obtinguts per minimització (màxims i mínims)
+function snapLoose(v) {
+  for (let q = 1; q <= 12; q++) {
+    const p = Math.round(v * q);
+    if (Math.abs(v - p / q) < 1e-6) return p / q;
+  }
+  // Múltiples de π (extrems de funcions trigonomètriques)
+  for (let q = 1; q <= 12; q++) {
+    const p = Math.round(v / Math.PI * q);
+    if (p !== 0 && Math.abs(p) <= 48 && Math.abs(v - p * Math.PI / q) < 1e-6) return p * Math.PI / q;
+  }
+  return v;
+}
 function toFraction(v) {
   for (let q = 1; q <= 12; q++) {
     const p = Math.round(v * q);
@@ -39,10 +52,25 @@ function formatNumber(v, decimals = 2) {
     const sign = frac.p < 0 ? "−" : "";
     return frac.q === 1 ? `${sign}${Math.abs(frac.p)}` : `${sign}${Math.abs(frac.p)}/${frac.q}`;
   }
+  const piText = formatPiMultiple(v);
+  if (piText) return piText;
   const s = Number(v.toFixed(decimals)).toString().replace(".", ",").replace("-", "−");
   return `${s}`;
 }
-const isApprox = (v) => typeof v === "number" && Number.isFinite(v) && !toFraction(v);
+// Múltiples racionals de π: π/2, 2π, −3π/4...
+function piFraction(v) {
+  if (v === 0 || !Number.isFinite(v)) return null;
+  const f = toFraction(v / Math.PI);
+  return f && Math.abs(f.p) <= 48 ? f : null;
+}
+function formatPiMultiple(v) {
+  const f = piFraction(v);
+  if (!f) return null;
+  const sign = f.p < 0 ? "−" : "";
+  const num = Math.abs(f.p) === 1 ? "π" : `${Math.abs(f.p)}π`;
+  return f.q === 1 ? `${sign}${num}` : `${sign}${num}/${f.q}`;
+}
+const isApprox = (v) => typeof v === "number" && Number.isFinite(v) && !toFraction(v) && !piFraction(v);
 function formatApprox(v, decimals = 2) {
   return (isApprox(v) ? "≈ " : "") + formatNumber(v, decimals);
 }
@@ -224,11 +252,22 @@ function polyInfo(D, sides) {
   return p;
 }
 
+// Els resultats depenen del valor dels paràmetres (a, b, c...): s'inclouen a la clau de la memòria cau
+const paramNamesCache = /* @__PURE__ */ new Map();
+function paramKey(text) {
+  let names = paramNamesCache.get(text);
+  if (!names) {
+    names = getParameters(text);
+    if (paramNamesCache.size > 1e3) paramNamesCache.clear();
+    paramNamesCache.set(text, names);
+  }
+  return names.length ? paramSignature(names) : "";
+}
 const prepareCache = /* @__PURE__ */ new Map();
 // Analitza el text i decideix com s'ha de dibuixar.
 // options.inSystem: dins d'un sistema, les equacions només en x es dibuixen com a rectes verticals.
 function prepareExpression(text, options = {}) {
-  const key = `${options.inSystem ? "S" : "F"}|${text}`;
+  const key = `${options.inSystem ? "S" : "F"}|${paramKey(text)}|${text}`;
   if (prepareCache.has(key)) return prepareCache.get(key);
   const result = prepareUncached(text, options);
   if (prepareCache.size > 500) prepareCache.clear();
@@ -373,18 +412,27 @@ function isConstInteger(node) {
   return Number.isInteger(v) && v >= 0;
 }
 const ALL_REALS = "Tots els reals (ℝ)";
+// Valors de x que anul·len algun denominador
+function domainExclusions(node) {
+  const exclusions = [];
+  for (const d of collectNodes(node, (n) => n.type === "bin" && n.op === "/" && usesVar(n.right, "x"))) {
+    const den = compile(d.right);
+    const roots = findRoots((x) => den(x, 0));
+    if (!roots.identicallyZero) roots.forEach((r) => pushUnique(exclusions, r));
+  }
+  for (const p of collectNodes(node, (n) => n.type === "pow" && usesVar(n.base, "x") && n.exp.type === "neg")) {
+    const b = compile(p.base);
+    findRoots((x) => b(x, 0)).forEach((r) => pushUnique(exclusions, r));
+  }
+  return exclusions.sort((a, b) => a - b);
+}
 function describeDomain(sides, fn) {
   const notes = [];
   const exprSide = sides;
   const divisions = collectNodes(exprSide, (n) => n.type === "bin" && n.op === "/" && usesVar(n.right, "x"));
-  const roots = collectNodes(exprSide, (n) => n.type === "func" && ["sqrt", "ln", "log", "asin", "acos"].includes(n.name) && usesVar(n.arg, "x") || n.type === "pow" && usesVar(n.base, "x") && !isConstInteger(n.exp));
+  const roots = collectNodes(exprSide, (n) => n.type === "func" && ["sqrt", "ln", "log", "logb", "asin", "acos"].includes(n.name) && usesVar(n.arg, "x") || n.type === "pow" && usesVar(n.base, "x") && !isConstInteger(n.exp));
   const tangents = collectNodes(exprSide, (n) => n.type === "func" && n.name === "tan" && usesVar(n.arg, "x"));
-  const exclusions = [];
-  for (const d of divisions) {
-    const den = compile(d.right);
-    findRoots((x) => den(x, 0)).forEach((r) => pushUnique(exclusions, r));
-  }
-  exclusions.sort((a, b) => a - b);
+  const exclusions = domainExclusions(exprSide);
   if (tangents.length) notes.push("La tangent no existeix on el seu argument val π/2 + k·π.");
   if (!divisions.length && !roots.length && !tangents.length) return { text: "Tots els reals (ℝ)", notes };
   if (tangents.length && !roots.length) return { text: exclusions.length ? `ℝ − {${exclusions.map((e) => formatNumber(e)).join(", ")}}, excepte on no existeix la tangent` : "ℝ, excepte on no existeix la tangent", notes };
@@ -398,8 +446,8 @@ function describeDomain(sides, fn) {
 
 // ---------- Inequacions d'una incògnita ----------
 const holds = (v, rel) => rel === "<" ? v < 0 : rel === ">" ? v > 0 : rel === "<=" ? v <= 0 : rel === ">=" ? v >= 0 : Math.abs(v) < 1e-12;
-function solveInequality1D(h, rel) {
-  const breaks = [];
+function solveInequality1D(h, rel, extraCuts = []) {
+  const breaks = [...extraCuts];
   const roots = findRoots(h, SEARCH_RANGE, SEARCH_STEPS, breaks);
   if (roots.identicallyZero) return { roots: [], intervals: rel.includes("=") ? [{ a: -Infinity, b: Infinity }] : [] };
   const edges = [];
@@ -407,7 +455,7 @@ function solveInequality1D(h, rel) {
     if (Number.isFinite(iv.a)) edges.push(iv.a);
     if (Number.isFinite(iv.b)) edges.push(iv.b);
   }
-  const cuts = [...roots, ...breaks, ...edges].sort((p, q) => p - q).filter((v, i, arr) => i === 0 || Math.abs(v - arr[i - 1]) > 1e-9);
+  const cuts = [...roots, ...breaks, ...edges].sort((p, q) => p - q).filter((v, i, arr) => i === 0 || Math.abs(v - arr[i - 1]) > 1e-6);
   const bounds = [-Infinity, ...cuts, Infinity];
   const pointOk = (v) => {
     const hv = h(v);
@@ -445,13 +493,142 @@ function formatSolutionIntervals(intervals) {
   return intervals.map((iv) => iv.point ? `{${formatNumber(iv.a)}}` : formatInterval(iv.a, iv.b, iv.incA, iv.incB)).join(" ∪ ");
 }
 
+// ---------- Característiques d'una funció y = f(x) ----------
+const BIG = 1e3;
+// Comportament a prop d'un punt problemàtic: forat (discontinuïtat evitable) o asímptota vertical
+function nearBehaviour(f, r, side) {
+  const at = (d) => f(r + side * d);
+  const m1 = Math.abs(at(1e-4));
+  const m2 = Math.abs(at(1e-8));
+  const m3 = Math.abs(at(1e-12));
+  if (![m1, m2, m3].every(Number.isFinite)) return { finite: false, asymptote: false };
+  const asymptote = m2 > 10 * m1 + 10 || m2 - m1 > 5 && m3 - m2 > 5;
+  return { finite: !asymptote, asymptote, value: at(1e-9) };
+}
+function horizontalAsymptote(f, sign) {
+  const v = [1e4, 1e6, 1e8].map((t) => f(sign * t));
+  if (!v.every(Number.isFinite)) return null;
+  if (Math.abs(v[2] - v[1]) < 1e-4 * (1 + Math.abs(v[2])) && Math.abs(v[1] - v[0]) < 1e-2 * (1 + Math.abs(v[1]))) return snapNumber(Number(v[2].toFixed(6)));
+  return null;
+}
+function findExtrema(f) {
+  const steps = SEARCH_STEPS;
+  const xs = new Float64Array(steps + 1);
+  const vs = new Float64Array(steps + 1);
+  for (let i = 0; i <= steps; i++) {
+    xs[i] = -SEARCH_RANGE + 2 * SEARCH_RANGE * i / steps;
+    const v = f(xs[i]);
+    vs[i] = Number.isFinite(v) ? v : NaN;
+  }
+  const out = [];
+  const golden = (g, a, b) => {
+    const k = (Math.sqrt(5) - 1) / 2;
+    let c = b - k * (b - a);
+    let d = a + k * (b - a);
+    for (let it = 0; it < 100; it++) {
+      if (g(c) < g(d)) b = d;
+      else a = c;
+      c = b - k * (b - a);
+      d = a + k * (b - a);
+    }
+    return (a + b) / 2;
+  };
+  for (let i = 1; i < steps; i++) {
+    const [a, v, b] = [vs[i - 1], vs[i], vs[i + 1]];
+    if (Number.isNaN(a) || Number.isNaN(v) || Number.isNaN(b)) continue;
+    const isMax = v > a && v >= b;
+    const isMin = v < a && v <= b;
+    if (!isMax && !isMin) continue;
+    // Descarta pics deguts a una asímptota
+    if (Math.abs(v) > 1e6) continue;
+    const x = snapLoose(golden(isMax ? (t) => -f(t) : f, xs[i - 1], xs[i + 1]));
+    const y = f(x);
+    if (!Number.isFinite(y)) continue;
+    if (out.every((e) => Math.abs(e.x - x) > 1e-6)) out.push({ x, y: snapNumber(y), type: isMax ? "max" : "min" });
+  }
+  return out;
+}
+// Arrels periòdiques (sin, cos...): forma general x = b + k·P
+function periodicForm(roots) {
+  if (roots.length < 6) return null;
+  const has = (v) => roots.some((r) => Math.abs(r - v) < 1e-6);
+  const max = roots[roots.length - 1];
+  for (let k = 1; k <= 4 && k < roots.length; k++) {
+    const P = roots[k] - roots[0];
+    if (P <= 1e-6) continue;
+    const ok = roots.every((r) => r + P > max + 1e-6 || has(r + P));
+    if (!ok) continue;
+    const base = roots.filter((r) => r >= -1e-9 && r < P - 1e-9);
+    const period = formatNumber(snapNumber(P));
+    const kP = /^\d*π(\/\d+)?$/.test(period) ? period.replace(/^(\d*)π/, (m, n) => `${n}kπ`) : `k·${period}`;
+    const general = base.map((b) => Math.abs(b) < 1e-12 ? `x = ${kP}` : `x = ${formatNumber(b)} + ${kP}`).join(";  ") + "  (k ∈ ℤ)";
+    const idx = roots.findIndex((r) => r >= -1e-9);
+    const start = Math.max(0, idx - 1);
+    return { general, sample: roots.slice(start, start + 4) };
+  }
+  return null;
+}
+function formatUnion(intervals) {
+  if (!intervals.length) return "Cap";
+  if (intervals.length === 1 && !Number.isFinite(intervals[0].a) && !Number.isFinite(intervals[0].b)) return ALL_REALS;
+  let list = intervals.filter((iv) => !iv.point);
+  let more = false;
+  if (list.length > 6) {
+    list = list.filter((iv) => iv.b > -10 && iv.a < 10).slice(0, 5);
+    more = true;
+  }
+  return list.map((iv) => formatInterval(iv.a, iv.b, false, false)).join(" ∪ ") + (more ? " ∪ …" : "");
+}
+function functionFeatures(f, exclusions, isPolynomial) {
+  const features = { holes: [], asymptotes: { vertical: [], horizontal: [] } };
+  // Punts problemàtics: denominadors nuls i extrems del domini
+  const edges = [];
+  for (const iv of numericDomain(f, exclusions)) {
+    if (Number.isFinite(iv.a)) edges.push({ x: iv.a, side: 1 });
+    if (Number.isFinite(iv.b)) edges.push({ x: iv.b, side: -1 });
+  }
+  for (const r of exclusions) {
+    const left = nearBehaviour(f, r, -1);
+    const right = nearBehaviour(f, r, 1);
+    if (left.asymptote || right.asymptote) pushUnique(features.asymptotes.vertical, snapNumber(r));
+    else if (left.finite && right.finite && Math.abs(left.value - right.value) < 1e-4 * (1 + Math.abs(left.value))) features.holes.push({ x: snapNumber(r), y: snapNumber(Number(((left.value + right.value) / 2).toFixed(9))) });
+  }
+  for (const e of edges) {
+    if (exclusions.some((r) => Math.abs(r - e.x) < 1e-6)) continue;
+    if (nearBehaviour(f, e.x, e.side).asymptote) pushUnique(features.asymptotes.vertical, snapNumber(e.x));
+  }
+  if (!isPolynomial) {
+    const plus = horizontalAsymptote(f, 1);
+    const minus = horizontalAsymptote(f, -1);
+    if (plus !== null && minus !== null && Math.abs(plus - minus) < 1e-9) features.asymptotes.horizontal.push({ y: plus, where: "x → ±∞" });
+    else {
+      if (minus !== null) features.asymptotes.horizontal.push({ y: minus, where: "x → −∞" });
+      if (plus !== null) features.asymptotes.horizontal.push({ y: plus, where: "x → +∞" });
+    }
+  }
+  features.extrema = findExtrema(f);
+  const cuts = [...exclusions];
+  const sign = { positive: solveInequality1D(f, ">", cuts).intervals, negative: solveInequality1D(f, "<", cuts).intervals };
+  features.sign = { positive: formatUnion(sign.positive), negative: formatUnion(sign.negative) };
+  const d = (x) => {
+    const h = 1e-6 * (1 + Math.abs(x));
+    if (exclusions.some((r) => Math.abs(r - x) <= 2 * h)) return NaN;
+    return (f(x + h) - f(x - h)) / (2 * h);
+  };
+  const inc = solveInequality1D(d, ">", cuts).intervals;
+  const dec = solveInequality1D(d, "<", cuts).intervals;
+  features.monotony = inc.length || dec.length ? { increasing: formatUnion(inc), decreasing: formatUnion(dec) } : null;
+  return features;
+}
+
 // ---------- Anàlisi d'una expressió ----------
 const analysisCache = /* @__PURE__ */ new Map();
 function analyzeExpression(expression) {
-  if (analysisCache.has(expression)) return analysisCache.get(expression);
+  const key = `${paramKey(expression)}|${expression}`;
+  if (analysisCache.has(key)) return analysisCache.get(key);
   const result = analyzeUncached(expression);
   if (analysisCache.size > 300) analysisCache.clear();
-  analysisCache.set(expression, result);
+  analysisCache.set(key, result);
   return result;
 }
 function analyzeUncached(expression) {
@@ -497,6 +674,21 @@ function analyzeUncached(expression) {
         }
       }
     }
+    let exclusions;
+    if (prep.fnNode) exclusions = domainExclusions(prep.fnNode);
+    else {
+      // Forma aïllada numèricament (2x + 3y = 7, xy = 1): els forats del domini són exclusions
+      const ivs = numericDomain(f, []);
+      exclusions = [];
+      for (let i = 1; i < ivs.length; i++) if (Number.isFinite(ivs[i].a) && Math.abs(ivs[i].a - ivs[i - 1].b) < 1e-6) exclusions.push(ivs[i].a);
+    }
+    Object.assign(result, functionFeatures(f, exclusions, !!poly));
+    result.xIntercepts = result.xIntercepts.filter((x) => !result.holes.some((h) => Math.abs(h.x - x) < 1e-9));
+    result.periodic = periodicForm(result.xIntercepts);
+    if (!result.xIntercepts.length && !result.onXAxis) {
+      const delta = result.facts.find((ft) => ft.label === "Discriminant");
+      result.explanation = delta ? "Com que Δ < 0, la paràbola no talla l'eix X." : "La gràfica no talla l'eix X: la funció no s'anul·la per a cap valor de x.";
+    }
   } else if (prep.kind === "explicitY" || prep.kind === "explicitX") {
     if (prep.relation === "=") {
       const xIsConst = prep.kind === "explicitX" && [-3, 0, 4].every((v) => Math.abs(prep.fn(v) - prep.fn(0)) < 1e-12);
@@ -535,6 +727,7 @@ function analyzeUncached(expression) {
         result.solutions = [snapNumber(-c / b)];
       } else {
         result.solutions = [];
+        result.explanation = `En simplificar queda una igualtat falsa (0 = ${formatNumber(snapNumber(-c))}): l'equació no té solució.`;
       }
     }
     if (!result.solutions) {
@@ -542,12 +735,19 @@ function analyzeUncached(expression) {
       result.identity = !!roots.identicallyZero;
       result.solutions = roots;
     }
+    result.periodic = periodicForm(result.solutions);
+    if (result.identity) result.explanation = "En simplificar queda 0 = 0: qualsevol valor de x és solució (és una identitat).";
+    else if (!result.solutions.length && !result.explanation) {
+      result.explanation = deg === 2 ? "Com que Δ < 0, la paràbola auxiliar no talla l'eix X: l'equació no té cap solució real." : "La corba auxiliar no talla l'eix X: cap valor de x compleix l'equació.";
+    }
   } else if (prep.kind === "inequalityX") {
     result.auxiliary = true;
     const sol = solveInequality1D(prep.fn, prep.relation);
     result.solutions = sol.roots;
     result.intervals = sol.intervals;
     result.solutionText = formatSolutionIntervals(sol.intervals);
+    if (!sol.intervals.length) result.explanation = "Cap valor de x compleix la inequació: la corba auxiliar no entra mai a la zona demanada.";
+    else if (result.solutionText === ALL_REALS) result.explanation = "Tots els valors de x compleixen la inequació.";
   } else if (prep.kind === "implicit" && prep.relation === "=" && poly) {
     // Circumferència: x² + y² + Dx + Ey + F = 0
     const a = polyCoef(poly, 2, 0);
@@ -560,6 +760,7 @@ function analyzeUncached(expression) {
       const r2 = D * D / 4 + E * E / 4 - F;
       if (r2 > 0) {
         result.facts.push({ label: "Tipus", value: "Circumferència" });
+        result.circle = { x: -D / 2, y: -E / 2, r: Math.sqrt(r2) };
         result.facts.push({ label: "Centre", value: formatPoint({ x: snapNumber(-D / 2), y: snapNumber(-E / 2) }) });
         const r = Math.sqrt(r2);
         const rs = snapNumber(r);
@@ -653,7 +854,7 @@ function polyProportional(p1, p2) {
 }
 const systemCache = /* @__PURE__ */ new Map();
 function analyzeSystem(expressions) {
-  const key = expressions.join("\n");
+  const key = expressions.map((e) => `${paramKey(e)}|${e}`).join("\n");
   if (systemCache.has(key)) return systemCache.get(key);
   const result = analyzeSystemUncached(expressions);
   if (systemCache.size > 100) systemCache.clear();
@@ -736,6 +937,22 @@ function parseIntervalExpression(expression) {
   return null;
 }
 
+// Domini escrit a la mateixa línia: "y = x^2, -2 < x < 2" -> { expr, domain }
+function splitInlineDomain(text) {
+  const str = String(text ?? "");
+  let depth = 0;
+  for (let i = 0; i < str.length; i++) {
+    const c = str[i];
+    if (c === "(" || c === "[" || c === "{") depth++;
+    else if (c === ")" || c === "]" || c === "}") depth--;
+    else if (depth === 0 && (c === ";" || c === "," && !/\d/.test(str[i + 1] || ""))) {
+      const domain = str.slice(i + 1).trim();
+      if (/[<>≤≥]/.test(domain) && /[xX]/.test(domain)) return { expr: str.slice(0, i).trim(), domain };
+    }
+  }
+  return { expr: str.trim(), domain: "" };
+}
+
 // Compatibilitat amb la versió anterior
 function parseExpression(expression) {
   const prep = prepareExpression(expression);
@@ -745,6 +962,7 @@ function parseExpression(expression) {
 
 export {
   analyzeExpression,
+  splitInlineDomain,
   analyzeSystem,
   findRoots,
   formatApprox,

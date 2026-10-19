@@ -3,11 +3,17 @@ import { useState, useEffect, useRef } from "react";
 import { MathKeyboard } from "./MathKeyboard.js";
 import { MathExpression } from "./MathExpression.js";
 import { THEMES, getExpressionColor } from "../constants.js";
-import { prepareExpression, parseIntervalExpression } from "../services/mathService.js";
+import { prepareExpression, parseIntervalExpression, splitInlineDomain } from "../services/mathService.js";
+import { getParameters } from "../services/parser.js";
 const FUNCTION_EXAMPLES = ["y = 2x + 1", "y = x² − 4", "x² − 5x + 6 = 0", "2x − 4 > 0", "x² + y² = 9", "y > x − 2"];
 const SYSTEM_EXAMPLES = [["2x + 3y = 7", "x − y = 1"], ["y = x²", "y = x + 2"], ["x² + y² = 25", "y = x + 1"]];
-const describeKind = (prep) => {
+const describeKind = (prep, text) => {
   if (!prep.ok) return null;
+  const names = getParameters(text);
+  const base = describeBaseKind(prep);
+  return names.length ? `${base} Paràmetres: ${names.join(", ")} (apareixeran lliscadors al panell).` : base;
+};
+const describeBaseKind = (prep) => {
   const strict = prep.relation !== "=";
   switch (prep.kind) {
     case "explicitY":
@@ -58,10 +64,13 @@ const EquationEditorModal = ({ isOpen, onClose, onSave, existingFunction, nextCo
       setIsAnimating(false);
     }
   }, [existingFunction, isOpen]);
-  const visibleExpressions = mode === "single" ? [expressions[0] ?? ""] : expressions;
+  // Domini escrit a la mateixa línia: "y = x², −2 < x < 2"
+  const inline = mode === "single" ? splitInlineDomain(expressions[0] ?? "") : { expr: "", domain: "" };
+  const visibleExpressions = mode === "single" ? [inline.domain ? inline.expr : expressions[0] ?? ""] : expressions;
   const preps = visibleExpressions.map((e) => e.trim() ? prepareExpression(e, { inSystem: mode === "system" }) : null);
   const showDomain = mode === "single" && !!preps[0] && preps[0].ok && preps[0].kind === "explicitY" && preps[0].relation === "=";
-  const domainValid = !showDomain || !domainRestriction.trim() || !!parseIntervalExpression(domainRestriction);
+  const effectiveDomain = inline.domain || domainRestriction;
+  const domainValid = !showDomain || !effectiveDomain.trim() || !!parseIntervalExpression(effectiveDomain);
   const handleClose = () => {
     setIsAnimating(false);
     setTimeout(onClose, 200);
@@ -82,7 +91,7 @@ const EquationEditorModal = ({ isOpen, onClose, onSave, existingFunction, nextCo
     onSave({
       expressions: validExpressions,
       type: finalType,
-      domainRestriction: showDomain ? domainRestriction.trim() : void 0
+      domainRestriction: showDomain ? effectiveDomain.trim() : void 0
     });
   };
   const handleKeyDown = (event) => {
@@ -224,7 +233,7 @@ const EquationEditorModal = ({ isOpen, onClose, onSave, existingFunction, nextCo
     }
     return /* @__PURE__ */ jsxs("p", { className: `text-sm mt-1 flex items-start gap-1.5 ${themeClasses.secondaryText}`, children: [
       /* @__PURE__ */ jsx("i", { className: "fa-solid fa-circle-check text-green-500 mt-0.5" }),
-      describeKind(prep)
+      describeKind(prep, visibleExpressions[index] || "")
     ] });
   };
   return /* @__PURE__ */ jsx("div", { className: `fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 transition-opacity duration-200 ${isAnimating ? "opacity-100" : "opacity-0"}`, onKeyDown: (e) => e.key === "Escape" && handleClose(), children: /* @__PURE__ */ jsxs("div", { className: `rounded-xl shadow-2xl w-full max-w-2xl max-h-[96vh] flex flex-col ${themeClasses.panelBg} border ${themeClasses.border} transition-all duration-200 ${isAnimating ? "scale-100 opacity-100" : "scale-95 opacity-0"}`, children: [
@@ -260,7 +269,7 @@ const EquationEditorModal = ({ isOpen, onClose, onSave, existingFunction, nextCo
                     inputRefs.current[index] = el;
                   },
                   type: "text",
-                  value: expr,
+                  value: mode === "single" ? expressions[0] ?? "" : expr,
                   autoComplete: "off",
                   autoCapitalize: "off",
                   spellCheck: false,
@@ -294,7 +303,7 @@ const EquationEditorModal = ({ isOpen, onClose, onSave, existingFunction, nextCo
           /* @__PURE__ */ jsx("i", { className: "fa-solid fa-plus mr-2" }),
           "Afegeix una equació"
         ] }),
-        showDomain && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 pt-1", children: [
+        showDomain && !inline.domain && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 pt-1", children: [
           /* @__PURE__ */ jsx("label", { htmlFor: "domain-restriction", className: `text-sm whitespace-nowrap ${themeClasses.secondaryText}`, children: "Domini (opcional):" }),
           /* @__PURE__ */ jsx(
             "input",
@@ -318,7 +327,7 @@ const EquationEditorModal = ({ isOpen, onClose, onSave, existingFunction, nextCo
       /* @__PURE__ */ jsx("div", { className: `w-full p-3 text-xl rounded-lg border ${themeClasses.border} min-h-[64px] flex items-center justify-center`, style: { backgroundColor: theme === "light" ? "#eff6ff" : theme === "dark" ? "#1e293b" : theme === "chalkboard" ? "#435446" : "#111111" }, children: visibleExpressions.some((expr) => expr.trim()) ? /* @__PURE__ */ jsxs("div", { className: "flex items-center flex-wrap justify-center gap-2", children: [
         mode === "system" && /* @__PURE__ */ jsx("span", { className: "text-5xl font-thin mr-1 leading-none", children: "{" }),
         /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-1", children: visibleExpressions.map((expr, index) => expr.trim() ? /* @__PURE__ */ jsx(MathExpression, { expression: expr, color: mode === "system" ? getExpressionColor(colorSource, index) : void 0 }, index) : null) }),
-        domainRestriction.trim() && showDomain && /* @__PURE__ */ jsxs("div", { className: `text-xs px-2.5 py-1 rounded-full border ${themeClasses.border} ${themeClasses.secondaryText}`, children: ["Domini: ", domainRestriction.trim()] })
+        effectiveDomain.trim() && showDomain && /* @__PURE__ */ jsxs("div", { className: `text-xs px-2.5 py-1 rounded-full border ${domainValid ? themeClasses.border : "border-red-500 text-red-500"} ${domainValid ? themeClasses.secondaryText : ""}`, children: ["Domini: ", effectiveDomain.trim(), domainValid ? "" : " (no és vàlid)"] })
       ] }) : /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap justify-center gap-1.5", children: [
         /* @__PURE__ */ jsx("span", { className: `text-sm ${themeClasses.secondaryText} w-full text-center mb-1`, children: "Prova un exemple:" }),
         (mode === "system" ? SYSTEM_EXAMPLES : FUNCTION_EXAMPLES).map((ex, i) => /* @__PURE__ */ jsx(

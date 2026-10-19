@@ -19,6 +19,14 @@ const FUNCTIONS = {
 };
 const FUNCTION_ALIASES = { sen: "sin", arrel: "sqrt", rel: "sqrt", arcsin: "asin", arccos: "acos", arctan: "atan", tg: "tan" };
 const CONSTANTS = { pi: Math.PI, e: Math.E };
+// Lletres que es poden fer servir com a paràmetres (y = a·x² + b...)
+const PARAM_LETTERS = "abcdhkmnpqrstuvw";
+const paramValues = {};
+const setParamValues = (values) => {
+  for (const k of Object.keys(paramValues)) delete paramValues[k];
+  Object.assign(paramValues, values);
+};
+const paramSignature = (names) => names.map((n) => `${n}=${paramValues[n] ?? 1}`).join(",");
 const FUNCTION_NAMES = [...Object.keys(FUNCTIONS), ...Object.keys(FUNCTION_ALIASES)].sort((a, b) => b.length - a.length);
 const SUPERSCRIPTS = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9", "⁻": "-" };
 
@@ -27,7 +35,7 @@ class MathSyntaxError extends Error {
 
 function normalizeInput(text) {
   let s = String(text ?? "");
-  s = s.replace(/[−–—]/g, "-").replace(/[×·⋅∙]/g, "*").replace(/[÷:]/g, "/").replace(/,/g, ".").replace(/π/g, "pi").replace(/≤/g, "<=").replace(/≥/g, ">=").replace(/≠/g, "!=").replace(/==/g, "=");
+  s = s.replace(/[−–—]/g, "-").replace(/[×·⋅∙]/g, "*").replace(/[÷:]/g, "/").replace(/(\d),(?=\d)/g, "$1.").replace(/;/g, ",").replace(/π/g, "pi").replace(/≤/g, "<=").replace(/≥/g, ">=").replace(/≠/g, "!=").replace(/==/g, "=");
   s = s.replace(/[⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+/g, (m) => `^(${[...m].map((c) => SUPERSCRIPTS[c]).join("")})`);
   s = s.replace(/∛/g, "cbrt").replace(/√/g, "sqrt");
   s = s.replace(/\\cdot/g, "*").replace(/\\pi/g, "pi");
@@ -72,8 +80,11 @@ function tokenize(input) {
         } else if (word[0] === "e") {
           tokens.push({ type: "const", value: "e" });
           word = word.slice(1);
+        } else if (PARAM_LETTERS.includes(word[0])) {
+          tokens.push({ type: "param", value: word[0] });
+          word = word.slice(1);
         } else {
-          throw new MathSyntaxError(`No reconec «${s.slice(i, j)}». Fes servir només x, y, nombres i funcions.`);
+          throw new MathSyntaxError(`No reconec «${s.slice(i, j)}». Fes servir x, y, nombres, funcions o paràmetres (a, b, c, k, m, n...).`);
         }
       }
       i = j;
@@ -105,6 +116,11 @@ function tokenize(input) {
       i++;
       continue;
     }
+    if (c === ",") {
+      tokens.push({ type: "comma" });
+      i++;
+      continue;
+    }
     if (c === "|") {
       tokens.push({ type: "bar" });
       i++;
@@ -126,7 +142,7 @@ function parseTokens(tokens) {
   let barDepth = 0;
   const peek = () => tokens[pos];
   const next = () => tokens[pos++];
-  const startsAtom = (t) => t && (t.type === "num" || t.type === "var" || t.type === "const" || t.type === "func" || t.type === "lparen" || t.type === "bar" && barDepth === 0);
+  const startsAtom = (t) => t && (t.type === "num" || t.type === "var" || t.type === "const" || t.type === "param" || t.type === "func" || t.type === "lparen" || t.type === "bar" && barDepth === 0);
   const parseExpr = () => {
     let node = parseTerm();
     while (peek() && peek().type === "op" && (peek().value === "+" || peek().value === "-")) {
@@ -179,6 +195,8 @@ function parseTokens(tokens) {
         return { type: "var", name: t.value };
       case "const":
         return { type: "const", name: t.value };
+      case "param":
+        return { type: "param", name: t.value };
       case "func": {
         const nt = peek();
         if (!nt) throw new MathSyntaxError(`Falta l'argument de ${t.value}( )`);
@@ -187,6 +205,16 @@ function parseTokens(tokens) {
           next();
           if (peek() && peek().type === "rparen") throw new MathSyntaxError(`${t.value}( ) està buida`);
           arg = parseExpr();
+          if (peek() && peek().type === "comma") {
+            // log(x, b): logaritme en base b
+            if (t.value !== "log") throw new MathSyntaxError(`La funció ${t.value} només té un argument. Per als decimals, escriu la coma sense espais: 2,5`);
+            next();
+            if (!peek() || peek().type === "rparen") throw new MathSyntaxError("Falta la base del logaritme: log(x, 2)");
+            const base = parseExpr();
+            if (!peek() || peek().type !== "rparen") throw new MathSyntaxError("Falta tancar un parèntesi «)»");
+            next();
+            return { type: "func", name: "logb", arg, base };
+          }
           if (!peek() || peek().type !== "rparen") throw new MathSyntaxError("Falta tancar un parèntesi «)»");
           next();
         } else {
@@ -211,6 +239,8 @@ function parseTokens(tokens) {
       }
       case "rparen":
         throw new MathSyntaxError("Sobra un parèntesi «)»");
+      case "comma":
+        throw new MathSyntaxError("La coma no pot anar aquí. Per als decimals, escriu-la sense espais: 2,5");
       case "op":
         throw new MathSyntaxError(`L'operador «${t.value}» no pot anar aquí`);
       case "rel":
@@ -223,7 +253,16 @@ function parseTokens(tokens) {
 }
 
 // Retorna { sides: [ast, ast, ...], ops: ["=", "<", ...] } o llança MathSyntaxError
+// Notació de funció: "f(x) = ..." s'interpreta com "y = ..."
+const FUNCTION_PREFIX = /^\s*([a-df-wzA-DF-WZ])\s*\(\s*x\s*\)\s*=(?!=)/;
+function splitFunctionName(text) {
+  const m = String(text ?? "").match(FUNCTION_PREFIX);
+  if (!m) return { name: null, rest: text };
+  return { name: m[1], rest: `y =${String(text).slice(m[0].length)}` };
+}
 function parseRelation(text) {
+  const { name, rest } = splitFunctionName(text);
+  text = rest;
   const tokens = tokenize(text);
   if (tokens.length === 0) throw new MathSyntaxError("L'expressió és buida");
   const p = parseTokens(tokens);
@@ -233,13 +272,14 @@ function parseRelation(text) {
     const t = p.next();
     if (t.type !== "rel") {
       if (t.type === "rparen") throw new MathSyntaxError("Sobra un parèntesi «)»");
+      if (t.type === "comma") throw new MathSyntaxError("La coma no pot anar aquí. Per als decimals, escriu-la sense espais (2,5); per al domini, fes servir el camp «Domini».");
       throw new MathSyntaxError("Hi ha alguna cosa que no encaixa a l'expressió");
     }
     if (p.atEnd()) throw new MathSyntaxError(`Falta una expressió després de «${t.value}»`);
     ops.push(t.value);
     sides.push(p.parseExpr());
   }
-  return { sides, ops };
+  return { sides, ops, name };
 }
 
 function parseExpressionAst(text) {
@@ -248,20 +288,25 @@ function parseExpressionAst(text) {
   return sides[0];
 }
 
+const CHILD_KEYS = ["left", "right", "arg", "base", "exp"];
 function usesVar(node, name) {
-  switch (node.type) {
-    case "var":
-      return node.name === name;
-    case "bin":
-      return usesVar(node.left, name) || usesVar(node.right, name);
-    case "pow":
-      return usesVar(node.base, name) || usesVar(node.exp, name);
-    case "neg":
-    case "group":
-    case "func":
-      return usesVar(node.arg, name);
-    default:
-      return false;
+  if (node.type === "var") return node.name === name;
+  return CHILD_KEYS.some((k) => node[k] && usesVar(node[k], name));
+}
+function collectParamNames(node, out = /* @__PURE__ */ new Set()) {
+  if (node.type === "param") out.add(node.name);
+  for (const k of CHILD_KEYS) if (node[k]) collectParamNames(node[k], out);
+  return out;
+}
+// Paràmetres que apareixen en un text (ordenats alfabèticament)
+function getParameters(text) {
+  try {
+    const { sides } = parseRelation(text);
+    const set = /* @__PURE__ */ new Set();
+    sides.forEach((sd) => collectParamNames(sd, set));
+    return [...set].sort();
+  } catch (e) {
+    return [];
   }
 }
 
@@ -277,6 +322,10 @@ function compile(node) {
     }
     case "var":
       return node.name === "x" ? (x) => x : (x, y) => y;
+    case "param": {
+      const n = node.name;
+      return () => paramValues[n] ?? 1;
+    }
     case "neg": {
       const a = compile(node.arg);
       return (x, y) => -a(x, y);
@@ -284,14 +333,18 @@ function compile(node) {
     case "group":
       return compile(node.arg);
     case "func": {
-      const f = FUNCTIONS[node.name];
       const a = compile(node.arg);
+      if (node.name === "logb") {
+        const b = compile(node.base);
+        return (x, y) => Math.log(a(x, y)) / Math.log(b(x, y));
+      }
+      const f = FUNCTIONS[node.name];
       return (x, y) => f(a(x, y));
     }
     case "pow": {
       const b = compile(node.base);
       const e = compile(node.exp);
-      const constExp = !usesVar(node.exp, "x") && !usesVar(node.exp, "y") ? e(0, 0) : null;
+      const constExp = !usesVar(node.exp, "x") && !usesVar(node.exp, "y") && collectParamNames(node.exp).size === 0 ? e(0, 0) : null;
       // Arrels senars de negatius: x^(1/3) amb x < 0 ha de donar un valor real
       return (x, y) => {
         const bv = b(x, y);
@@ -366,6 +419,8 @@ function toPolynomial(node) {
       return polyConst(node.value);
     case "const":
       return polyConst(CONSTANTS[node.name]);
+    case "param":
+      return polyConst(paramValues[node.name] ?? 1);
     case "var":
       return /* @__PURE__ */ new Map([[node.name === "x" ? "1,0" : "0,1", 1]]);
     case "neg": {
@@ -377,7 +432,13 @@ function toPolynomial(node) {
     case "func": {
       const a = toPolynomial(node.arg);
       const c = a && polyConstValue(a);
-      return c === null || c === void 0 ? null : polyConst(FUNCTIONS[node.name](c));
+      if (c === null || c === void 0) return null;
+      if (node.name === "logb") {
+        const b = toPolynomial(node.base);
+        const bc = b && polyConstValue(b);
+        return bc === null || bc === void 0 ? null : polyConst(Math.log(c) / Math.log(bc));
+      }
+      return polyConst(FUNCTIONS[node.name](c));
     }
     case "pow": {
       const b = toPolynomial(node.base);
@@ -438,6 +499,7 @@ function toTex(node) {
     case "const":
       return node.name === "pi" ? "\\pi" : "e";
     case "var":
+    case "param":
       return node.name;
     case "group":
       return node.arg.type === "bin" && node.arg.op === "/" ? toTex(node.arg) : `\\left(${toTex(node.arg)}\\right)`;
@@ -447,6 +509,7 @@ function toTex(node) {
       if (node.name === "sqrt") return `\\sqrt{${toTex(stripGroup(node.arg))}}`;
       if (node.name === "cbrt") return `\\sqrt[3]{${toTex(stripGroup(node.arg))}}`;
       if (node.name === "abs") return `\\left|${toTex(stripGroup(node.arg))}\\right|`;
+      if (node.name === "logb") return `\\log_{${toTex(stripGroup(node.base))}}\\left(${toTex(stripGroup(node.arg))}\\right)`;
       return `${FUNC_TEX[node.name] || node.name}\\left(${toTex(stripGroup(node.arg))}\\right)`;
     case "pow": {
       const base = node.base.type === "func" && node.base.name !== "sqrt" && node.base.name !== "abs" || precOf(node.base) <= PREC.pow ? `\\left(${toTex(stripGroup(node.base))}\\right)` : toTex(node.base);
@@ -472,13 +535,17 @@ function stripGroup(node) {
 }
 const REL_TEX = { "=": "=", "<": "<", ">": ">", "<=": "\\le", ">=": "\\ge", "!=": "\\ne" };
 function relationToTex(text) {
-  const { sides, ops } = parseRelation(text);
-  return sides.map((s, i) => (i > 0 ? ` ${REL_TEX[ops[i - 1]]} ` : "") + toTex(s)).join("");
+  const { sides, ops, name } = parseRelation(text);
+  return sides.map((s, i) => (i > 0 ? ` ${REL_TEX[ops[i - 1]]} ` : "") + (i === 0 && name ? `${name}(x)` : toTex(s))).join("");
 }
 
 export {
   MathSyntaxError,
   compile,
+  getParameters,
+  paramSignature,
+  setParamValues,
+  splitFunctionName,
   normalizeInput,
   parseExpressionAst,
   parseRelation,

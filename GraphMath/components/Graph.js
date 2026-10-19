@@ -1,4 +1,4 @@
-import { jsx, jsxs } from "react/jsx-runtime";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { useRef, useEffect, forwardRef, useImperativeHandle, useState, useCallback } from "react";
 import { THEMES, getExpressionColor } from "../constants.js";
 import { prepareExpression, parseIntervalExpression, analyzeSystem, analyzeExpression, formatNumber, formatPoint } from "../services/mathService.js";
@@ -42,9 +42,16 @@ const renderMathJaxToImage = async (expr, textColor) => {
 };
 const holds = (v, rel) => rel === "<" ? v < 0 : rel === ">" ? v > 0 : rel === "<=" ? v <= 0 : v >= 0;
 const formatAxisNumber = (v) => Number(v.toPrecision(4)).toString().replace(".", ",").replace("-", "−");
-const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
+const MARK_LABELS = { max: "Màx", min: "Mín" };
+const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfigChange }, ref) => {
   const canvasRef = useRef(null);
   const [tooltip, setTooltip] = useState({ visible: false, content: "", x: 0, y: 0 });
+  const [tracer, setTracer] = useState(null);
+  const yScaleRef = useRef(viewConfig.yScale || 1);
+  yScaleRef.current = viewConfig.yScale || 1;
+  const viewRef = useRef(null);
+  const specialPointsRef = useRef([]);
+  const traceRef = useRef(null);
   const panRef = useRef({ x: 0, y: 0 });
   const zoomRef = useRef(DEFAULT_ZOOM);
   const pointersRef = useRef(/* @__PURE__ */ new Map());
@@ -56,7 +63,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
     const worldX = (screenX - panRef.current.x - rect.width / 2) / zoomRef.current;
-    const worldY = (screenY - panRef.current.y - rect.height / 2) / -zoomRef.current;
+    const worldY = (screenY - panRef.current.y - rect.height / 2) / -(zoomRef.current * yScaleRef.current);
     return { x: worldX, y: worldY };
   }, []);
   const draw = useCallback(() => {
@@ -77,14 +84,17 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     ctx.fillRect(0, 0, W, H);
     const pan = panRef.current;
     const zoom = zoomRef.current;
+    const zoomY = zoom * yScaleRef.current;
     const view = {
       W,
       H,
-      zoom,
-      toScreen: (wx, wy) => ({ x: wx * zoom + pan.x + W / 2, y: -wy * zoom + pan.y + H / 2 }),
+      zoomX: zoom,
+      zoomY,
+      toScreen: (wx, wy) => ({ x: wx * zoom + pan.x + W / 2, y: -wy * zoomY + pan.y + H / 2 }),
       toWorldX: (sx) => (sx - pan.x - W / 2) / zoom,
-      toWorldY: (sy) => (sy - pan.y - H / 2) / -zoom
+      toWorldY: (sy) => (sy - pan.y - H / 2) / -zoomY
     };
+    viewRef.current = view;
     const worldLeft = view.toWorldX(0);
     const worldRight = view.toWorldX(W);
     const worldTop = view.toWorldY(0);
@@ -93,6 +103,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     drawAxes(ctx, view);
     if (viewConfig.labels) drawLabels(ctx, worldLeft, worldRight, worldBottom, worldTop, view);
     const pointLayer = [];
+    pointLayer.lineLabels = [];
     functions.forEach((func) => {
       const inSystem = func.type === "system";
       const domainInterval = !inSystem && func.domainRestriction ? parseIntervalExpression(func.domainRestriction) : null;
@@ -114,11 +125,73 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
       if (inSystem) {
         const analysis = analyzeSystem(func.expressions);
         (analysis.intersectionPoints || []).forEach((p) => pointLayer.push({ x: p.x, y: p.y, label: formatPoint(p), solution: true }));
+      } else {
+        const prep = prepareExpression(func.expressions[0]);
+        if (prep.ok && prep.kind === "explicitY" && prep.relation === "=") drawMarks(ctx, func, analyzeExpression(func.expressions[0]), view, pointLayer, worldLeft, worldRight);
       }
     });
     const placed = [];
     pointLayer.forEach((p) => drawPoint(ctx, p, view, placed));
-  }, [functions, theme, viewConfig]);
+    specialPointsRef.current = pointLayer.filter((p) => p.label);
+  }, [functions, theme, viewConfig, paramsKey]);
+  // Elements destacats d'una funció: vèrtex, eix, talls, extrems, asímptotes i forats
+  const drawMarks = (ctx, func, a, view, pointLayer, worldLeft, worldRight) => {
+    const color = func.color;
+    const marks = func.marks || {};
+    const inView = (x) => x >= worldLeft - 1e-9 && x <= worldRight + 1e-9;
+    const dashedLine = (x1, y1, x2, y2, label) => {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.8;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([7, 6]);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.restore();
+      if (label) {
+        ctx.font = "bold 13px sans-serif";
+        ctx.fillStyle = color;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        const w = ctx.measureText(label).width;
+        const lx = Math.min(view.W - w - 6, Math.max(6, x1 + 6));
+        let ly = Math.max(6, Math.min(view.H - 20, y1 === 0 ? 30 : y1 === y2 ? y1 - 20 : y1 + 6));
+        // Evita que les etiquetes de rectes properes se solapin
+        const placed = pointLayer.lineLabels;
+        while (placed.some((r) => lx < r.x + r.w + 4 && r.x < lx + w + 4 && Math.abs(ly - r.y) < 17)) ly += 18;
+        placed.push({ x: lx, y: ly, w });
+        ctx.fillText(label, lx, ly);
+        ctx.textBaseline = "alphabetic";
+      }
+    };
+    if (marks.axis && a.vertex) {
+      const sx = view.toScreen(a.vertex.x, 0).x;
+      dashedLine(sx, 0, sx, view.H, `x = ${formatNumber(a.vertex.x)}`);
+    }
+    if (marks.asymptotes && a.asymptotes) {
+      a.asymptotes.vertical.forEach((x) => {
+        const sx = view.toScreen(x, 0).x;
+        dashedLine(sx, 0, sx, view.H, `x = ${formatNumber(x)}`);
+      });
+      a.asymptotes.horizontal.forEach((h) => {
+        const sy = view.toScreen(0, h.y).y;
+        dashedLine(0, sy, view.W, sy, `y = ${formatNumber(h.y)}`);
+      });
+    }
+    if (marks.vertex && a.vertex) pointLayer.push({ ...a.vertex, color, label: `V ${formatPoint(a.vertex)}` });
+    if (marks.extrema && a.extrema) {
+      a.extrema.filter((e) => inView(e.x)).slice(0, 20).forEach((e) => {
+        if (marks.vertex && a.vertex && Math.abs(e.x - a.vertex.x) < 1e-9) return;
+        pointLayer.push({ x: e.x, y: e.y, color, label: `${MARK_LABELS[e.type]} ${formatPoint(e)}` });
+      });
+    }
+    if (marks.xIntercepts && a.xIntercepts) a.xIntercepts.filter(inView).slice(0, 20).forEach((x) => pointLayer.push({ x, y: 0, color, label: formatPoint({ x, y: 0 }) }));
+    if (marks.yIntercept && typeof a.yIntercept === "number") pointLayer.push({ x: 0, y: a.yIntercept, color, label: formatPoint({ x: 0, y: a.yIntercept }) });
+    // Els forats (discontinuïtats evitables) sempre es mostren
+    (a.holes || []).forEach((h) => pointLayer.push({ x: h.x, y: h.y, color, open: true }));
+  };
   const redraw = useCallback(() => {
     if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
     animationFrameId.current = requestAnimationFrame(draw);
@@ -127,10 +200,10 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const newZoom = Math.min(5e4, Math.max(0.05, zoomRef.current * factor));
+    const newZoom = Math.min(5e4, Math.max(5e-3, zoomRef.current * factor));
     const { x: worldX, y: worldY } = screenToWorld(sx, sy);
     panRef.current.x = sx - worldX * newZoom - rect.width / 2;
-    panRef.current.y = sy + worldY * newZoom - rect.height / 2;
+    panRef.current.y = sy + worldY * newZoom * yScaleRef.current - rect.height / 2;
     zoomRef.current = newZoom;
     redraw();
   }, [redraw, screenToWorld]);
@@ -145,8 +218,126 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
   const handleResetView = useCallback(() => {
     panRef.current = { x: 0, y: 0 };
     zoomRef.current = DEFAULT_ZOOM;
+    if (yScaleRef.current !== 1) onViewConfigChange?.({ yScale: 1 });
     redraw();
-  }, [redraw]);
+  }, [redraw, onViewConfigChange]);
+  // Punts clau d'una funció o sistema, per ajustar-hi la vista
+  const keyPoints = (func) => {
+    const pts = [];
+    const add = (x, y) => Number.isFinite(x) && Number.isFinite(y) && Math.abs(x) <= 1e4 && Math.abs(y) <= 1e6 && pts.push({ x, y });
+    const near = (list) => [...list].sort((p, q) => Math.abs(p) - Math.abs(q)).slice(0, 6);
+    if (func.type === "system") {
+      (analyzeSystem(func.expressions).intersectionPoints || []).forEach((p) => add(p.x, p.y));
+      func.expressions.forEach((e) => keyPoints({ expressions: [e], type: "equation" }).forEach((p) => add(p.x, p.y)));
+      return pts;
+    }
+    const expr = func.expressions[0];
+    const prep = prepareExpression(expr);
+    if (!prep.ok) return pts;
+    const a = analyzeExpression(expr);
+    if (prep.kind === "explicitY" && prep.relation === "=") {
+      near(a.xIntercepts || []).forEach((x) => add(x, 0));
+      if (typeof a.yIntercept === "number") add(0, a.yIntercept);
+      if (a.vertex) add(a.vertex.x, a.vertex.y);
+      (a.extrema || []).filter((e) => Math.abs(e.x) <= 20).slice(0, 6).forEach((e) => add(e.x, e.y));
+      (a.holes || []).forEach((h) => add(h.x, h.y));
+      (a.asymptotes?.vertical || []).forEach((x) => add(x, 0));
+      (a.asymptotes?.horizontal || []).forEach((h) => add(0, h.y));
+    } else if (prep.kind === "equationX" || prep.kind === "inequalityX") {
+      near(a.solutions || []).forEach((x) => {
+        add(x, 0);
+        add(x, 0);
+      });
+      const v = prep.fn(0);
+      if (Number.isFinite(v)) add(0, v);
+    } else if (prep.kind === "explicitX" || prep.kind === "explicitY") {
+      const v = prep.fn(0);
+      if (Number.isFinite(v)) prep.kind === "explicitX" ? add(v, 0) : add(0, v);
+    } else if (prep.kind === "interval") {
+      const iv = prep.interval;
+      [iv.lowerBound, iv.upperBound].filter(Number.isFinite).forEach((v) => iv.variable === "x" ? add(v, 0) : add(0, v));
+    } else if (prep.kind === "implicit") {
+      const c = a.circle;
+      if (c) {
+        add(c.x - c.r, c.y - c.r);
+        add(c.x + c.r, c.y + c.r);
+      }
+    }
+    return pts;
+  };
+  const fitView = useCallback((targetFunctions, { force = false } = {}) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const pts = targetFunctions.flatMap(keyPoints);
+    if (!pts.length) return;
+    const view = viewRef.current;
+    if (!force && view) {
+      const visible = pts.every((p) => {
+        const s = view.toScreen(p.x, p.y);
+        return s.x >= rect.width * 0.06 && s.x <= rect.width * 0.94 && s.y >= rect.height * 0.06 && s.y <= rect.height * 0.94;
+      });
+      if (visible) return;
+    }
+    pts.push({ x: 0, y: 0 });
+    let [x0, x1, y0, y1] = [Math.min(...pts.map((p) => p.x)), Math.max(...pts.map((p) => p.x)), Math.min(...pts.map((p) => p.y)), Math.max(...pts.map((p) => p.y))];
+    const cx = (x0 + x1) / 2;
+    const cy = (y0 + y1) / 2;
+    const dx = Math.max(4, (x1 - x0) * 1.35);
+    const dy = Math.max(4, (y1 - y0) * 1.35);
+    const zx = rect.width / dx;
+    const zy = rect.height / dy;
+    // Si les escales dels eixos són molt diferents, es tria una escala de l'eix Y adequada
+    let yScale = 1;
+    const ratio = zy / zx;
+    if (ratio < 0.4 || ratio > 2.5) {
+      const nice = [1e-3, 2e-3, 5e-3, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100];
+      yScale = [...nice].reverse().find((v) => v <= ratio) || nice[0];
+    }
+    const zoom = Math.min(zx, zy / yScale);
+    zoomRef.current = zoom;
+    panRef.current = { x: -cx * zoom, y: cy * zoom * yScale };
+    if (yScale !== yScaleRef.current) {
+      yScaleRef.current = yScale;
+      onViewConfigChange?.({ yScale });
+    }
+    redraw();
+  }, [redraw, onViewConfigChange]);
+  // Busca la corba y = f(x) més propera al punter per seguir-la
+  const findTrace = (sx, sy, maxDist) => {
+    const view = viewRef.current;
+    if (!view) return null;
+    const pick = specialPointsRef.current.map((p) => ({ p, s: view.toScreen(p.x, p.y) })).filter(({ s }) => Math.hypot(s.x - sx, s.y - sy) < 12).sort((a, b) => Math.hypot(a.s.x - sx, a.s.y - sy) - Math.hypot(b.s.x - sx, b.s.y - sy))[0];
+    if (pick) return { sx: pick.s.x, sy: pick.s.y, color: pick.p.color || themeConfig.textColorValue, label: pick.p.label, special: true };
+    const wx = view.toWorldX(sx);
+    let best = null;
+    functions.forEach((func) => {
+      const inSystem = func.type === "system";
+      const domainInterval = !inSystem && func.domainRestriction ? parseIntervalExpression(func.domainRestriction) : null;
+      func.expressions.forEach((expr, i) => {
+        const prep = prepareExpression(expr, { inSystem });
+        if (!prep.ok || prep.relation !== "=" && prep.kind !== "inequalityX") return;
+        if (prep.kind === "explicitY" || prep.kind === "equationX" || prep.kind === "inequalityX") {
+          if (domainInterval && domainInterval.variable === "x" && (wx < domainInterval.lowerBound || wx > domainInterval.upperBound)) return;
+          const wy = prep.fn(wx);
+          if (!Number.isFinite(wy)) return;
+          const py = view.toScreen(wx, wy).y;
+          const d = Math.abs(py - sy);
+          if (d < maxDist && (!best || d < best.d)) best = { d, sx, sy: py, x: wx, y: wy, color: getExpressionColor(func, i) };
+        } else if (prep.kind === "explicitX") {
+          const wy = view.toWorldY(sy);
+          const wxx = prep.fn(wy);
+          if (!Number.isFinite(wxx)) return;
+          const px = view.toScreen(wxx, wy).x;
+          const d = Math.abs(px - sx);
+          if (d < maxDist && (!best || d < best.d)) best = { d, sx: px, sy, x: wxx, y: wy, color: getExpressionColor(func, i) };
+        }
+      });
+    });
+    if (!best) return null;
+    const round = (v) => formatAxisNumber(Number(v.toFixed(2)));
+    return { ...best, label: `(${round(best.x)}; ${round(best.y)})` };
+  };
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -166,6 +357,16 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     };
     const handlePointerDown = (e) => {
       canvas.setPointerCapture?.(e.pointerId);
+      // En pantalles tàctils, si es toca a sobre d'una corba se segueix la corba en lloc de desplaçar la gràfica
+      if (e.pointerType !== "mouse" && pointersRef.current.size === 0) {
+        const { x, y } = localPos(e);
+        const t = findTrace(x, y, 22);
+        if (t) {
+          traceRef.current = e.pointerId;
+          setTracer(t);
+          return;
+        }
+      }
       pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (pointersRef.current.size === 2) {
         const [a, b] = [...pointersRef.current.values()];
@@ -175,9 +376,19 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     };
     const handlePointerMove = (e) => {
       const { x, y } = localPos(e);
+      if (traceRef.current === e.pointerId) {
+        setTracer(findTrace(x, y, 60));
+        return;
+      }
       if (e.pointerType === "mouse") {
-        const w = screenToWorld(x, y);
-        setTooltip({ visible: true, content: `(${formatAxisNumber(Number(w.x.toFixed(2)))}; ${formatAxisNumber(Number(w.y.toFixed(2)))})`, x, y });
+        const dragging = pointersRef.current.size > 0;
+        const t = dragging ? null : findTrace(x, y, 14);
+        setTracer(t);
+        if (t) setTooltip((old) => ({ ...old, visible: false }));
+        else {
+          const w = screenToWorld(x, y);
+          setTooltip({ visible: true, content: `(${formatAxisNumber(Number(w.x.toFixed(2)))}; ${formatAxisNumber(Number(w.y.toFixed(2)))})`, x, y });
+        }
       }
       const prev = pointersRef.current.get(e.pointerId);
       if (!prev) return;
@@ -195,12 +406,20 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
       }
     };
     const handlePointerUp = (e) => {
+      if (traceRef.current === e.pointerId) {
+        traceRef.current = null;
+        setTracer(null);
+        return;
+      }
       pointersRef.current.delete(e.pointerId);
       pinchRef.current = null;
       if (pointersRef.current.size === 0) canvas.style.cursor = "grab";
     };
     const handlePointerLeave = (e) => {
-      if (e.pointerType === "mouse") setTooltip((t) => ({ ...t, visible: false }));
+      if (e.pointerType === "mouse") {
+        setTooltip((t) => ({ ...t, visible: false }));
+        setTracer(null);
+      }
     };
     canvas.addEventListener("wheel", handleWheel, { passive: false });
     canvas.addEventListener("pointerdown", handlePointerDown);
@@ -219,45 +438,38 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
       canvas.removeEventListener("pointercancel", handlePointerUp);
       canvas.removeEventListener("pointerleave", handlePointerLeave);
     };
-  }, [redraw, screenToWorld, zoomAt]);
+  }, [redraw, screenToWorld, zoomAt, functions, paramsKey]);
   const getGridSpacing = (zoom) => {
+    // Espaiat "rodó" (1, 2 o 5 per una potència de 10) amb un mínim de 60 px entre línies
     const minWorldSpacing = 60 / zoom;
     const magnitude = Math.pow(10, Math.floor(Math.log10(minWorldSpacing)));
     for (const m of [1, 2, 5, 10]) if (m * magnitude >= minWorldSpacing) return m * magnitude;
     return 10 * magnitude;
   };
   const drawGrid = (ctx, worldLeft, worldRight, worldBottom, worldTop, view) => {
-    const spacing = getGridSpacing(view.zoom);
-    // Quadrícula secundària
+    const spacingX = getGridSpacing(view.zoomX);
+    const spacingY = getGridSpacing(view.zoomY);
+    const lines = (sx, sy) => {
+      ctx.beginPath();
+      for (let x = Math.floor(worldLeft / sx) * sx; x < worldRight; x += sx) {
+        const px = Math.round(view.toScreen(x, 0).x) + 0.5;
+        ctx.moveTo(px, 0);
+        ctx.lineTo(px, view.H);
+      }
+      for (let y = Math.floor(worldBottom / sy) * sy; y < worldTop; y += sy) {
+        const py = Math.round(view.toScreen(0, y).y) + 0.5;
+        ctx.moveTo(0, py);
+        ctx.lineTo(view.W, py);
+      }
+      ctx.stroke();
+    };
     ctx.strokeStyle = themeConfig.grid;
-    ctx.globalAlpha = 0.35;
     ctx.lineWidth = 1;
-    ctx.beginPath();
-    const minor = spacing / 5;
-    for (let x = Math.floor(worldLeft / minor) * minor; x < worldRight; x += minor) {
-      const sx = Math.round(view.toScreen(x, 0).x) + 0.5;
-      ctx.moveTo(sx, 0);
-      ctx.lineTo(sx, view.H);
-    }
-    for (let y = Math.floor(worldBottom / minor) * minor; y < worldTop; y += minor) {
-      const sy = Math.round(view.toScreen(0, y).y) + 0.5;
-      ctx.moveTo(0, sy);
-      ctx.lineTo(view.W, sy);
-    }
-    ctx.stroke();
+    // Quadrícula secundària
+    ctx.globalAlpha = 0.35;
+    lines(spacingX / 5, spacingY / 5);
     ctx.globalAlpha = 1;
-    ctx.beginPath();
-    for (let x = Math.floor(worldLeft / spacing) * spacing; x < worldRight; x += spacing) {
-      const sx = Math.round(view.toScreen(x, 0).x) + 0.5;
-      ctx.moveTo(sx, 0);
-      ctx.lineTo(sx, view.H);
-    }
-    for (let y = Math.floor(worldBottom / spacing) * spacing; y < worldTop; y += spacing) {
-      const sy = Math.round(view.toScreen(0, y).y) + 0.5;
-      ctx.moveTo(0, sy);
-      ctx.lineTo(view.W, sy);
-    }
-    ctx.stroke();
+    lines(spacingX, spacingY);
   };
   const drawAxes = (ctx, view) => {
     ctx.strokeStyle = themeConfig.textColorValue;
@@ -287,19 +499,20 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
   const drawLabels = (ctx, worldLeft, worldRight, worldBottom, worldTop, view) => {
     ctx.fillStyle = themeConfig.secondaryTextColorValue;
     ctx.font = "12px sans-serif";
-    const spacing = getGridSpacing(view.zoom);
+    const spacingX = getGridSpacing(view.zoomX);
+    const spacingY = getGridSpacing(view.zoomY);
     const { x: originX, y: originY } = view.toScreen(0, 0);
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    for (let x = Math.floor(worldLeft / spacing) * spacing; x < worldRight; x += spacing) {
-      if (Math.abs(x) < spacing * 1e-6) continue;
+    for (let x = Math.floor(worldLeft / spacingX) * spacingX; x < worldRight; x += spacingX) {
+      if (Math.abs(x) < spacingX * 1e-6) continue;
       const sx = view.toScreen(x, 0).x;
       ctx.fillText(formatAxisNumber(x), sx, Math.max(4, Math.min(view.H - 18, originY + 5)));
     }
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    for (let y = Math.floor(worldBottom / spacing) * spacing; y < worldTop; y += spacing) {
-      if (Math.abs(y) < spacing * 1e-6) continue;
+    for (let y = Math.floor(worldBottom / spacingY) * spacingY; y < worldTop; y += spacingY) {
+      if (Math.abs(y) < spacingY * 1e-6) continue;
       const sy = view.toScreen(0, y).y;
       ctx.fillText(formatAxisNumber(y), Math.max(30, Math.min(view.W - 4, originX - 6)), sy);
     }
@@ -637,6 +850,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     ctx.textBaseline = "alphabetic";
   };
   useImperativeHandle(ref, () => ({
+    fitView,
     async downloadImage() {
       const sourceCanvas = canvasRef.current;
       if (!sourceCanvas) return;
@@ -703,7 +917,16 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     /* @__PURE__ */ jsxs("div", { className: "absolute bottom-4 right-4 flex flex-col gap-2", children: [
       /* @__PURE__ */ jsx("button", { onClick: handleZoomIn, className: roundButton, title: "Apropa", "aria-label": "Apropa", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-plus" }) }),
       /* @__PURE__ */ jsx("button", { onClick: handleZoomOut, className: roundButton, title: "Allunya", "aria-label": "Allunya", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-minus" }) }),
+      /* @__PURE__ */ jsx("button", { onClick: () => fitView(functions, { force: true }), className: roundButton, title: "Ajusta la vista a les funcions", "aria-label": "Ajusta la vista a les funcions", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-expand" }) }),
       /* @__PURE__ */ jsx("button", { onClick: handleResetView, className: roundButton, title: "Torna a la vista inicial", "aria-label": "Torna a la vista inicial", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-house" }) })
+    ] }),
+    (viewConfig.yScale || 1) !== 1 && /* @__PURE__ */ jsxs("div", { className: `absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-md shadow ${themeConfig.panelBg} ${themeConfig.text}`, children: [
+      "Escala de l'eix Y: ×",
+      formatAxisNumber(viewConfig.yScale)
+    ] }),
+    tracer && /* @__PURE__ */ jsxs(Fragment, { children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute pointer-events-none rounded-full", style: { left: tracer.sx - 7, top: tracer.sy - 7, width: 14, height: 14, backgroundColor: tracer.color, border: `3px solid ${themeConfig.bgColorValue}`, boxShadow: `0 0 0 2px ${tracer.color}` } }),
+      /* @__PURE__ */ jsx("div", { className: "absolute pointer-events-none px-2 py-1 rounded-md shadow-lg font-mono text-sm font-bold whitespace-nowrap", style: { left: tracer.sx + 14, top: tracer.sy - 36, backgroundColor: themeConfig.bgColorValue, color: themeConfig.textColorValue, border: `2px solid ${tracer.color}` }, children: tracer.label })
     ] }),
     tooltip.visible && /* @__PURE__ */ jsx(
       "div",

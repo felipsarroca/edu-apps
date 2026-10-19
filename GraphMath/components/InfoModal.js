@@ -92,13 +92,17 @@ const InfoModal = ({ isOpen, onClose, theme }) => {
               ["Recta en forma general", "2x + 3y = 7", "La dibuixa sense haver d'a\xEFllar la y."],
               ["Corbes", "x^2 + y^2 = 9", "Circumfer\xE8ncies i altres corbes impl\xEDcites."],
               ["Inequaci\xF3 amb dues inc\xF2gnites", "y > x − 2", "Pinta la regi\xF3 del pla que la compleix."],
-              ["Sistema", "{ 2x + 3y = 7 ;  x − y = 1 }", "Cada equaci\xF3 amb un color i el punt soluci\xF3 marcat."]
+              ["Sistema", "{ 2x + 3y = 7 ;  x − y = 1 }", "Cada equaci\xF3 amb un color i el punt soluci\xF3 marcat."],
+              ["Funci\xF3 amb nom", "f(x) = x^2 − 4", "Es pot escriure amb la notaci\xF3 f(x), g(x)..."],
+              ["Domini restringit", "y = x^2, −2 < x < 2", "Dibuixa nom\xE9s el tros indicat."],
+              ["Par\xE0metres", "y = a x^2 + b x + c", "Apareixen lliscadors per canviar a, b, c... i un bot\xF3 \u25B6 per animar-los."]
             ].map(([kind, example, desc], i) => /* @__PURE__ */ jsxs("tr", { className: `border-b ${themeClasses.border}`, children: [
               /* @__PURE__ */ jsx("td", { className: "py-1.5 pr-2 font-semibold align-top", children: kind }),
               /* @__PURE__ */ jsx("td", { className: "py-1.5 pr-2 font-mono align-top whitespace-nowrap", children: example }),
               /* @__PURE__ */ jsx("td", { className: `py-1.5 align-top ${themeClasses.secondaryText}`, children: desc })
             ] }, i)) }) }) }),
-            /* @__PURE__ */ jsx("p", { className: `text-sm mt-2 ${themeClasses.secondaryText}`, children: "Notaci\xF3: x^2 o x\xB2 (pot\xE8ncia), 2x (producte), 1/2 (fracci\xF3), sqrt(x) o √(x), |x| (valor absolut), sin, cos, tan, ln, log, π. La coma decimal es pot escriure amb coma o amb punt." })
+            /* @__PURE__ */ jsx("p", { className: `text-sm mt-2 ${themeClasses.secondaryText}`, children: "Notaci\xF3: x^2 o x\xB2 (pot\xE8ncia), 2x (producte), 1/2 (fracci\xF3), sqrt(x) o √(x), |x| (valor absolut), sin, cos, tan, ln, log, log(x, 2) (logaritme en base 2), π. La coma decimal es pot escriure amb coma o amb punt." }),
+            /* @__PURE__ */ jsx("p", { className: `text-sm mt-2 ${themeClasses.secondaryText}`, children: "A la gr\xE0fica: passa el ratol\xED (o el dit) per sobre d'una corba per veure'n les coordenades. Al panell d'informaci\xF3, el bot\xF3 \xABMostra\xBB destaca el v\xE8rtex, els talls, els extrems o les as\xEDmptotes. El men\xFA de vista (icona de lliscadors) amaga la quadr\xEDcula o canvia l'escala de l'eix Y." })
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2", children: "Interactuar amb la gr\xE0fica" }),

@@ -6,6 +6,24 @@ import { EquationEditorModal } from "./components/EquationEditorModal.js";
 import { Header } from "./components/Header.js";
 import { InfoModal } from "./components/InfoModal.js";
 import { THEMES, COLORS, getExpressionColor } from "./constants.js";
+import { getParameters, setParamValues } from "./services/parser.js";
+const loadJson = (key, fallback) => {
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw) return { ...fallback, ...JSON.parse(raw) };
+  } catch (error) {
+    console.error(`No s'ha pogut llegir ${key}`, error);
+  }
+  return fallback;
+};
+const saveJson = (key, value) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error(`No s'ha pogut desar ${key}`, error);
+  }
+};
+const DEFAULT_PARAM = { value: 1, min: -5, max: 5, step: 0.1 };
 const App = () => {
   const [functions, setFunctions] = useState(() => {
     try {
@@ -26,12 +44,63 @@ const App = () => {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [editingFunction, setEditingFunction] = useState(null);
   const [theme, setTheme] = useState("light");
-  const [viewConfig, setViewConfig] = useState({
-    grid: true,
-    labels: true,
-    points: true
-  });
+  const [viewConfig, setViewConfig] = useState(() => loadJson("grapher-view", { grid: true, labels: true, points: true, yScale: 1 }));
+  const [params, setParams] = useState(() => loadJson("grapher-params", {}));
+  const [animating, setAnimating] = useState(null);
   const graphRef = useRef(null);
+  useEffect(() => saveJson("grapher-view", viewConfig), [viewConfig]);
+  useEffect(() => saveJson("grapher-params", params), [params]);
+  const handleViewConfigChange = useCallback((changes) => setViewConfig((prev) => ({ ...prev, ...changes })), []);
+  // Paràmetres (a, b, c...) que apareixen a les funcions
+  const paramNames = useMemo(() => {
+    const set = /* @__PURE__ */ new Set();
+    functions.forEach((f) => f.expressions.forEach((e) => getParameters(e).forEach((n) => set.add(n))));
+    return [...set].sort();
+  }, [functions]);
+  const paramConfigs = useMemo(() => Object.fromEntries(paramNames.map((n) => [n, { ...DEFAULT_PARAM, ...params[n] }])), [paramNames, params]);
+  const paramValues = useMemo(() => Object.fromEntries(paramNames.map((n) => [n, paramConfigs[n].value])), [paramNames, paramConfigs]);
+  setParamValues(paramValues);
+  const paramsKey = JSON.stringify(paramValues);
+  const handleParamChange = useCallback((name, changes) => {
+    setParams((prev) => {
+      const next = { ...DEFAULT_PARAM, ...prev[name], ...changes };
+      if (next.min > next.max) [next.min, next.max] = [next.max, next.min];
+      if (!(next.step > 0)) next.step = 0.1;
+      next.value = Math.min(next.max, Math.max(next.min, next.value));
+      return { ...prev, [name]: next };
+    });
+  }, []);
+  // Animació d'un paràmetre: va i ve entre el mínim i el màxim
+  useEffect(() => {
+    if (!animating || !paramConfigs[animating]) return;
+    let frame;
+    let last = performance.now();
+    let direction = 1;
+    const tick = (now) => {
+      const dt = now - last;
+      if (dt >= 40) {
+        last = now;
+        setParams((prev) => {
+          const cfg = { ...DEFAULT_PARAM, ...prev[animating] };
+          const span = cfg.max - cfg.min;
+          let value = cfg.value + direction * span * dt / 4e3;
+          if (value >= cfg.max) {
+            value = cfg.max;
+            direction = -1;
+          } else if (value <= cfg.min) {
+            value = cfg.min;
+            direction = 1;
+          }
+          return { ...prev, [animating]: { ...cfg, value: Number(value.toFixed(4)) } };
+        });
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [animating, Boolean(paramConfigs[animating])]);
+  const handleToggleAnimation = useCallback((name) => setAnimating((cur) => cur === name ? null : name), []);
+  const visibleFunctions = useMemo(() => functions.filter((f) => f.isVisible), [functions]);
   useEffect(() => {
     try {
       localStorage.setItem("grapher-functions", JSON.stringify(functions));
@@ -46,12 +115,20 @@ const App = () => {
   }, [functions]);
   // En un sistema, cada equació té el seu propi color
   const withColors = (func, base) => func.type === "system" ? { ...func, colors: func.expressions.map((_, i) => getExpressionColor(base, i)) } : { ...func, colors: void 0 };
+  // Després d'afegir o editar, s'ajusta la vista perquè se'n vegin els punts importants
+  const fitAfterSave = (func) => setTimeout(() => graphRef.current?.fitView([func]), 60);
   const handleAddFunction = (func) => {
-    setFunctions((prev) => [...prev, { ...withColors(func, { color: nextColor }), id: Date.now(), color: nextColor, isVisible: true }]);
+    const newFunc = { ...withColors(func, { color: nextColor }), id: Date.now(), color: nextColor, isVisible: true };
+    setFunctions((prev) => [...prev, newFunc]);
+    fitAfterSave(newFunc);
   };
   const handleUpdateFunction = (id, updatedFunc) => {
     setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, ...withColors(updatedFunc, f) } : f));
+    fitAfterSave({ ...editingFunction, ...updatedFunc });
   };
+  const handleToggleMark = useCallback((id, key) => {
+    setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, marks: { ...f.marks, [key]: !(f.marks && f.marks[key]) } } : f));
+  }, []);
   const handleSaveFunction = (funcData) => {
     if (editingFunction) {
       handleUpdateFunction(editingFunction.id, funcData);
@@ -98,10 +175,12 @@ const App = () => {
           onToggleSidePanel: () => setIsSidePanelOpen(!isSidePanelOpen),
           isSidePanelOpen,
           onInfoClick: () => setIsInfoModalOpen(true),
-          onDownloadClick: handleDownloadGraph
+          onDownloadClick: handleDownloadGraph,
+          viewConfig,
+          onViewConfigChange: handleViewConfigChange
         }
       ),
-      /* @__PURE__ */ jsx("div", { className: "flex-1 relative", children: /* @__PURE__ */ jsx(Graph, { ref: graphRef, functions: functions.filter((f) => f.isVisible), theme, viewConfig }) })
+      /* @__PURE__ */ jsx("div", { className: "flex-1 relative", children: /* @__PURE__ */ jsx(Graph, { ref: graphRef, functions: visibleFunctions, theme, viewConfig, paramsKey, onViewConfigChange: handleViewConfigChange }) })
     ] }),
     /* @__PURE__ */ jsx(
       SidePanel,
@@ -112,7 +191,14 @@ const App = () => {
         onDelete: handleDeleteFunction,
         onToggleVisibility: handleToggleVisibility,
         onUpdateColor: handleUpdateColor,
+        onToggleMark: handleToggleMark,
         onClose: () => setIsSidePanelOpen(false),
+        paramNames,
+        params: paramConfigs,
+        onParamChange: handleParamChange,
+        animating,
+        onToggleAnimation: handleToggleAnimation,
+        paramsKey,
         theme
       }
     ),
