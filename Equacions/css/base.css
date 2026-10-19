@@ -445,3 +445,24 @@ body.mask-answers [data-answer].revealed > *{ visibility:visible; }
 .home-path.compact .path-list li + li::before{ top:13px; height:2px; }
 .home-path.compact .path-step{ font-size:.72rem; font-weight:600; gap:4px; }
 .home-path.compact .path-step .ps-dot{ width:28px; height:28px; font-size:.82rem; border-width:2px; }
+
+/* ---------- Columna esquerra: un sol scroll ----------
+   El panell actiu creix amb el seu contingut i la barra de pestanyes queda
+   enganxada a dalt; així els reptes es llegeixen a tota l'alçada. */
+.lab-left > *{ flex:0 0 auto; }
+.lab-left .vtabs-panel{ flex:none; overflow:visible; }
+.lab-left .vtabs-bar{
+  position:sticky; top:0; z-index:3;
+  background:var(--bg); padding:6px 2px; margin:-6px 0 0;
+}
+
+/* Targeta plegable: només queda l'equació */
+.fold-btn{
+  margin-left:auto; display:inline-flex; align-items:center; gap:4px;
+  border:1px solid transparent; background:transparent; border-radius:7px; padding:2px 6px 2px 8px;
+  font:inherit; font-size:.72rem; letter-spacing:.6px; color:var(--ink-faint); cursor:pointer;
+}
+.fold-btn:hover{ border-color:var(--line); color:var(--ink); background:var(--bg-soft); }
+.fold-btn svg{ width:14px; height:14px; transition:transform .2s; }
+.card.folded .fold-btn svg{ transform:rotate(-90deg); }
+.card.folded [data-fold]{ display:none !important; }

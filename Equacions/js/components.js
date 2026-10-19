@@ -31,6 +31,7 @@
     steps: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4v-4h4v-4h4V8h4"/></svg>',
     predict: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-1.5 3H17l-6.5 9L11.5 13H8l4-8h3z"/></svg>',
     magnifier: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>',
+    chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
     pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4L8 20l-5 1 1-5L17 3z"/></svg>',
     arrows: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3L4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4"/></svg>',
     grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',
@@ -142,7 +143,14 @@
       if (opts && opts.onChange) opts.onChange(name);
     }
     bar.addEventListener('click', (e) => {
-      const b = e.target.closest('[data-tab]'); if (b) select(b.dataset.tab);
+      const b = e.target.closest('[data-tab]'); if (!b) return;
+      select(b.dataset.tab);
+      // a la columna esquerra, si la barra queda a la meitat baixa, la pugem perquè el panell es vegi sencer
+      const col = container.closest('.lab-left');
+      if (col) {
+        const top = bar.getBoundingClientRect().top - col.getBoundingClientRect().top;
+        if (top > col.clientHeight / 2) col.scrollBy({ top: top - 4, behavior: 'smooth' });
+      }
     });
     bar.addEventListener('keydown', (e) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
@@ -154,6 +162,30 @@
     });
     if (btns.length) select(btns[0].dataset.tab);
     return { select };
+  }
+
+  /* ---------- targeta plegable ----------
+     Amaga els fills marcats amb data-fold (nivells, lliscadors…) i deixa visible l'equació.
+     L'estat es recorda per mòdul. */
+  function foldCard(card, key) {
+    const title = card && card.querySelector('.card-title');
+    if (!title) return;
+    const sk = 'labeq:fold:' + key;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'fold-btn';
+    function set(folded, save) {
+      card.classList.toggle('folded', folded);
+      btn.setAttribute('aria-expanded', folded ? 'false' : 'true');
+      btn.title = folded ? 'Mostra els controls de l\'equació' : 'Plega els controls per guanyar espai';
+      btn.innerHTML = (folded ? 'Desplega' : 'Plega') + ICONS.chevron;
+      if (save) { try { localStorage.setItem(sk, folded ? '1' : '0'); } catch (e) { } }
+    }
+    let initial = false;
+    try { initial = localStorage.getItem(sk) === '1'; } catch (e) { }
+    btn.addEventListener('click', () => set(!card.classList.contains('folded'), true));
+    title.appendChild(btn);
+    set(initial, false);
   }
 
   /* ---------- targeta de pregunta o de predicció ----------
@@ -521,5 +553,5 @@
     v.innerHTML = '<span class="vv-q" aria-hidden="true">?</span><span class="vv-t">' + text + '</span>';
   }
 
-  L.UI = { openModal, confirmModal, closeAllModals, toast, tabsInit, renderPrediction, reflect, shuffled, labelText, announce, coefRow, miniGraph, whyBtn, icon, ICONS, bindLabViewTabs, addExplain, guide, levelPicker, celebrate, pic, veil };
+  L.UI = { openModal, foldCard, confirmModal, closeAllModals, toast, tabsInit, renderPrediction, reflect, shuffled, labelText, announce, coefRow, miniGraph, whyBtn, icon, ICONS, bindLabViewTabs, addExplain, guide, levelPicker, celebrate, pic, veil };
 })(typeof window !== 'undefined' ? window : globalThis);

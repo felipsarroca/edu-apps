@@ -37,8 +37,8 @@
 
       '<div class="card"><div class="card-title">' + UI.icon('flask') + 'Equació biquadrada</div>' +
       '<div class="eq-display" id="l5-eq"></div>' +
-      '<div id="l5-coefs" style="margin-top:6px"></div>' +
-      '<div id="l5-presets" style="margin-top:8px"></div></div>' +
+      '<div id="l5-coefs" data-fold style="margin-top:6px"></div>' +
+      '<div id="l5-presets" data-fold style="margin-top:8px"></div></div>' +
       '<div class="bq-level lvl-x"><div class="bq-tag"><span class="bq-dot"></span>① En x</div>' +
       '<div class="math" style="font-size:1.2rem" id="l5-lx"></div></div>' +
       '<div class="bq-level lvl-t"><div class="bq-tag"><span class="bq-dot"></span>② Canvia x² per t</div>' +
@@ -70,6 +70,7 @@
 
     UI.bindLabViewTabs(main.querySelector('.lab'), 'ctrl', () => el('l5-eq').innerHTML);
     const tabs = UI.tabsInit(main.querySelector('.vtabs'));
+    UI.foldCard(main.querySelector('.lab-left [data-fold]').closest('.card'), 'm5');
     const el = (id) => main.querySelector('#' + id);
     st.graph = new L.Graph(el('l5-graf'));
     const guide = UI.guide(el('l5-insight'), ['Mira la corba', 'Mira t', 'Comprova']);

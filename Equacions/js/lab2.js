@@ -34,10 +34,10 @@
       '<button data-viewtab="viz" type="button">' + UI.icon('chart') + 'Recta i gràfic</button></div>' +
       '<div class="lab-left">' +
       '<div class="card"><div class="card-title">' + UI.icon('flask') + 'Inequació</div>' +
-      '<div id="l2-presets"></div>' +
+      '<div id="l2-presets" data-fold></div>' +
       '<div class="eq-display" id="l2-eq" style="margin-top:12px"></div>' +
-      '<div id="l2-coefs" style="margin-top:6px"></div>' +
-      '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px">' +
+      '<div id="l2-coefs" data-fold style="margin-top:6px"></div>' +
+      '<div data-fold style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px">' +
       '<span class="help-note" style="font-weight:700">signe:</span>' +
       '<div class="sign-picker" role="group" aria-label="Signe de la desigualtat">' +
       '<button data-sign="<" aria-label="més petit">&lt;</button>' +
@@ -93,6 +93,7 @@
 
     UI.bindLabViewTabs(main.querySelector('.lab'), 'ctrl', () => el('l2-eq').innerHTML);
     const tabs = UI.tabsInit(main.querySelector('.vtabs'));
+    UI.foldCard(main.querySelector('.lab-left [data-fold]').closest('.card'), 'm2');
     const el = (id) => main.querySelector('#' + id);
     const guide = UI.guide(el('l2-insight'), ['Aïlla la x', 'Vigila el signe', 'Comprova']);
     // mateixos marges laterals que el gràfic (pad.l = 46, pad.r = 16): la recta i el gràfic queden alineats

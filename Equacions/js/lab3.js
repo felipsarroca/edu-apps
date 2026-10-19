@@ -41,8 +41,8 @@
 
       '<div class="card"><div class="card-title">' + UI.icon('flask') + 'Equació</div>' +
       '<div class="eq-display" id="l3-eq"></div>' +
-      '<div id="l3-coefs" style="margin-top:6px"></div>' +
-      '<div id="l3-presets" style="margin-top:8px"></div></div>' +
+      '<div id="l3-coefs" data-fold style="margin-top:6px"></div>' +
+      '<div id="l3-presets" data-fold style="margin-top:8px"></div></div>' +
       '<div class="vtabs">' +
       '<div class="vtabs-bar" role="tablist" aria-label="Seccions">' +
       '<button data-tab="formula" role="tab">Resol pas a pas</button>' +
@@ -68,6 +68,7 @@
 
     UI.bindLabViewTabs(main.querySelector('.lab'), 'ctrl', () => el('l3-eq').innerHTML);
     const tabs = UI.tabsInit(main.querySelector('.vtabs'));
+    UI.foldCard(main.querySelector('.lab-left [data-fold]').closest('.card'), 'm3');
     const el = (id) => main.querySelector('#' + id);
     st.graph = new L.Graph(el('l3-graf'));
     const guide = UI.guide(el('l3-insight'), ['Mira la paràbola', 'Mira Δ', 'Comprova']);

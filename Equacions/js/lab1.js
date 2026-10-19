@@ -85,12 +85,12 @@
       '<div class="lab-left" id="l1-left">' +
       '<div id="l1-predhost"></div>' +
       '<div class="card"><div class="card-title">' + UI.icon('flask') + 'Equació</div>' +
-      '<div id="l1-presets"></div>' +
+      '<div id="l1-presets" data-fold></div>' +
       '<div id="l1-editor" hidden style="margin-top:10px">' +
       '<div class="op-quick" id="l1-edrow" style="align-items:center"></div>' +
       '<div class="op-msg" id="l1-edmsg"></div></div>' +
       '<div class="eq-display removable" id="l1-eq" style="margin-top:12px"></div>' +
-      '<div class="eq-hintline">Toca un terme per treure\'l dels dos costats.</div>' +
+      '<div class="eq-hintline" data-fold>Toca un terme per treure\'l dels dos costats.</div>' +
       '<div class="op-panel" style="margin-top:10px">' +
       '<div class="op-btns" role="group" aria-label="Operació">' +
       '<button class="op-btn" data-op="add" aria-label="Suma">+</button>' +
@@ -133,6 +133,7 @@
 
     UI.bindLabViewTabs(main.querySelector('.lab'), 'ctrl', () => el('l1-eq').innerHTML);
     const tabs = UI.tabsInit(main.querySelector('.vtabs'));
+    UI.foldCard(main.querySelector('.lab-left [data-fold]').closest('.card'), 'm1');
     const el = (id) => main.querySelector('#' + id);
     st.graph = new L.Graph(el('l1-graf'));
     const guide = UI.guide(el('l1-insight'));

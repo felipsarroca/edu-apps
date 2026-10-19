@@ -41,7 +41,7 @@
       '<button data-viewtab="viz" type="button">' + UI.icon('chart') + 'Visualitza</button></div>' +
       '<div class="lab-left">' +
       '<div class="card"><div class="card-title">' + UI.icon('flask') + 'Tria una equació</div>' +
-      '<div id="m0-presets"></div></div>' +
+      '<div id="m0-presets" data-fold></div></div>' +
       '<div class="card"><div class="card-title">' + UI.icon('scale') + 'Prova un valor de x</div>' +
       '<div class="eq-display" id="m0-eq"></div>' +
       '<div class="m0-values">' +
@@ -80,6 +80,7 @@
 
     UI.bindLabViewTabs(main.querySelector('.lab'), 'ctrl', () => equationHTML(st.preset) + '<div style="font-size:.85rem;margin-top:2px">x = ' + F.fmtVal(st.x) + '</div>');
     UI.tabsInit(main.querySelector('.vtabs'));
+    UI.foldCard(main.querySelector('.lab-left [data-fold]').closest('.card'), 'm0');
     const el = (id) => main.querySelector('#' + id);
 
     /* ---- visualitzacions ---- */
