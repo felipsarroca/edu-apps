@@ -48,6 +48,13 @@
     UI().celebrate(); // cada repte nou es celebra
   }
 
+  // reptes ja aconseguits d'un laboratori, com a { id: true }, per restaurar-los en tornar-hi
+  function doneMap(labKey) {
+    const map = {};
+    for (const id of loadProgress()[labKey] || []) map[id] = true;
+    return map;
+  }
+
   /* ---------- explicacions escrites per l'alumne (hipòtesis i justificacions) ---------- */
   const REFL_KEY = 'labeq:reflexions';
   function loadReflections() {
@@ -108,6 +115,7 @@
     if (!current) return;
     clearTimeout(hashTimer);
     hashTimer = setTimeout(() => {
+      if (!current) return; // s'ha sortit del laboratori abans que s'actualitzés l'enllaç
       const key = current.lab.key;
       const qs = Object.entries(params || {}).map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
       const target = '#/' + key + (qs ? '?' + qs : '');
@@ -360,6 +368,6 @@
     route();
   }
 
-  L.App = { init, registerLab, updateHash, openGlossary, settings, markDone, saveReflection, loadReflections };
+  L.App = { init, registerLab, updateHash, openGlossary, settings, markDone, doneMap, saveReflection, loadReflections };
 
 })(typeof window !== 'undefined' ? window : globalThis);

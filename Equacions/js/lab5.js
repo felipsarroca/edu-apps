@@ -27,6 +27,7 @@
       a: R.ONE, b: R.make(-5n), c: R.make(4n),
       presetId: 'p4', revealed: true, challenged: {}, graph: null
     };
+    Object.assign(st.challenged, L.App.doneMap('m5'));
 
     main.innerHTML =
       '<div class="lab cols">' +
@@ -288,7 +289,7 @@
         { id: 'c3', title: 'Tres arrels', desc: 'Troba\'n una amb exactament <b>3</b> arrels. Pista: t = 0.', done: !!st.challenged.c3 },
         { id: 'c1', title: 'Una sola arrel', desc: 'I amb <b>una</b> arrel? Pista: tot zero.', done: !!st.challenged.c1 },
         { id: 'c0', title: 'Cap arrel', desc: 'Fes que els dos valors de t siguin negatius.', done: !!st.challenged.c0 },
-        { id: 'cd', title: 'El mite de «0, 2 o 4»', desc: 'Troba un contraexemple al mite.', done: !!st.challenged.cd }
+        { id: 'cd', title: 'El mite de «0, 2 o 4»', desc: 'Troba una biquadrada amb un nombre <b>senar</b> d\'arrels.', done: !!st.challenged.cd }
       ];
       CH.forEach(c => { if (c.done) L.App.markDone('m5', c.id); });
       el('l5-chalcount').textContent = CH.filter(c => c.done).length + '/' + CH.length;
@@ -297,7 +298,7 @@
         '<span class="ch-title">' + c.title + '</span></div>' +
         '<div class="ch-desc">' + c.desc + '</div>' +
         '<div class="ch-foot"><span class="ch-state ' + (c.done ? 'done' : 'todo') + '">' + (c.done ? '✓ aconseguit' : 'pendent') + '</span>' +
-        (!c.done && c.load && st.presetId !== c.load ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
+        (!c.done && c.load && (st.presetId !== c.load || !st.acted) ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
         '</div></div>').join('');
       el('l5-chal').querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', () => loadPreset(b.dataset.load)));
       if (!st.challenged.c4 && st.acted && s.count === 4) { st.challenged.c4 = true; UI.toast('Repte aconseguit: el cas de les 4 arrels.', 'ok'); renderChallenges(); }
@@ -316,7 +317,7 @@
       }
       if (!st.challenged.c1 && st.acted && s.count === 1) { st.challenged.c1 = true; UI.toast('Repte aconseguit: una sola arrel (0).', 'ok'); renderChallenges(); }
       if (!st.challenged.c0 && st.acted && s.count === 0) { st.challenged.c0 = true; UI.toast('Repte aconseguit: cap arrel real.', 'ok'); renderChallenges(); }
-      if (!st.challenged.cd && st.acted && s.count === 3) { st.challenged.cd = true; renderChallenges(); }
+      if (!st.challenged.cd && st.acted && s.count % 2 === 1) { st.challenged.cd = true; renderChallenges(); }
     }
 
     /* ---- gràfic ---- */

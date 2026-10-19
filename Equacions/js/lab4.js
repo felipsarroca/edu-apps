@@ -64,6 +64,7 @@
       presetId: 'det', revealed: true, cand: null, challenged: {},
       graph: null
     };
+    Object.assign(st.challenged, L.App.doneMap('m4'));
 
     main.innerHTML =
       '<div class="lab cols wide-left">' +
@@ -538,7 +539,7 @@
         '<span class="ch-title">' + c.title + '</span></div>' +
         '<div class="ch-desc">' + c.desc + '</div>' +
         '<div class="ch-foot"><span class="ch-state ' + (c.done ? 'done' : 'todo') + '">' + (c.done ? '✓ aconseguit' : 'pendent') + '</span>' +
-        (!c.done && c.load && st.presetId !== c.load ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
+        (!c.done && c.load && (st.presetId !== c.load || !st.acted) ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
         '</div></div>').join('');
       el('l4-chal').querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', () => loadPreset(b.dataset.load)));
       if (!st.challenged.c2 && st.acted && s.kind === 'parallel') { st.challenged.c2 = true; UI.toast('Repte aconseguit: rectes paral·leles, cap solució.', 'ok'); renderChallenges(); }

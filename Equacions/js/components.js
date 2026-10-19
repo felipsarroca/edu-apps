@@ -109,8 +109,9 @@
           '<button class="btn ghost" data-action="no">' + (opts.cancelLabel || 'Cancel·la') + '</button>' +
           '<button class="btn ' + (opts.danger ? 'danger-soft' : 'primary') + '" data-action="yes">' + (opts.okLabel || "D'acord") + '</button>',
         actions: [
-          { id: 'no', onClick: (m) => { m.close(); resolve(false); } },
-          { id: 'yes', onClick: (m) => { m.close(); resolve(true); } }
+          // resol abans de tancar: close() crida onClose, que resoldria false
+          { id: 'no', onClick: (m) => { resolve(false); m.close(); } },
+          { id: 'yes', onClick: (m) => { resolve(true); m.close(); } }
         ],
         onClose: () => resolve(false)
       });

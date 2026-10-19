@@ -26,6 +26,7 @@
       nline: null, graph: null,
       chal: { c1: false, c2: false, c3: false }, probes: { bound: false, near: false }, askedPos: false, askedNeg: false
     };
+    Object.assign(st.chal, L.App.doneMap('m2'));
 
     main.innerHTML =
       '<div class="lab cols">' +

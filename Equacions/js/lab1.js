@@ -74,8 +74,9 @@
       hist: [], cursor: 0, opKind: 'add', view: 'dues',
       graph: null, challenges: { c1: false, c2: false, c3: false, c4: false, c5: false, c6: false },
       target: [-3, -2, 2, 3, 5, 6][Math.floor(Math.random() * 6)], // solució que l'alumne ha d'aconseguir amb la seva equació
-      own: randomLinear(), justified: false
+      own: randomLinear()
     };
+    Object.assign(st.challenges, L.App.doneMap('m1'));
 
     main.innerHTML =
       '<div class="lab cols wide-left">' +
@@ -153,7 +154,6 @@
       st.hist = [{ L: Lp, R: Rp, Ldisp: Ldisp, Rdisp: null, op: null, presetId: id }];
       st.cursor = 0;
       st.found = false; // la solució queda amagada fins que l'alumne aïlla la x (o la demana)
-      st.justified = false; // es demana una justificació del primer pas de cada equació
       st.advanced = !!(p && p.advanced) || Lp.deg >= 2 || Rp.deg >= 2;
       renderPresets(id);
       refresh(true);
@@ -211,36 +211,6 @@
         }
       } catch (e) { showOpMsg(e.message); return; }
       pushStep({ L: nL, R: nR, Ldisp: null, Rdisp: null, op: { kind, operand, label: opLabel(kind, operand) } });
-      if (isConst || kind === 'add' || kind === 'sub') askJustify(kind, operand);
-    }
-
-    /* completa la justificació del primer pas: «He restat 4 als dos membres perquè…» */
-    function askJustify(kind, operand) {
-      const host = el('l1-predhost');
-      if (st.justified || host.children.length) return;
-      st.justified = true;
-      const verb = { add: 'sumat', sub: 'restat', mul: 'multiplicat per', div: 'dividit per' }[kind];
-      const what = operandHTMLPlain(operand);
-      const addLike = kind === 'add' || kind === 'sub';
-      const card = UI.renderPrediction({
-        question: 'Completa la frase: «He ' + verb + ' <span class="math">' + what + '</span> ' + (addLike ? 'als' : 'els') + ' dos membres perquè…»',
-        shuffle: true,
-        options: addLike ? [
-          { label: '…la igualtat es manté i la solució no canvia', correct: true, why: 'Fer el mateix als dos membres és una transformació equivalent.' },
-          { label: '…així la x canvia de valor', correct: false, why: 'La x no canvia: l\'equació nova té la mateixa solució.' },
-          { label: '…sempre s\'ha de començar restant', correct: false, why: 'No hi ha cap ordre obligatori: el que compta és fer el mateix als dos membres.' }
-        ] : [
-          { label: '…la igualtat es manté i la solució no canvia', correct: true, why: 'Multiplicar o dividir els dos membres per un nombre diferent de zero és equivalent.' },
-          { label: '…així la solució es fa més petita', correct: false, why: 'La solució és la mateixa: només canvia la forma de l\'equació.' },
-          { label: '…n\'hi ha prou de fer-ho al primer membre', correct: false, why: 'Si només ho fas a un membre, la igualtat deixa de ser certa.' }
-        ],
-        continueLabel: 'Continua',
-        onDone: (ok, i) => {
-          if (ok) L.App.saveReflection('m1', 'He ' + verb + ' ' + what + ' als dos membres perquè la igualtat es manté i la solució no canvia.', 'justificació');
-          refresh();
-        }
-      });
-      host.appendChild(card);
     }
 
     function blockedMulZero(c) {
@@ -462,7 +432,7 @@
         {
           id: 'c1', title: 'Resol 3x + 4 = x + 12', done: st.challenges.c1, load: 'bas',
           desc: 'Arriba a <span class="math">x = 4</span> amb pocs passos.',
-          state: st.challenges.c1 ? '✓ aconseguit' : (cur().presetId === 'bas' ? nSteps + (nSteps === 1 ? ' pas' : ' passos') : 'pendent')
+          state: st.challenges.c1 ? '✓ aconseguit' : (st.hist[0].presetId === 'bas' ? nSteps + (nSteps === 1 ? ' pas' : ' passos') : 'pendent')
         },
         {
           id: 'c2', title: 'Converteix 2(x+1) = 2x+2 en 0 = 0', done: st.challenges.c2, load: 'ide',
@@ -500,7 +470,7 @@
           '<input class="input math" id="l1-solo" style="width:110px" placeholder="p. ex. −3" aria-label="La teva solució">' +
           '<button class="btn primary small" id="l1-sologo">Comprova</button></div><div class="pr-msg" id="l1-solomsg"></div>' : '') +
         '<div class="ch-foot"><span class="ch-state ' + (c.done ? 'done' : 'todo') + '">' + c.state + '</span>' +
-        (!c.done && c.load && cur().presetId !== c.load ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
+        (!c.done && c.load && st.hist[0].presetId !== c.load ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
         (!c.done && c.edit ? '<button class="btn soft small" id="l1-openedit">✎ Obre l\'editor</button>' : '') +
         '</div></div>').join('');
       host.querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', () => {
@@ -548,7 +518,7 @@
       }
       const isIsolated = (p, q) => (p.deg === 1 && p.coef(1).eq(R.ONE) && p.coef(0).isZero() && q.isConst()) ||
         (q.deg === 1 && q.coef(1).eq(R.ONE) && q.coef(0).isZero() && p.isConst());
-      if (c.presetId === 'bas' && sol.kind === 'unique' && sol.roots[0] && sol.roots[0].eq(R.num(4)) && isIsolated(c.L, c.R)) {
+      if (st.hist[0].presetId === 'bas' && sol.kind === 'unique' && sol.roots[0] && sol.roots[0].eq(R.num(4)) && isIsolated(c.L, c.R)) {
         if (!st.challenges.c1) { st.challenges.c1 = true; UI.toast('Repte 1 aconseguit! Has aïllat la x en ' + st.cursor + ' passos.', 'ok'); }
       }
       if (c.L.isZero() && c.R.isZero() && st.cursor > 0 && !st.challenges.c2) {
@@ -557,7 +527,7 @@
       if ((c.L.isZero() && c.R.isConst() && !c.R.isZero() || c.R.isZero() && c.L.isConst() && !c.L.isZero()) && !st.challenges.c3) {
         st.challenges.c3 = true; UI.toast('Repte 3 aconseguit! Una contradicció evident: cap solució.', 'ok');
       }
-      if (c.presetId === 'qua' && st.cursor > 0) {
+      if (st.hist[0].presetId === 'qua' && st.cursor > 0) {
         const orig = st.hist[0];
         const os = L.solvePolyPair(orig.L, orig.R), cs = L.solvePolyPair(c.L, c.R);
         if (os.kind === 'unique' && cs.kind === 'unique' && os.roots.length > cs.roots.length && !st.challenges.c4) {
@@ -731,7 +701,7 @@
 
     /* ================= hash ================= */
     function updateHash() {
-      const c = cur();
+      const c = st.hist[0]; // l'enllaç comparteix l'equació de partida
       if (!c) return;
       if (c.presetId === 'lliure') {
         L.App.updateHash({

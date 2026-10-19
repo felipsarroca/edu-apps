@@ -31,6 +31,7 @@
       a: R.ONE, b: R.make(-5n), c: R.make(6n),
       presetId: 'two', revealed: true, challenged: {}, graph: null
     };
+    Object.assign(st.challenged, L.App.doneMap('m3'));
 
     main.innerHTML =
       '<div class="lab cols">' +
@@ -417,7 +418,7 @@
         '<span class="ch-title">' + c.title + '</span></div>' +
         '<div class="ch-desc">' + c.desc + '</div>' +
         '<div class="ch-foot"><span class="ch-state ' + (c.done ? 'done' : 'todo') + '">' + (c.done ? '✓ aconseguit' : 'pendent') + '</span>' +
-        (!c.done && c.load && st.presetId !== c.load ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
+        (!c.done && c.load && (st.presetId !== c.load || !st.acted) ? '<button class="btn soft small" data-load="' + c.load + '">Prova-la ▸</button>' : '') +
         '</div></div>').join('');
       el('l3-chal').querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', () => { loadPreset(b.dataset.load); tabs.select('formula'); }));
       if (!st.challenged.dbl && st.acted && q.kind === 'double') {
