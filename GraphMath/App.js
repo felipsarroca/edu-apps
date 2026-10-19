@@ -5,7 +5,7 @@ import { SidePanel } from "./components/SidePanel.js";
 import { EquationEditorModal } from "./components/EquationEditorModal.js";
 import { Header } from "./components/Header.js";
 import { InfoModal } from "./components/InfoModal.js";
-import { THEMES, COLORS } from "./constants.js";
+import { THEMES, COLORS, getExpressionColor } from "./constants.js";
 const App = () => {
   const [functions, setFunctions] = useState(() => {
     try {
@@ -21,7 +21,7 @@ const App = () => {
     }
     return [];
   });
-  const [isSidePanelOpen, setIsSidePanelOpen] = useState(true);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(() => typeof window === "undefined" || window.innerWidth >= 768);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [editingFunction, setEditingFunction] = useState(null);
@@ -39,12 +39,18 @@ const App = () => {
       console.error("Failed to save functions to localStorage", error);
     }
   }, [functions]);
+  // Color per a la propera funció: el primer de la paleta que encara no s'ha fet servir
+  const nextColor = useMemo(() => {
+    const used = new Set(functions.flatMap((f) => f.expressions.map((_, i) => getExpressionColor(f, i))));
+    return COLORS.find((c) => !used.has(c)) || COLORS[functions.length % COLORS.length];
+  }, [functions]);
+  // En un sistema, cada equació té el seu propi color
+  const withColors = (func, base) => func.type === "system" ? { ...func, colors: func.expressions.map((_, i) => getExpressionColor(base, i)) } : { ...func, colors: void 0 };
   const handleAddFunction = (func) => {
-    const nextColor = COLORS[functions.length % COLORS.length];
-    setFunctions((prev) => [...prev, { ...func, id: Date.now(), color: nextColor, isVisible: true }]);
+    setFunctions((prev) => [...prev, { ...withColors(func, { color: nextColor }), id: Date.now(), color: nextColor, isVisible: true }]);
   };
   const handleUpdateFunction = (id, updatedFunc) => {
-    setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, ...updatedFunc } : f));
+    setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, ...withColors(updatedFunc, f) } : f));
   };
   const handleSaveFunction = (funcData) => {
     if (editingFunction) {
@@ -69,14 +75,19 @@ const App = () => {
   const handleToggleVisibility = useCallback((id) => {
     setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, isVisible: !f.isVisible } : f));
   }, []);
-  const handleUpdateColor = useCallback((id, color) => {
-    setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, color } : f));
+  const handleUpdateColor = useCallback((id, color, index = 0) => {
+    setFunctions((prev) => prev.map((f) => {
+      if (f.id !== id) return f;
+      if (f.type !== "system") return { ...f, color };
+      const colors = f.expressions.map((_, i) => i === index ? color : getExpressionColor(f, i));
+      return { ...f, colors, color: colors[0] };
+    }));
   }, []);
   const handleDownloadGraph = () => {
     graphRef.current?.downloadImage();
   };
   const themeClasses = useMemo(() => THEMES[theme], [theme]);
-  return /* @__PURE__ */ jsxs("div", { className: `flex h-screen font-sans ${themeClasses.bg} ${themeClasses.text}`, children: [
+  return /* @__PURE__ */ jsxs("div", { className: `relative flex h-screen overflow-hidden font-sans ${themeClasses.bg} ${themeClasses.text}`, children: [
     /* @__PURE__ */ jsxs("main", { className: "flex-1 flex flex-col overflow-hidden", children: [
       /* @__PURE__ */ jsx(
         Header,
@@ -101,6 +112,7 @@ const App = () => {
         onDelete: handleDeleteFunction,
         onToggleVisibility: handleToggleVisibility,
         onUpdateColor: handleUpdateColor,
+        onClose: () => setIsSidePanelOpen(false),
         theme
       }
     ),
@@ -114,6 +126,7 @@ const App = () => {
         },
         onSave: handleSaveFunction,
         existingFunction: editingFunction,
+        nextColor,
         theme
       }
     ),

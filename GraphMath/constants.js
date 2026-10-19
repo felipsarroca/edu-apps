@@ -103,7 +103,15 @@ const THEMES = {
     bgColorValue: "#000000"
   }
 };
+// Color de cada equació: en un sistema, cada equació té un color diferent
+const getExpressionColor = (func, index = 0) => {
+  if (func.colors && func.colors[index]) return func.colors[index];
+  if (index === 0) return func.color;
+  const base = Math.max(0, COLORS.indexOf(func.color));
+  return COLORS[(base + index) % COLORS.length];
+};
 export {
   COLORS,
-  THEMES
+  THEMES,
+  getExpressionColor
 };

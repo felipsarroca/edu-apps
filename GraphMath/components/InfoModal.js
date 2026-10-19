@@ -79,9 +79,26 @@ const InfoModal = ({ isOpen, onClose, theme }) => {
               ] }),
               /* @__PURE__ */ jsxs("li", { children: [
                 /* @__PURE__ */ jsx("strong", { children: "Teclat virtual:" }),
-                " Utilitza el teclat a l'editor per introduir expressions complexes f\xE0cilment."
+                " Utilitza el teclat a l'editor per introduir expressions complexes f\xE0cilment. Les fletxes mouen el cursor i les tecles d'arrel, fracci\xF3 i funcions ja hi posen els par\xE8ntesis."
               ] })
             ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2", children: "Qu\xE8 pots escriure" }),
+            /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsx("table", { className: "w-full text-sm", children: /* @__PURE__ */ jsx("tbody", { children: [
+              ["Funci\xF3", "y = 2x + 1,  y = x^2 − 4", "Dibuixa la gr\xE0fica i en calcula el domini, els talls amb els eixos i, si \xE9s una par\xE0bola, el v\xE8rtex."],
+              ["Equaci\xF3 amb una inc\xF2gnita", "x^2 − 5x + 6 = 0", "Marca les solucions sobre l'eix X (x₁ = 2, x₂ = 3)."],
+              ["Inequaci\xF3 amb una inc\xF2gnita", "2x − 4 > 0", "Pinta l'interval soluci\xF3 sobre l'eix X."],
+              ["Recta en forma general", "2x + 3y = 7", "La dibuixa sense haver d'a\xEFllar la y."],
+              ["Corbes", "x^2 + y^2 = 9", "Circumfer\xE8ncies i altres corbes impl\xEDcites."],
+              ["Inequaci\xF3 amb dues inc\xF2gnites", "y > x − 2", "Pinta la regi\xF3 del pla que la compleix."],
+              ["Sistema", "{ 2x + 3y = 7 ;  x − y = 1 }", "Cada equaci\xF3 amb un color i el punt soluci\xF3 marcat."]
+            ].map(([kind, example, desc], i) => /* @__PURE__ */ jsxs("tr", { className: `border-b ${themeClasses.border}`, children: [
+              /* @__PURE__ */ jsx("td", { className: "py-1.5 pr-2 font-semibold align-top", children: kind }),
+              /* @__PURE__ */ jsx("td", { className: "py-1.5 pr-2 font-mono align-top whitespace-nowrap", children: example }),
+              /* @__PURE__ */ jsx("td", { className: `py-1.5 align-top ${themeClasses.secondaryText}`, children: desc })
+            ] }, i)) }) }) }),
+            /* @__PURE__ */ jsx("p", { className: `text-sm mt-2 ${themeClasses.secondaryText}`, children: "Notaci\xF3: x^2 o x\xB2 (pot\xE8ncia), 2x (producte), 1/2 (fracci\xF3), sqrt(x) o √(x), |x| (valor absolut), sin, cos, tan, ln, log, π. La coma decimal es pot escriure amb coma o amb punt." })
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("h3", { className: "font-bold text-lg mb-2", children: "Interactuar amb la gr\xE0fica" }),

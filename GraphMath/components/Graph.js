@@ -1,74 +1,11 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { useRef, useEffect, forwardRef, useImperativeHandle, useState, useCallback } from "react";
-import { THEMES } from "../constants.js";
-import { parseExpression, parseIntervalExpression, analyzeSystem } from "../services/mathService.js";
+import { THEMES, getExpressionColor } from "../constants.js";
+import { prepareExpression, parseIntervalExpression, analyzeSystem, analyzeExpression, formatNumber, formatPoint } from "../services/mathService.js";
+import { relationToTex } from "../services/parser.js";
 const TOOLTIP_OFFSET = 15;
-const formatSubExpression = (subExpr) => {
-  const expr = subExpr.trim();
-  if (!expr) return "";
-  if (expr.startsWith("(") && expr.endsWith(")")) {
-    let depth2 = 0;
-    let isWrapped = true;
-    for (let i = 0; i < expr.length - 1; i++) {
-      if (expr[i] === "(") depth2++;
-      else if (expr[i] === ")") depth2--;
-      if (depth2 === 0) {
-        isWrapped = false;
-        break;
-      }
-    }
-    if (isWrapped) return `(${formatSubExpression(expr.slice(1, -1))})`;
-  }
-  let depth = 0;
-  for (let i = expr.length - 1; i >= 0; i--) {
-    const char = expr[i];
-    if (char === ")") depth++;
-    else if (char === "(") depth--;
-    else if ((char === "+" || char === "-") && depth === 0) {
-      if (i > 0 && !["+", "-", "*", "/"].includes(expr[i - 1].trim())) {
-        return `${formatSubExpression(expr.slice(0, i))} ${char} ${formatSubExpression(expr.slice(i + 1))}`;
-      }
-    }
-  }
-  depth = 0;
-  for (let i = expr.length - 1; i >= 0; i--) {
-    const char = expr[i];
-    if (char === ")") depth++;
-    else if (char === "(") depth--;
-    else if (char === "/" && depth === 0) return `\\frac{${formatSubExpression(expr.slice(0, i))}}{${formatSubExpression(expr.slice(i + 1))}}`;
-  }
-  depth = 0;
-  for (let i = expr.length - 1; i >= 0; i--) {
-    const char = expr[i];
-    if (char === ")") depth++;
-    else if (char === "(") depth--;
-    else if (char === "*" && depth === 0) return `${formatSubExpression(expr.slice(0, i))} \\cdot ${formatSubExpression(expr.slice(i + 1))}`;
-  }
-  if (expr.startsWith("sqrt(") && expr.endsWith(")")) return `\\sqrt{${formatSubExpression(expr.slice(5, -1))}}`;
-  return expr;
-};
-const formatExpressionForMathJax = (expr) => {
-  let expressionToFormat = expr;
-  if (!expressionToFormat || expressionToFormat.trim() === "") return "";
-  const texifyOperator = (op) => op.replace(/<=/g, " \\le ").replace(/≤/g, " \\le ").replace(/>=/g, " \\ge ").replace(/≥/g, " \\ge ").replace(/</g, " \\lt ").replace(/>/g, " \\gt ").replace(/=/g, " = ");
-  const operatorMatch = expressionToFormat.match(/(<=|>=|≤|≥|<|>|=)/);
-  let formatted;
-  if (operatorMatch && operatorMatch.index !== void 0 && operatorMatch.index > 0) {
-    const op = operatorMatch[0];
-    const opIndex = operatorMatch.index;
-    let lhs = expressionToFormat.substring(0, opIndex).trim();
-    let rhs = expressionToFormat.substring(opIndex + op.length).trim();
-    formatted = `${lhs} ${texifyOperator(op)} ${formatSubExpression(rhs)}`;
-  } else {
-    const parts = expressionToFormat.split(/(<=|>=|≤|≥|<|>|=)/).filter((p) => p);
-    if (parts.length > 1) {
-      formatted = parts.map((part, index) => index % 2 === 1 ? texifyOperator(part) : formatSubExpression(part)).join("");
-    } else {
-      formatted = formatSubExpression(expressionToFormat);
-    }
-  }
-  return `\\(${formatted}\\)`;
-};
+const DEFAULT_ZOOM = 50;
+const LINE_WIDTH = 3.5;
 const svgStringToImage = (svgString) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -80,10 +17,14 @@ const svgStringToImage = (svgString) => {
 };
 const renderMathJaxToImage = async (expr, textColor) => {
   if (!window.MathJax || !expr) return null;
-  const tex = formatExpressionForMathJax(expr);
-  const cleanTex = tex.replace(/^\\\(/, "").replace(/\\\)$/, "");
+  let tex;
+  try {
+    tex = relationToTex(expr);
+  } catch (e) {
+    tex = expr;
+  }
   await window.MathJax.startup.promise;
-  const container = await window.MathJax.tex2svgPromise(cleanTex, { display: false });
+  const container = await window.MathJax.tex2svgPromise(tex, { display: false });
   const svgEl = container.querySelector("svg");
   if (!svgEl) return null;
   const style = document.createElement("style");
@@ -94,19 +35,20 @@ const renderMathJaxToImage = async (expr, textColor) => {
   const originalWidth = viewBox ? viewBox[2] : 0;
   const originalHeight = viewBox ? viewBox[3] : 0;
   if (originalHeight === 0 || originalWidth === 0) return null;
-  const desiredHeight = 20;
+  const desiredHeight = 22 * (window.devicePixelRatio || 1);
   const scale = desiredHeight / originalHeight;
-  const finalWidth = originalWidth * scale;
   const img = await svgStringToImage(svgString);
-  return { img, width: finalWidth, height: desiredHeight };
+  return { img, width: originalWidth * scale, height: desiredHeight };
 };
+const holds = (v, rel) => rel === "<" ? v < 0 : rel === ">" ? v > 0 : rel === "<=" ? v <= 0 : v >= 0;
+const formatAxisNumber = (v) => Number(v.toPrecision(4)).toString().replace(".", ",").replace("-", "−");
 const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
   const canvasRef = useRef(null);
   const [tooltip, setTooltip] = useState({ visible: false, content: "", x: 0, y: 0 });
   const panRef = useRef({ x: 0, y: 0 });
-  const zoomRef = useRef(50);
-  const isPanningRef = useRef(false);
-  const lastMousePosRef = useRef({ x: 0, y: 0 });
+  const zoomRef = useRef(DEFAULT_ZOOM);
+  const pointersRef = useRef(/* @__PURE__ */ new Map());
+  const pinchRef = useRef(null);
   const animationFrameId = useRef();
   const themeConfig = THEMES[theme];
   const screenToWorld = useCallback((screenX, screenY) => {
@@ -124,469 +66,650 @@ const Graph = forwardRef(({ functions, theme, viewConfig }, ref) => {
     if (!ctx) return;
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
-    if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+    if (canvas.width !== Math.round(rect.width * dpr) || canvas.height !== Math.round(rect.height * dpr)) {
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
     }
-    ctx.scale(dpr, dpr);
-    const viewWidth = rect.width;
-    const viewHeight = rect.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const W = rect.width;
+    const H = rect.height;
     ctx.fillStyle = themeConfig.bgColorValue;
-    ctx.fillRect(0, 0, viewWidth, viewHeight);
+    ctx.fillRect(0, 0, W, H);
     const pan = panRef.current;
     const zoom = zoomRef.current;
-    const worldToScreen = (worldX, worldY) => {
-      const screenX = worldX * zoom + pan.x + viewWidth / 2;
-      const screenY = -worldY * zoom + pan.y + viewHeight / 2;
-      return { x: screenX, y: screenY };
+    const view = {
+      W,
+      H,
+      zoom,
+      toScreen: (wx, wy) => ({ x: wx * zoom + pan.x + W / 2, y: -wy * zoom + pan.y + H / 2 }),
+      toWorldX: (sx) => (sx - pan.x - W / 2) / zoom,
+      toWorldY: (sy) => (sy - pan.y - H / 2) / -zoom
     };
-    const { x: worldLeft } = screenToWorld(0, 0);
-    const { y: worldTop } = screenToWorld(0, 0);
-    const { x: worldRight } = screenToWorld(viewWidth, viewHeight);
-    const { y: worldBottom } = screenToWorld(viewWidth, viewHeight);
-    if (viewConfig.grid) drawGrid(ctx, worldLeft, worldRight, worldBottom, worldTop, worldToScreen, zoom);
-    drawAxes(ctx, worldToScreen);
-    if (viewConfig.labels) drawLabels(ctx, worldLeft, worldRight, worldBottom, worldTop, worldToScreen, zoom);
+    const worldLeft = view.toWorldX(0);
+    const worldRight = view.toWorldX(W);
+    const worldTop = view.toWorldY(0);
+    const worldBottom = view.toWorldY(H);
+    if (viewConfig.grid) drawGrid(ctx, worldLeft, worldRight, worldBottom, worldTop, view);
+    drawAxes(ctx, view);
+    if (viewConfig.labels) drawLabels(ctx, worldLeft, worldRight, worldBottom, worldTop, view);
+    const pointLayer = [];
     functions.forEach((func) => {
-      drawFunction(ctx, func, screenToWorld, worldToScreen, zoom);
-    });
-    functions.forEach((func) => {
-      if (func.type === "system") {
-        const analysis = analyzeSystem(func.expressions);
-        if (analysis.intersectionPoints && analysis.intersectionPoints.length > 0) {
-          analysis.intersectionPoints.forEach((p) => {
-            const { x: sx, y: sy } = worldToScreen(p.x, p.y);
-            const pointRadius = 6;
-            const outlineColor = theme === "light" ? "#000" : "#fff";
-            const outlineWidth = 2;
-            ctx.fillStyle = outlineColor;
-            ctx.beginPath();
-            ctx.arc(sx, sy, pointRadius + outlineWidth, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.fillStyle = func.color;
-            ctx.beginPath();
-            ctx.arc(sx, sy, pointRadius, 0, 2 * Math.PI);
-            ctx.fill();
+      const inSystem = func.type === "system";
+      const domainInterval = !inSystem && func.domainRestriction ? parseIntervalExpression(func.domainRestriction) : null;
+      func.expressions.forEach((expression, index) => {
+        const prep = prepareExpression(expression, { inSystem });
+        if (!prep.ok) return;
+        const color = getExpressionColor(func, index);
+        drawPrepared(ctx, prep, color, view, domainInterval);
+        if (!inSystem && (prep.kind === "equationX" || prep.kind === "inequalityX")) {
+          const analysis = analyzeExpression(expression);
+          const sols = (analysis.solutions || []).filter((x) => x >= worldLeft && x <= worldRight).slice(0, 30);
+          sols.forEach((x, k) => {
+            const inclusive = prep.kind === "equationX" || prep.relation.includes("=");
+            const name = sols.length > 1 && prep.kind === "equationX" ? `x${"₁₂₃₄₅₆₇₈₉"[k] || ""}` : "x";
+            pointLayer.push({ x, y: 0, color, label: `${name} = ${formatNumber(x)}`, open: !inclusive });
           });
         }
+      });
+      if (inSystem) {
+        const analysis = analyzeSystem(func.expressions);
+        (analysis.intersectionPoints || []).forEach((p) => pointLayer.push({ x: p.x, y: p.y, label: formatPoint(p), solution: true }));
       }
     });
-  }, [functions, theme, viewConfig, screenToWorld]);
+    const placed = [];
+    pointLayer.forEach((p) => drawPoint(ctx, p, view, placed));
+  }, [functions, theme, viewConfig]);
   const redraw = useCallback(() => {
     if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
     animationFrameId.current = requestAnimationFrame(draw);
   }, [draw]);
-  const handleZoom = useCallback((zoomFactor) => {
+  const zoomAt = useCallback((factor, sx, sy) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const oldZoom = zoomRef.current;
-    const newZoom = oldZoom * zoomFactor;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const { x: worldX, y: worldY } = screenToWorld(centerX, centerY);
-    panRef.current.x = centerX - worldX * newZoom - rect.width / 2;
-    panRef.current.y = centerY + worldY * newZoom - rect.height / 2;
+    const newZoom = Math.min(5e4, Math.max(0.05, zoomRef.current * factor));
+    const { x: worldX, y: worldY } = screenToWorld(sx, sy);
+    panRef.current.x = sx - worldX * newZoom - rect.width / 2;
+    panRef.current.y = sy + worldY * newZoom - rect.height / 2;
     zoomRef.current = newZoom;
     redraw();
   }, [redraw, screenToWorld]);
-  const handleZoomIn = useCallback(() => handleZoom(1.2), [handleZoom]);
-  const handleZoomOut = useCallback(() => handleZoom(1 / 1.2), [handleZoom]);
+  const zoomCenter = useCallback((factor) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    zoomAt(factor, rect.width / 2, rect.height / 2);
+  }, [zoomAt]);
+  const handleZoomIn = useCallback(() => zoomCenter(1.25), [zoomCenter]);
+  const handleZoomOut = useCallback(() => zoomCenter(1 / 1.25), [zoomCenter]);
+  const handleResetView = useCallback(() => {
+    panRef.current = { x: 0, y: 0 };
+    zoomRef.current = DEFAULT_ZOOM;
+    redraw();
+  }, [redraw]);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     redraw();
     const handleResize = () => redraw();
     window.addEventListener("resize", handleResize);
+    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => redraw()) : null;
+    resizeObserver?.observe(canvas);
+    const localPos = (e) => {
+      const r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
     const handleWheel = (e) => {
       e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const zoomFactor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
-      const oldZoom = zoomRef.current;
-      const newZoom = oldZoom * zoomFactor;
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      const { x: worldX, y: worldY } = screenToWorld(mouseX, mouseY);
-      panRef.current.x = mouseX - worldX * newZoom - rect.width / 2;
-      panRef.current.y = mouseY + worldY * newZoom - rect.height / 2;
-      zoomRef.current = newZoom;
-      redraw();
+      const { x, y } = localPos(e);
+      zoomAt(e.deltaY < 0 ? 1.1 : 1 / 1.1, x, y);
     };
-    const handleMouseDown = (e) => {
-      isPanningRef.current = true;
-      lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+    const handlePointerDown = (e) => {
+      canvas.setPointerCapture?.(e.pointerId);
+      pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointersRef.current.size === 2) {
+        const [a, b] = [...pointersRef.current.values()];
+        pinchRef.current = Math.hypot(a.x - b.x, a.y - b.y);
+      }
       canvas.style.cursor = "grabbing";
     };
-    const handleMouseMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      const { x, y } = screenToWorld(mouseX, mouseY);
-      setTooltip({ visible: true, content: `(${x.toFixed(2)}, ${y.toFixed(2)})`, x: e.clientX, y: e.clientY });
-      if (isPanningRef.current) {
-        const dx = e.clientX - lastMousePosRef.current.x;
-        const dy = e.clientY - lastMousePosRef.current.y;
-        panRef.current = { x: panRef.current.x + dx, y: panRef.current.y + dy };
-        lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+    const handlePointerMove = (e) => {
+      const { x, y } = localPos(e);
+      if (e.pointerType === "mouse") {
+        const w = screenToWorld(x, y);
+        setTooltip({ visible: true, content: `(${formatAxisNumber(Number(w.x.toFixed(2)))}; ${formatAxisNumber(Number(w.y.toFixed(2)))})`, x, y });
+      }
+      const prev = pointersRef.current.get(e.pointerId);
+      if (!prev) return;
+      if (pointersRef.current.size === 1) {
+        panRef.current = { x: panRef.current.x + e.clientX - prev.x, y: panRef.current.y + e.clientY - prev.y };
+        pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
         redraw();
+      } else if (pointersRef.current.size === 2) {
+        pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        const [a, b] = [...pointersRef.current.values()];
+        const dist = Math.hypot(a.x - b.x, a.y - b.y);
+        const r = canvas.getBoundingClientRect();
+        if (pinchRef.current && dist > 0) zoomAt(dist / pinchRef.current, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
+        pinchRef.current = dist;
       }
     };
-    const handleMouseUp = () => {
-      isPanningRef.current = false;
-      canvas.style.cursor = "grab";
+    const handlePointerUp = (e) => {
+      pointersRef.current.delete(e.pointerId);
+      pinchRef.current = null;
+      if (pointersRef.current.size === 0) canvas.style.cursor = "grab";
     };
-    const handleMouseLeave = () => {
-      setTooltip((t) => ({ ...t, visible: false }));
+    const handlePointerLeave = (e) => {
+      if (e.pointerType === "mouse") setTooltip((t) => ({ ...t, visible: false }));
     };
     canvas.addEventListener("wheel", handleWheel, { passive: false });
-    canvas.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
+    canvas.addEventListener("pointerdown", handlePointerDown);
+    canvas.addEventListener("pointermove", handlePointerMove);
+    canvas.addEventListener("pointerup", handlePointerUp);
+    canvas.addEventListener("pointercancel", handlePointerUp);
+    canvas.addEventListener("pointerleave", handlePointerLeave);
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
       canvas.removeEventListener("wheel", handleWheel);
-      canvas.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      canvas.removeEventListener("mouseleave", handleMouseLeave);
+      canvas.removeEventListener("pointerdown", handlePointerDown);
+      canvas.removeEventListener("pointermove", handlePointerMove);
+      canvas.removeEventListener("pointerup", handlePointerUp);
+      canvas.removeEventListener("pointercancel", handlePointerUp);
+      canvas.removeEventListener("pointerleave", handlePointerLeave);
     };
-  }, [redraw, screenToWorld]);
+  }, [redraw, screenToWorld, zoomAt]);
   const getGridSpacing = (zoom) => {
-    const minPixelSpacing = 60;
-    const minWorldSpacing = minPixelSpacing / zoom;
-    const magnitudes = [0.1, 0.2, 0.25, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1e3];
-    return magnitudes.find((m) => m > minWorldSpacing) || magnitudes[magnitudes.length - 1];
+    const minWorldSpacing = 60 / zoom;
+    const magnitude = Math.pow(10, Math.floor(Math.log10(minWorldSpacing)));
+    for (const m of [1, 2, 5, 10]) if (m * magnitude >= minWorldSpacing) return m * magnitude;
+    return 10 * magnitude;
   };
-  const drawGrid = (ctx, worldLeft, worldRight, worldBottom, worldTop, worldToScreen, zoom) => {
+  const drawGrid = (ctx, worldLeft, worldRight, worldBottom, worldTop, view) => {
+    const spacing = getGridSpacing(view.zoom);
+    // Quadrícula secundària
     ctx.strokeStyle = themeConfig.grid;
+    ctx.globalAlpha = 0.35;
     ctx.lineWidth = 1;
-    const spacing = getGridSpacing(zoom);
-    const canvas = ctx.canvas;
+    ctx.beginPath();
+    const minor = spacing / 5;
+    for (let x = Math.floor(worldLeft / minor) * minor; x < worldRight; x += minor) {
+      const sx = Math.round(view.toScreen(x, 0).x) + 0.5;
+      ctx.moveTo(sx, 0);
+      ctx.lineTo(sx, view.H);
+    }
+    for (let y = Math.floor(worldBottom / minor) * minor; y < worldTop; y += minor) {
+      const sy = Math.round(view.toScreen(0, y).y) + 0.5;
+      ctx.moveTo(0, sy);
+      ctx.lineTo(view.W, sy);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
     ctx.beginPath();
     for (let x = Math.floor(worldLeft / spacing) * spacing; x < worldRight; x += spacing) {
-      const { x: screenX } = worldToScreen(x, 0);
-      ctx.moveTo(screenX, 0);
-      ctx.lineTo(screenX, canvas.height);
+      const sx = Math.round(view.toScreen(x, 0).x) + 0.5;
+      ctx.moveTo(sx, 0);
+      ctx.lineTo(sx, view.H);
     }
     for (let y = Math.floor(worldBottom / spacing) * spacing; y < worldTop; y += spacing) {
-      const { y: screenY } = worldToScreen(0, y);
-      ctx.moveTo(0, screenY);
-      ctx.lineTo(canvas.width, screenY);
+      const sy = Math.round(view.toScreen(0, y).y) + 0.5;
+      ctx.moveTo(0, sy);
+      ctx.lineTo(view.W, sy);
     }
     ctx.stroke();
   };
-  const drawAxes = (ctx, worldToScreen) => {
+  const drawAxes = (ctx, view) => {
     ctx.strokeStyle = themeConfig.textColorValue;
+    ctx.fillStyle = themeConfig.textColorValue;
     ctx.lineWidth = 1.5;
-    const canvas = ctx.canvas;
+    const { x: originX, y: originY } = view.toScreen(0, 0);
     ctx.beginPath();
-    const { x: originX, y: originY } = worldToScreen(0, 0);
     ctx.moveTo(originX, 0);
-    ctx.lineTo(originX, canvas.height);
+    ctx.lineTo(originX, view.H);
     ctx.moveTo(0, originY);
-    ctx.lineTo(canvas.width, originY);
+    ctx.lineTo(view.W, originY);
     ctx.stroke();
+    // Fletxes dels eixos
+    ctx.beginPath();
+    if (originY > 0 && originY < view.H) {
+      ctx.moveTo(view.W, originY);
+      ctx.lineTo(view.W - 10, originY - 5);
+      ctx.lineTo(view.W - 10, originY + 5);
+    }
+    if (originX > 0 && originX < view.W) {
+      ctx.moveTo(originX, 0);
+      ctx.lineTo(originX - 5, 10);
+      ctx.lineTo(originX + 5, 10);
+    }
+    ctx.fill();
   };
-  const drawLabels = (ctx, worldLeft, worldRight, worldBottom, worldTop, worldToScreen, zoom) => {
+  const drawLabels = (ctx, worldLeft, worldRight, worldBottom, worldTop, view) => {
     ctx.fillStyle = themeConfig.secondaryTextColorValue;
     ctx.font = "12px sans-serif";
-    const canvas = ctx.canvas;
-    const spacing = getGridSpacing(zoom);
+    const spacing = getGridSpacing(view.zoom);
+    const { x: originX, y: originY } = view.toScreen(0, 0);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
     for (let x = Math.floor(worldLeft / spacing) * spacing; x < worldRight; x += spacing) {
-      if (Math.abs(x) < 1e-9) continue;
-      const { x: screenX, y: originY2 } = worldToScreen(x, 0);
-      ctx.fillText(Number(x.toPrecision(4)).toString(), screenX + 5, Math.max(15, Math.min(canvas.height - 5, originY2 + 15)));
+      if (Math.abs(x) < spacing * 1e-6) continue;
+      const sx = view.toScreen(x, 0).x;
+      ctx.fillText(formatAxisNumber(x), sx, Math.max(4, Math.min(view.H - 18, originY + 5)));
     }
-    for (let y = Math.floor(worldBottom / spacing) * spacing; y < worldTop; y += spacing) {
-      if (Math.abs(y) < 1e-9) continue;
-      const { x: originX2, y: screenY } = worldToScreen(0, y);
-      ctx.fillText(Number(y.toPrecision(4)).toString(), Math.max(5, Math.min(canvas.width - 20, originX2 + 5)), screenY - 5);
-    }
-    const { x: originX, y: originY } = worldToScreen(0, 0);
-    ctx.fillText("0", originX + 5, originY + 15);
-    ctx.fillStyle = themeConfig.textColorValue;
-    ctx.font = "italic 16px sans-serif";
-    const xLabelYPos = originY > canvas.height - 25 ? originY - 15 : originY + 20;
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    ctx.fillText("eix x", canvas.width - 10, xLabelYPos);
-    const yLabelXPos = originX < 25 ? originX + 10 : originX - 15;
-    ctx.textAlign = originX < 25 ? "left" : "right";
+    for (let y = Math.floor(worldBottom / spacing) * spacing; y < worldTop; y += spacing) {
+      if (Math.abs(y) < spacing * 1e-6) continue;
+      const sy = view.toScreen(0, y).y;
+      ctx.fillText(formatAxisNumber(y), Math.max(30, Math.min(view.W - 4, originX - 6)), sy);
+    }
+    ctx.textAlign = "right";
     ctx.textBaseline = "top";
-    ctx.fillText("eix y", yLabelXPos, 10);
+    ctx.fillText("0", originX - 5, originY + 5);
+    ctx.fillStyle = themeConfig.textColorValue;
+    ctx.font = "italic bold 17px serif";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "bottom";
+    ctx.fillText("x", view.W - 8, Math.min(view.H - 4, Math.max(20, originY - 6)));
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("y", Math.max(4, Math.min(view.W - 16, originX + 8)), 4);
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
   };
-  const drawImplicitLinearEquation = (ctx, coefficients, screenToWorld2, worldToScreen) => {
-    const { a, b, c } = coefficients;
-    const canvas = ctx.canvas;
-    const points = [];
-    const addPoint = (x, y) => {
-      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
-      const screenPoint = worldToScreen(x, y);
-      if (Number.isFinite(screenPoint.x) && Number.isFinite(screenPoint.y)) {
-        points.push(screenPoint);
-      }
+  // Recorre una funció explícita (y = f(x) o x = g(y)) i en retorna els trams continus en coordenades de pantalla
+  const sampleExplicit = (prep, view, domainInterval) => {
+    const isY = prep.kind === "explicitY" || prep.kind === "equationX" || prep.kind === "inequalityX";
+    const length = isY ? view.W : view.H;
+    const limit = isY ? view.H : view.W;
+    const segments = [];
+    let current = [];
+    let prev = null;
+    const close = () => {
+      if (current.length > 1) segments.push(current);
+      current = [];
+      prev = null;
     };
-    if (Math.abs(b) > 1e-12) {
-      const leftWorld = screenToWorld2(0, 0).x;
-      const rightWorld = screenToWorld2(canvas.width, 0).x;
-      addPoint(leftWorld, (c - a * leftWorld) / b);
-      addPoint(rightWorld, (c - a * rightWorld) / b);
+    const step = 0.5;
+    for (let s = -1; s <= length + 1; s += step) {
+      const u = isY ? view.toWorldX(s) : view.toWorldY(s);
+      if (domainInterval) {
+        const v = domainInterval.variable === "x" ? isY ? u : NaN : isY ? NaN : u;
+        if (Number.isFinite(v)) {
+          const inside = (v > domainInterval.lowerBound || domainInterval.lowerInclusive && v >= domainInterval.lowerBound) && (v < domainInterval.upperBound || domainInterval.upperInclusive && v <= domainInterval.upperBound);
+          if (!inside) {
+            close();
+            continue;
+          }
+        }
+      }
+      let w;
+      try {
+        w = prep.fn(u);
+      } catch (e) {
+        w = NaN;
+      }
+      if (!Number.isFinite(w)) {
+        close();
+        continue;
+      }
+      const sc = isY ? view.toScreen(u, w).y : view.toScreen(w, u).x;
+      // Salt d'una asímptota: es trenca el traç
+      if (prev !== null && (prev < -limit && sc > 2 * limit || prev > 2 * limit && sc < -limit)) close();
+      const clamped = Math.max(-10 * limit, Math.min(11 * limit, sc));
+      current.push(isY ? { x: s, y: clamped } : { x: clamped, y: s });
+      prev = sc;
     }
-    if (Math.abs(a) > 1e-12) {
-      const topWorld = screenToWorld2(0, 0).y;
-      const bottomWorld = screenToWorld2(0, canvas.height).y;
-      addPoint((c - b * topWorld) / a, topWorld);
-      addPoint((c - b * bottomWorld) / a, bottomWorld);
-    }
-    const visiblePoints = points.filter((point, index) => index === points.findIndex((candidate) => Math.abs(candidate.x - point.x) < 0.5 && Math.abs(candidate.y - point.y) < 0.5)).filter((point) => point.x >= -1 && point.x <= canvas.width + 1 && point.y >= -1 && point.y <= canvas.height + 1);
-    if (visiblePoints.length >= 2) {
-      ctx.beginPath();
-      ctx.moveTo(visiblePoints[0].x, visiblePoints[0].y);
-      ctx.lineTo(visiblePoints[1].x, visiblePoints[1].y);
-      ctx.stroke();
-    }
+    close();
+    return { segments, isY };
   };
-  const drawFunction = (ctx, mathFunc, screenToWorld2, worldToScreen, zoom) => {
-    ctx.strokeStyle = mathFunc.color;
-    ctx.lineWidth = 3.5;
+  const strokeSegments = (ctx, segments) => {
+    ctx.beginPath();
+    for (const seg of segments) {
+      ctx.moveTo(seg[0].x, seg[0].y);
+      for (let i = 1; i < seg.length; i++) ctx.lineTo(seg[i].x, seg[i].y);
+    }
+    ctx.stroke();
+  };
+  const setLineStyle = (ctx, color, dashed, width = LINE_WIDTH) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    const canvas = ctx.canvas;
-    const domainInterval = mathFunc.domainRestriction ? parseIntervalExpression(mathFunc.domainRestriction) : null;
-    for (const expression of mathFunc.expressions) {
-      if (["equation", "inequality", "system"].includes(mathFunc.type)) {
-        const parsed = parseExpression(expression);
-        if (!parsed) continue;
-        if (parsed.implicitType === "linear" && parsed.coefficients) {
-          drawImplicitLinearEquation(ctx, parsed.coefficients, screenToWorld2, worldToScreen);
-          continue;
-        }
-        const points = [];
-        let currentSegment = [];
-        const addPoint = (wx, wy) => {
-          let inDomain = !domainInterval || (domainInterval.variable === "x" ? wx >= domainInterval.lowerBound && wx <= domainInterval.upperBound : wy >= domainInterval.lowerBound && wy <= domainInterval.upperBound);
-          if (isFinite(wx) && isFinite(wy) && inDomain) {
-            currentSegment.push(worldToScreen(wx, wy));
-          } else {
-            if (currentSegment.length > 0) {
-              points.push(...currentSegment, { x: NaN, y: NaN });
-              currentSegment = [];
-            }
-          }
-        };
-        if (parsed.variable === "y") {
-          for (let sx = 0; sx <= canvas.width; sx++) {
-            const { x: wx } = screenToWorld2(sx, 0);
-            try {
-              addPoint(wx, parsed.func(wx));
-            } catch (e) {
-              addPoint(NaN, NaN);
-            }
-          }
-        } else {
-          for (let sy = 0; sy <= canvas.height; sy++) {
-            const { y: wy } = screenToWorld2(0, sy);
-            try {
-              addPoint(parsed.func(wy), wy);
-            } catch (e) {
-              addPoint(NaN, NaN);
-            }
-          }
-        }
-        if (currentSegment.length > 0) points.push(...currentSegment);
-        if (points.length > 0) {
-          ctx.beginPath();
-          if (parsed.inequalityType === "<" || parsed.inequalityType === ">") {
-            ctx.setLineDash([8, 8]);
-          }
-          let isNewLine = true;
-          for (const p of points) {
-            if (isNaN(p.x)) {
-              isNewLine = true;
-              continue;
-            }
-            if (isNewLine) {
-              ctx.moveTo(p.x, p.y);
-              isNewLine = false;
-            } else {
-              ctx.lineTo(p.x, p.y);
-            }
-          }
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-        if (parsed.inequalityType && points.length > 0) {
-          const fillablePoints = points.filter((p) => !isNaN(p.x));
-          if (fillablePoints.length > 1) {
-            ctx.fillStyle = mathFunc.color;
-            ctx.globalAlpha = 0.3;
-            ctx.beginPath();
-            ctx.moveTo(fillablePoints[0].x, fillablePoints[0].y);
-            for (let i = 1; i < fillablePoints.length; i++) {
-              ctx.lineTo(fillablePoints[i].x, fillablePoints[i].y);
-            }
-            if (parsed.variable === "y") {
-              const bound = parsed.inequalityType === ">" || parsed.inequalityType === ">=" ? 0 : canvas.height;
-              ctx.lineTo(fillablePoints[fillablePoints.length - 1].x, bound);
-              ctx.lineTo(fillablePoints[0].x, bound);
-            } else {
-              const bound = parsed.inequalityType === ">" || parsed.inequalityType === ">=" ? canvas.width : 0;
-              ctx.lineTo(bound, fillablePoints[fillablePoints.length - 1].y);
-              ctx.lineTo(bound, fillablePoints[0].y);
-            }
-            ctx.closePath();
-            ctx.fill();
-            ctx.globalAlpha = 1;
-          }
-        }
-        if (domainInterval) {
-          const drawEndpoint = (worldX, worldY, inclusive) => {
-            if (!isFinite(worldX) || !isFinite(worldY)) return;
-            const { x: sx, y: sy } = worldToScreen(worldX, worldY);
-            ctx.beginPath();
-            ctx.arc(sx, sy, 5, 0, 2 * Math.PI);
-            if (inclusive) {
-              ctx.fillStyle = mathFunc.color;
-              ctx.fill();
-            } else {
-              ctx.fillStyle = themeConfig.bgColorValue;
-              ctx.fill();
-              ctx.strokeStyle = mathFunc.color;
-              ctx.lineWidth = 2;
-              ctx.stroke();
-            }
-          };
-          if (domainInterval.variable === "x" && parsed.variable === "y") {
-            if (isFinite(domainInterval.lowerBound)) drawEndpoint(domainInterval.lowerBound, parsed.func(domainInterval.lowerBound), domainInterval.lowerInclusive);
-            if (isFinite(domainInterval.upperBound)) drawEndpoint(domainInterval.upperBound, parsed.func(domainInterval.upperBound), domainInterval.upperInclusive);
-          }
-        }
-      } else if (mathFunc.type === "interval") {
-        const parsed = parseIntervalExpression(expression);
-        if (!parsed) continue;
-        ctx.fillStyle = mathFunc.color;
-        ctx.globalAlpha = 0.3;
-        if (parsed.variable === "x") {
-          const { x: startX } = worldToScreen(parsed.lowerBound, 0);
-          const { x: endX } = worldToScreen(parsed.upperBound, 0);
-          ctx.fillRect(startX, 0, endX - startX, canvas.height);
-        } else {
-          const { y: startY } = worldToScreen(0, parsed.upperBound);
-          const { y: endY } = worldToScreen(0, parsed.lowerBound);
-          ctx.fillRect(0, startY, canvas.width, endY - startY);
-        }
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = mathFunc.color;
-        ctx.lineWidth = 2;
-        const drawBoundary = (val, isInclusive, variable) => {
-          if (!isFinite(val)) return;
-          if (!isInclusive) ctx.setLineDash([8, 8]);
-          if (variable === "x") {
-            const { x } = worldToScreen(val, 0);
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, canvas.height);
-            ctx.stroke();
-          } else {
-            const { y } = worldToScreen(0, val);
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvas.width, y);
-            ctx.stroke();
-          }
-          ctx.setLineDash([]);
-        };
-        drawBoundary(parsed.lowerBound, parsed.lowerInclusive, parsed.variable);
-        drawBoundary(parsed.upperBound, parsed.upperInclusive, parsed.variable);
+    ctx.setLineDash(dashed ? [10, 8] : []);
+  };
+  // Marching squares per a corbes implícites F(x, y) = 0
+  const implicitSegments = (F, view, cell = 4) => {
+    const nx = Math.ceil(view.W / cell) + 1;
+    const ny = Math.ceil(view.H / cell) + 1;
+    const vals = new Float64Array(nx * ny);
+    for (let j = 0; j < ny; j++) {
+      const wy = view.toWorldY(j * cell);
+      for (let i = 0; i < nx; i++) {
+        const v = F(view.toWorldX(i * cell), wy);
+        vals[j * nx + i] = Number.isFinite(v) ? v : NaN;
       }
     }
+    const lines = [];
+    const edgePoint = (i0, j0, v0, i1, j1, v1) => {
+      const t = v0 / (v0 - v1);
+      const sx = (i0 + (i1 - i0) * t) * cell;
+      const sy = (j0 + (j1 - j0) * t) * cell;
+      const fv = F(view.toWorldX(sx), view.toWorldY(sy));
+      // Descarta canvis de signe deguts a discontinuïtats
+      if (!Number.isFinite(fv) || Math.abs(fv) > Math.max(Math.abs(v0), Math.abs(v1))) return null;
+      return { x: sx, y: sy };
+    };
+    for (let j = 0; j < ny - 1; j++) {
+      for (let i = 0; i < nx - 1; i++) {
+        const v0 = vals[j * nx + i];
+        const v1 = vals[j * nx + i + 1];
+        const v2 = vals[(j + 1) * nx + i + 1];
+        const v3 = vals[(j + 1) * nx + i];
+        if (Number.isNaN(v0) || Number.isNaN(v1) || Number.isNaN(v2) || Number.isNaN(v3)) continue;
+        const pts = [];
+        const cross = (a, b) => a === 0 && b !== 0 || a < 0 !== b < 0 && b !== 0;
+        if (cross(v0, v1)) pts[0] = edgePoint(i, j, v0, i + 1, j, v1);
+        if (cross(v1, v2)) pts[1] = edgePoint(i + 1, j, v1, i + 1, j + 1, v2);
+        if (cross(v2, v3)) pts[2] = edgePoint(i + 1, j + 1, v2, i, j + 1, v3);
+        if (cross(v3, v0)) pts[3] = edgePoint(i, j + 1, v3, i, j, v0);
+        const found = [0, 1, 2, 3].filter((k) => pts[k]);
+        if (found.length === 2) {
+          lines.push([pts[found[0]], pts[found[1]]]);
+        } else if (found.length === 4) {
+          const center = F(view.toWorldX((i + 0.5) * cell), view.toWorldY((j + 0.5) * cell));
+          if (center < 0 === v0 < 0) {
+            lines.push([pts[0], pts[1]], [pts[2], pts[3]]);
+          } else {
+            lines.push([pts[0], pts[3]], [pts[1], pts[2]]);
+          }
+        }
+      }
+    }
+    return lines;
+  };
+  const drawPrepared = (ctx, prep, color, view, domainInterval) => {
+    const strict = prep.relation === "<" || prep.relation === ">";
+    if (prep.kind === "explicitY" || prep.kind === "explicitX") {
+      const { segments, isY } = sampleExplicit(prep, view, domainInterval);
+      if (prep.relation !== "=") {
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.22;
+        const toMax = prep.relation.startsWith(">");
+        ctx.beginPath();
+        for (const seg of segments) {
+          const first = seg[0];
+          const last = seg[seg.length - 1];
+          ctx.moveTo(first.x, first.y);
+          for (let i = 1; i < seg.length; i++) ctx.lineTo(seg[i].x, seg[i].y);
+          if (isY) {
+            const bound = toMax ? 0 : view.H;
+            ctx.lineTo(last.x, bound);
+            ctx.lineTo(first.x, bound);
+          } else {
+            const bound = toMax ? view.W : 0;
+            ctx.lineTo(bound, last.y);
+            ctx.lineTo(bound, first.y);
+          }
+          ctx.closePath();
+        }
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      setLineStyle(ctx, color, strict);
+      strokeSegments(ctx, segments);
+      ctx.setLineDash([]);
+      if (domainInterval && domainInterval.variable === "x" && isY) {
+        const endpoint = (x, inclusive) => {
+          if (!Number.isFinite(x)) return;
+          const y = prep.fn(x);
+          if (!Number.isFinite(y)) return;
+          const { x: sx, y: sy } = view.toScreen(x, y);
+          ctx.beginPath();
+          ctx.arc(sx, sy, 5.5, 0, 2 * Math.PI);
+          ctx.fillStyle = inclusive ? color : themeConfig.bgColorValue;
+          ctx.fill();
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+        };
+        endpoint(domainInterval.lowerBound, domainInterval.lowerInclusive);
+        endpoint(domainInterval.upperBound, domainInterval.upperInclusive);
+      }
+      return;
+    }
+    if (prep.kind === "equationX" || prep.kind === "inequalityX") {
+      if (prep.kind === "inequalityX") {
+        const intervals = analyzeExpression(prep.source).intervals || [];
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.16;
+        for (const iv of intervals) {
+          if (iv.point) continue;
+          const a = Number.isFinite(iv.a) ? view.toScreen(iv.a, 0).x : -10;
+          const b = Number.isFinite(iv.b) ? view.toScreen(iv.b, 0).x : view.W + 10;
+          ctx.fillRect(a, 0, b - a, view.H);
+        }
+        ctx.globalAlpha = 1;
+        // Solució marcada sobre l'eix X
+        const { y: originY } = view.toScreen(0, 0);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 7;
+        ctx.globalAlpha = 0.85;
+        ctx.lineCap = "butt";
+        ctx.beginPath();
+        for (const iv of intervals) {
+          if (iv.point) continue;
+          const a = Number.isFinite(iv.a) ? view.toScreen(iv.a, 0).x : -10;
+          const b = Number.isFinite(iv.b) ? view.toScreen(iv.b, 0).x : view.W + 10;
+          ctx.moveTo(a, originY);
+          ctx.lineTo(b, originY);
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      const { segments } = sampleExplicit(prep, view, null);
+      ctx.globalAlpha = 0.75;
+      setLineStyle(ctx, color, false, 2.5);
+      strokeSegments(ctx, segments);
+      ctx.globalAlpha = 1;
+      return;
+    }
+    if (prep.kind === "implicit") {
+      const F = prep.D;
+      if (prep.relation !== "=") {
+        const cell = 3;
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.22;
+        ctx.beginPath();
+        for (let sy = 0; sy < view.H; sy += cell) {
+          const wy = view.toWorldY(sy + cell / 2);
+          let runStart = null;
+          for (let sx = 0; sx <= view.W + cell; sx += cell) {
+            const v = sx <= view.W ? F(view.toWorldX(sx + cell / 2), wy) : NaN;
+            const ok = Number.isFinite(v) && holds(v, prep.relation);
+            if (ok && runStart === null) runStart = sx;
+            if (!ok && runStart !== null) {
+              ctx.rect(runStart, sy, sx - runStart, cell);
+              runStart = null;
+            }
+          }
+        }
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      setLineStyle(ctx, color, strict);
+      const lines = implicitSegments(F, view);
+      ctx.beginPath();
+      for (const [a, b] of lines) {
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+      return;
+    }
+    if (prep.kind === "interval") {
+      const iv = prep.interval;
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.22;
+      if (iv.variable === "x") {
+        const a = Number.isFinite(iv.lowerBound) ? view.toScreen(iv.lowerBound, 0).x : -10;
+        const b = Number.isFinite(iv.upperBound) ? view.toScreen(iv.upperBound, 0).x : view.W + 10;
+        ctx.fillRect(a, 0, b - a, view.H);
+      } else {
+        const a = Number.isFinite(iv.upperBound) ? view.toScreen(0, iv.upperBound).y : -10;
+        const b = Number.isFinite(iv.lowerBound) ? view.toScreen(0, iv.lowerBound).y : view.H + 10;
+        ctx.fillRect(0, a, view.W, b - a);
+      }
+      ctx.globalAlpha = 1;
+      const boundary = (val, inclusive) => {
+        if (!Number.isFinite(val)) return;
+        setLineStyle(ctx, color, !inclusive, 2.5);
+        ctx.beginPath();
+        if (iv.variable === "x") {
+          const { x } = view.toScreen(val, 0);
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, view.H);
+        } else {
+          const { y } = view.toScreen(0, val);
+          ctx.moveTo(0, y);
+          ctx.lineTo(view.W, y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      };
+      boundary(iv.lowerBound, iv.lowerInclusive);
+      boundary(iv.upperBound, iv.upperInclusive);
+    }
+  };
+  const drawPoint = (ctx, p, view, placed) => {
+    const { x: sx, y: sy } = view.toScreen(p.x, p.y);
+    if (sx < -20 || sx > view.W + 20 || sy < -20 || sy > view.H + 20) return;
+    ctx.setLineDash([]);
+    if (p.solution) {
+      ctx.beginPath();
+      ctx.arc(sx, sy, 8, 0, 2 * Math.PI);
+      ctx.fillStyle = themeConfig.bgColorValue;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = themeConfig.textColorValue;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(sx, sy, 3.5, 0, 2 * Math.PI);
+      ctx.fillStyle = themeConfig.textColorValue;
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.arc(sx, sy, 6.5, 0, 2 * Math.PI);
+      ctx.fillStyle = p.open ? themeConfig.bgColorValue : p.color;
+      ctx.fill();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = p.open ? p.color : themeConfig.textColorValue;
+      ctx.stroke();
+    }
+    if (!viewConfig.points || !p.label) return;
+    ctx.font = "bold 14px sans-serif";
+    const textWidth = ctx.measureText(p.label).width;
+    const boxW = textWidth + 14;
+    const boxH = 24;
+    // Busca una posició per a l'etiqueta que no se superposi amb les ja dibuixades
+    const candidates = [[12, -12 - boxH], [-12 - boxW, -12 - boxH], [12, 12], [-12 - boxW, 12], [12, -24 - 2 * boxH], [-12 - boxW, -24 - 2 * boxH], [12, 24 + boxH], [-12 - boxW, 24 + boxH]];
+    const fits = (x, y) => x >= 2 && y >= 2 && x + boxW <= view.W - 2 && y + boxH <= view.H - 2;
+    const free = (x, y) => placed.every((b) => x + boxW < b.x || x > b.x + b.w || y + boxH < b.y || y > b.y + b.h);
+    let [bx, by] = [sx + candidates[0][0], sy + candidates[0][1]];
+    const choice = candidates.find(([dx, dy]) => fits(sx + dx, sy + dy) && free(sx + dx, sy + dy)) || candidates.find(([dx, dy]) => fits(sx + dx, sy + dy));
+    if (choice) [bx, by] = [sx + choice[0], sy + choice[1]];
+    placed.push({ x: bx, y: by, w: boxW, h: boxH });
+    ctx.globalAlpha = 0.92;
+    ctx.fillStyle = themeConfig.bgColorValue;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(bx, by, boxW, boxH, 6);
+    else ctx.rect(bx, by, boxW, boxH);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = p.solution ? themeConfig.textColorValue : p.color;
+    ctx.stroke();
+    ctx.fillStyle = themeConfig.textColorValue;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText(p.label, bx + 7, by + boxH / 2 + 1);
+    ctx.textBaseline = "alphabetic";
   };
   useImperativeHandle(ref, () => ({
     async downloadImage() {
       const sourceCanvas = canvasRef.current;
       if (!sourceCanvas) return;
-      const PADDING = 20;
-      const LEGEND_TOP_MARGIN = 20;
-      const LEGEND_ITEM_SPACING = 15;
-      const LEGEND_COLOR_BOX_SIZE = 20;
-      const LEGEND_BOX_TEXT_SPACING = 8;
-      const visibleFunctions = functions.filter((f) => f.expressions.some((e) => e.trim() !== ""));
-      if (visibleFunctions.length === 0) {
+      const dpr = window.devicePixelRatio || 1;
+      const PADDING = 20 * dpr;
+      const LEGEND_TOP_MARGIN = 20 * dpr;
+      const LEGEND_ITEM_SPACING = 24 * dpr;
+      const LEGEND_COLOR_BOX_SIZE = 18 * dpr;
+      const LEGEND_BOX_TEXT_SPACING = 8 * dpr;
+      const items = functions.flatMap((f) => f.expressions.filter((e) => e.trim() !== "").map((expr, i) => ({ expr, color: getExpressionColor(f, i) })));
+      if (items.length === 0) {
         const link2 = document.createElement("a");
         link2.download = "grafica.png";
         link2.href = sourceCanvas.toDataURL("image/png");
         link2.click();
         return;
       }
-      const formulaImages = await Promise.all(
-        visibleFunctions.map((f) => renderMathJaxToImage(f.expressions.join("; "), themeConfig.textColorValue))
-      );
-      const validFormulas = visibleFunctions.map((f, i) => ({ ...f, imgData: formulaImages[i] })).filter((f) => f.imgData);
-      const totalLegendWidth = validFormulas.reduce((acc, f) => {
-        return acc + LEGEND_COLOR_BOX_SIZE + LEGEND_BOX_TEXT_SPACING + (f.imgData?.width || 0) + LEGEND_ITEM_SPACING;
-      }, -LEGEND_ITEM_SPACING);
-      const maxLegendHeight = Math.max(...validFormulas.map((f) => f.imgData?.height || 0), LEGEND_COLOR_BOX_SIZE);
-      const newWidth = sourceCanvas.width;
-      const newHeight = sourceCanvas.height + maxLegendHeight + LEGEND_TOP_MARGIN + PADDING;
+      const images = await Promise.all(items.map((it) => renderMathJaxToImage(it.expr, themeConfig.textColorValue).catch(() => null)));
+      const legend = items.map((it, i) => ({ ...it, imgData: images[i] })).filter((it) => it.imgData);
+      const rows = [];
+      let row = [];
+      let rowWidth = 0;
+      const maxWidth = sourceCanvas.width - 2 * PADDING;
+      for (const it of legend) {
+        const w = LEGEND_COLOR_BOX_SIZE + LEGEND_BOX_TEXT_SPACING + it.imgData.width;
+        if (row.length && rowWidth + LEGEND_ITEM_SPACING + w > maxWidth) {
+          rows.push({ row, rowWidth });
+          row = [];
+          rowWidth = 0;
+        }
+        rowWidth += (row.length ? LEGEND_ITEM_SPACING : 0) + w;
+        row.push({ ...it, w });
+      }
+      if (row.length) rows.push({ row, rowWidth });
+      const rowHeight = Math.max(...legend.map((it) => it.imgData.height), LEGEND_COLOR_BOX_SIZE) + 10 * dpr;
       const targetCanvas = document.createElement("canvas");
-      targetCanvas.width = newWidth;
-      targetCanvas.height = newHeight;
+      targetCanvas.width = sourceCanvas.width;
+      targetCanvas.height = sourceCanvas.height + LEGEND_TOP_MARGIN + rows.length * rowHeight + PADDING;
       const ctx = targetCanvas.getContext("2d");
       if (!ctx) return;
       ctx.fillStyle = themeConfig.bgColorValue;
-      ctx.fillRect(0, 0, newWidth, newHeight);
+      ctx.fillRect(0, 0, targetCanvas.width, targetCanvas.height);
       ctx.drawImage(sourceCanvas, 0, 0);
-      const legendY = sourceCanvas.height + LEGEND_TOP_MARGIN;
-      let currentX = (newWidth - totalLegendWidth) / 2;
-      for (const func of validFormulas) {
-        if (!func.imgData) continue;
-        ctx.fillStyle = func.color;
-        ctx.fillRect(currentX, legendY + (maxLegendHeight - LEGEND_COLOR_BOX_SIZE) / 2, LEGEND_COLOR_BOX_SIZE, LEGEND_COLOR_BOX_SIZE);
-        currentX += LEGEND_COLOR_BOX_SIZE + LEGEND_BOX_TEXT_SPACING;
-        ctx.drawImage(func.imgData.img, currentX, legendY + (maxLegendHeight - func.imgData.height) / 2, func.imgData.width, func.imgData.height);
-        currentX += func.imgData.width + LEGEND_ITEM_SPACING;
-      }
+      rows.forEach(({ row: r, rowWidth: rw }, ri) => {
+        const y = sourceCanvas.height + LEGEND_TOP_MARGIN + ri * rowHeight;
+        let x = (targetCanvas.width - rw) / 2;
+        for (const it of r) {
+          ctx.fillStyle = it.color;
+          ctx.fillRect(x, y + (rowHeight - LEGEND_COLOR_BOX_SIZE) / 2, LEGEND_COLOR_BOX_SIZE, LEGEND_COLOR_BOX_SIZE);
+          x += LEGEND_COLOR_BOX_SIZE + LEGEND_BOX_TEXT_SPACING;
+          ctx.drawImage(it.imgData.img, x, y + (rowHeight - it.imgData.height) / 2, it.imgData.width, it.imgData.height);
+          x += it.imgData.width + LEGEND_ITEM_SPACING;
+        }
+      });
       const link = document.createElement("a");
       link.download = "grafica.png";
       link.href = targetCanvas.toDataURL("image/png");
       link.click();
     }
   }));
+  const roundButton = `w-10 h-10 flex items-center justify-center rounded-full shadow-lg text-lg font-bold transition-transform transform hover:scale-105 ${themeConfig.buttonBg} ${themeConfig.buttonHover}`;
   return /* @__PURE__ */ jsxs("div", { className: "w-full h-full relative touch-none", style: { touchAction: "none" }, children: [
-    /* @__PURE__ */ jsx("canvas", { ref: canvasRef, className: "w-full h-full", style: { cursor: "grab" } }),
+    /* @__PURE__ */ jsx("canvas", { ref: canvasRef, className: "w-full h-full block", style: { cursor: "grab", touchAction: "none" } }),
     /* @__PURE__ */ jsxs("div", { className: "absolute bottom-4 right-4 flex flex-col gap-2", children: [
-      /* @__PURE__ */ jsx(
-        "button",
-        {
-          onClick: handleZoomIn,
-          className: `w-10 h-10 flex items-center justify-center rounded-full shadow-lg text-xl font-bold transition-transform transform hover:scale-105 ${themeConfig.buttonBg} ${themeConfig.buttonHover}`,
-          "aria-label": "Zoom in",
-          children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-plus" })
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        "button",
-        {
-          onClick: handleZoomOut,
-          className: `w-10 h-10 flex items-center justify-center rounded-full shadow-lg text-xl font-bold transition-transform transform hover:scale-105 ${themeConfig.buttonBg} ${themeConfig.buttonHover}`,
-          "aria-label": "Zoom out",
-          children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-minus" })
-        }
-      )
+      /* @__PURE__ */ jsx("button", { onClick: handleZoomIn, className: roundButton, title: "Apropa", "aria-label": "Apropa", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-plus" }) }),
+      /* @__PURE__ */ jsx("button", { onClick: handleZoomOut, className: roundButton, title: "Allunya", "aria-label": "Allunya", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-minus" }) }),
+      /* @__PURE__ */ jsx("button", { onClick: handleResetView, className: roundButton, title: "Torna a la vista inicial", "aria-label": "Torna a la vista inicial", children: /* @__PURE__ */ jsx("i", { className: "fa-solid fa-house" }) })
     ] }),
     tooltip.visible && /* @__PURE__ */ jsx(
       "div",
       {
-        className: `absolute pointer-events-none p-2 rounded-md shadow-lg transition-opacity ${themeConfig.panelBg} ${themeConfig.text}`,
-        style: {
-          left: tooltip.x + TOOLTIP_OFFSET,
-          top: tooltip.y + TOOLTIP_OFFSET,
-          opacity: tooltip.visible ? 1 : 0
-        },
+        className: `absolute pointer-events-none px-2 py-1 rounded-md shadow-lg font-mono text-sm ${themeConfig.panelBg} ${themeConfig.text}`,
+        style: { left: tooltip.x + TOOLTIP_OFFSET, top: tooltip.y + TOOLTIP_OFFSET },
         children: tooltip.content
       }
     )
