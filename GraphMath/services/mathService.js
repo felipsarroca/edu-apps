@@ -668,9 +668,11 @@ function analyzeUncached(expression) {
           result.facts.push({ label: "Tipus", value: "Funció lineal o afí (recta)" });
           result.facts.push({ label: "Pendent", value: `m = ${formatNumber(b)}` });
           result.facts.push({ label: "Ordenada a l'origen", value: `n = ${formatNumber(c)}` });
+          result.slope = { m: b, n: c };
           result.xIntercepts = [snapNumber(-c / b)];
         } else {
           result.facts.push({ label: "Tipus", value: "Funció constant (recta horitzontal)" });
+          result.facts.push({ label: "Pendent", value: "m = 0" });
         }
       }
     }

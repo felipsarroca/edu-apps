@@ -1,6 +1,6 @@
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { useState } from "react";
-import { THEMES, COLORS, getExpressionColor } from "../constants.js";
+import { THEMES, COLORS, getExpressionColor, isMarkOn } from "../constants.js";
 import { MathExpression } from "./MathExpression.js";
 import { ParametersPanel } from "./ParametersPanel.js";
 import { analyzeExpression, analyzeSystem, formatNumber, formatPoint } from "../services/mathService.js";
@@ -71,6 +71,12 @@ const solutionSummary = (func) => {
     return shown.map((x, i) => `${rootName(a.solutions.length, i)} = ${formatNumber(x)}`).join(",  ") + (more ? " …" : "");
   }
   if (a.kind === "inequalityX") return `Solució: ${a.solutionText}`;
+  // Funcions: el vèrtex de les paràboles i el pendent de les rectes, a la vista sense obrir l'estudi
+  if (a.kind === "explicitY") {
+    if (a.vertex) return `Vèrtex: ${formatPoint(a.vertex)}`;
+    const slope = (a.facts || []).find((f) => f.label === "Pendent");
+    if (slope) return `Pendent: ${slope.value}`;
+  }
   return null;
 };
 const RootList = ({ roots, exact, label, themeClasses, color, periodic }) => {
@@ -92,7 +98,7 @@ const RootList = ({ roots, exact, label, themeClasses, color, periodic }) => {
   ] });
 };
 const AnalysisPanel = ({ func, themeClasses, onToggleMark }) => {
-  const mark = (key) => ({ active: !!(func.marks && func.marks[key]), onToggle: () => onToggleMark(func.id, key), color: func.color });
+  const mark = (key) => ({ active: isMarkOn(func, key), onToggle: () => onToggleMark(func.id, key), color: func.color });
   const box = `mt-2 p-3 rounded-md text-sm ${themeClasses.buttonBg} border ${themeClasses.border}`;
   if (func.type === "system") {
     const result = analyzeSystem(func.expressions);
@@ -110,8 +116,8 @@ const AnalysisPanel = ({ func, themeClasses, onToggleMark }) => {
   }
   const a = analyzeExpression(func.expressions[0]);
   if (!a.ok) return /* @__PURE__ */ jsx("div", { className: `${box} text-red-500`, children: a.error });
-  const FACT_MARKS = { "Vèrtex": "vertex", "Eix de simetria": "axis" };
-  const facts = a.facts.map((f, i) => /* @__PURE__ */ jsx(Row, { label: f.label, themeClasses, mark: a.kind === "explicitY" && FACT_MARKS[f.label] ? mark(FACT_MARKS[f.label]) : void 0, children: f.value }, `f${i}`));
+  const FACT_MARKS = { "Vèrtex": "vertex", "Eix de simetria": "axis", "Pendent": "slope" };
+  const facts = a.facts.map((f, i) => /* @__PURE__ */ jsx(Row, { label: f.label, themeClasses, mark: a.kind === "explicitY" && FACT_MARKS[f.label] && (f.label !== "Pendent" || a.slope) ? mark(FACT_MARKS[f.label]) : void 0, children: f.value }, `f${i}`));
   let body;
   if (a.kind === "explicitY" && a.domain !== void 0) {
     body = [

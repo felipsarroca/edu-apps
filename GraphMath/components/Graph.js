@@ -1,11 +1,11 @@
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { useRef, useEffect, forwardRef, useImperativeHandle, useState, useCallback } from "react";
-import { THEMES, getExpressionColor } from "../constants.js";
+import { THEMES, getExpressionColor, isMarkOn } from "../constants.js";
 import { prepareExpression, parseIntervalExpression, analyzeSystem, analyzeExpression, formatNumber, formatPoint } from "../services/mathService.js";
 import { relationToTex } from "../services/parser.js";
 const TOOLTIP_OFFSET = 15;
 const DEFAULT_ZOOM = 50;
-const LINE_WIDTH = 3.5;
+const LINE_WIDTH = 7;
 const svgStringToImage = (svgString) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -15,7 +15,7 @@ const svgStringToImage = (svgString) => {
     img.src = url;
   });
 };
-const renderMathJaxToImage = async (expr, textColor) => {
+const renderMathJaxToImage = async (expr, textColor, pixelScale = window.devicePixelRatio || 1) => {
   if (!window.MathJax || !expr) return null;
   let tex;
   try {
@@ -35,13 +35,26 @@ const renderMathJaxToImage = async (expr, textColor) => {
   const originalWidth = viewBox ? viewBox[2] : 0;
   const originalHeight = viewBox ? viewBox[3] : 0;
   if (originalHeight === 0 || originalWidth === 0) return null;
-  const desiredHeight = 22 * (window.devicePixelRatio || 1);
+  const desiredHeight = 22 * pixelScale;
   const scale = desiredHeight / originalHeight;
   const img = await svgStringToImage(svgString);
   return { img, width: originalWidth * scale, height: desiredHeight };
 };
 const holds = (v, rel) => rel === "<" ? v < 0 : rel === ">" ? v > 0 : rel === "<=" ? v <= 0 : v >= 0;
 const formatAxisNumber = (v) => Number(v.toPrecision(4)).toString().replace(".", ",").replace("-", "−");
+// Pas "rodó" (1 o 5 per una potència de 10) que ocupa com a mínim minWorld unitats
+const niceStep = (minWorld) => {
+  const pow = Math.pow(10, Math.floor(Math.log10(minWorld)));
+  return [1, 5, 10].map((m) => m * pow).find((st) => st >= minWorld);
+};
+const snapTo = (v, step) => {
+  const decimals = Math.min(10, Math.max(0, Math.ceil(-Math.log10(step) - 1e-9)));
+  return Number((Math.round(v / step) * step).toFixed(decimals));
+};
+const formatTraceNumber = (v) => {
+  const r = Number(v.toFixed(2));
+  return (Object.is(r, -0) ? 0 : r).toString().replace(".", ",").replace("-", "−");
+};
 const MARK_LABELS = { max: "Màx", min: "Mín" };
 const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfigChange }, ref) => {
   const canvasRef = useRef(null);
@@ -57,6 +70,8 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
   const pointersRef = useRef(/* @__PURE__ */ new Map());
   const pinchRef = useRef(null);
   const animationFrameId = useRef();
+  // Resolució temporal per a la captura (null: la de la pantalla)
+  const exportScaleRef = useRef(null);
   const themeConfig = THEMES[theme];
   const screenToWorld = useCallback((screenX, screenY) => {
     const canvas = canvasRef.current;
@@ -71,7 +86,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = exportScaleRef.current || window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     if (canvas.width !== Math.round(rect.width * dpr) || canvas.height !== Math.round(rect.height * dpr)) {
       canvas.width = Math.round(rect.width * dpr);
@@ -137,7 +152,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
   // Elements destacats d'una funció: vèrtex, eix, talls, extrems, asímptotes i forats
   const drawMarks = (ctx, func, a, view, pointLayer, worldLeft, worldRight) => {
     const color = func.color;
-    const marks = func.marks || {};
+    const marks = new Proxy({}, { get: (_, key) => isMarkOn(func, key) });
     const inView = (x) => x >= worldLeft - 1e-9 && x <= worldRight + 1e-9;
     const dashedLine = (x1, y1, x2, y2, label) => {
       ctx.save();
@@ -179,6 +194,58 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
         const sy = view.toScreen(0, h.y).y;
         dashedLine(0, sy, view.W, sy, `y = ${formatNumber(h.y)}`);
       });
+    }
+    // Triangle del pendent: avança "run" en horitzontal i puja (o baixa) m·run
+    if (marks.slope && a.slope && a.slope.m !== 0) {
+      const { m, n } = a.slope;
+      const run = niceStep(30 / view.zoomX);
+      const cy = view.toWorldY(view.H / 2);
+      const left = worldLeft + run * 0.5;
+      const right = worldRight - run - 140 / view.zoomX;
+      let x0 = Math.round((cy - n) / m / run) * run;
+      if (right > left) {
+        if (x0 > right) x0 = Math.floor(right / run) * run;
+        if (x0 < left) x0 = Math.ceil(left / run) * run;
+      }
+      const p = view.toScreen(x0, m * x0 + n);
+      const q = view.toScreen(x0 + run, m * x0 + n);
+      const r = view.toScreen(x0 + run, m * (x0 + run) + n);
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([6, 5]);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(q.x, q.y);
+      ctx.lineTo(r.x, r.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = "bold 14px sans-serif";
+      ctx.fillStyle = color;
+      ctx.textAlign = "center";
+      ctx.textBaseline = m > 0 ? "top" : "bottom";
+      ctx.fillText(formatNumber(run), (p.x + q.x) / 2, q.y + (m > 0 ? 6 : -6));
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      const rise = formatNumber(m * run);
+      ctx.fillText(rise, q.x + 8, (q.y + r.y) / 2);
+      if (viewConfig.points) {
+        const label = `m = ${formatNumber(m)}`;
+        const w = ctx.measureText(label).width + 14;
+        const bx = q.x + 8 + ctx.measureText(rise).width + 10;
+        const by = (q.y + r.y) / 2 - 13;
+        ctx.fillStyle = themeConfig.bgColorValue;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(bx, by, w, 26, 6);
+        else ctx.rect(bx, by, w, 26);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = color;
+        ctx.fillText(label, bx + 7, by + 13.5);
+      }
+      ctx.restore();
     }
     if (marks.vertex && a.vertex) pointLayer.push({ ...a.vertex, color, label: `V ${formatPoint(a.vertex)}` });
     if (marks.extrema && a.extrema) {
@@ -309,7 +376,11 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
     if (!view) return null;
     const pick = specialPointsRef.current.map((p) => ({ p, s: view.toScreen(p.x, p.y) })).filter(({ s }) => Math.hypot(s.x - sx, s.y - sy) < 12).sort((a, b) => Math.hypot(a.s.x - sx, a.s.y - sy) - Math.hypot(b.s.x - sx, b.s.y - sy))[0];
     if (pick) return { sx: pick.s.x, sy: pick.s.y, color: pick.p.color || themeConfig.textColorValue, label: pick.p.label, special: true };
-    const wx = view.toWorldX(sx);
+    // El punter salta a valors rodons de x (segons el zoom) i la y es calcula exactament en aquest valor
+    const stepX = niceStep(5 / view.zoomX);
+    const stepY = niceStep(5 / view.zoomY);
+    const wx = snapTo(view.toWorldX(sx), stepX);
+    const snappedSx = view.toScreen(wx, 0).x;
     let best = null;
     functions.forEach((func) => {
       const inSystem = func.type === "system";
@@ -323,20 +394,19 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
           if (!Number.isFinite(wy)) return;
           const py = view.toScreen(wx, wy).y;
           const d = Math.abs(py - sy);
-          if (d < maxDist && (!best || d < best.d)) best = { d, sx, sy: py, x: wx, y: wy, color: getExpressionColor(func, i) };
+          if (d < maxDist && (!best || d < best.d)) best = { d, sx: snappedSx, sy: py, x: wx, y: wy, color: getExpressionColor(func, i) };
         } else if (prep.kind === "explicitX") {
-          const wy = view.toWorldY(sy);
+          const wy = snapTo(view.toWorldY(sy), stepY);
           const wxx = prep.fn(wy);
           if (!Number.isFinite(wxx)) return;
           const px = view.toScreen(wxx, wy).x;
           const d = Math.abs(px - sx);
-          if (d < maxDist && (!best || d < best.d)) best = { d, sx: px, sy, x: wxx, y: wy, color: getExpressionColor(func, i) };
+          if (d < maxDist && (!best || d < best.d)) best = { d, sx: px, sy: view.toScreen(0, wy).y, x: wxx, y: wy, color: getExpressionColor(func, i) };
         }
       });
     });
     if (!best) return null;
-    const round = (v) => formatAxisNumber(Number(v.toFixed(2)));
-    return { ...best, label: `(${round(best.x)}; ${round(best.y)})` };
+    return { ...best, label: `(${formatTraceNumber(best.x)}; ${formatTraceNumber(best.y)})` };
   };
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -387,7 +457,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
         if (t) setTooltip((old) => ({ ...old, visible: false }));
         else {
           const w = screenToWorld(x, y);
-          setTooltip({ visible: true, content: `(${formatAxisNumber(Number(w.x.toFixed(2)))}; ${formatAxisNumber(Number(w.y.toFixed(2)))})`, x, y });
+          setTooltip({ visible: true, content: `(${formatTraceNumber(snapTo(w.x, niceStep(5 / viewRef.current.zoomX)))}; ${formatTraceNumber(snapTo(w.y, niceStep(5 / viewRef.current.zoomY)))})`, x, y });
         }
       }
       const prev = pointersRef.current.get(e.pointerId);
@@ -440,7 +510,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
     };
   }, [redraw, screenToWorld, zoomAt, functions, paramsKey]);
   const getGridSpacing = (zoom) => {
-    // Espaiat "rodó" (1, 2 o 5 per una potència de 10) amb un mínim de 60 px entre línies
+    // Espaiat "rodó" (1 o 5 per una potència de 10) amb un mínim de 60 px entre línies
     const minWorldSpacing = 60 / zoom;
     const magnitude = Math.pow(10, Math.floor(Math.log10(minWorldSpacing)));
     for (const m of [1, 2, 5, 10]) if (m * magnitude >= minWorldSpacing) return m * magnitude;
@@ -589,7 +659,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
     ctx.lineWidth = width;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.setLineDash(dashed ? [10, 8] : []);
+    ctx.setLineDash(dashed ? [width * 2.2, width * 1.8] : []);
   };
   // Marching squares per a corbes implícites F(x, y) = 0
   const implicitSegments = (F, view, cell = 4) => {
@@ -722,7 +792,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
       }
       const { segments } = sampleExplicit(prep, view, null);
       ctx.globalAlpha = 0.75;
-      setLineStyle(ctx, color, false, 2.5);
+      setLineStyle(ctx, color, false, 5);
       strokeSegments(ctx, segments);
       ctx.globalAlpha = 1;
       return;
@@ -777,7 +847,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
       ctx.globalAlpha = 1;
       const boundary = (val, inclusive) => {
         if (!Number.isFinite(val)) return;
-        setLineStyle(ctx, color, !inclusive, 2.5);
+        setLineStyle(ctx, color, !inclusive, 5);
         ctx.beginPath();
         if (iv.variable === "x") {
           const { x } = view.toScreen(val, 0);
@@ -801,19 +871,19 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
     ctx.setLineDash([]);
     if (p.solution) {
       ctx.beginPath();
-      ctx.arc(sx, sy, 8, 0, 2 * Math.PI);
+      ctx.arc(sx, sy, 10, 0, 2 * Math.PI);
       ctx.fillStyle = themeConfig.bgColorValue;
       ctx.fill();
       ctx.lineWidth = 3;
       ctx.strokeStyle = themeConfig.textColorValue;
       ctx.stroke();
       ctx.beginPath();
-      ctx.arc(sx, sy, 3.5, 0, 2 * Math.PI);
+      ctx.arc(sx, sy, 4.5, 0, 2 * Math.PI);
       ctx.fillStyle = themeConfig.textColorValue;
       ctx.fill();
     } else {
       ctx.beginPath();
-      ctx.arc(sx, sy, 6.5, 0, 2 * Math.PI);
+      ctx.arc(sx, sy, 8.5, 0, 2 * Math.PI);
       ctx.fillStyle = p.open ? themeConfig.bgColorValue : p.color;
       ctx.fill();
       ctx.lineWidth = 2.5;
@@ -852,9 +922,18 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
   useImperativeHandle(ref, () => ({
     fitView,
     async downloadImage() {
-      const sourceCanvas = canvasRef.current;
-      if (!sourceCanvas) return;
-      const dpr = window.devicePixelRatio || 1;
+      const liveCanvas = canvasRef.current;
+      if (!liveCanvas) return;
+      // Es redibuixa la gràfica a alta resolució (3 o 4 vegades la mida en pantalla) només per a la imatge
+      const dpr = Math.min(4, Math.max(3, 2 * (window.devicePixelRatio || 1)));
+      exportScaleRef.current = dpr;
+      draw();
+      const sourceCanvas = document.createElement("canvas");
+      sourceCanvas.width = liveCanvas.width;
+      sourceCanvas.height = liveCanvas.height;
+      sourceCanvas.getContext("2d").drawImage(liveCanvas, 0, 0);
+      exportScaleRef.current = null;
+      draw();
       const PADDING = 20 * dpr;
       const LEGEND_TOP_MARGIN = 20 * dpr;
       const LEGEND_ITEM_SPACING = 24 * dpr;
@@ -868,7 +947,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
         link2.click();
         return;
       }
-      const images = await Promise.all(items.map((it) => renderMathJaxToImage(it.expr, themeConfig.textColorValue).catch(() => null)));
+      const images = await Promise.all(items.map((it) => renderMathJaxToImage(it.expr, themeConfig.textColorValue, dpr).catch(() => null)));
       const legend = items.map((it, i) => ({ ...it, imgData: images[i] })).filter((it) => it.imgData);
       const rows = [];
       let row = [];
@@ -925,7 +1004,7 @@ const Graph = forwardRef(({ functions, theme, viewConfig, paramsKey, onViewConfi
       formatAxisNumber(viewConfig.yScale)
     ] }),
     tracer && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("div", { className: "absolute pointer-events-none rounded-full", style: { left: tracer.sx - 7, top: tracer.sy - 7, width: 14, height: 14, backgroundColor: tracer.color, border: `3px solid ${themeConfig.bgColorValue}`, boxShadow: `0 0 0 2px ${tracer.color}` } }),
+      /* @__PURE__ */ jsx("div", { className: "absolute pointer-events-none rounded-full", style: { left: tracer.sx - 9, top: tracer.sy - 9, width: 18, height: 18, backgroundColor: tracer.color, border: `3px solid ${themeConfig.bgColorValue}`, boxShadow: `0 0 0 2px ${tracer.color}` } }),
       /* @__PURE__ */ jsx("div", { className: "absolute pointer-events-none px-2 py-1 rounded-md shadow-lg font-mono text-sm font-bold whitespace-nowrap", style: { left: tracer.sx + 14, top: tracer.sy - 36, backgroundColor: themeConfig.bgColorValue, color: themeConfig.textColorValue, border: `2px solid ${tracer.color}` }, children: tracer.label })
     ] }),
     tooltip.visible && /* @__PURE__ */ jsx(

@@ -5,7 +5,7 @@ import { SidePanel } from "./components/SidePanel.js";
 import { EquationEditorModal } from "./components/EquationEditorModal.js";
 import { Header } from "./components/Header.js";
 import { InfoModal } from "./components/InfoModal.js";
-import { THEMES, COLORS, getExpressionColor } from "./constants.js";
+import { THEMES, COLORS, getExpressionColor, isMarkOn } from "./constants.js";
 import { getParameters, setParamValues } from "./services/parser.js";
 const loadJson = (key, fallback) => {
   try {
@@ -127,7 +127,7 @@ const App = () => {
     fitAfterSave({ ...editingFunction, ...updatedFunc });
   };
   const handleToggleMark = useCallback((id, key) => {
-    setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, marks: { ...f.marks, [key]: !(f.marks && f.marks[key]) } } : f));
+    setFunctions((prev) => prev.map((f) => f.id === id ? { ...f, marks: { ...f.marks, [key]: !isMarkOn(f, key) } } : f));
   }, []);
   const handleSaveFunction = (funcData) => {
     if (editingFunction) {
@@ -221,6 +221,7 @@ const App = () => {
       {
         isOpen: isInfoModalOpen,
         onClose: () => setIsInfoModalOpen(false),
+        onAddExample: handleAddFunction,
         theme
       }
     )

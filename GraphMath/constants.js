@@ -110,8 +110,13 @@ const getExpressionColor = (func, index = 0) => {
   const base = Math.max(0, COLORS.indexOf(func.color));
   return COLORS[(base + index) % COLORS.length];
 };
+// Elements que es destaquen a la gràfica sense haver-los d'activar: vèrtex de les paràboles i pendent de les rectes
+const DEFAULT_MARKS = { vertex: true, slope: true };
+const isMarkOn = (func, key) => func.marks && key in func.marks ? !!func.marks[key] : !!DEFAULT_MARKS[key];
 export {
   COLORS,
+  DEFAULT_MARKS,
   THEMES,
-  getExpressionColor
+  getExpressionColor,
+  isMarkOn
 };
