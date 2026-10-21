@@ -1,5 +1,38 @@
 {
   "applets": [{
+    "lastAccessTime": "2026-09-17T19:48:08.408419Z",
+    "firstAccessTime": "2026-09-17T19:20:57.154997Z",
+    "source": {
+      "sourceType": "SPANNER",
+      "spanner": {
+        "id": "1fb9c44e-0af7-4f7f-8962-b4d578759fd8"
+      }
+    },
+    "name": "DocuSlides - Infografies Didàctiques per a PDF",
+    "description": "Generador d\u0027infografies 16:9 i presentacions didàctiques per a classe a partir de documents PDF d\u0027història, amb to juvenil, sense paràgrafs i exportació a Google Slides."
+  }, {
+    "lastAccessTime": "2026-09-06T13:57:51.924139Z",
+    "firstAccessTime": "2026-09-06T08:37:49.930404Z",
+    "source": {
+      "sourceType": "SPANNER",
+      "spanner": {
+        "id": "faaa8e15-8c87-46b3-aaf7-f352558d30d5"
+      }
+    },
+    "name": "Gemini VozEs",
+    "description": "An advanced Text-to-Speech synthesizer specializing in Spanish accents and emotional prosody using Google Gemini 2.5."
+  }, {
+    "lastAccessTime": "2026-09-06T08:37:46.999494Z",
+    "firstAccessTime": "2026-09-06T08:37:46.999494Z",
+    "source": {
+      "sourceType": "DRIVE",
+      "drive": {
+        "resourceId": "1tsoOORdhctz8pDq9_wcdBkZU-Rk_HPLx"
+      }
+    },
+    "name": "Gemini VozEs",
+    "description": "An advanced Text-to-Speech synthesizer specializing in Spanish accents and emotional prosody using Google Gemini 2.5."
+  }, {
     "lastAccessTime": "2026-05-06T03:44:40.657466Z",
     "firstAccessTime": "2026-05-06T03:14:43.735394Z",
     "source": {
