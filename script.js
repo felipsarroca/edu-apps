@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Matemàtiques
         { 
             name: "GraphMath", 
-            path: 'GraphMath/', 
+            path: 'https://ja.cat/graficadora', 
             category: 'Matemàtiques', 
             description: "Eina per a representar gràficament funcions matemàtiques.",
             icon: 'GraphMath/favicon.svg'
