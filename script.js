@@ -114,6 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Explora equacions, inequacions i sistemes amb gràfics, reptes i comprovacions per a 4t d'ESO.",
             icon: 'Equacions/favicon.svg'
         },
+        {
+            name: "Volums",
+            path: 'https://ja.cat/calculvolums',
+            category: 'Matemàtiques',
+            description: "Aprèn, explora i practica el càlcul de volums amb figures 3D manipulables, pistes i reptes reals.",
+            icon: 'Volums/favicon.svg'
+        },
 
         // Física
         {

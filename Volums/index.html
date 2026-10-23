@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Volums · Aprèn a calcular volums</title>
+  <meta name="description" content="App per aprendre, explorar i practicar el càlcul de volums a l'ESO amb figures 3D.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#app">Salta al contingut</a>
+  <header class="topbar">
+    <a href="#/" class="brand" aria-label="Volums, inici">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 7.2v9.6L12 21.2 4 16.8V7.2z" fill="#2f5bea"/><path d="M4 7.2 12 11.6 20 7.2 12 2.8z" fill="#ff7a3d"/><path d="M12 11.6v9.6L20 16.8V7.2z" fill="#1d3fb8"/></svg>
+      <span>Volums</span>
+    </a>
+    <nav class="mainnav" aria-label="Seccions">
+      <a href="#/apren" data-route="apren">Aprèn</a>
+      <a href="#/explora" data-route="explora">Explora</a>
+      <a href="#/practica" data-route="practica">Practica</a>
+    </nav>
+    <a class="btn small progres-btn" href="#/progres" id="btn-progres">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V12M10 20V7M15 20v-5M20 20V4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Progrés</span>
+    </a>
+    <button type="button" class="btn small formulas-btn" id="btn-xuleta">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Fórmules</span>
+    </button>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <div id="xuleta" class="drawer" hidden></div>
+
+  <footer class="felip-app-footer">
+    <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+      <img class="felip-license-image" src="assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA">
+    </a>
+    <div class="felip-footer-text">
+      <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+      <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/shapes.js"></script>
+  <script src="js/viewer.js"></script>
+  <script src="js/exercises.js"></script>
+  <script src="js/practice.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/explore.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
