@@ -142,6 +142,30 @@ document.querySelectorAll('[data-obre-fonts]').forEach((b) => b.addEventListener
 dialegFonts.querySelector('.f-tanca').addEventListener('click', () => dialegFonts.close());
 dialegFonts.addEventListener('click', (ev) => { if (ev.target === dialegFonts) dialegFonts.close(); });
 
+// --- Pantalla completa ---
+
+const botoPantalla = $('#boto-pantalla');
+const ICONA_AMPLIA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ICONA_REDUEIX = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function marcaPantalla() {
+  const completa = !!document.fullscreenElement;
+  const text = completa ? 'Surt de la pantalla completa' : 'Pantalla completa';
+  botoPantalla.innerHTML = completa ? ICONA_REDUEIX : ICONA_AMPLIA;
+  botoPantalla.setAttribute('aria-label', text);
+  botoPantalla.title = text;
+}
+
+if (document.fullscreenEnabled) {
+  botoPantalla.hidden = false;
+  marcaPantalla();
+  botoPantalla.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  });
+  document.addEventListener('fullscreenchange', marcaPantalla);
+}
+
 // --- Teclat ---
 
 document.addEventListener('keydown', (ev) => {
