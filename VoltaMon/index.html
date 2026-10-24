@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>La primera volta al món · Magallanes i Elcano</title>
+  <meta name="description" content="Reviu pas a pas l'expedició de Magallanes i Elcano (1519-1522): la ruta, les naus que es perden, els homes que no tornen i les decisions que ho van canviar tot.">
+  <meta name="theme-color" content="#2b2118">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:wght@600;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>if (location.hash.length > 1 && location.hash !== '#sevilla') document.documentElement.classList.add('sense-intro');</script>
+</head>
+<body>
+  <div class="app">
+    <div id="mapa" aria-label="Mapa de la ruta de l'expedició"></div>
+    <div class="vinyeta" aria-hidden="true"></div>
+
+    <header class="capcalera">
+      <button type="button" id="boto-inici" class="marca" aria-label="Torna a la presentació">
+        <svg class="rosa" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M24 3 L28 24 L24 45 L20 24 Z" fill="currentColor"/><path d="M3 24 L24 20 L45 24 L24 28 Z" fill="currentColor" opacity=".55"/><circle cx="24" cy="24" r="2.6" fill="#f3e9d2"/></svg>
+        <span><strong>La primera volta al món</strong><small>Magallanes i Elcano · 1519-1522</small></span>
+      </button>
+      <button type="button" class="boto-fonts" data-obre-fonts>Fonts</button>
+    </header>
+
+    <section id="marcador" class="marcador" aria-label="Estat de l'expedició"></section>
+
+    <article id="targeta" class="targeta" aria-live="polite"></article>
+
+    <nav id="cronologia" class="cronologia" aria-label="Etapes del viatge"></nav>
+  </div>
+
+  <section id="intro" class="intro" aria-labelledby="intro-titol">
+    <div class="intro-full">
+      <p class="intro-any">1519 · 1522</p>
+      <h1 id="intro-titol">La primera volta al món</h1>
+      <p class="intro-sub">L'expedició de Magallanes i Elcano</p>
+      <svg class="intro-clau" viewBox="0 0 60 100" aria-hidden="true">
+        <path d="M26 38 L34 38 L31.5 96 Q30 99 28.5 96 Z" fill="#5a3a22"/>
+        <path d="M12 22 L22 38 H38 L48 22 L39 28 L30 16 L21 28 Z" fill="#6b3f22"/>
+        <circle cx="30" cy="20" r="11" fill="#8a5530"/>
+        <circle cx="26.5" cy="16.5" r="3.5" fill="#b07a4a"/>
+      </svg>
+      <h2>Per què volien arribar a les Moluques?</h2>
+      <p>Fa 500 anys, espècies com el <strong>clau</strong>, el pebre o la canyella valien una fortuna a Europa. El clau només creixia en unes petites illes d'Àsia: les <strong>Moluques</strong>.</p>
+      <p>Portugal hi arribava navegant cap a l'est, envoltant l'Àfrica. Castella no podia fer servir aquella ruta: el <strong>Tractat de Tordesillas</strong> (1494) havia repartit el món entre els dos regnes. Magallanes va proposar una idea agosarada: <strong>arribar-hi navegant cap a l'oest</strong>.</p>
+      <ul class="intro-xifres" aria-label="L'expedició en xifres">
+        <li><strong>5</strong> naus</li>
+        <li><strong>≈ 250</strong> homes</li>
+        <li><strong>3</strong> anys</li>
+      </ul>
+      <button type="button" id="salpa" class="boto boto-principal boto-gran">Salpa ▸</button>
+      <p class="intro-ajuda">Toca les paraules <span class="mot-mostra">subratllades</span> per saber què volen dir. A les etapes amb una pregunta, decideix què hauries fet tu.</p>
+      <button type="button" class="enllac" data-obre-fonts>Fonts i crèdits</button>
+    </div>
+  </section>
+
+  <dialog id="fonts" class="fonts" aria-labelledby="fonts-titol">
+    <div class="f-cap">
+      <h2 id="fonts-titol">Fonts i crèdits</h2>
+      <button type="button" class="f-tanca" aria-label="Tanca">✕</button>
+    </div>
+    <div class="f-contingut"></div>
+  </dialog>
+
+  <footer class="felip-app-footer">
+    <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+      <img class="felip-license-image" src="assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA">
+    </a>
+    <div class="felip-footer-text">
+      <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+      <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

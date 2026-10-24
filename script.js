@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'https://ja.cat/magallanes', 
             category: 'Història', 
             description: "Segueix la primera circumnavegació de la història.",
-            icon: 'voltaalmon/favicon.svg'
+            icon: 'VoltaMon/favicon.svg'
         },
         { 
             name: "El Modernisme", 
