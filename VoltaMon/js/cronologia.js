@@ -20,8 +20,10 @@ export function creaCronologia(el, { onEtapa, onPlay }) {
   el.innerHTML = `
     <button type="button" class="c-play" aria-label="Reprodueix el viatge automàticament">${ICONES.play}</button>
     <div class="c-pista">
-      <div class="c-linia"><span class="c-feta"></span></div>
-      <ol class="c-punts">${punts}</ol>
+      <div class="c-carril">
+        <div class="c-linia"><span class="c-feta"></span></div>
+        <ol class="c-punts">${punts}</ol>
+      </div>
     </div>`;
 
   const play = el.querySelector('.c-play');

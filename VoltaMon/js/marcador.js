@@ -61,6 +61,7 @@ export function creaMarcador(el) {
   /** Interpola el comptador de dies mentre el vaixell navega. */
   function avanca(diaInici, diaFi, t) {
     dia.textContent = Math.round(diaInici + (diaFi - diaInici) * t);
+    q('.m-data').textContent = 'en alta mar…';
   }
 
   function actualitza(index) {

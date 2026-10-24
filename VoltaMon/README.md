@@ -23,9 +23,10 @@ Una carta nàutica antiga on un vaixell recorre la ruta de la primera volta al m
 
 - 📅 **Dies de viatge**: el comptador avança mentre el vaixell navega.
 - ⛵ **Naus**: les cinc naus es perden una a una (naufragi, deserció, incendi i captura).
-- 👥 **Homes**: la barra baixa d'uns 250 homes als 18 que tornen.
+- 👥 **Homes**: la barra baixa d'uns 250 homes als 18 que tornen, i cada etapa explica quants se'n perden i per què (morts o homes que marxen).
+- ⏳ **Dies de cada tram**: en arribar, apareix sobre la ruta una etiqueta amb els dies de navegació des de l'etapa anterior. Mentre el vaixell navega, la targeta mostra el destí i el compte dels dies.
 
-Funciona en ordinador, tauleta, mòbil i pissarra digital.
+Funciona en ordinador, tauleta, mòbil i pissarra digital. La interfície s'escala segons l'amplada i l'alçada de la pantalla: es veu proporcionada tant en un portàtil de 1366x740 com en una pantalla de 1920x1080.
 
 ![Una decisió a San Julián](docs/captures/02-decisio.png)
 
@@ -39,7 +40,7 @@ Funciona en ordinador, tauleta, mòbil i pissarra digital.
 | **Fet o interpretació?** | Caixes que separen el que se sap del que són hipòtesis (els «gegants» patagons, Enrique de Malaca…). |
 | **Una altra mirada** | El punt de vista dels pobles que trobaven: tupinambà, chamorros, Lapu-Lapu… |
 | **Glossari** | Les paraules subratllades (escorbut, estret, Tordesillas…) es poden consultar amb un toc. |
-| **Lectura en veu alta** | Botó 🔊 a cada etapa. |
+| **Narració en català** | Botó 🔊 a la portada i a cada etapa, amb veu neuronal catalana (Joana) en àudios pregenerats: sona igual a tots els navegadors. |
 | **Línia de Tordesillas** | Dibuixada al mapa amb el seu antimeridià, per entendre per què les Moluques eren en disputa. |
 
 Encaixa amb el currículum de Ciències Socials de l'ESO (Decret 175/2022): pensament històric, ús de fonts, multiperspectiva i conflicte en l'expansió europea dels segles XV i XVI.
@@ -69,15 +70,25 @@ VoltaMon/
 │   ├── marcador.js       Comptadors de dies, naus i homes
 │   ├── targeta.js        Text de l'etapa, decisions, glossari i lectura en veu alta
 │   ├── cronologia.js     Barra d'etapes inferior
+│   ├── veu.js            Reproductor de la narració
 │   ├── util.js           Dates, geometria i utilitats
 │   └── dades/
 │       ├── etapes.js     ← Tot el contingut històric: 24 etapes i l'epíleg
 │       ├── glossari.js
 │       └── fonts.js
+├── audio/                Narració en MP3 (una per etapa i una per desenllaç de decisió)
+├── eines/genera-audios.mjs
 └── assets/
 ```
 
 **Per corregir o ampliar el contingut només cal editar `js/dades/etapes.js`.** Els dies de viatge es calculen a partir de les dates. Les longituds es «despleguen» automàticament perquè la ruta travessi el Pacífic sense talls.
+
+**Si canvies algun text, regenera'n l'àudio.** Cal Node i `edge-tts` (`pip install edge-tts`):
+
+```bash
+node eines/genera-audios.mjs mactan    # només una etapa
+node eines/genera-audios.mjs --tots    # totes
+```
 
 Per provar-la en local cal un servidor (els mòduls JS no funcionen amb `file://`):
 

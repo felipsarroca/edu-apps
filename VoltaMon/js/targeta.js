@@ -2,6 +2,7 @@ import { ETAPES } from './dades/etapes.js';
 import { GLOSSARI } from './dades/glossari.js';
 import { escapa, dataLlarga } from './util.js';
 import { diaDe } from './marcador.js';
+import * as veu from './veu.js';
 
 const TOTAL = ETAPES.filter((e) => !e.epileg).length;
 
@@ -19,8 +20,6 @@ function format(text) {
       GLOSSARI[terme] ? `<button type="button" class="mot" data-terme="${terme}">${paraula}</button>` : paraula);
 }
 
-const textPla = (text) => text.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\{[\w-]+:([^}]+)\}/g, '$1');
-
 const paragrafs = (llista) => llista.map((p) => `<p>${format(p)}</p>`).join('');
 
 function capcalera(e, index) {
@@ -30,6 +29,24 @@ function capcalera(e, index) {
     <span class="t-num">Etapa ${index + 1} de ${TOTAL}</span>
     <span class="t-data">${escapa(data)} · dia ${diaDe(e)}</span>`;
 }
+
+/** Quants homes es perden (o marxen) en aquesta etapa, i per què. */
+function htmlBalanc(e, index) {
+  if (!e.balanc) return '';
+  const dif = e.homes - ETAPES[index - 1].homes;
+  const n = Math.abs(dif);
+  const xifra = `${n > 1 ? '≈ ' : ''}${dif < 0 ? '−' : '+'}${n} ${n === 1 ? 'home' : 'homes'}`;
+  const tipus = e.balancTipus === 'marxen' ? 'marxen' : 'morts';
+  return `<p class="t-balanc ${tipus}"><span class="tb-xifra">${xifra}</span><span class="tb-motiu">${format(e.balanc)}</span></p>`;
+}
+
+const VAIXELL = `<svg class="tv-vaixell" viewBox="0 0 64 56" aria-hidden="true">
+  <path class="v-vela" d="M30 6 C38 10 40 20 38 30 L30 30 Z M30 10 C24 14 22 22 23 30 L30 30 Z M44 14 C50 18 51 25 49 31 L44 31 Z M16 16 C12 20 12 26 13 31 L17 31 Z"/>
+  <path class="v-pal" d="M30 3 V34 M44 11 V34 M17 13 V34"/>
+  <path class="v-bandera" d="M30 3 L37 5 L30 7 Z"/>
+  <path class="v-buc" d="M6 34 H58 L52 46 Q32 50 12 46 Z"/>
+</svg>
+<svg class="tv-onades" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q7.5 0 15 6 T30 6 T45 6 T60 6 T75 6 T90 6 T105 6 T120 6"/></svg>`;
 
 function htmlDecisio(d) {
   return `
@@ -59,49 +76,67 @@ export function creaTargeta(el, { onAnterior, onSeguent }) {
   document.addEventListener('click', (ev) => { if (!ev.target.closest('.mot, .glossari-pop')) amagaPop(); });
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') amagaPop(); });
 
-  const veu = 'speechSynthesis' in window ? window.speechSynthesis : null;
   let etapaActual = null;
 
+  /** Narra l'etapa i, si ja s'ha revelat, també el desenllaç de la decisió. */
   function llegeix(boto) {
-    if (!veu) return;
-    if (veu.speaking) {
-      veu.cancel();
-      return;
-    }
     const e = etapaActual;
-    const parts = [e.titol, ...e.text];
-    if (e.decisio) parts.push(e.decisio.pregunta);
-    const d = el.querySelector('.d-resultat');
-    if (d && !d.hidden) parts.push(...e.decisio.resultat);
-    if (e.cita) parts.push(e.cita.text);
-    const frase = new SpeechSynthesisUtterance(parts.map(textPla).join('. '));
-    frase.lang = 'ca-ES';
-    const catala = veu.getVoices().find((v) => v.lang.toLowerCase().startsWith('ca'));
-    if (catala) frase.voice = catala;
-    frase.rate = 0.95;
-    frase.onstart = () => boto.classList.add('actiu');
-    frase.onend = frase.onerror = () => boto.classList.remove('actiu');
-    veu.speak(frase);
+    const fitxers = [e.id];
+    if (e.decisio && !el.querySelector('.d-resultat').hidden) fitxers.push(`${e.id}-resultat`);
+    veu.reprodueix(fitxers, boto);
+  }
+
+  /** Canvia tot el contingut de la targeta amb una entrada suau, sempre des de dalt. */
+  function posa(html) {
+    el.classList.remove('entra');
+    el.innerHTML = html;
+    el.scrollTop = 0;
+    void el.offsetWidth;
+    el.classList.add('entra');
+  }
+
+  /** Vista de travessia: substitueix l'etapa anterior mentre el vaixell navega. */
+  function navegant(index, diesTram) {
+    veu.atura();
+    amagaPop();
+    const e = ETAPES[index];
+    posa(`
+      <div class="t-viatge" role="status">
+        <span class="t-num">Etapa ${index + 1} de ${TOTAL}</span>
+        <p class="tv-rumb">Rumb a</p>
+        <h2 class="tv-desti">${escapa(e.lloc)}</h2>
+        <div class="tv-escena">${VAIXELL}</div>
+        <p class="tv-dies"><span class="tv-comptador">0</span> de ${diesTram} dies de navegació</p>
+        <div class="tv-barra"><span></span></div>
+      </div>`);
+  }
+
+  function progres(t, diesTram) {
+    const comptador = el.querySelector('.tv-comptador');
+    if (!comptador) return;
+    comptador.textContent = Math.round(t * diesTram);
+    el.querySelector('.tv-barra span').style.width = `${t * 100}%`;
   }
 
   function mostra(index) {
-    veu?.cancel();
+    veu.atura();
     amagaPop();
     const e = ETAPES[index];
     etapaActual = e;
     const darrera = index === ETAPES.length - 1;
     const seguentText = darrera ? 'Torna a començar ↺' : ETAPES[index + 1].epileg ? 'Què va passar després? ▸' : 'Continua el viatge ▸';
 
-    el.innerHTML = `
+    posa(`
       <div class="t-cap">
         <div class="t-meta">${capcalera(e, index)}</div>
         <div class="t-botons">
-        ${veu ? '<button type="button" class="t-veu" aria-label="Escolta el text" title="Escolta el text"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>' : ''}
+        <button type="button" class="t-veu" aria-label="Escolta el text" aria-pressed="false" title="Escolta el text"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
         <button type="button" class="t-plega" aria-label="Plega o desplega el text" aria-expanded="${!el.classList.contains('plegada')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
       </div>
       <h2 class="t-titol" tabindex="-1">${escapa(e.titol)}</h2>
       <p class="t-lloc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>${escapa(e.lloc)}</p>
+      ${htmlBalanc(e, index)}
       <div class="t-cos">
         ${paragrafs(e.text)}
         ${e.decisio ? htmlDecisio(e.decisio) : ''}
@@ -112,10 +147,9 @@ export function creaTargeta(el, { onAnterior, onSeguent }) {
       <div class="t-nav">
         <button type="button" class="boto boto-secundari t-anterior" ${index === 0 ? 'disabled' : ''} aria-label="Etapa anterior">◂</button>
         <button type="button" class="boto boto-principal t-seguent">${seguentText}</button>
-      </div>`;
+      </div>`);
 
-    el.scrollTop = 0;
-    el.querySelector('.t-veu')?.addEventListener('click', (ev) => llegeix(ev.currentTarget));
+    el.querySelector('.t-veu').addEventListener('click', (ev) => llegeix(ev.currentTarget));
     el.querySelector('.t-plega').addEventListener('click', (ev) => {
       const plegada = el.classList.toggle('plegada');
       ev.currentTarget.setAttribute('aria-expanded', String(!plegada));
@@ -154,5 +188,5 @@ export function creaTargeta(el, { onAnterior, onSeguent }) {
     }
   }
 
-  return { mostra, focus: () => el.querySelector('.t-titol')?.focus({ preventScroll: true }) };
+  return { mostra, navegant, progres, focus: () => el.querySelector('.t-titol')?.focus({ preventScroll: true }) };
 }

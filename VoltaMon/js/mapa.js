@@ -1,5 +1,5 @@
 import { ETAPES, RUTA_TRINIDAD, TORDESILLAS, ANTIMERIDIA } from './dades/etapes.js';
-import { desplega, suavitza, acumulades, puntA, suau, redueixMoviment, escapa } from './util.js';
+import { desplega, suavitza, acumulades, puntA, suau, redueixMoviment, escapa, diesEntre } from './util.js';
 
 const L = window.L;
 
@@ -98,6 +98,45 @@ export function creaMapa(element, { padding, onEtapa }) {
   const vora = L.polyline([], { className: 'ruta-vora', interactive: false }).addTo(map);
   const feta = L.polyline([], { className: 'ruta-feta', interactive: false }).addTo(map);
 
+  // Etiquetes amb els dies de navegació de cada tram, a mig camí.
+  const RELLOTGE = '<svg viewBox="0 0 16 20" aria-hidden="true"><path d="M3 1.5h10M3 18.5h10M4 2c0 5 4 5.5 4 8s-4 3-4 8M12 2c0 5-4 5.5-4 8s4 3 4 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 16.5c.6-1.6 1.4-2.3 2-2.3s1.4.7 2 2.3z" fill="currentColor"/></svg>';
+  const etiquetesDies = ETAPES.map((e, i) => {
+    const anterior = ETAPES[i - 1];
+    if (!anterior || e.epileg || trams[i].length < 2) return null;
+    const dies = diesEntre(anterior.data, e.data);
+    const aprox = e.aprox || anterior.aprox ? '≈ ' : '';
+    const { punt } = puntA(trams[i], acumulades(trams[i]), 0.5);
+    return L.marker(punt, {
+      interactive: false,
+      keyboard: false,
+      icon: L.divIcon({
+        className: 'dies-tram',
+        html: `<span>${RELLOTGE}${aprox}${dies} ${dies === 1 ? 'dia' : 'dies'}</span>`,
+        iconSize: [0, 0],
+      }),
+    });
+  });
+  let fins = 0;
+
+  /** Mostra les etiquetes dels trams fets, si el tram és prou llarg en pantalla perquè no molestin. */
+  function actualitzaDies(index = fins, nou = false) {
+    fins = index;
+    etiquetesDies.forEach((m, i) => {
+      if (!m) return;
+      const t = trams[i];
+      const a = map.latLngToContainerPoint(t[0]);
+      const b = map.latLngToContainerPoint(t[t.length - 1]);
+      const visible = i <= index && !ETAPES[index].epileg && a.distanceTo(b) > 110;
+      if (visible && !map.hasLayer(m)) {
+        m.addTo(map);
+        if (nou && i === index) m.getElement()?.classList.add('nou');
+      } else if (!visible && map.hasLayer(m)) {
+        m.remove();
+      }
+    });
+  }
+  map.on('zoomend', () => actualitzaDies());
+
   const marcadors = ETAPES.map((e, i) => {
     if (e.epileg) return null;
     const m = L.marker(pos[i], {
@@ -106,8 +145,7 @@ export function creaMapa(element, { padding, onEtapa }) {
       icon: L.divIcon({
         className: 'marca-etapa',
         html: `<span>${i + 1}</span>`,
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
+        iconSize: [0, 0], // la mida i el centrat són al CSS, en rem
       }),
       zIndexOffset: i,
     }).addTo(map);
@@ -120,7 +158,7 @@ export function creaMapa(element, { padding, onEtapa }) {
     interactive: false,
     keyboard: false,
     zIndexOffset: 1000,
-    icon: L.divIcon({ className: 'vaixell', html: `<div class="vaixell-cos">${VAIXELL_SVG}</div>`, iconSize: [56, 50], iconAnchor: [28, 66] }),
+    icon: L.divIcon({ className: 'vaixell', html: `<div class="vaixell-cos">${VAIXELL_SVG}</div>`, iconSize: [0, 0] }),
   }).addTo(map);
 
   const orientaVaixell = (deLng, aLng) => {
@@ -175,7 +213,7 @@ export function creaMapa(element, { padding, onEtapa }) {
     marcaEstat(index);
     if (ETAPES[index].epileg) rutaTrinidad.addTo(map);
     else rutaTrinidad.remove();
-    return enquadra(index, animat);
+    return enquadra(index, animat).then(() => actualitzaDies(index));
   }
 
   /** Anima el viatge de l'etapa index-1 a index. onProgres rep la fracció recorreguda. */
@@ -189,6 +227,7 @@ export function creaMapa(element, { padding, onEtapa }) {
     rutaTrinidad.remove();
     marcaEstat(index - 1);
     await enquadra(index);
+    actualitzaDies(index - 1);
 
     const acc = acumulades(tram);
     const durada = Math.min(6500, Math.max(1400, 900 + acc[acc.length - 1] * 45));
@@ -213,6 +252,7 @@ export function creaMapa(element, { padding, onEtapa }) {
     });
     vaixell.getElement()?.classList.remove('navegant');
     marcaEstat(index);
+    actualitzaDies(index, true);
   }
 
   return { map, mostra, viatja, enquadra };

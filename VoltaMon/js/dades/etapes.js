@@ -7,6 +7,8 @@
 // - `pos`: [latitud, longitud] del punt de l'etapa (longitud entre -180 i 180).
 // - `ruta`: punts intermedis des de l'etapa anterior, perquè el traç segueixi el mar.
 // - `homes`: persones a bord després dels fets de l'etapa (xifres aproximades).
+// - `balanc`: per què canvia el nombre d'homes respecte de l'etapa anterior
+//   (`balancTipus: 'marxen'` quan no són morts sinó homes que se'n van).
 // - `naus`: canvis d'estat de les naus en aquesta etapa.
 // - Al text, {terme:paraula} enllaça la paraula amb el glossari.
 
@@ -156,6 +158,7 @@ export const ETAPES = [
       tipus: 'debat',
       text: "Pigafetta parla de «gegants» i els anomena patagons. Els aonikenk (tehuelches) eren alts, però no gegants: és una exageració. El nom potser ve de Patagón, un gegant d'una novel·la de cavalleries de l'època.",
     },
+    balanc: "morts, executats o abandonats pel motí",
     homes: 245,
   },
   {
@@ -170,6 +173,7 @@ export const ETAPES = [
       "Gairebé tota la tripulació se salva i torna a peu, durant dies, per la costa gelada fins a San Julián. Queden quatre naus.",
     ],
     naus: { santiago: { estat: 'naufragada', nota: 'naufraga a la Patagònia (maig de 1520)' } },
+    balanc: "un mariner mor en el naufragi",
     homes: 244,
   },
   {
@@ -183,6 +187,7 @@ export const ETAPES = [
       "Després de cinc mesos d'hivern, el 21 d'octubre veuen un cap i, darrere, una entrada estreta. És el pas que buscaven: avui en diem l'{estret:estret} de Magallanes.",
       "Hi entren amb molta por: corrents forts, vents gelats i canals que no porten enlloc. De nit, a la riba sud, veuen moltes fogueres. Magallanes l'anomena Terra dels Fums; més endavant es dirà Terra del Foc.",
     ],
+    balanc: "morts durant l'hivern austral",
     homes: 240,
   },
   {
@@ -215,6 +220,8 @@ export const ETAPES = [
       ],
     },
     naus: { sanantonio: { estat: 'desertora', nota: 'deserta i torna a Castella (novembre de 1520)' } },
+    balancTipus: 'marxen',
+    balanc: "no moren: tornen a Castella amb la San Antonio",
     homes: 185,
   },
   {
@@ -257,6 +264,7 @@ export const ETAPES = [
       tipus: 'sabies',
       text: "L'escorbut el causa la manca de vitamina C, que hi ha a la fruita i la verdura fresques. Aleshores ningú no en sabia la causa.",
     },
+    balanc: "morts per l'escorbut i la fam",
     homes: 165,
   },
   {
@@ -291,6 +299,7 @@ export const ETAPES = [
       tipus: 'debat',
       text: "Si Enrique era originari d'aquestes illes, potser va ser la primera persona que va fer la volta al món sencera. No sabem del cert d'on venia: és una hipòtesi, no un fet demostrat.",
     },
+    balanc: "morts per malaltia",
     homes: 160,
   },
   {
@@ -331,6 +340,7 @@ export const ETAPES = [
       tipus: 'perspectiva',
       text: "A les Filipines, Lapu-Lapu és un heroi nacional: el primer que va resistir els europeus. El 2021, el país va commemorar els 500 anys de la «victòria de Mactan».",
     },
+    balanc: "Magallanes i vuit homes moren a la batalla",
     homes: 150,
   },
   {
@@ -347,6 +357,7 @@ export const ETAPES = [
       "No queden prou mariners per a tres naus. Prop de l'illa de Bohol, cremen la Concepción. Només en queden dues: la Trinidad i la Victoria.",
     ],
     naus: { concepcion: { estat: 'cremada', nota: 'cremada a Bohol (maig de 1521)' } },
+    balanc: "uns 27 assassinats al banquet de Cebu, i altres baixes",
     homes: 115,
   },
   {
@@ -360,6 +371,7 @@ export const ETAPES = [
       "Sense un rumb clar, les dues naus vaguen per les illes durant mesos. A Brunei, a l'illa de Borneo, troben una ciutat rica, amb milers de cases construïdes sobre l'aigua.",
       "El {sulta:sultà} els rep i envia elefants guarnits amb seda per portar-los al palau. Els europeus descobreixen que no són els únics amb riquesa i poder.",
     ],
+    balanc: "homes retinguts a Brunei o morts",
     homes: 110,
   },
   {
@@ -381,6 +393,7 @@ export const ETAPES = [
       tipus: 'debat',
       text: "De qui eren les Moluques? Segons Tordesillas, el món es dividia en dues meitats, però ningú no sabia mesurar bé la {longitud:longitud}. Castella i Portugal les reclamaven. El 1529, pel Tractat de Saragossa, Carles I hi va renunciar a canvi de diners.",
     },
+    balanc: "morts per malaltia",
     homes: 105,
   },
   {
@@ -414,6 +427,8 @@ export const ETAPES = [
       ],
     },
     naus: { trinidad: { estat: 'separada', nota: 'es queda a Tidore per reparar-se' } },
+    balancTipus: 'marxen',
+    balanc: "es queden 54 homes a la Trinidad; s'hi sumen 13 moluquesos",
     homes: 60,
     homesEtiqueta: 'a la Victoria',
   },
@@ -428,6 +443,7 @@ export const ETAPES = [
       "La Victoria fa escala a Timor per comprar carn, arròs i fruita. La nau fa aigües i la tripulació està esgotada.",
       "Elcano pren una decisió valenta: per evitar els portuguesos, no tocaran terra fins a l'Àfrica. Tenen al davant tot l'oceà Índic.",
     ],
+    balanc: "dos desertors i un mort",
     homes: 57,
     homesEtiqueta: 'a la Victoria',
   },
@@ -448,6 +464,7 @@ export const ETAPES = [
       text: "Però la majoria, que estimava més l'honor que la vida, va decidir intentar tornar a Espanya, vius o morts.",
       autor: 'Antonio Pigafetta',
     },
+    balanc: "morts de fam i d'escorbut",
     homes: 42,
     homesEtiqueta: 'a la Victoria',
   },
@@ -470,6 +487,7 @@ export const ETAPES = [
       tipus: 'sabies',
       text: "Navegant sempre cap a l'oest, seguint el sol, cada dia els durava una mica més. Sumant tota la volta, havien «perdut» un dia sencer. Avui, la {canvi-data:línia de canvi de data} resol aquest problema.",
     },
+    balanc: "13 presos pels portuguesos i uns 11 morts pel camí",
     homes: 18,
     homesEtiqueta: 'a la Victoria',
   },

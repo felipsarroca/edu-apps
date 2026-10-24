@@ -5,6 +5,7 @@ import { creaMarcador, diaDe } from './marcador.js';
 import { creaTargeta } from './targeta.js';
 import { creaCronologia } from './cronologia.js';
 import { escapa, espera } from './util.js';
+import * as veu from './veu.js';
 
 const LECTURA_AUTO = 9000;
 const ULTIMA = ETAPES.length - 1;
@@ -22,14 +23,15 @@ function padding() {
   const marcador = $('#marcador').getBoundingClientRect();
   const crono = $('#cronologia').getBoundingClientRect();
   const targeta = elTargeta.getBoundingClientRect();
+  const vaixell = 5 * parseFloat(getComputedStyle(document.documentElement).fontSize);
   if (ampla.matches) {
     return {
-      topLeft: [40, marcador.bottom + 60],
+      topLeft: [40, marcador.bottom + vaixell],
       bottomRight: [window.innerWidth - targeta.left + 40, window.innerHeight - crono.top + 30],
     };
   }
   return {
-    topLeft: [24, marcador.bottom + 56],
+    topLeft: [24, marcador.bottom + vaixell],
     bottomRight: [24, window.innerHeight - targeta.top + 20],
   };
 }
@@ -71,11 +73,14 @@ async function seguent() {
 
   estat.ocupat = true;
   app.classList.add('navegant');
-  elTargeta.dataset.desti = `Navegant cap a ${ETAPES[desti].lloc}…`;
   const diaInici = marcador.dia;
   const diaFi = diaDe(ETAPES[desti]);
+  targeta.navegant(desti, diaFi - diaInici);
   try {
-    await mapa.viatja(desti, (t) => marcador.avanca(diaInici, diaFi, t));
+    await mapa.viatja(desti, (t) => {
+      marcador.avanca(diaInici, diaFi, t);
+      targeta.progres(t, diaFi - diaInici);
+    });
   } finally {
     estat.ocupat = false;
     app.classList.remove('navegant');
@@ -107,6 +112,7 @@ function iniciaAuto() {
 // --- Introducció i fonts ---
 
 function tancaIntro() {
+  veu.atura();
   elIntro.classList.add('tancant');
   app.inert = false;
   espera(450).then(() => { elIntro.hidden = true; elIntro.classList.remove('tancant'); });
@@ -123,6 +129,7 @@ function obreIntro() {
 }
 
 $('#salpa').addEventListener('click', tancaIntro);
+$('#intro-veu').addEventListener('click', (ev) => veu.reprodueix(['intro'], ev.currentTarget));
 $('#boto-inici').addEventListener('click', obreIntro);
 
 const dialegFonts = $('#fonts');
