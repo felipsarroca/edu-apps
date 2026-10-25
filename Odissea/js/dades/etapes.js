@@ -230,20 +230,54 @@ export const ETAPES = [
     balanc: 'Elpenor cau del terrat de Circe',
   },
   {
-    id: 'inframon',
-    lloc: "Entrada de l'Hades",
-    on: "Llac Avern, prop de Cumes (Itàlia), segons la tradició; d'altres, a l'Atlàntic",
+    id: 'columnes',
+    lloc: "Columnes d'Hèracles",
+    on: "Estret de Gibraltar, entre Europa i Àfrica",
     cant: 'Cant XI',
     anys: 11,
     anysText: 'onze anys fora de casa',
-    pos: [40.84, 14.05],
-    durada: '1 dia',
-    ruta: [[41.1, 13.1], [40.82, 13.95]],
-    // Lectura alternativa: l'Oceà homèric com l'Atlàntic, més enllà de les columnes d'Hèracles.
+    pos: [35.97, -5.55],
+    durada: '1 dia, segons Homer',
+    ruta: [[40.5, 12.3], [39.0, 9.8], [38.4, 8.3], [37.3, 3], [36.3, -2]],
+    titol: 'A la fi del món conegut',
+    text: [
+      "Circe envia Ulisses a buscar el camí de casa al país dels morts, a la vora de l'Oceà. Un vent que ella mateixa li envia infla la vela tot el dia, fins que es pon el sol.",
+      "Per als grecs, l'Oceà era el gran riu que envoltava tota la terra. Molts autors posteriors el van identificar amb l'oceà Atlàntic, i per això van imaginar Ulisses sortint de la Mediterrània per l'estret de Gibraltar, que els grecs anomenaven les columnes d'{heracles:Hèracles}.",
+    ],
+    cita: {
+      text: "Va arribar als límits de l'Oceà de corrent profund. Allà hi ha el poble i la ciutat dels cimmeris, coberts de boira i de núvols.",
+      autor: 'Odissea, cant XI, v. 13-15',
+    },
+    caixa: [
+      {
+        tipus: 'sabies',
+        text: "Segons el mite, Hèracles va obrir l'estret i hi va posar dues columnes: la penya de Gibraltar, a Europa, i el mont Abila, a l'Àfrica. Marcaven el final del món conegut. Avui les columnes surten a l'escut d'Espanya.",
+      },
+      {
+        tipus: 'mite',
+        text: "Homer no parla mai de les columnes d'Hèracles ni de Gibraltar: només diu que Ulisses arriba a l'Oceà. La ruta per l'estret és una interpretació d'autors posteriors, com Crates de Mal·los. I hi ha un problema: el poema diu que hi arriba en un sol dia de navegació, i des de l'illa de Circe fins a Gibraltar hi ha més de 1.500 km.",
+      },
+    ],
+    naus: 1,
+    flotaText: 'una nau',
+    companys: 45,
+  },
+  {
+    id: 'inframon',
+    lloc: "Entrada de l'Hades",
+    on: "A l'Oceà, segons aquesta lectura; la tradició el situa al llac Avern (Itàlia)",
+    cant: 'Cant XI',
+    anys: 11,
+    anysText: 'onze anys fora de casa',
+    pos: [36.6, -9.6],
+    ruta: [[35.95, -6.3]],
+    // Lectura tradicional: el llac Avern, prop de Cumes, a un dia de navegació de l'illa de Circe.
     alternativa: {
-      pos: [36.6, -9.6],
-      ruta: [[40.5, 12.3], [39.0, 9.8], [38.4, 8.3], [37.3, 3], [36.3, -2], [35.95, -5.6], [35.95, -6.3]],
-      etiqueta: "L'Oceà, més enllà de Gibraltar?",
+      des: [41.23, 13.05],
+      pos: [40.84, 14.05],
+      ruta: [[41.1, 13.1], [40.82, 13.95]],
+      etiqueta: 'Llac Avern, segons la tradició?',
+      costat: 'esquerra',
     },
     titol: 'El país dels morts',
     text: [
@@ -257,7 +291,7 @@ export const ETAPES = [
     caixa: [
       {
         tipus: 'mite',
-        text: "Homer diu que Ulisses navega fins al corrent de l'Oceà, el gran riu que envolta la terra, al país dels cimmeris, sempre cobert de boira. Més tard, molts grecs van identificar l'Oceà amb l'Atlàntic, més enllà de les columnes d'Hèracles, l'actual estret de Gibraltar, i alguns, com Crates de Mal·los, hi van situar aquest episodi. És la línia blava del mapa. Però el poema diu que hi arriba en un sol dia de navegació, i per això la tradició el situa al llac Avern, a Itàlia.",
+        text: "On era l'entrada del món dels morts? Si l'Oceà d'Homer és l'Atlàntic, era més enllà de Gibraltar, com mostra el mapa. Però com que el poema diu que Ulisses hi arriba en un sol dia, molts autors antics la van situar al llac Avern, a Itàlia: un llac dins d'un cràter, amb vapors i coves, que es considerava una porta de l'Hades. És la línia blava del mapa.",
       },
       {
         tipus: 'pensa',
@@ -276,7 +310,8 @@ export const ETAPES = [
     anys: 11,
     anysText: 'onze anys fora de casa',
     pos: [40.58, 14.43],
-    ruta: [[40.82, 13.95], [41.15, 13.1], [40.6, 13.6], [40.5, 14.25]],
+    // Tornen de l'Oceà a l'illa de Circe i, d'allà, cap a les sirenes.
+    ruta: [[35.95, -6.3], [35.95, -5.6], [36.3, -2], [37.3, 3], [38.4, 8.3], [39.0, 9.8], [40.5, 12.3], [41.1, 12.95], [40.75, 13.7], [40.5, 14.25]],
     titol: 'Un cant irresistible',
     text: [
       "Tornen a l'illa de Circe per enterrar Elpenor, i ella els avisa dels perills que vindran. El primer són les sirenes, que canten tan bé que els mariners s'hi acosten i ja no en tornen. Al seu voltant hi ha munts d'ossos.",

@@ -8,6 +8,7 @@ export const GLOSSARI = {
   endevi: "Persona que pot conèixer el futur. Tirèsias era cec, però veia el que havia de passar.",
   hades: 'El món dels morts, sota terra, segons els grecs. També és el nom del déu que hi governa.',
   helios: 'Déu del Sol. Cada dia travessa el cel en un carro de foc.',
+  heracles: "Heroi grec famós per la seva força, fill de Zeus. Els romans l'anomenaven Hèrcules.",
   hermes: 'Missatger dels déus. Porta sandàlies amb ales i guia les ànimes dels morts.',
   hybris: "Paraula grega que vol dir orgull desmesurat: creure's més que els altres, o més que els déus. Als relats grecs, sempre es castiga.",
   'in-medias-res': "Expressió llatina que vol dir «enmig de les coses». És quan un relat comença a la meitat de la història i després explica què havia passat abans.",

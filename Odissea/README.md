@@ -72,7 +72,7 @@ Odissea/
 │   ├── veu.js            Reproductor de la narració
 │   ├── util.js           Geometria i utilitats
 │   └── dades/
-│       ├── etapes.js     ← Tot el contingut: 16 etapes i l'epíleg
+│       ├── etapes.js     ← Tot el contingut: 17 etapes i l'epíleg
 │       ├── glossari.js
 │       └── fonts.js
 ├── audio/                Narració en MP3 (una per etapa i una per desenllaç de decisió)
@@ -99,6 +99,7 @@ python -m http.server
 ## Rigor
 
 - **La geografia de l'Odissea és poètica.** Els llocs del mapa són les identificacions tradicionals (Tucídides, Estrabó i la tradició posterior), no fets demostrats.
+- **Gibraltar.** Homer diu que Ulisses navega fins a l'Oceà. Seguint la lectura que identifica l'Oceà amb l'Atlàntic, l'app el fa passar per les columnes d'Hèracles; el llac Avern, la localització tradicional, surt com a alternativa.
 - **Les rutes són orientatives.** Homer no descriu el camí entre els llocs; els dies de navegació sí que surten al poema.
 - **Els ≈ 600 companys inicials són una estimació** (unes 50 persones per nau). Les pèrdues sí que segueixen el poema: sis per nau a Ísmar, sis amb el ciclop, onze naus amb els lestrígons…
 - **Les cites són traduccions pròpies del grec**, adaptades per facilitar-ne la lectura. Per llegir el poema sencer en català, la referència és la traducció de Carles Riba.

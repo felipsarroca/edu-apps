@@ -25,7 +25,7 @@ function preparaGeometria() {
     return suavitza([a, ...(e.ruta || []), b]);
   });
   // Localitzacions alternatives d'algunes etapes, des del lloc anterior.
-  const alternatives = ETAPES.map((e, i) => (e.alternativa ? suavitza([pos[i - 1], ...(e.alternativa.ruta || []), e.alternativa.pos]) : null));
+  const alternatives = ETAPES.map((e, i) => (e.alternativa ? suavitza([e.alternativa.des || pos[i - 1], ...(e.alternativa.ruta || []), e.alternativa.pos]) : null));
   return { pos, trams, alternatives };
 }
 
@@ -132,7 +132,7 @@ export function creaMapa(element, { padding, onEtapa }) {
       L.marker(e.alternativa.pos, {
         interactive: false,
         keyboard: false,
-        icon: L.divIcon({ className: 'hipotesi', html: `<span>${escapa(e.alternativa.etiqueta)}</span>`, iconSize: [0, 0] }),
+        icon: L.divIcon({ className: `hipotesi${e.alternativa.costat === 'esquerra' ? ' a-esquerra' : ''}`, html: `<span>${escapa(e.alternativa.etiqueta)}</span>`, iconSize: [0, 0] }),
       }),
     ]);
   });

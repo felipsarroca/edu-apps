@@ -931,6 +931,8 @@ button { font: inherit; color: inherit; }
   pointer-events: none;
 }
 
+.hipotesi.a-esquerra span { translate: calc(-100% + 0.85rem) calc(-100% - 0.4rem); flex-direction: row-reverse; }
+
 .hipotesi span::before { content: '?'; display: grid; place-items: center; width: 1rem; height: 1rem; border-radius: 50%; background: var(--mar); color: #fff; font-size: 0.7rem; }
 .dies-tram.nou span { animation: segell 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
 
