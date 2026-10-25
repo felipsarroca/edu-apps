@@ -17,14 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         { 
             name: "L'Odissea d'Homer", 
-            path: 'https://ja.cat/ulisses', 
+            path: 'https://felipsarroca.github.io/edu-apps/Odissea/', 
             category: 'Història', 
             description: "El viatge d'Ulisses de Troia a Ítaca sobre el mapa, amb les decisions que ho canvien tot.",
             icon: 'Odissea/favicon.svg?v=2'
         },
         { 
             name: "La primera volta al món", 
-            path: 'https://ja.cat/magallanes', 
+            path: 'https://felipsarroca.github.io/edu-apps/VoltaMon/', 
             category: 'Història', 
             description: "Magallanes i Elcano (1519-1522) etapa per etapa: naus, homes, dies i decisions.",
             icon: 'VoltaMon/favicon.svg?v=2'
