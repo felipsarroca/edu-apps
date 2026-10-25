@@ -138,7 +138,7 @@ export function creaTargeta(el, { onAnterior, onSeguent }) {
         ${paragrafs(e.text)}
         ${e.decisio ? htmlDecisio(e.decisio) : ''}
         ${e.cita ? `<blockquote class="cita"><p>${format(e.cita.text)}</p><footer>— ${escapa(e.cita.autor)}</footer></blockquote>` : ''}
-        ${e.caixa ? `<aside class="caixa caixa-${e.caixa.tipus}"><h3><span aria-hidden="true">${CAIXES[e.caixa.tipus].icona}</span> ${CAIXES[e.caixa.tipus].titol}</h3><p>${format(e.caixa.text)}</p></aside>` : ''}
+        ${[].concat(e.caixa || []).map((c) => `<aside class="caixa caixa-${c.tipus}"><h3><span aria-hidden="true">${CAIXES[c.tipus].icona}</span> ${CAIXES[c.tipus].titol}</h3><p>${format(c.text)}</p></aside>`).join('')}
         ${e.resum ? `<section class="resum"><h3>Què ens explica encara avui?</h3><ul>${e.resum.map((r) => `<li>${format(r)}</li>`).join('')}</ul></section>` : ''}
       </div>
       <div class="t-nav">

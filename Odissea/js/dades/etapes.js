@@ -232,13 +232,19 @@ export const ETAPES = [
   {
     id: 'inframon',
     lloc: "Entrada de l'Hades",
-    on: "Llac Avern, prop de Cumes (Itàlia), segons els autors antics",
+    on: "Llac Avern, prop de Cumes (Itàlia), segons la tradició; d'altres, a l'Atlàntic",
     cant: 'Cant XI',
     anys: 11,
     anysText: 'onze anys fora de casa',
     pos: [40.84, 14.05],
     durada: '1 dia',
     ruta: [[41.1, 13.1], [40.82, 13.95]],
+    // Lectura alternativa: l'Oceà homèric com l'Atlàntic, més enllà de les columnes d'Hèracles.
+    alternativa: {
+      pos: [36.6, -9.6],
+      ruta: [[40.5, 12.3], [39.0, 9.8], [38.4, 8.3], [37.3, 3], [36.3, -2], [35.95, -5.6], [35.95, -6.3]],
+      etiqueta: "L'Oceà, més enllà de Gibraltar?",
+    },
     titol: 'El país dels morts',
     text: [
       "Circe li diu que, per saber com tornar a casa, ha de consultar l'{endevi:endeví} Tirèsias, que és mort. Ulisses navega fins a la vora del món, a l'entrada de l'{hades:Hades}, el regne dels morts. Hi fa un sacrifici i les ànimes dels morts s'hi acosten.",
@@ -248,10 +254,16 @@ export const ETAPES = [
       text: "Preferiria treballar la terra al servei d'un home pobre, sense terres, que no pas regnar sobre tots els morts.",
       autor: 'Aquil·les a Ulisses. Odissea, cant XI, v. 489-491',
     },
-    caixa: {
-      tipus: 'pensa',
-      text: "A la guerra de Troia, Aquil·les va triar una vida curta i gloriosa. Ara, mort, diu que la glòria no val res al costat d'estar viu. Quina de les dues coses val més?",
-    },
+    caixa: [
+      {
+        tipus: 'mite',
+        text: "Homer diu que Ulisses navega fins al corrent de l'Oceà, el gran riu que envolta la terra, al país dels cimmeris, sempre cobert de boira. Més tard, molts grecs van identificar l'Oceà amb l'Atlàntic, més enllà de les columnes d'Hèracles, l'actual estret de Gibraltar, i alguns, com Crates de Mal·los, hi van situar aquest episodi. És la línia blava del mapa. Però el poema diu que hi arriba en un sol dia de navegació, i per això la tradició el situa al llac Avern, a Itàlia.",
+      },
+      {
+        tipus: 'pensa',
+        text: "A la guerra de Troia, Aquil·les va triar una vida curta i gloriosa. Ara, mort, diu que la glòria no val res al costat d'estar viu. Quina de les dues coses val més?",
+      },
+    ],
     naus: 1,
     flotaText: 'una nau',
     companys: 45,
@@ -370,13 +382,18 @@ export const ETAPES = [
   {
     id: 'ogigia',
     lloc: 'Ogígia, illa de Calipso',
-    on: 'Illa de Gozo (Malta), segons una tradició',
+    on: "Illa de Gozo (Malta), segons una tradició; d'altres, a l'Atlàntic",
     cant: 'Cant V',
     anys: 19,
     anysText: 'set anys amb Calipso',
     pos: [36.05, 14.27],
     durada: '9 dies a la deriva',
     ruta: [[38.1, 15.6], [38.24, 15.62], [37.8, 15.75], [36.8, 15.4], [36.25, 14.6]],
+    alternativa: {
+      pos: [33.9, -9.8],
+      ruta: [[38.24, 15.62], [38.65, 13.0], [38.3, 8.4], [37.3, 3], [36.3, -2], [35.95, -5.6], [35.9, -6.4]],
+      etiqueta: "A l'Atlàntic, a prop de l'Atles?",
+    },
     titol: 'Set anys i una pregunta',
     text: [
       "Arrossegat pel mar nou dies, Ulisses arriba a Ogígia, l'illa de la {nimfa:nimfa} Calipso. Ella s'enamora d'ell i no el deixa marxar. Hi passa set anys. Cada dia s'asseu a la platja i plora mirant el mar.",
@@ -396,6 +413,10 @@ export const ETAPES = [
     cita: {
       text: "Ja sé que la prudent Penèlope és menys bella que tu… però tot i així vull, i desitjo cada dia, arribar a casa i veure el dia del retorn.",
       autor: 'Ulisses a Calipso. Odissea, cant V, v. 215-220',
+    },
+    caixa: {
+      tipus: 'mite',
+      text: "Homer diu que Ogígia és molt lluny, al «melic del mar», i que Calipso és filla d'Atles, el tità que aguanta el cel a l'extrem occidental del món. A més, per tornar, Ulisses navega disset dies cap a l'est. Per això hi ha qui la situa a l'Atlàntic, més enllà de l'estret de Gibraltar. La identificació amb Gozo, a Malta, és posterior al poema.",
     },
     naus: 0,
     flotaText: 'un rai fet per ell mateix',

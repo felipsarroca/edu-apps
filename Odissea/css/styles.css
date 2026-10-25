@@ -909,6 +909,29 @@ button { font: inherit; color: inherit; }
 }
 
 .dies-tram svg { width: 0.7rem; height: 0.9rem; }
+
+/* Localització alternativa d'una etapa (per exemple, més enllà de Gibraltar) */
+.ruta-hipotesi { stroke: var(--mar); stroke-opacity: 0.85; stroke-width: 2.6; stroke-dasharray: 2 7; stroke-linecap: round; fill: none; }
+
+.hipotesi span {
+  position: absolute;
+  translate: -0.85rem calc(-100% - 0.4rem); /* just a sobre del final de la línia */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.65rem;
+  border: 1.5px dashed var(--mar);
+  border-radius: 99px;
+  background: rgba(253, 248, 236, 0.92);
+  color: var(--mar);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(43, 33, 24, 0.2);
+  pointer-events: none;
+}
+
+.hipotesi span::before { content: '?'; display: grid; place-items: center; width: 1rem; height: 1rem; border-radius: 50%; background: var(--mar); color: #fff; font-size: 0.7rem; }
 .dies-tram.nou span { animation: segell 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
 
 @keyframes segell {

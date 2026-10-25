@@ -16,18 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: 'ViatgesColom/favicon.svg'
         },
         { 
-            name: "L'Odissea", 
+            name: "L'Odissea d'Homer", 
             path: 'https://ja.cat/ulisses', 
             category: 'Història', 
-            description: "El viatge d'Ulisses de Troia a Ítaca, pas a pas, amb les decisions que ho canvien tot.",
-            icon: 'Odissea/favicon.svg'
+            description: "El viatge d'Ulisses de Troia a Ítaca sobre el mapa, amb les decisions que ho canvien tot.",
+            icon: 'Odissea/favicon.svg?v=2'
         },
         { 
-            name: "La Volta al Món", 
+            name: "La primera volta al món", 
             path: 'https://ja.cat/magallanes', 
             category: 'Història', 
-            description: "Segueix la primera circumnavegació de la història.",
-            icon: 'VoltaMon/favicon.svg'
+            description: "Magallanes i Elcano (1519-1522) etapa per etapa: naus, homes, dies i decisions.",
+            icon: 'VoltaMon/favicon.svg?v=2'
         },
         { 
             name: "El Modernisme", 

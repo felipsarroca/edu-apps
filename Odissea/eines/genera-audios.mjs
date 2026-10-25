@@ -43,7 +43,7 @@ function textEtapa(e, i) {
     e.decisio.opcions.forEach((o, i) => parts.push(`${ORDINALS[i]} opció: ${o.text}`));
   }
   if (e.cita) parts.push(`Diu l'Odissea: «${e.cita.text}»`);
-  if (e.caixa) parts.push(CAIXES[e.caixa.tipus], e.caixa.text);
+  for (const c of [].concat(e.caixa || [])) parts.push(CAIXES[c.tipus], c.text);
   if (e.resum) parts.push('Què ens explica encara avui?', ...e.resum);
   return parts.map(pla).join('\n\n');
 }

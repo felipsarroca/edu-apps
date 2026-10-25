@@ -24,7 +24,9 @@ function preparaGeometria() {
     if (a[0] === b[0] && a[1] === b[1]) return [];
     return suavitza([a, ...(e.ruta || []), b]);
   });
-  return { pos, trams };
+  // Localitzacions alternatives d'algunes etapes, des del lloc anterior.
+  const alternatives = ETAPES.map((e, i) => (e.alternativa ? suavitza([pos[i - 1], ...(e.alternativa.ruta || []), e.alternativa.pos]) : null));
+  return { pos, trams, alternatives };
 }
 
 function esperaMoviment(map, maxim = 2600) {
@@ -37,13 +39,13 @@ function esperaMoviment(map, maxim = 2600) {
 export function creaMapa(element, { padding, onEtapa }) {
   const map = L.map(element, {
     zoomControl: false,
-    minZoom: 3,
+    minZoom: 2,
     maxZoom: 9,
     zoomSnap: 0.25,
     zoomDelta: 0.5,
     center: ETAPES[0].pos,
     zoom: 5,
-    maxBounds: [[20, -15], [55, 50]],
+    maxBounds: [[5, -35], [65, 60]],
   });
   L.control.zoom({ position: 'bottomleft', zoomInTitle: 'Apropa', zoomOutTitle: 'Allunya' }).addTo(map);
   map.attributionControl.setPosition('bottomleft');
@@ -55,7 +57,7 @@ export function creaMapa(element, { padding, onEtapa }) {
     attribution: 'Mapa &copy; <a href="https://www.esri.com" target="_blank" rel="noopener noreferrer">Esri</a>, US National Park Service',
   }).addTo(map);
 
-  const { pos, trams } = preparaGeometria();
+  const { pos, trams, alternatives } = preparaGeometria();
 
   const etiquetaMar = (latlng, text) => L.marker(latlng, {
     interactive: false,
@@ -122,6 +124,24 @@ export function creaMapa(element, { padding, onEtapa }) {
     return m;
   });
 
+  // Es mostren només a la seva etapa: una línia de punts i una etiqueta amb interrogant.
+  const capesAlternatives = ETAPES.map((e, i) => {
+    if (!alternatives[i]) return null;
+    return L.layerGroup([
+      L.polyline(alternatives[i], { className: 'ruta-hipotesi', interactive: false }),
+      L.marker(e.alternativa.pos, {
+        interactive: false,
+        keyboard: false,
+        icon: L.divIcon({ className: 'hipotesi', html: `<span>${escapa(e.alternativa.etiqueta)}</span>`, iconSize: [0, 0] }),
+      }),
+    ]);
+  });
+  const mostraAlternativa = (index) => capesAlternatives.forEach((c, i) => {
+    if (!c) return;
+    if (i === index && !map.hasLayer(c)) c.addTo(map);
+    else if (i !== index && map.hasLayer(c)) c.remove();
+  });
+
   const vaixell = L.marker(pos[0], {
     interactive: false,
     keyboard: false,
@@ -153,7 +173,7 @@ export function creaMapa(element, { padding, onEtapa }) {
   };
 
   /** Enquadra l'etapa: el tram que hi porta, o un entorn del punt. */
-  function enquadra(index, animat = true) {
+  function enquadra(index, animat = true, ambAlternativa = true) {
     const e = ETAPES[index];
     const dur = animat && !redueixMoviment() ? 1.1 : 0;
     let limits;
@@ -164,6 +184,10 @@ export function creaMapa(element, { padding, onEtapa }) {
     } else {
       const [lat, lng] = pos[index];
       limits = L.latLngBounds([[lat - 1.5, lng - 2.2], [lat + 1.5, lng + 2.2]]);
+    }
+    if (ambAlternativa && alternatives[index]) {
+      const [lat, lng] = e.alternativa.pos;
+      limits.extend(L.latLngBounds(alternatives[index])).extend([lat - 1.5, lng - 1.5]); // marge per a l'etiqueta
     }
     const opcions = { ...opcionsPadding(), maxZoom: e.epileg ? 6 : 7.5 };
     if (dur) map.flyToBounds(limits, { ...opcions, duration: dur });
@@ -180,6 +204,7 @@ export function creaMapa(element, { padding, onEtapa }) {
     const tram = trams[index];
     if (tram.length > 1) orientaVaixell(tram[tram.length - 2][1], tram[tram.length - 1][1]);
     marcaEstat(index);
+    mostraAlternativa(index);
     return enquadra(index, animat).then(() => actualitzaDurades(index));
   }
 
@@ -192,7 +217,8 @@ export function creaMapa(element, { padding, onEtapa }) {
     }
     const base = rutaFins(index - 1);
     marcaEstat(index - 1);
-    await enquadra(index);
+    mostraAlternativa(-1);
+    await enquadra(index, true, false);
     actualitzaDurades(index - 1);
 
     const acc = acumulades(tram);
@@ -219,6 +245,10 @@ export function creaMapa(element, { padding, onEtapa }) {
     vaixell.getElement()?.classList.remove('navegant');
     marcaEstat(index);
     actualitzaDurades(index, true);
+    if (alternatives[index]) {
+      mostraAlternativa(index);
+      await enquadra(index);
+    }
   }
 
   return { map, mostra, viatja, enquadra };
