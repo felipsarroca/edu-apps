@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: 'ViatgesColom/favicon.svg'
         },
         { 
-            name: "El Viatge d'Ulisses", 
+            name: "L'Odissea", 
             path: 'https://ja.cat/ulisses', 
             category: 'Història', 
-            description: "Una adaptació senzilla de l'Odissea d'Homer.",
-            icon: 'Ulisses/favicon.svg'
+            description: "El viatge d'Ulisses de Troia a Ítaca, pas a pas, amb les decisions que ho canvien tot.",
+            icon: 'Odissea/favicon.svg'
         },
         { 
             name: "La Volta al Món", 

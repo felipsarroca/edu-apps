@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>L'Odissea · El viatge d'Ulisses</title>
+  <meta name="description" content="Reviu pas a pas el viatge d'Ulisses de Troia a Ítaca, tal com l'explica l'Odissea d'Homer: els llocs, els monstres, els companys que es perden i les decisions que ho canvien tot.">
+  <meta name="theme-color" content="#1f1712">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>if (location.hash.length > 1 && location.hash !== '#troia') document.documentElement.classList.add('sense-intro');</script>
+</head>
+<body>
+  <div class="app">
+    <div id="mapa" aria-label="Mapa del viatge d'Ulisses"></div>
+    <div class="vinyeta" aria-hidden="true"></div>
+
+    <header class="capcalera">
+      <button type="button" id="boto-inici" class="marca" aria-label="Torna a la presentació">
+        <svg class="rosa" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M14 13 H34 Q35 21 33 27 H15 Q13 21 14 13 Z" fill="currentColor" opacity=".25"/><path d="M24 10 V31 M13 12 H35" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M7 30 Q10 29 12 31 H35 Q39 29 41 24 Q42 29 39 32 L37 34 Q24 37 12 35 Q8 33 7 30 Z" fill="currentColor"/></svg>
+        <span><strong>L'Odissea</strong><small>El viatge d'Ulisses · Homer</small></span>
+      </button>
+      <button type="button" class="boto-fonts" data-obre-fonts>Fonts</button>
+      <button type="button" id="boto-pantalla" class="boto-fonts boto-pantalla" aria-label="Pantalla completa" title="Pantalla completa" hidden></button>
+    </header>
+
+    <section id="marcador" class="marcador" aria-label="Estat del viatge"></section>
+
+    <article id="targeta" class="targeta" aria-live="polite"></article>
+
+    <nav id="cronologia" class="cronologia" aria-label="Etapes del viatge"></nav>
+  </div>
+
+  <section id="intro" class="intro" aria-labelledby="intro-titol">
+    <div class="intro-fons" aria-hidden="true"></div>
+    <div class="intro-greca intro-greca-dalt" aria-hidden="true"></div>
+    <div class="intro-greca intro-greca-baix" aria-hidden="true"></div>
+    <svg class="intro-nau" viewBox="0 0 72 52" aria-hidden="true">
+      <path d="M34 6 V36 M20 9 H48" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      <path d="M21 10 H47 Q49 21 46 30 H22 Q19 21 21 10 Z" fill="currentColor" opacity=".45"/>
+      <path d="M18 40 L12 48 M26 41 L21 49 M34 41 L30 49 M42 41 L39 49 M50 40 L48 48" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M4 34 Q8 33 12 35 H58 Q63 33 66 26 Q67 31 64 36 L60 40 Q36 44 12 41 Q6 39 4 34 Z" fill="currentColor"/>
+    </svg>
+
+    <div class="intro-full">
+      <div class="intro-portada">
+        <p class="intro-any">Homer · segles VIII-VII aC</p>
+        <h1 id="intro-titol">L'Odissea</h1>
+        <p class="intro-sub">El viatge d'Ulisses, de Troia a Ítaca</p>
+        <ul class="intro-xifres" aria-label="El viatge en xifres">
+          <li><strong>12</strong> naus</li>
+          <li><strong>10</strong> anys</li>
+          <li><strong>24</strong> cants</li>
+        </ul>
+        <button type="button" id="salpa" class="boto boto-principal boto-gran">Salpa ▸</button>
+      </div>
+
+      <div class="intro-context">
+        <svg class="intro-clau" viewBox="0 0 40 80" aria-hidden="true">
+          <path d="M14 4 H26 V9 Q26 12 23 13 Q34 20 33 40 Q32 60 22 72 L24 77 H16 L18 72 Q8 60 7 40 Q6 20 17 13 Q14 12 14 9 Z" fill="#b4502a"/>
+          <path d="M8 34 H32 M8.5 46 H31.5" stroke="#1f1712" stroke-width="3"/>
+          <path d="M11 40 L15 37 L19 40 L23 37 L27 40 L29 38" stroke="#1f1712" stroke-width="1.6" fill="none"/>
+          <path d="M14 15 Q4 16 6 26 M26 15 Q36 16 34 26" stroke="#8e3c1c" stroke-width="2.5" fill="none"/>
+        </svg>
+        <h2>Qui és Ulisses? <button type="button" id="intro-veu" class="t-veu intro-veu" aria-label="Escolta la presentació" aria-pressed="false" title="Escolta la presentació"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></h2>
+        <p>Ulisses (en grec, <strong>Odisseu</strong>) és el rei d'<strong>Ítaca</strong>, una petita illa de Grècia. Fa deu anys que lluita a la <strong>guerra de Troia</strong>, i és famós per la seva astúcia.</p>
+        <p>Ara només vol tornar a casa, amb la seva dona Penèlope i el seu fill Telèmac. Però el retorn durarà <strong>deu anys més</strong>: monstres, deesses, tempestes i la ira de Posidó, el déu del mar. L'<strong>Odissea</strong>, el poema d'Homer, explica aquest viatge.</p>
+        <p class="intro-ajuda">Toca les paraules <span class="mot-mostra">subratllades</span> per saber què volen dir. A les etapes amb una pregunta, decideix què hauries fet tu.</p>
+        <button type="button" class="enllac" data-obre-fonts>Fonts i crèdits</button>
+      </div>
+    </div>
+  </section>
+
+  <dialog id="fonts" class="fonts" aria-labelledby="fonts-titol">
+    <div class="f-cap">
+      <h2 id="fonts-titol">Fonts i crèdits</h2>
+      <button type="button" class="f-tanca" aria-label="Tanca">✕</button>
+    </div>
+    <div class="f-contingut"></div>
+  </dialog>
+
+  <footer class="felip-app-footer">
+    <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+      <img class="felip-license-image" src="assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA">
+    </a>
+    <div class="felip-footer-text">
+      <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+      <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
