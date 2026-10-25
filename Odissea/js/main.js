@@ -26,8 +26,8 @@ function padding() {
   const vaixell = 5 * parseFloat(getComputedStyle(document.documentElement).fontSize);
   if (ampla.matches) {
     return {
-      topLeft: [40, marcador.bottom + vaixell],
-      bottomRight: [window.innerWidth - targeta.left + 40, window.innerHeight - crono.top + 30],
+      topLeft: [100, marcador.bottom + vaixell], // deixa lliures els botons de zoom
+      bottomRight: [window.innerWidth - targeta.left + 40, window.innerHeight - crono.top + 60],
     };
   }
   return {
