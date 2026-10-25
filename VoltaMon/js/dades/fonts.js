@@ -17,4 +17,5 @@ export const NOTES = [
   'Les rutes del mapa i algunes dates (marcades amb ≈) són aproximades.',
   "Les dates segueixen el calendari julià, el que es feia servir aleshores. Els dies de viatge es compten des de la sortida de Sevilla.",
   'La línia de Tordesillas es dibuixa a 370 llegües a l\'oest de Cap Verd; la seva posició exacta ja era discutida a l\'època.',
+  'Fons de la portada: mapamundi de Battista Agnese (Venècia, 1544), amb la ruta de Magallanes. Library of Congress, domini públic (via Wikimedia Commons).',
 ];

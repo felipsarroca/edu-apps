@@ -36,10 +36,47 @@
   </div>
 
   <section id="intro" class="intro" aria-labelledby="intro-titol">
+    <div class="intro-fons" aria-hidden="true"></div>
+    <div class="intro-rumbs" aria-hidden="true"></div>
+    <svg class="intro-rosa" viewBox="-100 -100 200 200" aria-hidden="true">
+      <circle r="97" fill="none" stroke="currentColor" stroke-width="1"/>
+      <circle r="92" fill="none" stroke="currentColor" stroke-width="5" stroke-dasharray="0.7 8.33"/>
+      <circle r="87" fill="none" stroke="currentColor" stroke-width="0.6"/>
+      <circle r="30" fill="none" stroke="currentColor" stroke-width="0.6"/>
+      <g fill="currentColor">
+        <path d="M0 -84 L7 -7 L0 0 Z"/><path d="M0 -84 L-7 -7 L0 0 Z" opacity=".45"/>
+        <path d="M84 0 L7 7 L0 0 Z"/><path d="M84 0 L7 -7 L0 0 Z" opacity=".45"/>
+        <path d="M0 84 L-7 7 L0 0 Z"/><path d="M0 84 L7 7 L0 0 Z" opacity=".45"/>
+        <path d="M-84 0 L-7 -7 L0 0 Z"/><path d="M-84 0 L-7 7 L0 0 Z" opacity=".45"/>
+        <g transform="rotate(45)" opacity=".7">
+          <path d="M0 -60 L6 -6 L0 0 Z"/><path d="M0 -60 L-6 -6 L0 0 Z" opacity=".45"/>
+          <path d="M60 0 L6 6 L0 0 Z"/><path d="M60 0 L6 -6 L0 0 Z" opacity=".45"/>
+          <path d="M0 60 L-6 6 L0 0 Z"/><path d="M0 60 L6 6 L0 0 Z" opacity=".45"/>
+          <path d="M-60 0 L-6 -6 L0 0 Z"/><path d="M-60 0 L-6 6 L0 0 Z" opacity=".45"/>
+        </g>
+        <circle r="3.5"/>
+      </g>
+    </svg>
+    <svg class="intro-nau" viewBox="0 0 64 56" aria-hidden="true">
+      <path d="M30 6 C38 10 40 20 38 30 L30 30 Z M30 10 C24 14 22 22 23 30 L30 30 Z M44 14 C50 18 51 25 49 31 L44 31 Z M16 16 C12 20 12 26 13 31 L17 31 Z" fill="currentColor" opacity=".55"/>
+      <path d="M30 3 V34 M44 11 V34 M17 13 V34" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M6 34 H58 L52 46 Q32 50 12 46 Z" fill="currentColor"/>
+    </svg>
+
     <div class="intro-full">
-      <p class="intro-any">1519 · 1522</p>
-      <h1 id="intro-titol">La primera volta al món</h1>
-      <p class="intro-sub">L'expedició de Magallanes i Elcano</p>
+      <div class="intro-portada">
+        <p class="intro-any">1519 · 1522</p>
+        <h1 id="intro-titol">La primera volta al món</h1>
+        <p class="intro-sub">L'expedició de Magallanes i Elcano</p>
+        <ul class="intro-xifres" aria-label="L'expedició en xifres">
+          <li><strong>5</strong> naus</li>
+          <li><strong>≈ 250</strong> homes</li>
+          <li><strong>3</strong> anys</li>
+        </ul>
+        <button type="button" id="salpa" class="boto boto-principal boto-gran">Salpa ▸</button>
+      </div>
+
+      <div class="intro-context">
       <svg class="intro-clau" viewBox="0 0 60 100" aria-hidden="true">
         <path d="M26 38 L34 38 L31.5 96 Q30 99 28.5 96 Z" fill="#5a3a22"/>
         <path d="M12 22 L22 38 H38 L48 22 L39 28 L30 16 L21 28 Z" fill="#6b3f22"/>
@@ -49,14 +86,9 @@
       <h2>Per què volien arribar a les Moluques? <button type="button" id="intro-veu" class="t-veu intro-veu" aria-label="Escolta la presentació" aria-pressed="false" title="Escolta la presentació"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></h2>
       <p>Fa 500 anys, espècies com el <strong>clau</strong>, el pebre o la canyella valien una fortuna a Europa. El clau només creixia en unes petites illes d'Àsia: les <strong>Moluques</strong>.</p>
       <p>Portugal hi arribava navegant cap a l'est, envoltant l'Àfrica. Castella no podia fer servir aquella ruta: el <strong>Tractat de Tordesillas</strong> (1494) havia repartit el món entre els dos regnes. Magallanes va proposar una idea agosarada: <strong>arribar-hi navegant cap a l'oest</strong>.</p>
-      <ul class="intro-xifres" aria-label="L'expedició en xifres">
-        <li><strong>5</strong> naus</li>
-        <li><strong>≈ 250</strong> homes</li>
-        <li><strong>3</strong> anys</li>
-      </ul>
-      <button type="button" id="salpa" class="boto boto-principal boto-gran">Salpa ▸</button>
       <p class="intro-ajuda">Toca les paraules <span class="mot-mostra">subratllades</span> per saber què volen dir. A les etapes amb una pregunta, decideix què hauries fet tu.</p>
       <button type="button" class="enllac" data-obre-fonts>Fonts i crèdits</button>
+      </div>
     </div>
   </section>
 
