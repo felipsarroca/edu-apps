@@ -38,8 +38,12 @@ const el = {
   correctCount: $("correctCount"),
   streakCount: $("streakCount"),
   infoDialog: $("infoDialog"),
-  typeList: $("typeList"),
-  progressList: $("progressList"),
+  guideSteps: $("guideSteps"),
+  guideRules: $("guideRules"),
+  typeCards: $("typeCards"),
+  statCards: $("statCards"),
+  levelCards: $("levelCards"),
+  typeProgress: $("typeProgress"),
   resetProgressBtn: $("resetProgressBtn"),
   resultDialog: $("resultDialog"),
   resultStars: $("resultStars"),
@@ -64,8 +68,8 @@ const state = {
   solved: false,
   solutionShown: false,
   hintStep: 0,
-  settings: { aid: "barres", projector: false, showTimer: false, levels: [1, 2, 3], types: [] },
-  stats: { attempts: 0, correct: 0, streak: 0 },
+  settings: { aid: "barres", projector: false, showTimer: false, levels: [1, 2, 3], types: [], infoTab: "metode" },
+  stats: { attempts: 0, correct: 0, streak: 0, bestStreak: 0 },
   progress: {},
   challenge: null,
 };
@@ -91,12 +95,19 @@ function save(key, value) {
    Pensada per a 1440 × 800 px útils: s'amplia en pantalles grans (1920 × 1080)
    i es redueix en portàtils (1366 × 740) perquè tot càpiga sense desplaçar-se.
    En mòbils (menys de 900 px d'amplada) no s'escala i la pàgina fa desplaçament.
-   El mode projector fa servir una base més petita: tot surt més gran. */
+   El mode projector fa servir una base més petita: tot surt més gran.
+   Amb equacions molt llargues (6 substàncies o 5 elements), el projector
+   amplia una mica menys perquè les columnes i el recompte d'àtoms hi càpiguen. */
 const MOBILE_W = 900;
+function isLongEquation(eq) {
+  return Boolean(eq) && (eq.reactants.length + eq.products.length >= 6 || equationElements(eq).length >= 5);
+}
+
 function fitScale() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const [baseW, baseH] = state.settings.projector ? [1180, 660] : [1440, 800];
+  let [baseW, baseH] = [1440, 800];
+  if (state.settings.projector) [baseW, baseH] = isLongEquation(state.current) ? [1320, 740] : [1180, 660];
   let z = Math.min(w / baseW, h / baseH);
   z = Math.min(1.6, Math.max(0.7, Math.floor(z * 20) / 20));
   if (w < MOBILE_W) z = 1;
@@ -287,7 +298,8 @@ function renderEquation() {
 
   renderLegend();
   renderAid();
-  requestAnimationFrame(fitAllBuckets);
+  if (state.settings.projector) fitScale();
+  else requestAnimationFrame(fitAllBuckets);
 }
 
 function buildTerm(formula, index) {
@@ -590,6 +602,7 @@ function onSolved() {
   } else {
     state.stats.correct += 1;
     state.stats.streak += 1;
+    state.stats.bestStreak = Math.max(state.stats.bestStreak ?? 0, state.stats.streak);
     markProgress(eq);
     celebrate();
     setFeedback(`<strong>Molt bé! Equació igualada.</strong> ${eq.explanation}`, "success");
@@ -832,21 +845,231 @@ function markProgress(eq) {
   save(STORAGE.progress, state.progress);
 }
 
-function renderProgress() {
-  el.progressList.innerHTML = state.config.levels
-    .map((level) => {
-      const all = state.equations.filter((eq) => eq.level === level.id);
-      const done = all.filter((eq) => state.progress[eq.id]).length;
-      const pct = all.length ? Math.round((done / all.length) * 100) : 0;
+/* ---------- Guia del laboratori (diàleg d'informació) ---------- */
+
+// Converteix «2 Na + Cl2 -> 2 NaCl» en una equació i els seus coeficients.
+function parseExample(text) {
+  const [left, right] = text.split("->").map((side) =>
+    side.trim().split(" + ").map((term) => {
+      const m = term.trim().match(/^(\d+)\s+(.+)$/);
+      return m ? [Number(m[1]), m[2]] : [1, term.trim()];
+    })
+  );
+  return {
+    eq: { reactants: left.map((t) => t[1]), products: right.map((t) => t[1]) },
+    coefs: [...left, ...right].map((t) => t[0]),
+  };
+}
+
+// Equació en línia: coeficient (si no és 1) + fórmula, amb «+» i fletxa.
+function equationHTML(eq, coefs, { mark = -1, molecules = false } = {}) {
+  const term = (f, i) => {
+    const c = coefs[i];
+    const sprite = molecules ? `<span class="mini-mols">${Array.from({ length: c }, () => `<span class="mini-mol sprite">${moleculeSVG(f).markup}</span>`).join("")}</span>` : "";
+    return `<span class="eq-term${i === mark ? " marked" : ""}">${sprite}<span class="eq-formula">${c > 1 ? `<b class="eq-coef">${c}</b>` : ""}${formulaHTML(f)}</span></span>`;
+  };
+  const nR = eq.reactants.length;
+  const side = (list, offset) => list.map((f, i) => term(f, i + offset)).join('<span class="eq-op">+</span>');
+  return `<div class="eq-line">${side(eq.reactants, 0)}<span class="eq-op arrow">→</span>${side(eq.products, nR)}</div>`;
+}
+
+// Fitxes d'àtoms: «H 2 | 2» en verd si quadra, en vermell si no.
+function countChips(eq, coefs) {
+  return analyse(eq, coefs)
+    .elements.map(({ element, left, right }) => {
+      const ok = left === right;
+      return `<span class="count-chip ${ok ? "ok" : "bad"}">${dot(element)}<span>${left}</span><i>|</i><span>${right}</span><em aria-label="${ok ? "quadra" : "no quadra"}">${ok ? "✓" : "✗"}</em></span>`;
+    })
+    .join("");
+}
+
+const GUIDE_EQ = { reactants: ["H2", "O2"], products: ["H2O"] };
+const GUIDE_STEPS = [
+  {
+    coefs: [1, 1, 1],
+    mark: -1,
+    title: "Compta els àtoms de cada costat",
+    text: "Hi ha 2 àtoms d'oxigen a l'esquerra, però només 1 a la dreta. L'hidrogen sí que quadra.",
+  },
+  {
+    coefs: [1, 1, 2],
+    mark: 2,
+    title: "Posa un 2 davant de l'aigua",
+    text: "Ara hi ha 2 molècules d'aigua: l'oxigen quadra, però l'hidrogen passa a 4 àtoms a la dreta.",
+  },
+  {
+    coefs: [2, 1, 2],
+    mark: 0,
+    title: "Posa un 2 davant de l'hidrogen",
+    text: "Amb 2 molècules d'hidrogen tenim 4 àtoms de H a cada costat. Tots els elements quadren!",
+  },
+  {
+    coefs: [2, 1, 2],
+    mark: -1,
+    final: true,
+    title: "Revisa que siguin els més petits",
+    text: "2, 1, 2 no es poden simplificar: és la resposta correcta. El coeficient 1 no s'escriu.",
+  },
+];
+
+function renderGuide() {
+  el.guideSteps.innerHTML = GUIDE_STEPS.map(
+    (step, i) => `
+      <li class="step-card${step.final ? " final" : ""}">
+        <span class="step-num" aria-hidden="true">${i + 1}</span>
+        <div class="step-main">
+          <h4>${step.title}</h4>
+          ${equationHTML(GUIDE_EQ, step.coefs, { mark: step.mark, molecules: !step.final })}
+          <div class="count-chips">${countChips(GUIDE_EQ, step.coefs)}</div>
+          <p>${step.text}</p>
+        </div>
+      </li>`
+  ).join("");
+
+  const sub = (f) => `<span class="eq-formula">${formulaHTML(f)}</span>`;
+  const mols = (f, n = 1) => Array.from({ length: n }, () => `<span class="mini-mol sprite">${moleculeSVG(f).markup}</span>`).join("");
+  el.guideRules.innerHTML = `
+    <article class="rule">
+      <h4><span class="rule-icon">1</span>Canvia coeficients, mai subíndexs</h4>
+      <div class="compare">
+        <figure class="good"><div class="mini-mols">${mols("H2O", 2)}</div><figcaption><b class="eq-coef">2</b>${sub("H2O")}<small>2 molècules d'aigua ✓</small></figcaption></figure>
+        <figure class="bad"><div class="mini-mols">${mols("H2O2")}</div><figcaption>${sub("H2O2")}<small>és una altra substància ✗</small></figcaption></figure>
+      </div>
+    </article>
+    <article class="rule">
+      <h4><span class="rule-icon">2</span>Nombres enters i tan petits com puguis</h4>
+      <p class="simplify"><span>4, 2, 4</span><span class="arrow">÷ 2 →</span><strong>2, 1, 2</strong></p>
+    </article>
+    <article class="rule">
+      <h4><span class="rule-icon">3</span>Tria bé per on comences</h4>
+      <p>Comença per l'element que surt en menys substàncies. Deixa l'hidrogen i l'oxigen per al final.</p>
+    </article>
+    <article class="rule">
+      <h4><span class="rule-icon">4</span>Amb ions, també la càrrega</h4>
+      <p>A batxillerat, la suma de càrregues ha de ser igual a cada costat, a més dels àtoms.</p>
+    </article>
+    <article class="rule tools">
+      <h4><span class="rule-icon">?</span>Les ajudes de l'app</h4>
+      <ul>
+        <li><b>Barres i Balança</b>: veus quin costat té més àtoms de cada element.</li>
+        <li><b>Pista</b>: en tres passos, de l'element que falla fins al valor que pots provar.</li>
+        <li><b>Comprova</b> (o tecla Retorn): et diu exactament què falta.</li>
+        <li><b>Repte</b>: 5 equacions i 2 intents per a cadascuna, sense pistes.</li>
+      </ul>
+    </article>`;
+}
+
+// Esquema d'un tipus: «A», «AB»… com a fitxes de colors; la resta, com a text.
+const TILE_COLORS = { A: "#2563eb", B: "#f59e0b", C: "#16a34a", D: "#db2777" };
+function patternHTML(pattern) {
+  return pattern
+    .split(" ")
+    .map((token) => {
+      if (token === "+") return '<span class="eq-op">+</span>';
+      if (token === "->") return '<span class="eq-op arrow">→</span>';
+      if (/^[A-D]{1,2}$/.test(token)) {
+        return `<span class="tiles">${[...token].map((l) => `<span class="tile" style="--c:${TILE_COLORS[l]}">${l}</span>`).join("")}</span>`;
+      }
+      if (/^[A-Z][A-Za-z0-9]*$/.test(token)) return `<span class="eq-formula">${formulaHTML(token)}</span>`;
+      return `<span class="word">${token}</span>`;
+    })
+    .join("");
+}
+
+function renderTypes() {
+  el.typeCards.innerHTML = state.config.types
+    .map((t) => {
+      const count = state.equations.filter((eq) => eq.type === t.id).length;
+      const ex = parseExample(t.example);
       return `
-        <div class="progress-row">
-          <span class="tag level l${level.id}">${level.name}</span>
-          <div class="progress-track" role="progressbar" aria-valuenow="${done}" aria-valuemin="0" aria-valuemax="${all.length}" aria-label="${level.name}"><span style="width:${pct}%"></span></div>
-          <span class="progress-num">${done}/${all.length}${done === all.length && done ? " ✔" : ""}</span>
+        <article class="type-card">
+          <header><h4>${t.name}</h4><span class="type-count">${count} equacions</span></header>
+          <div class="pattern">${patternHTML(t.pattern)}</div>
+          <p>${t.description}</p>
+          <div class="type-example"><span class="label">Exemple</span>${equationHTML(ex.eq, ex.coefs)}</div>
+        </article>`;
+    })
+    .join("");
+}
+
+const pct = (done, total) => (total ? Math.round((done / total) * 100) : 0);
+
+function levelMessage(done, total) {
+  if (!total) return "Sense equacions";
+  if (done === total) return "Completat! 🏆";
+  if (done === 0) return "Encara per començar";
+  if (done / total >= 0.5) return "Més de la meitat!";
+  return "En marxa";
+}
+
+function renderProgress() {
+  const all = state.equations;
+  const solved = all.filter((eq) => state.progress[eq.id]).length;
+  const { attempts, correct, bestStreak = 0, streak } = state.stats;
+  const cards = [
+    ["Equacions resoltes", `${solved}<small>/${all.length}</small>`, "blue"],
+    ["Encerts", correct, "green"],
+    ["Intents", attempts, "slate"],
+    ["Precisió", attempts ? `${pct(correct, attempts)}<small>%</small>` : "—", "amber"],
+    ["Millor ratxa", Math.max(bestStreak, streak), "violet"],
+  ];
+  el.statCards.innerHTML = cards
+    .map(([label, value, tone]) => `<div class="stat-card ${tone}"><span class="stat-value">${value}</span><span class="stat-label">${label}</span></div>`)
+    .join("");
+
+  el.levelCards.innerHTML = state.config.levels
+    .map((level) => {
+      const list = all.filter((eq) => eq.level === level.id);
+      const done = list.filter((eq) => state.progress[eq.id]).length;
+      const p = pct(done, list.length);
+      return `
+        <div class="level-card l${level.id}${done === list.length && done ? " complete" : ""}">
+          <div class="ring" style="--p:${p}" role="progressbar" aria-valuenow="${done}" aria-valuemin="0" aria-valuemax="${list.length}" aria-label="${level.name}"><span>${p}%</span></div>
+          <div class="level-info">
+            <strong>${level.name}</strong>
+            <span class="level-num">${done}/${list.length}</span>
+            <small>${levelMessage(done, list.length)}</small>
+          </div>
         </div>`;
     })
     .join("");
-  el.typeList.innerHTML = state.config.types.map((t) => `<dt>${t.name}</dt><dd>${t.description}</dd>`).join("");
+
+  el.typeProgress.innerHTML = state.config.types
+    .map((t) => {
+      const list = all.filter((eq) => eq.type === t.id);
+      const done = list.filter((eq) => state.progress[eq.id]).length;
+      return `
+        <div class="progress-row">
+          <span class="progress-name">${t.name}</span>
+          <div class="progress-track" role="progressbar" aria-valuenow="${done}" aria-valuemin="0" aria-valuemax="${list.length}" aria-label="${t.name}"><span style="width:${pct(done, list.length)}%"></span></div>
+          <span class="progress-num">${done}/${list.length}</span>
+        </div>`;
+    })
+    .join("");
+}
+
+function showInfoTab(tab) {
+  document.querySelectorAll(".info-tab").forEach((btn) => {
+    const on = btn.dataset.tab === tab;
+    btn.setAttribute("aria-selected", String(on));
+    btn.tabIndex = on ? 0 : -1;
+  });
+  document.querySelectorAll(".info-pane").forEach((pane) => {
+    pane.hidden = pane.id !== `pane-${tab}`;
+  });
+  el.infoDialog.querySelector(".info-body").scrollTop = 0;
+  state.settings.infoTab = tab;
+  save(STORAGE.settings, state.settings);
+}
+
+function openInfo() {
+  if (!el.guideSteps.childElementCount) {
+    renderGuide();
+    renderTypes();
+  }
+  renderProgress();
+  showInfoTab(state.settings.infoTab || "metode");
+  el.infoDialog.showModal();
 }
 
 function celebrate() {
@@ -914,9 +1137,17 @@ function attachEvents() {
     applyProjector();
   });
 
-  el.infoBtn.addEventListener("click", () => {
-    renderProgress();
-    el.infoDialog.showModal();
+  el.infoBtn.addEventListener("click", openInfo);
+  const tabs = [...document.querySelectorAll(".info-tab")];
+  tabs.forEach((btn, i) => {
+    btn.addEventListener("click", () => showInfoTab(btn.dataset.tab));
+    btn.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      showInfoTab(next.dataset.tab);
+      next.focus();
+    });
   });
   let resetArmed = false;
   el.resetProgressBtn.addEventListener("click", () => {
@@ -928,7 +1159,7 @@ function attachEvents() {
     resetArmed = false;
     el.resetProgressBtn.textContent = "Esborra el progrés i el marcador";
     state.progress = {};
-    state.stats = { attempts: 0, correct: 0, streak: 0 };
+    state.stats = { attempts: 0, correct: 0, streak: 0, bestStreak: 0 };
     save(STORAGE.progress, state.progress);
     updateScoreboard();
     renderProgress();

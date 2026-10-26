@@ -129,30 +129,59 @@
     </div>
 
     <!-- Consells, tipus de reacció i progrés -->
-    <dialog class="modal" id="infoDialog" aria-labelledby="infoTitle">
-      <div class="modal-head">
-        <h2 id="infoTitle">Com s'igualen les equacions</h2>
+    <dialog class="modal info-modal" id="infoDialog" aria-labelledby="infoTitle">
+      <div class="info-head">
+        <div class="info-title">
+          <span class="info-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7.5 15h9"/></svg>
+          </span>
+          <div>
+            <h2 id="infoTitle">Guia del laboratori</h2>
+            <p>Aprèn el mètode, coneix els tipus de reacció i segueix el teu progrés.</p>
+          </div>
+        </div>
         <button type="button" class="icon-btn close" data-close aria-label="Tanca">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </div>
-      <div class="modal-body info-grid">
-        <section>
-          <h3>Consells</h3>
-          <ul class="tips">
-            <li>Canvia només els <strong>coeficients</strong> (el nombre gran del davant). No canviïs mai els subíndexs: canviaries la substància.</li>
-            <li>Comença pels elements que surten en menys substàncies i deixa l'hidrogen i l'oxigen per al final.</li>
-            <li>Els coeficients han de ser nombres enters i tan petits com sigui possible.</li>
-            <li>Si hi ha ions, la càrrega total ha de ser la mateixa als dos costats.</li>
-          </ul>
-          <h3>Tipus de reacció</h3>
-          <dl class="type-list" id="typeList"></dl>
+      <div class="info-tabs" role="tablist" aria-label="Seccions de la guia">
+        <button type="button" role="tab" class="info-tab" id="tab-metode" data-tab="metode" aria-controls="pane-metode" aria-selected="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM8 7h6M8 11h6"/></svg>Com s'iguala
+        </button>
+        <button type="button" role="tab" class="info-tab" id="tab-tipus" data-tab="tipus" aria-controls="pane-tipus" aria-selected="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Tipus de reacció
+        </button>
+        <button type="button" role="tab" class="info-tab" id="tab-progres" data-tab="progres" aria-controls="pane-progres" aria-selected="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>El meu progrés
+        </button>
+      </div>
+      <div class="info-body">
+        <section class="info-pane" id="pane-metode" role="tabpanel" aria-labelledby="tab-metode">
+          <div class="guide-grid">
+            <div>
+              <h3 class="pane-title">Un exemple pas a pas</h3>
+              <ol class="steps" id="guideSteps"></ol>
+            </div>
+            <div>
+              <h3 class="pane-title">Regles d'or</h3>
+              <div class="rules" id="guideRules"></div>
+            </div>
+          </div>
         </section>
-        <section>
-          <h3>El teu progrés</h3>
-          <p class="muted">Equacions resoltes sense mirar la solució (es desa en aquest navegador).</p>
-          <div class="progress-list" id="progressList"></div>
-          <button type="button" class="action-btn ghost small" id="resetProgressBtn">Esborra el progrés i el marcador</button>
+        <section class="info-pane" id="pane-tipus" role="tabpanel" aria-labelledby="tab-tipus" hidden>
+          <p class="pane-intro">Identificar el tipus de reacció ajuda a preveure els productes. Fixa't en l'esquema de cada tipus: cada color és un element o un grup d'àtoms.</p>
+          <div class="type-cards" id="typeCards"></div>
+        </section>
+        <section class="info-pane" id="pane-progres" role="tabpanel" aria-labelledby="tab-progres" hidden>
+          <div class="stat-cards" id="statCards"></div>
+          <h3 class="pane-title">Per nivells</h3>
+          <div class="level-cards" id="levelCards"></div>
+          <h3 class="pane-title">Per tipus de reacció</h3>
+          <div class="type-progress" id="typeProgress"></div>
+          <div class="progress-foot">
+            <p class="muted">Compten les equacions resoltes sense mirar la solució. El progrés es desa només en aquest navegador.</p>
+            <button type="button" class="action-btn ghost small" id="resetProgressBtn">Esborra el progrés i el marcador</button>
+          </div>
         </section>
       </div>
     </dialog>

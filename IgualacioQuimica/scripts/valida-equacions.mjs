@@ -102,6 +102,19 @@ for (const file of config.dataFiles) {
   }
 }
 
+// Els exemples de cada tipus de reacció (guia de l'app) també han d'estar igualats.
+for (const type of config.types) {
+  const [left, right] = type.example.split("->").map((side) =>
+    side.trim().split(" + ").map((term) => {
+      const m = term.trim().match(/^(\d+)\s+(.+)$/);
+      return m ? [Number(m[1]), m[2]] : [1, term.trim()];
+    })
+  );
+  const eq = { reactants: left.map((t) => t[1]), products: right.map((t) => t[1]) };
+  const result = analyse(eq, [...left, ...right].map((t) => t[0]));
+  if (!result.balanced || !result.simplest) errors.push(`config.json ${type.id}: l'exemple «${type.example}» no està ben igualat`);
+}
+
 console.log(`Equacions revisades: ${total}`);
 console.log("Per nivell:", perLevel);
 console.log("Per tipus:", perType);
