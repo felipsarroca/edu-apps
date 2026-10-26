@@ -1117,6 +1117,14 @@ svg {
   line-height: 0;
 }
 
+/* Els signes + i − tipogràfics queden a l'eix matemàtic (mitja alçada de
+   la xifra); en una càrrega s'han d'alinear amb la part alta del nombre. */
+.sgn {
+  position: relative;
+  top: -0.2em;
+  margin-left: 0.04em;
+}
+
 .tag.activity {
   --c: var(--blue);
 }
@@ -1473,12 +1481,51 @@ svg {
 .step-btn {
   width: 34px;
   height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid var(--line-strong);
   background: #fff;
-  font-size: 1.2rem;
-  font-weight: 800;
-  line-height: 1;
+  color: var(--text);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.step-btn:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: #eff6ff;
+  color: var(--blue);
+}
+
+/* Signes + i − dibuixats: queden centrats exactament, sigui quina sigui la font. */
+.pm,
+.cells i {
+  position: relative;
+}
+
+.pm {
+  width: 12px;
+  height: 12px;
+}
+
+.pm::before,
+.pm.plus::after,
+.cells i::before,
+.cells i.p::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.pm.plus::after,
+.cells i.p::after {
+  transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .step-num {
@@ -1526,10 +1573,13 @@ svg {
   display: grid;
   place-items: center;
   border-radius: 5px;
-  font-style: normal;
-  font-size: 0.8rem;
-  font-weight: 800;
   color: #fff;
+}
+
+.cells i::before,
+.cells i.p::after {
+  width: 10px;
+  height: 2px;
 }
 
 .cells i.p {
@@ -2346,4 +2396,8 @@ svg {
   .felip-app-footer {
     font-size: 0.74rem;
   }
+}
+
+.nowrap {
+  white-space: nowrap;
 }

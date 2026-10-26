@@ -85,7 +85,7 @@ export function formulaHTML(formula) {
   const match = text.match(/\^(\d*)([+-])$/);
   const body = match ? text.slice(0, match.index) : text;
   let html = body.replace(/([A-Za-z)])(\d+)/g, "$1<sub>$2</sub>");
-  if (match) html += `<sup>${match[1] === "1" ? "" : match[1]}${match[2] === "+" ? "+" : "−"}</sup>`;
+  if (match) html += `<sup>${match[1] === "1" ? "" : match[1]}<span class="sgn">${match[2] === "+" ? "+" : "−"}</span></sup>`;
   return html;
 }
 

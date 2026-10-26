@@ -368,14 +368,14 @@ function renderBuild() {
     list.map((ion, i) => ionTileHTML(ion, `data-side="${side}" data-i="${i}" aria-pressed="${selected === ion}" ${q.solved ? "disabled" : ""}`)).join("");
   const plus = cat ? cat.charge * nC : 0;
   const minus = an ? -an.charge * nA : 0;
-  const cells = (n, cls, sign) => Array.from({ length: Math.min(n, 24) }, () => `<i class="${cls}">${sign}</i>`).join("");
+  const cells = (n, cls) => Array.from({ length: Math.min(n, 24) }, () => `<i class="${cls}"></i>`).join("");
   const total = plus - minus;
   const formula = cat && an ? buildFormula(cat, an, nC, nA) : "";
   const stepper = (side, n, ion) => `
     <div class="stepper">
-      <button type="button" class="step-btn" data-step="${side}" data-d="-1" ${!ion || n <= 1 || q.solved ? "disabled" : ""} aria-label="Treu-ne un">−</button>
+      <button type="button" class="step-btn" data-step="${side}" data-d="-1" ${!ion || n <= 1 || q.solved ? "disabled" : ""} aria-label="Treu-ne un"><span class="pm minus" aria-hidden="true"></span></button>
       <span class="step-num">${n}</span>
-      <button type="button" class="step-btn" data-step="${side}" data-d="1" ${!ion || n >= 6 || q.solved ? "disabled" : ""} aria-label="Afegeix-ne un">+</button>
+      <button type="button" class="step-btn" data-step="${side}" data-d="1" ${!ion || n >= 6 || q.solved ? "disabled" : ""} aria-label="Afegeix-ne un"><span class="pm plus" aria-hidden="true"></span></button>
     </div>`;
   el.workArea.innerHTML = `
     <div class="build">
@@ -387,8 +387,8 @@ function renderBuild() {
         <div class="slot pos">${cat ? fm(ionLabel(cat)) : '<span class="slot-empty">Tria un catió</span>'}<span class="times">×</span>${stepper("cat", nC, cat)}</div>
         <div class="slot neg">${an ? fm(ionLabel(an)) : '<span class="slot-empty">Tria un anió</span>'}<span class="times">×</span>${stepper("an", nA, an)}</div>
         <div class="charge-meter${cat && an && total === 0 ? " zero" : ""}" aria-label="Càrrega total ${total}">
-          <div class="meter-row"><span class="meter-label">+${plus}</span><span class="cells">${cells(plus, "p", "+")}</span></div>
-          <div class="meter-row"><span class="meter-label">−${minus}</span><span class="cells">${cells(minus, "m", "−")}</span></div>
+          <div class="meter-row"><span class="meter-label">+${plus}</span><span class="cells">${cells(plus, "p")}</span></div>
+          <div class="meter-row"><span class="meter-label">−${minus}</span><span class="cells">${cells(minus, "m")}</span></div>
           <p class="meter-total">Càrrega total: <b>${total > 0 ? "+" : ""}${total}</b>${cat && an && total === 0 ? " ✓" : ""}</p>
         </div>
         <div class="build-formula" aria-live="polite">${formula ? fm(formula) : "<span class='slot-empty'>La fórmula apareixerà aquí</span>"}</div>
@@ -866,7 +866,7 @@ function renderIonTables() {
     <div class="ion-columns">
       <section><h3 class="pane-title pos">Cations</h3>${cations.map((c) => row(c, cationName(c))).join("")}</section>
       <section><h3 class="pane-title neg">Anions monoatòmics</h3>${monoAnions.map((a) => row(a, a.name)).join("")}
-        <p class="muted small">Els anions d'un sol element acaben en <b>-ur</b>, excepte l'òxid.</p></section>
+        <p class="muted small">Els anions d'un sol element acaben en <b class="nowrap">-ur</b>, excepte l'òxid.</p></section>
       <section class="wide"><h3 class="pane-title neg">Anions poliatòmics</h3><div class="ion-grid">${polyAnions.map((a) => row(a, a.name, acidOf(a))).join("")}</div></section>
     </div>
     <p class="muted small">Els ions marcats amb fons lila són de batxillerat.</p>`;
