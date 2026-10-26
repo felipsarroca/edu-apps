@@ -1939,7 +1939,7 @@ svg {
   margin-bottom: 8px;
 }
 
-.prefix-grid span {
+.prefix-grid > span {
   padding: 6px;
   border-radius: 8px;
   background: #f1f5f9;
@@ -1956,12 +1956,16 @@ svg {
   gap: 6px;
 }
 
-.ion-chips span {
-  padding: 4px 10px;
+.ion-chips > span {
+  padding: 4px 12px;
   border-radius: 999px;
   background: var(--neg-soft);
   color: #164e63;
   font-size: 0.9rem;
+}
+
+.ion-chips .fm {
+  margin-right: 6px;
 }
 
 .rule-pair {
@@ -1970,7 +1974,7 @@ svg {
   margin-bottom: 8px;
 }
 
-.rule-pair span {
+.rule-pair > span {
   flex: 1;
   padding: 8px;
   border-radius: 10px;
