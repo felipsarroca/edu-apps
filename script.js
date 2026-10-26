@@ -77,6 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Una eina per igualar equacions químiques pas a pas.",
             icon: 'IgualacioQuimica/favicon.svg'
         },
+        {
+            name: "Laboratori de Formulació",
+            path: 'https://ja.cat/formulacio',
+            category: 'Química',
+            description: "Formula i anomena compostos inorgànics construint-los amb ions, amb correcció que explica cada error.",
+            icon: 'FormulacioInorganica/favicon.svg'
+        },
 
         // Matemàtiques
         { 
