@@ -84,6 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Formula i anomena compostos inorgànics construint-los amb ions, amb correcció que explica cada error.",
             icon: 'FormulacioInorganica/favicon.svg'
         },
+        {
+            name: "Laboratori de reactius i sobrants",
+            path: 'ReactiusSobrants/',
+            category: 'Química',
+            description: "Descobreix el reactiu limitant i els sobrants formant lots amb analogies, models moleculars i càlculs amb mols.",
+            icon: 'ReactiusSobrants/favicon.svg'
+        },
 
         // Matemàtiques
         { 
