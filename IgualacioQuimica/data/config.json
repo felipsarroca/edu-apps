@@ -1,0 +1,67 @@
+{
+  "dataFiles": [
+    "data/eq_nivell1.json",
+    "data/eq_nivell2.json",
+    "data/eq_nivell3.json",
+    "data/eq_batxillerat.json"
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "name": "Fàcil",
+      "description": "2 o 3 substàncies i coeficients petits"
+    },
+    {
+      "id": 2,
+      "name": "Mitjà",
+      "description": "4 substàncies o més, grups entre parèntesis"
+    },
+    {
+      "id": 3,
+      "name": "Avançat",
+      "description": "Coeficients grans i fins a 6 substàncies"
+    },
+    {
+      "id": 4,
+      "name": "Batxillerat",
+      "description": "Reaccions redox amb ions: cal igualar també la càrrega"
+    }
+  ],
+  "types": [
+    {
+      "id": "sintesi",
+      "name": "Síntesi",
+      "description": "Dues o més substàncies s'uneixen i en formen una de nova."
+    },
+    {
+      "id": "descomposicio",
+      "name": "Descomposició",
+      "description": "Una substància es descompon en dues o més de més senzilles."
+    },
+    {
+      "id": "combustio",
+      "name": "Combustió",
+      "description": "Una substància crema amb l'oxigen i desprèn energia."
+    },
+    {
+      "id": "substitucio_simple",
+      "name": "Substitució simple",
+      "description": "Un element ocupa el lloc d'un altre en un compost."
+    },
+    {
+      "id": "substitucio_doble",
+      "name": "Substitució doble",
+      "description": "Dos compostos s'intercanvien una part (sovint es forma un precipitat)."
+    },
+    {
+      "id": "neutralitzacio",
+      "name": "Neutralització",
+      "description": "Un àcid i una base reaccionen i formen una sal (i sovint aigua)."
+    },
+    {
+      "id": "redox",
+      "name": "Oxidació-reducció",
+      "description": "Una substància s'oxida i una altra es redueix: hi ha transferència d'electrons."
+    }
+  ]
+}

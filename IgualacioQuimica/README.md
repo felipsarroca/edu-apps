@@ -1,101 +1,122 @@
 # Laboratori d'igualació d'equacions
 
-Aplicació web interactiva per practicar l'equilibrat d'equacions químiques amb suport visual, filtres per nivells i seguiment de progressos. Dissenyada per a l'aula de secundària i batxillerat.
+Aplicació web per aprendre a igualar equacions químiques amb models moleculars, gràfics de barres i balances. Està pensada per a l'alumnat d'ESO i té un nivell opcional de batxillerat amb reaccions redox iòniques.
 
-## Visió ràpida
-- Tipus de recurs: web estàtica (HTML, CSS i JavaScript) autoallotjable a GitHub Pages.
-- Públic objectiu: alumnat d'ESO i batxillerat que necessita reforçar l'igualació química.
-- Què aporta: taula dinàmica d'àtoms, ajudes pas a pas, filtres per dificultat i tipologia de reaccions, i marcador d'intents que es desa al navegador.
-- Requisits tècnics: només cal servir el projecte amb un servidor web estàtic (p. ex. `python -m http.server`) per permetre la càrrega dels JSON.
-
-## Funcionalitats clau
-- Biblioteca de reaccions etiquetades per tipus i nivell (`data/*.json`) amb explicacions pedagògiques.
-- Filtre combinat de tipologia i dificultat, amb botó de nova equació i selector multiselecció.
-- Taula d'àtoms reactius/productes amb diferències calculades en temps real.
-- Modes d'ajuda: pistes guiades, solució completa, recomptes d'àtoms i representació gràfica en SVG.
-- Gamificació lleugera: intents, encerts i ratxa guardats a `localStorage`.
-- Interfície preparada per a MathJax i paleta de colors adaptada per a estudiants.
-
-## Captura de pantalla
 ![Vista principal de l'aplicació](Captura.PNG)
 
+## Què ofereix
+
+- **91 equacions verificades** en quatre nivells:
+
+  | Nivell | Equacions | Contingut |
+  |---|---|---|
+  | Fàcil | 32 | 2 o 3 substàncies i coeficients petits |
+  | Mitjà | 37 | 4 substàncies o més, grups entre parèntesis |
+  | Avançat | 13 | Coeficients grans i fins a 6 substàncies |
+  | Batxillerat | 9 | Redox amb ions: cal igualar també la càrrega |
+
+- **Set tipus de reacció**: síntesi, descomposició, combustió, substitució simple, substitució doble, neutralització i oxidació-reducció.
+- **Context real** per a cada equació, que es mostra quan s'encerta: airbag, rovell, antiàcids, pluja àcida, fotosíntesi, gasolina, butà…
+- **Una sola fila de treball**: cada substància té les seves molècules, la fórmula i el coeficient [−] [n] [+] a sota.
+- **Models moleculars** amb els colors CPK i el símbol dins de cada àtom:
+  - molècules orgàniques en cadena;
+  - sals com a xarxa iònica;
+  - ions amb la seva càrrega.
+- **Tres ajudes visuals**, que es poden canviar en qualsevol moment:
+  - **Cap**;
+  - **Barres**: reactius i productes per a cada element;
+  - **Balança**: es decanta cap al costat que té més àtoms.
+- **Comprovació en dos temps**: l'estat «Equilibrada» no apareix fins que es prem «Comprova». Els missatges són concrets:
+  - «Encara falten 2 àtoms d'oxigen (O) a l'esquerra»;
+  - avís quan els coeficients es poden simplificar;
+  - avís quan la càrrega no quadra.
+- **Pistes en tres passos**: quin element no quadra, quin compost cal canviar i quin valor cal provar.
+- **Dos modes**:
+  - **Practica**, lliure, amb pistes i solució.
+  - **Repte**: 5 equacions, 2 intents per equació (2 punts a la primera i 1 a la segona), estrelles al final i cronòmetre opcional.
+- **Marcador fiable**: un sol encert per equació. Si es mira la solució, no compta com a encert i la ratxa torna a zero.
+- **Progrés per nivell** desat al navegador. Les equacions no es repeteixen fins que s'han fet totes les del filtre.
+- **Mode projector**, amb la interfície més gran per a la pissarra digital.
+
+## Adaptació a la pantalla
+
+La interfície està pensada per a 1440 × 800 px i s'escala automàticament amb la variable `--ui-zoom` (vegeu `fitScale` a `js/app.js`). Tota l'activitat cap en una sola pantalla, sense desplaçament, a:
+
+- 1920 × 1080 (s'amplia);
+- 1366 × 768 i 1366 × 740 (es redueix);
+- escalat del sistema al 125 % i al 150 %;
+- tauleta (1024 × 768).
+
+Per sota de 900 px d'amplada (mòbil), la disposició passa a una columna amb desplaçament vertical.
+
 ## Estructura del projecte
+
 ```text
 IgualacioQuimica/
-├── index.html              # Pàgina principal amb Tailwind CDN i càrrega de MathJax
-├── css/
-│   └── styles.css          # Estils propis (complements a Tailwind)
+├── index.html                  # Estructura de la pàgina
+├── css/styles.css              # Estils i adaptació a la pantalla
 ├── js/
-│   └── app.js              # Lògica principal de l'app (gestió d'equacions, UI i estadístiques)
+│   ├── chem.js                 # Motor químic: fórmules, ions, càrregues, comprovació
+│   ├── molecules.js            # Dibuix SVG de molècules i ions
+│   └── app.js                  # Interfície, modes, ajudes visuals i progrés
 ├── data/
-│   ├── eq_basic.json       # Equacions nivell 1
-│   ├── eq_intermediate.json# Equacions nivell 2
-│   ├── eq_advanced.json    # Equacions nivell 3 i redox
-│   ├── equations_master.json
-│   └── reaction_types.json # Catalogació de reaccions
-├── scripts/
-│   └── update_equations.py # Script opcional per regenerar els JSON
-├── favicon.svg             # Icona principal
-├── CC_BY-NC-SA.svg         # Insígnia de la llicència
-└── Captura.PNG             # Imatge d'exemple
+│   ├── config.json             # Nivells, tipus de reacció i fitxers de dades
+│   ├── eq_nivell1.json         # Fàcil
+│   ├── eq_nivell2.json         # Mitjà
+│   ├── eq_nivell3.json         # Avançat
+│   └── eq_batxillerat.json     # Batxillerat (redox amb ions)
+├── scripts/valida-equacions.mjs  # Validació automàtica de les dades
+├── assets/CC_BY-NC-SA.png      # Distintiu de la llicència
+├── favicon.svg
+└── Captura.PNG
 ```
 
+No depèn de cap biblioteca externa i funciona sense connexió un cop carregada.
+
 ## Execució local
-### Opció 1. Servidor Python (recomanada)
-1. Obrir una terminal a `IgualacioQuimica`.
-2. Executar:
-   ```bash
-   python -m http.server 8000
-   ```
-3. Obriu el navegador i aneu a `http://localhost:8000`.
 
-### Opció 2. npm serve (alternativa multiplataforma)
-1. Instal·lar `serve` una sola vegada:
-   ```bash
-   npm install --global serve
-   ```
-2. Llançar el servidor:
-   ```bash
-   serve .
-   ```
-3. Visitar l'enllaç que mostri la terminal (habitualment `http://localhost:3000`).
+Cal un servidor web estàtic, perquè el navegador no carrega els JSON des de `file://`:
 
-> Nota: si obriu `index.html` directament amb `file://`, el navegador bloquejarà la càrrega dels fitxers JSON. Sempre cal un servidor local.
+```bash
+python -m http.server 8000
+```
+
+Després obriu `http://localhost:8000`.
+
+## Afegir o modificar equacions
+
+1. Editeu el fitxer del nivell corresponent dins de `data/`. Cada equació ocupa una línia:
+
+   ```json
+   {"id": "eq124", "reactants": ["Fe^2+", "MnO4^-", "H^+"], "products": ["Fe^3+", "Mn^2+", "H2O"], "coefficients": [5, 1, 8, 5, 1, 4], "type": "redox", "level": 4, "explanation": "Text que es mostra en encertar."}
+   ```
+
+   - Els subíndexs s'escriuen com a dígits: `H2O`, `Ca(OH)2`, `(NH4)2SO4`.
+   - La càrrega s'escriu sempre amb `^`: `Fe^2+`, `MnO4^-`, `Cr2O7^2-`.
+   - L'explicació no ha de donar la solució, perquè es mostra quan s'encerta.
+
+2. Valideu les dades:
+
+   ```bash
+   node scripts/valida-equacions.mjs
+   ```
+
+   L'script comprova, per a cada equació:
+   - que les fórmules s'interpreten bé;
+   - que la solució quadra en àtoms i en càrrega;
+   - que els coeficients són mínims;
+   - que no ve igualada amb tots els coeficients a 1;
+   - que la solució és única;
+   - que el tipus i el nivell existeixen;
+   - que no hi ha identificadors ni equacions repetits.
 
 ## Flux de treball docent suggerit
-- **Activació**: trieu el tipus de reacció i el nivell segons els objectius de la sessió.
-- **Modelatge**: projecte la pantalla, activeu les pistes i mostreu com es dedueixen els coeficients.
-- **Treball autònom**: demaneu a l'alumnat que treballi per parelles; poden registrar els seus intents i encerts.
-- **Extensions**: utilitzeu `equations_master.json` per preparar reptes o tasques a Google Classroom. Podeu exportar els resultats del marcador demanant una captura o transcripció manual.
 
-## Gestió de dades i personalització
-- **Afegir reaccions**: editeu `data/eq_basic.json`, `data/eq_intermediate.json` o `data/eq_advanced.json`. Mantenir l'estructura (`reactants`, `products`, `coefficients`, `type`, `level`, `explanation`).
-- **Script de suport**: `scripts/update_equations.py` genera els JSON a partir de llistes Python. Ideal si preferiu editar les dades des d'un mateix arxiu.
-  ```bash
-  python scripts/update_equations.py
-  ```
-- **Tipologies de reacció**: `data/reaction_types.json` controla les etiquetes visibles al filtre i a la interfície.
-- **Traduccions**: tot el text es troba a `index.html` i `js/app.js`. Els literals de les dades són en català per defecte.
-
-## Scripts disponibles
-- `scripts/update_equations.py`: requereix Python 3. Escriu tots els fitxers JSON a `data/` amb format UTF-8 i indentació de 2 espais.
-
-## Tecnologies utilitzades
-- HTML5 i Tailwind CSS (CDN) per a la interfície.
-- JavaScript modular (`type="module"`) per encapsular lògica i estat.
-- MathJax 3 (CDN) per renderitzar fórmules químiques i símbols.
-- SVG generat en temps real per visualitzar molècules i àtoms.
-- `localStorage` per mantenir intents/encerts entre sessions.
-
-## Millores pendents (idees)
-- Afegir mode redox pas a pas amb descomposició d'ions i càrregues.
-- Exportació d'estadístiques en CSV o Google Sheets mitjançant scripts externs.
-- Suport multilingüe (castellà i anglès) amb fitxers de traducció.
-- Modalitat de qüestionari cronometrat amb taula de classificació.
+- **Modelatge**: amb el mode projector, resoleu una equació a la pissarra digital amb la balança i mostreu com es compensa cada element.
+- **Pràctica guiada**: l'alumnat treballa en parelles al nivell Fàcil amb les barres activades i fa servir les pistes només quan les necessita.
+- **Autonomia**: desactiveu l'ajuda visual («Cap») perquè l'alumnat compti els àtoms per si mateix.
+- **Avaluació formativa**: el mode Repte dona una puntuació en estrelles. L'alumnat pot fer una captura del resultat i lliurar-la a Google Classroom.
 
 ## Llicència
-El codi i els materials es distribueixen sota llicència [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca).
 
-## Crèdits
-Projecte creat per Felip Sarroca amb assistència de la IA. Accedeix als repositoris educatius des de `I:\Mi unitat\Github` per mantenir una còpia organitzada dels materials.
-
+[Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca). Aplicació creada per [Felip Sarroca](https://ja.cat/felipsarroca) amb assistència de la IA.
