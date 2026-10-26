@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             name: "Laboratori de reactius i sobrants",
-            path: 'ReactiusSobrants/',
+            path: 'https://ja.cat/reactius',
             category: 'Química',
             description: "Descobreix el reactiu limitant i els sobrants formant lots amb analogies, models moleculars i càlculs amb mols.",
             icon: 'ReactiusSobrants/favicon.svg'
