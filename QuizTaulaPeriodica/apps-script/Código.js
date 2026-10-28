@@ -4,6 +4,30 @@ const SHEET_NAME = 'Resultats';  // Nom de la pestanya on s'escriuen els resulta
 const HISTORIC_PROPERTY = 'HISTORIC_SS_ID';
 const HISTORIC_HEADERS = ['ID', 'Data entrada', 'Data sortida', 'Durada (dies)', 'Nom', 'Puntuació', 'Nivell', 'Temps', 'Motiu sortida', 'Origen'];
 
+/** Publica únicament les marques vigents; el full pot continuar sent privat. */
+function doGet(e) {
+  const callback = String(e?.parameter?.callback || '');
+  if (!/^[$A-Z_a-z][$\w]*$/.test(callback)) return json({ status: 'error', missatge: 'Callback invàlid.' });
+  try {
+    const sheet = obreFullAmbReintents().getSheetByName(SHEET_NAME);
+    if (!sheet) throw new Error(`No s'ha trobat la pestanya '${SHEET_NAME}'.`);
+    const data = sheet.getDataRange().getValues();
+    const headers = data[0];
+    const idx = Object.fromEntries(['Data', 'Nom', 'Puntuació', 'Nivell', 'Temps'].map(k => [k, headers.indexOf(k)]));
+    if (Object.values(idx).some(i => i < 0)) throw new Error('Falten columnes al full de resultats.');
+    const entries = data.slice(1).filter(row => norm(row[idx.Nom])).map(row => ({
+      dataISO: row[idx.Data] instanceof Date ? row[idx.Data].toISOString() : String(row[idx.Data]),
+      nom: String(row[idx.Nom]),
+      puntuacio: Number(row[idx['Puntuació']]) || 0,
+      nivell: String(row[idx.Nivell]),
+      temps: textTempsHistoric(row[idx.Temps]),
+    }));
+    return ContentService.createTextOutput(`${callback}(${JSON.stringify({ entries })});`).setMimeType(ContentService.MimeType.JAVASCRIPT);
+  } catch (err) {
+    return ContentService.createTextOutput(`${callback}(${JSON.stringify({ error: String(err) })});`).setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+}
+
 /******************** REGISTRE DE RESULTATS ********************/
 /**
  * Endpoint per registrar resultats:
@@ -211,6 +235,35 @@ function fullHistoric() {
   const sheet = obreFullAmbReintents(id).getSheetByName('Històric');
   if (!sheet) throw new Error("No s'ha trobat la pestanya 'Històric'.");
   return sheet;
+}
+
+/** Copia l'històric existent a una pestanya del full de puntuacions i en canvia la destinació. */
+function mouHistoricAlFullPrincipal() {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(30000)) throw new Error('No s’ha pogut obtenir el bloqueig.');
+  try {
+    const props = PropertiesService.getScriptProperties();
+    const origenId = props.getProperty(HISTORIC_PROPERTY);
+    if (!origenId) throw new Error('No hi ha cap històric per traslladar.');
+    const desti = obreFullAmbReintents();
+    const existent = desti.getSheetByName('Històric');
+    if (existent) {
+      if (origenId === SS_ID) return;
+      throw new Error("Ja existeix una pestanya 'Històric' al full principal.");
+    }
+    const origen = obreFullAmbReintents(origenId).getSheetByName('Històric');
+    if (!origen) throw new Error("Falta la pestanya 'Històric' al full d'origen.");
+    const nova = desti.insertSheet('Històric');
+    const valors = origen.getDataRange().getValues();
+    for (let i = 1; i < valors.length; i++) valors[i][7] = textTempsHistoric(valors[i][7]);
+    nova.getRange('H:H').setNumberFormat('@');
+    nova.getRange(1, 1, valors.length, HISTORIC_HEADERS.length).setValues(valors);
+    aplicaFormatHistoric(nova);
+    props.setProperty(HISTORIC_PROPERTY, SS_ID);
+    Logger.log(`Traslladades ${valors.length - 1} marques a la pestanya Històric del full principal.`);
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 /** Dona format llegible al full privat. Es pot tornar a executar sense canviar dades. */

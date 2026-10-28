@@ -180,25 +180,25 @@ function ensureGvizSetResponseHook() {
 }
 
 async function fetchLeaderboardEntries() {
-  if (GOOGLE_SCRIPT_URL) {
-    try {
-      const url = new URL(GOOGLE_SCRIPT_URL);
-      url.searchParams.set('action', 'leaderboard');
-      const response = await fetch(url.toString(), {
-        method: 'GET',
-        mode: 'cors',
-      });
-      if (response.ok) {
-        const payload = await response.json();
-        if (Array.isArray(payload?.entries)) {
-          return payload.entries;
-        }
-      }
-    } catch (error) {
-      console.warn("No s'ha pogut obtenir el rànquing via Apps Script", error);
-    }
-  }
-  return fetchLeaderboardEntriesJsonp();
+  if (!GOOGLE_SCRIPT_URL) throw new Error("No hi ha cap servei configurat per al rànquing.");
+  return new Promise((resolve, reject) => {
+    const callback = `quizTaulaRanking_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
+    const url = new URL(GOOGLE_SCRIPT_URL);
+    url.searchParams.set('callback', callback);
+    const script = document.createElement('script');
+    script.src = url.toString();
+    script.async = true;
+    const cleanup = () => { window.clearTimeout(timeoutId); delete window[callback]; script.remove(); };
+    const timeoutId = window.setTimeout(() => { cleanup(); reject(new Error('La resposta del rànquing ha trigat massa.')); }, 8000);
+    window[callback] = (payload) => {
+      cleanup();
+      if (payload?.error) reject(new Error(payload.error));
+      else if (Array.isArray(payload?.entries)) resolve(payload.entries);
+      else reject(new Error('Resposta inesperada del rànquing.'));
+    };
+    script.onerror = () => { cleanup(); reject(new Error("No s'ha pogut carregar el rànquing.")); };
+    document.body.appendChild(script);
+  });
 }
 
 function fetchLeaderboardEntriesJsonp() {

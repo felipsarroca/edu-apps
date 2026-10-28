@@ -7,9 +7,9 @@ Aplicació web per reforçar la identificació dels elements químics a partir d
 - Cinc nivells de dificultat que combinen temps disponible i pool d’elements.
 - Modal d’instruccions accessible des de la icona `❓` amb un resum del repte.
 - Pantalla de rànquing en tres columnes (Normal, Difícil i Molt difícil) amb icones `⏳` i `📅` per destacar el temps i la data respectivament.
-- Rànquing automàtic alimentat per Google Sheets amb memòria cau de 60 segons i opció de refrescar manualment.
+- Rànquing automàtic alimentat per Apps Script des d'un full privat, amb memòria cau de 60 segons i opció de refrescar manualment.
 - Els rècords caduquen al cap de nou mesos; la neteja programada conserva la millor marca vigent per nom i nivell.
-- Un full privat independent conserva les marques que han passat pel rànquing, amb dates d'entrada i sortida i durada. Aquest històric no es mostra al joc.
+- La pestanya «Històric» del mateix full privat conserva les marques que han passat pel rànquing, amb dates d'entrada i sortida i durada. El joc només rep les marques vigents.
 - Seguiment de la ratxa d’encerts, temps total i enviament opcional del resultat mitjançant Apps Script.
 
 ## Com s’hi juga
@@ -24,7 +24,7 @@ Aplicació web per reforçar la identificació dels elements químics a partir d
 ## Integració amb Google Sheets
 ### Preparar el full de càlcul
 1. Crea un full amb les columnes `Nom`, `Puntuació`, `Nivell`, `Temps`, `Data`.
-2. Comparteix-lo en mode “Qualsevol amb l’enllaç pot veure” per permetre la lectura del rànquing.
+2. Mantén el full privat. L'aplicació web d'Apps Script en publica només les marques vigents.
 
 ### Publicar l’endpoint Apps Script
 El codi del projecte és a `apps-script/Código.js`. La funció `netejaDuplicatsMillorTemps` s'executa amb un activador temporal; el codi web també la crida abans de registrar una marca nova. Consulta [DESPLEGAMENT.md](DESPLEGAMENT.md) per a les comprovacions i futures actualitzacions.
@@ -64,8 +64,7 @@ La resta d'aquest apartat és un exemple per configurar una instal·lació nova.
 3. Copia la URL de desplegament i enganxa-la a `GOOGLE_SCRIPT_URL` dins `config.js`.
 
 ### Configurar la lectura del rànquing
-- Copia l’ID del full i el `gid` de la pestanya pública i assigna’ls a `LEADERBOARD_SHEET_ID` i `LEADERBOARD_SHEET_GID`.
-- L’app consulta el full via `https://docs.google.com/spreadsheets/d/<ID>/gviz/tq?gid=<GID>`; no cal cap `doGet` personalitzat.
+- L'app consulta el `doGet` d'Apps Script amb una crida JSONP. No exposa l'ID del full al navegador ni les dades de la pestanya «Històric».
 
 ## Configuració inicial del projecte
 1. Clona o descarrega el repositori (ex.: `I:\La meva unitat\Github\QuizTaulaPeriodica`).

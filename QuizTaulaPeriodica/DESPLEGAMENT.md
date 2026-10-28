@@ -3,10 +3,10 @@
 ## Estat actual
 
 - Codi Apps Script sincronitzat amb `clasp` a `apps-script/Código.js`.
-- Versió immutable **14**: caducitat als 9 mesos, reintents d'accés i històric en un full privat.
+- Versió immutable **15**: caducitat als 9 mesos, reintents d'accés, lectura pública només de les marques vigents i històric en una pestanya del mateix full privat.
 - L'activador horari executa `netejaDuplicatsMillorTemps` sobre el codi actual. La darrera execució comprovada es va completar el 28/10/2026 a les 20.26 h.
-- El desplegament web que utilitza `config.js` es va actualitzar a la versió **14** el 28/10/2026, mantenint la mateixa URL.
-- L'històric es desa en un full privat del compte del centre. L'ID és una propietat d'Apps Script (`HISTORIC_SS_ID`), no una dada del joc ni del repositori. Inclou les marques recuperades de la còpia de seguretat i registra l'entrada, la sortida i la durada en dies de cada marca al full de resultats.
+- El desplegament web que utilitza `config.js` es va actualitzar a la versió **15** el 28/10/2026, mantenint la mateixa URL.
+- L'històric es desa a la pestanya «Històric» del full de puntuacions, que es manté privat. L'ID de destinació és una propietat d'Apps Script (`HISTORIC_SS_ID`). Inclou les marques recuperades de la còpia de seguretat i registra l'entrada, la sortida i la durada en dies de cada marca al full de resultats.
 - El propietari del full i de l'script és **felip.sarroca@ramonpont.cat**. El compte **felip.sarroca@gmail.com** només hi té permís d'editor i Google li impedeix actualitzar el desplegament.
 - S'ha comprovat que l'endpoint web respon amb HTTP 200 i valida les dades sense crear una marca de prova.
 
