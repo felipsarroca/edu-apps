@@ -9,6 +9,7 @@ Aplicació web per reforçar la identificació dels elements químics a partir d
 - Pantalla de rànquing en tres columnes (Normal, Difícil i Molt difícil) amb icones `⏳` i `📅` per destacar el temps i la data respectivament.
 - Rànquing automàtic alimentat per Google Sheets amb memòria cau de 60 segons i opció de refrescar manualment.
 - Els rècords caduquen al cap de nou mesos; la neteja programada conserva la millor marca vigent per nom i nivell.
+- Un full privat independent conserva les marques que han passat pel rànquing, amb dates d'entrada i sortida i durada. Aquest històric no es mostra al joc.
 - Seguiment de la ratxa d’encerts, temps total i enviament opcional del resultat mitjançant Apps Script.
 
 ## Com s’hi juga
@@ -26,7 +27,7 @@ Aplicació web per reforçar la identificació dels elements químics a partir d
 2. Comparteix-lo en mode “Qualsevol amb l’enllaç pot veure” per permetre la lectura del rànquing.
 
 ### Publicar l’endpoint Apps Script
-El codi del projecte és a `apps-script/Código.js`. La funció `netejaDuplicatsMillorTemps` s'executa amb un activador temporal i la versió web 11 també la crida abans de registrar una marca nova. Consulta [DESPLEGAMENT.md](DESPLEGAMENT.md) per a les comprovacions i futures actualitzacions.
+El codi del projecte és a `apps-script/Código.js`. La funció `netejaDuplicatsMillorTemps` s'executa amb un activador temporal; el codi web també la crida abans de registrar una marca nova. Consulta [DESPLEGAMENT.md](DESPLEGAMENT.md) per a les comprovacions i futures actualitzacions.
 
 La resta d'aquest apartat és un exemple per configurar una instal·lació nova.
 1. A **Extensions → Apps Script**, enganxa aquest codi a `Code.gs`:
