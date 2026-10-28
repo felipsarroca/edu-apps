@@ -64,7 +64,7 @@ La resta d'aquest apartat és un exemple per configurar una instal·lació nova.
 3. Copia la URL de desplegament i enganxa-la a `GOOGLE_SCRIPT_URL` dins `config.js`.
 
 ### Configurar la lectura del rànquing
-- L'app consulta el `doGet` d'Apps Script amb una crida JSONP. No exposa l'ID del full al navegador ni les dades de la pestanya «Històric».
+- L'app consulta el `doGet` d'Apps Script amb una crida JSONP. Si el navegador no pot obrir-lo, utilitza `leaderboard.json`, que GitHub Actions actualitza cada cinc minuts amb les marques vigents. No exposa les dades de la pestanya «Històric».
 
 ## Configuració inicial del projecte
 1. Clona o descarrega el repositori (ex.: `I:\La meva unitat\Github\QuizTaulaPeriodica`).

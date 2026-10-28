@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "dataISO": "2026-02-11T10:57:43.705Z",
+      "nom": "Brenda Pizarro",
+      "puntuacio": 10,
+      "nivell": "Normal",
+      "temps": "2:15"
+    },
+    {
+      "dataISO": "2026-10-28T20:37:28.283Z",
+      "nom": "Felip Sarroca",
+      "puntuacio": 10,
+      "nivell": "Normal",
+      "temps": "0:30"
+    }
+  ]
+}

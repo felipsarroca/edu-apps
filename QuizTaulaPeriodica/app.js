@@ -181,6 +181,18 @@ function ensureGvizSetResponseHook() {
 
 async function fetchLeaderboardEntries() {
   if (!GOOGLE_SCRIPT_URL) throw new Error("No hi ha cap servei configurat per al rànquing.");
+  try {
+    return await fetchLeaderboardEntriesFromScript();
+  } catch (error) {
+    const response = await fetch('https://raw.githubusercontent.com/felipsarroca/edu-apps/main/QuizTaulaPeriodica/leaderboard.json', { cache: 'no-store' });
+    if (!response.ok) throw error;
+    const payload = await response.json();
+    if (!Array.isArray(payload?.entries)) throw error;
+    return payload.entries;
+  }
+}
+
+function fetchLeaderboardEntriesFromScript() {
   return new Promise((resolve, reject) => {
     const callback = `quizTaulaRanking_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
     const url = new URL(GOOGLE_SCRIPT_URL);
