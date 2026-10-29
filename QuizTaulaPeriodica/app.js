@@ -181,25 +181,7 @@ function ensureGvizSetResponseHook() {
 
 async function fetchLeaderboardEntries() {
   if (!GOOGLE_SCRIPT_URL) throw new Error("No hi ha cap servei configurat per al rànquing.");
-  try {
-    return await fetchLeaderboardEntriesFromScript();
-  } catch (error) {
-    const sources = [
-      ['https://api.github.com/repos/felipsarroca/edu-apps/contents/QuizTaulaPeriodica/leaderboard.json?ref=main', { headers: { Accept: 'application/vnd.github.raw+json' } }],
-      ['https://raw.githubusercontent.com/felipsarroca/edu-apps/main/QuizTaulaPeriodica/leaderboard.json', {}],
-    ];
-    for (const [url, options] of sources) {
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) continue;
-        const payload = await response.json();
-        if (Array.isArray(payload?.entries)) return payload.entries;
-      } catch (fallbackError) {
-        console.warn('Font alternativa del rànquing no disponible', fallbackError);
-      }
-    }
-    throw error;
-  }
+  return fetchLeaderboardEntriesFromScript();
 }
 
 function fetchLeaderboardEntriesFromScript() {
@@ -210,6 +192,7 @@ function fetchLeaderboardEntriesFromScript() {
     const script = document.createElement('script');
     script.src = url.toString();
     script.async = true;
+    script.crossOrigin = 'anonymous';
     const cleanup = () => { window.clearTimeout(timeoutId); delete window[callback]; script.remove(); };
     const timeoutId = window.setTimeout(() => { cleanup(); reject(new Error('La resposta del rànquing ha trigat massa.')); }, 8000);
     window[callback] = (payload) => {

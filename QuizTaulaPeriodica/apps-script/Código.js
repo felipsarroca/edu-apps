@@ -1,7 +1,6 @@
 /******************** CONFIG ********************/
 const SS_ID = '1-W01-KZ1v7PVAQc72pHth9h-CkAAcDBJrBqqsfUd8ZU';  // ID del full de càlcul
 const SHEET_NAME = 'Resultats';  // Nom de la pestanya on s'escriuen els resultats
-const HISTORIC_PROPERTY = 'HISTORIC_SS_ID';
 const HISTORIC_HEADERS = ['ID', 'Data entrada', 'Data sortida', 'Durada (dies)', 'Nom', 'Puntuació', 'Nivell', 'Temps', 'Motiu sortida', 'Origen'];
 
 /** Publica únicament les marques vigents; el full pot continuar sent privat. */
@@ -219,51 +218,11 @@ function netejaResultats(sheet) {
   if (filesAEliminar.length) sincronitzaHistoric(sheet, motius);
 }
 
-/** Crea una única vegada un full privat, propietat del compte que executa l'script. */
+/** L'històric viu sempre al mateix document privat que els resultats. */
 function fullHistoric() {
-  const props = PropertiesService.getScriptProperties();
-  let id = props.getProperty(HISTORIC_PROPERTY);
-  if (!id) {
-    const ss = SpreadsheetApp.create('Històric privat - Quiz Taula Periòdica');
-    const sheet = ss.getSheets()[0];
-    sheet.setName('Històric');
-    sheet.appendRow(HISTORIC_HEADERS);
-    aplicaFormatHistoric(sheet);
-    props.setProperty(HISTORIC_PROPERTY, ss.getId());
-    return sheet;
-  }
-  const sheet = obreFullAmbReintents(id).getSheetByName('Històric');
+  const sheet = obreFullAmbReintents().getSheetByName('Històric');
   if (!sheet) throw new Error("No s'ha trobat la pestanya 'Històric'.");
   return sheet;
-}
-
-/** Copia l'històric existent a una pestanya del full de puntuacions i en canvia la destinació. */
-function mouHistoricAlFullPrincipal() {
-  const lock = LockService.getScriptLock();
-  if (!lock.tryLock(30000)) throw new Error('No s’ha pogut obtenir el bloqueig.');
-  try {
-    const props = PropertiesService.getScriptProperties();
-    const origenId = props.getProperty(HISTORIC_PROPERTY);
-    if (!origenId) throw new Error('No hi ha cap històric per traslladar.');
-    const desti = obreFullAmbReintents();
-    const existent = desti.getSheetByName('Històric');
-    if (existent) {
-      if (origenId === SS_ID) return;
-      throw new Error("Ja existeix una pestanya 'Històric' al full principal.");
-    }
-    const origen = obreFullAmbReintents(origenId).getSheetByName('Històric');
-    if (!origen) throw new Error("Falta la pestanya 'Històric' al full d'origen.");
-    const nova = desti.insertSheet('Històric');
-    const valors = origen.getDataRange().getValues();
-    for (let i = 1; i < valors.length; i++) valors[i][7] = textTempsHistoric(valors[i][7]);
-    nova.getRange('H:H').setNumberFormat('@');
-    nova.getRange(1, 1, valors.length, HISTORIC_HEADERS.length).setValues(valors);
-    aplicaFormatHistoric(nova);
-    props.setProperty(HISTORIC_PROPERTY, SS_ID);
-    Logger.log(`Traslladades ${valors.length - 1} marques a la pestanya Històric del full principal.`);
-  } finally {
-    lock.releaseLock();
-  }
 }
 
 /** Dona format llegible al full privat. Es pot tornar a executar sense canviar dades. */
@@ -345,43 +304,6 @@ function sincronitzaHistoric(sheet, motius = new Map()) {
       historic.getRange(i + 1, 3, 1, 2).setValues([[ara, dies]]);
       historic.getRange(i + 1, 9).setValue(motius.get(id) || 'Sortida del rànquing');
     }
-  }
-}
-
-/** Recupera una sola vegada les marques eliminades a la neteja del 28/10/2026. */
-function migraHistoricAnterior() {
-  const lock = LockService.getScriptLock();
-  if (!lock.tryLock(30000)) throw new Error('No s’ha pogut obtenir el bloqueig.');
-  try {
-    const props = PropertiesService.getScriptProperties();
-    const idCopia = props.getProperty('HISTORIC_BACKUP_ID');
-    if (!idCopia) throw new Error('Falta la propietat HISTORIC_BACKUP_ID.');
-    const actual = obreFullAmbReintents().getSheetByName(SHEET_NAME);
-    const copia = obreFullAmbReintents(idCopia).getSheetByName(SHEET_NAME);
-    if (!actual || !copia) throw new Error('Falta la pestanya de resultats.');
-    sincronitzaHistoric(actual);
-    const historic = fullHistoric();
-    const dades = copia.getDataRange().getValues();
-    const header = dades[0];
-    const dadesActuals = actual.getDataRange().getValues();
-    const idsActius = new Set(dadesActuals.slice(1).map(fila => idResultat(fila, dadesActuals[0])));
-    const idsExistents = new Set(historic.getDataRange().getValues().slice(1).map(fila => String(fila[0])));
-    const sortida = new Date('2026-10-28T19:26:31Z');
-    const nous = [];
-    for (let i = 1; i < dades.length; i++) {
-      const fila = dades[i];
-      const id = idResultat(fila, header);
-      if (idsActius.has(id) || idsExistents.has(id)) continue;
-      const entrada = fila[header.indexOf('Data')];
-      if (!(entrada instanceof Date) || !Number.isFinite(entrada.getTime())) throw new Error('La còpia conté una data invàlida.');
-      const dies = Math.max(0, (sortida - entrada) / 86400000);
-      nous.push([id, entrada, sortida, dies, fila[header.indexOf('Nom')], fila[header.indexOf('Puntuació')], fila[header.indexOf('Nivell')], textTempsHistoric(fila[header.indexOf('Temps')]), 'Neteja del 28/10/2026 (hora aproximada)', 'Recuperat de còpia']);
-    }
-    if (nous.length) historic.getRange(historic.getLastRow() + 1, 1, nous.length, HISTORIC_HEADERS.length).setValues(nous);
-    props.deleteProperty('HISTORIC_BACKUP_ID');
-    Logger.log(`S'han recuperat ${nous.length} marques antigues.`);
-  } finally {
-    lock.releaseLock();
   }
 }
 
