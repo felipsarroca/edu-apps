@@ -184,7 +184,9 @@ async function fetchLeaderboardEntries() {
   try {
     return await fetchLeaderboardEntriesFromScript();
   } catch (error) {
-    const response = await fetch('https://raw.githubusercontent.com/felipsarroca/edu-apps/main/QuizTaulaPeriodica/leaderboard.json', { cache: 'no-store' });
+    const fallbackUrl = new URL('https://raw.githubusercontent.com/felipsarroca/edu-apps/main/QuizTaulaPeriodica/leaderboard.json');
+    fallbackUrl.searchParams.set('updated', Date.now().toString());
+    const response = await fetch(fallbackUrl, { cache: 'no-store' });
     if (!response.ok) throw error;
     const payload = await response.json();
     if (!Array.isArray(payload?.entries)) throw error;
