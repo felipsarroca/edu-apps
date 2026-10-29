@@ -23,45 +23,12 @@ Aplicació web per reforçar la identificació dels elements químics a partir d
 
 ## Integració amb Google Sheets
 ### Preparar el full de càlcul
-1. Crea un full amb les columnes `Nom`, `Puntuació`, `Nivell`, `Temps`, `Data`.
-2. Mantén el full privat. L'aplicació web d'Apps Script en publica només les marques vigents.
+El document original «Resultats del Quiz de la Taula Periòdica» té les pestanyes `Resultats` i `Històric`. `Resultats` conté les columnes `Data`, `Nom`, `Puntuació`, `Nivell` i `Temps`. El document es manté privat; l'aplicació web d'Apps Script retorna només les marques vigents.
 
 ### Publicar l’endpoint Apps Script
 El codi del projecte és a `apps-script/Código.js`. La funció `netejaDuplicatsMillorTemps` s'executa amb un activador temporal; el codi web també la crida abans de registrar una marca nova. Consulta [DESPLEGAMENT.md](DESPLEGAMENT.md) per a les comprovacions i futures actualitzacions.
 
-La resta d'aquest apartat és un exemple per configurar una instal·lació nova.
-1. A **Extensions → Apps Script**, enganxa aquest codi a `Code.gs`:
-   ```javascript
-   const SHEET_NAME = 'Resultats';
-
-   function doPost(e) {
-     const sheet = getSheet();
-     const params = e.parameter;
-     const now = new Date();
-
-     sheet.appendRow([
-       params.nom || '',
-       Number(params.puntuacio || params.score || 0),
-       params.nivell || '',
-       params.temps || '',
-       now,
-     ]);
-
-     return ContentService.createTextOutput(JSON.stringify({ success: true }))
-       .setMimeType(ContentService.MimeType.JSON)
-       .setHeader('Access-Control-Allow-Origin', '*');
-   }
-
-   function getSheet() {
-     const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
-     if (!sheet) {
-       throw new Error(`No s'ha trobat la pestanya ${SHEET_NAME}`);
-     }
-     return sheet;
-   }
-   ```
-2. Desa el projecte i publica’l com a **Aplicació web** (execució com a tu, accés per a qualsevol amb l’enllaç).
-3. Copia la URL de desplegament i enganxa-la a `GOOGLE_SCRIPT_URL` dins `config.js`.
+Per actualitzar-lo, modifica el codi local i sincronitza'l amb `clasp`; les instruccions de publicació són a [DESPLEGAMENT.md](DESPLEGAMENT.md). No cal crear cap altre full de càlcul.
 
 ### Configurar la lectura del rànquing
 - L'app consulta directament el `doGet` d'Apps Script, que llegeix la pestanya «Resultats» del document original. La petició no envia galetes de Google i no necessita cap còpia del rànquing a GitHub. La pestanya privada «Històric» no s'exposa.
@@ -76,7 +43,7 @@ La resta d'aquest apartat és un exemple per configurar una instal·lació nova.
 - `styles.css`: estils generals, temàtica visual, graella de rànquing i estats interactius.
 - `app.js`: lògica del joc, temporitzadors, gestió de nivells, enviament i lectura de resultats.
 - `elementsData.js`: catàleg complet dels elements químics (nom, símbol, número atòmic, categoria).
-- `config.js`: valors de configuració per a Apps Script i Google Sheets.
+- `config.js`: URL del servei d'Apps Script que llegeix el document original.
 
 ## Personalització
 - Ajusta temps, pools o recompenses a `app.js` (`BASE_POOLS`, `DIFFICULTY_CONFIG`).
