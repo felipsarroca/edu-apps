@@ -8,11 +8,32 @@
       "temps": "2:15"
     },
     {
+      "dataISO": "2026-10-29T03:55:00.000Z",
+      "nom": "Ludwig Wittgenstein",
+      "puntuacio": 10,
+      "nivell": "Molt difícil",
+      "temps": "2:33"
+    },
+    {
+      "dataISO": "2026-10-29T03:50:00.000Z",
+      "nom": "Martin Heidegger",
+      "puntuacio": 10,
+      "nivell": "Difícil",
+      "temps": "1:51"
+    },
+    {
       "dataISO": "2026-10-28T20:37:28.283Z",
       "nom": "Felip Sarroca",
       "puntuacio": 10,
       "nivell": "Normal",
       "temps": "0:30"
+    },
+    {
+      "dataISO": "2026-10-29T04:49:58.891Z",
+      "nom": "Felip Sarroca",
+      "puntuacio": 10,
+      "nivell": "Difícil",
+      "temps": "0:41"
     }
   ]
 }
