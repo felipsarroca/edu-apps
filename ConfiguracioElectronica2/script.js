@@ -1,7 +1,7 @@
 // Aplicació: Configuració electrònica + Taula periòdica
 // Llengua: Català
 
-// Ordre demplenament (Aufbau): n i capacitats
+// Ordre d'emplenament (Aufbau): n i capacitats
 const ORBITAL_ORDER = [
   { n: 1, l: 's', max: 2 },
   { n: 2, l: 's', max: 2 },
@@ -30,12 +30,6 @@ ORBITAL_ORDER.forEach((orb, index) => {
   runningTotalElectrons += orb.max;
 });
 const MAX_ELECTRONS = runningTotalElectrons;
-
-
-
-
-
-
 
 // Dades bàsiques de la taula periòdica: Z, símbol, període, grup, bloc
 const ELEMENTS = [
@@ -123,7 +117,7 @@ const ELEMENTS = [
   { Z:82, s:'Pb', period:6, group:14, block:'p', name:'Plom' },
   { Z:83, s:'Bi', period:6, group:15, block:'p', name:'Bismut' },
   { Z:84, s:'Po', period:6, group:16, block:'p', name:'Poloni' },
-  { Z:85, s:'At', period:6, group:17, block:'p', name:'stat' },
+  { Z:85, s:'At', period:6, group:17, block:'p', name:'Àstat' },
   { Z:86, s:'Rn', period:6, group:18, block:'p', name:'Radó' },
   { Z:87, s:'Fr', period:7, group:1,  block:'s', name:'Franci' },
   { Z:88, s:'Ra', period:7, group:2,  block:'s', name:'Radi' },
@@ -286,357 +280,30 @@ setOxidation(116, [+2, +4], [+2]);
 setOxidation(117, [+1, +3, +5], [+5]);
 setOxidation(118, [0, +2, +4], [0]);
 
-const SVG_NS = 'http://www.w3.org/2000/svg';
-const SHELL_CAPACITY = new Map();
-ORBITAL_ORDER.forEach((orb) => {
-  SHELL_CAPACITY.set(orb.n, (SHELL_CAPACITY.get(orb.n) || 0) + orb.max);
-});
-const SHELL_LIST = Array.from(SHELL_CAPACITY.entries())
-  .sort((a, b) => a[0] - b[0])
-  .map(([n, max]) => ({ n, max }));
-const SHELL_INDEX = new Map(SHELL_LIST.map((shell, idx) => [shell.n, idx]));
-const SHELL_SP_ORBITALS = new Map();
-ORBITAL_ORDER.forEach((orb, index) => {
-  if (orb.l === 's' || orb.l === 'p') {
-    if (!SHELL_SP_ORBITALS.has(orb.n)) SHELL_SP_ORBITALS.set(orb.n, {});
-    SHELL_SP_ORBITALS.get(orb.n)[orb.l] = index;
-  }
-});
-const SHELL_BASE_RADIUS = 52;
-const SHELL_RADIUS_STEP = 18;
-const SHELL_CENTER = 180;
-const SHELL_BADGE_RADIUS = 11;
+// Elements amb una configuració experimental diferent de la que dona l'ordre d'Aufbau (fonamental, en fase gasosa)
+const REAL_CONFIG = new Map([
+  [24, { core: 'Ar', rest: '3d5 4s1', stable: true }],
+  [29, { core: 'Ar', rest: '3d10 4s1', stable: true }],
+  [41, { core: 'Kr', rest: '4d4 5s1' }],
+  [42, { core: 'Kr', rest: '4d5 5s1', stable: true }],
+  [44, { core: 'Kr', rest: '4d7 5s1' }],
+  [45, { core: 'Kr', rest: '4d8 5s1' }],
+  [46, { core: 'Kr', rest: '4d10' }],
+  [47, { core: 'Kr', rest: '4d10 5s1', stable: true }],
+  [57, { core: 'Xe', rest: '5d1 6s2' }],
+  [58, { core: 'Xe', rest: '4f1 5d1 6s2' }],
+  [64, { core: 'Xe', rest: '4f7 5d1 6s2' }],
+  [78, { core: 'Xe', rest: '4f14 5d9 6s1' }],
+  [79, { core: 'Xe', rest: '4f14 5d10 6s1', stable: true }],
+  [89, { core: 'Rn', rest: '6d1 7s2' }],
+  [90, { core: 'Rn', rest: '6d2 7s2' }],
+  [91, { core: 'Rn', rest: '5f2 6d1 7s2' }],
+  [92, { core: 'Rn', rest: '5f3 6d1 7s2' }],
+  [93, { core: 'Rn', rest: '5f4 6d1 7s2' }],
+  [96, { core: 'Rn', rest: '5f7 6d1 7s2' }],
+  [103, { core: 'Rn', rest: '5f14 7s2 7p1' }],
+]);
 
-// Selecció delements del DOM
-const $count = document.getElementById('electron-count');
-const $configFull = document.getElementById('config-full');
-const $configNoble = document.getElementById('config-noble');
-const $diagram = document.getElementById('orbital-diagram');
-const $periodicMain = document.getElementById('periodic-main');
-const $periodicLan = document.getElementById('periodic-f-lan');
-const $periodicAct = document.getElementById('periodic-f-act');
-const $coords = document.getElementById('coords');
-const $elTitle = document.getElementById('el-title');
-const $atomVisual = document.getElementById('atom-visual');
-const $atomSymbol = document.getElementById('atom-symbol');
-const $atomName = document.getElementById('atom-name');
-const $atomNumber = document.getElementById('atom-number');
-const $atomShellGroup = document.getElementById('atom-shell-group');
-const $atomShellBadges = document.getElementById('atom-shell-badges');
-const $atomShellList = document.getElementById('atom-shell-list');
-const $aufbauDisplay = document.getElementById('aufbau-config-display');
-const $oxidationStates = document.getElementById('oxidation-states');
-
-const $btnAdd = document.getElementById('add-electron');
-const $btnRemove = document.getElementById('remove-electron');
-const $btnReset = document.getElementById('reset');
-const $groupHeader = document.getElementById('group-header');
-const $periodLabels = document.getElementById('period-labels');
-
-// Estat d'ocupació (per orbital) i índex ràpid n|l  posició a ORBITAL_ORDER
-let occ = ORBITAL_ORDER.map(o => ({ n: o.n, l: o.l, max: o.max, e: 0 }));
-let Z = 0; // compatibilitat amb flux anterior
-const INDEX_BY_NL = new Map();
-ORBITAL_ORDER.forEach((o, i) => INDEX_BY_NL.set(`${o.n}|${o.l}`, i));
-
-// Construcció inicial
-buildOrbitalDiagram();
-buildPeriodicTable();
-buildPeriodicLabels();
-updateAll();
-
-// Events
-$btnAdd.addEventListener('click', addElectronByOrder);
-$btnRemove.addEventListener('click', removeElectronByOrder);
-$btnReset.addEventListener('click', () => {
-  if (typeof setZ === 'function') {
-    setZ(0);
-  } else {
-    Z = 0;
-    updateAll();
-  }
-});
-
-
-// Clic sobre orbitals: selecciona o desactiva el comptador d'electrons.
-$diagram.addEventListener('click', (ev) => {
-  const dot = ev.target.closest('.dot');
-  if (dot) {
-    const electronNumber = Number(dot.dataset.electron);
-    if (!Number.isNaN(electronNumber)) {
-      const current = typeof getZ === 'function' ? getZ() : Z;
-      let desired = electronNumber;
-      if (electronNumber === current) desired = electronNumber - 1;
-      desired = Math.max(0, Math.min(MAX_ELECTRONS, desired));
-      if (typeof setZ === 'function') setZ(desired);
-      else {
-        Z = desired;
-        updateAll();
-      }
-    }
-    return;
-  }
-
-  const pair = ev.target.closest('.dot-pair');
-  if (!pair) return;
-
-  const rangeEnd = Number(pair.dataset.rangeEnd);
-  if (Number.isNaN(rangeEnd)) return;
-
-  const rangeStart = Number(pair.dataset.rangeStart);
-  const current = typeof getZ === 'function' ? getZ() : Z;
-  let desired = rangeEnd;
-
-  if (!Number.isNaN(rangeStart) && current >= rangeStart && current <= rangeEnd) {
-    desired = rangeStart - 1;
-  }
-
-  desired = Math.max(0, Math.min(MAX_ELECTRONS, desired));
-  if (typeof setZ === 'function') setZ(desired);
-  else {
-    Z = desired;
-    updateAll();
-  }
-});
-
-
-/**
- * Afegeix un electró (incrementa Z) i actualitza la vista, fins a un màxim de 118.
- */
-function addElectronByOrder() {
-  const current = typeof getZ === 'function' ? getZ() : Z;
-  if (current >= MAX_ELECTRONS) return;
-  const desired = Math.min(MAX_ELECTRONS, current + 1);
-  if (typeof setZ === 'function') {
-    setZ(desired);
-  } else {
-    Z = desired;
-    updateAll();
-  }
-}
-
-
-/**
- * Treu un electró (decrementa Z) i actualitza la vista, fins a un mínim de 0.
- */
-function removeElectronByOrder() {
-  const current = typeof getZ === 'function' ? getZ() : Z;
-  if (current <= 0) return;
-  const desired = Math.max(0, current - 1);
-  if (typeof setZ === 'function') {
-    setZ(desired);
-  } else {
-    Z = desired;
-    updateAll();
-  }
-}
-
-
-/**
- * Troba la posició del següent electró a afegir segons l'ordre d'Aufbau.
- * @param {Array<object>} occArray - L'array d'ocupació actual.
- * @returns {object|null} Un objecte {oi, ei} amb l'índex de l'orbital i de l'electró, o null si està ple.
- */
-function getNextSlot(occArray) {
-  for (let oi = 0; oi < occArray.length; oi++) {
-    const o = occArray[oi];
-    if (o.e < o.max) {
-      return { oi, ei: o.e };
-    }
-  }
-  return null; // Tot ple
-}
-
-/**
- * Troba la posició del darrer electró afegit.
- * @param {Array<object>} occArray - L'array d'ocupació actual.
- * @returns {object|null} Un objecte {oi, ei} amb l'índex de l'orbital i de l'electró, o null si està buit.
- */
-function getLastFilledSlot(occArray) {
-  for (let oi = occArray.length - 1; oi >= 0; oi--) {
-    const o = occArray[oi];
-    if (o.e > 0) {
-      return { oi, ei: o.e - 1 };
-    }
-  }
-  return null; // Buit
-}
-
-//  Funcions de vista i lògica 
-
-function buildOrbitalDiagram() {
-  const blocks = ['s', 'p', 'd', 'f'];
-  const grid = document.createElement('div');
-  grid.className = 'orbital-grid';
-
-  
-
-  blocks.forEach((block) => {
-    const header = document.createElement('div');
-    header.className = 'og-label';
-    header.dataset.block = block;
-    header.textContent = `Bloc ${block}`;
-    grid.appendChild(header);
-  });
-
-  for (let n = 1; n <= 7; n++) {
-    const rowLabel = document.createElement('div');
-    rowLabel.className = 'row-label';
-    rowLabel.textContent = `Capa ${n}`;
-    rowLabel.dataset.shell = String(n);
-    grid.appendChild(rowLabel);
-
-    for (const l of blocks) {
-      const has = (l === 's' && n >= 1) || (l === 'p' && n >= 2) || (l === 'd' && n >= 3) || (l === 'f' && n >= 4);
-      const cell = document.createElement('div');
-      cell.className = `og-cell ${l} ${has ? 'has' : ''}`;
-      cell.dataset.block = l;
-      cell.dataset.shell = String(n);
-
-      if (has) {
-        const oi = INDEX_BY_NL.get(`${n}|${l}`);
-        if (oi !== undefined) {
-          const o = ORBITAL_ORDER[oi];
-          const dots = document.createElement('div');
-          dots.className = 'dots';
-          const pairCount = Math.ceil(o.max / 2);
-          const blockColumns = o.l === 's' ? 1 : o.l === 'p' ? 3 : o.l === 'd' ? 5 : 7;
-          const colSetting = Math.max(1, Math.min(pairCount, blockColumns));
-          dots.style.setProperty('--pair-columns', String(colSetting));
-
-          for (let pairIndex = 0; pairIndex < pairCount; pairIndex++) {
-            const pair = document.createElement('div');
-            pair.className = 'dot-pair empty';
-            pair.dataset.oi = String(oi);
-            pair.dataset.pi = String(pairIndex);
-
-            for (let slot = 0; slot < 2; slot++) {
-              const eIndex = pairIndex * 2 + slot;
-              if (eIndex >= o.max) break;
-              const d = document.createElement('span');
-              d.className = 'dot';
-              d.dataset.oi = String(oi);
-              d.dataset.ei = String(eIndex);
-              pair.appendChild(d);
-            }
-
-            dots.appendChild(pair);
-          }
-
-          cell.appendChild(dots);
-        }
-      }
-
-      grid.appendChild(cell);
-    }
-  }
-
-  $diagram.innerHTML = '';
-  $diagram.appendChild(grid);
-}
-
-function buildPeriodicTable() {
-  // Main grid: excloem f-bloc (excepte La i Ac que es mostren al principal)
-  $periodicMain.innerHTML = '';
-  const main = ELEMENTS.filter(e => !(isLanthanide(e.Z) || isActinide(e.Z)) || e.Z === 57 || e.Z === 89);
-  main.forEach(e => {
-    const tile = makeElementTile(e, 'main');
-    tile.style.gridColumn = String(e.group);
-    tile.style.gridRow = String(e.period);
-    $periodicMain.appendChild(tile);
-  });
-
-  // f-bloc: alineació sota La/Ac
-  if ($periodicLan) {
-    $periodicLan.innerHTML = '';
-    const lanSpacer = document.createElement('div');
-    lanSpacer.className = 'f-spacer';
-    lanSpacer.setAttribute('aria-hidden', 'true');
-    $periodicLan.appendChild(lanSpacer);
-
-    for (let z = 57; z <= 71; z++) {
-      const e = ELEMENTS.find((x) => x.Z === z);
-      if (!e) continue;
-      $periodicLan.appendChild(makeElementTile(e, 'f'));
-    }
-  }
-
-  if ($periodicAct) {
-    $periodicAct.innerHTML = '';
-    const actSpacer = document.createElement('div');
-    actSpacer.className = 'f-spacer';
-    actSpacer.setAttribute('aria-hidden', 'true');
-    $periodicAct.appendChild(actSpacer);
-
-    for (let z = 89; z <= 103; z++) {
-      const e = ELEMENTS.find((x) => x.Z === z);
-      if (!e) continue;
-      $periodicAct.appendChild(makeElementTile(e, 'f'));
-    }
-  }
-}
-
-function buildPeriodicLabels() {
-  // grups 1..18
-  if ($groupHeader) {
-    $groupHeader.innerHTML = '';
-    for (let g = 1; g <= 18; g++) {
-      const cell = document.createElement('div');
-      cell.className = 'group';
-      cell.textContent = String(g);
-      $groupHeader.appendChild(cell);
-    }
-  }
-  // períodes 1..7
-  if ($periodLabels) {
-    $periodLabels.innerHTML = '';
-    for (let p = 1; p <= 7; p++) {
-      const cell = document.createElement('div');
-      cell.className = 'period';
-      cell.textContent = String(p);
-      $periodLabels.appendChild(cell);
-    }
-  }
-}
-
-function makeElementTile(e, region) {
-  const tile = document.createElement('button');
-  tile.type = 'button';
-  tile.className = `element-tile ${e.block}`;
-  tile.title = `${e.Z} · ${e.s}    període ${e.period}${e.block==='f'?' · bloc f':''}${e.group?` · grup ${e.group}`:''}`;
-  tile.id = `el-${region}-${e.Z}`;
-  tile.innerHTML = `<span class="Z">${e.Z}</span><span class="symbol">${e.s}</span>`;
-  tile.addEventListener('click', () => { setZ(e.Z); });
-  return tile;
-}
-
-function isLanthanide(z) { return z >= 58 && z <= 71; }
-function isActinide(z) { return z >= 90 && z <= 103; }
-
-function computeOccupancy(Zvalue) {
-  let left = Zvalue;
-  const occ = ORBITAL_ORDER.map(o => ({ n: o.n, l: o.l, max: o.max, e: 0 }));
-  for (const slot of occ) {
-    if (left <= 0) break;
-    const add = Math.min(slot.max, left);
-    slot.e = add;
-    left -= add;
-  }
-  return occ;
-}
-
-function configToString(occ) {
-  return occ.filter(x => x.e > 0).map(x => `${x.n}${x.l}${x.e === x.max ? `<sup>${x.e}</sup>` : `<sup>${x.e}</sup>`}`).join(' ');
-}
-
-function configToColoredString(occ) {
-  if (occ.reduce((sum, o) => sum + o.e, 0) === 0) return '';
-  return occ.filter(x => x.e > 0)
-    .map(x => `<span class="config-part-${x.l}">${x.n}${x.l}<sup>${x.e}</sup></span>`)
-    .join(' ');
-}
-
-// Notació amb gas noble abreujada
 const NOBLE_GASES = [
   { Z: 2, s: 'He' },
   { Z: 10, s: 'Ne' },
@@ -646,279 +313,418 @@ const NOBLE_GASES = [
   { Z: 86, s: 'Rn' },
 ];
 
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const SHELL_CAPACITY = new Map();
+ORBITAL_ORDER.forEach((orb) => {
+  SHELL_CAPACITY.set(orb.n, (SHELL_CAPACITY.get(orb.n) || 0) + orb.max);
+});
+const SHELL_LIST = Array.from(SHELL_CAPACITY.entries())
+  .sort((a, b) => a[0] - b[0])
+  .map(([n, max]) => ({ n, max }));
+const SHELL_SP_ORBITALS = new Map();
+ORBITAL_ORDER.forEach((orb, index) => {
+  if (orb.l === 's' || orb.l === 'p') {
+    if (!SHELL_SP_ORBITALS.has(orb.n)) SHELL_SP_ORBITALS.set(orb.n, {});
+    SHELL_SP_ORBITALS.get(orb.n)[orb.l] = index;
+  }
+});
+const SHELL_BASE_RADIUS = 58;
+const SHELL_RADIUS_STEP = 18;
+const SHELL_CENTER = 180;
+const SHELL_BADGE_RADIUS = 14;
+
+const INDEX_BY_NL = new Map();
+ORBITAL_ORDER.forEach((o, i) => INDEX_BY_NL.set(`${o.n}|${o.l}`, i));
+
+// Selecció d'elements del DOM
+const $count = document.getElementById('electron-count');
+const $configNoble = document.getElementById('config-noble');
+const $configException = document.getElementById('config-exception');
+const $diagram = document.getElementById('orbital-diagram');
+const $periodicTable = document.getElementById('periodic-table');
+const $coords = document.getElementById('coords');
+const $elTitle = document.getElementById('el-title');
+const $atomVisual = document.getElementById('atom-visual');
+const $atomSymbol = document.getElementById('atom-symbol');
+const $atomName = document.getElementById('atom-name');
+const $atomNumber = document.getElementById('atom-number');
+const $atomNucleusText = document.getElementById('atom-nucleus-text');
+const $atomShellGroup = document.getElementById('atom-shell-group');
+const $atomShellBadges = document.getElementById('atom-shell-badges');
+const $atomShellList = document.getElementById('atom-shell-list');
+const $aufbauDisplay = document.getElementById('aufbau-config-display');
+const $oxidationStates = document.getElementById('oxidation-states');
+const $btnAdd = document.getElementById('add-electron');
+const $btnRemove = document.getElementById('remove-electron');
+const $btnReset = document.getElementById('reset');
+
+// Estat: nombre d'electrons (= Z de l'àtom neutre)
+let Z = 0;
+
+function setZ(value) {
+  const parsed = Math.floor(Number(value));
+  if (Number.isNaN(parsed)) return;
+  Z = Math.max(0, Math.min(MAX_ELECTRONS, parsed));
+  updateAll();
+}
+
+// Construcció inicial
+buildOrbitalDiagram();
+buildPeriodicTable();
+updateAll();
+
+// Esdeveniments
+$btnAdd.addEventListener('click', () => setZ(Z + 1));
+$btnRemove.addEventListener('click', () => setZ(Z - 1));
+$btnReset.addEventListener('click', () => setZ(0));
+
+document.addEventListener('keydown', (ev) => {
+  if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+  if (ev.key === 'ArrowRight' || ev.key === '+') { ev.preventDefault(); setZ(Z + 1); }
+  else if (ev.key === 'ArrowLeft' || ev.key === '-') { ev.preventDefault(); setZ(Z - 1); }
+});
+
+// Clic sobre un punt: s'emplena fins a aquell electró (o es treu si ja era l'últim)
+$diagram.addEventListener('click', (ev) => {
+  const dot = ev.target.closest('.dot');
+  if (dot) {
+    const electron = Number(dot.dataset.electron);
+    setZ(electron === Z ? electron - 1 : electron);
+    return;
+  }
+  // Clic sobre la càpsula: omple l'orbital sencer o, si ja és ple, el buida
+  const pair = ev.target.closest('.dot-pair');
+  if (!pair) return;
+  const electrons = Array.from(pair.querySelectorAll('.dot')).map((d) => Number(d.dataset.electron));
+  const top = Math.max(...electrons);
+  setZ(Z >= top ? Math.min(...electrons) - 1 : top);
+});
+
+// Funcions de vista i lògica
+
+function buildOrbitalDiagram() {
+  const blocks = ['s', 'p', 'd', 'f'];
+  const grid = document.createElement('div');
+  grid.className = 'orbital-grid';
+
+  const corner = document.createElement('div');
+  corner.className = 'og-label og-label-blank';
+  grid.appendChild(corner);
+
+  blocks.forEach((block) => {
+    const header = document.createElement('div');
+    header.className = 'og-label';
+    header.dataset.block = block;
+    header.innerHTML = `<span class="label-word">Bloc&nbsp;</span>${block}`;
+    grid.appendChild(header);
+  });
+
+  for (let n = 1; n <= 7; n++) {
+    const rowLabel = document.createElement('div');
+    rowLabel.className = 'row-label';
+    rowLabel.innerHTML = `<span class="row-word">Capa&nbsp;</span>${n}`;
+    rowLabel.dataset.shell = String(n);
+    rowLabel.title = `Capa ${n} (n = ${n})`;
+    grid.appendChild(rowLabel);
+
+    for (const l of blocks) {
+      const oi = INDEX_BY_NL.get(`${n}|${l}`);
+      const cell = document.createElement('div');
+      cell.className = `og-cell ${l}`;
+
+      if (oi !== undefined) {
+        cell.classList.add('has');
+        const o = ORBITAL_ORDER[oi];
+        const start = ORBITAL_PREFIX_SUMS[oi];
+        const orbitals = o.max / 2;
+        const dots = document.createElement('div');
+        dots.className = 'dots';
+
+        for (let k = 0; k < orbitals; k++) {
+          const pair = document.createElement('div');
+          pair.className = 'dot-pair empty';
+          pair.title = `Orbital ${n}${l}`;
+          // Regla de Hund: primer un electró a cada orbital (spin ↑) i després s'aparellen (spin ↓)
+          for (let spin = 0; spin < 2; spin++) {
+            const electron = start + spin * orbitals + k + 1;
+            const d = document.createElement('span');
+            d.className = 'dot';
+            d.dataset.electron = String(electron);
+            d.title = `Electró ${electron} · ${n}${l} ${spin === 0 ? '↑' : '↓'}`;
+            pair.appendChild(d);
+          }
+          dots.appendChild(pair);
+        }
+        cell.appendChild(dots);
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  $diagram.innerHTML = '';
+  $diagram.appendChild(grid);
+}
+
+function buildPeriodicTable() {
+  $periodicTable.innerHTML = '';
+  const place = (node, row, col, span = 1) => {
+    node.style.gridRow = String(row);
+    node.style.gridColumn = span > 1 ? `${col} / span ${span}` : String(col);
+    $periodicTable.appendChild(node);
+  };
+  const label = (cls, text, row, col, span) => {
+    const node = document.createElement('div');
+    node.className = cls;
+    node.textContent = text;
+    node.setAttribute('aria-hidden', 'true');
+    place(node, row, col, span);
+  };
+
+  // Fila 1: grups; columna 1: períodes
+  for (let g = 1; g <= 18; g++) label('pt-group', String(g), 1, g + 1);
+  for (let p = 1; p <= 7; p++) label('pt-period', String(p), p + 1, 1);
+
+  // Taula principal (sense el bloc f, excepte La i Ac al grup 3)
+  ELEMENTS
+    .filter((e) => !(isLanthanide(e.Z) || isActinide(e.Z)))
+    .forEach((e) => place(makeElementTile(e, 'main'), e.period + 1, e.group + 1));
+
+  // Files del bloc f, alineades sota el grup 3
+  label('pt-series-label', 'Lantànids', 10, 1, 3);
+  label('pt-series-label', 'Actínids', 11, 1, 3);
+  for (let i = 0; i <= 14; i++) {
+    place(makeElementTile(findElementByZ(57 + i), 'f'), 10, 4 + i);
+    place(makeElementTile(findElementByZ(89 + i), 'f'), 11, 4 + i);
+  }
+}
+
+function makeElementTile(e, region) {
+  const tile = document.createElement('button');
+  tile.type = 'button';
+  tile.className = `element-tile ${e.block}`;
+  tile.id = `el-${region}-${e.Z}`;
+  tile.title = `${e.name} · Z = ${e.Z}`;
+  tile.setAttribute('aria-label', `${e.name}, Z ${e.Z}`);
+  tile.innerHTML = `<span class="Z">${e.Z}</span><span class="symbol">${e.s}</span>`;
+  tile.addEventListener('click', () => setZ(e.Z));
+  return tile;
+}
+
+function isLanthanide(z) { return z >= 58 && z <= 71; }
+function isActinide(z) { return z >= 90 && z <= 103; }
+
+function computeOccupancy(Zvalue) {
+  let left = Zvalue;
+  return ORBITAL_ORDER.map((o) => {
+    const e = Math.max(0, Math.min(o.max, left));
+    left -= e;
+    return { n: o.n, l: o.l, max: o.max, e };
+  });
+}
+
+function configToColoredString(occ) {
+  return occ.filter((x) => x.e > 0)
+    .map((x) => `<span class="config-part-${x.l}">${x.n}${x.l}<sup>${x.e}</sup></span>`)
+    .join(' ');
+}
+
 function nobleCore(Zvalue) {
-  // Retorna el gas noble immediatament inferior (Z < Zvalue). Si no n'hi ha, null.
+  // Gas noble immediatament anterior (Z < Zvalue); null si no n'hi ha
   let core = null;
   for (const g of NOBLE_GASES) {
     if (g.Z < Zvalue) core = g; else break;
   }
-  return core; // null si Zvalue <= 2
+  return core;
 }
 
 function configToNobleString(Zvalue) {
   const core = nobleCore(Zvalue);
-  if (!core) return '';
+  if (!core) return null;
   const occ = computeOccupancy(Zvalue);
   const occCore = computeOccupancy(core.Z);
-  const remainder = occ.map((o, i) => ({ ...o, e: Math.max(0, o.e - occCore[i].e) }));
-  const remText = remainder.filter(x => x.e > 0).map(x => `${x.n}${x.l}<sup>${x.e}</sup>`).join(' ');
-  return remText ? `[${core.s}] ${remText}` : `[${core.s}]`;
+  const remText = occ
+    .map((o, i) => ({ ...o, e: o.e - occCore[i].e }))
+    .filter((x) => x.e > 0)
+    .map((x) => `${x.n}${x.l}<sup>${x.e}</sup>`)
+    .join(' ');
+  return `[${core.s}] ${remText}`;
+}
+
+function formatSubshells(text) {
+  return text.split(' ').map((part) => part.replace(/^(\d[spdf])(\d+)$/, '$1<sup>$2</sup>')).join(' ');
 }
 
 function computeShellSummary(occupancy) {
-  const shells = SHELL_LIST.map(shell => ({ ...shell, electrons: 0 }));
-  occupancy.forEach(slot => {
-    const idx = SHELL_INDEX.get(slot.n);
-    if (idx === undefined) return;
-    shells[idx].electrons += slot.e;
-  });
-  let lastIndex = -1;
-  shells.forEach((shell, idx) => {
-    if (shell.electrons > 0) lastIndex = idx;
-  });
-  return lastIndex >= 0 ? shells.slice(0, lastIndex + 1) : [];
+  const shells = SHELL_LIST.map((shell) => ({ ...shell, electrons: 0 }));
+  occupancy.forEach((slot) => { shells[slot.n - 1].electrons += slot.e; });
+  let last = -1;
+  shells.forEach((shell, idx) => { if (shell.electrons > 0) last = idx; });
+  return shells.slice(0, last + 1);
 }
 
 function updateAtomVisual(occData, element) {
-  if (!$atomShellGroup || !$atomSymbol || !$atomName || !$atomNumber || !$atomVisual) return;
   const shells = computeShellSummary(occData);
-  const totalElectrons = occData.reduce((sum, slot) => sum + slot.e, 0);
   $atomShellGroup.innerHTML = '';
-  if ($atomShellBadges) $atomShellBadges.innerHTML = '';
-  if ($atomShellList) $atomShellList.innerHTML = '';
+  $atomShellBadges.innerHTML = '';
+  $atomShellList.innerHTML = '';
 
   if (shells.length === 0) {
-    if ($atomShellList) {
-      const emptyItem = document.createElement('li');
-      emptyItem.className = 'shell-item empty';
-      emptyItem.textContent = totalElectrons === 0 ? 'Encara no hi ha electrons assignats' : 'Sense capes actives';
-      $atomShellList.appendChild(emptyItem);
-    }
-  } else {
-    shells.forEach((shell, idx) => {
-      const radius = SHELL_BASE_RADIUS + idx * SHELL_RADIUS_STEP;
-      const isFull = shell.electrons >= shell.max;
-      const badgeState = isFull ? 'full' : 'partial';
-
-      const circle = document.createElementNS(SVG_NS, 'circle');
-      circle.setAttribute('cx', SHELL_CENTER);
-      circle.setAttribute('cy', SHELL_CENTER);
-      circle.setAttribute('r', String(radius));
-      circle.setAttribute('data-shell', String(shell.n));
-      circle.classList.add('atom-shell-circle', badgeState);
-      $atomShellGroup.appendChild(circle);
-
-      if ($atomShellBadges) {
-        const badgeGroup = document.createElementNS(SVG_NS, 'g');
-        badgeGroup.setAttribute('data-shell', String(shell.n));
-
-        const badgeCircle = document.createElementNS(SVG_NS, 'circle');
-        badgeCircle.classList.add('shell-badge', badgeState);
-        badgeCircle.setAttribute('cx', SHELL_CENTER);
-        badgeCircle.setAttribute('cy', String(SHELL_CENTER - radius));
-        badgeCircle.setAttribute('r', String(SHELL_BADGE_RADIUS));
-
-        const badgeText = document.createElementNS(SVG_NS, 'text');
-        badgeText.classList.add('shell-badge-text', badgeState);
-        badgeText.setAttribute('x', SHELL_CENTER);
-        badgeText.setAttribute('y', String(SHELL_CENTER - radius));
-        badgeText.setAttribute('dominant-baseline', 'middle');
-        badgeText.textContent = String(shell.electrons);
-
-        badgeGroup.appendChild(badgeCircle);
-        badgeGroup.appendChild(badgeText);
-        $atomShellBadges.appendChild(badgeGroup);
-      }
-
-      if ($atomShellList) {
-        const item = document.createElement('li');
-        item.className = `shell-item ${badgeState}`;
-
-        const indexSpan = document.createElement('span');
-        indexSpan.className = 'shell-index';
-        indexSpan.textContent = `Capa ${shell.n}`;
-
-        const countSpan = document.createElement('span');
-        countSpan.className = 'shell-count';
-        countSpan.textContent = `${shell.electrons}/${shell.max} electrons`;
-
-        item.appendChild(indexSpan);
-        item.appendChild(countSpan);
-
-        if (!isFull) {
-          const noteSpan = document.createElement('span');
-          noteSpan.className = 'shell-note';
-          noteSpan.textContent = `${shell.max - shell.electrons} per completar`;
-          item.appendChild(noteSpan);
-        }
-
-        $atomShellList.appendChild(item);
-      }
-    });
+    const emptyItem = document.createElement('li');
+    emptyItem.className = 'shell-item empty';
+    emptyItem.textContent = 'Encara no hi ha electrons. Prem «+ electró» o tria un element.';
+    $atomShellList.appendChild(emptyItem);
   }
 
-  const hasElement = Boolean(element);
-  const symbol = hasElement ? element.s : '–';
-  const displayName = hasElement ? (element.name || element.s) : 'Cap element';
-  
-  $atomSymbol.textContent = symbol;
-  $atomName.textContent = displayName;
-  $atomNumber.textContent = `Z = ${totalElectrons}`;
+  shells.forEach((shell, idx) => {
+    const radius = SHELL_BASE_RADIUS + idx * SHELL_RADIUS_STEP;
+    const state = shell.electrons >= shell.max ? 'full' : 'partial';
 
-  // Reset classes and apply new ones
-  $atomSymbol.className = 'atom-core-symbol';
-  $atomNumber.className = 'atom-core-number';
-  $atomName.className = 'atom-core-name';
-  if (hasElement) {
-    $atomSymbol.classList.add(`color-${element.block}`);
-    $atomNumber.classList.add(`color-${element.block}`);
-    $atomName.classList.add(`color-${element.block}`);
-  }
+    const circle = document.createElementNS(SVG_NS, 'circle');
+    circle.setAttribute('cx', SHELL_CENTER);
+    circle.setAttribute('cy', SHELL_CENTER);
+    circle.setAttribute('r', String(radius));
+    circle.classList.add('atom-shell-circle', state);
+    $atomShellGroup.appendChild(circle);
 
-  if ($atomVisual) {
-    const shellLabel = shells.length === 0 ? 'cap capa activa' : shells.length === 1 ? '1 capa' : `${shells.length} capes`;
-    const electronsLabel = totalElectrons === 1 ? '1 electró' : `${totalElectrons} electrons`;
-    const shellDetails = shells.length
-      ? shells.map(shell => `n=${shell.n} (${shell.electrons}/${shell.max})`).join(', ')
-      : 'sense capes actives';
-    const ariaParts = hasElement
-      ? [`tom de ${displayName}`, electronsLabel, shellLabel, shellDetails]
-      : [electronsLabel, shellDetails];
-    $atomVisual.setAttribute('aria-label', ariaParts.join('. '));
-  }
+    // Les etiquetes es reparteixen en angles diferents perquè no se solapin
+    const angle = (-90 + idx * 38) * Math.PI / 180;
+    const bx = SHELL_CENTER + radius * Math.cos(angle);
+    const by = SHELL_CENTER + radius * Math.sin(angle);
+    const badge = document.createElementNS(SVG_NS, 'circle');
+    badge.classList.add('shell-badge', state);
+    badge.setAttribute('cx', bx.toFixed(1));
+    badge.setAttribute('cy', by.toFixed(1));
+    badge.setAttribute('r', String(SHELL_BADGE_RADIUS));
+    const text = document.createElementNS(SVG_NS, 'text');
+    text.classList.add('shell-badge-text');
+    text.setAttribute('x', bx.toFixed(1));
+    text.setAttribute('y', by.toFixed(1));
+    text.textContent = String(shell.electrons);
+    $atomShellBadges.append(badge, text);
+
+    const item = document.createElement('li');
+    item.className = `shell-item ${state}`;
+    const missing = shell.max - shell.electrons;
+    item.innerHTML = `<span class="shell-index">Capa ${shell.n}</span>`
+      + `<span class="shell-count">${shell.electrons}/${shell.max} e⁻${state === 'partial' ? ` <span class="shell-note">· falten ${missing}</span>` : ''}</span>`;
+    $atomShellList.appendChild(item);
+  });
+
+  const block = element ? element.block : null;
+  $atomSymbol.textContent = element ? element.s : '—';
+  $atomName.textContent = element ? element.name : 'Cap element';
+  $atomNumber.textContent = `Z = ${Z}`;
+  $atomNucleusText.textContent = Z > 0 ? `${Z}+` : '';
+  [$atomSymbol, $atomName, $atomNumber].forEach((node) => {
+    node.classList.remove('color-s', 'color-p', 'color-d', 'color-f');
+    if (block) node.classList.add(`color-${block}`);
+  });
+
+  const electronsLabel = Z === 1 ? '1 electró' : `${Z} electrons`;
+  const shellDetails = shells.length
+    ? shells.map((shell) => `capa ${shell.n}: ${shell.electrons} de ${shell.max}`).join(', ')
+    : 'sense capes actives';
+  const parts = element ? [`Àtom de ${element.name}`, electronsLabel, shellDetails] : [electronsLabel, shellDetails];
+  $atomVisual.setAttribute('aria-label', parts.join('. '));
 }
 
 function formatOxidationState(value) {
-  if (Number.isNaN(value)) return '';
-  if (value > 0) return `+${value}`;
-  if (value < 0) return `${value}`;
-  return '0';
+  return value > 0 ? `+${value}` : String(value);
 }
 
 function updateShellOctetState(occArr) {
-  if (!Array.isArray(occArr)) return;
   SHELL_SP_ORBITALS.forEach((orbitals, shellNumber) => {
-    const label = document.querySelector(`.row-label[data-shell="${shellNumber}"]`);
+    const label = $diagram.querySelector(`.row-label[data-shell="${shellNumber}"]`);
     if (!label) return;
-    const sIndex = orbitals.s;
-    const pIndex = orbitals.p;
-    const hasFullS = typeof sIndex === 'number' && occArr[sIndex] && occArr[sIndex].e === occArr[sIndex].max;
-    const hasFullP = typeof pIndex === 'number' && occArr[pIndex] && occArr[pIndex].e === occArr[pIndex].max;
-    const hasOctet = hasFullS && (typeof pIndex !== 'number' ? true : hasFullP);
-    label.classList.toggle('row-label-octet', hasOctet);
+    const full = (i) => i === undefined || occArr[i].e === occArr[i].max;
+    label.classList.toggle('row-label-octet', full(orbitals.s) && full(orbitals.p));
   });
 }
 
 function updateOxidationStates(element) {
-  if (!$oxidationStates) return;
   if (!element) {
-    $oxidationStates.innerHTML = '<span class="oxidation-placeholder">Selecciona un element per veure les valències d\'oxidació</span>';
+    $oxidationStates.innerHTML = '<span class="oxidation-placeholder">Tria un element per veure els seus nombres d\'oxidació</span>';
     return;
   }
   const data = OXIDATION_DATA.get(element.Z);
-  if (!data) {
+  if (!data || data.states.length === 0) {
     $oxidationStates.innerHTML = '<span class="oxidation-placeholder">Sense dades disponibles per a aquest element</span>';
     return;
   }
-  const { states, common } = data;
-  if (!states || states.length === 0) {
-    $oxidationStates.innerHTML = '<span class="oxidation-placeholder">Sense valències conegudes</span>';
-    return;
-  }
-  const commonSet = new Set(common);
-  const chips = states.map((state) => {
-    const classes = ['oxidation-chip'];
-    if (state > 0) classes.push('positive');
-    else if (state < 0) classes.push('negative');
-    else classes.push('zero');
+  const commonSet = new Set(data.common);
+  $oxidationStates.innerHTML = data.states.map((state) => {
+    const classes = ['oxidation-chip', state > 0 ? 'positive' : state < 0 ? 'negative' : 'zero'];
     if (commonSet.has(state)) classes.push('common');
-    const title = commonSet.has(state) ? 'València habitual' : 'València menys freqüent';
+    const title = commonSet.has(state) ? 'Nombre d\'oxidació habitual' : 'Nombre d\'oxidació menys freqüent';
     return `<span class="${classes.join(' ')}" title="${title}">${formatOxidationState(state)}</span>`;
   }).join('');
-  if (!chips) {
-    $oxidationStates.innerHTML = '<span class="oxidation-placeholder">Sense valències disponibles</span>';
-    return;
-  }
-  $oxidationStates.innerHTML = chips;
 }
 
 function updateOrbitalDiagram(occ) {
-  // neteja i emplena puntets
-  const allDots = $diagram.querySelectorAll('.dot');
-  allDots.forEach(d => d.classList.remove('filled','next'));
-  occ.forEach((o, oi) => {
-    const dots = $diagram.querySelectorAll(`.dot[data-oi="${oi}"]`);
-    dots.forEach((d, idx) => { if (idx < o.e) d.classList.add('filled'); });
-    const pairCount = Math.ceil(o.max / 2);
-    for (let pairIndex = 0; pairIndex < pairCount; pairIndex++) {
-      const pair = $diagram.querySelector(`.dot-pair[data-oi="${oi}"][data-pi="${pairIndex}"]`);
-      if (!pair) continue;
-      pair.classList.remove('full', 'partial', 'empty');
-      const electronsInPair = Math.max(0, Math.min(2, o.e - pairIndex * 2));
-      const pairCapacity = Math.min(2, o.max - pairIndex * 2);
-      if (electronsInPair === 0) pair.classList.add('empty');
-      else if (electronsInPair >= pairCapacity) pair.classList.add('full');
-      else pair.classList.add('partial');
-    }
+  $diagram.querySelectorAll('.dot').forEach((d) => {
+    const electron = Number(d.dataset.electron);
+    d.classList.toggle('filled', electron <= Z);
+    d.classList.toggle('next', electron === Z + 1);
+  });
+  $diagram.querySelectorAll('.dot-pair').forEach((pair) => {
+    const filled = pair.querySelectorAll('.dot.filled').length;
+    pair.classList.remove('full', 'partial', 'empty');
+    pair.classList.add(filled === 2 ? 'full' : filled === 1 ? 'partial' : 'empty');
   });
   updateShellOctetState(occ);
-  const next = getNextSlot(occ);
-  if (next) {
-    const d = $diagram.querySelector(`.dot[data-oi="${next.oi}"][data-ei="${next.ei}"]`);
-    if (d) d.classList.add('next');
+}
+
+function updateConfiguration(occ, element) {
+  $aufbauDisplay.innerHTML = Z === 0 ? '<span class="oxidation-placeholder">—</span>' : configToColoredString(occ);
+  const noble = configToNobleString(Z);
+  $configNoble.innerHTML = noble || '—';
+
+  const real = element ? REAL_CONFIG.get(element.Z) : null;
+  $configException.hidden = !real;
+  if (real) {
+    $configException.innerHTML = `<strong>Excepció:</strong> la configuració real (experimental) ${withDe(element.name)} és `
+      + `<strong>[${real.core}] ${formatSubshells(real.rest)}</strong>.`
+      + (real.stable ? ' Un subnivell d semiple o ple és especialment estable.' : ' L\'ordre d\'Aufbau és una aproximació.');
   }
+}
+
+// «del crom», «de l'or»
+function withDe(name) {
+  const lower = name.toLowerCase();
+  return /^[aeiouàèéíòóú]/.test(lower) ? `de l'${lower}` : `del ${lower}`;
 }
 
 function findElementByZ(z) {
-  return ELEMENTS.find(e => e.Z === z) || null;
+  return ELEMENTS.find((e) => e.Z === z) || null;
 }
 
 function highlightElement(el) {
-  // Treu selecció prèvia
-  document.querySelectorAll('.element-tile.selected').forEach(n => n.classList.remove('selected'));
+  document.querySelectorAll('.element-tile.selected').forEach((n) => n.classList.remove('selected'));
   if (!el) return;
-
-  // Decideix on ressaltar
-  const isLn = isLanthanide(el.Z) || el.Z === 57; // incloem La a la fila f també
-  const isAn = isActinide(el.Z) || el.Z === 89;   // incloem Ac a la fila f també
-
-  // Principal
-  const main = document.getElementById(`el-main-${el.Z}`);
-  if (main) main.classList.add('selected');
-
-  // f-bloc: si sescau
-  if (isLn) {
-    const t = document.getElementById(`el-f-${el.Z}`);
-    if (t) t.classList.add('selected');
-  }
-  if (isAn) {
-    const t = document.getElementById(`el-f-${el.Z}`);
-    if (t) t.classList.add('selected');
-  }
+  ['main', 'f'].forEach((region) => {
+    const tile = document.getElementById(`el-${region}-${el.Z}`);
+    if (tile) tile.classList.add('selected');
+  });
 }
 
 function coordsText(el) {
-  if (!el) return '–';
   if (el.block === 'f') {
-    const serie = el.period === 6 ? 'lantànids' : el.period === 7 ? 'actínids' : 'bloc f';
-    return `període ${el.period} · bloc f (${serie})${el.group ? ` · grup ${el.group}` : ''}`;
+    return `període ${el.period} · bloc f (${el.period === 6 ? 'lantànids' : 'actínids'})`;
   }
-  return `període ${el.period} · grup ${el.group}`;
+  return `període ${el.period} · grup ${el.group} · bloc ${el.block}`;
 }
 
 function updateAll() {
-  // Estat de comptador i element
-  $count.textContent = String(Z);
   const occ = computeOccupancy(Z);
-  $configFull.innerHTML = Z === 0 ? '–' : configToString(occ);
-  $configNoble.innerHTML = Z === 0 ? '–' : configToNobleString(Z);
-  updateOrbitalDiagram(occ);
-
   const el = findElementByZ(Z);
-  $elTitle.textContent = el ? `${el.Z} · ${el.s}` : '';
-  $coords.textContent = el ? coordsText(el) : '';
+  $count.textContent = String(Z);
+  $btnRemove.disabled = Z === 0;
+  $btnAdd.disabled = Z === MAX_ELECTRONS;
+  updateOrbitalDiagram(occ);
+  $elTitle.textContent = el ? `${el.name} (${el.s}, Z = ${el.Z})` : '—';
+  $coords.textContent = el ? coordsText(el) : '—';
   updateAtomVisual(occ, el);
   highlightElement(el);
   updateOxidationStates(el);
-  if ($aufbauDisplay) $aufbauDisplay.innerHTML = configToColoredString(occ);
+  updateConfiguration(occ, el);
 }

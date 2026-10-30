@@ -4,116 +4,106 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Configuració electrònica · orbitals i taula periòdica</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=4" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   </head>
   <body>
     <header class="app-header">
       <h1>Configuració electrònica</h1>
-      <p class="subtitle">Emplenament d'orbitals i posició a la Taula Periòdica</p>
+      <p class="subtitle">Emplenament d'orbitals i posició a la taula periòdica</p>
+      <p class="keys-hint" aria-hidden="true"><kbd>←</kbd> <kbd>→</kbd> treu o afegeix electrons</p>
     </header>
 
     <main class="layout">
       <!-- Panell esquerre: orbitals -->
-      <section class="panel" id="orbitals-panel">
+      <section class="panel" id="orbitals-panel" aria-labelledby="orbitals-title">
         <div class="panel-header">
-          <h2>Emplenament d'orbitals</h2>
+          <h2 id="orbitals-title">Emplenament d'orbitals</h2>
           <div class="controls">
-            <button id="remove-electron" class="btn btn-secondary btn-electron" title="Treure 1 electró">− electró</button>
-            <button id="add-electron" class="btn btn-primary btn-electron" title="Afegir 1 electró">+ electró</button>
-            <button id="reset" class="btn" title="Reiniciar">reinicia</button>
+            <button id="remove-electron" class="btn btn-secondary btn-electron" type="button" title="Treure 1 electró (tecla ←)">− electró</button>
+            <span class="electron-counter" aria-live="polite"><span id="electron-count">0</span> e⁻</span>
+            <button id="add-electron" class="btn btn-primary btn-electron" type="button" title="Afegir 1 electró (tecla →)">+ electró</button>
+            <button id="reset" class="btn btn-reset" type="button" title="Treure tots els electrons">reinicia</button>
           </div>
         </div>
 
-        <div class="status">
-          <div><strong>Electrons:</strong> <span id="electron-count">0</span></div>
-          <div class="status-config"><strong>Configuració completa:</strong> <span id="config-full">—</span></div>
-          <div class="status-config"><strong>Notació amb gas noble:</strong> <span id="config-noble">—</span></div>
+        <div class="orbital-scroll">
+          <div id="orbital-diagram" class="orbital-diagram"></div>
         </div>
+        <p class="panel-hint">Cada càpsula és un orbital (màxim 2 electrons). Els electrons ocupen primer un orbital cadascun i després s'aparellen (regla de Hund). Fes clic en un punt per arribar fins a aquell electró.</p>
 
-        <div class="orbital-stage">
-          <div id="orbital-diagram" class="orbital-diagram" aria-live="polite"></div>
-
-          <div class="atom-wrapper">
-            <div class="atom-visual" id="atom-visual" role="img" aria-live="polite" aria-label="Representació esquemàtica de l'àtom seleccionat">
-              <svg id="atom-svg" class="atom-svg" viewBox="0 0 360 360" role="presentation" focusable="false">
-                <g id="atom-shell-group"></g>
-                <circle id="atom-nucleus" class="atom-nucleus-circle" cx="180" cy="180" r="44"></circle>
-                <g id="atom-shell-badges"></g>
-              </svg>
-            </div>
-            <div class="atom-core-label">
-              <span id="atom-symbol" class="atom-core-symbol">—</span>
-              <span id="atom-name" class="atom-core-name">Cap element</span>
-              <span id="atom-number" class="atom-core-number">Z = 0</span>
-            </div>
-            <ul class="atom-shell-list" id="atom-shell-list" aria-live="polite" aria-label="Electrons per capa"></ul>
-            <p class="atom-hint">Verd: capa plena · Rosa: capa en curs</p>
+        <div class="atom-stage">
+          <div class="atom-visual" id="atom-visual" role="img" aria-label="Representació esquemàtica de l'àtom seleccionat">
+            <svg id="atom-svg" class="atom-svg" viewBox="0 0 360 360" focusable="false" aria-hidden="true">
+              <g id="atom-shell-group"></g>
+              <circle id="atom-nucleus" class="atom-nucleus-circle" cx="180" cy="180" r="38"></circle>
+              <text id="atom-nucleus-text" class="atom-nucleus-text" x="180" y="181"></text>
+              <g id="atom-shell-badges"></g>
+            </svg>
+          </div>
+          <div class="atom-core-label">
+            <span id="atom-symbol" class="atom-core-symbol">—</span>
+            <span id="atom-name" class="atom-core-name">Cap element</span>
+            <span id="atom-number" class="atom-core-number">Z = 0</span>
+          </div>
+          <div class="atom-shells">
+            <ul class="atom-shell-list" id="atom-shell-list" aria-label="Electrons per capa"></ul>
+            <p class="atom-hint"><span class="hint-full">Verd</span>: capa plena · <span class="hint-partial">rosa</span>: capa en curs</p>
           </div>
         </div>
-
       </section>
 
       <!-- Panell dret: taula periòdica -->
-      <section class="panel" id="periodic-panel">
+      <section class="panel" id="periodic-panel" aria-labelledby="periodic-title">
         <div class="panel-header">
-          <h2>Taula periòdica</h2>
-        </div>
-
-        <div class="status">
-          <div><strong>Element:</strong> <span id="el-title">—</span></div>
-          <div><strong>Coordenades:</strong> <span id="coords">—</span></div>
+          <h2 id="periodic-title">Taula periòdica</h2>
+          <div class="status" aria-live="polite">
+            <span><strong>Element:</strong> <span id="el-title">—</span></span>
+            <span><strong>Posició:</strong> <span id="coords">—</span></span>
+          </div>
         </div>
 
         <div class="legend">
           <span class="legend-item s">bloc s</span>
           <span class="legend-item d">bloc d</span>
           <span class="legend-item p">bloc p</span>
-          <span class="legend-item f">bloc f (lantànids/actínids)</span>
+          <span class="legend-item f">bloc f (lantànids i actínids)</span>
         </div>
 
-        <div class="periodic-area">
-          <div class="corner"></div>
-          <div id="group-header" class="group-header" aria-hidden="true"></div>
-          <div id="period-labels" class="period-labels" aria-hidden="true"></div>
-          <div class="periodic-wrapper">
-            <div id="periodic-main" class="periodic-grid" aria-label="Taula periòdica principal"></div>
-            
-            <span class="f-label f-label-lan">Lantànids</span>
-            <div id="periodic-f-lan" class="periodic-f-grid" aria-label="Lantànids"></div>
-            
-            <span class="f-label f-label-act">Actínids</span>
-            <div id="periodic-f-act" class="periodic-f-grid" aria-label="Actínids"></div>
+        <div class="periodic-scroll">
+          <div id="periodic-table" class="periodic-table" aria-label="Taula periòdica: tria un element"></div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-block">
+            <h3 class="info-title">Configuració electrònica (ordre d'Aufbau)</h3>
+            <div id="aufbau-config-display" class="aufbau-display"></div>
+            <div class="noble-display"><strong>Abreujada:</strong> <span id="config-noble">—</span></div>
+            <p id="config-exception" class="config-exception" hidden></p>
           </div>
-        </div>
-
-        <div class="aufbau-display-wrapper">
-          <h3 class="aufbau-title">Configuració d'Aufbau</h3>
-          <div id="aufbau-config-display" class="aufbau-display"></div>
-        </div>
-
-        <div class="oxidation-wrapper">
-          <h3 class="oxidation-title">Valències d'oxidació</h3>
-          <div id="oxidation-states" class="oxidation-states" aria-live="polite"></div>
+          <div class="info-block">
+            <h3 class="info-title">Nombres d'oxidació (valències)</h3>
+            <div id="oxidation-states" class="oxidation-states" aria-live="polite"></div>
+            <p class="oxidation-legend"><span class="oxidation-chip common mini">+n</span> més habituals</p>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="app-footer">
-      <div class="footer-credit">
-        <span class="footer-author">Aplicació creada per Felip Sarroca amb l'assistència de la IA</span>
-        <div class="footer-license">
-          <span class="license-text">Obra sota llicència <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></span>
-          <span class="license-icons" aria-hidden="true">
-            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" class="license-icon" loading="lazy" />
-            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" class="license-icon" loading="lazy" />
-            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" class="license-icon" loading="lazy" />
-          </span>
-        </div>
+    <footer class="felip-app-footer">
+      <a class="felip-license-image-link"
+         href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image" src="assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA" width="88" height="31">
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
       </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="enhancements.js"></script>
+    <script src="script.js?v=4"></script>
   </body>
 </html>
