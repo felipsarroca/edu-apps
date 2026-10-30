@@ -89,7 +89,7 @@ const ELEMENTS = [
   { Z:54, s:'Xe', period:5, group:18, block:'p', name:'Xenó' },
   { Z:55, s:'Cs', period:6, group:1,  block:'s', name:'Cesi' },
   { Z:56, s:'Ba', period:6, group:2,  block:'s', name:'Bari' },
-  { Z:57, s:'La', period:6, group:3,  block:'d', name:'Lantani' },
+  { Z:57, s:'La', period:6, group:3,  block:'f', name:'Lantani' },
   { Z:58, s:'Ce', period:6, group:3,  block:'f', name:'Ceri' },
   { Z:59, s:'Pr', period:6, group:3,  block:'f', name:'Praseodimi' },
   { Z:60, s:'Nd', period:6, group:3,  block:'f', name:'Neodimi' },
@@ -121,7 +121,7 @@ const ELEMENTS = [
   { Z:86, s:'Rn', period:6, group:18, block:'p', name:'Radó' },
   { Z:87, s:'Fr', period:7, group:1,  block:'s', name:'Franci' },
   { Z:88, s:'Ra', period:7, group:2,  block:'s', name:'Radi' },
-  { Z:89, s:'Ac', period:7, group:3,  block:'d', name:'Actini' },
+  { Z:89, s:'Ac', period:7, group:3,  block:'f', name:'Actini' },
   { Z:90, s:'Th', period:7, group:3,  block:'f', name:'Tori' },
   { Z:91, s:'Pa', period:7, group:3,  block:'f', name:'Protoactini' },
   { Z:92, s:'U',  period:7, group:3,  block:'f', name:'Urani' },
@@ -288,7 +288,7 @@ const REAL_CONFIG = new Map([
   [42, { core: 'Kr', rest: '4d5 5s1', stable: true }],
   [44, { core: 'Kr', rest: '4d7 5s1' }],
   [45, { core: 'Kr', rest: '4d8 5s1' }],
-  [46, { core: 'Kr', rest: '4d10' }],
+  [46, { core: 'Kr', rest: '4d10', stable: true }],
   [47, { core: 'Kr', rest: '4d10 5s1', stable: true }],
   [57, { core: 'Xe', rest: '5d1 6s2' }],
   [58, { core: 'Xe', rest: '4f1 5d1 6s2' }],
@@ -484,15 +484,15 @@ function buildPeriodicTable() {
   for (let g = 1; g <= 18; g++) label('pt-group', String(g), 1, g + 1);
   for (let p = 1; p <= 7; p++) label('pt-period', String(p), p + 1, 1);
 
-  // Taula principal (sense el bloc f, excepte La i Ac al grup 3)
+  // Taula principal (disposició IUPAC: Lu i Lr al grup 3; el bloc f, a part)
   ELEMENTS
     .filter((e) => !(isLanthanide(e.Z) || isActinide(e.Z)))
     .forEach((e) => place(makeElementTile(e, 'main'), e.period + 1, e.group + 1));
 
-  // Files del bloc f, alineades sota el grup 3
+  // Files del bloc f (La–Yb i Ac–No), alineades a partir del grup 3
   label('pt-series-label', 'Lantànids', 10, 1, 3);
   label('pt-series-label', 'Actínids', 11, 1, 3);
-  for (let i = 0; i <= 14; i++) {
+  for (let i = 0; i < 14; i++) {
     place(makeElementTile(findElementByZ(57 + i), 'f'), 10, 4 + i);
     place(makeElementTile(findElementByZ(89 + i), 'f'), 11, 4 + i);
   }
@@ -510,8 +510,8 @@ function makeElementTile(e, region) {
   return tile;
 }
 
-function isLanthanide(z) { return z >= 58 && z <= 71; }
-function isActinide(z) { return z >= 90 && z <= 103; }
+function isLanthanide(z) { return z >= 57 && z <= 70; }
+function isActinide(z) { return z >= 89 && z <= 102; }
 
 function computeOccupancy(Zvalue) {
   let left = Zvalue;
