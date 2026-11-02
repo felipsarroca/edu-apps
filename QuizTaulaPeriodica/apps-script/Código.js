@@ -130,14 +130,36 @@ function doPost(e) {
  */
 function netejaDuplicatsMillorTemps() {
   const lock = LockService.getScriptLock();
-  if (!lock.tryLock(30000)) throw new Error('No s’ha pogut obtenir el bloqueig per netejar els resultats.');
+  if (!lock.tryLock(30000)) {
+    // Un registre o una altra neteja està en curs: l'activador següent ho tornarà a provar.
+    console.warn('Neteja ajornada: el bloqueig és ocupat.');
+    return;
+  }
   try {
-    const sheet = obreFullAmbReintents().getSheetByName(SHEET_NAME);
-    if (!sheet) throw new Error(`No s'ha trobat la pestanya '${SHEET_NAME}'.`);
-    netejaResultats(sheet);
+    for (let intent = 1; intent <= 3; intent++) {
+      try {
+        const sheet = obreFullAmbReintents().getSheetByName(SHEET_NAME);
+        if (!sheet) throw new Error(`No s'ha trobat la pestanya '${SHEET_NAME}'.`);
+        netejaResultats(sheet);
+        return;
+      } catch (err) {
+        if (!esErrorTemporal(err)) throw err;
+        if (intent === 3) {
+          // Error intern de Google persistent: la neteja és idempotent i es repetirà a la propera execució.
+          console.warn(`Neteja ajornada per un error temporal de Google: ${err}`);
+          return;
+        }
+        Utilities.sleep(5000 * intent);
+      }
+    }
   } finally {
     lock.releaseLock();
   }
+}
+
+/** Errors transitoris dels servidors de Google que convé reintentar. */
+function esErrorTemporal(err) {
+  return /server error|service error|try again|timed out|temporar|internal error|service unavailable/i.test(String(err && err.message || err));
 }
 
 /** Reintenta errors temporals del servei de Fulls de càlcul. */
@@ -214,7 +236,14 @@ function netejaResultats(sheet) {
     }
   }
 
-  filesAEliminar.sort((a, b) => b - a).forEach(f => sheet.deleteRow(f));
+  // Esborra de baix a dalt agrupant files consecutives per reduir les crides al servei.
+  filesAEliminar.sort((a, b) => b - a);
+  for (let i = 0; i < filesAEliminar.length;) {
+    let j = i;
+    while (j + 1 < filesAEliminar.length && filesAEliminar[j + 1] === filesAEliminar[j] - 1) j++;
+    sheet.deleteRows(filesAEliminar[j], j - i + 1);
+    i = j + 1;
+  }
   if (filesAEliminar.length) sincronitzaHistoric(sheet, motius);
 }
 
@@ -294,16 +323,26 @@ function sincronitzaHistoric(sheet, motius = new Map()) {
   }
   if (nous.length) historic.getRange(historic.getLastRow() + 1, 1, nous.length, HISTORIC_HEADERS.length).setValues(nous);
 
+  // Tanca les marques sortides amb una sola escriptura per bloc de columnes (menys crides al servei).
   const ara = new Date();
+  if (registres.length < 2) return;
+  const sortides = registres.slice(1).map(fila => [fila[2] ?? '', fila[3] ?? '']);
+  const motiusSortida = registres.slice(1).map(fila => [fila[8] ?? '']);
+  let canvis = false;
   for (let i = 1; i < registres.length; i++) {
     const fila = registres[i];
     const id = String(fila[0]);
     if (!fila[2] && !actius.has(id)) {
       const entrada = fila[1] instanceof Date ? fila[1] : new Date(fila[1]);
       const dies = Number.isFinite(entrada.getTime()) ? Math.max(0, (ara - entrada) / 86400000) : '';
-      historic.getRange(i + 1, 3, 1, 2).setValues([[ara, dies]]);
-      historic.getRange(i + 1, 9).setValue(motius.get(id) || 'Sortida del rànquing');
+      sortides[i - 1] = [ara, dies];
+      motiusSortida[i - 1] = [motius.get(id) || 'Sortida del rànquing'];
+      canvis = true;
     }
+  }
+  if (canvis) {
+    historic.getRange(2, 3, sortides.length, 2).setValues(sortides);
+    historic.getRange(2, 9, motiusSortida.length, 1).setValues(motiusSortida);
   }
 }
 

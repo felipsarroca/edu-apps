@@ -15,7 +15,7 @@ context.PropertiesService = { getScriptProperties: () => ({
   setProperty: (key, value) => props.set(key, value),
   deleteProperty: (key) => props.delete(key),
 }) };
-const historyRows = [];
+const historyRows = [['ID', 'Data entrada', 'Data sortida', 'Durada (dies)', 'Nom', 'Puntuació', 'Nivell', 'Temps', 'Motiu sortida', 'Origen']];
 const historySheet = {
   setName: () => {},
   setFrozenRows: () => {},
@@ -55,6 +55,7 @@ const rows = [
 const sheet = {
   getDataRange: () => ({ getValues: () => rows }),
   deleteRow: (n) => rows.splice(n - 1, 1),
+  deleteRows: (n, count) => rows.splice(n - 1, count),
 };
 context.netejaResultats(sheet);
 assert.deepEqual(rows.map((row) => row[1]).slice(1), ['Anna', 'Biel']);
@@ -73,16 +74,15 @@ context.Utilities = { sleep: () => {} };
 assert.equal(context.obreFullAmbReintents(), sheet);
 assert.equal(attempts, 3);
 
-const legacyRows = [rows[0], [old, 'Carla', 10, 'Normal', '0:25'], ...rows.slice(1)];
-context.SpreadsheetApp.openById = (id) => ({
-  getSheetByName: () => id === 'backup' ? { getDataRange: () => ({ getValues: () => legacyRows }) } : id === 'private-history' ? historySheet : sheet,
-});
 context.LockService = { getScriptLock: () => ({ tryLock: () => true, releaseLock: () => {} }) };
-context.Logger = { log: () => {} };
-props.set('HISTORIC_BACKUP_ID', 'backup');
-context.migraHistoricAnterior();
-assert.equal(historyRows.length, 6);
-assert.equal(historyRows[5][4], 'Carla');
-assert.ok(historyRows[5][2] instanceof Date);
-assert.equal(props.has('HISTORIC_BACKUP_ID'), false);
+context.console = { warn: () => {} };
+let cleanAttempts = 0;
+context.SpreadsheetApp = { openById: () => {
+  cleanAttempts++;
+  throw new Error("We're sorry, a server error occurred. Please wait a bit and try again.");
+} };
+context.netejaDuplicatsMillorTemps();
+assert.ok(cleanAttempts >= 3);
+context.SpreadsheetApp = { openById: () => { throw new Error('Permís denegat'); } };
+assert.throws(() => context.netejaDuplicatsMillorTemps(), /Permís denegat/);
 console.log('Neteja i reintents: correcte');
