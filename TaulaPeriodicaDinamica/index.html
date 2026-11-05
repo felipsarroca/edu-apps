@@ -3,85 +3,80 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Taula peri&ograve;dica din&agrave;mica</title>
+    <title>Taula periòdica dinàmica</title>
+    <meta name="description" content="Taula periòdica interactiva que acoloreix els elements segons famílies, propietats, abundància, història i més." />
     <link rel="icon" type="image/svg+xml" href="data/favicon.svg" />
     <link rel="stylesheet" href="style.css" />
+    <script>
+      /* Tema desat abans de pintar, per evitar el parpelleig */
+      try { if (localStorage.getItem('tpd:theme') === 'dark') document.documentElement.classList.add('dark-mode'); } catch (e) { }
+    </script>
   </head>
   <body>
     <div id="app">
-      <aside class="sidebar">
+      <aside class="sidebar" aria-label="Controls">
         <div class="sidebar-header">
-          <h1 class="app-title">Taula peri&ograve;dica din&agrave;mica</h1>
-                    <div class="theme-switcher">
-            <span id="theme-label" class="theme-label"></span>
-            <button id="theme-toggle-btn" class="theme-toggle-btn" title="Canviar tema clar/fosc">&#9728;&#65039;</button> <!-- Sun icon -->
+          <h1 class="app-title">Taula periòdica dinàmica</h1>
+          <div class="header-buttons">
+            <button id="projector-btn" class="icon-btn" type="button" aria-pressed="false" title="Mode projector: text més gran a les cel·les" aria-label="Mode projector">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+            </button>
+            <button id="theme-toggle-btn" class="icon-btn" type="button" title="Canvia el tema clar o fosc" aria-label="Canvia el tema clar o fosc">
+              <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+              <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+            </button>
           </div>
         </div>
-        <div id="mode-indicator" class="mode-indicator" title="Mode de visualitzaci&oacute;" aria-hidden="true">-</div>
-        <h2 class="subtitle" id="subtitle">Mode: en blanc</h2>
 
-        <label for="mode-select" class="label">Tria la visualitzaci&oacute;</label>
-        <select id="mode-select" class="select">
-          <option value="blank">En blanc</option>
-          <option value="families">Fam&iacute;lies / grups</option>
-          <option value="blocks">Blocs electr&ograve;nics (s, p, d, f)</option>
-          <option value="valence">Val&egrave;ncies d&rsquo;oxidaci&oacute;</option>
-          <option value="electronegativity">Electronegativitat (Pauling)</option>
-          <option value="ionization">Energia d'ionitzaci&oacute;</option>
-          <option value="state">Estat f&iacute;sic a T ambient</option>
-          <option value="density">Densitat</option>
-          <option value="meltPoint">Punt de fusi&oacute; (K)</option>
-          <option value="boilPoint">Punt d'ebullici&oacute; (K)</option>
-          <option value="atomicRadius">Radi at&ograve;mic</option>
-          <option value="metallic">Met&agrave;l&middot;lics</option>
-          <option value="reactivity">Reactivitat (aprox.)</option>
-          <option value="condElectric">Conductivitat el&egrave;ctrica (aprox.)</option>
-          <option value="condThermal">Conductivitat t&egrave;rmica (aprox.)</option>
-          <option value="ferromagnetism">Ferromagnetisme</option>
-          <option value="bioessential">Essencials per a la vida</option>
-          <option value="toxic">T&ograve;xics/contaminants (selecci&oacute;)</option>
-          <option value="radioactive">Radioactivitat</option>
-          <optgroup label="Abund&agrave;ncia (percentatge)">
-            <option value="body">Cos hum&agrave; (%)</option>
-            <option value="earth">Pres&egrave;ncia a la Terra (%)</option>
-            <option value="universe">Abund&agrave;ncia a l&rsquo;Univers (%)</option>
-          </optgroup>
-        </select>
+        <label for="mode-select" class="label">Tria la visualització</label>
+        <select id="mode-select" class="select"></select>
 
-        <div id="legend" class="legend" aria-live="polite"></div>
-        <div class="legend-footer">
-          <div class="credit">Aplicaci&oacute; realitzada per Felip Sarroca amb l'assist&egrave;ncia de la IA</div>
-          <div class="license">Obra sota llic&egrave;ncia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></div>
+        <div id="mode-options" class="mode-options"></div>
+
+        <section id="legend" class="legend" aria-live="polite"></section>
+
+        <div class="tools" role="group" aria-label="Activitats">
+          <button id="compare-btn" class="tool-btn" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="7" height="14" rx="1.5"/><rect x="14" y="5" width="7" height="14" rx="1.5"/></svg>
+            Compara
+          </button>
+          <button id="quiz-btn" class="tool-btn" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg>
+            Repte
+          </button>
         </div>
+
+        <footer class="felip-app-footer">
+          <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+            <img class="felip-license-image" src="assets/CC_BY-NC-SA.png" alt="Creative Commons BY-NC-SA" />
+          </a>
+          <div class="felip-footer-text">
+            <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+            <p>Obra sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></p>
+          </div>
+        </footer>
       </aside>
 
       <main class="board">
         <div class="grid-viewport" id="grid-viewport">
           <div class="grid-scale" id="grid-scale">
-            <div id="periodic-grid" class="grid" aria-label="Taula peri&ograve;dica"></div>
+            <div id="periodic-grid" class="grid" role="group" aria-label="Taula periòdica"></div>
           </div>
         </div>
       </main>
     </div>
 
-    <!-- Fallback de dades offline: carrega dataset com a JS si s'obre amb file:// -->
-    <script src="data/elements.js"></script>
-    <script src="data/noms_ca.js"></script>
-    <script src="data/conductivity.js"></script>
-    <script src="data/custom_values.js"></script>
-    <script src="data/oxidation.js"></script>
-    <script src="data/abundance.js"></script>
-    <script src="data/summaries_ca.js"></script>
-    <script src="app.js"></script>
-
-    <!-- Element Details Modal -->
     <div id="modal-overlay" class="modal-overlay hidden">
-      <div id="element-modal" class="modal">
-        <button id="modal-close-btn" class="modal-close-btn">&times;</button>
-        <div id="modal-content">
-          <!-- Content will be injected by JS -->
-        </div>
+      <div id="element-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+        <button id="modal-close-btn" class="modal-close-btn" type="button" aria-label="Tanca">&times;</button>
+        <div id="modal-content"></div>
       </div>
     </div>
+
+    <script src="data/elements.js"></script>
+    <script src="data/noms_ca.js"></script>
+    <script src="data/propietats.js"></script>
+    <script src="data/summaries_ca.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

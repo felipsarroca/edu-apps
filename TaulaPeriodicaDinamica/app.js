@@ -1,1353 +1,966 @@
-// App: Taula periòdica dinàmica
-// Dades: data/elements.json (Bowserinator - PeriodicTableJSON)
+/* Taula periòdica dinàmica
+   Dades: data/elements.js (PeriodicTableJSON), data/propietats.js (dades revisades),
+   data/noms_ca.js i data/summaries_ca.js. */
+(() => {
+  'use strict';
 
-const state = {
-  elements: [],
-  mode: 'blank',
-};
+  const D = window.PT_DADES || {};
+  const NAMES = window.PT_NOMS_CA || {};
+  const SUMMARIES = window.SUMMARIES_CA || {};
+  const ELS = ((window.PT_ELEMENTS && window.PT_ELEMENTS.elements) || []).filter(e => e.number <= 118);
+  const root = document.documentElement;
 
-// Noms en català (accepta tant objecte {"H":"Hidrogen"} com array [{Key:"H", Value:"Hidrogen"}])
-let PT_NAMES_CA = null;
-function getNameCA(symbol, fallback) {
-  if (typeof window !== 'undefined' && window.PT_NOMS_CA) {
-    if (!PT_NAMES_CA) {
-      if (Array.isArray(window.PT_NOMS_CA)) {
-        PT_NAMES_CA = {};
-        for (const row of window.PT_NOMS_CA) {
-          const k = row.Key || row.symbol || row.sym;
-          const v = row.Value || row.name_ca || row.NameCA || row.name || row.ValueCA;
-          if (k && v) PT_NAMES_CA[k] = v;
-        }
-      } else if (typeof window.PT_NOMS_CA === 'object') {
-        PT_NAMES_CA = window.PT_NOMS_CA;
-      } else {
-        PT_NAMES_CA = {};
-      }
-    }
-    if (PT_NAMES_CA[symbol]) return PT_NAMES_CA[symbol];
-  }
-  return fallback;
-}
-
-const modeMeta = {
-  blank: { label: 'en blanc', icon: '—' },
-  families: { label: 'famílies / grups', icon: 'F' },
-  blocks: { label: 'blocs electrònics', icon: 'b' },
-  valence: { label: 'valència', icon: 'v' },
-  electronegativity: { label: 'electronegativitat', icon: 'e⁻' },
-  ionization: { label: 'energia d’ionització', icon: 'I' },
-  state: { label: 'estat físic (TA)', icon: '·' },
-  reactivity: { label: 'reactivitat (aprox.)', icon: 'R' },
-  condElectric: { label: 'conductivitat elèctrica (aprox.)', icon: '⚡' },
-  condThermal: { label: 'conductivitat tèrmica (aprox.)', icon: '♨' },
-  ferromagnetism: { label: 'ferromagnetisme', icon: '🧲' },
-  bioessential: { label: 'essencials per a la vida', icon: '❤' },
-  toxic: { label: 'tòxics/contaminants (selecció)', icon: '☠' },
-  radioactive: { label: 'radioactivitat', icon: '☢' },
-  body: { label: 'cos humà (%)', icon: '👨' },
-  earth: { label: 'presència a la Terra (%)', icon: '🌍' },
-  universe: { label: 'abundància a l’Univers (%)', icon: '✨' },
-  density: { label: 'densitat', icon: 'ρ' },
-  atomicRadius: { label: 'radi atòmic', icon: '📏' },
-  metallic: { label: 'metàl·lics', icon: 'M' },
-};
-
-// Corregeix etiquetes i icones mal codificades (accents i símbols)
-(function normalizeUITexts(){
-  try{
-    if (typeof modeMeta !== 'undefined'){
-      Object.assign(modeMeta.blank||{}, { icon: '-' });
-      if (modeMeta.families) modeMeta.families.label = 'famílies / grups';
-      if (modeMeta.blocks) modeMeta.blocks.label = 'blocs electrònics';
-      if (modeMeta.valence) modeMeta.valence.label = 'valència';
-      if (modeMeta.electronegativity) { modeMeta.electronegativity.label = 'electronegativitat'; modeMeta.electronegativity.icon = 'EN'; }
-      if (modeMeta.ionization) modeMeta.ionization.label = 'energia d’ionització';
-      if (modeMeta.state) { modeMeta.state.label = 'estat físic (TA)'; modeMeta.state.icon = 'S'; }
-      if (modeMeta.condElectric) { modeMeta.condElectric.label = 'conductivitat elèctrica (aprox.)'; modeMeta.condElectric.icon = 'CE'; }
-      if (modeMeta.condThermal) { modeMeta.condThermal.label = 'conductivitat tèrmica (aprox.)'; modeMeta.condThermal.icon = 'CT'; }
-      if (modeMeta.bioessential) modeMeta.bioessential.label = 'essencials per a la vida';
-      if (modeMeta.toxic) modeMeta.toxic.label = 'tòxics/contaminants (selecció)';
-      if (modeMeta.body) { modeMeta.body.label = 'cos humà (%)'; modeMeta.body.icon = 'H'; }
-      if (modeMeta.earth) { modeMeta.earth.label = 'presència a la Terra (%)'; modeMeta.earth.icon = 'E'; }
-      if (modeMeta.universe) { modeMeta.universe.label = 'abundància a l’Univers (%)'; modeMeta.universe.icon = 'U'; }
-      if (modeMeta.atomicRadius) modeMeta.atomicRadius.label = 'radi atòmic';
-      if (modeMeta.metallic) modeMeta.metallic.label = 'metàl·lics';
-    }
-    if (typeof familiesLabelCa !== 'undefined'){
-      familiesLabelCa['transition metal'] = 'metalls de transició';
-      familiesLabelCa['lanthanide'] = 'lantànids';
-      familiesLabelCa['actinide'] = 'actínids';
-    }
-  }catch(e){ /* no-op */ }
-})();
-
-const familiesPalette = {
-  // Mapa de categories (en anglès al dataset) -> colors
-  'alkali metal': '#fca5a5',
-  'alkaline earth metal': '#fdba74',
-  'transition metal': '#fde047',
-  'post-transition metal': '#60a5fa',
-  'metalloid': '#34d399',
-  'polyatomic nonmetal': '#a78bfa',
-  'diatomic nonmetal': '#c084fc',
-  'noble gas': '#f472b6',
-  'lanthanide': '#5eead4',
-  'actinide': '#67e8f9',
-  'unknown': '#94a3b8',
-};
-
-// Ordre explícit per a la llegenda de famílies
-const familiesOrder = [
-  'alkali metal',
-  'alkaline earth metal',
-  'transition metal',
-  'post-transition metal',
-  'metalloid',
-  'polyatomic nonmetal',
-  'diatomic nonmetal',
-  'noble gas',
-  'lanthanide',
-  'actinide',
-  'unknown',
-];
-
-const familiesLabelCa = {
-  'alkali metal': 'metalls alcalins',
-  'alkaline earth metal': 'metalls alcalinoterris',
-  'transition metal': 'metalls de transició',
-  'post-transition metal': 'altres metalls',
-  'metalloid': 'semimetalls',
-  'polyatomic nonmetal': 'altres no-metalls',
-  'diatomic nonmetal': 'altres no-metalls',
-  'noble gas': 'gasos nobles',
-  'lanthanide': 'lantànids',
-  'actinide': 'actínids',
-  'unknown': 'desconegut',
-};
-
-const blocksPalette = {
-  s: '#38bdf8', // blau cel
-  p: '#f472b6', // rosa
-  d: '#22c55e', // verd
-  f: '#f59e0b', // taronja
-};
-
-const statePalette = {
-  Solid: '#22c55e',   // verd
-  Liquid: '#2563eb',  // blau
-  Gas: '#eab308',     // groc
-  Unknown: '#94a3b8', // gris
-};
-
-const qualitativePalette = {
-  high: '#ef4444',            // molt reactiu (vermell)
-  fairly: '#f97316',          // bastant reactiu (taronja)
-  medium: '#eab308',          // reactiu (groc)
-  low: '#16a34a',             // poc reactiu (verd)
-  none: '#94a3b8',            // inert (gris)
-};
-
-// Paleta discreta i molt diferenciada (5 colors)
-const paletteDistinct = ['#2563eb', '#16a34a', '#eab308', '#f97316', '#ef4444'];
-// Paleta específica per a conductivitat tèrmica: baixa -> alta (blau -> vermell)
-const paletteThermal = ['#2563eb', '#60a5fa', '#fbbf24', '#fb923c', '#ef4444'];
-// Paletes específiques per a abundàncies
-const paletteBody = ['#e5e7eb', '#bbf7d0', '#86efac', '#34d399', '#059669'];
-const paletteEarth = ['#e5e7eb', '#c7d2fe', '#93c5fd', '#3b82f6', '#1d4ed8'];
-// Paleta específica per a cos humà: baixa -> alta (gris clar -> verd)
-// conjunts per a modes aprox.
-const ferromagneticSet = new Set(['Fe','Co','Ni']);
-const essentialMajor = new Set(['H','C','N','O','P','S','Na','K','Mg','Ca','Cl']);
-const essentialTrace = new Set(['Fe','Cu','Zn','Mn','Se','I','Mo','Co','Cr']); // selecció bàsica
-const toxicSet = new Set(['Hg','Pb','Cd','Tl','Po','As','Sb','Be']);
-
-async function loadData() {
-  // Fallback offline: si ja tenim window.PT_ELEMENTS (carregat via <script>), usem això
-  if (typeof window !== 'undefined' && window.PT_ELEMENTS && Array.isArray(window.PT_ELEMENTS.elements)) {
-    state.elements = window.PT_ELEMENTS.elements;
-    applyCustomValues();
-    return;
-  }
-  // Si no, prova via fetch (requereix http/https)
-  if (typeof location !== 'undefined' && location.protocol === 'file:') {
-    throw new Error('Entorn file:// sense dades. Usa data/elements.js o un servidor local.');
-  }
-  const res = await fetch('data/elements.json');
-  const json = await res.json();
-  state.elements = json.elements;
-  applyCustomValues();
-}
-
-function normalizeDiscoveryData() {
-  const nameCorrections = {
-    'Jöns Jacob Berzelius': 'Jöns Jacob Berzelius',
-    'Louis Nicolas Vauquelin': 'Louis-Nicolas Vauquelin',
-    'André-Marie Ampère': 'André-Marie Ampère',
-    'Andrés Manuel del Río': 'Andrés Manuel del Río',
-    'Carl Wilhelm Scheele': 'Carl Wilhelm Scheele',
-    'Antoine Jérôme Balard': 'Antoine-Jérôme Balard',
-    'Lecoq de Boisbaudran': 'Paul-Émile Lecoq de Boisbaudran',
-    'Jean-Antoine Chaptal': 'Jean-Antoine Chaptal',
-    'Johan August Arfwedson': 'Johan August Arfwedson',
-    'Lars Fredrik Nilson': 'Lars Fredrik Nilson',
-    'Torbern Olof Bergman': 'Torbern Olof Bergman',
-    'Clemens Winkler': 'Clemens Winkler',
-    'Ferdinand Reich': 'Ferdinand Reich',
-    'Carl Gustaf Mosander': 'Carl Gustaf Mosander',
-    'Eugène-Anatole Demarçay': 'Eugène-Anatole Demarçay',
-    'Georges Urbain': 'Georges Urbain',
-    'Charles James': 'Charles James',
-    'Nils Gabriel Sefström': 'Nils Gabriel Sefström',
-    'Karl Ernst Claus': 'Karl Ernst Claus',
-    'Smithson Tennant': 'Smithson Tennant',
-    'William Hyde Wollaston': 'William Hyde Wollaston',
-    'Marie Curie': 'Marie Curie',
-    'Pierre Curie': 'Pierre Curie',
-    'Marguerite Perey': 'Marguerite Perey',
-    'Joint Institute for Nuclear Research': 'Joint Institute for Nuclear Research (Dubna, Rússia)',
-    'GSI Helmholtz Centre for Heavy Ion Research': 'GSI (Darmstadt, Alemanya)'
+  /* ---------- emmagatzematge (tolerant a navegadors que el bloquegen) ---------- */
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('tpd:' + k); return v === null ? d : v; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem('tpd:' + k, v); } catch (e) { /* sense emmagatzematge */ } }
   };
 
-  const termTranslations = {
-    'Ancient China': 'Antiga Xina',
-    'Ancient Egypt': 'Antic Egipte',
-    'Middle East': 'Orient Mitjà',
-    'Bronze Age': 'Edat del Bronze',
-    '5000 BC': 'ca. 5000 aC'
+  const state = {
+    mode: store.get('mode', 'families'),
+    temp: store.get('temp', 'C'),
+    yearLimit: 2010,
+    focus: null,       // categoria destacada a la llegenda
+    hover: null,       // element de la vista prèvia
+    compare: null,     // array de símbols quan el mode comparació és actiu
+    quiz: null         // estat del repte
   };
 
-  for (const el of state.elements) {
-    let discoverer = el.discovered_by;
-    const year = el.year_discovered;
-    let final_string = '';
-
-    if (discoverer) {
-      // Aplica correccions i traduccions
-      if (nameCorrections[discoverer]) {
-        discoverer = nameCorrections[discoverer];
-      } else if (termTranslations[discoverer]) {
-        discoverer = termTranslations[discoverer];
-      }
-      final_string = `Descobert per: ${discoverer}`;
-      if (typeof year === 'number') {
-        final_string += ` (${year})`;
-      }
-    } else if (typeof year === 'number') {
-      final_string = `Descobert l'any: ${year}`;
-    } else {
-      final_string = 'Descobridor: Desconegut';
+  /* ================= format de nombres (convencions catalanes) ================= */
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const minus = s => String(s).replace(/^-/, '−');
+  const comma = s => String(s).replace('.', ',');
+  function fmtFixed(v, d) { return minus(comma(v.toFixed(d))); }
+  function fmtSig(v, sig = 3) {
+    if (v === 0) return '0';
+    const e = Math.floor(Math.log10(Math.abs(v)));
+    if (e >= 5 || e <= -4) {
+      const m = v / Math.pow(10, e);
+      return minus(comma(String(Number(m.toPrecision(sig))))) + '·10' + String(e).split('').map(c => SUP[c]).join('');
     }
-    el.discovery_string_ca = final_string;
+    return minus(comma(String(Number(v.toPrecision(sig)))));
   }
-}
+  const fmtPct = v => fmtSig(v, 3) + ' %';
+  function fmtTemp(k, unit = state.temp) {
+    return unit === 'K' ? Math.round(k) + ' K' : minus(Math.round(k - 273.15)) + ' °C';
+  }
+  function fmtYear(y) {
+    if (y < 0) return 'c. ' + (-y) + ' aC';
+    if (y < 1600) return 'c. ' + y;
+    return String(y);
+  }
+  const fmtOx = arr => arr.slice().sort((a, b) => a - b).map(n => n > 0 ? '+' + n : n === 0 ? '0' : minus(n)).join(', ');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-// Versió ampliada: corregeix accents, tradueix 'unknown/before', i intenta afegir l'any
-function normalizeDiscoveryData2() {
-  const nameCorrections = {
-    'Louis Nicolas Vauquelin': 'Louis‑Nicolas Vauquelin',
-    'André-Marie Ampère': 'André‑Marie Ampère',
-    'Andrés Manuel del Río': 'Andrés Manuel del Río',
-    'Antoine Jérôme Balard': 'Antoine‑Jérôme Balard',
-    'Lecoq de Boisbaudran': 'Paul‑Émile Lecoq de Boisbaudran',
-    'Jöns Jakob Berzelius': 'Jöns Jakob Berzelius',
-    'Jöns Jacob Berzelius': 'Jöns Jacob Berzelius',
-    'Nils Gabriel Sefström': 'Nils Gabriel Sefström',
-    'Franz-Joseph Müller von Reichenstein': 'Franz‑Joseph Müller von Reichenstein',
-    'Emilio Segrè': 'Emilio Segrè',
-    'Georges Urbain': 'Georges Urbain',
-    'Charles James': 'Charles James',
-    'Karl Ernst Claus': 'Karl Ernst Claus',
-    'Smithson Tennant': 'Smithson Tennant',
-    'William Hyde Wollaston': 'William Hyde Wollaston',
-    'Marie Curie': 'Marie Curie',
-    'Pierre Curie': 'Pierre Curie',
-    'Marguerite Perey': 'Marguerite Perey',
-    'Joint Institute for Nuclear Research': 'Joint Institute for Nuclear Research (Dubna, Rússia)',
-    'GSI Helmholtz Centre for Heavy Ion Research': 'GSI (Darmstadt, Alemanya)'
+  /* ================= consultes de dades ================= */
+  const nameOf = el => NAMES[el.symbol] || el.name;
+  const isPredicted = el => el.number >= 104;           // propietats predites, no mesurades
+  const noBulk = el => el.number >= 100;                // no se n'ha obtingut mai una mostra visible
+  const inList = (list, s) => Array.isArray(list) && list.includes(s);
+  const groupOf = el => (el.ypos <= 7 ? el.xpos : null);
+
+  function family(el) {
+    const s = el.symbol, z = el.number;
+    for (const [k, list] of Object.entries(D.families || {})) if (list.includes(s)) return k;
+    if (z >= 57 && z <= 71) return 'lantanid';
+    if (z >= 89 && z <= 103) return 'actinid';
+    return 'transicio';
+  }
+  const isMetalFamily = f => ['alcali', 'alcalinoterri', 'transicio', 'lantanid', 'actinid', 'altresMetalls'].includes(f);
+
+  const val = {
+    en: el => (isPredicted(el) ? null : (typeof el.electronegativity_pauling === 'number' ? el.electronegativity_pauling : null)),
+    ion: el => (isPredicted(el) ? null : (Array.isArray(el.ionization_energies) && typeof el.ionization_energies[0] === 'number' ? el.ionization_energies[0] : null)),
+    radius: el => (typeof (D.radi || {})[el.symbol] === 'number' ? D.radi[el.symbol] : null),
+    isGas: el => el.phase === 'Gas',
+    densityRaw: el => (noBulk(el) || typeof el.density !== 'number' ? null : el.density),
+    density: el => { const d = val.densityRaw(el); return d === null ? null : (val.isGas(el) ? d / 1000 : d); },
+    melt: el => (noBulk(el) || typeof el.melt !== 'number' ? null : el.melt),
+    boil: el => (noBulk(el) || typeof el.boil !== 'number' ? null : el.boil),
+    sigma: el => { const r = (D.resistivitat || {})[el.symbol]; if (typeof r === 'number') return 1e9 / r; const s = (D.semiconductors || {})[el.symbol]; return typeof s === 'number' ? s : null; },
+    thermal: el => (typeof (D.termica || {})[el.symbol] === 'number' ? D.termica[el.symbol] : null),
+    abund: (key, el) => (typeof ((D[key] || {})[el.symbol]) === 'number' ? D[key][el.symbol] : null),
+    ox: el => (D.oxidacio || {})[el.symbol] || null,
+    year: el => ((D.descobriment || {})[el.symbol] || [null])[0],
+    discoverer: el => ((D.descobriment || {})[el.symbol] || [null, null])[1]
   };
+  const fmtDensity = el => { const d = val.densityRaw(el); return d === null ? '—' : fmtSig(d, 3) + (val.isGas(el) ? ' g/L' : ' g/cm³'); };
 
-  const termTranslations = {
-    'Ancient China': 'Antiga Xina',
-    'Ancient china': 'Antiga Xina',
-    'Ancient Egypt': 'Antic Egipte',
-    'Middle East': 'Orient Mitjà',
-    'Bronze Age': 'Edat del Bronze',
-    'India': 'Índia',
-    '5000 BC': 'ca. 5000 aC'
-  };
-
-  const yearFromSummary = (summary) => {
-    try {
-      if (!summary || typeof summary !== 'string') return null;
-      const sentences = summary.split(/(?<=[.!?])\s+/);
-      for (const s of sentences) {
-        if (/discover/i.test(s)) {
-          const m = s.match(/\b(1[5-9]\d{2}|20\d{2})\b/);
-          if (m) return parseInt(m[1], 10);
-        }
-      }
-      return null;
-    } catch { return null; }
-  };
-
-  const normEra = (txt) => {
-    return txt
-      .replace(/before\s+/i, 'abans del ')
-      .replace(/\bunknown\b/gi, 'desconegut')
-      .replace(/\bBCE\b|\bBC\b/g, 'aC')
-      .replace(/\bCE\b|\bAD\b/g, 'dC');
-  };
-
-  for (const el of state.elements) {
-    let discoverer = el.discovered_by;
-    let finalString = '';
-
-    if (discoverer && typeof discoverer === 'string') {
-      if (nameCorrections[discoverer]) discoverer = nameCorrections[discoverer];
-      else if (termTranslations[discoverer]) discoverer = termTranslations[discoverer];
-      discoverer = normEra(discoverer);
-
-      const yr = yearFromSummary(el.summary);
-      finalString = `Descobert per: ${discoverer}` + (yr ? ` (${yr})` : '');
-    } else {
-      const yr = yearFromSummary(el.summary);
-      if (yr) finalString = `Descobert l'any: ${yr}`;
-      else finalString = 'Descobridor: desconegut';
-    }
-
-    el.discovery_string_ca = finalString;
-  }
-}
-
-function createGrid() {
-  const grid = document.getElementById('periodic-grid');
-  grid.innerHTML = '';
-
-  // Add labels for groups (columns)
-  for (let i = 1; i <= 18; i++) {
-    const label = document.createElement('div');
-    label.className = 'grid-label-group';
-    label.textContent = i;
-    label.style.gridColumn = i + 1;
-    label.style.gridRow = 1;
-    grid.appendChild(label);
-  }
-
-  // Add labels for periods (rows)
-  for (let i = 1; i <= 7; i++) {
-    const label = document.createElement('div');
-    label.className = 'grid-label-period';
-    label.textContent = i;
-    label.style.gridColumn = 1;
-    label.style.gridRow = i + 1;
-    grid.appendChild(label);
-  }
-
-  for (const el of state.elements) {
-    const card = document.createElement('button');
-    card.className = 'cell blank';
-    // Offset by 1 to account for labels
-    card.style.gridColumn = el.xpos + 1;
-    card.style.gridRow = el.ypos + 1;
-    card.setAttribute('data-atomic', el.number);
-    const caName = getNameCA(el.symbol, el.name);
-    card.setAttribute('title', `${caName} (${el.symbol})`);
-
-    card.addEventListener('click', () => showElementDetails(el.number));
-
-    const num = document.createElement('div');
-    num.className = 'num';
-    num.textContent = el.number;
-    const sym = document.createElement('div');
-    sym.className = 'sym';
-    sym.textContent = el.symbol;
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = caName;
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = '';
-
-    card.append(num, sym, name, meta);
-    grid.appendChild(card);
-  }
-
-  // Add markers for Lanthanides and Actinides
-  const lanthanideMarker = document.createElement('div');
-  lanthanideMarker.className = 'grid-label-group';
-  lanthanideMarker.textContent = '*';
-  lanthanideMarker.style.gridColumn = 4;
-  lanthanideMarker.style.gridRow = 7;
-  grid.appendChild(lanthanideMarker);
-
-  const actinideMarker = document.createElement('div');
-  actinideMarker.className = 'grid-label-group';
-  actinideMarker.textContent = '**';
-  actinideMarker.style.gridColumn = 4;
-  actinideMarker.style.gridRow = 8;
-  grid.appendChild(actinideMarker);
-
-
-  // Ajusta escala perquÃ¨ la taula completa cÃ piga al viewport
-  fitGridScale();
-}
-
-function setMode(mode) {
-  state.mode = mode;
-  const subtitle = document.getElementById('subtitle');
-  const indicator = document.getElementById('mode-indicator');
-  const sel = document.getElementById('mode-select');
-  const opt = sel ? sel.querySelector(`option[value="${mode}"]`) : null;
-  const modeLabel = opt?.textContent || modeMeta[mode].label;
-  subtitle.textContent = `Mode: ${modeLabel}`;
-  indicator.textContent = '-';
-
-  colorize();
-	renderLegend_clean();
-  // Reajustar escala (el contingut pot canviar alÃ§ada)
-  fitGridScale();
-}
-
-function colorize() {
-  const grid = document.getElementById('periodic-grid');
-  const cards = grid.querySelectorAll('.cell');
-  cards.forEach(c => { c.className = 'cell blank'; c.style.background = ''; c.style.removeProperty('--cell-fg'); });
-
-  switch (state.mode) {
-    case 'blank':
-      // Res: deixa la base
-      break;
-    case 'families':
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const cat = el.category?.toLowerCase() ?? 'unknown';
-        const key = Object.keys(familiesPalette).find(k => cat.includes(k)) || 'unknown';
-        setCardBG(card, familiesPalette[key]);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break;
-    case 'blocks':
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        let b = (el.block || '').toLowerCase();
-        // Ajust: pinta Lu/Lr com a f per coherÃ¨ncia visual amb la fila f
-        if (el.symbol === 'Lu' || el.symbol === 'Lr') b = 'f';
-        const color = blocksPalette[b] || '#94a3b8';
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break;
-    case 'state':
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const ph = el.phase || 'Unknown';
-        const color = statePalette[ph] || statePalette.Unknown;
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break;
-    case 'electronegativity': {
-      const vals = state.elements.map(e => e.electronegativity_pauling).filter(v => typeof v === 'number');
-      const min = Math.min(...vals);
-      const max = Math.max(...vals);
-      const bins = makeBins(min, max, paletteDistinct.length);
-      const colors = paletteDistinct;
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = el.electronegativity_pauling;
-        if (typeof v !== 'number') { setCardBG(card, '#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const idx = binIndex(v, bins);
-        const color = colors[idx];
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, v.toFixed(2));
-      }
-      break; }
-    case 'ionization': {
-      const vals = state.elements.map(e => e.ionization_energies?.[0]).filter(v => typeof v === 'number');
-      const min = Math.min(...vals);
-      const max = Math.max(...vals);
-      const bins = makeBins(min, max, paletteDistinct.length);
-      const colors = paletteDistinct;
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = el.ionization_energies?.[0]; // kJ/mol al dataset
-        if (typeof v !== 'number') { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const idx = binIndex(v, bins);
-        const color = colors[idx];
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, `${v.toFixed(0)} kJ/mol`);
-      }
-      break; }
-    case 'density': {
-      // g/cmÂ³
-      const vals = state.elements.map(e => (typeof e.density === 'number' && e.density>0 ? e.density : undefined)).filter(v => typeof v === 'number');
-      const min = Math.min(...vals), max = Math.max(...vals);
-      const bins = makeBins(min, max, paletteDistinct.length);
-      for (const el of state.elements){
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = (typeof el.density === 'number' && el.density>0) ? el.density : undefined;
-        if (typeof v !== 'number') { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const idx = binIndex(v, bins); setCardBG(card, paletteDistinct[idx]); card.classList.add('colored'); setMeta(card, `${v} g/cm³`);
-      }
-      break; }
-    case 'atomicRadius': {
-      // pm (provinent de custom_values)
-      const vals = state.elements.map(e => e.atomic_radius_pm).filter(v => typeof v === 'number' && v>0);
-      const min = Math.min(...vals), max = Math.max(...vals);
-      const bins = makeBins(min, max, paletteDistinct.length);
-      for (const el of state.elements){
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = el.atomic_radius_pm;
-        if (!(typeof v === 'number' && v>0)) { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const idx = binIndex(v, bins); setCardBG(card, paletteDistinct[idx]); card.classList.add('colored'); setMeta(card, `${v} pm`);
-      }
-      break; }
-    case 'meltPoint': {
-      // K (del dataset elements)
-      const vals = state.elements.map(e => (typeof e.melt === 'number' && e.melt>0 ? e.melt : undefined)).filter(v => typeof v === 'number');
-      const min = Math.min(...vals), max = Math.max(...vals);
-      const bins = makeBins(min, max, paletteDistinct.length);
-      for (const el of state.elements){
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = (typeof el.melt === 'number' && el.melt>0) ? el.melt : undefined;
-        if (typeof v !== 'number') { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const idx = binIndex(v, bins); setCardBG(card, paletteDistinct[idx]); card.classList.add('colored'); setMeta(card, `${v.toFixed(0)} K`);
-      }
-      break; }
-    case 'boilPoint': {
-      // K (del dataset elements)
-      const vals = state.elements.map(e => (typeof e.boil === 'number' && e.boil>0 ? e.boil : undefined)).filter(v => typeof v === 'number');
-      const min = Math.min(...vals), max = Math.max(...vals);
-      const bins = makeBins(min, max, paletteDistinct.length);
-      for (const el of state.elements){
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = (typeof el.boil === 'number' && el.boil>0) ? el.boil : undefined;
-        if (typeof v !== 'number') { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const idx = binIndex(v, bins); setCardBG(card, paletteDistinct[idx]); card.classList.add('colored'); setMeta(card, `${v.toFixed(0)} K`);
-      }
-      break; }
-    case 'metallic': {
-      const metalCats = ['alkali metal','alkaline earth metal','transition metal','post-transition metal','lanthanide','actinide'];
-      for (const el of state.elements){
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const cat = (el.category||'').toLowerCase();
-        const isMetal = metalCats.some(k=>cat.includes(k));
-        const color = isMetal ? '#0ea5e9' : '#9ca3af';
-        setCardBG(card,color); card.classList.add('colored'); setMeta(card,'');
-      }
-      break; }
-    case 'valence': {
-      // Estats d'oxidació (substitueix l'antiga valència d'electrons)
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        let arr = null;
-        if (Array.isArray(el.oxidation_states_array)) arr = el.oxidation_states_array;
-        else if (typeof el.oxidation_states === 'string') {
-          arr = el.oxidation_states.split(/[ ,]+/).map(s => parseInt(s.replace(/\u2212|−/g,'-'),10)).filter(n => !isNaN(n));
-        }
-        if (!arr && typeof window !== 'undefined' && window.PT_OX && Array.isArray(window.PT_OX[el.symbol])) {
-          arr = window.PT_OX[el.symbol].slice();
-        }
-        if (!Array.isArray(arr) || arr.length===0){ setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); continue; }
-        const hasPos = arr.some(n=> n>0), hasNeg = arr.some(n=> n<0), hasZero = arr.some(n=> n===0);
-        let color = '#9ca3af';
-        if (hasPos && hasNeg) color = '#a855f7';
-        else if (hasPos) color = '#ef4444';
-        else if (hasNeg) color = '#2563eb';
-        else if (hasZero) color = '#9ca3af';
-        setCardBG(card, color);
-        card.classList.add('colored');
-        const label = arr.sort((a,b)=>a-b).map(n=> (n>0? '+'+n : n===0? '0' : n)).join(', ');
-        setMeta(card, label);
-      }
-      break; } 
-    case 'reactivity': {
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const cat = (el.category || '').toLowerCase();
-        let level = 'low'; // per defecte
-        if (cat.includes('noble gas')) level = 'none';
-        else if (cat.includes('alkali metal') || cat.includes('halogen')) level = 'high';
-        else if (cat.includes('alkaline earth')) level = 'fairly';
-        else if (cat.includes('transition metal') || cat.includes('other nonmetal') || cat.includes('polyatomic nonmetal') || cat.includes('diatomic nonmetal')) level = 'medium';
-        else level = 'low';
-        const color = qualitativePalette[level] || '#9ca3af';
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break; }
-    case 'condElectric': {
-      // NomÃ©s dades numÃ¨riques; sense dades -> gris clar
-      const map = (window.PT_COND) || {};
-      const vals = state.elements.map(e => map[e.symbol]?.e).filter(v => typeof v === 'number' && v>0);
-      const useNumeric = vals.length >= 2;
-      let bins = [], colors = [];
-      // Escala especÃ­fica: baixa -> alta (blau -> vermell)
-      if (useNumeric) { const lmin=Math.log10(Math.min(...vals)), lmax=Math.log10(Math.max(...vals)); bins = makeBins(lmin,lmax,paletteThermal.length); colors = paletteThermal; }
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = map[el.symbol]?.e;
-        if (useNumeric && typeof v === 'number' && v>0) { const idx = binIndex(Math.log10(v),bins); const color = colors[idx]; setCardBG(card,color); card.classList.add('colored'); setMeta(card, `${formatSI(v)} S/m`);
-        } else { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); }
-      }
-      break; }
-    case 'condThermal': {
-      const map = (window.PT_COND) || {};
-      const vals = state.elements.map(e => map[e.symbol]?.t).filter(v => typeof v === 'number' && v>0);
-      const useNumeric = vals.length >= 2;
-      let bins = [], colors = [];
-      if (useNumeric) { const lmin=Math.log10(Math.min(...vals)), lmax=Math.log10(Math.max(...vals)); bins = makeBins(lmin,lmax,paletteThermal.length); colors = paletteThermal; }
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const v = map[el.symbol]?.t;
-        if (useNumeric && typeof v === 'number' && v>0) { const idx = binIndex(Math.log10(v),bins); const color = colors[idx]; setCardBG(card,color); card.classList.add('colored'); setMeta(card, `${formatSI(v)} W/m·K`);
-        } else { setCardBG(card,'#e5e7eb'); card.classList.add('colored'); setMeta(card,''); }
-      }
-      break; }
-    case 'ferromagnetism': {
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const yes = ferromagneticSet.has(el.symbol);
-        const color = yes ? '#0ea5e9' : '#475569';
-        setCardBG(card, color); card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break; }
-    case 'bioessential': {
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        let tag = 'no'; let color = '#9ca3af';
-        if (essentialMajor.has(el.symbol)) { tag = 'essencial'; color = '#34d399'; }
-        else if (essentialTrace.has(el.symbol)) { tag = 'traça'; color = '#a3e635'; }
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break; }
-    case 'toxic': {
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const tx = toxicSet.has(el.symbol);
-        // Colors: SÃ­ (tÃ²xic) destacat en vermell; No (no tÃ²xic) en gris suau
-        const color = tx ? '#ef4444' : '#9ca3af';
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break; }
-    case 'radioactive': {
-      for (const el of state.elements) {
-        const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-        const n = el.number;
-        const radio = (n > 83) || n === 43 || n === 61; // regla bÃ sica
-        const color = radio ? '#f97316' : '#22c55e';
-        setCardBG(card, color);
-        card.classList.add('colored');
-        setMeta(card, '');
-      }
-      break; }
-    case 'body': {
-      const map = (window.PT_ABUND && window.PT_ABUND.human) || {};
-      paintAbundance(map, false);
-      break; }
-    case 'earth': {
-      const map = (window.PT_ABUND && window.PT_ABUND.earth) || {};
-      paintAbundance(map, false);
-      break; }
-    case 'universe': {
-      const map = (window.PT_ABUND && window.PT_ABUND.universe) || {};
-      paintAbundance(map, true);
-      break; }
-  }
-}
-
-function renderLegend_clean() {
-  const box = document.getElementById('legend');
-  box.innerHTML = '';
-
-  const title = document.createElement('h3');
-  title.textContent = 'Llegenda';
-  box.appendChild(title);
-
-  const addItemsLocal = (items) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'items';
-    if (box.querySelector('.items')) { wrap.style.marginTop = '8px'; }
-    for (const [label, color] of items) {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${label}</span>`;
-      wrap.appendChild(item);
-    }
-    box.appendChild(wrap);
-  };
-
-  if (state.mode === 'blank') {
-    const p = document.createElement('div');
-    p.className = 'items';
-    p.innerHTML = '<span class="item">Sense colors: només símbol i número atòmic.</span>';
-    box.appendChild(p);
-    return;
-  }
-
-  if (state.mode === 'families') {
-    const wrap = document.createElement('div');
-    wrap.className = 'items';
-    for (const [key, color] of Object.entries(familiesPalette)) {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${familiesLabelCa[key] || key}</span>`;
-      wrap.appendChild(item);
-    }
-    box.appendChild(wrap);
-    return;
-  }
-
-  if (state.mode === 'blocks') {
-    const wrap = document.createElement('div');
-    wrap.className = 'items';
-    for (const [b, color] of Object.entries(blocksPalette)) {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>Bloc ${b}</span>`;
-      wrap.appendChild(item);
-    }
-    const note = document.createElement('div');
-    note.style.cssText = 'margin-top:8px; font-size:12px; color:#a8acb3';
-    note.textContent = 'Nota: Lu i Lr es mostren com a f per coherència visual amb la fila.';
-    box.appendChild(wrap);
-    box.appendChild(note);
-    return;
-  }
-
-  if (state.mode === 'state') {
-    const wrap = document.createElement('div');
-    wrap.className = 'items';
-    const map = { Solid: 'Sòlid', Liquid: 'Líquid', Gas: 'Gas', Unknown: 'Desconegut' };
-    for (const [k, color] of Object.entries(statePalette)) {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${map[k]}</span>`;
-      wrap.appendChild(item);
-    }
-    box.appendChild(wrap);
-    return;
-  }
-
-  if (state.mode === 'reactivity') {
-    addItemsLocal([
-      ['molt reactiu', qualitativePalette.high],
-      ['bastant reactiu', qualitativePalette.fairly],
-      ['reactiu', qualitativePalette.medium],
-      ['poc reactiu', qualitativePalette.low],
-      ['inert', qualitativePalette.none],
-    ]);
-    const note = document.createElement('div');
-    note.style.cssText = 'margin-top:8px; font-size:12px; color:#6b7280';
-    note.textContent = 'Criteri: alcalins/halògens=molt, alcalinoterris=bastant, transició/no-metalls=reactiu, altres=baix, nobles=inert.';
-    box.appendChild(note);
-    return;
-  }
-
-  if (state.mode === 'ferromagnetism') {
-    addItemsLocal([
-      ['Sí', '#0ea5e9'],
-      ['No', '#475569']
-    ]);
-    return;
-  }
-
-  if (state.mode === 'bioessential') {
-    addItemsLocal([
-      ['Essencial', '#34d399'],
-      ['Traça', '#a3e635'],
-      ['No essencial', '#9ca3af']
-    ]);
-    return;
-  }
-
-  if (state.mode === 'electronegativity') {
-    const vals = state.elements.map(e => e.electronegativity_pauling).filter(v => typeof v === 'number');
-    if (vals.length) addBinsLegend(vals, v => v.toFixed(2));
-    return;
-  }
-
-  if (state.mode === 'ionization') {
-    const vals = state.elements.map(e => e.ionization_energies?.[0]).filter(v => typeof v === 'number');
-    if (vals.length) addBinsLegend(vals, v => `${v.toFixed(0)} kJ/mol`);
-    return;
-  }
-
-  if (state.mode === 'condElectric' || state.mode === 'condThermal') {
-    const map = (window.PT_COND)||{}; const key = state.mode==='condElectric'?'e':'t'; const unit = state.mode==='condElectric'?'S/m':'W/m·K';
-    const vals = state.elements.map(e=>map[e.symbol]?.[key]).filter(v=>typeof v==='number' && v>0);
-    if (vals.length){
-      if (state.mode==='condThermal'|| state.mode==='condElectric'){
-        const lmin = Math.log10(Math.min(...vals)), lmax = Math.log10(Math.max(...vals));
-        const bins = makeBins(lmin, lmax, paletteThermal.length);
-        const wrap = document.createElement('div'); wrap.className='items';
-        for (let i=0;i<bins.length;i++){
-          const a = i===0 ? lmin : bins[i-1]; const b = bins[i];
-          const item = document.createElement('div'); item.className='item';
-          item.innerHTML = `<span class="swatch" style="background:${paletteThermal[i]}"></span><span>${formatSI(Math.pow(10,a))} - ${formatSI(Math.pow(10,b))} ${unit}</span>`;
-          wrap.appendChild(item);
-        }
-        box.appendChild(wrap);
-      } 
-    }
-    if (state.elements.some(e=> typeof (map[e.symbol]?.[key]) !== 'number')) addItemsLocal([["Sense dades", '#e5e7eb']]);
-    const note = document.createElement('div'); note.style.cssText='margin-top:8px;font-size:12px;color:#6b7280'; note.textContent='Valors aproximats a 300 K. Escala logarítmica per a tèrmica.'; box.appendChild(note); return;
-  }
-
-  if (state.mode === 'density') {
-    const vals = state.elements.map(e=> (typeof e.density === 'number' && e.density>0 ? e.density : undefined)).filter(v=> typeof v === 'number');
-    if (vals.length){ addBinsLegend(vals, v=>`${v.toFixed(2)} g/cm³`); }
-    if (state.elements.some(e=> !(typeof e.density === 'number' && e.density>0))) addItemsLocal([["Sense dades", '#e5e7eb']]);
-    return;
-  }
-
-  if (state.mode === 'atomicRadius') {
-    const vals = state.elements.map(e=> e.atomic_radius_pm).filter(v=> typeof v === 'number' && v>0);
-    if (vals.length){ addBinsLegend(vals, v=>`${v.toFixed(0)} pm`); }
-    if (state.elements.some(e=> !(typeof e.atomic_radius_pm === 'number' && e.atomic_radius_pm>0))) addItemsLocal([["Sense dades", '#e5e7eb']]);
-    return;
-  }
-
-  if (state.mode === 'meltPoint') {
-    const vals = state.elements.map(e=> (typeof e.melt === 'number' && e.melt>0 ? e.melt : undefined)).filter(v=> typeof v === 'number');
-    if (vals.length){ addBinsLegend(vals, v=>`${v.toFixed(0)} K`); }
-    if (state.elements.some(e=> !(typeof e.melt === 'number' && e.melt>0))) addItemsLocal([["Sense dades", '#e5e7eb']]);
-    return;
-  }
-
-  if (state.mode === 'boilPoint') {
-    const vals = state.elements.map(e=> (typeof e.boil === 'number' && e.boil>0 ? e.boil : undefined)).filter(v=> typeof v === 'number');
-    if (vals.length){ addBinsLegend(vals, v=>`${v.toFixed(0)} K`); }
-    if (state.elements.some(e=> !(typeof e.boil === 'number' && e.boil>0))) addItemsLocal([["Sense dades", '#e5e7eb']]);
-    return;
-  }
-
-  if (state.mode === 'metallic') {
-    addItemsLocal([
-      ['Metàl·lics', '#0ea5e9'],
-      ['No metàl·lics', '#9ca3af']
-    ]);
-    return;
-  }
-
-  if (state.mode === 'body' || state.mode === 'earth' || state.mode === 'universe') {
-    const map = (window.PT_ABUND && (state.mode==='body'?window.PT_ABUND.human: state.mode==='earth'?window.PT_ABUND.earth: window.PT_ABUND.universe))||{};
-    const raw = state.elements.map(e=>map[e.symbol]??0).filter(v=>typeof v==='number' && v>0);
-    if (!raw.length){ const p=document.createElement('div'); p.className='items'; p.innerHTML='<span class="item">Sense dades.</span>'; box.appendChild(p); return; }
-    if (state.mode==='body'){
-      const vals = raw.map(v=>Math.log10(v)); addBinsLegend(vals, v=>formatPct(Math.pow(10,v))); addItemsLocal([["Sense presència (0%)", '#374151']]); return;
-    }
-    if (state.mode==='earth'){
-      const vals = raw.map(v=>Math.log10(v)); addBinsLegend(vals, v=>formatPct(Math.pow(10,v))); addItemsLocal([["Sense presència (0%)", '#374151']]); return;
-    }
-    if (state.mode==='universe'){
-      const vals = raw.map(v=>Math.log10(v)); addBinsLegend(vals, v=>formatPct(Math.pow(10,v))); addItemsLocal([["Sense presència (0%)", '#374151']]); return;
-    }
-  }
-
-  if (state.mode === 'valence') {
-    addItemsLocal([
-      ['Només positives', '#ef4444'],
-      ['Només negatives', '#2563eb'],
-      ['Positives i negatives', '#a855f7'],
-      ['Només 0', '#9ca3af'],
-      ['Sense dades', '#e5e7eb']
-    ]);
-    const note = document.createElement('div'); note.style.cssText='margin-top:8px;font-size:12px;color:#6b7280'; note.textContent='Mostra els estats d’oxidació possibles per element. Etiqueta: llista de valències.'; box.appendChild(note);
-    return;
-  }
-
-  if (state.mode === 'toxic') {
-    addItemsLocal([
-      ['Tòxic', '#ef4444'],
-      ['No tòxic', '#9ca3af']
-    ]);
-    return;
-  }
-
-  if (state.mode === 'radioactive') {
-    addItemsLocal([
-      ['Radioactiu', '#f97316'],
-      ['No radioactiu', '#22c55e']
-    ]);
-    return;
-  }
-}
-
-// Helpers de llegenda
-function addItems(items){
-  const box = document.getElementById('legend');
-  if (!box) return;
-  const wrap = document.createElement('div');
-  wrap.className = 'items';
-  for (const [label, color] of items){
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `<span class="swatch" style="background:${color}"></span><span>${label}</span>`;
-    wrap.appendChild(item);
-  }
-  box.appendChild(wrap);
-}
-
-function addBinsLegend(vals, format){
-  if (!Array.isArray(vals) || !vals.length) return;
-  const box = document.getElementById('legend');
-  if (!box) return;
-  const min = Math.min(...vals), max = Math.max(...vals);
-  const bins = makeBins(min, max, paletteDistinct.length);
-  const wrap = document.createElement('div');
-  wrap.className = 'items';
-  for (let i=0;i<bins.length;i++){
-    const a = i===0 ? min : bins[i-1];
-    const b = bins[i];
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `<span class="swatch" style="background:${paletteDistinct[i]}"></span><span>${format(a)} - ${format(b)}</span>`;
-    wrap.appendChild(item);
-  }
-  box.appendChild(wrap);
-}
-
-function addBinsLegendCustom(vals, format, palette){
-  if (!Array.isArray(vals) || !vals.length) return;
-  const box = document.getElementById('legend');
-  if (!box) return;
-  const pal = Array.isArray(palette) && palette.length ? palette : paletteDistinct;
-  const min = Math.min(...vals), max = Math.max(...vals);
-  const bins = makeBins(min, max, pal.length);
-  const wrap = document.createElement('div');
-  wrap.className = 'items';
-  for (let i=0;i<bins.length;i++){
-    const a = i===0 ? min : bins[i-1];
-    const b = bins[i];
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `<span class=\"swatch\" style=\"background:${pal[i]}\"></span><span>${format(a)} - ${format(b)}</span>`;
-    wrap.appendChild(item);
-  }
-  box.appendChild(wrap);
-}
-
-function normalizeLegendText(){
-  try{
-    const repl = new Map([
-      ['nomǸs', 'només'],
-      ['símbol', 'símbol'],
-      ['número', 'número'],
-      ['atòmic', 'atòmic'],
-      ['coherència', 'coherència'],
-      ['Sòlid', 'Sòlid'],
-      ['Líquid', 'Líquid'],
-      ['logarítmica', 'logarítmica'],
-      ['tèrmica', 'tèrmica'],
-      ['W/m·K', 'W/m·K'],
-      ['W/m·K', 'W/m·K'],
-      ['g/cm³', 'g/cm³']
-    ]);
-    const box = document.getElementById('legend');
-    if (box){
-      let html = box.innerHTML;
-      for (const [a,b] of repl) html = html.split(a).join(b);
-      box.innerHTML = html;
-    }
-    document.querySelectorAll('.cell .meta').forEach(meta => {
-      let t = meta.textContent || '';
-      for (const [a,b] of repl) t = t.split(a).join(b);
-      meta.textContent = t;
-    });
-  }catch(e){ /* no-op */ }
-}
-
-function normalizeStaticUI(){
-  try{
-    document.title = 'Taula periòdica dinàmica';
-    const h1 = document.querySelector('h1.app-title'); if (h1) h1.textContent = 'Taula periòdica dinàmica';
-    const ind = document.getElementById('mode-indicator'); if (ind){ ind.textContent='-'; ind.title = 'Mode de visualització'; }
-    const lab = document.querySelector('label[for="mode-select"]'); if (lab) lab.textContent = 'Tria la visualització';
-    const sel = document.getElementById('mode-select');
-    if (sel){
-      const texts = new Map([
-        ['blank','En blanc'],
-        ['families','Famílies / grups'],
-        ['blocks','Blocs electrònics (s, p, d, f)'],
-        ['valence','València (electrons de valència)'],
-        ['electronegativity','Electronegativitat (Pauling)'],
-        ['ionization','Energia d\'ionització'],
-        ['state','Estat físic a T ambient'],
-        ['density','Densitat'],
-        ['meltPoint','Punt de fusió (K)'],
-        ['boilPoint','Punt d\'ebullició (K)'],
-        ['atomicRadius','Radi atòmic'],
-        ['metallic','Metàl·lics'],
-        ['reactivity','Reactivitat (aprox.)'],
-        ['condElectric','Conductivitat elèctrica (aprox.)'],
-        ['condThermal','Conductivitat tèrmica (aprox.)'],
-        ['ferromagnetism','Ferromagnetisme'],
-        ['bioessential','Essencials per a la vida'],
-        ['toxic','Tòxics/contaminants (selecció)'],
-        ['radioactive','Radioactivitat'],
-        ['body','Cos humà (%)'],
-        ['earth','Presència a la Terra (%)'],
-        ['universe','Abundància a l’Univers (%)'],
-      ]);
-      for (const opt of sel.querySelectorAll('option')){
-        const t = texts.get(opt.value); if (t) opt.textContent = t;
-      }
-      const og = sel.querySelector('optgroup'); if (og) og.label = 'Abundància (percentatge)';
-    }
-    const grid = document.getElementById('periodic-grid'); if (grid) grid.setAttribute('aria-label','Taula periòdica');
-    const credit = document.querySelector('.legend-footer .credit'); if (credit) credit.textContent = 'Aplicació realitzada per Felip Sarroca amb l\'assistència de la IA';
-  }catch(e){ /* no-op */ }
-}
-
-function mixColor(hex1, hex2, t) {
-  const c1 = hexToRgb(hex1), c2 = hexToRgb(hex2);
-  const r = Math.round(c1.r + (c2.r - c1.r) * t);
-  const g = Math.round(c1.g + (c2.g - c1.g) * t);
-  const b = Math.round(c1.b + (c2.b - c1.b) * t);
-  return `rgb(${r}, ${g}, ${b})`;
-}
-function hexToRgb(hex){
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return m ? { r: parseInt(m[1],16), g: parseInt(m[2],16), b: parseInt(m[3],16) } : {r:0,g:0,b:0};
-}
-
-function getFgForBg(bg){
-  // bg pot ser rgb(...) o #hex; tornem negre o blanc segons luminància
-  let r=17,g=19,b=24;
-  if (bg.startsWith('#')) { const c = hexToRgb(bg); r=c.r; g=c.g; b=c.b; } 
-  else {
-    const m = /rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)/.exec(bg);
-    if (m) { r=parseInt(m[1]); g=parseInt(m[2]); b=parseInt(m[3]); }
-  }
-  const sr = r/255, sg=g/255, sb=b/255;
-  const lin = (x)=> (x<=0.03928? x/12.92 : Math.pow((x+0.055)/1.055,2.4));
-  const L = 0.2126*lin(sr) + 0.7152*lin(sg) + 0.0722*lin(sb);
-  return L > 0.53 ? '#111318' : '#f8fafc'; // si clar, negre; si fosc, blanc
-}
-
-function setCardBG(card,color){
-  card.style.background = color;
-  const fg = getFgForBg(color);
-  card.style.setProperty('--cell-fg', fg);
-}
-
-function setMeta(card, text){
-  const meta = card.querySelector('.meta');
-  if (!meta) return;
-  meta.textContent = text || '';
-}
-
-// Helpers per a franges discretes
-function makeBins(min, max, n){
-  const bins = [];
-  const step = (max - min) / n;
-  for (let i=1;i<=n;i++) bins.push(min + step * i);
-  return bins;
-}
-function binIndex(v, bins){
-  for (let i=0;i<bins.length;i++) if (v <= bins[i]) return i;
-  return bins.length - 1;
-}
-function stepColors(hex1, hex2, n){
-  const colors = [];
-  for (let i=0;i<n;i++){
-    const t = n===1 ? 0.5 : i/(n-1);
-    colors.push(mixColor(hex1, hex2, t));
-  }
-  return colors;
-}
-
-function formatSI(v){
-  // Format curt amb prefixos SI: S/m i W/m·K
-  const abs = Math.abs(v);
-  const units = [
-    {k:1e9, s:'G'}, {k:1e6, s:'M'}, {k:1e3, s:'k'}, {k:1, s:''}, {k:1e-3, s:'m'}, {k:1e-6, s:'µ'}, {k:1e-9, s:'n'}
+  /* ================= definició dels modes ================= */
+  const NODATA = { k: 'nodata', label: 'Sense dades', color: null };
+  const FAMILY_CATS = [
+    { k: 'alcali', label: 'Metalls alcalins', color: '#fca5a5' },
+    { k: 'alcalinoterri', label: 'Metalls alcalinoterris', color: '#fdba74' },
+    { k: 'transicio', label: 'Metalls de transició', color: '#fde68a' },
+    { k: 'altresMetalls', label: 'Altres metalls (bloc p)', color: '#93c5fd' },
+    { k: 'semimetall', label: 'Semimetalls', color: '#6ee7b7' },
+    { k: 'noMetall', label: 'No-metalls', color: '#d9f99d' },
+    { k: 'halogen', label: 'Halògens', color: '#c4b5fd' },
+    { k: 'gasNoble', label: 'Gasos nobles', color: '#f9a8d4' },
+    { k: 'lantanid', label: 'Lantànids', color: '#a5f3fc' },
+    { k: 'actinid', label: 'Actínids', color: '#e7c9a9' }
   ];
-  for (const u of units){ if (abs >= u.k){ return (v/u.k).toFixed(2).replace(/\.00$/,'') + ' ' + u.s; } }
-  return v.toExponential(2);
-}
+  const FAMILY_LABEL = Object.fromEntries(FAMILY_CATS.map(c => [c.k, c.label]));
+  const PREDICTED_NOTE = 'Elements 104–118 (vora discontínua): només se n\'han obtingut uns quants àtoms; la classificació i les propietats són predites.';
 
-function formatPct(v){
-  if (v === 0) return '0%';
-  if (v >= 10) return v.toFixed(1).replace(/\.0$/,'') + '%';
-  if (v >= 1) return v.toFixed(2).replace(/0$/,'').replace(/\.$/,'') + '%';
-  if (v >= 0.1) return v.toFixed(2) + '%';
-  if (v >= 0.01) return v.toFixed(3) + '%';
-  if (v >= 0.001) return v.toFixed(4) + '%';
-  return v.toExponential(1).replace('e','×10^') + '%';
-}
-
-function paintAbundance(map, useLog, palette){
-  const grid = document.getElementById('periodic-grid');
-  const vals = [];
-  for (const el of state.elements){ const v = map[el.symbol] ?? 0; if (typeof v === 'number' && v>0) vals.push(v); }
-  if (!vals.length){ for (const el of state.elements){ const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`); setCardBG(card,'#374151'); card.classList.add('colored'); setMeta(card,'0%'); } return; }
-  if (useLog){
-    const lmin = Math.log10(Math.min(...vals)), lmax = Math.log10(Math.max(...vals));
-    const pal = Array.isArray(palette) && palette.length ? palette : paletteDistinct;
-    const bins = makeBins(lmin, lmax, pal.length);
-    const colors = pal;
-    for (const el of state.elements){
-      const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-      const vv = map[el.symbol] ?? 0;
-      if (vv>0){ const idx = binIndex(Math.log10(vv), bins); setCardBG(card, colors[idx]); card.classList.add('colored'); setMeta(card, formatPct(vv)); }
-      else { setCardBG(card, '#374151'); card.classList.add('colored'); setMeta(card, '0%'); }
-    }
-  } else {
-    const min = Math.min(...vals), max = Math.max(...vals);
-    const pal = Array.isArray(palette) && palette.length ? palette : paletteDistinct;
-    const bins = makeBins(min, max, pal.length);
-    const colors = pal;
-    for (const el of state.elements){
-      const card = grid.querySelector(`.cell[data-atomic="${el.number}"]`);
-      const vv = map[el.symbol] ?? 0;
-      if (vv>0){ const idx = binIndex(vv, bins); setCardBG(card, colors[idx]); card.classList.add('colored'); setMeta(card, formatPct(vv)); }
-      else { setCardBG(card, '#374151'); card.classList.add('colored'); setMeta(card, '0%'); }
-    }
+  function reactivity(el) {
+    const f = family(el), s = el.symbol;
+    if (el.number >= 99) return 'nodata';
+    if (f === 'gasNoble') return 'inert';
+    if (f === 'alcali' || s === 'F' || s === 'Cl') return 'molt';
+    if (['Ca', 'Sr', 'Ba', 'Ra', 'Br', 'I', 'O', 'P'].includes(s)) return 'bastant';
+    if (['Cu', 'Ag', 'Au', 'Pt', 'Pd', 'Rh', 'Ir', 'Os', 'Ru', 'Hg', 'N'].includes(s)) return 'poc';
+    return 'moderat';
   }
-}
-
-function applyCustomValues(){
-  if (typeof window === 'undefined' || !window.PT_VALUES) return;
-  const V = window.PT_VALUES;
-  for (const el of state.elements){
-    const sym = el.symbol;
-    if (V.electronegativity_pauling && sym in V.electronegativity_pauling){
-      const val = V.electronegativity_pauling[sym];
-      if (val === null || typeof val === 'number') el.electronegativity_pauling = val;
-    }
-    if (V.ionization_kjmol && sym in V.ionization_kjmol){
-      const val = V.ionization_kjmol[sym];
-      if (typeof val === 'number') {
-        if (!Array.isArray(el.ionization_energies)) el.ionization_energies = [];
-        el.ionization_energies[0] = val;
-      }
-    }
-    if (V.conductivity){
-      // Completa PT_COND amb valors personalitzats, sense sobreescriure valors existents
-      if (!window.PT_COND) window.PT_COND = {};
-      if (!window.PT_COND[sym]) window.PT_COND[sym] = {};
-      if (V.conductivity.e && (sym in V.conductivity.e) && typeof window.PT_COND[sym].e !== 'number') {
-        window.PT_COND[sym].e = V.conductivity.e[sym];
-      }
-      if (V.conductivity.t && (sym in V.conductivity.t) && typeof window.PT_COND[sym].t !== 'number') {
-        // Evita possibles unitats errònies en gasos (dades sobredimensionades)
-        const proposed = V.conductivity.t[sym];
-        if (!(el.phase === 'Gas' && proposed > 5)) {
-          window.PT_COND[sym].t = proposed;
-        }
-      }
-    }
-    if (V.density_gcm3 && sym in V.density_gcm3){
-      const val = V.density_gcm3[sym];
-      if (typeof val === 'number') el.density = val;
-    }
-    if (V.melt_K && sym in V.melt_K){
-      const val = V.melt_K[sym];
-      if (typeof val === 'number' && !(typeof el.melt === 'number')) el.melt = val;
-    }
-    if (V.boil_K && sym in V.boil_K){
-      const val = V.boil_K[sym];
-      if (typeof val === 'number' && !(typeof el.boil === 'number')) el.boil = val;
-    }
-    if (V.atomic_radius_pm && sym in V.atomic_radius_pm){
-      const val = V.atomic_radius_pm[sym];
-      if (typeof val === 'number') el.atomic_radius_pm = val;
-    }
+  function condClass(el) {
+    if (inList(D.aillants, el.symbol)) return 'aillant';
+    if (el.symbol in (D.semiconductors || {})) return 'semi';
+    const s = val.sigma(el);
+    if (s === null) return 'nodata';
+    if (s >= 1e7) return 'molt';
+    if (s >= 1e6) return 'bo';
+    return 'moderat';
   }
-}
-
-function initUI() {
-  const select = document.getElementById('mode-select');
-  select.addEventListener('change', e => setMode(e.target.value));
-  normalizeStaticUI();
-  initModal();
-  initTheme();
-}
-
-function initTheme() {
-  const toggleBtn = document.getElementById('theme-toggle-btn');
-  const themeLabel = document.getElementById('theme-label');
-  if (!toggleBtn || !themeLabel) {
-    console.error('Theme UI elements not found');
-    return;
+  function yearCat(y) {
+    if (y === null) return 'nodata';
+    if (y < 500) return 'antic';
+    if (y < 1650) return 'mitja';
+    if (y < 1800) return 'c18';
+    if (y < 1850) return 'c19a';
+    if (y < 1900) return 'c19b';
+    if (y < 1950) return 'c20a';
+    return 'c20b';
   }
-  const body = document.body;
 
-  const applyTheme = (theme) => {
-    if (theme === 'dark') {
-      body.classList.add('dark-mode');
-      toggleBtn.innerHTML = '🌙'; // Moon icon
-      themeLabel.textContent = 'Tema: Fosc';
-    } else {
-      body.classList.remove('dark-mode');
-      toggleBtn.innerHTML = '☀️'; // Sun icon
-      themeLabel.textContent = 'Tema: Clar';
+  const MODES = {
+    blank: {
+      label: 'En blanc', kind: 'none',
+      desc: 'Taula sense colors per localitzar els elements pel nombre atòmic i el símbol. Clica qualsevol element per veure\'n la fitxa.'
+    },
+
+    /* --- classificació --- */
+    families: {
+      label: 'Famílies', group: 'Classificació', kind: 'cat', cats: FAMILY_CATS, catOf: family,
+      desc: 'Els elements d\'una mateixa família tenen propietats químiques semblants perquè tenen el mateix nombre d\'electrons de valència.',
+      note: 'L\'hidrogen és un no-metall, tot i encapçalar el grup 1. ' + PREDICTED_NOTE
+    },
+    metallic: {
+      label: 'Metalls, semimetalls i no-metalls', group: 'Classificació', kind: 'cat',
+      cats: [
+        { k: 'metall', label: 'Metalls', color: '#7dd3fc' },
+        { k: 'semimetall', label: 'Semimetalls', color: '#6ee7b7' },
+        { k: 'nometall', label: 'No-metalls', color: '#fcd34d' }
+      ],
+      catOf: el => { const f = family(el); return isMetalFamily(f) ? 'metall' : f === 'semimetall' ? 'semimetall' : 'nometall'; },
+      desc: 'Una línia en escala separa els metalls (a l\'esquerra) dels no-metalls (a la dreta). Els semimetalls tenen propietats intermèdies.',
+      trend: { h: ['←', 'Caràcter metàl·lic: augmenta cap a l\'esquerra'], v: ['↓', 'i cap avall del grup'] },
+      note: 'Po i At tenen una classificació debatuda. ' + PREDICTED_NOTE
+    },
+    blocks: {
+      label: 'Blocs electrònics (s, p, d, f)', group: 'Classificació', kind: 'cat',
+      cats: [
+        { k: 's', label: 'Bloc s', color: '#7dd3fc' },
+        { k: 'p', label: 'Bloc p', color: '#f9a8d4' },
+        { k: 'd', label: 'Bloc d', color: '#86efac' },
+        { k: 'f', label: 'Bloc f', color: '#fcd34d' }
+      ],
+      catOf: el => (el.block || 'nodata').toLowerCase(),
+      desc: 'El bloc indica el tipus d\'orbital (s, p, d o f) on entra l\'últim electró segons la configuració electrònica.',
+      note: 'L\'heli és del bloc s, però se situa al grup 18. La posició de La, Ac, Lu i Lr és objecte de debat a la IUPAC.'
+    },
+    state: {
+      label: 'Estat físic a 25 °C', group: 'Classificació', kind: 'cat',
+      cats: [
+        { k: 'Solid', label: 'Sòlid', color: '#86efac' },
+        { k: 'Liquid', label: 'Líquid', color: '#60a5fa' },
+        { k: 'Gas', label: 'Gas', color: '#fde047' },
+        { k: 'nodata', label: 'Desconegut', color: null }
+      ],
+      catOf: el => (noBulk(el) ? 'nodata' : el.phase || 'nodata'),
+      desc: 'Estat de cada element a 25 °C i 1 atm. Només el brom i el mercuri són líquids; el gal·li i el cesi es fonen a poc més de 28 °C.',
+      note: 'Dels elements 100–118 no se n\'ha obtingut mai una mostra visible: l\'estat és desconegut.'
+    },
+
+    /* --- estructura i enllaç --- */
+    valence: {
+      label: 'Estats d\'oxidació (valències)', group: 'Estructura i enllaç', kind: 'cat',
+      cats: [
+        { k: 'pos', label: 'Només positius', color: '#fca5a5' },
+        { k: 'neg', label: 'Només negatius', color: '#93c5fd' },
+        { k: 'both', label: 'Positius i negatius', color: '#d8b4fe' },
+        { k: 'zero', label: 'Només 0', color: '#d1d5db' },
+        NODATA
+      ],
+      catOf: el => { const a = val.ox(el); if (!a) return 'nodata'; const p = a.some(n => n > 0), n = a.some(n => n < 0); return p && n ? 'both' : p ? 'pos' : n ? 'neg' : 'zero'; },
+      metaOf: el => { const a = val.ox(el); return a ? fmtOx(a) : ''; },
+      desc: 'Nombres d\'oxidació habituals que es fan servir en formulació inorgànica. Els metalls només en tenen de positius.',
+      note: 'Selecció escolar: molts elements tenen altres estats d\'oxidació menys freqüents.'
+    },
+    electronegativity: {
+      label: 'Electronegativitat', group: 'Estructura i enllaç', kind: 'num', value: val.en,
+      fmt: v => fmtFixed(v, 2), legendFmt: v => fmtFixed(v, 1),
+      desc: 'Tendència d\'un àtom a atreure els electrons d\'un enllaç. El fluor és l\'element més electronegatiu (3,98).',
+      trend: { h: ['→', 'Augmenta al llarg del període'], v: ['↑', 'i cap amunt del grup'] },
+      note: 'He, Ne i Ar no tenen valor a l\'escala de Pauling perquè no formen compostos estables.',
+      source: 'Escala de Pauling. Font: PeriodicTableJSON.'
+    },
+    ionization: {
+      label: 'Energia d\'ionització', group: 'Estructura i enllaç', kind: 'num', value: val.ion,
+      fmt: v => Math.round(v) + ' kJ/mol', legendFmt: v => Math.round(v) + ' kJ/mol',
+      desc: 'Energia necessària per arrencar l\'electró més extern d\'un àtom en estat gasós (primera energia d\'ionització).',
+      trend: { h: ['→', 'Augmenta al llarg del període'], v: ['↑', 'i cap amunt del grup'] },
+      source: 'Primera energia d\'ionització (kJ/mol). Font: PeriodicTableJSON (NIST).'
+    },
+    atomicRadius: {
+      label: 'Radi atòmic', group: 'Estructura i enllaç', kind: 'num', value: val.radius,
+      fmt: v => v + ' pm', legendFmt: v => Math.round(v) + ' pm',
+      desc: 'Mida aproximada de l\'àtom, en picòmetres (1 pm = 10⁻¹² m).',
+      trend: { h: ['←', 'Augmenta cap a l\'esquerra del període'], v: ['↓', 'i cap avall del grup'] },
+      source: 'Radi empíric (Slater, 1964); gasos nobles: radi calculat (Clementi, 1967).'
+    },
+
+    /* --- propietats físiques --- */
+    density: {
+      label: 'Densitat', group: 'Propietats físiques', kind: 'num', value: val.density,
+      fmt: (v, el) => fmtDensity(el), legendFmt: v => (v < 0.01 ? '≈ 0' : fmtSig(v, 2)) + ' g/cm³',
+      desc: 'Massa per unitat de volum. L\'osmi (22,6 g/cm³) és l\'element més dens.',
+      note: 'Els gasos es donen en g/L (0 °C, 1 atm): 1 g/L = 0,001 g/cm³.',
+      source: 'Font: PeriodicTableJSON.'
+    },
+    meltPoint: {
+      label: 'Punt de fusió', group: 'Propietats físiques', kind: 'num', value: val.melt, temp: true,
+      fmt: v => fmtTemp(v), legendFmt: v => fmtTemp(v),
+      desc: 'Temperatura a què el sòlid passa a líquid a 1 atm. El tungstè té el punt de fusió més alt dels metalls.',
+      note: 'El carboni i l\'arsènic subliment a pressió atmosfèrica; l\'heli només se solidifica a pressió elevada.',
+      source: 'Font: PeriodicTableJSON.'
+    },
+    boilPoint: {
+      label: 'Punt d\'ebullició', group: 'Propietats físiques', kind: 'num', value: val.boil, temp: true,
+      fmt: v => fmtTemp(v), legendFmt: v => fmtTemp(v),
+      desc: 'Temperatura a què el líquid bull a 1 atm. L\'heli té el punt d\'ebullició més baix (−269 °C).',
+      source: 'Font: PeriodicTableJSON.'
+    },
+    condElectric: {
+      label: 'Conductivitat elèctrica', group: 'Propietats físiques', kind: 'cat',
+      cats: [
+        { k: 'molt', label: 'Molt bons conductors (≥ 10⁷ S/m)', color: '#ef4444' },
+        { k: 'bo', label: 'Bons conductors (10⁶–10⁷ S/m)', color: '#fb923c' },
+        { k: 'moderat', label: 'Conductors moderats (< 10⁶ S/m)', color: '#fde047' },
+        { k: 'semi', label: 'Semiconductors', color: '#a78bfa' },
+        { k: 'aillant', label: 'Aïllants', color: '#60a5fa' },
+        NODATA
+      ],
+      catOf: condClass,
+      metaOf: el => { const s = val.sigma(el); return s !== null ? fmtSig(s, 3) : (condClass(el) === 'semi' ? 'variable' : ''); },
+      desc: 'Capacitat de conduir el corrent elèctric, en siemens per metre (S/m). L\'argent és el millor conductor.',
+      note: 'Valors a 20 °C. Carboni: grafit (el diamant és aïllant). Silici i germani: purs (intrínsecs).',
+      source: 'Font: CRC Handbook of Chemistry and Physics.'
+    },
+    condThermal: {
+      label: 'Conductivitat tèrmica', group: 'Propietats físiques', kind: 'num', value: val.thermal, log: true,
+      fmt: v => fmtSig(v, 3), legendFmt: v => fmtSig(v, 1) + ' W/m·K',
+      desc: 'Capacitat de conduir la calor, en W/m·K. Els metalls condueixen molt millor que els gasos.',
+      note: 'Valors a 300 K. Escala logarítmica: cada pas de color multiplica el valor.',
+      source: 'Font: CRC Handbook of Chemistry and Physics.'
+    },
+    ferromagnetism: {
+      label: 'Ferromagnetisme', group: 'Propietats físiques', kind: 'cat',
+      cats: [
+        { k: 'si', label: 'Ferromagnètic a temperatura ambient', color: '#38bdf8' },
+        { k: 'fred', label: 'Ferromagnètic per sota de 20 °C', color: '#a5f3fc' },
+        { k: 'no', label: 'No ferromagnètic', color: '#d1d5db' }
+      ],
+      catOf: el => (inList(D.ferromagnetics, el.symbol) ? 'si' : el.symbol === 'Gd' ? 'fred' : 'no'),
+      desc: 'Els materials ferromagnètics són atrets amb força pels imants i es poden imantar.',
+      note: 'Altres lantànids (Tb, Dy) són ferromagnètics només a temperatures molt baixes.'
+    },
+
+    /* --- química i vida --- */
+    reactivity: {
+      label: 'Reactivitat', group: 'Química i vida', kind: 'cat',
+      cats: [
+        { k: 'molt', label: 'Molt reactius', color: '#ef4444' },
+        { k: 'bastant', label: 'Bastant reactius', color: '#fb923c' },
+        { k: 'moderat', label: 'Reactivitat moderada', color: '#fde047' },
+        { k: 'poc', label: 'Poc reactius', color: '#86efac' },
+        { k: 'inert', label: 'Gairebé inerts', color: '#cbd5e1' },
+        NODATA
+      ],
+      catOf: reactivity,
+      desc: 'Facilitat amb què l\'element reacciona amb l\'aire, l\'aigua o els àcids. Els alcalins i els halògens són els més reactius.',
+      note: 'Classificació qualitativa i aproximada: la reactivitat depèn del medi i de la forma de l\'element. El nitrogen és poc reactiu perquè la molècula N₂ és molt estable.'
+    },
+    bioessential: {
+      label: 'Bioelements', group: 'Química i vida', kind: 'cat',
+      cats: [
+        { k: 'primari', label: 'Primaris (≈ 96 % de la massa)', color: '#22c55e' },
+        { k: 'secundari', label: 'Secundaris', color: '#86efac' },
+        { k: 'oligo', label: 'Oligoelements essencials', color: '#bef264' },
+        { k: 'possible', label: 'Possiblement essencials', color: '#fef08a' },
+        { k: 'no', label: 'No essencials', color: '#e5e7eb' }
+      ],
+      catOf: el => { const b = D.bioelements || {}; for (const k of ['primari', 'secundari', 'oligo', 'possible']) if (inList(b[k], el.symbol)) return k; return 'no'; },
+      desc: 'Elements que formen part dels éssers vius. Els primaris (C, H, O, N, P, S) formen les biomolècules.',
+      note: 'Els oligoelements són imprescindibles en quantitats molt petites; en excés poden ser tòxics.'
+    },
+    toxic: {
+      label: 'Toxicitat', group: 'Química i vida', kind: 'cat',
+      cats: [
+        { k: 'alta', label: 'Molt tòxics', color: '#ef4444' },
+        { k: 'compostos', label: 'Tòxics en alguns compostos o en excés', color: '#fdba74' },
+        { k: 'no', label: 'No destacats', color: '#e5e7eb' }
+      ],
+      catOf: el => (inList((D.toxicitat || {}).alta, el.symbol) ? 'alta' : inList((D.toxicitat || {}).compostos, el.symbol) ? 'compostos' : 'no'),
+      desc: 'Selecció d\'elements amb toxicitat química destacada, com els metalls pesants (mercuri, plom, cadmi).',
+      note: 'La toxicitat depèn de la dosi i de la forma química. Per al perill radioactiu, vegeu el mode Radioactivitat.'
+    },
+    radioactive: {
+      label: 'Radioactivitat', group: 'Química i vida', kind: 'cat',
+      cats: [
+        { k: 'estable', label: 'Té isòtops estables', color: '#86efac' },
+        { k: 'natural', label: 'Radioactiu natural', color: '#fdba74' },
+        { k: 'artificial', label: 'Radioactiu artificial', color: '#f87171' }
+      ],
+      catOf: el => { const z = el.number; if (z === 43 || z === 61 || z >= 93) return 'artificial'; if (z >= 84) return 'natural'; return 'estable'; },
+      desc: 'Els elements sense isòtops estables emeten radiació. Del poloni (84) en endavant, tots són radioactius.',
+      note: 'Tc i Pm no tenen isòtops estables. Se\'n troben traces a la natura, com també de Np i Pu. El bismut es considera estable a la pràctica.'
+    },
+
+    /* --- abundància --- */
+    earth: {
+      label: 'Escorça terrestre', group: 'Abundància (% en massa)', kind: 'num', log: true,
+      value: el => val.abund('escorca', el), fmt: v => fmtPct(v), legendFmt: v => fmtPct(v),
+      desc: 'Percentatge en massa de cada element a l\'escorça terrestre. L\'oxigen i el silici en formen el 74 %.',
+      note: 'Escala logarítmica. En gris, elements sense dades o només en traces.',
+      source: 'Font: CRC Handbook of Chemistry and Physics.'
+    },
+    body: {
+      label: 'Cos humà', group: 'Abundància (% en massa)', kind: 'num', log: true,
+      value: el => val.abund('cos', el), fmt: v => fmtPct(v), legendFmt: v => fmtPct(v),
+      desc: 'Percentatge en massa en una persona adulta. L\'oxigen, el carboni, l\'hidrogen i el nitrogen en formen el 96 %.',
+      note: 'Escala logarítmica. En gris, elements absents o només en traces.',
+      source: 'Font: J. Emsley, The Elements (adult de 70 kg).'
+    },
+    universe: {
+      label: 'Univers', group: 'Abundància (% en massa)', kind: 'num', log: true,
+      value: el => val.abund('univers', el), fmt: v => fmtPct(v), legendFmt: v => fmtPct(v),
+      desc: 'Percentatge en massa a la nostra galàxia. L\'hidrogen i l\'heli, formats al Big Bang, en són gairebé el 98 %.',
+      note: 'Escala logarítmica. En gris, elements molt minoritaris (sense dades).',
+      source: 'Font: K. Croswell (1996), fracció en massa a la Via Làctia.'
+    },
+
+    /* --- història --- */
+    discovery: {
+      label: 'Any de descobriment', group: 'Història', kind: 'cat',
+      cats: [
+        { k: 'antic', label: 'Antiguitat', color: '#d6a35c' },
+        { k: 'mitja', label: 'Edat mitjana i moderna (500–1649)', color: '#fcd34d' },
+        { k: 'c18', label: '1650–1799', color: '#bef264' },
+        { k: 'c19a', label: '1800–1849', color: '#6ee7b7' },
+        { k: 'c19b', label: '1850–1899', color: '#7dd3fc' },
+        { k: 'c20a', label: '1900–1949', color: '#a5b4fc' },
+        { k: 'c20b', label: 'Des de 1950', color: '#f0abfc' }
+      ],
+      catOf: el => yearCat(val.year(el)),
+      metaOf: el => { const y = val.year(el); return y === null ? '' : fmtYear(y); },
+      desc: 'Any en què l\'element es va identificar o aïllar. Mou el control lliscant per veure com creix la taula al llarg de la història.',
+      note: 'Els anys anteriors al 1600 són aproximats. Mendeléiev va publicar la seva taula el 1869.',
+      source: 'Font: taula d\'anys de descobriment (Viquipèdia).'
     }
   };
+  const MODE_KEYS = Object.keys(MODES);
+  if (!MODES[state.mode]) state.mode = 'families';
 
-  toggleBtn.addEventListener('click', () => {
-    const isDark = body.classList.contains('dark-mode');
-    const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem('theme', newTheme);
-    applyTheme(newTheme);
-  });
-
-  // Apply saved theme on load
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  applyTheme(savedTheme);
-}
-
-function initModal() {
-  const overlay = document.getElementById('modal-overlay');
-  const closeBtn = document.getElementById('modal-close-btn');
-
-  if (!overlay || !closeBtn) {
-    console.error('Modal elements not found');
-    return;
+  /* ================= colors ================= */
+  const SEQ = ['#2563eb', '#0ea5e9', '#22c55e', '#eab308', '#f97316', '#dc2626'];
+  const hexToRgb = h => { const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h); return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [0, 0, 0]; };
+  function paletteAt(t) {
+    t = Math.min(1, Math.max(0, t));
+    const x = t * (SEQ.length - 1), i = Math.min(SEQ.length - 2, Math.floor(x)), f = x - i;
+    const a = hexToRgb(SEQ[i]), b = hexToRgb(SEQ[i + 1]);
+    return '#' + a.map((c, j) => Math.round(c + (b[j] - c) * f).toString(16).padStart(2, '0')).join('');
+  }
+  function fgFor(hex) {
+    const lin = c => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+    const [r, g, b] = hexToRgb(hex);
+    const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    // contrast amb negre (L+0.05)/0.05 vs amb blanc 1.05/(L+0.05)
+    return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? '#111318' : '#ffffff';
+  }
+  function setBG(node, color) {
+    node.style.background = color;
+    node.style.setProperty('--cell-fg', fgFor(color));
+  }
+  function buildScale(valueFn, log, els = ELS) {
+    const vals = els.map(valueFn).filter(v => typeof v === 'number' && (!log || v > 0));
+    if (!vals.length) return null;
+    const f = log ? Math.log10 : (v => v);
+    const lo = f(Math.min(...vals)), hi = f(Math.max(...vals));
+    const inv = log ? (x => Math.pow(10, x)) : (x => x);
+    return {
+      min: inv(lo), max: inv(hi), mid: inv((lo + hi) / 2),
+      color: v => paletteAt(hi === lo ? 0.5 : (f(v) - lo) / (hi - lo))
+    };
   }
 
-  function hideModal() {
-    overlay.classList.add('hidden');
-  }
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      hideModal();
-    }
-  });
-
-  closeBtn.addEventListener('click', hideModal);
-}
-
-function formatElectronConfiguration(config) {
-  if (!config) return 'N/A';
-  return config.replace(/([spdfg])(\d+)/g, '$1<sup>$2</sup>');
-}
-
-function showElementDetails(atomicNumber) {
-  const element = state.elements.find(el => el.number === atomicNumber);
-  if (!element) return;
-
-  const overlay = document.getElementById('modal-overlay');
-  const contentDiv = document.getElementById('modal-content');
-  const caName = getNameCA(element.symbol, element.name);
-
-  const phase_ca = {
-    'Solid': 'Sòlid',
-    'Liquid': 'Líquid',
-    'Gas': 'Gas',
-    'Unknown': 'Desconegut'
-  };
-
-  // Check for a Catalan summary, otherwise fall back to the English one
-  const summary = (window.SUMMARIES_CA && window.SUMMARIES_CA[element.symbol]) || element.summary;
-
-  let detailsHtml = `
-    <h2 style="margin-top:0;">${caName} (${element.symbol})</h2>
-    <p><strong>El seu DNI atòmic:</strong> ${element.number}</p>
-    <p><strong>Pesa aproximadament:</strong> ${element.atomic_mass} u</p>
-    <p><strong>Pertany a la família de:</strong> ${familiesLabelCa[element.category.toLowerCase().replace("unknown, but predicted to be an ","")] || element.category}</p>
-    <p><strong>Fase a temperatura ambient:</strong> ${phase_ca[element.phase] || element.phase}</p>
-    <p><strong>Distribució d'electrons:</strong> ${formatElectronConfiguration(element.electron_configuration)}</p>
-    <hr>
-    <p style="font-size: 0.9em; text-align: justify;"><strong>Una mica sobre aquest element:</strong><br>${summary}</p>
-  `;
-
-  if (element.discovery_string_ca) {
-    detailsHtml += `<p><small>${element.discovery_string_ca}</small></p>`;
-  }
-
-  contentDiv.innerHTML = detailsHtml;
-  overlay.classList.remove('hidden');
-}
-
-
-async function main() {
-  await loadData();
-  // Nova normalització amb any, accents i termes en català
-  normalizeDiscoveryData2();
-  createGrid();
-  initUI();
-  setMode('blank');
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  main().catch(err => {
-    console.error(err);
-    const grid = document.getElementById('periodic-grid');
-    grid.innerHTML = '<div style="grid-column:1 / span 18;color:#f87171">Error carregant dades: ' + (err?.message || err) + '<br>Solució: obre amb un servidor (http://localhost) o assegura que es carrega <code>data/elements.js</code>.</div>';
-  });
-});
-
-// Responsivitat: ajust d'escala perquÃ¨ la taula sencera es vegi
-function fitGridScale(){
-  const viewport = document.getElementById('grid-viewport');
-  const scaler = document.getElementById('grid-scale');
+  /* ================= construcció de la graella ================= */
   const grid = document.getElementById('periodic-grid');
-  if (!viewport || !scaler || !grid) return;
-  // Mesura mides naturals
-  // Assegurem que no hi ha escala abans de mesurar
-  scaler.style.transform = 'scale(1)';
-  const gw = grid.scrollWidth;
-  const gh = grid.scrollHeight;
-  const vw = viewport.clientWidth - 16; // marge interior
-  const vh = viewport.clientHeight - 16;
-  if (gw === 0 || gh === 0 || vw <= 0 || vh <= 0) return;
-  const s = Math.min(vw / gw, vh / gh);
-  scaler.style.transform = `scale(${s})`;
-}
+  const cells = {};
+  let infoPanel = null;
 
-window.addEventListener('resize', () => {
-  fitGridScale();
-});
+  function addLabel(cls, text, col, row) {
+    const d = document.createElement('div');
+    d.className = cls; d.textContent = text;
+    d.style.gridColumn = col; d.style.gridRow = row;
+    d.setAttribute('aria-hidden', 'true');
+    grid.appendChild(d);
+    return d;
+  }
 
+  function createGrid() {
+    grid.innerHTML = '';
+    for (let g = 1; g <= 18; g++) addLabel('grid-label-group', g, g + 1, 1);
+    for (let p = 1; p <= 7; p++) addLabel('grid-label-period', p, 1, p + 1);
+    // referències al bloc f dins del grup 3
+    const ref6 = addLabel('fblock-ref', '', 4, 7); ref6.innerHTML = '<span>57–71</span><span>*</span>';
+    const ref7 = addLabel('fblock-ref', '', 4, 8); ref7.innerHTML = '<span>89–103</span><span>**</span>';
+    const l1 = addLabel('grid-label-f', '* Lantànids', '1 / 4', 10);
+    const l2 = addLabel('grid-label-f', '** Actínids', '1 / 4', 11);
+    l1.removeAttribute('aria-hidden'); l2.removeAttribute('aria-hidden');
 
-// Complement: llegenda específica per a conductivitat tèrmica (log) si cal
-(function setupThermalLegendOverride(){
-  function drawThermalLegendIfNeeded(){
-    try{
-      if (!document) return;
-      if (state.mode !== 'condThermal') return;
-      const box = document.getElementById('legend');
-      if (!box) return;
-      // Neteja i capçalera
-      box.innerHTML = '';
-      const title = document.createElement('h3'); title.textContent = 'Llegenda'; box.appendChild(title);
-      const map = (window.PT_COND)||{}; const unit = 'W/m·K';
-      const vals = (state.elements||[]).map(e=>map[e.symbol]?.t).filter(v=>typeof v==='number' && v>0);
-      if (vals.length){
-        const lmin = Math.log10(Math.min(...vals)), lmax = Math.log10(Math.max(...vals));
-        const bins = makeBins(lmin, lmax, paletteThermal.length);
-        const wrap = document.createElement('div'); wrap.className='items';
-        for (let i=0;i<bins.length;i++){
-          const a = i===0 ? lmin : bins[i-1]; const b = bins[i];
-          const item = document.createElement('div'); item.className='item';
-          item.innerHTML = `<span class="swatch" style="background:${paletteThermal[i]}"></span><span>${formatSI(Math.pow(10,a))} – ${formatSI(Math.pow(10,b))} ${unit}</span>`;
-          wrap.appendChild(item);
-        }
-        box.appendChild(wrap);
-        const note = document.createElement('div'); note.style.cssText='margin-top:8px;font-size:12px;color:#6b7280'; note.textContent='Escala logarítmica per visualitzar millor el rang dels valors (≈300 K).'; box.appendChild(note);
+    infoPanel = document.createElement('div');
+    infoPanel.className = 'info-panel';
+    infoPanel.setAttribute('aria-live', 'polite');
+    grid.appendChild(infoPanel);
+
+    for (const el of ELS) {
+      const c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'cell';
+      c.style.gridColumn = el.xpos + 1;
+      c.style.gridRow = el.ypos + 1;
+      c.dataset.sym = el.symbol;
+      c.innerHTML = `<span class="num">${el.number}</span><span class="sym">${el.symbol}</span><span class="name">${esc(nameOf(el))}</span><span class="meta"></span>`;
+      c.addEventListener('click', () => onCellClick(el));
+      c.addEventListener('mouseenter', () => { state.hover = el.symbol; if (!state.quiz && !state.compare) renderInfo(); });
+      c.addEventListener('focus', () => { state.hover = el.symbol; if (!state.quiz && !state.compare) renderInfo(); });
+      cells[el.symbol] = c;
+      grid.appendChild(c);
+    }
+  }
+
+  /* ================= pintat ================= */
+  function cellState(el, m, scale) {
+    if (m.kind === 'cat') {
+      const k = m.catOf(el);
+      const def = m.cats.find(c => c.k === k);
+      return { cat: k, color: def ? def.color : null, meta: m.metaOf ? m.metaOf(el) : '' };
+    }
+    if (m.kind === 'num') {
+      const v = m.value(el);
+      if (v === null || v === undefined || (m.log && v <= 0) || !scale) return { cat: 'nodata', color: null, meta: '' };
+      return { cat: 'value', color: scale.color(v), meta: m.fmt(v, el) };
+    }
+    return { cat: null, color: null, meta: '' };
+  }
+
+  function paint() {
+    const q = state.quiz;
+    const m = MODES[state.mode];
+    const scale = m.kind === 'num' ? buildScale(m.value, m.log) : null;
+    const qScale = q ? buildScale(q.prop.value, q.prop.log, q.set.map(s => ELS.find(e => e.symbol === s))) : null;
+
+    for (const el of ELS) {
+      const c = cells[el.symbol];
+      c.className = 'cell';
+      c.style.background = '';
+      c.style.removeProperty('--cell-fg');
+      let st;
+      if (q) {
+        const inSet = q.set.includes(el.symbol);
+        st = { cat: null, color: null, meta: '' };
+        if (!inSet) c.classList.add('dim');
+        else if (q.answered) { const v = q.prop.value(el); st = { color: qScale.color(v), meta: q.prop.fmt(v, el) }; }
+        if (q.answered && el.symbol === q.answer) c.classList.add('right');
+        if (q.answered && el.symbol === q.picked && q.picked !== q.answer) c.classList.add('wrong');
       } else {
-        const p = document.createElement('div'); p.className='items'; p.innerHTML = '<span class="item">Sense dades</span>'; box.appendChild(p);
+        st = cellState(el, m, scale);
+        if (m.kind !== 'none' && isPredicted(el)) c.classList.add('predicted');
+        if (state.focus && st.cat !== state.focus) c.classList.add('dim');
+        if (state.mode === 'discovery') { const y = val.year(el); if (y !== null && y > state.yearLimit) c.classList.add('dim'); }
+        if (state.compare && state.compare.includes(el.symbol)) c.classList.add('picked');
       }
-    }catch(e){ /* no-op */ }
+      if (st.color) { setBG(c, st.color); c.classList.add('colored'); }
+      else if (st.cat === 'nodata') c.style.background = 'var(--nodata)';
+      const meta = c.querySelector('.meta');
+      meta.textContent = st.meta || '';
+      const long = (st.meta || '').length > 12;
+      meta.classList.toggle('long', long);
+      c.classList.toggle('has-long', long);
+      c.setAttribute('aria-label', `${nameOf(el)}, ${el.symbol}, nombre atòmic ${el.number}${st.meta ? ', ' + st.meta : ''}`);
+    }
+    renderLegend();
+    renderInfo();
   }
-  // Redibuixa quan canviï el selector
-  const sel = document.getElementById('mode-select');
-  if (sel) sel.addEventListener('change', ()=> setTimeout(drawThermalLegendIfNeeded));
-  // També quan carregui inicialment
-  if (typeof window!== 'undefined') window.addEventListener('load', ()=> setTimeout(drawThermalLegendIfNeeded));
+
+  /* ================= panell d'informació (espai buit de la taula) ================= */
+  function previewHTML(el) {
+    if (!el) return '<div class="info-preview empty">Passa per sobre d\'un element per veure\'l aquí</div>';
+    const m = MODES[state.mode];
+    const st = cellState(el, m, m.kind === 'num' ? buildScale(m.value, m.log) : null);
+    let valText = st.meta;
+    if (m.kind === 'cat' && st.cat) { const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label + (st.meta ? ' · ' + st.meta : ''); }
+    if (st.cat === 'nodata' && m.kind === 'num') valText = 'Sense dades';
+    const style = st.color ? `style="background:${st.color};--cell-fg:${fgFor(st.color)}"` : '';
+    return `<div class="info-preview" ${style}>
+      <span class="num">${el.number}</span><span class="sym">${el.symbol}</span>
+      <span class="name">${esc(nameOf(el))}</span><span class="val">${esc(valText || '')}</span></div>`;
+  }
+
+  function renderInfo() {
+    if (!infoPanel) return;
+    const q = state.quiz;
+    if (q) {
+      const fb = q.answered
+        ? (q.picked === q.answer
+          ? `<p class="quiz-feedback ok">Correcte! ${esc(nameOf(bySym(q.answer)))}: ${esc(q.prop.fmt(q.prop.value(bySym(q.answer)), bySym(q.answer)))}.</p>`
+          : `<p class="quiz-feedback ko">No és correcte. La resposta és ${esc(nameOf(bySym(q.answer)))} (${esc(q.prop.fmt(q.prop.value(bySym(q.answer)), bySym(q.answer)))}).</p>`)
+        : '<p class="info-text">Clica l\'element que creguis correcte. Pensa en les tendències de la taula!</p>';
+      infoPanel.innerHTML = `<div class="info-body">
+        <p class="quiz-score">Repte · ${q.score} encerts de ${q.total}</p>
+        <p class="quiz-q">${esc(q.text)}</p>${fb}
+        <div class="panel-actions">
+          ${q.answered ? '<button type="button" class="panel-btn" data-act="next">Següent repte</button>' : ''}
+          <button type="button" class="panel-btn secondary" data-act="quit">Surt del repte</button>
+        </div></div>`;
+      return;
+    }
+    if (state.compare) {
+      const picked = state.compare.map(s => `<strong>${esc(nameOf(bySym(s)))}</strong>`).join(' i ');
+      infoPanel.innerHTML = `${previewHTML(state.hover ? bySym(state.hover) : null)}<div class="info-body">
+        <p class="info-title">Compara dos elements</p>
+        <p class="info-text">${picked ? 'Has triat ' + picked + '. Ara tria el segon element.' : 'Clica dos elements de la taula per comparar-ne les propietats.'}</p>
+        <div class="panel-actions"><button type="button" class="panel-btn secondary" data-act="stopcmp">Cancel·la</button></div></div>`;
+      return;
+    }
+    const m = MODES[state.mode];
+    const trend = m.trend ? `<div class="trend">
+        <span class="trend-box"><span class="trend-arrow">${m.trend.h[0]}</span>${esc(m.trend.h[1])}</span>
+        <span class="trend-box"><span class="trend-arrow">${m.trend.v[0]}</span>${esc(m.trend.v[1])}</span></div>` : '';
+    infoPanel.innerHTML = `${previewHTML(state.hover ? bySym(state.hover) : null)}<div class="info-body">
+      <p class="info-title">${esc(m.label)}</p><p class="info-text">${esc(m.desc)}</p>${trend}</div>`;
+  }
+  const bySym = s => ELS.find(e => e.symbol === s);
+
+  /* ================= llegenda i opcions ================= */
+  function renderLegend() {
+    const box = document.getElementById('legend');
+    const m = MODES[state.mode];
+    let html = '<h2>Llegenda</h2>';
+    const q = state.quiz;
+    if (q) {
+      if (q.answered) {
+        const sc = buildScale(q.prop.value, q.prop.log, q.set.map(bySym));
+        html += `<div class="gradient" style="background:linear-gradient(90deg, ${SEQ.join(', ')})"></div>
+          <div class="ticks"><span>${esc(q.prop.legendFmt(sc.min))}</span><span>${esc(q.prop.legendFmt(sc.max))}</span></div>
+          <p class="note">${esc(q.prop.label)} dels elements del repte.</p>`;
+      } else html += '<p class="note" style="margin-top:0">Repte en curs: els colors i els valors apareixeran quan responguis.</p>';
+      box.innerHTML = html;
+      return;
+    }
+    if (m.kind === 'none') {
+      html += '<p class="note" style="margin-top:0">Sense colors: només número atòmic, símbol i nom. Clica un element per obrir-ne la fitxa.</p>';
+    } else if (m.kind === 'cat') {
+      const counts = {};
+      for (const el of ELS) { const k = m.catOf(el); counts[k] = (counts[k] || 0) + 1; }
+      html += '<div class="items">';
+      for (const c of m.cats) {
+        if (!counts[c.k]) continue;
+        const sw = c.color ? `background:${c.color}` : 'background:var(--nodata)';
+        html += `<button type="button" class="item" data-cat="${c.k}" aria-pressed="${state.focus === c.k}"><span class="swatch" style="${sw}"></span>${esc(c.label)} <span class="count">${counts[c.k]}</span></button>`;
+      }
+      html += '</div><p class="hint">Clica una categoria per destacar-ne els elements.</p>';
+    } else {
+      const sc = buildScale(m.value, m.log);
+      if (sc) {
+        const stops = SEQ.map((c, i) => `${c} ${Math.round(i / (SEQ.length - 1) * 100)}%`).join(', ');
+        html += `<div class="gradient" style="background:linear-gradient(90deg, ${stops})"></div>
+          <div class="ticks"><span>${esc(m.legendFmt(sc.min))}</span><span>${esc(m.legendFmt(sc.mid))}</span><span>${esc(m.legendFmt(sc.max))}</span></div>`;
+      }
+      const nodata = ELS.filter(el => { const v = m.value(el); return v === null || v === undefined; }).length;
+      if (nodata) html += `<div class="items"><span class="item"><span class="swatch" style="background:var(--nodata)"></span>Sense dades <span class="count">${nodata}</span></span></div>`;
+    }
+    if (m.note) html += `<p class="note">${esc(m.note)}</p>`;
+    if (m.source) html += `<p class="source">${esc(m.source)}</p>`;
+    box.innerHTML = html;
+  }
+
+  function renderOptions() {
+    const box = document.getElementById('mode-options');
+    const m = MODES[state.mode];
+    if (m.temp) {
+      box.innerHTML = `<div class="opt-row">Unitats:
+        <span class="seg" role="group" aria-label="Unitats de temperatura">
+          <button type="button" data-temp="C" aria-pressed="${state.temp === 'C'}">°C</button>
+          <button type="button" data-temp="K" aria-pressed="${state.temp === 'K'}">K</button>
+        </span></div>`;
+    } else if (state.mode === 'discovery') {
+      box.innerHTML = `<label class="opt-row" for="year-range">Descoberts fins a
+        <input id="year-range" type="range" min="1650" max="2010" step="5" value="${state.yearLimit}">
+        <output class="year-out" id="year-out">${state.yearLimit >= 2010 ? 'avui' : state.yearLimit}</output></label>`;
+    } else box.innerHTML = '';
+  }
+
+  function setMode(mode) {
+    if (!MODES[mode]) mode = 'families';
+    state.mode = mode;
+    state.focus = null;
+    store.set('mode', mode);
+    document.getElementById('mode-select').value = mode;
+    renderOptions();
+    renderLegend();
+    paint();
+  }
+
+  function buildSelect() {
+    const sel = document.getElementById('mode-select');
+    let html = '', group = undefined;
+    for (const k of MODE_KEYS) {
+      const m = MODES[k];
+      if (m.group !== group) {
+        if (group) html += '</optgroup>';
+        if (m.group) html += `<optgroup label="${esc(m.group)}">`;
+        group = m.group;
+      }
+      html += `<option value="${k}">${esc(m.label)}</option>`;
+    }
+    if (group) html += '</optgroup>';
+    sel.innerHTML = html;
+    sel.addEventListener('change', e => setMode(e.target.value));
+  }
+
+  /* ================= fitxa de l'element ================= */
+  function configHTML(el) {
+    const raw = (el.electron_configuration_semantic || el.electron_configuration || '').replace(/^\*/, '');
+    return esc(raw).replace(/([spdf])(\d+)/g, '$1<sup>$2</sup>');
+  }
+  function massText(el) {
+    const m = el.atomic_mass;
+    if (typeof m !== 'number') return '—';
+    return Number.isInteger(m) ? `[${m}]` : fmtFixed(m, 2);
+  }
+  function catLabel(modeKey, el) {
+    const m = MODES[modeKey], k = m.catOf(el), def = m.cats.find(c => c.k === k);
+    return def ? def.label.replace(/\s*\([^)]*\)$/, '') : '—';
+  }
+  function fitxaRows(el) {
+    const pred = isPredicted(el) ? ' (predit)' : '';
+    const g = groupOf(el);
+    const sigma = val.sigma(el);
+    const condTxt = catLabel('condElectric', el) + (sigma !== null ? ' · ' + fmtSig(sigma, 3) + ' S/m' : '');
+    const th = val.thermal(el);
+    const abund = (k, mode) => { const v = val.abund(k, el); return [MODES[mode].label, v === null ? 'traces o sense dades' : fmtPct(v), mode]; };
+    const t = (k) => (k === null ? '—' : `${fmtTemp(k, 'C')} (${fmtTemp(k, 'K')})`);
+    const y = val.year(el);
+    return [
+      ['Nombre atòmic (Z)', el.number, 'blank'],
+      ['Massa atòmica (u)', massText(el), null],
+      ['Grup · període', `${g ? g : (family(el) === 'lantanid' ? 'lantànids' : 'actínids')} · ${el.period}`, null],
+      ['Bloc', (el.block || '—').toLowerCase(), 'blocks'],
+      ['Família', FAMILY_LABEL[family(el)] + pred, 'families'],
+      ['Estat a 25 °C', catLabel('state', el), 'state'],
+      ['Configuració electrònica', configHTML(el) + pred, null, true, true],
+      ['Estats d\'oxidació habituals', val.ox(el) ? fmtOx(val.ox(el)) : '—', 'valence'],
+      ['Electronegativitat (Pauling)', val.en(el) !== null ? fmtFixed(val.en(el), 2) : '—', 'electronegativity'],
+      ['1a energia d\'ionització', val.ion(el) !== null ? Math.round(val.ion(el)) + ' kJ/mol' : '—', 'ionization'],
+      ['Radi atòmic', val.radius(el) !== null ? val.radius(el) + ' pm' : '—', 'atomicRadius'],
+      ['Densitat', fmtDensity(el), 'density'],
+      ['Punt de fusió', t(val.melt(el)), 'meltPoint'],
+      ['Punt d\'ebullició', t(val.boil(el)), 'boilPoint'],
+      ['Conductivitat elèctrica', condTxt, 'condElectric'],
+      ['Conductivitat tèrmica', th !== null ? fmtSig(th, 3) + ' W/m·K' : '—', 'condThermal'],
+      abund('escorca', 'earth'), abund('cos', 'body'), abund('univers', 'universe'),
+      ['Bioelement', catLabel('bioessential', el), 'bioessential'],
+      ['Toxicitat', catLabel('toxic', el), 'toxic'],
+      ['Radioactivitat', catLabel('radioactive', el), 'radioactive'],
+      ['Magnetisme', catLabel('ferromagnetism', el), 'ferromagnetism'],
+      ['Reactivitat', catLabel('reactivity', el), 'reactivity'],
+      ['Any de descobriment', y === null ? '—' : fmtYear(y), 'discovery']
+    ];
+  }
+
+  let lastFocus = null;
+  function openModal(html, tileColor) {
+    const overlay = document.getElementById('modal-overlay');
+    document.getElementById('modal-content').innerHTML = html;
+    if (tileColor) {
+      const tile = overlay.querySelector('.fitxa-tile');
+      if (tile) setBG(tile, tileColor);
+    }
+    lastFocus = document.activeElement;
+    overlay.classList.remove('hidden');
+    document.getElementById('element-modal').focus();
+  }
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.add('hidden');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function showElement(el) {
+    const m = MODES[state.mode];
+    const st = cellState(el, m, m.kind === 'num' ? buildScale(m.value, m.log) : null);
+    const rows = fitxaRows(el).map(([k, v, mode, isHTML, wide]) =>
+      `<div class="${[mode === state.mode && mode !== 'blank' ? 'current' : '', wide ? 'wide' : ''].join(' ').trim()}"><dt>${esc(k)}</dt><dd>${isHTML ? v : esc(v)}</dd></div>`).join('');
+    const note = (D.notes || {})[el.symbol];
+    const disc = val.discoverer(el);
+    const y = val.year(el);
+    const html = `
+      <div class="fitxa-head">
+        <div class="fitxa-tile"><span class="z">${el.number}</span><span class="s">${el.symbol}</span></div>
+        <div><h2 id="modal-title">${esc(nameOf(el))}</h2>
+          <div class="sub">${esc(FAMILY_LABEL[family(el)])}${isPredicted(el) ? ' · propietats predites' : ''}</div></div>
+      </div>
+      <dl class="fitxa-props">${rows}</dl>
+      ${note ? `<p class="fitxa-note">${esc(note)}</p>` : ''}
+      <p class="fitxa-summary">${esc(SUMMARIES[el.symbol] || '')}</p>
+      ${disc ? `<p class="fitxa-disc"><strong>Descobriment:</strong> ${esc(disc)}${y !== null ? ' (' + esc(fmtYear(y)) + ')' : ''}.</p>` : ''}`;
+    openModal(html, st.color);
+  }
+
+  /* ================= comparació ================= */
+  const CMP_ROWS = [
+    ['Nombre atòmic', el => el.number, v => String(v)],
+    ['Massa atòmica (u)', el => el.atomic_mass, v => (Number.isInteger(v) ? `[${v}]` : fmtFixed(v, 2))],
+    ['Electronegativitat', val.en, v => fmtFixed(v, 2)],
+    ['1a energia d\'ionització (kJ/mol)', val.ion, v => String(Math.round(v))],
+    ['Radi atòmic (pm)', val.radius, v => String(v)],
+    ['Densitat (g/cm³)', val.density, v => fmtSig(v, 3)],
+    ['Punt de fusió', val.melt, v => fmtTemp(v)],
+    ['Punt d\'ebullició', val.boil, v => fmtTemp(v)],
+    ['Conductivitat elèctrica (S/m)', val.sigma, v => fmtSig(v, 3)],
+    ['Conductivitat tèrmica (W/m·K)', val.thermal, v => fmtSig(v, 3)],
+    ['Escorça terrestre (%)', el => val.abund('escorca', el), v => fmtSig(v, 3)],
+    ['Any de descobriment', val.year, v => fmtYear(v)]
+  ];
+  function showCompare(a, b) {
+    const rows = CMP_ROWS.map(([label, f, fmt]) => {
+      const va = f(a), vb = f(b);
+      const ok = x => typeof x === 'number';
+      const hiA = ok(va) && ok(vb) && va > vb, hiB = ok(va) && ok(vb) && vb > va;
+      return `<tr><td>${esc(label)}</td><td class="${hiA ? 'hi' : ''}">${ok(va) ? esc(fmt(va)) : '—'}</td><td class="${hiB ? 'hi' : ''}">${ok(vb) ? esc(fmt(vb)) : '—'}</td></tr>`;
+    }).join('');
+    const extra = [['Família', el => FAMILY_LABEL[family(el)]], ['Estat a 25 °C', el => catLabel('state', el)], ['Estats d\'oxidació', el => (val.ox(el) ? fmtOx(val.ox(el)) : '—')]]
+      .map(([l, f]) => `<tr><td>${esc(l)}</td><td>${esc(f(a))}</td><td>${esc(f(b))}</td></tr>`).join('');
+    openModal(`<h2 id="modal-title" style="margin:0 0 6px">Comparació</h2>
+      <table class="cmp-table"><thead><tr><th></th><th>${esc(nameOf(a))} (${a.symbol})</th><th>${esc(nameOf(b))} (${b.symbol})</th></tr></thead>
+      <tbody>${extra}${rows}</tbody></table>
+      <p class="fitxa-disc">En negreta, el valor més alt de cada propietat. Densitat dels gasos convertida a g/cm³.</p>`);
+  }
+  function setCompare(on) {
+    state.compare = on ? [] : null;
+    document.getElementById('compare-btn').setAttribute('aria-pressed', String(on));
+    if (on) setQuiz(false);
+    paint();
+  }
+
+  /* ================= repte ================= */
+  const QUIZ_PROPS = [
+    { key: 'electronegativity', max: 'l\'electronegativitat més alta', min: 'l\'electronegativitat més baixa' },
+    { key: 'ionization', max: 'la primera energia d\'ionització més alta', min: 'la primera energia d\'ionització més baixa' },
+    { key: 'atomicRadius', max: 'el radi atòmic més gran', min: 'el radi atòmic més petit' },
+    { key: 'meltPoint', max: 'el punt de fusió més alt', min: 'el punt de fusió més baix' },
+    { key: 'density', max: 'la densitat més alta', min: 'la densitat més baixa' }
+  ];
+  const MAIN_GROUPS = [1, 2, 13, 14, 15, 16, 17, 18];
+  const rnd = a => a[Math.floor(Math.random() * a.length)];
+  function newQuestion(prev) {
+    for (let tries = 0; tries < 200; tries++) {
+      const p = rnd(QUIZ_PROPS), m = MODES[p.key];
+      const byPeriod = Math.random() < 0.55;
+      let set, where;
+      if (byPeriod) {
+        const per = rnd([2, 3, 4, 5, 6]);
+        set = ELS.filter(e => e.period === per && e.ypos <= 7 && MAIN_GROUPS.includes(groupOf(e)));
+        where = `del període ${per}`;
+      } else {
+        const g = rnd([1, 2, 13, 14, 15, 16, 17]);
+        set = ELS.filter(e => groupOf(e) === g && e.period <= 6);
+        where = `del grup ${g}`;
+      }
+      set = set.filter(e => m.value(e) !== null);
+      if (set.length < 3) continue;
+      const want = Math.random() < 0.5 ? 'max' : 'min';
+      const sorted = set.slice().sort((a, b) => m.value(a) - m.value(b));
+      const ans = want === 'max' ? sorted[sorted.length - 1] : sorted[0];
+      const runner = want === 'max' ? sorted[sorted.length - 2] : sorted[1];
+      if (m.value(ans) === m.value(runner)) continue;
+      const text = `Quin element ${where} té ${p[want]}?`;
+      return {
+        prop: { value: m.value, fmt: m.fmt, log: m.log, legendFmt: m.legendFmt, label: m.label },
+        set: set.map(e => e.symbol), answer: ans.symbol, text,
+        answered: false, picked: null,
+        score: prev ? prev.score : 0, total: prev ? prev.total : 0
+      };
+    }
+    return null;
+  }
+  function setQuiz(on) {
+    state.quiz = on ? newQuestion(null) : null;
+    document.getElementById('quiz-btn').setAttribute('aria-pressed', String(!!state.quiz));
+    if (on && state.compare) { state.compare = null; document.getElementById('compare-btn').setAttribute('aria-pressed', 'false'); }
+    paint();
+  }
+
+  function onCellClick(el) {
+    const q = state.quiz;
+    if (q) {
+      if (q.answered || !q.set.includes(el.symbol)) return;
+      q.answered = true; q.picked = el.symbol; q.total++;
+      if (el.symbol === q.answer) q.score++;
+      paint();
+      return;
+    }
+    if (state.compare) {
+      if (state.compare.includes(el.symbol)) state.compare = state.compare.filter(s => s !== el.symbol);
+      else state.compare.push(el.symbol);
+      if (state.compare.length === 2) {
+        const [a, b] = state.compare.map(bySym);
+        state.compare = [];
+        paint();
+        showCompare(a, b);
+        return;
+      }
+      paint();
+      return;
+    }
+    showElement(el);
+  }
+
+  /* ================= adaptació a la pantalla =================
+     Com a Equacions: la interfície es pensa per a 1440 × 820 px útils. En
+     pantalles d'ordinador més petites (p. ex. 1366 × 768, o escalat del 125 %)
+     es redueix tota sencera (--ui-zoom). A més, la graella s'escala per omplir
+     l'espai disponible sense retalls. En mòbils i tauletes, la barra es col·loca
+     a dalt i la taula es pot desplaçar dins del seu marc. */
+  const BASE_W = 1440, BASE_H = 820, MIN_ZOOM = 0.75, MOBILE_W = 900;
+  const isMobile = () => window.innerWidth < MOBILE_W;
+
+  function fitScale() {
+    const w = window.innerWidth, h = window.innerHeight;
+    let z = Math.min(1, w / BASE_W, h / BASE_H);
+    z = Math.max(MIN_ZOOM, Math.floor(z * 20) / 20);
+    if (isMobile() || root.classList.contains('projector')) z = 1;
+    root.style.setProperty('--ui-zoom', String(z));
+    placeFooter();
+    fitGrid();
+  }
+
+  function placeFooter() {
+    const footer = document.querySelector('.felip-app-footer');
+    const target = isMobile() ? document.getElementById('app') : document.querySelector('.sidebar');
+    if (footer && footer.parentElement !== target) target.appendChild(footer);
+  }
+
+  function fitGrid() {
+    const vp = document.getElementById('grid-viewport');
+    const scaler = document.getElementById('grid-scale');
+    const gw = grid.offsetWidth, gh = grid.offsetHeight;
+    if (!gw || !gh) return;
+    let s;
+    if (isMobile()) {
+      s = Math.min(1, Math.max(0.5, (vp.clientWidth - 4) / gw));
+    } else {
+      const vw = vp.clientWidth - 12, vh = vp.clientHeight - 12;
+      if (vw <= 0 || vh <= 0) return;
+      s = Math.min(vw / gw, vh / gh, 1.5);
+    }
+    grid.style.transform = `scale(${s})`;
+    scaler.style.width = (gw * s) + 'px';
+    scaler.style.height = (gh * s) + 'px';
+  }
+
+  /* ================= tema i projector ================= */
+  function initToggles() {
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    const projBtn = document.getElementById('projector-btn');
+    const syncTheme = () => themeBtn.setAttribute('aria-pressed', String(root.classList.contains('dark-mode')));
+    themeBtn.addEventListener('click', () => {
+      root.classList.toggle('dark-mode');
+      store.set('theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+      syncTheme();
+    });
+    syncTheme();
+    if (store.get('projector', '0') === '1') root.classList.add('projector');
+    projBtn.setAttribute('aria-pressed', String(root.classList.contains('projector')));
+    projBtn.addEventListener('click', () => {
+      root.classList.toggle('projector');
+      const on = root.classList.contains('projector');
+      store.set('projector', on ? '1' : '0');
+      projBtn.setAttribute('aria-pressed', String(on));
+      fitScale();
+    });
+  }
+
+  /* ================= esdeveniments ================= */
+  function initEvents() {
+    document.getElementById('legend').addEventListener('click', e => {
+      const b = e.target.closest('button[data-cat]');
+      if (!b) return;
+      state.focus = state.focus === b.dataset.cat ? null : b.dataset.cat;
+      renderLegend();
+      paint();
+    });
+    document.getElementById('mode-options').addEventListener('click', e => {
+      const b = e.target.closest('button[data-temp]');
+      if (!b) return;
+      state.temp = b.dataset.temp;
+      store.set('temp', state.temp);
+      renderOptions(); renderLegend(); paint();
+    });
+    document.getElementById('mode-options').addEventListener('input', e => {
+      if (e.target.id !== 'year-range') return;
+      state.yearLimit = Number(e.target.value);
+      document.getElementById('year-out').textContent = state.yearLimit >= 2010 ? 'avui' : state.yearLimit;
+      paint();
+    });
+    grid.addEventListener('click', e => {
+      const b = e.target.closest('button[data-act]');
+      if (!b) return;
+      if (b.dataset.act === 'next') { state.quiz = newQuestion(state.quiz); paint(); }
+      if (b.dataset.act === 'quit') setQuiz(false);
+      if (b.dataset.act === 'stopcmp') setCompare(false);
+    });
+    document.getElementById('compare-btn').addEventListener('click', () => setCompare(!state.compare));
+    document.getElementById('quiz-btn').addEventListener('click', () => setQuiz(!state.quiz));
+
+    const overlay = document.getElementById('modal-overlay');
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+    document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (!overlay.classList.contains('hidden')) closeModal();
+        else if (state.quiz) setQuiz(false);
+        else if (state.compare) setCompare(false);
+      }
+    });
+
+    window.addEventListener('resize', fitScale);
+    if ('ResizeObserver' in window) new ResizeObserver(() => fitGrid()).observe(document.getElementById('grid-viewport'));
+  }
+
+  /* ================= inici ================= */
+  function main() {
+    if (!ELS.length) {
+      grid.textContent = 'No s\'han pogut carregar les dades (data/elements.js).';
+      return;
+    }
+    buildSelect();
+    createGrid();
+    initToggles();
+    initEvents();
+    setMode(state.mode);
+    fitScale();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main);
+  else main();
 })();

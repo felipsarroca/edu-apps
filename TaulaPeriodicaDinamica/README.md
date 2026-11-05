@@ -1,73 +1,64 @@
 # Taula periòdica dinàmica
 
-Aplicació web simple (HTML/CSS/JS) que mostra la taula periòdica en blanc i permet canviar el mode de visualització per pintar les cel·les segons diferents criteris.
+Aplicació web (HTML, CSS i JavaScript, sense dependències) que acoloreix la taula periòdica segons el criteri que es triï: famílies, propietats periòdiques, propietats físiques, química i vida, abundància i història.
 
-## Contingut del projecte
+Funciona obrint directament `index.html` (també des de `file://`) o publicada a GitHub Pages.
 
-- `index.html`: estructura i interfície (títol, selector, llegenda i tauler).
-- `style.css`: estil fosc, graella responsive i targetes dels elements.
-- `app.js`: càrrega de dades, renderitzat i lògica de modes.
-- `data/elements.json`: dataset JSON (Bowserinator – PeriodicTableJSON).
-- `0. Idees de classificacions.md`: idees de classificació per a futurs modes.
+## Funcionalitats
 
-## Com executar
+- **23 visualitzacions** agrupades en sis blocs:
+  - *Classificació*: famílies (amb halògens), metalls/semimetalls/no-metalls, blocs s-p-d-f i estat físic a 25 °C.
+  - *Estructura i enllaç*: estats d'oxidació habituals (formulació d'ESO), electronegativitat, energia d'ionització i radi atòmic.
+  - *Propietats físiques*: densitat, punts de fusió i d'ebullició (en °C o K), conductivitat elèctrica i tèrmica, i ferromagnetisme.
+  - *Química i vida*: reactivitat, bioelements (primaris, secundaris i oligoelements), toxicitat i radioactivitat (natural o artificial).
+  - *Abundància*: escorça terrestre, cos humà i univers (escala logarítmica).
+  - *Història*: any de descobriment, amb un control lliscant per veure com creix la taula.
+- **Escales de color contínues** amb llegenda en degradat per a les magnituds numèriques.
+- **Llegenda interactiva**: en clicar una categoria, es destaquen els seus elements.
+- **Panell d'informació** a l'espai buit de la taula: vista ampliada de l'element sota el cursor, descripció del mode i tendències periòdiques amb fletxes.
+- **Fitxa de l'element** amb totes les propietats, el valor del mode actiu destacat, notes que matisen les dades, un resum i el descobriment.
+- **Compara**: tria dos elements i en veus les propietats en paral·lel.
+- **Repte**: preguntes sobre les tendències periòdiques (per exemple, quin element del període 3 té el radi més gran) amb puntuació.
+- **Mode projector** (text més gran) i **tema clar o fosc**.
+- Els elements 104-118 es mostren amb una vora discontínua: tenen propietats predites.
 
-Hi ha dues maneres:
+## Adaptació a la pantalla
 
-- Obertura directa (`file://`): ja funciona perquè s’inclou `data/elements.js` amb el dataset incrustat. Simplement obre `index.html` amb el navegador.
-- Servidor local (`http://`): recomanat si vols treballar amb `fetch()` i fitxers separats.
+- La interfície es dissenya per a 1440 × 820 px útils. En portàtils més petits (1366 × 768) o amb escalat del sistema (125 %, 150 %) es redueix sencera (`--ui-zoom`, com a l'app *Equacions*), amb un mínim del 75 %.
+- La graella s'escala per ocupar tot l'espai disponible i es recalcula en redimensionar la finestra o en canviar de monitor.
+- En mòbils i tauletes (< 900 px), el tauler de control se situa a dalt, la taula es pot desplaçar dins del seu marc i el peu queda al final.
 
-Opcions ràpides per servidor local:
+## Estructura
 
-1) Python 3
+- `index.html`: estructura de la interfície.
+- `style.css`: estils, temes i adaptació a la pantalla.
+- `app.js`: definició dels modes, pintat, llegenda, fitxa, comparació, repte i escalat.
+- `data/elements.js`: dataset base (PeriodicTableJSON, de Bowserinator, elements 1-118).
+- `data/propietats.js`: dades complementàries revisades (classificació, radis, conductivitats, abundàncies, estats d'oxidació, bioelements, toxicitat, descobriment i notes).
+- `data/noms_ca.js` i `data/summaries_ca.js`: noms i resums en català.
+- `assets/CC_BY-NC-SA.png`: distintiu de la llicència.
+- Documents i imatges de referència: `Valors dels elements de la Taula Periòdica.pdf/.docx`, `Propietats dels Elements.pdf` i les imatges `*.JPG`.
 
-```
-python -m http.server 8000
-```
+## Fonts de les dades
 
-Obre `http://localhost:8000/` i entra a `TaulaPeriodicaDinamica/` si cal.
+| Dada | Font |
+|---|---|
+| Massa, electronegativitat (Pauling), 1a energia d'ionització, densitat, punts de fusió i d'ebullició, configuració | PeriodicTableJSON (Bowserinator) |
+| Radi atòmic | Slater (1964); gasos nobles, Clementi (1967) |
+| Conductivitat elèctrica (20 °C) i tèrmica (300 K) | CRC Handbook of Chemistry and Physics |
+| Abundància a l'escorça | CRC Handbook of Chemistry and Physics |
+| Abundància al cos humà | J. Emsley, *The Elements* (adult de 70 kg) |
+| Abundància a l'univers | K. Croswell (1996), Via Làctia |
+| Any de descobriment | Taula de la carpeta (`AnyDescobrimentElements.JPG`) |
 
-2) Node.js (si tens `npx`)
+## Afegir un mode nou
 
-```
-npx http-server -p 8000
-```
+Afegeix una entrada a l'objecte `MODES` d'`app.js`:
 
-3) Extensió “Live Server” (VS Code)
+- Mode de categories: `kind: 'cat'`, `cats` (clau, etiqueta i color) i `catOf(el)`.
+- Mode numèric: `kind: 'num'`, `value(el)`, `fmt(v, el)` i `legendFmt(v)`; opcionalment `log: true`.
+- Camps opcionals: `group` (grup del selector), `desc`, `note`, `source` i `trend`.
 
-- Obre la carpeta i fes “Open with Live Server”.
+## Llicència
 
-## Modes implementats (segons el .md)
-
-- Famílies / grups principals: colors fixos per categoria (`category`).
-- Blocs electrònics (s, p, d, f): colors diferenciats per `block`.
-- València: gradient segons nombre d’electrons de la darrera capa (`shells`).
-- Electronegativitat: gradient continu (Pauling) (`electronegativity_pauling`).
-- Energia d’ionització: gradient continu (primer valor a `ionization_energies`).
-- Estat físic a temperatura ambient: colors fixos (`phase`).
-
-Pendent (esquelet preparat per afegir):
-
-- Reactivitat, propietats físiques especials, abundància (humà/escorça/univers), essencials/tòxics/radioactius. Cal una font de dades fiable per a cada camp.
-
-## Estructura bàsica del codi
-
-- Carrega el JSON i genera la graella amb `xpos` i `ypos` de cada element.
-- Cada targeta mostra número atòmic, símbol i nom.
-- Canviar el selector actualitza el mode, la llegenda i pinta les cel·les.
-
-## Afegir un nou mode
-
-1. A `app.js`, afegeix l’entrada a `modeMeta` (etiqueta i icona).
-2. Implementa el cas a `colorize()` (com assignes els colors).
-3. Implementa la llegenda a `renderLegend()` (discreta o gradient).
-4. Si calen dades noves, amplia `data/elements.json` o crea un nou `data/*.json` i carrega’l.
-
-## Notes de dades
-
-- El dataset original està en anglès i inclou camps útils: `category`, `block`, `phase`, `electronegativity_pauling`, `ionization_energies`, `shells`, `xpos`, `ypos`.
-- Les etiquetes de llegenda es mostren en català quan és possible (mapa `familiesLabelCa`).
-
-## Llicència de dades
-
-El JSON prové del projecte “PeriodicTableJSON” (Bowserinator) publicat a GitHub. Revisa la llicència original si el reutilitzes més enllà de l’ús educatiu.
+Aplicació creada per Felip Sarroca amb assistència de la IA. Obra sota llicència [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca). El dataset PeriodicTableJSON es distribueix sota llicència CC BY-SA 3.0.
