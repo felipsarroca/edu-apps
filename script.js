@@ -66,9 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         { 
             name: "Taula Periòdica Dinàmica", 
-            path: 'TaulaPeriodicaDinamica/', 
-            category: 'Química', 
-            description: "Una taula periòdica interactiva amb múltiples visualitzacions." 
+            path: 'https://ja.cat/taula-dinamica',
+            category: 'Química',
+            description: "Una taula periòdica interactiva amb múltiples visualitzacions.",
+            icon: 'TaulaPeriodicaDinamica/data/favicon.svg'
         },
         { 
             name: "Igualació d'Equacions Químiques", 
