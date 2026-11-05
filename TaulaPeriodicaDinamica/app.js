@@ -8,6 +8,7 @@
   const NAMES = window.PT_NOMS_CA || {};
   const SUMMARIES = window.SUMMARIES_CA || {};
   const ORI = window.PT_ORIGENS || {};
+  const X = window.PT_EXTRA || {};
   const ELS = ((window.PT_ELEMENTS && window.PT_ELEMENTS.elements) || []).filter(e => e.number <= 118);
   const root = document.documentElement;
 
@@ -25,7 +26,9 @@
     hover: null,       // element de la vista prèvia
     compare: null,     // array de símbols quan el mode comparació és actiu
     quiz: null,        // estat del repte
-    playing: null      // animació de la línia del temps
+    playing: null,     // animació (línia del temps o temperatura)
+    tempPos: 655,      // posició del control de temperatura (655 ≈ 25 °C)
+    tempFix: 298       // temperatura exacta d'un botó de referència (K)
   };
 
   /* ================= format de nombres (convencions catalanes) ================= */
@@ -117,8 +120,34 @@
     flame: el => (D.flama || {})[el.symbol] || null,
     /* afinitat electrònica: només dades fiables (fins al radó, sense els lantànids 58-70) */
     eaRaw: el => ((el.number <= 86 && !(el.number >= 58 && el.number <= 70) && typeof el.electron_affinity === 'number') ? el.electron_affinity : null),
-    ea: el => { const v = val.eaRaw(el); return v !== null && v > 0 ? v : null; }
+    ea: el => { const v = val.eaRaw(el); return v !== null && v > 0 ? v : null; },
+    isotopes: el => (X.isotops || {})[el.symbol] || [],
+    nIsotopes: el => val.isotopes(el).length,
+    crystal: el => (X.cristall || {})[el.symbol] || null,
+    country: el => (X.pais || {})[el.symbol] || null,
+    phone: el => (X.mobil || {})[el.symbol] || null,
+    price: el => (el.symbol in (X.preu || {}) ? X.preu[el.symbol] : null)
   };
+  /* estat a una temperatura donada (en K) i 1 atm */
+  const T_LOGMAX = Math.log10(6000);
+  const posToK = p => Math.pow(10, p / 1000 * T_LOGMAX);
+  const kToPos = k => Math.round(Math.log10(k) / T_LOGMAX * 1000);
+  const tempK = () => state.tempFix || posToK(state.tempPos);
+  function phaseAt(el, K) {
+    if (noBulk(el)) return 'nodata';
+    const sub = (X.sublima || {})[el.symbol];
+    if (sub) return K < sub ? 'Solid' : 'Gas';
+    const m = val.melt(el), b = val.boil(el);
+    if (m === null || b === null) return 'nodata';
+    if (inList(X.noSolid, el.symbol)) return K < b ? 'Liquid' : 'Gas';
+    return K < m ? 'Solid' : K < b ? 'Liquid' : 'Gas';
+  }
+  function fmtTempC(K) {
+    const c = K - 273.15;
+    return (Math.abs(c) >= 1000 ? minus(numCa(Math.round(c))) : minus(Math.round(c))) + ' °C';
+  }
+  const fmtK = K => (K >= 1000 ? numCa(Math.round(K)) : K < 10 ? comma(K.toFixed(1)) : Math.round(K)) + ' K';
+  const tempPreset = () => (X.temps || []).find(t => t[0] === state.tempFix) || null;
   const HALF_UNIT = { ms: 1e-3, s: 1, min: 60, h: 3600, d: 86400, a: YEAR_S };
   const DECAY_MODE = { 'α': 'desintegració alfa', 'β⁻': 'desintegració beta', CE: 'captura electrònica', FE: 'fissió espontània' };
   const supNum = n => String(n).split('').map(c => SUP[c]).join('');
@@ -129,6 +158,7 @@
     if (el.symbol === 'Bi') return 'quasi';
     return val.halfData(el) ? null : 'estable';
   }
+  const NODATA_CAT = label => ({ k: 'nodata', label, color: null });
   const COSMIC_CATS = [
     { k: 'bigbang', label: 'Big Bang', color: '#c4b5fd' },
     { k: 'raigs', label: 'Raigs còsmics', color: '#f0abfc' },
@@ -165,6 +195,86 @@
     { k: 'critica', label: 'Crítiques', color: '#fdba74' },
     { k: 'conflicte', label: 'Minerals de conflicte (no crítics)', color: '#c4b5fd' },
     { k: 'no', label: 'No incloses a la llista', color: null }
+  ];
+  const ISO_CATS = [
+    { k: 'i1', label: '1 isòtop estable', color: '#fef08a' },
+    { k: 'i2', label: '2 isòtops', color: '#bef264' },
+    { k: 'i34', label: '3 o 4 isòtops', color: '#5eead4' },
+    { k: 'i56', label: '5 o 6 isòtops', color: '#7dd3fc' },
+    { k: 'i710', label: 'De 7 a 10 isòtops', color: '#c4b5fd' },
+    { k: 'cap', label: 'Cap: només radioactius', color: null }
+  ];
+  function isoCat(el) {
+    const n = val.nIsotopes(el);
+    return n === 0 ? 'cap' : n === 1 ? 'i1' : n === 2 ? 'i2' : n <= 4 ? 'i34' : n <= 6 ? 'i56' : 'i710';
+  }
+  function isoText(el) {
+    const l = val.isotopes(el);
+    if (!l.length) return 'Cap: tots els seus isòtops són radioactius';
+    return l.map(([a, ab]) => `${supNum(a)}${el.symbol} ${numCa(ab)} %`).join(' · ');
+  }
+  const CRYSTAL_CATS = [
+    { k: 'cc', label: 'Cúbica centrada en el cos', color: '#93c5fd' },
+    { k: 'ccc', label: 'Cúbica centrada en les cares', color: '#86efac' },
+    { k: 'hc', label: 'Hexagonal compacta', color: '#fcd34d' },
+    { k: 'diamant', label: 'Cúbica del diamant', color: '#f0abfc' },
+    { k: 'altres', label: 'Altres estructures', color: '#e7c9a9' },
+    NODATA_CAT('Desconeguda')
+  ];
+  const CRYSTAL_INFO = {
+    cc: { n: 8, pct: 68, t: 'Un àtom a cada vèrtex del cub i un altre al centre.' },
+    ccc: { n: 12, pct: 74, t: 'Un àtom a cada vèrtex del cub i un altre al centre de cada cara. És l\'apilament més compacte possible, com les taronges d\'una parada del mercat.' },
+    hc: { n: 12, pct: 74, t: 'Capes d\'àtoms en forma d\'hexàgon apilades alternadament. És tan compacta com la ccc.' },
+    diamant: { n: 4, pct: 34, t: 'Els àtoms s\'uneixen formant tetràedres, com en el diamant. És una estructura molt oberta, però molt dura.' }
+  };
+  function crystalText(el) {
+    const c = val.crystal(el);
+    if (!c) return 'Desconeguda';
+    if (c[0] === 'altres') return c[1].charAt(0).toUpperCase() + c[1].slice(1);
+    const lab = CRYSTAL_CATS.find(x => x.k === c[0]).label;
+    return c[1] === 'doble' ? 'Hexagonal compacta doble (variant de la hc)' : lab + (c[0] === 'diamant' ? '' : ' (' + c[0] + ')');
+  }
+  const PHONE_CATS = [
+    { k: 'pantalla', label: 'Pantalla i càmera', color: '#7dd3fc' },
+    { k: 'bateria', label: 'Bateria', color: '#86efac' },
+    { k: 'circuits', label: 'Xips i circuits', color: '#fcd34d' },
+    { k: 'imants', label: 'Imants (altaveu i vibració)', color: '#f0abfc' },
+    { k: 'carcassa', label: 'Carcassa i protecció', color: '#fdba74' },
+    { k: 'no', label: 'No hi és (o només en traces)', color: null }
+  ];
+  const COUNTRY_CATS = [
+    { k: 'antic', label: 'Coneguts des d\'antic', color: '#d6a35c' },
+    { k: 'ru', label: 'Regne Unit', color: '#93c5fd' },
+    { k: 'suecia', label: 'Suècia', color: '#fde047' },
+    { k: 'franca', label: 'França', color: '#a5b4fc' },
+    { k: 'alemanya', label: 'Alemanya', color: '#fca5a5' },
+    { k: 'espanya', label: 'Espanya', color: '#fdba74' },
+    { k: 'eua', label: 'Estats Units', color: '#86efac' },
+    { k: 'russia', label: 'Rússia (i URSS)', color: '#f0abfc' },
+    { k: 'altres', label: 'Altres països', color: '#5eead4' }
+  ];
+  const MAIN_COUNTRIES = COUNTRY_CATS.map(c => c.k);
+  const countryName = k => ((X.paisNom || {})[k] || k);
+  const countryCat = el => { const c = val.country(el); return !c ? 'nodata' : MAIN_COUNTRIES.includes(c[0]) ? c[0] : 'altres'; };
+  // «a Suècia», «al Regne Unit», «als Estats Units»
+  const countryIn = k => ({ ru: 'al Regne Unit', eua: 'als Estats Units', japo: 'al Japó' }[k] || 'a ' + countryName(k));
+  function countryText(el) {
+    const c = val.country(el);
+    if (!c) return '—';
+    if (c[0] === 'antic') return 'Conegut des de l\'antiguitat o l\'edat mitjana';
+    const others = c[1] || [];
+    const nota = (X.paisNota || {})[el.symbol];
+    return countryName(c[0]) + (others.length ? ' (compartit amb ' + others.map(countryName).join(' i ') + ')' : '') + '.' + (nota ? ' ' + nota : '');
+  }
+  const PRICE_CATS = [
+    { k: 'p0', label: 'Menys d\'1 €/kg', color: '#2563eb' },
+    { k: 'p1', label: '1–10 €/kg', color: '#0ea5e9' },
+    { k: 'p2', label: '10–100 €/kg', color: '#22c55e' },
+    { k: 'p3', label: '100–1.000 €/kg', color: '#eab308' },
+    { k: 'p4', label: '1.000–10.000 €/kg', color: '#f97316' },
+    { k: 'p5', label: 'Més de 10.000 €/kg', color: '#dc2626' },
+    { k: 'p6', label: 'Radioactius: més de 100 €/g', color: '#7c3aed' },
+    NODATA_CAT('No es comercialitza')
   ];
   const FLAME_CATS = [
     { k: 'vermell', label: 'Vermell', color: '#e0001b' },
@@ -300,6 +410,19 @@
       desc: 'Estat de cada element a 25 °C i 1 atm. Només el brom i el mercuri són líquids; el gal·li i el cesi es fonen a poc més de 28 °C.',
       note: 'Dels elements 100–118 no se n\'ha obtingut mai una mostra visible: l\'estat és desconegut.'
     },
+    stateTemp: {
+      label: 'Estat segons la temperatura', group: 'Classificació', kind: 'cat',
+      cats: [
+        { k: 'Solid', label: 'Sòlid', color: '#86efac' },
+        { k: 'Liquid', label: 'Líquid', color: '#60a5fa' },
+        { k: 'Gas', label: 'Gas', color: '#fde047' },
+        { k: 'nodata', label: 'Desconegut', color: null }
+      ],
+      catOf: el => phaseAt(el, tempK()),
+      desc: 'Mou el control o prem ▶ per escalfar la taula des del zero absolut fins a la temperatura del Sol. Cada element es fon quan arriba al punt de fusió i bull quan arriba al d\'ebullició.',
+      note: 'Pressió d\'1 atm. L\'heli no se solidifica mai a aquesta pressió; el carboni i l\'arsènic passen directament de sòlid a gas (sublimen). Valors de l\'àstat i el franci estimats. Escala logarítmica, per veure bé les temperatures baixes.',
+      source: 'Font: CRC Handbook of Chemistry and Physics.'
+    },
 
     /* --- estructura i enllaç --- */
     valenceE: {
@@ -413,6 +536,14 @@
       desc: 'Els materials ferromagnètics són atrets amb força pels imants i es poden imantar.',
       note: 'Altres lantànids (Tb, Dy) són ferromagnètics només a temperatures molt baixes.'
     },
+    crystal: {
+      label: 'Estructura cristal·lina', group: 'Propietats físiques', kind: 'cat', cats: CRYSTAL_CATS,
+      catOf: el => { const c = val.crystal(el); return c ? c[0] : 'nodata'; },
+      metaOf: el => { const c = val.crystal(el); if (!c || c[0] !== 'altres') return ''; const w = c[1].split(' ')[0]; return { 'romboèdrica': 'romboèdr.', 'ortoròmbica': 'ortoròmb.', 'monoclínica': 'monoclín.' }[w] || w; },
+      desc: 'Com s\'ordenen els àtoms en el sòlid. La majoria de metalls s\'apilen de manera compacta, en estructures cúbiques o hexagonals. Clica un element per veure\'n la cel·la unitat.',
+      note: 'A temperatura ambient (gasos i líquids: el sòlid a baixa temperatura). L\'estructura pot canviar amb la temperatura: el ferro passa de cc a ccc a 912 °C.',
+      source: 'Font: CRC Handbook of Chemistry and Physics.'
+    },
 
     /* --- química i vida --- */
     flame: {
@@ -473,6 +604,13 @@
       desc: 'Els elements sense isòtops estables emeten radiació. Del poloni (84) en endavant, tots són radioactius.',
       note: 'Tc i Pm no tenen isòtops estables. Se\'n troben traces a la natura, com també de Np i Pu. El bismut es considera estable a la pràctica.'
     },
+    isotopes: {
+      label: 'Isòtops estables', group: 'Química i vida', kind: 'cat', cats: ISO_CATS, catOf: isoCat,
+      metaOf: el => { const n = val.nIsotopes(el); return n ? String(n) : ''; },
+      desc: 'Els isòtops són àtoms d\'un mateix element amb diferent nombre de neutrons. La majoria d\'elements són una barreja d\'isòtops estables: l\'estany en té 10, el rècord. Clica un element per veure\'n les proporcions a la natura.',
+      note: `Els elements de nombre atòmic senar en tenen 2 com a màxim: els protons aparellats fan el nucli més estable. En total, n'hi ha ${Object.values(X.isotops || {}).reduce((s, l) => s + l.length, 0)}. Del bismut (83) endavant, cap element en té.`,
+      source: 'Font: IAEA, Live Chart of Nuclides (inclou els isòtops dels quals no s\'ha observat mai la desintegració).'
+    },
     halfLife: {
       label: 'Període de semidesintegració', group: 'Química i vida', kind: 'num', log: true,
       value: val.halfLife,
@@ -523,6 +661,19 @@
       note: 'Estratègiques: claus per a la transició verda i digital i per a la defensa. ⚠ Minerals de conflicte (Sn, Ta, W, Au): la seva extracció pot finançar guerres; la UE n\'exigeix la traçabilitat. Alguns elements hi són pel seu mineral: bauxita (Al), barita (Ba), fluorita (F), roca fosfòrica (P) i grafit (C).',
       source: 'Font: Reglament (UE) 2024/1252 i Comissió Europea, estudi de matèries primeres crítiques (2023).'
     },
+    phone: {
+      label: 'Elements del mòbil', group: 'Recursos i societat', kind: 'cat', cats: PHONE_CATS,
+      catOf: el => { const p = val.phone(el); return p ? p[0] : 'no'; },
+      desc: 'Un telèfon mòbil pot contenir més de 60 elements diferents. Aquí hi ha els principals, segons la part on es fan servir. Clica un element per saber-ne la funció.',
+      note: 'Molts hi són en quantitats molt petites, però són difícils de substituir. Reciclar els mòbils permet recuperar-los (mineria urbana).',
+      source: 'Fonts: A. Brunning, Compound Interest; Royal Society of Chemistry; American Chemical Society.'
+    },
+    price: {
+      label: 'Preu aproximat', group: 'Recursos i societat', kind: 'cat', cats: PRICE_CATS,
+      catOf: el => { const p = val.price(el); return p === null ? 'nodata' : 'p' + p; },
+      desc: 'Quant costa, aproximadament, 1 kg de cada element en la forma en què es ven (metall, gas o mineral). El ferro i el sofre costen menys d\'1 € el quilo; l\'or i el platí, desenes de milers d\'euros. Com més escàs i difícil d\'obtenir, més car. Són ordres de magnitud: els preus varien segons el mercat.',
+      source: 'Fonts: Wikipedia, «Prices of chemical elements» (USGS, 2020); cotitzacions de 2025.'
+    },
 
     /* --- origen i història --- */
     cosmic: {
@@ -556,6 +707,13 @@
       desc: 'Any en què l\'element es va identificar o aïllar. Mou el control lliscant per veure com creix la taula al llarg de la història.',
       note: 'Els anys anteriors al 1600 són aproximats. Mendeléiev va publicar la seva taula el 1869.',
       source: 'Font: taula d\'anys de descobriment (Viquipèdia).'
+    },
+    country: {
+      label: 'País del descobriment', group: 'Origen i història', kind: 'cat', cats: COUNTRY_CATS, catOf: countryCat,
+      metaOf: el => { const c = val.country(el); return c && countryCat(el) === 'altres' ? countryName(c[0]) : ''; },
+      desc: 'País on es va descobrir o aïllar cada element. Suècia, rica en minerals, i el Regne Unit en van descobrir molts als segles XVIII i XIX. Des de 1940, els elements nous s\'han obtingut en grans laboratoris dels Estats Units, Rússia, Alemanya i el Japó.',
+      note: 'Hi van participar Marie Curie (Po, Ra), Marguerite Perey (Fr), Ida Noddack (Re) i Lise Meitner (Pa). A la fitxa, els descobriments compartits.',
+      source: 'Font: descobridors i anys de la Viquipèdia; elaboració pròpia.'
     }
   };
   const MODE_KEYS = Object.keys(MODES);
@@ -777,6 +935,16 @@
       const f = (D.fites || []).filter(x => x[0] <= state.yearLimit).pop();
       extra = `<p class="milestone">${f ? `<strong>${f[0] <= 1650 ? 'Fins al 1650' : f[0]}</strong> · ${esc(f[1])}` : ''}</p>
         <p class="known">Elements coneguts ${state.yearLimit >= 2010 ? 'avui' : 'el ' + state.yearLimit}: <strong>${known}</strong> de 118</p>`;
+    } else if (state.mode === 'stateTemp') {
+      const K = tempK(), n = { Solid: 0, Liquid: 0, Gas: 0 };
+      for (const e of ELS) { const p = phaseAt(e, K); if (p in n) n[p]++; }
+      const pr = tempPreset();
+      extra = `<p class="milestone">${pr ? `<strong>${esc(pr[2])}</strong>` : `<strong>${esc(fmtTempC(K))}</strong> (${esc(fmtK(K))})`}</p>
+        <p class="known">Sòlids: <strong>${n.Solid}</strong> · líquids: <strong>${n.Liquid}</strong> · gasos: <strong>${n.Gas}</strong></p>`;
+    } else if (state.mode === 'phone') {
+      const inPhone = ELS.filter(e => val.phone(e));
+      const crit = inPhone.filter(e => val.critical(e)).length;
+      extra = `<p class="known"><strong>${crit}</strong> d'aquests ${inPhone.length} elements són matèries primeres crítiques per a la UE.</p>`;
     }
     const trend = m.trend ? `<div class="trend">
         <span class="trend-box"><span class="trend-arrow">${m.trend.h[0]}</span>${esc(m.trend.h[1])}</span>
@@ -875,6 +1043,14 @@
         <button type="button" class="play-btn" id="play-btn" aria-pressed="${!!state.playing}" title="${state.playing ? 'Atura' : 'Reprodueix'} la línia del temps" aria-label="${state.playing ? 'Atura' : 'Reprodueix'} la línia del temps">${state.playing ? '❚❚' : '▶'}</button>
         <input id="year-range" type="range" min="1650" max="2010" step="5" value="${state.yearLimit}" aria-label="Elements descoberts fins a l'any">
         <output class="year-out" id="year-out">${state.yearLimit >= 2010 ? 'avui' : state.yearLimit}</output></div>`;
+    } else if (state.mode === 'stateTemp') {
+      const K = tempK();
+      box.innerHTML = `<div class="opt-row timeline">
+        <button type="button" class="play-btn" id="play-btn" aria-pressed="${!!state.playing}" title="${state.playing ? 'Atura' : 'Escalfa'} la taula" aria-label="${state.playing ? 'Atura' : 'Escalfa'} la taula">${state.playing ? '❚❚' : '▶'}</button>
+        <input id="temp-range" type="range" min="0" max="1000" step="1" value="${state.tempPos}" aria-label="Temperatura" aria-valuetext="${esc(fmtTempC(K))}">
+        <output class="year-out temp-out" id="temp-out">${esc(fmtTempC(K))}<small>${esc(fmtK(K))}</small></output></div>
+        <div class="temp-presets" role="group" aria-label="Temperatures de referència">${(X.temps || []).map(t =>
+          `<button type="button" data-tk="${t[0]}" title="${esc(t[2])}" aria-pressed="${t[0] === state.tempFix}">${esc(t[1])}</button>`).join('')}</div>`;
     } else box.innerHTML = '';
   }
 
@@ -883,13 +1059,35 @@
     if (state.playing) { clearInterval(state.playing); state.playing = null; }
   }
   function syncTimeline() {
-    const r = document.getElementById('year-range'), o = document.getElementById('year-out'), b = document.getElementById('play-btn');
+    const b = document.getElementById('play-btn');
+    if (state.mode === 'stateTemp') {
+      const r = document.getElementById('temp-range'), o = document.getElementById('temp-out'), K = tempK();
+      if (r) { r.value = state.tempPos; r.setAttribute('aria-valuetext', fmtTempC(K)); }
+      if (o) o.innerHTML = `${esc(fmtTempC(K))}<small>${esc(fmtK(K))}</small>`;
+      document.querySelectorAll('.temp-presets button').forEach(x => x.setAttribute('aria-pressed', String(Number(x.dataset.tk) === state.tempFix)));
+      if (b) { b.textContent = state.playing ? '❚❚' : '▶'; b.setAttribute('aria-pressed', String(!!state.playing)); const t = (state.playing ? 'Atura' : 'Escalfa') + ' la taula'; b.title = t; b.setAttribute('aria-label', t); }
+      return;
+    }
+    const r = document.getElementById('year-range'), o = document.getElementById('year-out');
     if (r) r.value = state.yearLimit;
     if (o) o.textContent = state.yearLimit >= 2010 ? 'avui' : state.yearLimit;
     if (b) { b.textContent = state.playing ? '❚❚' : '▶'; b.setAttribute('aria-pressed', String(!!state.playing)); const t = (state.playing ? 'Atura' : 'Reprodueix') + ' la línia del temps'; b.title = t; b.setAttribute('aria-label', t); }
   }
   function togglePlay() {
     if (state.playing) { stopPlay(); syncTimeline(); return; }
+    if (state.mode === 'stateTemp') {
+      // des d'una temperatura de referència, l'animació comença al zero absolut
+      if (state.tempFix || state.tempPos >= 1000) state.tempPos = 0;
+      state.tempFix = null;
+      state.playing = setInterval(() => {
+        state.tempPos = Math.min(1000, state.tempPos + 6);
+        if (state.tempPos >= 1000) stopPlay();
+        syncTimeline();
+        paint();
+      }, 90);
+      syncTimeline();
+      return;
+    }
     if (state.yearLimit >= 2010) state.yearLimit = 1645;
     state.playing = setInterval(() => {
       state.yearLimit = Math.min(2010, state.yearLimit + 5);
@@ -982,8 +1180,13 @@
       ['Matèria primera crítica (UE)', criticalText(el), 'critical'],
       ['Color a la flama', flameText(el), 'flame', false, true],
       ['Origen del nom', val.nameOrigin(el) ? val.nameOrigin(el)[2] : '—', 'nameOrigin', false, true, true],
-      ['Origen còsmic', cosmicText(el), 'cosmic', false, true, true]
-    ];
+      ['Origen còsmic', cosmicText(el), 'cosmic', false, true, true],
+      ['Isòtops estables', isoText(el), 'isotopes', false, true],
+      ['Estructura cristal·lina', crystalText(el), 'crystal'],
+      ['Preu aproximat', catLabel('price', el), 'price'],
+      ['País del descobriment', countryText(el), 'country', false, true, true],
+      val.phone(el) ? ['Al mòbil', PHONE_CATS.find(c => c.k === val.phone(el)[0]).label + '. ' + val.phone(el)[1], 'phone', false, true, true] : null
+    ].filter(Boolean);
   }
 
   let lastFocus = null;
@@ -1042,6 +1245,43 @@
       </div></div>`;
   }
 
+  /* cel·la unitat en perspectiva (cc, ccc, hc i diamant) */
+  function crystalHTML(el) {
+    const c = val.crystal(el);
+    if (!c || !CRYSTAL_INFO[c[0]]) return '';
+    const k = c[0], info = CRYSTAL_INFO[k];
+    let pts = [], edges = [];
+    const cube = [[0, 0, 0], [1, 0, 0], [1, 0, 1], [0, 0, 1], [0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]];
+    if (k === 'hc') {
+      const h = 1.63, hex = y => Array.from({ length: 6 }, (_, i) => [Math.cos(i * Math.PI / 3), y, Math.sin(i * Math.PI / 3)]);
+      const lo = hex(0), hi = hex(h);
+      pts = [...lo, ...hi, [0, 0, 0], [0, h, 0]].map(p => [...p, 'a']);
+      [30, 150, 270].forEach(d => pts.push([Math.cos(d * Math.PI / 180) / Math.sqrt(3), h / 2, Math.sin(d * Math.PI / 180) / Math.sqrt(3), 'b']));
+      for (let i = 0; i < 6; i++) edges.push([lo[i], lo[(i + 1) % 6]], [hi[i], hi[(i + 1) % 6]], [lo[i], hi[i]]);
+    } else {
+      pts = cube.map(p => [...p, 'a']);
+      [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach(([i, j]) => edges.push([cube[i], cube[j]]));
+      if (k === 'cc') pts.push([0.5, 0.5, 0.5, 'b']);
+      if (k === 'ccc' || k === 'diamant') [[0.5, 0.5, 0], [0.5, 0.5, 1], [0.5, 0, 0.5], [0.5, 1, 0.5], [0, 0.5, 0.5], [1, 0.5, 0.5]].forEach(p => pts.push([...p, k === 'ccc' ? 'b' : 'a']));
+      if (k === 'diamant') [[0.25, 0.25, 0.25], [0.75, 0.75, 0.25], [0.75, 0.25, 0.75], [0.25, 0.75, 0.75]].forEach(p => pts.push([...p, 'b']));
+    }
+    // projecció: centrat, rotació lleugera i perspectiva isomètrica
+    const off = k === 'hc' ? [0, 0.815, 0] : [0.5, 0.5, 0.5], S = k === 'hc' ? 52 : 74;
+    const ca = Math.cos(0.55), sa = Math.sin(0.55);
+    const pr = ([x, y, z]) => { x -= off[0]; y -= off[1]; z -= off[2]; const xr = x * ca - z * sa, zr = x * sa + z * ca; return [80 + xr * S, 80 - y * S + zr * S * 0.38, zr]; };
+    const lines = edges.map(([a, b]) => { const p = pr(a), q = pr(b); return `<line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}"/>`; }).join('');
+    const atoms = pts.map(p => [pr(p), p[3]]).sort((a, b) => b[0][2] - a[0][2])
+      .map(([p, t]) => `<circle class="${t === 'b' ? 'atom b' : 'atom'}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${(k === 'hc' ? 7.5 : 9) * (1 - p[2] * 0.12)}"/>`).join('');
+    return `<div class="bohr crystal-box">
+      <svg viewBox="0 0 160 160" role="img" aria-label="Cel·la unitat: ${esc(crystalText(el))}"><g class="cell-edges">${lines}</g>${atoms}</svg>
+      <div class="bohr-info">
+        <p class="decay-title">Estructura cristal·lina: ${esc(crystalText(el).toLowerCase())}</p>
+        <p class="decay-text">${esc(info.t)}</p>
+        <p class="decay-text">Cada àtom toca <strong>${info.n} àtoms veïns</strong>, i els àtoms ocupen el <strong>${info.pct} %</strong> de l'espai; la resta és buit.</p>
+        <p class="bohr-note">Dibuix de la cel·la unitat, el bloc mínim que, repetit en totes direccions, forma el cristall. Els àtoms s'han dibuixat més petits per veure'n la posició.</p>
+      </div></div>`;
+  }
+
   /* corba de desintegració: quantitat que queda al cap de 1, 2, 3 i 4 períodes */
   function decayHTML(el) {
     const T = val.halfLife(el);
@@ -1084,7 +1324,7 @@
       </div>
       <dl class="fitxa-props">${rows}</dl>
       ${note ? `<p class="fitxa-note">${esc(note)}</p>` : ''}
-      ${bohrHTML(el)}
+      ${state.mode === 'crystal' ? crystalHTML(el) + bohrHTML(el) : bohrHTML(el) + crystalHTML(el)}
       ${decayHTML(el)}
       <p class="fitxa-summary">${esc(SUMMARIES[el.symbol] || '')}</p>
       ${disc ? `<p class="fitxa-disc"><strong>Descobriment:</strong> ${esc(disc)}${y !== null ? ' (' + esc(fmtYear(y)) + ')' : ''}.</p>` : ''}`;
@@ -1119,7 +1359,11 @@
     const extra = [['Família', el => FAMILY_LABEL[family(el)]], ['Estat a 25 °C', el => catLabel('state', el)], ['Estats d\'oxidació', el => (val.ox(el) ? fmtOx(val.ox(el)) : '—')],
       ['Electrons de valència', el => (val.valenceE(el) === null ? 'variables' : String(val.valenceE(el)))],
       ['Capes electròniques', el => val.shells(el).join(', ')],
-      ['Origen còsmic', el => { const c = val.cosmic(el); return c ? COSMIC_LABEL[c[0]] : '—'; }]]
+      ['Origen còsmic', el => { const c = val.cosmic(el); return c ? COSMIC_LABEL[c[0]] : '—'; }],
+      ['Isòtops estables', el => String(val.nIsotopes(el))],
+      ['Estructura cristal·lina', crystalText],
+      ['Preu aproximat', el => catLabel('price', el)],
+      ['País del descobriment', el => { const c = val.country(el); return c ? (c[0] === 'antic' ? 'antiguitat' : countryName(c[0])) : '—'; }]]
       .map(([l, f]) => `<tr><td>${esc(l)}</td><td>${esc(f(a))}</td><td>${esc(f(b))}</td></tr>`).join('');
     openModal(`<h2 id="modal-title" style="margin:0 0 6px">Comparació</h2>
       <table class="cmp-table"><thead><tr><th></th><th>${esc(nameOf(a))} (${a.symbol})</th><th>${esc(nameOf(b))} (${b.symbol})</th></tr></thead>
@@ -1158,7 +1402,8 @@
     const ON = { bigbang: 'en el Big Bang', raigs: 'per l’acció dels raigs còsmics', petites: 'dins d’estrelles petites que moren', massives: 'en l’explosió d’estrelles massives', nanes: 'en l’explosió de nanes blanques', neutrons: 'en xocs d’estrelles de neutrons', desintegracio: 'per la desintegració de l’urani i el tori', laboratori: 'al laboratori' };
     c.push(`Els seus àtoms es van formar sobretot ${cos ? ON[cos[0]] : 'en un lloc desconegut'}. A 25 °C és ${catLabel('state', el).toLowerCase()}.`);
     c.push(`Família: ${FAMILY_LABEL[family(el)].toLowerCase()}.${v !== null ? ` Té ${v} electrons de valència.` : ''}`);
-    c.push(y === null ? 'Data de descobriment desconeguda.' : y < 1600 ? 'Es coneix des de l\'antiguitat o l\'edat mitjana.' : `Es va descobrir l'any ${y}.`);
+    const ct = val.country(el);
+    c.push(y === null ? 'Data de descobriment desconeguda.' : y < 1600 ? 'Es coneix des de l\'antiguitat o l\'edat mitjana.' : `Es va descobrir l'any ${y}${ct && ct[0] !== 'antic' ? ' ' + countryIn(ct[0]) : ''}.`);
     c.push(`És al període ${el.period}${g ? ' i al grup ' + g : ''}.`);
     if (n) c.push(`El seu nom fa referència a: «${n[1]}».`);
     return c;
@@ -1335,6 +1580,21 @@
     });
     document.getElementById('mode-options').addEventListener('click', e => {
       if (e.target.closest('#play-btn')) togglePlay();
+    });
+    document.getElementById('mode-options').addEventListener('click', e => {
+      const b = e.target.closest('button[data-tk]');
+      if (!b) return;
+      stopPlay();
+      state.tempFix = Number(b.dataset.tk);
+      state.tempPos = kToPos(state.tempFix);
+      syncTimeline(); paint();
+    });
+    document.getElementById('mode-options').addEventListener('input', e => {
+      if (e.target.id !== 'temp-range') return;
+      stopPlay();
+      state.tempPos = Number(e.target.value);
+      state.tempFix = null;
+      syncTimeline(); paint();
     });
     document.getElementById('mode-options').addEventListener('input', e => {
       if (e.target.id !== 'year-range') return;

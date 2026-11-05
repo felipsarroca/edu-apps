@@ -6,14 +6,14 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 
 ## Funcionalitats
 
-- **30 visualitzacions** agrupades en set blocs:
-  - *Classificació*: famílies (amb halògens), metalls/semimetalls/no-metalls, blocs s-p-d-f i estat físic a 25 °C.
+- **36 visualitzacions** agrupades en set blocs:
+  - *Classificació*: famílies (amb halògens), metalls/semimetalls/no-metalls, blocs s-p-d-f, estat físic a 25 °C i estat segons la temperatura (control lliscant de 1 K a 6.000 K, temperatures de referència i botó ▶ que escalfa la taula des del zero absolut fins a la temperatura del Sol).
   - *Estructura i enllaç*: electrons de valència amb l'estructura de Lewis (punts al voltant del símbol), estats d'oxidació habituals (formulació d'ESO), electronegativitat, energia d'ionització, afinitat electrònica i radi atòmic.
-  - *Propietats físiques*: densitat, punts de fusió i d'ebullició (en °C o K), conductivitat elèctrica i tèrmica, i ferromagnetisme.
-  - *Química i vida*: color a la flama (amb el color real de cada element i els que s'usen als focs artificials), reactivitat, bioelements (primaris, secundaris i oligoelements), toxicitat, radioactivitat (natural o artificial) i període de semidesintegració (escala logarítmica amb marques de referència: 1 s, 1 dia, 1.000 anys i edat de la Terra).
+  - *Propietats físiques*: densitat, punts de fusió i d'ebullició (en °C o K), conductivitat elèctrica i tèrmica, ferromagnetisme i estructura cristal·lina (amb el dibuix de la cel·la unitat cc, ccc, hc i del diamant a la fitxa).
+  - *Química i vida*: color a la flama (amb el color real de cada element i els que s'usen als focs artificials), reactivitat, bioelements (primaris, secundaris i oligoelements), toxicitat, radioactivitat (natural o artificial), isòtops estables (amb l'abundància natural de cada isòtop a la fitxa) i període de semidesintegració (escala logarítmica amb marques de referència: 1 s, 1 dia, 1.000 anys i edat de la Terra).
   - *Abundància*: escorça terrestre, cos humà i univers (escala logarítmica).
-  - *Recursos i societat*: matèries primeres crítiques i estratègiques de la UE, amb el principal país productor i els minerals de conflicte.
-  - *Origen i història*: origen còsmic (Big Bang, estrelles, supernoves, xocs d'estrelles de neutrons), origen del nom (mitologia, astres, llocs, persones, propietats, minerals) i any de descobriment, amb un control lliscant i un botó ▶ que anima la línia del temps del 1650 a avui, amb fites històriques (Lavoisier, Mendeléiev, els Curie...) i el recompte d'elements coneguts.
+  - *Recursos i societat*: matèries primeres crítiques i estratègiques de la UE, amb el principal país productor i els minerals de conflicte; elements del mòbil (pantalla, bateria, xips, imants i carcassa, amb la funció de cada element) i preu aproximat per kg (ordres de magnitud).
+  - *Origen i història*: origen còsmic (Big Bang, estrelles, supernoves, xocs d'estrelles de neutrons), origen del nom (mitologia, astres, llocs, persones, propietats, minerals) i any de descobriment, amb un control lliscant i un botó ▶ que anima la línia del temps del 1650 a avui, amb fites històriques (Lavoisier, Mendeléiev, els Curie...) i el recompte d'elements coneguts; i país del descobriment (amb els descobriments compartits i les científiques que hi van participar).
 - **Escales de color contínues** amb llegenda en degradat per a les magnituds numèriques.
 - **Llegenda interactiva**: en clicar una categoria, es destaquen els seus elements.
 - **Panell d'informació** a l'espai buit de la taula: vista ampliada de l'element sota el cursor, descripció del mode i tendències periòdiques amb fletxes.
@@ -37,6 +37,7 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 - `data/elements.js`: dataset base (PeriodicTableJSON, de Bowserinator, elements 1-118).
 - `data/propietats.js`: dades complementàries revisades (classificació, radis, conductivitats, abundàncies, estats d'oxidació, bioelements, toxicitat, períodes de semidesintegració, isòtop més abundant, matèries primeres crítiques, descobriment i notes).
 - `data/origens.js`: etimologia del nom i origen còsmic de cada element.
+- `data/extra.js`: canvis d'estat a 1 atm, isòtops estables, estructura cristal·lina, elements del mòbil, país del descobriment i preu aproximat.
 - `data/noms_ca.js` i `data/summaries_ca.js`: noms i resums en català.
 - `assets/CC_BY-NC-SA.png`: distintiu de la llicència.
 - Documents i imatges de referència: `Valors dels elements de la Taula Periòdica.pdf/.docx`, `Propietats dels Elements.pdf` i les imatges `*.JPG`.
@@ -60,6 +61,11 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 | Origen del nom | IUPAC; P. Enghag, *Encyclopedia of the Elements* (2004); J. Coromines, *Diccionari etimològic* |
 | Color a la flama | A. I. Vogel, *Química analítica qualitativa*; Royal Society of Chemistry |
 | Afinitat electrònica | PeriodicTableJSON (valors experimentals); no es mostren els lantànids ni els elements des del 87 |
+| Isòtops estables i abundància natural | IAEA, Live Chart of Nuclides (NUBASE2020 i ENSDF) |
+| Estructura cristal·lina | CRC Handbook of Chemistry and Physics |
+| Elements del mòbil | A. Brunning, Compound Interest; Royal Society of Chemistry; American Chemical Society |
+| País del descobriment | Elaboració pròpia a partir dels descobridors (Viquipèdia) |
+| Preu aproximat | Wikipedia, *Prices of chemical elements* (USGS, 2020); cotitzacions dels metalls preciosos (2025) |
 | Any de descobriment | Taula de la carpeta (`AnyDescobrimentElements.JPG`) |
 
 ## Afegir un mode nou

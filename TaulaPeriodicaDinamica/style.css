@@ -115,6 +115,17 @@ button,select{font:inherit}
 }
 .play-btn[aria-pressed="true"]{padding:0; background:var(--panel); color:var(--accent)}
 .play-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.temp-out{min-width:5.2em; line-height:1.1}
+.temp-out small{display:block; font-size:11px; font-weight:500; color:var(--muted)}
+.temp-presets{display:flex; flex-wrap:wrap; gap:4px; margin-top:6px}
+.temp-presets button{border:1px solid var(--border); background:var(--bg-select); color:var(--text); border-radius:999px; padding:2px 8px; font-size:12px; cursor:pointer}
+.temp-presets button:hover{border-color:var(--accent)}
+.temp-presets button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--panel); font-weight:650}
+.temp-presets button:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.bohr.crystal-box svg{width:170px; height:170px}
+.crystal-box .cell-edges line{stroke:var(--muted); stroke-width:1.2; opacity:.7}
+.crystal-box .atom{fill:#94a3b8; stroke:var(--panel); stroke-width:1}
+.crystal-box .atom.b{fill:#f59e0b}
 
 /* ---------- llegenda ---------- */
 .legend{padding:10px 11px 11px; border:1px solid var(--border); border-radius:10px; background:var(--bg-legend)}
