@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Configuració Electrònica", 
             path: 'ConfiguracioElectronica/', 
             category: 'Química', 
-            description: "Aprèn a distribuir els electrons en els orbitals atòmics." 
+            description: "Construeix els àtoms electró a electró: orbitals, regla de Moeller i model de Bohr." 
         },
         { 
             name: "Configuració Electrònica 2", 
