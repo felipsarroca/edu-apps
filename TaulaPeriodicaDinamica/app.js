@@ -50,6 +50,23 @@
     return String(y);
   }
   const fmtOx = arr => arr.slice().sort((a, b) => a - b).map(n => n > 0 ? '+' + n : n === 0 ? '0' : minus(n)).join(', ');
+  /* durades: tria la unitat més entenedora (anys, dies, hores, minuts, segons, mil·lisegons) */
+  const YEAR_S = 31557600; // any julià, en segons
+  const DUR_UNITS = [[YEAR_S, 'a', 'anys'], [86400, 'd', 'dies'], [3600, 'h', 'hores'], [60, 'min', 'minuts'], [1, 's', 'segons'], [1e-3, 'ms', 'mil·lisegons']];
+  function numCa(x) {
+    const r = Number(x.toPrecision(3));
+    if (r >= 1e3 && Number.isInteger(r)) return String(r).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return comma(String(r));
+  }
+  function fmtDur(sec, long = false) {
+    const [f, short, word] = DUR_UNITS.find(([u]) => sec >= u) || DUR_UNITS[DUR_UNITS.length - 1];
+    const v = sec / f;
+    if (short === 'a' && v >= 1e5) {
+      if (long && v < 1e12) return numCa(v / 1e6) + ' milions d\'anys';
+      return fmtSig(v, 2) + (long ? ' anys' : ' a');
+    }
+    return numCa(v) + ' ' + (long ? word : short);
+  }
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   /* ================= consultes de dades ================= */
@@ -82,8 +99,28 @@
     abund: (key, el) => (typeof ((D[key] || {})[el.symbol]) === 'number' ? D[key][el.symbol] : null),
     ox: el => (D.oxidacio || {})[el.symbol] || null,
     year: el => ((D.descobriment || {})[el.symbol] || [null])[0],
-    discoverer: el => ((D.descobriment || {})[el.symbol] || [null, null])[1]
+    discoverer: el => ((D.descobriment || {})[el.symbol] || [null, null])[1],
+    /* període de semidesintegració en segons (null si té isòtops estables o és el bismut) */
+    halfData: el => (D.semivida || {})[el.symbol] || null,
+    halfSec: el => { const h = val.halfData(el); return h ? h[0] * HALF_UNIT[h[1]] : null; },
+    halfLife: el => (el.symbol === 'Bi' ? null : val.halfSec(el))
   };
+  const HALF_UNIT = { ms: 1e-3, s: 1, min: 60, h: 3600, d: 86400, a: YEAR_S };
+  const DECAY_MODE = { 'α': 'desintegració alfa', 'β⁻': 'desintegració beta', CE: 'captura electrònica', FE: 'fissió espontània' };
+  const supNum = n => String(n).split('').map(c => SUP[c]).join('');
+  const isotopeOf = el => { const h = val.halfData(el); return h ? supNum(h[2]) + el.symbol : ''; };
+  // «el radi-226», «l'urani-238»
+  const isoName = el => { const n = nameOf(el).toLowerCase(), h = val.halfData(el); return (/^[aeiouàèéíòóúh]/.test(n) ? 'l’' : 'el ') + n + '-' + (h ? h[2] : ''); };
+  function halfCat(el) {
+    if (el.symbol === 'Bi') return 'quasi';
+    return val.halfData(el) ? null : 'estable';
+  }
+  function halfText(el) {
+    const cat = halfCat(el), h = val.halfData(el);
+    if (cat === 'estable') return 'Estable (té isòtops que no es desintegren)';
+    const base = `${fmtDur(val.halfSec(el), true)} (${isotopeOf(el)}, ${DECAY_MODE[h[3]] || h[3]})`;
+    return cat === 'quasi' ? base + ' · pràcticament estable' : base;
+  }
   const fmtDensity = el => { const d = val.densityRaw(el); return d === null ? '—' : fmtSig(d, 3) + (val.isGas(el) ? ' g/L' : ' g/cm³'); };
 
   /* ================= definició dels modes ================= */
@@ -325,6 +362,23 @@
       desc: 'Els elements sense isòtops estables emeten radiació. Del poloni (84) en endavant, tots són radioactius.',
       note: 'Tc i Pm no tenen isòtops estables. Se\'n troben traces a la natura, com també de Np i Pu. El bismut es considera estable a la pràctica.'
     },
+    halfLife: {
+      label: 'Període de semidesintegració', group: 'Química i vida', kind: 'num', log: true,
+      value: val.halfLife,
+      fmt: v => fmtDur(v), longFmt: v => fmtDur(v, true), legendFmt: v => fmtDur(v),
+      cats: [
+        { k: 'estable', label: 'Estables', color: null },
+        { k: 'quasi', label: 'Pràcticament estable (Bi)', color: '#94a3b8' }
+      ],
+      catOf: halfCat,
+      metaOf: el => (el.symbol === 'Bi' ? fmtDur(val.halfSec(el)) : 'estable'),
+      valueLabel: 'Radioactius',
+      refs: [[1, '1 s'], [86400, '1 dia'], [1000 * YEAR_S, '1.000 anys'], [4.54e9 * YEAR_S, 'edat de la Terra', 1]],
+      desc: 'Temps que triga a desintegrar-se la meitat dels àtoms d\'una mostra (isòtop més estable de cada element). Exemple: d\'1 g de radi-226, al cap de 1.600 anys en queda 0,5 g; al cap de 3.200 anys, 0,25 g.',
+      trend: { h: ['→', 'Del plom (82) endavant, cap element és estable'], v: ['↓', 'Com més pesant és el nucli, menys dura'] },
+      note: 'Escala logarítmica: cada color multiplica el temps. a = anys, d = dies, h = hores, min = minuts, s = segons, ms = mil·lisegons. Clica un element per veure\'n la corba de desintegració. Els valors dels elements 104–118 són aproximats.',
+      source: 'Font: NUBASE2020 (Kondev et al., 2021) i IAEA LiveChart.'
+    },
 
     /* --- abundància --- */
     earth: {
@@ -457,6 +511,9 @@
       return { cat: k, color: def ? def.color : null, meta: m.metaOf ? m.metaOf(el) : '' };
     }
     if (m.kind === 'num') {
+      // categories fixes dins d'un mode numèric (p. ex. elements estables)
+      const k = m.catOf ? m.catOf(el) : null;
+      if (k) { const def = m.cats.find(c => c.k === k); return { cat: k, color: def.color, meta: m.metaOf ? m.metaOf(el) : '' }; }
       const v = m.value(el);
       if (v === null || v === undefined || (m.log && v <= 0) || !scale) return { cat: 'nodata', color: null, meta: '' };
       return { cat: 'value', color: scale.color(v), meta: m.fmt(v, el) };
@@ -511,6 +568,10 @@
     let valText = st.meta;
     if (m.kind === 'cat' && st.cat) { const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label + (st.meta ? ' · ' + st.meta : ''); }
     if (st.cat === 'nodata' && m.kind === 'num') valText = 'Sense dades';
+    if (m.kind === 'num' && st.cat === 'value' && m.longFmt) valText = m.longFmt(m.value(el), el);
+    if (m.kind === 'num' && m.cats && st.cat !== 'value' && st.cat !== 'nodata') {
+      const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label.replace(/\s*\([^)]*\)$/, '');
+    }
     const style = st.color ? `style="background:${st.color};--cell-fg:${fgFor(st.color)}"` : '';
     return `<div class="info-preview" ${style}>
       <span class="num">${el.number}</span><span class="sym">${el.symbol}</span>
@@ -523,8 +584,8 @@
     if (q) {
       const fb = q.answered
         ? (q.picked === q.answer
-          ? `<p class="quiz-feedback ok">Correcte! ${esc(nameOf(bySym(q.answer)))}: ${esc(q.prop.fmt(q.prop.value(bySym(q.answer)), bySym(q.answer)))}.</p>`
-          : `<p class="quiz-feedback ko">No és correcte. La resposta és ${esc(nameOf(bySym(q.answer)))} (${esc(q.prop.fmt(q.prop.value(bySym(q.answer)), bySym(q.answer)))}).</p>`)
+          ? `<p class="quiz-feedback ok">Correcte! ${esc(nameOf(bySym(q.answer)))}: ${esc(q.prop.longFmt(q.prop.value(bySym(q.answer)), bySym(q.answer)))}.</p>`
+          : `<p class="quiz-feedback ko">No és correcte. La resposta és ${esc(nameOf(bySym(q.answer)))} (${esc(q.prop.longFmt(q.prop.value(bySym(q.answer)), bySym(q.answer)))}).</p>`)
         : '<p class="info-text">Clica l\'element que creguis correcte. Pensa en les tendències de la taula!</p>';
       infoPanel.innerHTML = `<div class="info-body">
         <p class="quiz-score">Repte · ${q.score} encerts de ${q.total}</p>
@@ -584,10 +645,36 @@
       const sc = buildScale(m.value, m.log);
       if (sc) {
         const stops = SEQ.map((c, i) => `${c} ${Math.round(i / (SEQ.length - 1) * 100)}%`).join(', ');
-        html += `<div class="gradient" style="background:linear-gradient(90deg, ${stops})"></div>
-          <div class="ticks"><span>${esc(m.legendFmt(sc.min))}</span><span>${esc(m.legendFmt(sc.mid))}</span><span>${esc(m.legendFmt(sc.max))}</span></div>`;
+        html += `<div class="gradient" style="background:linear-gradient(90deg, ${stops})"></div>`;
+        if (m.refs && m.log) {
+          // marques de referència (1 s, 1 dia...) situades a la seva posició de l'escala
+          const lo = Math.log10(sc.min), hi = Math.log10(sc.max);
+          const two = m.refs.some(r => r[2]);
+          html += `<div class="refs${two ? ' two' : ''}">` + m.refs.map(([v, label, row]) => {
+            const t = (Math.log10(v) - lo) / (hi - lo);
+            if (t < 0 || t > 1) return '';
+            const align = t > 0.85 ? 'end' : t < 0.12 ? 'start' : 'mid';
+            return `<span class="ref ${align}${row ? ' row1' : ''}" style="left:${(t * 100).toFixed(1)}%"><i></i>${esc(label)}</span>`;
+          }).join('') + '</div>';
+          html += `<div class="ticks"><span>${esc(m.legendFmt(sc.min))}</span><span>${esc(m.legendFmt(sc.max))}</span></div>`;
+        } else {
+          html += `<div class="ticks"><span>${esc(m.legendFmt(sc.min))}</span><span>${esc(m.legendFmt(sc.mid))}</span><span>${esc(m.legendFmt(sc.max))}</span></div>`;
+        }
       }
-      const nodata = ELS.filter(el => { const v = m.value(el); return v === null || v === undefined; }).length;
+      const fixedCat = el => (m.catOf ? m.catOf(el) : null);
+      if (m.cats) {
+        const counts = {};
+        for (const el of ELS) { const k = fixedCat(el); if (k) counts[k] = (counts[k] || 0) + 1; }
+        const nVal = ELS.filter(el => !fixedCat(el) && typeof m.value(el) === 'number').length;
+        html += '<div class="items">';
+        if (m.valueLabel) html += `<button type="button" class="item" data-cat="value" aria-pressed="${state.focus === 'value'}"><span class="swatch" style="background:linear-gradient(90deg, ${SEQ.join(', ')})"></span>${esc(m.valueLabel)} <span class="count">${nVal}</span></button>`;
+        for (const c of m.cats) {
+          if (!counts[c.k]) continue;
+          html += `<button type="button" class="item" data-cat="${c.k}" aria-pressed="${state.focus === c.k}"><span class="swatch" style="background:${c.color || 'var(--bg-blank-cell)'}"></span>${esc(c.label)} <span class="count">${counts[c.k]}</span></button>`;
+        }
+        html += '</div><p class="hint">Clica una categoria per destacar-ne els elements.</p>';
+      }
+      const nodata = ELS.filter(el => { if (fixedCat(el)) return false; const v = m.value(el); return v === null || v === undefined; }).length;
       if (nodata) html += `<div class="items"><span class="item"><span class="swatch" style="background:var(--nodata)"></span>Sense dades <span class="count">${nodata}</span></span></div>`;
     }
     if (m.note) html += `<p class="note">${esc(m.note)}</p>`;
@@ -683,6 +770,7 @@
       ['Bioelement', catLabel('bioessential', el), 'bioessential'],
       ['Toxicitat', catLabel('toxic', el), 'toxic'],
       ['Radioactivitat', catLabel('radioactive', el), 'radioactive'],
+      ['Període de semidesintegració', halfText(el), 'halfLife', false, true],
       ['Magnetisme', catLabel('ferromagnetism', el), 'ferromagnetism'],
       ['Reactivitat', catLabel('reactivity', el), 'reactivity'],
       ['Any de descobriment', y === null ? '—' : fmtYear(y), 'discovery']
@@ -706,6 +794,32 @@
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
+  /* corba de desintegració: quantitat que queda al cap de 1, 2, 3 i 4 períodes */
+  function decayHTML(el) {
+    const T = val.halfLife(el);
+    const ctx = (D.semividaContext || {})[el.symbol];
+    if (T === null) return ctx && el.symbol !== 'Bi' ? `<p class="fitxa-note">${esc(ctx)}</p>` : '';
+    const W = 440, H = 150, L = 46, R = 14, TOP = 12, B = 30;
+    const x = k => L + (W - L - R) * k / 4, y = p => TOP + (H - TOP - B) * (1 - p / 100);
+    let path = '';
+    for (let i = 0; i <= 80; i++) { const k = i / 20; path += (i ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(100 * Math.pow(2, -k)).toFixed(1); }
+    const pct = ['100 %', '50 %', '25 %', '12,5 %', '6,25 %'];
+    let guides = '', labels = '';
+    for (let k = 0; k <= 4; k++) {
+      const p = 100 / Math.pow(2, k);
+      if (k > 0) guides += `<path class="guide" d="M${x(k)} ${y(0)}V${y(p)}H${L}"/><circle class="dot" cx="${x(k)}" cy="${y(p)}" r="3.5"/>`;
+      labels += `<text x="${x(k)}" y="${H - 10}" text-anchor="${k === 4 ? 'end' : k === 0 ? 'start' : 'middle'}">${k ? esc(fmtDur(T * k)) : '0'}</text>`;
+      if (k < 4) labels += `<text x="${L - 6}" y="${y(p) + 4}" text-anchor="end">${pct[k]}</text>`;
+    }
+    const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Corba de desintegració de ${esc(isotopeOf(el))}: la quantitat es redueix a la meitat cada ${esc(fmtDur(T, true))}">
+      <path class="axis" d="M${L} ${TOP}V${y(0)}H${W - R}"/>${guides}<path class="curve" d="${path}"/>${labels}</svg>`;
+    return `<div class="decay">
+      <p class="decay-title">Com es desintegra ${esc(isoName(el))} (${esc(isotopeOf(el))})</p>
+      <p class="decay-text">Cada <strong>${esc(fmtDur(T, true))}</strong>, la quantitat es redueix a la meitat: de cada 100 àtoms, al cap d'un període en queden 50; al cap de dos, 25; al cap de tres, uns 12.</p>
+      ${svg}
+      ${ctx ? `<p class="decay-text">${esc(ctx)}</p>` : ''}</div>`;
+  }
+
   function showElement(el) {
     const m = MODES[state.mode];
     const st = cellState(el, m, m.kind === 'num' ? buildScale(m.value, m.log) : null);
@@ -722,6 +836,7 @@
       </div>
       <dl class="fitxa-props">${rows}</dl>
       ${note ? `<p class="fitxa-note">${esc(note)}</p>` : ''}
+      ${decayHTML(el)}
       <p class="fitxa-summary">${esc(SUMMARIES[el.symbol] || '')}</p>
       ${disc ? `<p class="fitxa-disc"><strong>Descobriment:</strong> ${esc(disc)}${y !== null ? ' (' + esc(fmtYear(y)) + ')' : ''}.</p>` : ''}`;
     openModal(html, st.color);
@@ -740,14 +855,16 @@
     ['Conductivitat elèctrica (S/m)', val.sigma, v => fmtSig(v, 3)],
     ['Conductivitat tèrmica (W/m·K)', val.thermal, v => fmtSig(v, 3)],
     ['Escorça terrestre (%)', el => val.abund('escorca', el), v => fmtSig(v, 3)],
+    ['Període de semidesintegració', val.halfSec, v => fmtDur(v, true), el => (halfCat(el) === 'estable' ? 'estable' : null)],
     ['Any de descobriment', val.year, v => fmtYear(v)]
   ];
   function showCompare(a, b) {
-    const rows = CMP_ROWS.map(([label, f, fmt]) => {
+    const rows = CMP_ROWS.map(([label, f, fmt, alt]) => {
       const va = f(a), vb = f(b);
       const ok = x => typeof x === 'number';
       const hiA = ok(va) && ok(vb) && va > vb, hiB = ok(va) && ok(vb) && vb > va;
-      return `<tr><td>${esc(label)}</td><td class="${hiA ? 'hi' : ''}">${ok(va) ? esc(fmt(va)) : '—'}</td><td class="${hiB ? 'hi' : ''}">${ok(vb) ? esc(fmt(vb)) : '—'}</td></tr>`;
+      const txt = (v, el) => (ok(v) ? esc(fmt(v)) : esc((alt && alt(el)) || '—'));
+      return `<tr><td>${esc(label)}</td><td class="${hiA ? 'hi' : ''}">${txt(va, a)}</td><td class="${hiB ? 'hi' : ''}">${txt(vb, b)}</td></tr>`;
     }).join('');
     const extra = [['Família', el => FAMILY_LABEL[family(el)]], ['Estat a 25 °C', el => catLabel('state', el)], ['Estats d\'oxidació', el => (val.ox(el) ? fmtOx(val.ox(el)) : '—')]]
       .map(([l, f]) => `<tr><td>${esc(l)}</td><td>${esc(f(a))}</td><td>${esc(f(b))}</td></tr>`).join('');
@@ -769,7 +886,15 @@
     { key: 'ionization', max: 'la primera energia d\'ionització més alta', min: 'la primera energia d\'ionització més baixa' },
     { key: 'atomicRadius', max: 'el radi atòmic més gran', min: 'el radi atòmic més petit' },
     { key: 'meltPoint', max: 'el punt de fusió més alt', min: 'el punt de fusió més baix' },
-    { key: 'density', max: 'la densitat més alta', min: 'la densitat més baixa' }
+    { key: 'density', max: 'la densitat més alta', min: 'la densitat més baixa' },
+    { key: 'halfLife', max: 'el període de semidesintegració més llarg (dura més)', min: 'el període de semidesintegració més curt (dura menys)', radio: true }
+  ];
+  // conjunts d'elements radioactius per a les preguntes de semidesintegració
+  const RADIO_SETS = [
+    ['del període 7', e => e.period === 7 && e.ypos <= 7],
+    ['dels actínids', e => e.ypos === 10],
+    ['entre el poloni (84) i l’urani (92)', e => e.number >= 84 && e.number <= 92],
+    ['entre l’urani (92) i el fermi (100)', e => e.number >= 92 && e.number <= 100]
   ];
   const MAIN_GROUPS = [1, 2, 13, 14, 15, 16, 17, 18];
   const rnd = a => a[Math.floor(Math.random() * a.length)];
@@ -778,7 +903,11 @@
       const p = rnd(QUIZ_PROPS), m = MODES[p.key];
       const byPeriod = Math.random() < 0.55;
       let set, where;
-      if (byPeriod) {
+      if (p.radio) {
+        const [w, f] = rnd(RADIO_SETS);
+        set = ELS.filter(f);
+        where = w;
+      } else if (byPeriod) {
         const per = rnd([2, 3, 4, 5, 6]);
         set = ELS.filter(e => e.period === per && e.ypos <= 7 && MAIN_GROUPS.includes(groupOf(e)));
         where = `del període ${per}`;
@@ -796,7 +925,7 @@
       if (m.value(ans) === m.value(runner)) continue;
       const text = `Quin element ${where} té ${p[want]}?`;
       return {
-        prop: { value: m.value, fmt: m.fmt, log: m.log, legendFmt: m.legendFmt, label: m.label },
+        prop: { value: m.value, fmt: m.fmt, longFmt: m.longFmt || m.fmt, log: m.log, legendFmt: m.legendFmt, label: m.label },
         set: set.map(e => e.symbol), answer: ans.symbol, text,
         answered: false, picked: null,
         score: prev ? prev.score : 0, total: prev ? prev.total : 0

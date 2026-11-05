@@ -250,6 +250,71 @@ window.PT_DADES = {
     Og: [2006, 'Dubna (Rússia) i Livermore (EUA)']
   },
 
+  /* ---------- període de semidesintegració ----------
+     Isòtop de vida més llarga de cada element sense isòtops estables (i del bismut,
+     que es considera estable a la pràctica).
+     [valor, unitat (ms, s, min, h, d, a), nombre màssic, manera de desintegració]
+     α = alfa, β⁻ = beta, CE = captura electrònica, FE = fissió espontània.
+     Font: NUBASE2020 (Kondev et al., Chinese Physics C 45, 030001) i IAEA LiveChart.
+     Els valors dels elements 104-118 són aproximats: es basen en molt pocs àtoms. */
+  semivida: {
+    Tc: [4.21e6, 'a', 97, 'CE'],
+    Pm: [17.7, 'a', 145, 'CE'],
+    Bi: [2.01e19, 'a', 209, 'α'],
+    Po: [124, 'a', 209, 'α'],
+    At: [8.1, 'h', 210, 'CE'],
+    Rn: [3.82, 'd', 222, 'α'],
+    Fr: [22.0, 'min', 223, 'β⁻'],
+    Ra: [1600, 'a', 226, 'α'],
+    Ac: [21.8, 'a', 227, 'β⁻'],
+    Th: [1.40e10, 'a', 232, 'α'],
+    Pa: [3.28e4, 'a', 231, 'α'],
+    U: [4.47e9, 'a', 238, 'α'],
+    Np: [2.14e6, 'a', 237, 'α'],
+    Pu: [8.1e7, 'a', 244, 'α'],
+    Am: [7350, 'a', 243, 'α'],
+    Cm: [1.56e7, 'a', 247, 'α'],
+    Bk: [1380, 'a', 247, 'α'],
+    Cf: [898, 'a', 251, 'α'],
+    Es: [472, 'd', 252, 'α'],
+    Fm: [100.5, 'd', 257, 'α'],
+    Md: [51.6, 'd', 258, 'α'],
+    No: [58, 'min', 259, 'α'],
+    Lr: [11, 'h', 266, 'FE'],
+    Rf: [48, 'min', 267, 'FE'],
+    Db: [16, 'h', 268, 'FE'],
+    Sg: [14, 'min', 269, 'α'],
+    Bh: [2.4, 'min', 270, 'α'],
+    Hs: [16, 's', 269, 'α'],
+    Mt: [4.5, 's', 278, 'α'],
+    Ds: [14, 's', 281, 'FE'],
+    Rg: [100, 's', 282, 'α'],
+    Cn: [30, 's', 285, 'α'],
+    Nh: [9.5, 's', 286, 'α'],
+    Fl: [1.9, 's', 289, 'α'],
+    Mc: [0.65, 's', 290, 'α'],
+    Lv: [57, 'ms', 293, 'α'],
+    Ts: [51, 'ms', 294, 'α'],
+    Og: [0.69, 'ms', 294, 'α']
+  },
+
+  /* context per entendre el període de semidesintegració d'alguns elements */
+  semividaContext: {
+    U: 'S\'ha desintegrat aproximadament la meitat de l\'urani-238 que hi havia quan es va formar la Terra, fa 4.500 milions d\'anys.',
+    Th: 'El seu període és més llarg que l\'edat de l\'Univers (13.800 milions d\'anys). Des que es va formar la Terra, només n\'ha desaparegut una cinquena part.',
+    Ra: 'Marie Curie el va aïllar el 1902. El radi-226 es forma contínuament a partir de la desintegració de l\'urani.',
+    Rn: 'Es forma a partir del radi de les roques i s\'acumula en soterranis mal ventilats: és la principal font natural de radiació que rebem.',
+    Po: 'El poloni-210 (138 dies) és l\'isòtop més conegut i el que es troba a la natura.',
+    Tc: 'El tecneci-99m (6 hores) s\'utilitza en milions de proves de medicina nuclear cada any.',
+    Pu: 'El plutoni-239 (24.100 anys) és el que s\'utilitza als reactors i a les armes nuclears.',
+    Am: 'L\'americi-241 (432 anys) és dins dels detectors de fum iònics de moltes cases.',
+    Fr: 'És tan inestable que a tota l\'escorça terrestre n\'hi ha, en cada moment, uns 30 grams com a màxim.',
+    At: 'És l\'element natural més escàs: a tota l\'escorça terrestre n\'hi ha menys d\'un gram.',
+    Bi: 'El seu període (2·10¹⁹ anys) és mil milions de vegades l\'edat de l\'Univers: es considera estable a la pràctica.',
+    Pm: 'És l\'únic lantànid sense isòtops estables.',
+    Og: 'És l\'element més pesant conegut: cada àtom dura menys d\'una mil·lèsima de segon.'
+  },
+
   /* ---------- notes que matisen les dades ---------- */
   notes: {
     H: 'Encapçala el grup 1, però no és un metall alcalí.',
