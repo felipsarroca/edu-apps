@@ -17,6 +17,10 @@
       <aside class="sidebar" aria-label="Controls">
         <div class="sidebar-header">
           <h1 class="app-title"><img class="app-icon" src="data/favicon.svg" alt="" width="49" height="49" /><span>Taula periòdica<br />dinàmica</span></h1>
+        </div>
+
+        <div class="select-row">
+          <label for="mode-select" class="label">Tria la visualització</label>
           <div class="header-buttons">
             <button id="projector-btn" class="icon-btn" type="button" aria-pressed="false" title="Mode projector: text més gran a les cel·les" aria-label="Mode projector">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
@@ -27,8 +31,6 @@
             </button>
           </div>
         </div>
-
-        <label for="mode-select" class="label">Tria la visualització</label>
         <select id="mode-select" class="select"></select>
 
         <div id="mode-options" class="mode-options"></div>

@@ -68,14 +68,17 @@ button,select{font:inherit}
   transition:background-color .3s,border-color .3s;
 }
 /* El títol ocupa tota l'amplada; els botons queden a la dreta de la segona línia */
-.sidebar-header{position:relative; margin-bottom:16px}
+.sidebar-header{margin-bottom:14px}
 .app-title{
   display:flex; align-items:center; gap:10px;
   font-size:22px; line-height:1.12; margin:0; font-weight:800; letter-spacing:-0.01em;
   color:var(--accent);
 }
 .app-icon{width:2.24em; height:2.24em; flex-shrink:0; filter:drop-shadow(0 2px 3px rgba(0,0,0,.18))}
-.header-buttons{display:flex; gap:6px; position:absolute; right:0; bottom:-14px}
+/* Etiqueta a l'esquerra i botons a la dreta, just a sobre del selector */
+.select-row{display:flex; justify-content:space-between; align-items:flex-end; gap:8px; margin-bottom:-4px}
+.select-row .label{margin:0 0 2px}
+.header-buttons{display:flex; gap:6px; flex-shrink:0}
 .icon-btn{
   width:36px; height:36px; border-radius:9px; cursor:pointer;
   display:flex; align-items:center; justify-content:center;
