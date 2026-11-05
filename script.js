@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'https://ja.cat/elmodernisme', 
             category: 'Història', 
             description: "Introducció al Modernisme català amb característiques i exemples.",
-            icon: '../web/Modernisme/favicon.svg'
+            icon: 'https://felipsarroca.github.io/web/Modernisme/favicon.svg'
         },
         { 
             name: "Quiz dels museus", 
