@@ -6,17 +6,18 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 
 ## Funcionalitats
 
-- **24 visualitzacions** agrupades en sis blocs:
+- **28 visualitzacions** agrupades en set blocs:
   - *Classificació*: famílies (amb halògens), metalls/semimetalls/no-metalls, blocs s-p-d-f i estat físic a 25 °C.
-  - *Estructura i enllaç*: estats d'oxidació habituals (formulació d'ESO), electronegativitat, energia d'ionització i radi atòmic.
+  - *Estructura i enllaç*: electrons de valència amb l'estructura de Lewis (punts al voltant del símbol), estats d'oxidació habituals (formulació d'ESO), electronegativitat, energia d'ionització i radi atòmic.
   - *Propietats físiques*: densitat, punts de fusió i d'ebullició (en °C o K), conductivitat elèctrica i tèrmica, i ferromagnetisme.
   - *Química i vida*: reactivitat, bioelements (primaris, secundaris i oligoelements), toxicitat, radioactivitat (natural o artificial) i període de semidesintegració (escala logarítmica amb marques de referència: 1 s, 1 dia, 1.000 anys i edat de la Terra).
   - *Abundància*: escorça terrestre, cos humà i univers (escala logarítmica).
-  - *Història*: any de descobriment, amb un control lliscant per veure com creix la taula.
+  - *Recursos i societat*: matèries primeres crítiques i estratègiques de la UE, amb el principal país productor i els minerals de conflicte.
+  - *Origen i història*: origen còsmic (Big Bang, estrelles, supernoves, xocs d'estrelles de neutrons), origen del nom (mitologia, astres, llocs, persones, propietats, minerals) i any de descobriment, amb un control lliscant per veure com creix la taula.
 - **Escales de color contínues** amb llegenda en degradat per a les magnituds numèriques.
 - **Llegenda interactiva**: en clicar una categoria, es destaquen els seus elements.
 - **Panell d'informació** a l'espai buit de la taula: vista ampliada de l'element sota el cursor, descripció del mode i tendències periòdiques amb fletxes.
-- **Fitxa de l'element** amb totes les propietats, el valor del mode actiu destacat, notes que matisen les dades, un resum i el descobriment. En els elements radioactius, inclou la corba de desintegració de l'isòtop més estable i un context per entendre-la.
+- **Fitxa de l'element** amb totes les propietats, el valor del mode actiu destacat, notes que matisen les dades, un resum i el descobriment. Inclou el model de Bohr de l'àtom (protons, neutrons i electrons per capes, amb la capa externa destacada), l'etimologia del nom i l'origen còsmic. En els elements radioactius, inclou la corba de desintegració de l'isòtop més estable i un context per entendre-la.
 - **Compara**: tria dos elements i en veus les propietats en paral·lel.
 - **Repte**: preguntes sobre les tendències periòdiques (per exemple, quin element del període 3 té el radi més gran o quin actínid dura més) amb puntuació.
 - **Mode projector** (text més gran) i **tema clar o fosc**.
@@ -34,7 +35,8 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 - `style.css`: estils, temes i adaptació a la pantalla.
 - `app.js`: definició dels modes, pintat, llegenda, fitxa, comparació, repte i escalat.
 - `data/elements.js`: dataset base (PeriodicTableJSON, de Bowserinator, elements 1-118).
-- `data/propietats.js`: dades complementàries revisades (classificació, radis, conductivitats, abundàncies, estats d'oxidació, bioelements, toxicitat, períodes de semidesintegració, descobriment i notes).
+- `data/propietats.js`: dades complementàries revisades (classificació, radis, conductivitats, abundàncies, estats d'oxidació, bioelements, toxicitat, períodes de semidesintegració, isòtop més abundant, matèries primeres crítiques, descobriment i notes).
+- `data/origens.js`: etimologia del nom i origen còsmic de cada element.
 - `data/noms_ca.js` i `data/summaries_ca.js`: noms i resums en català.
 - `assets/CC_BY-NC-SA.png`: distintiu de la llicència.
 - Documents i imatges de referència: `Valors dels elements de la Taula Periòdica.pdf/.docx`, `Propietats dels Elements.pdf` i les imatges `*.JPG`.
@@ -50,6 +52,12 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 | Abundància al cos humà | J. Emsley, *The Elements* (adult de 70 kg) |
 | Abundància a l'univers | K. Croswell (1996), Via Làctia |
 | Període de semidesintegració (isòtop més estable) | NUBASE2020 (Kondev et al., 2021) i IAEA LiveChart; elements 104-118, valors aproximats |
+| Isòtop més abundant (model de Bohr) | IUPAC/CIAAW, composició isotòpica dels elements (2021) |
+| Capes electròniques | Calculades a partir de la configuració electrònica (PeriodicTableJSON) |
+| Matèries primeres crítiques | Reglament (UE) 2024/1252 i Comissió Europea, estudi de matèries primeres crítiques (2023) |
+| Minerals de conflicte | Reglament (UE) 2017/821 |
+| Origen còsmic | J. A. Johnson, *Science* 363 (2019); N. Prantzos et al., *MNRAS* 491 (2020) |
+| Origen del nom | IUPAC; P. Enghag, *Encyclopedia of the Elements* (2004); J. Coromines, *Diccionari etimològic* |
 | Any de descobriment | Taula de la carpeta (`AnyDescobrimentElements.JPG`) |
 
 ## Afegir un mode nou

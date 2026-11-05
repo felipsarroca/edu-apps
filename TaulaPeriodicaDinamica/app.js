@@ -7,6 +7,7 @@
   const D = window.PT_DADES || {};
   const NAMES = window.PT_NOMS_CA || {};
   const SUMMARIES = window.SUMMARIES_CA || {};
+  const ORI = window.PT_ORIGENS || {};
   const ELS = ((window.PT_ELEMENTS && window.PT_ELEMENTS.elements) || []).filter(e => e.number <= 118);
   const root = document.documentElement;
 
@@ -103,17 +104,80 @@
     /* període de semidesintegració en segons (null si té isòtops estables o és el bismut) */
     halfData: el => (D.semivida || {})[el.symbol] || null,
     halfSec: el => { const h = val.halfData(el); return h ? h[0] * HALF_UNIT[h[1]] : null; },
-    halfLife: el => (el.symbol === 'Bi' ? null : val.halfSec(el))
+    halfLife: el => (el.symbol === 'Bi' ? null : val.halfSec(el)),
+    /* electrons per capa (K, L, M...), calculats a partir de la configuració electrònica */
+    shells: el => { const s = []; for (const m of String(el.electron_configuration || '').matchAll(/(\d)([spdf])(\d+)/g)) s[m[1] - 1] = (s[m[1] - 1] || 0) + Number(m[3]); return Array.from(s, x => x || 0); },
+    massNumber: el => { const a = (D.isotopPrincipal || {})[el.symbol]; if (a) return a; const h = (D.semivida || {})[el.symbol]; return h ? h[2] : null; },
+    /* electrons de valència: només en els grups principals (en els de transició són variables) */
+    valenceE: el => { const g = groupOf(el); if (el.symbol === 'He') return 2; if (g === 1 || g === 2) return g; if (g >= 13 && g <= 18) return g - 10; return null; },
+    nameOrigin: el => (ORI.nom || {})[el.symbol] || null,
+    cosmic: el => (ORI.cosmic || {})[el.symbol] || (el.number >= 93 ? ['laboratori', []] : null),
+    critical: el => (D.critiques || {})[el.symbol] || null
   };
   const HALF_UNIT = { ms: 1e-3, s: 1, min: 60, h: 3600, d: 86400, a: YEAR_S };
   const DECAY_MODE = { 'α': 'desintegració alfa', 'β⁻': 'desintegració beta', CE: 'captura electrònica', FE: 'fissió espontània' };
   const supNum = n => String(n).split('').map(c => SUP[c]).join('');
   const isotopeOf = el => { const h = val.halfData(el); return h ? supNum(h[2]) + el.symbol : ''; };
   // «el radi-226», «l'urani-238»
-  const isoName = el => { const n = nameOf(el).toLowerCase(), h = val.halfData(el); return (/^[aeiouàèéíòóúh]/.test(n) ? 'l’' : 'el ') + n + '-' + (h ? h[2] : ''); };
+  const isoName = (el, A) => { const n = nameOf(el).toLowerCase(), h = val.halfData(el); return (/^[aeiouàèéíòóúh]/.test(n) ? 'l’' : 'el ') + n + '-' + (A || (h ? h[2] : '')); };
   function halfCat(el) {
     if (el.symbol === 'Bi') return 'quasi';
     return val.halfData(el) ? null : 'estable';
+  }
+  const COSMIC_CATS = [
+    { k: 'bigbang', label: 'Big Bang', color: '#c4b5fd' },
+    { k: 'raigs', label: 'Raigs còsmics', color: '#f0abfc' },
+    { k: 'petites', label: 'Estrelles petites', color: '#fcd34d' },
+    { k: 'massives', label: 'Estrelles massives', color: '#7dd3fc' },
+    { k: 'nanes', label: 'Nanes blanques', color: '#fda4af' },
+    { k: 'neutrons', label: 'Estrelles de neutrons', color: '#86efac' },
+    { k: 'desintegracio', label: 'Desintegració (U, Th)', color: '#d6b48c' },
+    { k: 'laboratori', label: 'Laboratori', color: '#a8a29e' }
+  ];
+  const COSMIC_LABEL = Object.fromEntries(COSMIC_CATS.map(c => [c.k, c.label]));
+  const NAME_CATS = [
+    { k: 'mite', label: 'Mitologia i folklore', color: '#f0abfc' },
+    { k: 'astre', label: 'Astres', color: '#a5b4fc' },
+    { k: 'lloc', label: 'Llocs', color: '#86efac' },
+    { k: 'persona', label: 'Persones', color: '#fcd34d' },
+    { k: 'propietat', label: 'Propietats (color, olor...)', color: '#7dd3fc' },
+    { k: 'material', label: 'Minerals i materials', color: '#e7c9a9' },
+    { k: 'antic', label: 'Noms antics o incerts', color: '#fca5a5' }
+  ];
+  const VALENCE_CATS = [
+    { k: 'v1', label: '1 electró', color: '#fca5a5' },
+    { k: 'v2', label: '2 electrons', color: '#fdba74' },
+    { k: 'v3', label: '3 electrons', color: '#fde68a' },
+    { k: 'v4', label: '4 electrons', color: '#bef264' },
+    { k: 'v5', label: '5 electrons', color: '#86efac' },
+    { k: 'v6', label: '6 electrons', color: '#5eead4' },
+    { k: 'v7', label: '7 electrons', color: '#93c5fd' },
+    { k: 'v8', label: '8 electrons', color: '#c4b5fd' },
+    { k: 'variable', label: 'Variables', color: null }
+  ];
+  const CRIT_CATS = [
+    { k: 'estrategica', label: 'Estratègiques (i crítiques)', color: '#f87171' },
+    { k: 'critica', label: 'Crítiques', color: '#fdba74' },
+    { k: 'conflicte', label: 'Minerals de conflicte (no crítics)', color: '#c4b5fd' },
+    { k: 'no', label: 'No incloses a la llista', color: null }
+  ];
+  function lewisHTML(n, he) {
+    const sides = [0, 0, 0, 0]; // dalt, dreta, baix, esquerra
+    if (he) sides[0] = 2;
+    else for (let i = 0; i < n; i++) sides[i % 4]++;
+    return ['t', 'r', 'b', 'l'].map((s, i) => (sides[i] ? `<i class="ld ${s}">${'<b></b>'.repeat(sides[i])}</i>` : '')).join('');
+  }
+  function cosmicText(el) {
+    const c = val.cosmic(el);
+    if (!c) return '—';
+    const t = (ORI.cosmicText || {})[c[0]] || '';
+    return COSMIC_LABEL[c[0]] + (t ? '. ' + t : '') + (c[1].length ? ' També: ' + c[1].map(k => COSMIC_LABEL[k].toLowerCase()).join(', ') + '.' : '');
+  }
+  function criticalText(el) {
+    const c = val.critical(el), conf = inList(D.conflicte, el.symbol);
+    let t = c ? (c[0] === 'estrategica' ? 'Estratègica' : 'Crítica') + (c[1] ? ' · principal productor: ' + c[1] : '') : 'No';
+    if (conf) t = (c ? t + ' · ' : 'No crítica · ') + 'mineral de conflicte';
+    return t;
   }
   function halfText(el) {
     const cat = halfCat(el), h = val.halfData(el);
@@ -219,6 +283,14 @@
     },
 
     /* --- estructura i enllaç --- */
+    valenceE: {
+      label: 'Electrons de valència (Lewis)', group: 'Estructura i enllaç', kind: 'cat', lewis: true, previewNoMeta: true, cats: VALENCE_CATS,
+      catOf: el => { const v = val.valenceE(el); return v === null ? 'variable' : 'v' + v; },
+      metaOf: el => { const v = val.valenceE(el); return v === null ? '' : v + ' e⁻'; },
+      desc: 'Electrons de la capa més externa, els que participen en els enllaços. Els punts al voltant del símbol en formen l\'estructura de Lewis. En els grups 13-18 coincideixen amb l\'última xifra del grup.',
+      trend: { h: ['→', 'D\'1 a 8 al llarg de cada període'], v: ['↓', 'Els mateixos en tot el grup'] },
+      note: 'Regla de l\'octet: els àtoms tendeixen a guanyar, perdre o compartir electrons fins a tenir-ne 8 a la capa externa. Variables: metalls de transició.'
+    },
     valence: {
       label: 'Estats d\'oxidació (valències)', group: 'Estructura i enllaç', kind: 'cat',
       cats: [
@@ -403,9 +475,34 @@
       source: 'Font: K. Croswell (1996), fracció en massa a la Via Làctia.'
     },
 
-    /* --- història --- */
+    /* --- recursos i societat --- */
+    critical: {
+      label: 'Matèries primeres crítiques (UE)', group: 'Recursos i societat', kind: 'cat', cats: CRIT_CATS,
+      catOf: el => { const c = val.critical(el); if (c) return c[0]; return inList(D.conflicte, el.symbol) ? 'conflicte' : 'no'; },
+      metaOf: el => { const c = val.critical(el), w = inList(D.conflicte, el.symbol) ? '⚠' : ''; return c ? [c[1], w].filter(Boolean).join(' ') : (w ? w + ' conflicte' : ''); },
+      desc: 'Elements imprescindibles per a bateries, imants, xips o energies renovables amb un risc alt de no poder-ne obtenir prou. A cada cel·la, el principal país productor.',
+      note: 'Estratègiques: claus per a la transició verda i digital i per a la defensa. ⚠ Minerals de conflicte (Sn, Ta, W, Au): la seva extracció pot finançar guerres; la UE n\'exigeix la traçabilitat. Alguns elements hi són pel seu mineral: bauxita (Al), barita (Ba), fluorita (F), roca fosfòrica (P) i grafit (C).',
+      source: 'Font: Reglament (UE) 2024/1252 i Comissió Europea, estudi de matèries primeres crítiques (2023).'
+    },
+
+    /* --- origen i història --- */
+    cosmic: {
+      label: 'Origen còsmic', group: 'Origen i història', kind: 'cat', cats: COSMIC_CATS,
+      catOf: el => { const c = val.cosmic(el); return c ? c[0] : 'nodata'; },
+      desc: 'On es van formar els àtoms de cada element. Les estrelles petites els fabriquen en morir; les massives i les nanes blanques, en explotar (supernoves); les de neutrons, en xocar. Tret de l\'hidrogen, els àtoms del nostre cos vénen d\'estrelles: som pols d\'estrelles.',
+      note: 'Es mostra l\'origen principal. A la fitxa, l\'explicació i els altres orígens.',
+      source: 'Font: J. A. Johnson, Science 363 (2019); N. Prantzos et al., MNRAS (2020).'
+    },
+    nameOrigin: {
+      label: 'Origen del nom', group: 'Origen i història', kind: 'cat', cats: NAME_CATS,
+      catOf: el => { const n = val.nameOrigin(el); return n ? n[0] : 'nodata'; },
+      metaOf: el => { const n = val.nameOrigin(el); return n ? n[1] : ''; },
+      desc: 'D\'on ve el nom de cada element: mitologia, astres, llocs, persones, propietats o minerals. Molts noms vénen del grec i del llatí. Clica un element per llegir-ne l\'etimologia.',
+      note: 'Símbols que vénen del llatí: Na (natrium), K (kalium), Fe, Cu, Ag, Sn, Sb, Au, Hg i Pb.',
+      source: 'Fonts: IUPAC; P. Enghag, Encyclopedia of the Elements (2004); J. Coromines, Diccionari etimològic.'
+    },
     discovery: {
-      label: 'Any de descobriment', group: 'Història', kind: 'cat',
+      label: 'Any de descobriment', group: 'Origen i història', kind: 'cat',
       cats: [
         { k: 'antic', label: 'Antiguitat', color: '#d6a35c' },
         { k: 'mitja', label: 'Edat mitjana i moderna (500–1649)', color: '#fcd34d' },
@@ -494,7 +591,7 @@
       c.style.gridColumn = el.xpos + 1;
       c.style.gridRow = el.ypos + 1;
       c.dataset.sym = el.symbol;
-      c.innerHTML = `<span class="num">${el.number}</span><span class="sym">${el.symbol}</span><span class="name">${esc(nameOf(el))}</span><span class="meta"></span>`;
+      c.innerHTML = `<span class="num">${el.number}</span><span class="sym">${el.symbol}<span class="lewis" aria-hidden="true"></span></span><span class="name">${esc(nameOf(el))}</span><span class="meta"></span>`;
       c.addEventListener('click', () => onCellClick(el));
       c.addEventListener('mouseenter', () => { state.hover = el.symbol; if (!state.quiz && !state.compare) renderInfo(); });
       c.addEventListener('focus', () => { state.hover = el.symbol; if (!state.quiz && !state.compare) renderInfo(); });
@@ -527,6 +624,7 @@
     const scale = m.kind === 'num' ? buildScale(m.value, m.log) : null;
     const qScale = q ? buildScale(q.prop.value, q.prop.log, q.set.map(s => ELS.find(e => e.symbol === s))) : null;
 
+    grid.classList.toggle('lewis-on', !q && !!m.lewis);
     for (const el of ELS) {
       const c = cells[el.symbol];
       c.className = 'cell';
@@ -551,6 +649,8 @@
       else if (st.cat === 'nodata') c.style.background = 'var(--nodata)';
       const meta = c.querySelector('.meta');
       meta.textContent = st.meta || '';
+      const nv = !q && m.lewis ? val.valenceE(el) : null;
+      c.querySelector('.lewis').innerHTML = nv ? lewisHTML(nv, el.symbol === 'He') : '';
       const long = (st.meta || '').length > 12;
       meta.classList.toggle('long', long);
       c.classList.toggle('has-long', long);
@@ -566,7 +666,7 @@
     const m = MODES[state.mode];
     const st = cellState(el, m, m.kind === 'num' ? buildScale(m.value, m.log) : null);
     let valText = st.meta;
-    if (m.kind === 'cat' && st.cat) { const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label + (st.meta ? ' · ' + st.meta : ''); }
+    if (m.kind === 'cat' && st.cat) { const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label + (st.meta && !m.previewNoMeta ? ' · ' + st.meta : ''); }
     if (st.cat === 'nodata' && m.kind === 'num') valText = 'Sense dades';
     if (m.kind === 'num' && st.cat === 'value' && m.longFmt) valText = m.longFmt(m.value(el), el);
     if (m.kind === 'num' && m.cats && st.cat !== 'value' && st.cat !== 'nodata') {
@@ -757,6 +857,7 @@
       ['Família', FAMILY_LABEL[family(el)] + pred, 'families'],
       ['Estat a 25 °C', catLabel('state', el), 'state'],
       ['Configuració electrònica', configHTML(el) + pred, null, true, true],
+      ['Electrons de valència', val.valenceE(el) === null ? 'variables' : String(val.valenceE(el)), 'valenceE'],
       ['Estats d\'oxidació habituals', val.ox(el) ? fmtOx(val.ox(el)) : '—', 'valence'],
       ['Electronegativitat (Pauling)', val.en(el) !== null ? fmtFixed(val.en(el), 2) : '—', 'electronegativity'],
       ['1a energia d\'ionització', val.ion(el) !== null ? Math.round(val.ion(el)) + ' kJ/mol' : '—', 'ionization'],
@@ -773,7 +874,10 @@
       ['Període de semidesintegració', halfText(el), 'halfLife', false, true],
       ['Magnetisme', catLabel('ferromagnetism', el), 'ferromagnetism'],
       ['Reactivitat', catLabel('reactivity', el), 'reactivity'],
-      ['Any de descobriment', y === null ? '—' : fmtYear(y), 'discovery']
+      ['Any de descobriment', y === null ? '—' : fmtYear(y), 'discovery'],
+      ['Matèria primera crítica (UE)', criticalText(el), 'critical'],
+      ['Origen del nom', val.nameOrigin(el) ? val.nameOrigin(el)[2] : '—', 'nameOrigin', false, true, true],
+      ['Origen còsmic', cosmicText(el), 'cosmic', false, true, true]
     ];
   }
 
@@ -792,6 +896,45 @@
   function closeModal() {
     document.getElementById('modal-overlay').classList.add('hidden');
     if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  /* model de Bohr: nucli (protons i neutrons) i electrons per capes */
+  const SHELL_NAMES = ['K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+  function bohrHTML(el) {
+    const sh = val.shells(el);
+    if (!sh.length) return '';
+    const Z = el.number, A = val.massNumber(el), N = A ? A - Z : null;
+    const S = 300, c = S / 2, n = sh.length;
+    const rad = i => (n === 1 ? 62 : 44 + i * (100 / (n - 1)));
+    let orbits = '', dots = '';
+    sh.forEach((k, i) => {
+      const r = rad(i), last = i === n - 1, dr = k > 18 ? 3.4 : 4.2;
+      orbits += `<circle class="orbit" cx="${c}" cy="${c}" r="${r.toFixed(1)}"/>`;
+      for (let j = 0; j < k; j++) {
+        const a = (-90 + i * 13 + 360 * j / k) * Math.PI / 180;
+        dots += `<circle class="el${last ? ' ve' : ''}" cx="${(c + r * Math.cos(a)).toFixed(1)}" cy="${(c + r * Math.sin(a)).toFixed(1)}" r="${dr}"/>`;
+      }
+    });
+    const nuc = `<circle class="nucleus" cx="${c}" cy="${c}" r="27"/>
+      <text class="nuc-text" x="${c}" y="${c - 2}" text-anchor="middle">${Z} p⁺</text>
+      <text class="nuc-text" x="${c}" y="${c + 12}" text-anchor="middle">${N === null ? '' : N + ' n⁰'}</text>`;
+    const stable = !!(D.isotopPrincipal || {})[el.symbol];
+    const iso = A ? `${supNum(A)}${el.symbol} (${isoName(el, A).replace(/^(el |l’)/, '')}), ${stable ? 'l\'isòtop més abundant a la natura' : 'l\'isòtop de vida més llarga'}` : '';
+    const capes = sh.map((k, i) => `${SHELL_NAMES[i]} ${k}`).join(' · ');
+    return `<div class="bohr">
+      <svg viewBox="0 0 ${S} ${S}" role="img" aria-label="Model de Bohr de ${esc(nameOf(el))}: ${Z} protons, ${N === null ? '' : N + ' neutrons, '}${Z} electrons en capes ${esc(capes)}">${orbits}${nuc}${dots}</svg>
+      <div class="bohr-info">
+        <p class="decay-title">Estructura de l'àtom (model de Bohr)</p>
+        <ul class="particles">
+          <li><b class="pp"></b>${Z} protons</li>
+          ${N === null ? '' : `<li><b class="pn"></b>${N} neutrons</li>`}
+          <li><b class="pe"></b>${Z} electrons</li>
+        </ul>
+        ${iso ? `<p class="decay-text">Isòtop representat: ${esc(iso)}. Nombre màssic A = ${A} (protons + neutrons).</p>` : ''}
+        <p class="decay-text"><strong>Capes:</strong> ${esc(capes)}${isPredicted(el) ? ' (predites)' : ''}.</p>
+        <p class="decay-text">Capa externa (${SHELL_NAMES[n - 1]}): <strong>${sh[n - 1]} electrons</strong>, en taronja${val.valenceE(el) === null ? '. En els metalls de transició i de transició interna, també hi poden intervenir electrons de capes anteriors' : ''}.</p>
+        <p class="bohr-note">El model de Bohr (1913) és una simplificació: els electrons no giren en òrbites fixes, sinó que ocupen orbitals (vegeu la configuració electrònica). El nucli no està a escala: és unes 100.000 vegades més petit que l'àtom.</p>
+      </div></div>`;
   }
 
   /* corba de desintegració: quantitat que queda al cap de 1, 2, 3 i 4 períodes */
@@ -823,8 +966,8 @@
   function showElement(el) {
     const m = MODES[state.mode];
     const st = cellState(el, m, m.kind === 'num' ? buildScale(m.value, m.log) : null);
-    const rows = fitxaRows(el).map(([k, v, mode, isHTML, wide]) =>
-      `<div class="${[mode === state.mode && mode !== 'blank' ? 'current' : '', wide ? 'wide' : ''].join(' ').trim()}"><dt>${esc(k)}</dt><dd>${isHTML ? v : esc(v)}</dd></div>`).join('');
+    const rows = fitxaRows(el).map(([k, v, mode, isHTML, wide, text]) =>
+      `<div class="${[mode === state.mode && mode !== 'blank' ? 'current' : '', wide ? 'wide' : '', text ? 'textrow' : ''].join(' ').trim()}"><dt>${esc(k)}</dt><dd>${isHTML ? v : esc(v)}</dd></div>`).join('');
     const note = (D.notes || {})[el.symbol];
     const disc = val.discoverer(el);
     const y = val.year(el);
@@ -836,6 +979,7 @@
       </div>
       <dl class="fitxa-props">${rows}</dl>
       ${note ? `<p class="fitxa-note">${esc(note)}</p>` : ''}
+      ${bohrHTML(el)}
       ${decayHTML(el)}
       <p class="fitxa-summary">${esc(SUMMARIES[el.symbol] || '')}</p>
       ${disc ? `<p class="fitxa-disc"><strong>Descobriment:</strong> ${esc(disc)}${y !== null ? ' (' + esc(fmtYear(y)) + ')' : ''}.</p>` : ''}`;
@@ -866,7 +1010,10 @@
       const txt = (v, el) => (ok(v) ? esc(fmt(v)) : esc((alt && alt(el)) || '—'));
       return `<tr><td>${esc(label)}</td><td class="${hiA ? 'hi' : ''}">${txt(va, a)}</td><td class="${hiB ? 'hi' : ''}">${txt(vb, b)}</td></tr>`;
     }).join('');
-    const extra = [['Família', el => FAMILY_LABEL[family(el)]], ['Estat a 25 °C', el => catLabel('state', el)], ['Estats d\'oxidació', el => (val.ox(el) ? fmtOx(val.ox(el)) : '—')]]
+    const extra = [['Família', el => FAMILY_LABEL[family(el)]], ['Estat a 25 °C', el => catLabel('state', el)], ['Estats d\'oxidació', el => (val.ox(el) ? fmtOx(val.ox(el)) : '—')],
+      ['Electrons de valència', el => (val.valenceE(el) === null ? 'variables' : String(val.valenceE(el)))],
+      ['Capes electròniques', el => val.shells(el).join(', ')],
+      ['Origen còsmic', el => { const c = val.cosmic(el); return c ? COSMIC_LABEL[c[0]] : '—'; }]]
       .map(([l, f]) => `<tr><td>${esc(l)}</td><td>${esc(f(a))}</td><td>${esc(f(b))}</td></tr>`).join('');
     openModal(`<h2 id="modal-title" style="margin:0 0 6px">Comparació</h2>
       <table class="cmp-table"><thead><tr><th></th><th>${esc(nameOf(a))} (${a.symbol})</th><th>${esc(nameOf(b))} (${b.symbol})</th></tr></thead>

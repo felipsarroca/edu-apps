@@ -315,6 +315,47 @@ window.PT_DADES = {
     Og: 'És l\'element més pesant conegut: cada àtom dura menys d\'una mil·lèsima de segon.'
   },
 
+  /* ---------- nombre màssic de l'isòtop més abundant a la natura ----------
+     (per als elements sense isòtops estables, s'usa el de vida més llarga: vegeu semivida)
+     Font: IUPAC, Isotopic compositions of the elements 2021 (CIAAW). */
+  isotopPrincipal: {
+    H: 1, He: 4, Li: 7, Be: 9, B: 11, C: 12, N: 14, O: 16, F: 19, Ne: 20, Na: 23, Mg: 24, Al: 27, Si: 28,
+    P: 31, S: 32, Cl: 35, Ar: 40, K: 39, Ca: 40, Sc: 45, Ti: 48, V: 51, Cr: 52, Mn: 55, Fe: 56, Co: 59,
+    Ni: 58, Cu: 63, Zn: 64, Ga: 69, Ge: 74, As: 75, Se: 80, Br: 79, Kr: 84, Rb: 85, Sr: 88, Y: 89, Zr: 90,
+    Nb: 93, Mo: 98, Ru: 102, Rh: 103, Pd: 106, Ag: 107, Cd: 114, In: 115, Sn: 120, Sb: 121, Te: 130,
+    I: 127, Xe: 132, Cs: 133, Ba: 138, La: 139, Ce: 140, Pr: 141, Nd: 142, Sm: 152, Eu: 153, Gd: 158,
+    Tb: 159, Dy: 164, Ho: 165, Er: 166, Tm: 169, Yb: 174, Lu: 175, Hf: 180, Ta: 181, W: 184, Re: 187,
+    Os: 192, Ir: 193, Pt: 195, Au: 197, Hg: 202, Tl: 205, Pb: 208, Bi: 209, Th: 232, U: 238
+  },
+
+  /* ---------- matèries primeres crítiques de la Unió Europea ----------
+     Reglament (UE) 2024/1252 (Llei de matèries primeres crítiques), annexos I i II, i
+     Comissió Europea, Study on the critical raw materials for the EU (2023).
+     [categoria, principal país productor mundial (extracció o primera transformació)]
+     estrategica = estratègica i crítica; critica = crítica.
+     Alguns elements hi figuren a través del seu mineral: Al (bauxita), Ba (barita),
+     F (fluorita), P (roca fosfòrica), C (grafit natural). */
+  critiques: {
+    Al: ['estrategica', 'Austràlia'], Bi: ['estrategica', 'Xina'], B: ['estrategica', 'Turquia'],
+    Co: ['estrategica', 'RD Congo'], Cu: ['estrategica', 'Xile'], Ga: ['estrategica', 'Xina'],
+    Ge: ['estrategica', 'Xina'], Li: ['estrategica', 'Austràlia'], Mg: ['estrategica', 'Xina'],
+    Mn: ['estrategica', 'Sud-àfrica'], C: ['estrategica', 'Xina'], Ni: ['estrategica', 'Indonèsia'],
+    Pt: ['estrategica', 'Sud-àfrica'], Pd: ['estrategica', 'Rússia'], Rh: ['estrategica', 'Sud-àfrica'],
+    Ir: ['estrategica', 'Sud-àfrica'], Ru: ['estrategica', 'Sud-àfrica'], Os: ['estrategica', 'Sud-àfrica'],
+    Nd: ['estrategica', 'Xina'], Pr: ['estrategica', 'Xina'], Tb: ['estrategica', 'Xina'],
+    Dy: ['estrategica', 'Xina'], Gd: ['estrategica', 'Xina'], Sm: ['estrategica', 'Xina'],
+    Ce: ['estrategica', 'Xina'], Si: ['estrategica', 'Xina'], Ti: ['estrategica', 'Xina'],
+    W: ['estrategica', 'Xina'],
+    Sb: ['critica', 'Xina'], As: ['critica', 'Xina'], Ba: ['critica', 'Xina'], Be: ['critica', 'EUA'],
+    F: ['critica', 'Xina'], Hf: ['critica', null], He: ['critica', 'EUA'], Er: ['critica', 'Xina'],
+    Eu: ['critica', 'Xina'], Ho: ['critica', 'Xina'], Lu: ['critica', 'Xina'], Tm: ['critica', 'Xina'],
+    Yb: ['critica', 'Xina'], Y: ['critica', 'Xina'], La: ['critica', 'Xina'], Nb: ['critica', 'Brasil'],
+    P: ['critica', 'Xina'], Sc: ['critica', 'Xina'], Sr: ['critica', null], Ta: ['critica', 'RD Congo'],
+    V: ['critica', 'Xina']
+  },
+  /* minerals de conflicte: estany, tàntal, tungstè i or (Reglament (UE) 2017/821) */
+  conflicte: ['Sn', 'Ta', 'W', 'Au'],
+
   /* ---------- notes que matisen les dades ---------- */
   notes: {
     H: 'Encapçala el grup 1, però no és un metall alcalí.',
