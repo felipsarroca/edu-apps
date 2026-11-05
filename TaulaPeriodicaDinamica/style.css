@@ -202,15 +202,18 @@ button,select{font:inherit}
   padding:10px 12px; border-radius:12px;
   color:var(--text); font-size:14px; line-height:1.35;
 }
+/* Centrat sobre la línia entre els grups 4 i 5 (grups de 84 px + 6 px d'espai)
+   i separat una mica dels elements veïns */
 .info-preview{
-  width:150px; flex-shrink:0; border-radius:12px; border:1px solid var(--border);
-  padding:10px; display:flex; flex-direction:column; justify-content:space-between;
+  width:135px; flex-shrink:0; border-radius:12px; border:1px solid var(--border);
+  margin:10px 0 10px 98px;
+  padding:9px; display:flex; flex-direction:column; justify-content:space-between;
   background:var(--bg-blank-cell); color:var(--cell-fg, var(--text));
 }
-.info-preview .num{font-size:15px; font-weight:650}
-.info-preview .sym{font-size:46px; font-weight:800; line-height:1}
-.info-preview .name{font-size:15px}
-.info-preview .val{font-size:14px; font-weight:700}
+.info-preview .num{font-size:14px; font-weight:650}
+.info-preview .sym{font-size:41px; font-weight:800; line-height:1}
+.info-preview .name{font-size:14px}
+.info-preview .val{font-size:13px; font-weight:700}
 .info-preview.empty{align-items:center; justify-content:center; text-align:center; color:var(--muted); font-size:13px; border-style:dashed}
 .info-body{flex:1; display:flex; flex-direction:column; gap:6px; min-width:0}
 .info-title{font-size:18px; font-weight:750; margin:0}
