@@ -356,6 +356,61 @@ window.PT_DADES = {
   /* minerals de conflicte: estany, tàntal, tungstè i or (Reglament (UE) 2017/821) */
   conflicte: ['Sn', 'Ta', 'W', 'Au'],
 
+  /* ---------- color a la flama (assaig a la flama) ----------
+     [família de color, nom del color, color aproximat (hex)]
+     Fonts: A. I. Vogel, Química analítica qualitativa; Royal Society of Chemistry,
+     Practical Chemistry «Flame tests». Els colors de pantalla són aproximats. */
+  flama: {
+    Li: ['vermell', 'vermell carmí', '#d3123b'],
+    Na: ['groc', 'groc intens', '#ffc107'],
+    K: ['violeta', 'lila', '#c39bd3'],
+    Rb: ['violeta', 'violeta vermellós', '#b5179e'],
+    Cs: ['violeta', 'blau violeta', '#7b6fe0'],
+    Ca: ['taronja', 'vermell ataronjat', '#ff5a1f'],
+    Sr: ['vermell', 'vermell intens', '#e0001b'],
+    Ba: ['verd', 'verd poma', '#9acd32'],
+    Ra: ['vermell', 'vermell carmí', '#c8102e'],
+    Cu: ['verd', 'verd blavós', '#14b8a6'],
+    B: ['verd', 'verd brillant', '#22c55e'],
+    Tl: ['verd', 'verd pur', '#3cb043'],
+    In: ['blau', 'blau indi', '#4b4bd6'],
+    Pb: ['blau', 'blau pàl·lid', '#9bbbe0'],
+    As: ['blau', 'blau pàl·lid', '#8fb3e8'],
+    Se: ['blau', 'blau cel', '#4fa3ff'],
+    Sb: ['verd', 'verd pàl·lid', '#b5dfa0'],
+    Te: ['verd', 'verd pàl·lid', '#a8d8a0'],
+    Zn: ['verd', 'verd blavós pàl·lid', '#9ad9c9'],
+    Mo: ['verd', 'verd groguenc', '#c5e063'],
+    Mn: ['verd', 'verd groguenc', '#bfd85a'],
+    P: ['verd', 'verd blavós pàl·lid', '#a6d8c8'],
+    Fe: ['taronja', 'daurat', '#f2a33a']
+  },
+  /* elements que donen color als focs artificials (com a sals) */
+  focs: { Sr: 'vermell', Li: 'vermell', Ca: 'taronja', Na: 'groc', Ba: 'verd', Cu: 'blau (amb clorurs)' },
+
+  /* ---------- fites per a l'animació de la línia del temps ---------- */
+  fites: [
+    [1650, 'Abans del 1650 ja es coneixien 13 elements, com l\'or, el ferro, el coure o el sofre.'],
+    [1669, 'Hennig Brand descobreix el fòsfor: és el primer element amb un descobridor conegut.'],
+    [1735, 'Georg Brandt descobreix el cobalt, el primer metall desconegut a l\'antiguitat.'],
+    [1774, 'Scheele i Priestley descobreixen l\'oxigen.'],
+    [1789, 'Lavoisier publica la primera llista d\'elements químics: 33 «substàncies simples».'],
+    [1807, 'Humphry Davy aïlla el sodi i el potassi amb electricitat (electròlisi).'],
+    [1860, 'Bunsen i Kirchhoff inventen l\'espectroscòpia i descobreixen el cesi i el rubidi pel color de la seva llum.'],
+    [1869, 'Mendeléiev publica la taula periòdica i deixa forats per a elements encara desconeguts.'],
+    [1875, 'Es descobreix el gal·li, un dels elements que Mendeléiev havia predit.'],
+    [1886, 'Es descobreix el germani: les prediccions de Mendeléiev s\'hi compleixen gairebé exactament.'],
+    [1894, 'Rayleigh i Ramsay descobreixen l\'argó, el primer gas noble.'],
+    [1898, 'Marie i Pierre Curie descobreixen el poloni i el radi, elements radioactius.'],
+    [1913, 'Moseley demostra que els elements s\'ordenen pel nombre atòmic (els protons).'],
+    [1937, 'S\'obté el tecneci, el primer element artificial.'],
+    [1940, 'Es creen els primers elements més pesants que l\'urani: el neptuni i el plutoni.'],
+    [1952, 'L\'einsteini i el fermi apareixen a les restes de la primera bomba d\'hidrogen.'],
+    [1955, 'Es crea el mendelevi, àtom a àtom, en un accelerador de partícules.'],
+    [1994, 'Els elements nous s\'obtenen de pocs en pocs àtoms i duren fraccions de segon.'],
+    [2010, 'Es descobreix el tennes. El 2016 la IUPAC confirma els noms dels últims elements i la setena fila queda completa.']
+  ],
+
   /* ---------- notes que matisen les dades ---------- */
   notes: {
     H: 'Encapçala el grup 1, però no és un metall alcalí.',

@@ -106,6 +106,15 @@ button,select{font:inherit}
 .opt-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
 .opt-row input[type=range]{flex:1; min-width:120px; accent-color:var(--accent)}
 .year-out{font-weight:700; min-width:4.5em; text-align:right}
+.opt-row.timeline{flex-wrap:nowrap}
+.opt-row.timeline input[type=range]{min-width:0}
+.play-btn{
+  width:34px; height:34px; flex-shrink:0; border-radius:50%; cursor:pointer;
+  border:1px solid var(--accent); background:var(--accent); color:#fff; font-size:13px; line-height:1;
+  display:flex; align-items:center; justify-content:center; padding:0 0 0 2px;
+}
+.play-btn[aria-pressed="true"]{padding:0; background:var(--panel); color:var(--accent)}
+.play-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
 
 /* ---------- llegenda ---------- */
 .legend{padding:10px 11px 11px; border:1px solid var(--border); border-radius:10px; background:var(--bg-legend)}
@@ -253,6 +262,21 @@ button,select{font:inherit}
 
 /* repte i comparació dins el panell */
 .quiz-q{font-size:19px; font-weight:750; margin:0}
+.clues{margin:2px 0; padding-left:20px; font-size:13.5px; line-height:1.35}
+.info-body.compact{gap:3px}
+.info-body.compact .quiz-q{font-size:17px}
+.clues li{margin:1px 0}
+.clues li:last-child{font-weight:650}
+.milestone{margin:4px 0 0; font-size:14px; line-height:1.4}
+.milestone strong{color:var(--accent)}
+.known{margin:2px 0 0; font-size:13.5px; color:var(--muted)}
+/* element que apareix durant l'animació de la línia del temps */
+.cell.pop{animation:pop .9s ease-out; z-index:4}
+@keyframes pop{
+  0%{transform:scale(1.22); box-shadow:0 0 0 5px var(--accent)}
+  100%{transform:scale(1); box-shadow:0 0 0 0 transparent}
+}
+@media (prefers-reduced-motion: reduce){ .cell.pop{animation:none; box-shadow:0 0 0 3px var(--accent)} }
 .quiz-score{font-size:13px; color:var(--muted)}
 .quiz-feedback{font-weight:650}
 .quiz-feedback.ok{color:var(--ok)}

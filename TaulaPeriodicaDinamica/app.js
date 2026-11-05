@@ -24,7 +24,8 @@
     focus: null,       // categoria destacada a la llegenda
     hover: null,       // element de la vista prèvia
     compare: null,     // array de símbols quan el mode comparació és actiu
-    quiz: null         // estat del repte
+    quiz: null,        // estat del repte
+    playing: null      // animació de la línia del temps
   };
 
   /* ================= format de nombres (convencions catalanes) ================= */
@@ -112,7 +113,11 @@
     valenceE: el => { const g = groupOf(el); if (el.symbol === 'He') return 2; if (g === 1 || g === 2) return g; if (g >= 13 && g <= 18) return g - 10; return null; },
     nameOrigin: el => (ORI.nom || {})[el.symbol] || null,
     cosmic: el => (ORI.cosmic || {})[el.symbol] || (el.number >= 93 ? ['laboratori', []] : null),
-    critical: el => (D.critiques || {})[el.symbol] || null
+    critical: el => (D.critiques || {})[el.symbol] || null,
+    flame: el => (D.flama || {})[el.symbol] || null,
+    /* afinitat electrònica: només dades fiables (fins al radó, sense els lantànids 58-70) */
+    eaRaw: el => ((el.number <= 86 && !(el.number >= 58 && el.number <= 70) && typeof el.electron_affinity === 'number') ? el.electron_affinity : null),
+    ea: el => { const v = val.eaRaw(el); return v !== null && v > 0 ? v : null; }
   };
   const HALF_UNIT = { ms: 1e-3, s: 1, min: 60, h: 3600, d: 86400, a: YEAR_S };
   const DECAY_MODE = { 'α': 'desintegració alfa', 'β⁻': 'desintegració beta', CE: 'captura electrònica', FE: 'fissió espontània' };
@@ -161,6 +166,20 @@
     { k: 'conflicte', label: 'Minerals de conflicte (no crítics)', color: '#c4b5fd' },
     { k: 'no', label: 'No incloses a la llista', color: null }
   ];
+  const FLAME_CATS = [
+    { k: 'vermell', label: 'Vermell', color: '#e0001b' },
+    { k: 'taronja', label: 'Taronja', color: '#ff7a1a' },
+    { k: 'groc', label: 'Groc', color: '#ffc107' },
+    { k: 'verd', label: 'Verd', color: '#22c55e' },
+    { k: 'blau', label: 'Blau', color: '#4f8df5' },
+    { k: 'violeta', label: 'Violeta', color: '#a78bfa' },
+    { k: 'cap', label: 'Sense color característic', color: null }
+  ];
+  function flameText(el) {
+    const f = val.flame(el), fw = (D.focs || {})[el.symbol];
+    if (!f) return 'Sense color característic';
+    return f[1].charAt(0).toUpperCase() + f[1].slice(1) + (fw ? ' · s\'usa als focs artificials (' + fw + ')' : '');
+  }
   function lewisHTML(n, he) {
     const sides = [0, 0, 0, 0]; // dalt, dreta, baix, esquerra
     if (he) sides[0] = 2;
@@ -320,6 +339,17 @@
       trend: { h: ['→', 'Augmenta al llarg del període'], v: ['↑', 'i cap amunt del grup'] },
       source: 'Primera energia d\'ionització (kJ/mol). Font: PeriodicTableJSON (NIST).'
     },
+    electronAffinity: {
+      label: 'Afinitat electrònica', group: 'Estructura i enllaç', kind: 'num', value: val.ea,
+      fmt: v => Math.round(v) + ' kJ/mol', legendFmt: v => Math.round(v) + ' kJ/mol',
+      cats: [{ k: 'noanio', label: 'No formen anions estables', color: null, meta: '≤ 0' }],
+      catOf: el => { const v = val.eaRaw(el); return v !== null && v <= 0 ? 'noanio' : null; },
+      metaOf: () => '≤ 0',
+      desc: 'Energia que s\'allibera quan un àtom en estat gasós capta un electró i es converteix en un ió negatiu (anió). Com més gran, més tendència a formar anions. El clor té el valor més alt.',
+      trend: { h: ['→', 'Augmenta cap a la dreta (màxim als halògens)'], v: ['↑', 'i cap amunt, amb excepcions (Cl > F)'] },
+      note: 'Els gasos nobles, el nitrogen i metalls com el Be, el Mg o el Zn no formen anions estables (≤ 0). En gris, sense dades fiables (lantànids i elements des del 87).',
+      source: 'Font: PeriodicTableJSON (valors experimentals recopilats a la Viquipèdia).'
+    },
     atomicRadius: {
       label: 'Radi atòmic', group: 'Estructura i enllaç', kind: 'num', value: val.radius,
       fmt: v => v + ' pm', legendFmt: v => Math.round(v) + ' pm',
@@ -385,6 +415,15 @@
     },
 
     /* --- química i vida --- */
+    flame: {
+      label: 'Color a la flama', group: 'Química i vida', kind: 'cat', cats: FLAME_CATS, previewMetaOnly: true,
+      catOf: el => { const f = val.flame(el); return f ? f[0] : 'cap'; },
+      colorOf: el => { const f = val.flame(el); return f ? f[2] : null; },
+      metaOf: el => { const f = val.flame(el); return f ? f[1] : ''; },
+      desc: 'Si s\'escalfa una sal de l\'element a la flama, els electrons pugen de nivell i, en tornar-hi, emeten llum d\'un color característic. Així es poden identificar elements (assaig a la flama) i es fan els colors dels focs artificials.',
+      note: 'Colors aproximats. El sodi és tan intens que pot amagar els altres colors. Focs artificials: estronci (vermell), calci (taronja), sodi (groc), bari (verd) i coure (blau). El magnesi crema amb una llum blanca molt brillant.',
+      source: 'Fonts: A. I. Vogel, Química analítica qualitativa; Royal Society of Chemistry.'
+    },
     reactivity: {
       label: 'Reactivitat', group: 'Química i vida', kind: 'cat',
       cats: [
@@ -605,7 +644,8 @@
     if (m.kind === 'cat') {
       const k = m.catOf(el);
       const def = m.cats.find(c => c.k === k);
-      return { cat: k, color: def ? def.color : null, meta: m.metaOf ? m.metaOf(el) : '' };
+      const own = m.colorOf ? m.colorOf(el) : null;
+      return { cat: k, color: own || (def ? def.color : null), meta: m.metaOf ? m.metaOf(el) : '' };
     }
     if (m.kind === 'num') {
       // categories fixes dins d'un mode numèric (p. ex. elements estables)
@@ -622,7 +662,7 @@
     const q = state.quiz;
     const m = MODES[state.mode];
     const scale = m.kind === 'num' ? buildScale(m.value, m.log) : null;
-    const qScale = q ? buildScale(q.prop.value, q.prop.log, q.set.map(s => ELS.find(e => e.symbol === s))) : null;
+    const qScale = q && q.prop ? buildScale(q.prop.value, q.prop.log, q.set.map(s => ELS.find(e => e.symbol === s))) : null;
 
     grid.classList.toggle('lewis-on', !q && !!m.lewis);
     for (const el of ELS) {
@@ -631,7 +671,11 @@
       c.style.background = '';
       c.style.removeProperty('--cell-fg');
       let st;
-      if (q) {
+      if (q && q.type === 'guess') {
+        st = { cat: null, color: null, meta: '' };
+        if (q.wrong.includes(el.symbol)) c.classList.add('wrong');
+        if (q.answered && el.symbol === q.answer) c.classList.add('right');
+      } else if (q) {
         const inSet = q.set.includes(el.symbol);
         st = { cat: null, color: null, meta: '' };
         if (!inSet) c.classList.add('dim');
@@ -642,7 +686,11 @@
         st = cellState(el, m, scale);
         if (m.kind !== 'none' && isPredicted(el)) c.classList.add('predicted');
         if (state.focus && st.cat !== state.focus) c.classList.add('dim');
-        if (state.mode === 'discovery') { const y = val.year(el); if (y !== null && y > state.yearLimit) c.classList.add('dim'); }
+        if (state.mode === 'discovery') {
+          const y = val.year(el);
+          if (y !== null && y > state.yearLimit) c.classList.add('dim');
+          else if (state.playing && y !== null && y > state.yearLimit - 5) c.classList.add('pop');
+        }
         if (state.compare && state.compare.includes(el.symbol)) c.classList.add('picked');
       }
       if (st.color) { setBG(c, st.color); c.classList.add('colored'); }
@@ -668,6 +716,7 @@
     let valText = st.meta;
     if (m.kind === 'cat' && st.cat) { const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label + (st.meta && !m.previewNoMeta ? ' · ' + st.meta : ''); }
     if (st.cat === 'nodata' && m.kind === 'num') valText = 'Sense dades';
+    if (m.previewMetaOnly && st.meta) valText = st.meta.charAt(0).toUpperCase() + st.meta.slice(1);
     if (m.kind === 'num' && st.cat === 'value' && m.longFmt) valText = m.longFmt(m.value(el), el);
     if (m.kind === 'num' && m.cats && st.cat !== 'value' && st.cat !== 'nodata') {
       const def = m.cats.find(c => c.k === st.cat); if (def) valText = def.label.replace(/\s*\([^)]*\)$/, '');
@@ -681,6 +730,23 @@
   function renderInfo() {
     if (!infoPanel) return;
     const q = state.quiz;
+    if (q && q.type === 'guess') {
+      const ans = bySym(q.answer);
+      const fb = q.answered
+        ? (q.found
+          ? `<p class="quiz-feedback ok">Correcte! És ${esc(isoArticle(ans))}, amb ${q.shown} ${q.shown === 1 ? 'pista' : 'pistes'}.</p>`
+          : `<p class="quiz-feedback ko">S'han acabat les pistes. Era ${esc(isoArticle(ans))} (${ans.symbol}).</p>`)
+        : `<p class="info-text">Clica l'element. Cada error descobreix una pista nova (${q.shown} de ${q.clues.length}).</p>`;
+      infoPanel.innerHTML = `<div class="info-body compact">
+        <p class="quiz-score">Repte · ${q.score} encerts de ${q.total}</p>
+        <p class="quiz-q">Endevina l'element</p>
+        <ol class="clues">${q.clues.slice(0, q.answered ? q.clues.length : q.shown).map(c => `<li>${esc(c)}</li>`).join('')}</ol>${fb}
+        <div class="panel-actions">
+          ${q.answered ? '<button type="button" class="panel-btn" data-act="next">Següent repte</button>' : ''}
+          <button type="button" class="panel-btn secondary" data-act="quit">Surt del repte</button>
+        </div></div>`;
+      return;
+    }
     if (q) {
       const fb = q.answered
         ? (q.picked === q.answer
@@ -705,13 +771,21 @@
       return;
     }
     const m = MODES[state.mode];
+    let extra = '';
+    if (state.mode === 'discovery') {
+      const known = ELS.filter(e => { const y = val.year(e); return y !== null && y <= state.yearLimit; }).length;
+      const f = (D.fites || []).filter(x => x[0] <= state.yearLimit).pop();
+      extra = `<p class="milestone">${f ? `<strong>${f[0] <= 1650 ? 'Fins al 1650' : f[0]}</strong> · ${esc(f[1])}` : ''}</p>
+        <p class="known">Elements coneguts ${state.yearLimit >= 2010 ? 'avui' : 'el ' + state.yearLimit}: <strong>${known}</strong> de 118</p>`;
+    }
     const trend = m.trend ? `<div class="trend">
         <span class="trend-box"><span class="trend-arrow">${m.trend.h[0]}</span>${esc(m.trend.h[1])}</span>
         <span class="trend-box"><span class="trend-arrow">${m.trend.v[0]}</span>${esc(m.trend.v[1])}</span></div>` : '';
     infoPanel.innerHTML = `${previewHTML(state.hover ? bySym(state.hover) : null)}<div class="info-body">
-      <p class="info-title">${esc(m.label)}</p><p class="info-text">${esc(m.desc)}</p>${trend}</div>`;
+      <p class="info-title">${esc(m.label)}</p><p class="info-text">${esc(m.desc)}</p>${extra}${trend}</div>`;
   }
   const bySym = s => ELS.find(e => e.symbol === s);
+  const isoArticle = el => { const n = nameOf(el); return (/^[aeiouàèéíòóúhAEIOUÀÈÉÍÒÓÚH]/.test(n) ? 'l’' : 'el ') + n; };
 
   /* ================= llegenda i opcions ================= */
   function renderLegend() {
@@ -719,6 +793,11 @@
     const m = MODES[state.mode];
     let html = '<h2>Llegenda</h2>';
     const q = state.quiz;
+    if (q && q.type === 'guess') {
+      html += '<p class="note" style="margin-top:0">Endevina l\'element: clica\'l a la taula. Cada error descobreix una pista nova. Les pistes fan servir els modes de la taula (origen còsmic, família, descobriment, origen del nom...).</p>';
+      box.innerHTML = html;
+      return;
+    }
     if (q) {
       if (q.answered) {
         const sc = buildScale(q.prop.value, q.prop.log, q.set.map(bySym));
@@ -792,13 +871,37 @@
           <button type="button" data-temp="K" aria-pressed="${state.temp === 'K'}">K</button>
         </span></div>`;
     } else if (state.mode === 'discovery') {
-      box.innerHTML = `<label class="opt-row" for="year-range">Descoberts fins a
-        <input id="year-range" type="range" min="1650" max="2010" step="5" value="${state.yearLimit}">
-        <output class="year-out" id="year-out">${state.yearLimit >= 2010 ? 'avui' : state.yearLimit}</output></label>`;
+      box.innerHTML = `<div class="opt-row timeline">
+        <button type="button" class="play-btn" id="play-btn" aria-pressed="${!!state.playing}" title="${state.playing ? 'Atura' : 'Reprodueix'} la línia del temps" aria-label="${state.playing ? 'Atura' : 'Reprodueix'} la línia del temps">${state.playing ? '❚❚' : '▶'}</button>
+        <input id="year-range" type="range" min="1650" max="2010" step="5" value="${state.yearLimit}" aria-label="Elements descoberts fins a l'any">
+        <output class="year-out" id="year-out">${state.yearLimit >= 2010 ? 'avui' : state.yearLimit}</output></div>`;
     } else box.innerHTML = '';
   }
 
+  /* animació de la línia del temps: avança 5 anys cada 0,17 s */
+  function stopPlay() {
+    if (state.playing) { clearInterval(state.playing); state.playing = null; }
+  }
+  function syncTimeline() {
+    const r = document.getElementById('year-range'), o = document.getElementById('year-out'), b = document.getElementById('play-btn');
+    if (r) r.value = state.yearLimit;
+    if (o) o.textContent = state.yearLimit >= 2010 ? 'avui' : state.yearLimit;
+    if (b) { b.textContent = state.playing ? '❚❚' : '▶'; b.setAttribute('aria-pressed', String(!!state.playing)); const t = (state.playing ? 'Atura' : 'Reprodueix') + ' la línia del temps'; b.title = t; b.setAttribute('aria-label', t); }
+  }
+  function togglePlay() {
+    if (state.playing) { stopPlay(); syncTimeline(); return; }
+    if (state.yearLimit >= 2010) state.yearLimit = 1645;
+    state.playing = setInterval(() => {
+      state.yearLimit = Math.min(2010, state.yearLimit + 5);
+      if (state.yearLimit >= 2010) stopPlay();
+      syncTimeline();
+      paint();
+    }, 170);
+    syncTimeline();
+  }
+
   function setMode(mode) {
+    stopPlay();
     if (!MODES[mode]) mode = 'families';
     state.mode = mode;
     state.focus = null;
@@ -861,6 +964,7 @@
       ['Estats d\'oxidació habituals', val.ox(el) ? fmtOx(val.ox(el)) : '—', 'valence'],
       ['Electronegativitat (Pauling)', val.en(el) !== null ? fmtFixed(val.en(el), 2) : '—', 'electronegativity'],
       ['1a energia d\'ionització', val.ion(el) !== null ? Math.round(val.ion(el)) + ' kJ/mol' : '—', 'ionization'],
+      ['Afinitat electrònica', val.ea(el) !== null ? Math.round(val.ea(el)) + ' kJ/mol' : (val.eaRaw(el) !== null ? '≤ 0 (no forma anions estables)' : '—'), 'electronAffinity'],
       ['Radi atòmic', val.radius(el) !== null ? val.radius(el) + ' pm' : '—', 'atomicRadius'],
       ['Densitat', fmtDensity(el), 'density'],
       ['Punt de fusió', t(val.melt(el)), 'meltPoint'],
@@ -876,6 +980,7 @@
       ['Reactivitat', catLabel('reactivity', el), 'reactivity'],
       ['Any de descobriment', y === null ? '—' : fmtYear(y), 'discovery'],
       ['Matèria primera crítica (UE)', criticalText(el), 'critical'],
+      ['Color a la flama', flameText(el), 'flame', false, true],
       ['Origen del nom', val.nameOrigin(el) ? val.nameOrigin(el)[2] : '—', 'nameOrigin', false, true, true],
       ['Origen còsmic', cosmicText(el), 'cosmic', false, true, true]
     ];
@@ -992,6 +1097,7 @@
     ['Massa atòmica (u)', el => el.atomic_mass, v => (Number.isInteger(v) ? `[${v}]` : fmtFixed(v, 2))],
     ['Electronegativitat', val.en, v => fmtFixed(v, 2)],
     ['1a energia d\'ionització (kJ/mol)', val.ion, v => String(Math.round(v))],
+    ['Afinitat electrònica (kJ/mol)', val.ea, v => String(Math.round(v)), el => (val.eaRaw(el) !== null ? '≤ 0' : null)],
     ['Radi atòmic (pm)', val.radius, v => String(v)],
     ['Densitat (g/cm³)', val.density, v => fmtSig(v, 3)],
     ['Punt de fusió', val.melt, v => fmtTemp(v)],
@@ -1045,7 +1151,30 @@
   ];
   const MAIN_GROUPS = [1, 2, 13, 14, 15, 16, 17, 18];
   const rnd = a => a[Math.floor(Math.random() * a.length)];
+  /* endevinalla: pistes successives; cada error en descobreix una de nova */
+  const GUESS_EXTRA = ['Pt', 'Au', 'Hg', 'Pb', 'U', 'Ra', 'Rn', 'W', 'Bi', 'Po', 'Pu', 'Ne'];
+  function guessClues(el) {
+    const c = [], cos = val.cosmic(el), y = val.year(el), v = val.valenceE(el), g = groupOf(el), n = val.nameOrigin(el);
+    const ON = { bigbang: 'en el Big Bang', raigs: 'per l’acció dels raigs còsmics', petites: 'dins d’estrelles petites que moren', massives: 'en l’explosió d’estrelles massives', nanes: 'en l’explosió de nanes blanques', neutrons: 'en xocs d’estrelles de neutrons', desintegracio: 'per la desintegració de l’urani i el tori', laboratori: 'al laboratori' };
+    c.push(`Els seus àtoms es van formar sobretot ${cos ? ON[cos[0]] : 'en un lloc desconegut'}. A 25 °C és ${catLabel('state', el).toLowerCase()}.`);
+    c.push(`Família: ${FAMILY_LABEL[family(el)].toLowerCase()}.${v !== null ? ` Té ${v} electrons de valència.` : ''}`);
+    c.push(y === null ? 'Data de descobriment desconeguda.' : y < 1600 ? 'Es coneix des de l\'antiguitat o l\'edat mitjana.' : `Es va descobrir l'any ${y}.`);
+    c.push(`És al període ${el.period}${g ? ' i al grup ' + g : ''}.`);
+    if (n) c.push(`El seu nom fa referència a: «${n[1]}».`);
+    return c;
+  }
+  function newGuess(prev) {
+    const pool = ELS.filter(e => e.number <= 56 || GUESS_EXTRA.includes(e.symbol));
+    let el;
+    do { el = rnd(pool); } while (prev && prev.answer === el.symbol);
+    return {
+      type: 'guess', answer: el.symbol, clues: guessClues(el), shown: 1, wrong: [],
+      answered: false, found: false, picked: null, set: ELS.map(e => e.symbol),
+      score: prev ? prev.score : 0, total: prev ? prev.total : 0
+    };
+  }
   function newQuestion(prev) {
+    if (Math.random() < 0.35) return newGuess(prev);
     for (let tries = 0; tries < 200; tries++) {
       const p = rnd(QUIZ_PROPS), m = MODES[p.key];
       const byPeriod = Math.random() < 0.55;
@@ -1089,6 +1218,17 @@
 
   function onCellClick(el) {
     const q = state.quiz;
+    if (q && q.type === 'guess') {
+      if (q.answered || q.wrong.includes(el.symbol)) return;
+      if (el.symbol === q.answer) { q.answered = true; q.found = true; q.total++; q.score++; }
+      else {
+        q.wrong.push(el.symbol);
+        if (q.shown < q.clues.length) q.shown++;
+        else { q.answered = true; q.total++; }
+      }
+      paint();
+      return;
+    }
     if (q) {
       if (q.answered || !q.set.includes(el.symbol)) return;
       q.answered = true; q.picked = el.symbol; q.total++;
@@ -1193,8 +1333,12 @@
       store.set('temp', state.temp);
       renderOptions(); renderLegend(); paint();
     });
+    document.getElementById('mode-options').addEventListener('click', e => {
+      if (e.target.closest('#play-btn')) togglePlay();
+    });
     document.getElementById('mode-options').addEventListener('input', e => {
       if (e.target.id !== 'year-range') return;
+      stopPlay(); syncTimeline();
       state.yearLimit = Number(e.target.value);
       document.getElementById('year-out').textContent = state.yearLimit >= 2010 ? 'avui' : state.yearLimit;
       paint();

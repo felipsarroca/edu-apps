@@ -6,20 +6,20 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 
 ## Funcionalitats
 
-- **28 visualitzacions** agrupades en set blocs:
+- **30 visualitzacions** agrupades en set blocs:
   - *Classificació*: famílies (amb halògens), metalls/semimetalls/no-metalls, blocs s-p-d-f i estat físic a 25 °C.
-  - *Estructura i enllaç*: electrons de valència amb l'estructura de Lewis (punts al voltant del símbol), estats d'oxidació habituals (formulació d'ESO), electronegativitat, energia d'ionització i radi atòmic.
+  - *Estructura i enllaç*: electrons de valència amb l'estructura de Lewis (punts al voltant del símbol), estats d'oxidació habituals (formulació d'ESO), electronegativitat, energia d'ionització, afinitat electrònica i radi atòmic.
   - *Propietats físiques*: densitat, punts de fusió i d'ebullició (en °C o K), conductivitat elèctrica i tèrmica, i ferromagnetisme.
-  - *Química i vida*: reactivitat, bioelements (primaris, secundaris i oligoelements), toxicitat, radioactivitat (natural o artificial) i període de semidesintegració (escala logarítmica amb marques de referència: 1 s, 1 dia, 1.000 anys i edat de la Terra).
+  - *Química i vida*: color a la flama (amb el color real de cada element i els que s'usen als focs artificials), reactivitat, bioelements (primaris, secundaris i oligoelements), toxicitat, radioactivitat (natural o artificial) i període de semidesintegració (escala logarítmica amb marques de referència: 1 s, 1 dia, 1.000 anys i edat de la Terra).
   - *Abundància*: escorça terrestre, cos humà i univers (escala logarítmica).
   - *Recursos i societat*: matèries primeres crítiques i estratègiques de la UE, amb el principal país productor i els minerals de conflicte.
-  - *Origen i història*: origen còsmic (Big Bang, estrelles, supernoves, xocs d'estrelles de neutrons), origen del nom (mitologia, astres, llocs, persones, propietats, minerals) i any de descobriment, amb un control lliscant per veure com creix la taula.
+  - *Origen i història*: origen còsmic (Big Bang, estrelles, supernoves, xocs d'estrelles de neutrons), origen del nom (mitologia, astres, llocs, persones, propietats, minerals) i any de descobriment, amb un control lliscant i un botó ▶ que anima la línia del temps del 1650 a avui, amb fites històriques (Lavoisier, Mendeléiev, els Curie...) i el recompte d'elements coneguts.
 - **Escales de color contínues** amb llegenda en degradat per a les magnituds numèriques.
 - **Llegenda interactiva**: en clicar una categoria, es destaquen els seus elements.
 - **Panell d'informació** a l'espai buit de la taula: vista ampliada de l'element sota el cursor, descripció del mode i tendències periòdiques amb fletxes.
 - **Fitxa de l'element** amb totes les propietats, el valor del mode actiu destacat, notes que matisen les dades, un resum i el descobriment. Inclou el model de Bohr de l'àtom (protons, neutrons i electrons per capes, amb la capa externa destacada), l'etimologia del nom i l'origen còsmic. En els elements radioactius, inclou la corba de desintegració de l'isòtop més estable i un context per entendre-la.
 - **Compara**: tria dos elements i en veus les propietats en paral·lel.
-- **Repte**: preguntes sobre les tendències periòdiques (per exemple, quin element del període 3 té el radi més gran o quin actínid dura més) amb puntuació.
+- **Repte**: preguntes sobre les tendències periòdiques (per exemple, quin element del període 3 té el radi més gran o quin actínid dura més) i endevinalles: cal trobar l'element a partir de pistes successives (origen còsmic, família, descobriment, posició i origen del nom). Cada error en descobreix una de nova.
 - **Mode projector** (text més gran) i **tema clar o fosc**.
 - Els elements 104-118 es mostren amb una vora discontínua: tenen propietats predites.
 
@@ -58,6 +58,8 @@ Funciona obrint directament `index.html` (també des de `file://`) o publicada a
 | Minerals de conflicte | Reglament (UE) 2017/821 |
 | Origen còsmic | J. A. Johnson, *Science* 363 (2019); N. Prantzos et al., *MNRAS* 491 (2020) |
 | Origen del nom | IUPAC; P. Enghag, *Encyclopedia of the Elements* (2004); J. Coromines, *Diccionari etimològic* |
+| Color a la flama | A. I. Vogel, *Química analítica qualitativa*; Royal Society of Chemistry |
+| Afinitat electrònica | PeriodicTableJSON (valors experimentals); no es mostren els lantànids ni els elements des del 87 |
 | Any de descobriment | Taula de la carpeta (`AnyDescobrimentElements.JPG`) |
 
 ## Afegir un mode nou
