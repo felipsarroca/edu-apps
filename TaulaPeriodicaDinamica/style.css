@@ -140,7 +140,7 @@ button,select{font:inherit}
 .felip-license-image-link{display:block; line-height:0; flex-shrink:0}
 .felip-license-image{display:block; width:80px; height:auto}
 .felip-footer-text{display:flex; flex-direction:column; gap:3px}
-.felip-footer-text p{margin:0}
+.felip-footer-text p{margin:0; white-space:nowrap}
 .felip-footer-text a{color:var(--accent); font-weight:650; text-decoration:none; white-space:nowrap}
 .felip-footer-text a:hover{text-decoration:underline}
 

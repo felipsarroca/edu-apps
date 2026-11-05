@@ -61,4 +61,4 @@ Afegeix una entrada a l'objecte `MODES` d'`app.js`:
 
 ## Llicència
 
-Aplicació creada per Felip Sarroca amb assistència de la IA. Obra sota llicència [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca). El dataset PeriodicTableJSON es distribueix sota llicència CC BY-SA 3.0.
+Aplicació de Felip Sarroca i sota llicència [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca). El dataset PeriodicTableJSON es distribueix sota llicència CC BY-SA 3.0.
