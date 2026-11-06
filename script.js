@@ -47,9 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Química
         { 
             name: "Configuració Electrònica", 
-            path: 'ConfiguracioElectronica/', 
+            path: 'https://ja.cat/orbitals', 
             category: 'Química', 
-            description: "Construeix els àtoms electró a electró: orbitals, regla de Moeller i model de Bohr." 
+            description: "Construeix els àtoms electró a electró: orbitals, regla de Moeller i model de Bohr.",
+            icon: 'ConfiguracioElectronica/favicon.svg'
         },
         { 
             name: "Configuració Electrònica 2", 
