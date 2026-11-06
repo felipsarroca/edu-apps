@@ -160,9 +160,9 @@ html.dark .seg button[aria-checked="true"]{color:#0f172a}
 @keyframes glow{0%,100%{box-shadow:inset 0 0 0 2px var(--accent-2); background:transparent}50%{box-shadow:inset 0 0 0 2px var(--accent-2); background:color-mix(in srgb, var(--accent-2) 30%, transparent)}}
 @keyframes pop{0%{transform:scale(.3); opacity:0}100%{transform:scale(1); opacity:1}}
 
-.moeller{width:226px; height:207px}
-.moeller .ln{stroke:var(--box-border); stroke-width:1.6; fill:none}
-.moeller .hd{fill:var(--box-border)}
+.moeller{width:230px; height:200px}
+.moeller .ln{stroke:var(--muted); stroke-width:1.8; stroke-linecap:round; fill:none; opacity:.8}
+.moeller .hd{fill:var(--muted)}
 .moeller rect{stroke:var(--box-border); stroke-width:1; fill:var(--card)}
 .moeller text{font-size:11px; font-weight:700; text-anchor:middle; dominant-baseline:central; fill:var(--muted)}
 .moeller .full rect{stroke:none}

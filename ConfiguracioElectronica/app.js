@@ -205,15 +205,15 @@
   }
 
   /* ---------- diagrama de Moeller ---------- */
-  const MX = 52, MY = 27, MW = 40, MH = 20, OX = 30, OY = 16;
+  const MX = 52, MY = 27, MW = 40, MH = 20, OX = 42, OY = 16;
   const mpos = s => ({ x: OX + s.l * MX, y: OY + (s.n - 1) * MY });
   function buildMoeller() {
-    let g = '<defs><marker id="ah" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path class="hd" d="M0 0L8 4L0 8z"/></marker></defs>';
+    let g = '<defs><marker id="ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path class="hd" d="M0 0L8 4L0 8z"/></marker></defs>';
     for (let k = 1; k <= 8; k++) { // diagonal n + l = k
       const d = AUFBAU.filter(s => s.n + s.l === k);
       if (!d.length) continue;
       const a = mpos(d[0]), b = mpos(d[d.length - 1]);
-      g += '<line class="ln" marker-end="url(#ah)" x1="' + (a.x + 26) + '" y1="' + (a.y - 14) + '" x2="' + (b.x - 22) + '" y2="' + (b.y + 12) + '"/>';
+      g += '<line class="ln" marker-end="url(#ah)" x1="' + (a.x + 26) + '" y1="' + (a.y - 14) + '" x2="' + (b.x - 31) + '" y2="' + (b.y + 16) + '"/>';
     }
     AUFBAU.forEach(s => {
       const p = mpos(s);
