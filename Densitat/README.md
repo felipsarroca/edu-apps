@@ -1,6 +1,6 @@
 # Densitat · Laboratori virtual de densitat i flotació
 
-[![Obre l'aplicació](https://img.shields.io/badge/Obre_l'aplicació-ja.cat%2Fdensitat-0E7C86?style=for-the-badge)](https://ja.cat/densitat)
+[![Obre l'aplicació](https://img.shields.io/badge/Obre_l'aplicació-ja.cat%2Flabdensitat-0E7C86?style=for-the-badge)](https://ja.cat/labdensitat)
 [![HTML · CSS · JS](https://img.shields.io/badge/HTML_·_CSS_·_JS-mòduls_ES_natius-16303F?style=flat-square)](#arquitectura-tècnica)
 [![Codi](https://img.shields.io/badge/codi-AGPLv3-16303F?style=flat-square)](LICENSE)
 [![Continguts](https://img.shields.io/badge/continguts-CC_BY--NC--SA_4.0-8A5A00?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca)
@@ -9,7 +9,7 @@
 
 En lloc d'una col·lecció d'animacions predeterminades, tota l'aplicació funciona sobre **un únic motor físic coherent i verificat**: un bloc d'alumini de 100 cm³ marca 270 g a la balança, fa pujar 100 mL el nivell de la proveta, s'enfonsa a l'aigua, té un pes aparent d'1,67 N al dinamòmetre quan està submergit (empenyiment de 0,98 N) i, si es talla, cada tros conserva exactament 2,70 g/cm³.
 
-**[Obre l'aplicació a GitHub Pages](https://felipsarroca.github.io/edu-apps/Densitat/)** · **[Enllaç curt: ja.cat/densitat](https://ja.cat/densitat)**
+**[Obre l'aplicació a GitHub Pages](https://felipsarroca.github.io/edu-apps/Densitat/)** · **[Enllaç curt: ja.cat/labdensitat](https://ja.cat/labdensitat)**
 
 ---
 
