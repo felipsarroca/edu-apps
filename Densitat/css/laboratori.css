@@ -1,0 +1,1273 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/**
+ * Disseny del Laboratori: Prestatge (196 px), Escena central vectorial, Eines de pensament i Panell lateral (350 px).
+ */
+
+.pantalla-laboratori {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.laboratori-cos {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 205px 1fr 355px;
+  overflow: hidden;
+}
+
+.pantalla-laboratori.amb-panell-plegat .laboratori-cos {
+  grid-template-columns: 205px 1fr 36px;
+}
+
+html.projector .laboratori-cos {
+  grid-template-columns: 185px 1fr 0px;
+}
+html.projector .laboratori-panell {
+  display: none;
+}
+
+/* ==================== PRESTATGE LATERAL ESQUERRE ==================== */
+.laboratori-prestatge {
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.prestatge-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.prestatge-cap h4, .prestatge-liquids h4 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+}
+
+.prestatge-llista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 205px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.fitxa-prestatge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  text-align: left;
+  background: var(--surface-soft);
+  border: 1.5px solid var(--line-soft);
+  border-radius: var(--radius-s);
+  padding: 5px 7px;
+  cursor: pointer;
+}
+.fitxa-prestatge:hover {
+  border-color: var(--primary);
+}
+.fitxa-prestatge.seleccionada {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.fitxa-mostra-svg {
+  width: 26px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1.5px solid #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0F172A;
+  flex-shrink: 0;
+}
+
+.fitxa-prestatge-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.fitxa-prestatge-info strong {
+  font-size: 0.79rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge-ubicacio {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+.badge-ubicacio.ub-activa {
+  color: var(--primary-deep);
+  font-weight: 700;
+}
+
+.prestatge-afegir select {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  font-size: 0.76rem;
+  background: var(--surface-soft);
+}
+
+/* Fitxa de detall de l'objecte */
+.fitxa-detall-objecte {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 7px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.fitxa-detall-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 3px;
+}
+
+.badge-mode-vis {
+  font-size: 0.66rem;
+  background: #E2E8F0;
+  border: 1px solid #94A3B8;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.badge-mode-vis.mode-analisi-actiu {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.prestatge-filtre-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.bt-filtre-prest {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.bt-filtre-prest.actiu {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.fitxa-dl {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.76rem;
+}
+.fitxa-dl > div {
+  display: flex;
+  justify-content: space-between;
+}
+.fitxa-dl dt {
+  color: var(--ink-soft);
+}
+.fitxa-dl dd {
+  font-weight: 600;
+}
+
+.bts-destinacio {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.bt-desti {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-desti.actiu, .bt-desti:hover {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.fitxa-accions-rapides {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ampolles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.bt-ampolla {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 5px;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.bt-ampolla.activa {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  font-weight: 700;
+}
+.gota-color {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid #475569;
+  flex-shrink: 0;
+}
+
+/* ==================== ZONA CENTRAL (ESCENA + BARRA D'EINES) ==================== */
+.laboratori-zona-central {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--bg);
+}
+
+.laboratori-escena-container {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow-y: auto;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.escena-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.svg-escena {
+  width: 100%;
+  max-height: 360px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+}
+
+.zona-drop.drag-over .drop-highlight {
+  stroke: var(--primary);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  fill: rgba(14, 124, 134, 0.06);
+}
+
+.controls-estacions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 8px;
+}
+
+.targeta-control-estacio {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+}
+
+.targeta-control-estacio select {
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.bts-estacio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.subcontrol-recipient-balanca {
+  display: flex;
+  gap: 6px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--line);
+}
+
+/* Submodes del Tanc */
+.barra-submodes-tanc {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.bt-submode {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 4px 9px;
+  border-radius: var(--radius-s);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-submode.actiu {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.etiqueta-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+}
+
+/* Taller i Drassana */
+.taller-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.taller-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.taller-bloc-accions, .constructor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fila-2-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.fila-2-inputs label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.8rem;
+}
+.fila-2-inputs input {
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.drassana-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 14px;
+  align-items: center;
+}
+.drassana-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.drassana-resum {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 9px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+.drassana-resum.amb-avis {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+}
+
+/* Vistes especials (Cubets i Partícules) */
+.vistes-especials-overlay {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 8px;
+}
+.targeta-vista-especial {
+  background: var(--surface);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-s);
+  padding: 8px 10px;
+  font-size: 0.78rem;
+}
+.vista-titol {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.reticula-cubets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 5px;
+}
+.cubet-unitari {
+  width: 28px;
+  height: 22px;
+  border: 1px solid #334155;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+.particules-layout {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.svg-particules {
+  width: 145px;
+  flex-shrink: 0;
+}
+
+/* Comparativa Cubet 1 cm³ vs Líquid i Barra de Volums */
+.comparativa-cubet-aigua {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+  background: var(--surface-soft);
+  padding: 5px 8px;
+  border-radius: var(--radius-s);
+}
+.cubet-zoom {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1.5px solid #334155;
+  font-size: 0.72rem;
+}
+.cubet-zoom-liq {
+  background: #BAE6FD;
+  border-color: #0284C7;
+}
+.vs-simbol {
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.veredicte-cubet {
+  font-weight: 700;
+  font-size: 0.76rem;
+}
+.veredicte-cubet.ok {
+  color: var(--confirm);
+}
+.veredicte-cubet.enf {
+  color: var(--danger);
+}
+
+.barra-volums-comp {
+  display: flex;
+  height: 22px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1.5px solid #334155;
+  margin-bottom: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.seg-vol-mat {
+  background: #CBD5E1;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+.seg-vol-buit {
+  background: #E0F2FE;
+  color: #0369A1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-left: 1.5px dashed #0284C7;
+  white-space: nowrap;
+}
+
+/* Escala comparativa de densitats i frontera de flotació en viu */
+.escala-densitats-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 6px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.escala-densitats-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.77rem;
+}
+.escala-titol {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.pindola-zona-sura {
+  background: #DCFCE7;
+  color: #166534;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.71rem;
+}
+.pindola-frontera {
+  background: #E0F2FE;
+  color: #075985;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.71rem;
+}
+.pindola-zona-enfonsa {
+  background: #FEE2E2;
+  color: #991B1B;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.71rem;
+}
+
+.escala-barra-wrap {
+  position: relative;
+  height: 36px;
+  border-radius: 6px;
+  border: 1.5px solid #64748B;
+  background: #F8FAFC;
+  overflow: hidden;
+}
+.escala-zona-sura {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(187, 247, 208, 0.55), rgba(186, 230, 253, 0.55));
+  display: flex;
+  align-items: flex-start;
+  padding: 2px 6px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #15803D;
+  pointer-events: none;
+}
+.escala-zona-enfonsa {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(254, 226, 226, 0.48), rgba(254, 202, 202, 0.62));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 2px 6px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #B91C1C;
+  pointer-events: none;
+}
+.escala-tick {
+  position: absolute;
+  bottom: 0;
+  height: 7px;
+  border-left: 1px solid #64748B;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.escala-tick small {
+  position: absolute;
+  bottom: 6px;
+  left: 2px;
+  font-size: 0.58rem;
+  color: #475569;
+  font-weight: 600;
+}
+.escala-agulla-liquid {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  background: #0284C7;
+  z-index: 4;
+  transform: translateX(-50%);
+}
+.agulla-eti {
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  background: #0284C7;
+  color: #FFFFFF;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.escala-pin-obj {
+  position: absolute;
+  z-index: 5;
+  transform: translateX(-50%);
+  border: 1.5px solid #0F172A;
+  border-radius: 4px;
+  padding: 0 5px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.65rem;
+  color: #0F172A;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+}
+
+.svg-taller {
+  max-height: 210px;
+}
+
+/* Eines flotants (Calculadora, Conversor, Gràfica, Comparador, Lupa, Regle) */
+.eina-flotant {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 10px;
+  z-index: 40;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-m);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-2);
+  max-height: 86%;
+  overflow-y: auto;
+}
+.eina-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+.eina-cap h4 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+}
+
+.llista-fitxes {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 4px 0 8px;
+}
+.chip-mesura {
+  background: var(--primary-soft);
+  border: 1px solid var(--primary);
+  border-radius: 99px;
+  padding: 3px 9px;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.calc-operacio {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.calc-camp label {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 2px;
+}
+.calc-resultat {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 7px 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calc-valor-final {
+  font-size: 1.1rem;
+  color: var(--col-densitat);
+  margin-left: 6px;
+}
+.calc-avis {
+  background: var(--warn-soft);
+  color: var(--warn);
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.escala-graons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.grao-escala {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.grao-nom {
+  background: var(--surface-soft);
+  border: 1.5px solid var(--line);
+  padding: 4px 9px;
+  border-radius: var(--radius-s);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.grao-orig .grao-nom {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+.grao-dest .grao-nom {
+  background: var(--confirm-soft);
+  border-color: var(--confirm);
+}
+.grao-fletxa {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+.conv-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.conv-controls input {
+  width: 100px;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.conv-resultat {
+  font-size: 1.05rem;
+  color: var(--primary-deep);
+}
+.conv-factor-box {
+  background: var(--surface-soft);
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  font-size: 0.8rem;
+}
+
+.svg-grafica {
+  width: 100%;
+  max-height: 225px;
+  background: var(--surface-soft);
+  border-radius: var(--radius-s);
+}
+
+.comp-banner {
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.comp-banner.control-ok {
+  background: var(--confirm-soft);
+  color: var(--confirm);
+}
+.comp-banner.control-avis {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.comp-banner.control-neutre {
+  background: var(--surface-soft);
+  color: var(--ink-soft);
+}
+.comp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.comp-col {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.comp-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+.comp-resultats {
+  border-top: 1px solid var(--line);
+  padding-top: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  font-size: 0.78rem;
+}
+
+.lupa-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.svg-lupa-menisc {
+  width: 195px;
+  height: auto;
+}
+.lupa-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.badge-avis-ep {
+  display: inline-block;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+.badge-ok-ep {
+  display: inline-block;
+  background: var(--confirm-soft);
+  color: var(--confirm);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.bafarada-avis-fisic {
+  background: var(--warn-soft);
+  border: 1.5px solid #F59E0B;
+  color: #92400E;
+  padding: 6px 12px;
+  border-radius: var(--radius-s);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Barra inferior de taules i eines (52 px) */
+.barra-eines-laboratori {
+  height: 52px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.grup-taules, .grup-eines-pensa, .grup-historial {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.separador-vertical {
+  width: 1px;
+  height: 26px;
+  background: var(--line);
+}
+
+.bt-taula, .bt-eina {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 5px 10px;
+  border-radius: var(--radius-s);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bt-taula:hover, .bt-eina:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+.bt-taula.activa {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+.bt-eina.activa {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+/* ==================== PANELL LATERAL DRET (GUIA / DADES / NOTES) ==================== */
+.laboratori-panell {
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.laboratori-panell-plegat {
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.panell-pestanyes {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-soft);
+  padding: 0 6px;
+}
+
+.bt-pestanya-panell {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  padding: 9px 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.bt-pestanya-panell.activa {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: var(--surface);
+}
+
+.panell-cos {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 12px;
+}
+
+.guia-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guia-selector-inv select {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  font-weight: 600;
+  font-size: 0.82rem;
+  background: var(--surface-soft);
+}
+
+.guia-pregunta-box {
+  background: var(--primary-soft);
+  border-left: 3.5px solid var(--primary);
+  padding: 7px 10px;
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+.guia-pregunta-box h3 {
+  font-size: 0.92rem;
+  margin-top: 2px;
+}
+
+.guia-passos-nav {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.bt-pas-dot {
+  flex: 1;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 4px 5px;
+  font-size: 0.71rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bt-pas-dot.completat {
+  background: var(--confirm-soft);
+  border-color: #86EFAC;
+  color: var(--confirm);
+}
+.bt-pas-dot.actiu {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+.guia-pas-card {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 10px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.insignia-pas {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--primary-deep);
+  text-transform: uppercase;
+}
+
+.badge-cond-ok {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--confirm);
+  background: var(--confirm-soft);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.guia-enunciat {
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+.guia-contrast-box {
+  background: var(--warn-soft);
+  color: #92400E;
+  padding: 6px 9px;
+  border-radius: var(--radius-s);
+  font-size: 0.8rem;
+}
+
+.grup-radios {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.opcio-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 6px 8px;
+  font-size: 0.81rem;
+  cursor: pointer;
+}
+.opcio-radio.seleccionada {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.guia-motiu-sel {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.8rem;
+  margin: 6px 0;
+}
+.guia-motiu-sel select {
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.fila-input-aplica {
+  display: grid;
+  grid-template-columns: 1fr 105px;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.fila-input-aplica input, .fila-input-aplica select {
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.guia-feedback {
+  padding: 7px 9px;
+  border-radius: var(--radius-s);
+  font-size: 0.81rem;
+  font-weight: 600;
+}
+.guia-feedback.fb-ok {
+  background: var(--confirm-soft);
+  color: var(--confirm);
+}
+.guia-feedback.fb-orienta {
+  background: var(--warn-soft);
+  color: #92400E;
+}
+
+.llista-pistes-obertes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+  font-size: 0.79rem;
+  background: #FEFCE8;
+  border: 1px solid #FDE047;
+  padding: 6px 8px;
+  border-radius: var(--radius-s);
+}
+
+.guia-conclusio-final {
+  background: var(--confirm-soft);
+  border: 1px solid #86EFAC;
+  border-radius: var(--radius-s);
+  padding: 9px 11px;
+  font-size: 0.82rem;
+}
+
+.targeta-repte-mini {
+  background: var(--surface-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-s);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.8rem;
+  margin-top: 6px;
+}
+
+/* Mode compacte i mòbil */
+html.mode-compacte .laboratori-cos {
+  grid-template-columns: 185px 1fr 295px;
+}
+html.mode-compacte .bt-taula,
+html.mode-compacte .bt-eina {
+  padding: 4px 7px;
+  font-size: 0.75rem;
+}
+html.mode-mobil .pantalla-laboratori {
+  overflow: visible;
+}
+html.mode-mobil .laboratori-cos {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+html.mode-mobil .laboratori-zona-central {
+  order: 1;
+}
+html.mode-mobil .laboratori-panell {
+  order: 2;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+html.mode-mobil .laboratori-prestatge {
+  order: 3;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+html.mode-mobil .barra-eines-laboratori {
+  height: auto;
+  flex-wrap: wrap;
+  padding: 6px 8px;
+}
+html.mode-mobil .taller-grid-2,
+html.mode-mobil .drassana-grid,
+html.mode-mobil .calc-operacio,
+html.mode-mobil .comp-grid,
+html.mode-mobil .lupa-layout {
+  grid-template-columns: 1fr;
+}

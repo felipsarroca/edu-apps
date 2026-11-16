@@ -1,0 +1,401 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/**
+ * Variables de disseny, tipografia, carcassa compacta, escalat --ui-zoom i peu corporatiu (08-disseny-visual-i-interaccio.md).
+ */
+
+:root {
+  --bg: #F4F6F8;
+  --surface: #FFFFFF;
+  --surface-soft: #F8FAFC;
+  --ink: #16303F;
+  --ink-soft: #586A76;
+  --line: #D5DDE3;
+  --line-soft: #E5EBF0;
+
+  --primary: #0E7C86;
+  --primary-deep: #0A5E66;
+  --primary-soft: #E0F4F6;
+
+  --confirm: #1A7F4B;
+  --confirm-soft: #DCFCE7;
+
+  --warn: #A16207;
+  --warn-soft: #FEF3C7;
+
+  --danger: #B91C1C;
+  --danger-soft: #FEE2E2;
+
+  /* Magnituds */
+  --col-massa: #8A5A00;
+  --col-volum: #1D6FB8;
+  --col-densitat: #6D3FB5;
+
+  /* Forces */
+  --col-pes: #C2410C;
+  --col-empenyiment: #1553A1;
+  --col-normal: #4B5563;
+  --col-tensio: #0F766E;
+
+  --font-ui: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --fs-root: 15.5px;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+
+  --shadow-1: 0 1px 3px rgba(22, 48, 63, 0.07);
+  --shadow-2: 0 6px 20px rgba(22, 48, 63, 0.12);
+
+  --header-h: 48px;
+  --footer-h: 46px;
+
+  --ui-zoom: 1;
+  --vh: calc(1vh / var(--ui-zoom));
+  --dvh: calc(1dvh / var(--ui-zoom));
+}
+
+html.projector {
+  --fs-root: 19.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--fs-root);
+  height: 100%;
+  zoom: var(--ui-zoom);
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.42;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, p, ul, ol, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 3px solid #F59E0B;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 3000;
+  background: var(--ink);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Carcassa principal */
+#app {
+  height: calc(100 * var(--vh));
+  height: calc(100 * var(--dvh));
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--footer-h);
+}
+
+.app-header {
+  height: var(--header-h);
+  flex-shrink: 0;
+  background: var(--ink);
+  color: #FFFFFF;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0 12px;
+}
+
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.header-esquerra, .header-dreta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marca-app {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-s);
+}
+.marca-app:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-principal {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bt-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #D5DDE3;
+  padding: 5px 10px;
+  border-radius: var(--radius-s);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bt-nav:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+}
+.bt-nav.actiu {
+  color: #FFFFFF;
+  background: var(--primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.grup-vistes-header, .grup-suports-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bt-vista, .bt-suport {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #E2E8F0;
+  padding: 4px 8px;
+  border-radius: var(--radius-s);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bt-vista.activa, .bt-suport.actiu {
+  background: #38BDF8;
+  color: #0F172A;
+  border-color: #BAE6FD;
+}
+
+.selector-nivell-top select {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: var(--radius-s);
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.selector-nivell-top select option {
+  color: var(--ink);
+  background: #FFFFFF;
+}
+
+.app-main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Icones de línia */
+.ic {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.ic-perill {
+  width: 13px;
+  height: 13px;
+  color: #D97706;
+  flex-shrink: 0;
+}
+
+/* Peu corporatiu de Felip Sarroca (skill felip-app-footer) */
+.felip-app-footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--footer-h);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 4px clamp(12px, 2vw, 28px);
+  border-top: 1px solid var(--line);
+  background: rgba(244, 246, 248, 0.97);
+  backdrop-filter: blur(8px);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.felip-license-image-link {
+  display: block;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.felip-license-image {
+  display: block;
+  width: 72px;
+  height: auto;
+}
+
+.felip-footer-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.felip-footer-text a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.felip-footer-text a:hover {
+  color: var(--primary);
+}
+
+/* Toast emergent */
+.toast-root {
+  position: fixed;
+  right: 18px;
+  bottom: 56px;
+  z-index: 2000;
+  background: var(--ink);
+  color: #FFFFFF;
+  padding: 9px 14px;
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+  font-size: 0.86rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.toast-root.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Adaptació en mode mòbil i compacte */
+html.mode-compacte .bt-vista span {
+  display: none;
+}
+html.mode-compacte .bt-nav {
+  padding: 4px 7px;
+  font-size: 0.82rem;
+}
+html.mode-mobil,
+html.mode-mobil body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+html.mode-mobil #app {
+  height: auto;
+  min-height: 100dvh;
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding-bottom: 58px;
+}
+html.mode-mobil .app-main {
+  overflow: visible;
+}
+html.mode-mobil .header-inner,
+html.mode-mobil .header-esquerra,
+html.mode-mobil .header-dreta,
+html.mode-mobil .grup-vistes-header,
+html.mode-mobil .grup-suports-header {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+html.mode-mobil .app-header {
+  height: auto;
+  padding: 6px 8px;
+}
+html.mode-mobil .bt-nav span,
+html.mode-mobil .bt-vista span {
+  display: none;
+}
+html.mode-mobil .felip-app-footer {
+  height: auto;
+  min-height: 48px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+}
+html.mode-mobil .felip-license-image {
+  width: 60px;
+}

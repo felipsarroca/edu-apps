@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-NC-SA-4.0 -->
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Densitat · Laboratori virtual de densitat i flotació</title>
+  <meta name="description" content="Laboratori virtual interactiu de matèria, densitat, flotabilitat i principi d'Arquimedes per a 1r–4t d'ESO, amb quadern científic i 51 investigacions guiades.">
+  <meta name="theme-color" content="#16303F">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/laboratori.css">
+  <link rel="stylesheet" href="css/quadern.css">
+  <link rel="stylesheet" href="css/informe.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Salta al contingut principal</a>
+
+  <div id="app">
+    <header id="app-header" class="app-header" role="banner"></header>
+    <main id="main" tabindex="-1" class="app-main"></main>
+
+    <footer class="felip-app-footer" role="contentinfo">
+      <a class="felip-license-image-link"
+         href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image"
+             src="assets/CC_BY-NC-SA.png"
+             alt="Creative Commons BY-NC-SA">
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Codi: <a href="LICENSE" target="_blank" rel="noopener noreferrer">AGPLv3</a> · Continguts: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> · <a href="https://github.com/felipsarroca/edu-apps/issues/new?template=densitat.yml" target="_blank" rel="noopener noreferrer">Suggeriments i errors</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast-root" class="toast-root" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -140,6 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Física
         {
+            name: "Laboratori de densitat i flotació",
+            path: 'https://ja.cat/densitat',
+            category: 'Física',
+            description: "Mesura, prediu i comprova per què uns objectes suren i d'altres s'enfonsen, amb principi d'Arquimedes, taller de barques i quadern científic.",
+            icon: 'Densitat/favicon.svg'
+        },
+        {
             name: "KineGraphIA",
             path: 'https://ja.cat/kinegraphia',
             category: 'Física',

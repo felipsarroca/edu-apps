@@ -1,0 +1,760 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/**
+ * Components reutilitzables: botons, insígnies, targetes, pantalla d'inici, consulta, progrés i docent.
+ */
+
+.bt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: var(--radius-s);
+  font-weight: 600;
+  font-size: 0.88rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+.bt:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.bt-primari {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+.bt-primari:hover:not(:disabled) {
+  background: var(--primary-deep);
+}
+
+.bt-secundari {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.bt-secundari:hover:not(:disabled),
+.bt-secundari.actiu {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary-deep);
+}
+
+.bt-neutre {
+  background: #E2E8F0;
+  color: var(--ink);
+}
+.bt-neutre:hover {
+  background: #CBD5E1;
+}
+
+.bt-perill {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: #FCA5A5;
+}
+
+.bt-petit {
+  padding: 4px 9px;
+  font-size: 0.8rem;
+}
+
+.bt-gran {
+  padding: 9px 16px;
+  font-size: 0.94rem;
+}
+
+.bt-complet {
+  width: 100%;
+}
+
+.bt-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.bt-link:hover {
+  text-decoration: underline;
+}
+
+.bt-icona {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 4px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.bt-icona:hover {
+  background: var(--line-soft);
+}
+
+.fila-entre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.etiqueta-petita {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.text-suau {
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+}
+
+.text-justificat {
+  text-align: justify;
+}
+
+.num-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.insignia-bloc {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary-deep);
+  background: var(--primary-soft);
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-bottom: 3px;
+}
+
+/* ==================== PANTALLA D'INICI ==================== */
+.pantalla-inici {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 18px;
+  overflow-y: auto;
+}
+
+.inici-hero {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-1);
+}
+
+.avant-titol {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.inici-hero h1 {
+  font-size: 1.38rem;
+  margin: 2px 0 4px;
+  color: var(--ink);
+}
+
+.inici-subtitol {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  margin-bottom: 10px;
+}
+
+.inici-accions-principals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.inici-acces-rapid h4 {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.chips-inici-1a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.chip-inv-1a {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.chip-inv-1a:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.chip-inv-1a.fet {
+  background: var(--confirm-soft);
+  border-color: #86EFAC;
+  color: var(--confirm);
+}
+
+.inici-cos {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.graella-blocs {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.targeta-bloc {
+  text-align: left;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 9px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+.targeta-bloc:hover {
+  border-color: var(--primary);
+}
+.targeta-bloc.seleccionat {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.targeta-bloc-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--primary-deep);
+}
+
+.targeta-bloc h3 {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.targeta-bloc p {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.targeta-bloc-peu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.punts-progres {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.punt-inv {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #CBD5E1;
+}
+.punt-inv.fet {
+  background: var(--confirm);
+}
+.punt-inv.actual {
+  background: var(--primary);
+  box-shadow: 0 0 0 2px rgba(14, 124, 134, 0.3);
+}
+
+.comptador-bloc {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.desplegable-bloc {
+  flex: 1;
+  min-height: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.desplegable-bloc-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 8px;
+}
+.desplegable-bloc-cap h2 {
+  font-size: 1.05rem;
+}
+.desplegable-bloc-cap p {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.llista-invs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 8px;
+}
+
+.item-inv-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 11px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-s);
+  background: var(--surface-soft);
+}
+.item-inv-card.inv-feta {
+  border-color: #86EFAC;
+  background: #F0FDF4;
+}
+
+.item-inv-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.84rem;
+}
+
+.codi-inv {
+  background: var(--ink);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.74rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.badge-essencial {
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.badge-nivell, .badge-durada {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: #E2E8F0;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.segell-completat {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--confirm);
+}
+
+.item-inv-preg {
+  font-size: 0.81rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* ==================== CONSULTA, PROGRÉS I DOCENT ==================== */
+.pantalla-consulta, .pantalla-progres, .pantalla-docent {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.consulta-cap, .docent-cap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pestanyes-consulta, .pestanyes-curtes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.bt-pestanya-consulta, .pestanya-curta {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: var(--radius-s);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-pestanya-consulta.activa, .pestanya-curta.activa {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.consulta-grid-2, .docent-grid, .progres-grid-principal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.targeta-consulta, .targeta-progres {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.triangle-formula-wrap {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.svg-triangle-formula {
+  width: 145px;
+  height: auto;
+}
+
+.formules-aillades {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eq-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface-soft);
+  padding: 7px 11px;
+  border-radius: var(--radius-s);
+  border-left: 3px solid var(--primary);
+}
+
+.eq-math {
+  font-size: 1.05rem;
+  font-weight: 700;
+  min-width: 105px;
+}
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.88em;
+}
+.frac > span:first-child {
+  border-bottom: 1.5px solid currentColor;
+  padding: 0 3px;
+}
+
+.destacat-equivalencia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--primary-soft);
+  padding: 10px 12px;
+  border-radius: var(--radius-s);
+  font-weight: 700;
+}
+
+.mostra-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid #475569;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.badge-sura {
+  background: var(--confirm-soft);
+  color: var(--confirm);
+  font-weight: 700;
+  font-size: 0.76rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.badge-enfonsa {
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 0.76rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.glossari-grid, .simplificacions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.fitxa-glossari, .fitxa-simplificacio {
+  background: var(--surface-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-s);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fitxa-glossari-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+.traduccions-glossari {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  display: flex;
+  gap: 8px;
+}
+
+.codi-simp {
+  background: var(--ink);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+/* Progrés i Bayesià */
+.barra-progres {
+  height: 9px;
+  background: #E2E8F0;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 4px 0;
+}
+.barra-progres-omplert {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 99px;
+}
+
+.recomanacio-caixa, .recomanacio-destacada-alumne {
+  background: var(--primary-soft);
+  border: 1px solid #99F6E4;
+  border-radius: var(--radius-s);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bayes-opcions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.bt-opcio-bayes {
+  text-align: left;
+  background: var(--surface-soft);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.bt-opcio-bayes:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.bayes-posterior-panel {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.bayes-barres-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.bayes-barra-col {
+  font-size: 0.76rem;
+}
+.barra-bayes .barra-progres-omplert.assolida {
+  background: var(--confirm);
+}
+
+.radar-idees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+}
+.targeta-idea-radar {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 9px 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 0.8rem;
+}
+.targeta-idea-radar.estat-superada {
+  border-color: #86EFAC;
+  background: #F0FDF4;
+}
+.targeta-idea-radar.estat-activa {
+  border-color: #FCD34D;
+  background: #FFFBEB;
+}
+.badge-estat-idea {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.idea-mite {
+  font-weight: 700;
+  color: var(--ink);
+}
+.idea-contrast {
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
+.segells-blocs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.chips-segells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.chip-segell {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+.chip-segell.fet {
+  background: var(--confirm-soft);
+  border-color: #86EFAC;
+  color: var(--confirm);
+}
+
+.docent-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fila-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.fila-input {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.fila-input input, .input-cerca {
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  flex: 1;
+}
+
+@media (max-width: 1050px) {
+  .inici-hero, .consulta-grid-2, .docent-grid, .progres-grid-principal {
+    grid-template-columns: 1fr;
+  }
+  .graella-blocs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 759px) {
+  .graella-blocs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .llista-invs-grid {
+    grid-template-columns: 1fr;
+  }
+}
