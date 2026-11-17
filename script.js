@@ -140,6 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Física
         {
+            name: "Simulador de densitats",
+            path: 'https://ja.cat/densitats',
+            category: 'Física',
+            description: "Simulador visual per projectar a la pissarra: calcula massa, volum, flotació i pes aparent dins d'un líquid amb objectes realistes.",
+            icon: 'Densitats/favicon.svg'
+        },
+        {
             name: "Laboratori de densitat i flotació",
             path: 'https://ja.cat/labdensitat',
             category: 'Física',

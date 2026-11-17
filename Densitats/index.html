@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-NC-SA-4.0 -->
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Densitats · Simulador visual de massa, volum i flotació</title>
+  <meta name="description" content="Simulador interactiu i visual de massa, volum, densitat, flotació i pes aparent dins l'aigua, pensat per projectar a la pissarra.">
+  <meta name="theme-color" content="#0F172A">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <!-- Barra superior -->
+    <header class="topbar" role="banner">
+      <div class="brand">
+        <svg class="brand-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 3h6M10 3v5.4L5.2 17a2 2 0 0 0 1.7 3h10.2a2 2 0 0 0 1.7-3L14 8.4V3"/>
+          <path d="M7.5 14h9"/>
+        </svg>
+        <div>
+          <h1 class="brand-title">Densitats</h1>
+          <p class="brand-sub">Simulador de massa, volum i immersió</p>
+        </div>
+      </div>
+
+      <div class="topbar-controls">
+        <label class="liquid-picker" for="select-liquid">
+          <span class="ctrl-label">Líquid:</span>
+          <select id="select-liquid" aria-label="Tria el líquid del laboratori"></select>
+        </label>
+
+        <div id="custom-liquid-wrap" class="custom-liquid-wrap hidden">
+          <input id="range-liquid-density" type="range" min="0.50" max="13.60" step="0.01" value="1.00" aria-label="Densitat del líquid personalitzat">
+          <span id="val-liquid-density" class="mono-pill">1,00 g/cm³</span>
+        </div>
+
+        <div class="toggle-group" role="group" aria-label="Opcions de pissarra">
+          <button id="btn-forces" class="btn-toggle active" type="button" aria-pressed="true" title="Mostra o amaga els vectors de força P, E i T">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/><path d="M12 3v6M9.5 5.5L12 3l2.5 2.5M12 21v-6M9.5 18.5L12 21l2.5-2.5"/>
+            </svg>
+            <span>Forces</span>
+          </button>
+
+          <button id="btn-calculs" class="btn-toggle active" type="button" aria-pressed="true" title="Mostra o amaga els càlculs de densitat i pes per preguntar a classe">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/>
+            </svg>
+            <span>Mostra càlculs</span>
+          </button>
+
+          <button id="btn-projector" class="btn-toggle" type="button" aria-pressed="false" title="Augmenta el contrast i la mida dels textos per projectar">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+            <span>Pissarra</span>
+          </button>
+
+          <button id="btn-reinicia" class="btn-action" type="button" title="Buida tots els instruments">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+            </svg>
+            <span>Reinicia</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cos principal: prestatge d'objectes + taula de laboratori -->
+    <main class="workspace" role="main">
+      <!-- Barra lateral d'objectes -->
+      <aside class="catalog-panel" aria-label="Catàleg d'objectes">
+        <div class="cat-tabs" id="cat-tabs" role="tablist"></div>
+
+        <div id="cat-grid" class="cat-grid"></div>
+
+        <!-- Panell d'objecte personalitzat -->
+        <div id="custom-obj-panel" class="custom-obj-panel hidden">
+          <div class="field-row">
+            <label for="custom-shape">Forma</label>
+            <select id="custom-shape">
+              <option value="custom_bloc">Bloc</option>
+              <option value="custom_esfera">Esfera</option>
+              <option value="custom_cilindre">Cilindre</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <label for="custom-mat">Aspecte</label>
+            <select id="custom-mat">
+              <option value="alumini">Alumini</option>
+              <option value="fusta">Fusta</option>
+              <option value="plastic">Plàstic</option>
+              <option value="ferro">Ferro</option>
+              <option value="or">Or</option>
+            </select>
+          </div>
+          <div class="slider-block">
+            <div class="slider-head">
+              <label for="custom-massa">Massa</label>
+              <span id="custom-massa-val" class="mono-val">200 g</span>
+            </div>
+            <input id="custom-massa" type="range" min="10" max="1500" step="10" value="200">
+          </div>
+          <div class="slider-block">
+            <div class="slider-head">
+              <label for="custom-volum">Volum</label>
+              <span id="custom-volum-val" class="mono-val">100 cm³</span>
+            </div>
+            <input id="custom-volum" type="range" min="20" max="400" step="5" value="100">
+          </div>
+          <button id="btn-use-custom" class="btn-primary full-w" type="button">Selecciona aquest objecte</button>
+        </div>
+
+        <!-- Targeta de l'objecte seleccionat i accions ràpides -->
+        <div class="selected-box" id="selected-box">
+          <div class="selected-info">
+            <div id="selected-thumb" class="selected-thumb"></div>
+            <div>
+              <div id="selected-name" class="selected-name">Cap objecte triat</div>
+              <div id="selected-desc" class="selected-desc">Tria o arrossega un objecte</div>
+            </div>
+          </div>
+          <div class="quick-send">
+            <button type="button" class="btn-send" data-target="balanca" title="Posa l'objecte a la balança">Balança</button>
+            <button type="button" class="btn-send" data-target="proveta" title="Posa l'objecte a la proveta">Proveta</button>
+            <button type="button" class="btn-send" data-target="tanc" title="Posa l'objecte al tanc">Tanc</button>
+            <button type="button" class="btn-send accent" data-target="tots" title="Mostra'l als tres instruments alhora">Als 3</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Taula de laboratori amb els 3 instruments -->
+      <section class="bench-area" aria-label="Taula d'experiments">
+        <div class="instruments-grid">
+          <!-- 1. Balança -->
+          <article class="station-card drop-zone" data-station="balanca">
+            <header class="station-head">
+              <div>
+                <h2 class="station-title">1. Balança digital</h2>
+                <p class="station-hint">Mesura la massa (g) i el pes real (N)</p>
+              </div>
+              <div class="station-actions">
+                <button id="btn-tara" class="btn-mini" type="button" title="Posa la balança a zero">Tara</button>
+                <button id="btn-treu-balanca" class="btn-mini" type="button" title="Treu l'objecte de la balança">Treu</button>
+              </div>
+            </header>
+            <div id="stage-balanca" class="station-stage"></div>
+          </article>
+
+          <!-- 2. Proveta -->
+          <article class="station-card drop-zone" data-station="proveta">
+            <header class="station-head">
+              <div>
+                <h2 class="station-title">2. Proveta graduada</h2>
+                <p class="station-hint">Mesura el volum per desplaçament</p>
+              </div>
+              <div class="station-actions">
+                <select id="select-proveta-cap" class="select-mini" aria-label="Capacitat de la proveta">
+                  <option value="250">250 mL</option>
+                  <option value="500" selected>500 mL</option>
+                  <option value="1000">1000 mL</option>
+                </select>
+                <button id="btn-treu-proveta" class="btn-mini" type="button" title="Treu l'objecte de la proveta">Treu</button>
+              </div>
+            </header>
+            <div id="stage-proveta" class="station-stage"></div>
+            <footer class="station-foot">
+              <div class="foot-row">
+                <label for="range-v0">V₀: <strong id="val-v0">200 mL</strong></label>
+                <input id="range-v0" type="range" min="50" max="400" step="25" value="200">
+                <button id="btn-vareta" class="btn-mini-toggle" type="button" aria-pressed="false" title="Empènyer l'objecte fins al fons amb la vareta">
+                  Vareta
+                </button>
+              </div>
+            </footer>
+          </article>
+
+          <!-- 3. Tanc + Dinamòmetre -->
+          <article class="station-card station-wide drop-zone" data-station="tanc">
+            <header class="station-head">
+              <div>
+                <h2 class="station-title">3. Tanc d'immersió i dinamòmetre</h2>
+                <p class="station-hint">Pes aparent dins el líquid, empenyiment i flotació</p>
+              </div>
+              <div class="station-actions">
+                <div class="mode-pills" role="group" aria-label="Mode del tanc">
+                  <button id="btn-mode-din" class="pill-btn active" type="button">Dinamòmetre</button>
+                  <button id="btn-mode-lliure" class="pill-btn" type="button">Flotació lliure</button>
+                </div>
+                <button id="btn-treu-tanc" class="btn-mini" type="button" title="Treu l'objecte del tanc">Treu</button>
+              </div>
+            </header>
+            <div id="stage-tanc" class="station-stage"></div>
+            <footer class="station-foot">
+              <div id="dinamometre-controls" class="foot-row">
+                <label for="range-immersio">Immersió: <strong id="val-immersio">0 %</strong></label>
+                <input id="range-immersio" type="range" min="0" max="100" step="1" value="0">
+                <div class="preset-imm">
+                  <button type="button" class="btn-mini" data-imm="0">Aire</button>
+                  <button type="button" class="btn-mini" data-imm="50">50 %</button>
+                  <button type="button" class="btn-mini" data-imm="100">Submergit</button>
+                </div>
+              </div>
+              <div id="lliure-controls" class="foot-row hidden">
+                <span id="lliure-status" class="status-note">L'objecte s'ajusta lliurement segons la seva densitat.</span>
+                <button id="btn-deixa-caure" class="btn-mini" type="button">Torna a deixar caure</button>
+              </div>
+            </footer>
+          </article>
+        </div>
+
+        <!-- Barra resum de magnituds per a la pissarra -->
+        <section class="summary-bar" aria-label="Resum de magnituds">
+          <div class="sum-item">
+            <span class="sum-lbl">Massa (m)</span>
+            <strong id="sum-massa" class="sum-val">—</strong>
+          </div>
+          <div class="sum-item">
+            <span class="sum-lbl">Volum (V)</span>
+            <strong id="sum-volum" class="sum-val">—</strong>
+          </div>
+          <div class="sum-item highlight">
+            <span class="sum-lbl">Densitat (ρ = m / V)</span>
+            <strong id="sum-densitat" class="sum-val">—</strong>
+          </div>
+          <div class="sum-item">
+            <span class="sum-lbl">Pes a l'aire (P)</span>
+            <strong id="sum-pes" class="sum-val">—</strong>
+          </div>
+          <div class="sum-item">
+            <span class="sum-lbl">Empenyiment (E)</span>
+            <strong id="sum-emp" class="sum-val">—</strong>
+          </div>
+          <div class="sum-item highlight-green">
+            <span class="sum-lbl">Pes dins el líquid (Pₐₚ)</span>
+            <strong id="sum-pap" class="sum-val">—</strong>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <!-- Peu corporatiu de Felip Sarroca -->
+    <footer class="felip-app-footer" role="contentinfo">
+      <a class="felip-license-image-link"
+         href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image"
+             src="assets/CC_BY-NC-SA.png"
+             alt="Creative Commons BY-NC-SA">
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Codi: <a href="LICENSE" target="_blank" rel="noopener noreferrer">AGPLv3</a> · Continguts: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> · <a href="https://github.com/felipsarroca/edu-apps/issues/new" target="_blank" rel="noopener noreferrer">Suggeriments i errors</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
