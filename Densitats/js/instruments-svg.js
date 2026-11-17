@@ -26,9 +26,9 @@ export function midaVisualObjecte(obj, escalaBase = 1) {
 /**
  * 1. BALANÇA DIGITAL
  */
-export function renderBalancaSVG({ obj, massaMesurada, pesMesurat, tara = 0 }) {
+export function renderBalancaSVG({ obj, massaMesurada, pesMesurat, tara = 0, got = false, amagaPes = false }) {
   const teObj = Boolean(obj);
-  const panDip = teObj ? 4 : 0;
+  const panDip = teObj || got ? 4 : 0;
   const { w, h } = teObj ? midaVisualObjecte(obj, 1.05) : { w: 0, h: 0 };
   const panY = 148 + panDip;
 
@@ -75,26 +75,37 @@ export function renderBalancaSVG({ obj, massaMesurada, pesMesurat, tara = 0 }) {
       <!-- Pantalla LCD -->
       <rect x="52" y="187" width="156" height="46" rx="6" fill="url(#bal-lcd)" stroke="#334155" stroke-width="1.5"/>
       <text x="198" y="214" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="22" font-weight="700" fill="#34D399">
-        ${fmt(massaMesurada, 1)} g
+        ${fmt(Math.abs(massaMesurada) < 0.05 ? 0 : massaMesurada, 1)} g
       </text>
-      <text x="60" y="227" text-anchor="start" font-size="10.5" font-weight="600" fill="#94A3B8">
-        Pes: ${fmt(pesMesurat, 2)} N
+      <text x="60" y="227" text-anchor="start" font-size="11" font-weight="600" fill="#94A3B8">
+        Pes: ${amagaPes ? "?" : fmt(pesMesurat, 2)} N
       </text>
       ${tara > 0 ? `<text x="198" y="227" text-anchor="end" font-size="9.5" font-weight="700" fill="#FBBF24">TARA</text>` : ""}
 
-      <!-- Objecte damunt del plat -->
+      <!-- Objecte damunt del plat (dins del got si n'hi ha) -->
       ${
         teObj
           ? `
             <ellipse cx="130" cy="${panY}" rx="${w * 0.44}" ry="4" fill="#0F172A" opacity="0.22"/>
-            ${dibuixaObjecteRealista(obj, 130, panY - h / 2 + 1, w, h, "bal-")}
+            ${dibuixaObjecteRealista(obj, 130, panY - h / 2 + 1 - (got ? 4 : 0), w, h, "bal-")}
           `
           : `
-            <text x="130" y="108" text-anchor="middle" font-size="12" font-weight="600" fill="#64748B" opacity="0.75">
+            <text x="130" y="${got ? 60 : 108}" text-anchor="middle" font-size="12.5" font-weight="600" fill="#64748B" opacity="0.8">
               Col·loca un objecte aquí
             </text>
-            <path d="M 130 116 L 130 132 M 124 126 L 130 133 L 136 126" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 130 ${got ? 66 : 116} l 0 14 M 124 ${got ? 74 : 124} l 6 7 l 6 -7" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           `
+      }
+      ${
+        got
+          ? `
+            <!-- Got de vidre per fer la tara -->
+            <path d="M 76 ${panY - 70} L 80 ${panY - 66} L 80 ${panY - 4} Q 80 ${panY} 84 ${panY} L 176 ${panY} Q 180 ${panY} 180 ${panY - 4} L 180 ${panY - 66} L 184 ${panY - 70}"
+                  fill="#E0F2FE" fill-opacity="0.28" stroke="#64748B" stroke-width="1.8" stroke-linejoin="round"/>
+            <line x1="84" y1="${panY - 62}" x2="84" y2="${panY - 8}" stroke="#FFFFFF" stroke-width="2.5" opacity="0.7"/>
+            <rect x="80" y="${panY - 4}" width="100" height="4" fill="#94A3B8" opacity="0.6"/>
+          `
+          : ""
       }
     </svg>
   `;
@@ -109,7 +120,8 @@ export function renderProvetaSVG({
   capacitatMl = 500,
   volumInicialMl = 200,
   varetaSubmergit = false,
-  estatEquilibri = null
+  estatEquilibri = null,
+  amagaDelta = false
 }) {
   const teObj = Boolean(obj);
   const topY = 36;
@@ -149,7 +161,7 @@ export function renderProvetaSVG({
     const len = esPrincipal ? 18 : 9;
     ticks += `<line x1="${cylX + 3}" y1="${ty}" x2="${cylX + 3 + len}" y2="${ty}" stroke="#334155" stroke-width="${esPrincipal ? 1.5 : 1}" opacity="${esPrincipal ? 0.85 : 0.5}"/>`;
     if (esPrincipal) {
-      ticks += `<text x="${cylX + 25}" y="${ty + 3.5}" font-size="9.5" font-weight="700" fill="#1E293B">${ml}</text>`;
+      ticks += `<text x="${cylX + 25}" y="${ty + 4}" font-size="11" font-weight="700" fill="#1E293B">${ml}</text>`;
     }
   }
 
@@ -253,7 +265,7 @@ export function renderProvetaSVG({
         </text>
         ${
           teObj && !desborda
-            ? `<text x="10" y="50" font-size="11" font-weight="700" fill="#34D399">ΔV = ${fmtNet(vDesplacat, 1)} mL</text>`
+            ? `<text x="10" y="50" font-size="11" font-weight="700" fill="#34D399">ΔV = ${amagaDelta ? "?" : fmtNet(vDesplacat, 1)} mL</text>`
             : ""
         }
       </g>
@@ -272,7 +284,8 @@ export function renderTancSVG({
   posYAnim = null, // posició animada en px per al mode lliure
   mostraForces = true,
   estatDin,
-  estatLliure
+  estatLliure,
+  amaga = {}
 }) {
   const tankX = 54;
   const tankY = 148;
@@ -363,59 +376,91 @@ export function renderTancSVG({
     }
   }
 
-  // Vectors de força
+  // Vectors de força: les etiquetes van als costats de l'objecte perquè no el tapin
   let vectorsMarkup = "";
   if (teObj && mostraForces) {
     const lenP = fLen(P);
     const lenE = fLen(E);
     const lenT = fLen(T);
     const lenN = fLen(N);
+    const xDreta = tankCx + w / 2 + 8;
+    const xEsquerra = tankCx - w / 2 - 8;
+
+    const etiqueta = (x, yCentre, costat, nom, valor, amagat, colorVora, colorFons, colorText) => {
+      const text = amagat ? `${nom} = ?` : `${nom} = ${fmt(valor, 2)} N`;
+      const amp = amagat ? 46 : 90;
+      const x0 = costat === "dreta" ? x : x - amp;
+      const y0 = Math.max(4, Math.min(330, yCentre - 11));
+      return `
+        <rect x="${x0}" y="${y0}" width="${amp}" height="22" rx="5" fill="${colorFons}" stroke="${colorVora}" stroke-width="1.3"/>
+        <text x="${x0 + amp / 2}" y="${y0 + 15.5}" text-anchor="middle" font-size="12.5" font-weight="800" fill="${colorText}">${text}</text>
+      `;
+    };
 
     vectorsMarkup += `<g class="force-vectors">`;
     // Pes P (cap avall, vermell)
     if (lenP > 0) {
       const py2 = Math.min(tankBot - 6, objCy + lenP);
       vectorsMarkup += `
-        <line x1="${tankCx}" y1="${objCy}" x2="${tankCx}" y2="${py2}" stroke="#EF4444" stroke-width="3.2" stroke-linecap="round"/>
-        <polygon points="${tankCx - 5},${py2 - 6} ${tankCx + 5},${py2 - 6} ${tankCx},${py2 + 2}" fill="#EF4444"/>
-        <rect x="${tankCx + 8}" y="${py2 - 16}" width="70" height="18" rx="4" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
-        <text x="${tankCx + 13}" y="${py2 - 4}" font-size="10.5" font-weight="800" fill="#B91C1C">P = ${fmt(P, 2)} N</text>
+        <line x1="${tankCx}" y1="${objCy}" x2="${tankCx}" y2="${py2}" stroke="#EF4444" stroke-width="3.4" stroke-linecap="round"/>
+        <polygon points="${tankCx - 5.5},${py2 - 6} ${tankCx + 5.5},${py2 - 6} ${tankCx},${py2 + 2}" fill="#EF4444"/>
+        <line x1="${tankCx + 4}" y1="${py2 - 4}" x2="${xDreta}" y2="${py2 - 4}" stroke="#EF4444" stroke-width="1" stroke-dasharray="2 2"/>
+        ${etiqueta(xDreta, py2 - 4, "dreta", "P", P, amaga.pes, "#EF4444", "#FEF2F2", "#B91C1C")}
       `;
     }
-    // Empenyiment E (cap amunt, blau cian, desplaçat lleugerament a l'esquerra)
+    // Empenyiment E (cap amunt, blau, a l'esquerra)
     if (lenE > 0) {
       const ex = tankCx - 10;
       const ey2 = Math.max(40, objCy - lenE);
       vectorsMarkup += `
-        <line x1="${ex}" y1="${objCy}" x2="${ex}" y2="${ey2}" stroke="#0284C7" stroke-width="3.2" stroke-linecap="round"/>
-        <polygon points="${ex - 5},${ey2 + 6} ${ex + 5},${ey2 + 6} ${ex},${ey2 - 2}" fill="#0284C7"/>
-        <rect x="${ex - 78}" y="${ey2 - 2}" width="72" height="18" rx="4" fill="#F0F9FF" stroke="#0284C7" stroke-width="1"/>
-        <text x="${ex - 73}" y="${ey2 + 10}" font-size="10.5" font-weight="800" fill="#0369A1">E = ${fmt(E, 2)} N</text>
+        <line x1="${ex}" y1="${objCy}" x2="${ex}" y2="${ey2}" stroke="#0284C7" stroke-width="3.4" stroke-linecap="round"/>
+        <polygon points="${ex - 5.5},${ey2 + 6} ${ex + 5.5},${ey2 + 6} ${ex},${ey2 - 2}" fill="#0284C7"/>
+        <line x1="${ex - 4}" y1="${ey2 + 2}" x2="${xEsquerra}" y2="${ey2 + 2}" stroke="#0284C7" stroke-width="1" stroke-dasharray="2 2"/>
+        ${etiqueta(xEsquerra, ey2 + 2, "esquerra", "E", E, amaga.emp, "#0284C7", "#F0F9FF", "#0369A1")}
       `;
     }
-    // Tensió T del dinamòmetre (cap amunt, verd maragda, desplaçada a la dreta)
+    // Tensió T del dinamòmetre (cap amunt, verd, a la dreta)
     if (lenT > 0) {
       const tx = tankCx + 10;
       const ty2 = Math.max(40, objCy - lenT);
       vectorsMarkup += `
-        <line x1="${tx}" y1="${objCy}" x2="${tx}" y2="${ty2}" stroke="#10B981" stroke-width="3.2" stroke-linecap="round"/>
-        <polygon points="${tx - 5},${ty2 + 6} ${tx + 5},${ty2 + 6} ${tx},${ty2 - 2}" fill="#10B981"/>
-        <rect x="${tx + 8}" y="${ty2 - 2}" width="72" height="18" rx="4" fill="#ECFDF5" stroke="#10B981" stroke-width="1"/>
-        <text x="${tx + 13}" y="${ty2 + 10}" font-size="10.5" font-weight="800" fill="#047857">T = ${fmt(T, 2)} N</text>
+        <line x1="${tx}" y1="${objCy}" x2="${tx}" y2="${ty2}" stroke="#10B981" stroke-width="3.4" stroke-linecap="round"/>
+        <polygon points="${tx - 5.5},${ty2 + 6} ${tx + 5.5},${ty2 + 6} ${tx},${ty2 - 2}" fill="#10B981"/>
+        <line x1="${tx + 4}" y1="${ty2 + 2}" x2="${xDreta}" y2="${ty2 + 2}" stroke="#10B981" stroke-width="1" stroke-dasharray="2 2"/>
+        ${etiqueta(xDreta, ty2 + 2, "dreta", "T", T, amaga.pap, "#10B981", "#ECFDF5", "#047857")}
       `;
     }
-    // Normal N al fons (cap amunt, ambre)
+    // Normal N al fons (cap amunt, ambre, a la dreta)
     if (lenN > 0) {
       const nx = tankCx + 10;
       const ny2 = Math.max(40, objCy - lenN);
       vectorsMarkup += `
-        <line x1="${nx}" y1="${objCy}" x2="${nx}" y2="${ny2}" stroke="#F59E0B" stroke-width="3.2" stroke-linecap="round"/>
-        <polygon points="${nx - 5},${ny2 + 6} ${nx + 5},${ny2 + 6} ${nx},${ny2 - 2}" fill="#F59E0B"/>
-        <rect x="${nx + 8}" y="${ny2 - 2}" width="72" height="18" rx="4" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1"/>
-        <text x="${nx + 13}" y="${ny2 + 10}" font-size="10.5" font-weight="800" fill="#B45309">N = ${fmt(N, 2)} N</text>
+        <line x1="${nx}" y1="${objCy}" x2="${nx}" y2="${ny2}" stroke="#F59E0B" stroke-width="3.4" stroke-linecap="round"/>
+        <polygon points="${nx - 5.5},${ny2 + 6} ${nx + 5.5},${ny2 + 6} ${nx},${ny2 - 2}" fill="#F59E0B"/>
+        <line x1="${nx + 4}" y1="${ny2 + 2}" x2="${xDreta}" y2="${ny2 + 2}" stroke="#F59E0B" stroke-width="1" stroke-dasharray="2 2"/>
+        ${etiqueta(xDreta, ny2 + 2, "dreta", "N", N, amaga.pap, "#F59E0B", "#FFFBEB", "#B45309")}
       `;
     }
     vectorsMarkup += `</g>`;
+  }
+
+  // Franja d'informació sota el tanc: volum submergit o avís de flotació
+  let franja = "";
+  if (teObj) {
+    const fReq = immersioSlider / 100;
+    const suraDin = modeTanc === "dinamometre" && estatDin && estatDin.densitat < liquid.densitat && fReq > 0.01;
+    if (suraDin && !estatDin.cordaTensa) {
+      const pct = Math.round((estatDin.densitat / liquid.densitat) * 100);
+      franja = `
+        <rect x="14" y="358" width="332" height="28" rx="7" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.4"/>
+        <text x="180" y="376.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#92400E">Sura: només se n'enfonsa un ${pct} %. La corda s'afluixa.</text>
+      `;
+    } else if (vSub > 0.1) {
+      franja = `
+        <rect x="70" y="358" width="220" height="28" rx="7" fill="#0F172A" opacity="0.9"/>
+        <text x="180" y="376.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#38BDF8">Volum submergit: ${amaga.volum ? "?" : fmtNet(vSub, 1)} cm³</text>
+      `;
+    }
   }
 
   // Regle en cm a la paret esquerra del tanc
@@ -424,12 +469,12 @@ export function renderTancSVG({
     const ry = tankBot - 8 - cm * 10;
     ruler += `<line x1="${tankX + 3}" y1="${ry}" x2="${tankX + (cm % 4 === 0 ? 14 : 9)}" y2="${ry}" stroke="#334155" stroke-width="1.2" opacity="0.65"/>`;
     if (cm % 4 === 0) {
-      ruler += `<text x="${tankX + 17}" y="${ry + 3}" font-size="8.5" font-weight="600" fill="#334155">${cm}</text>`;
+      ruler += `<text x="${tankX + 17}" y="${ry + 3}" font-size="10" font-weight="600" fill="#334155">${cm}</text>`;
     }
   }
 
   return `
-    <svg class="inst-svg" viewBox="0 0 360 360" role="img" aria-label="Tanc d'immersió amb dinamòmetre">
+    <svg class="inst-svg" viewBox="0 0 360 392" role="img" aria-label="Tanc d'immersió amb dinamòmetre">
       <defs>
         ${defsObjectes("tanc-")}
         <linearGradient id="tanc-liq" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -458,7 +503,7 @@ export function renderTancSVG({
         <text x="${tankCx}" y="${dinY + 17}" text-anchor="middle" font-size="9.5" font-weight="700" fill="#94A3B8" letter-spacing="0.6">DINAMÒMETRE</text>
         <rect x="${tankCx - 46}" y="${dinY + 23}" width="92" height="36" rx="6" fill="#0F172A" stroke="#334155" stroke-width="1"/>
         <text x="${tankCx}" y="${dinY + 47}" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="18" font-weight="800" fill="#34D399">
-          ${teObj ? `${fmt(T, 2)} N` : "0,00 N"}
+          ${teObj ? (amaga.pap && modeTanc === "dinamometre" ? "? N" : `${fmt(T, 2)} N`) : "0,00 N"}
         </text>
         <text x="${tankCx}" y="${dinY + 69}" text-anchor="middle" font-size="9" font-weight="600" fill="#CBD5E1">
           ${teObj && modeTanc === "dinamometre" ? (fSub > 0 ? "Pes aparent dins el líquid" : "Pes real a l'aire") : "Mode lliure"}
@@ -493,28 +538,15 @@ export function renderTancSVG({
       <rect x="${tankX}" y="${tankY}" width="${tankW}" height="${tankH}" rx="6" fill="url(#tanc-glass)" stroke="#475569" stroke-width="2"/>
       ${ruler}
 
-      <!-- Indicador de volum submergit al tanc -->
-      ${
-        teObj && vSub > 0.1
-          ? `
-            <g transform="translate(${tankX + tankW - 102}, ${Math.max(tankY + 8, waterY - 26)})">
-              <rect x="0" y="0" width="96" height="22" rx="5" fill="#0F172A" opacity="0.86"/>
-              <text x="48" y="14.5" text-anchor="middle" font-size="10" font-weight="700" fill="#38BDF8">
-                Vsub = ${fmtNet(vSub, 1)} cm³
-              </text>
-            </g>
-          `
-          : ""
-      }
-
       <!-- Vectors de força per sobre de tot -->
       ${vectorsMarkup}
+      ${franja}
 
       ${
         !teObj
           ? `
             <text x="${tankCx}" y="278" text-anchor="middle" font-size="12.5" font-weight="600" fill="#0F172A" opacity="0.65">
-              Arrossega o envia un objecte al tanc
+              Toca o arrossega un objecte fins aquí
             </text>
           `
           : ""

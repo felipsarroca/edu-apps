@@ -5,12 +5,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Densitats · Simulador visual de massa, volum i flotació</title>
-  <meta name="description" content="Simulador interactiu i visual de massa, volum, densitat, flotació i pes aparent dins l'aigua, pensat per projectar a la pissarra.">
+  <meta name="description" content="Simulador interactiu i visual de massa, volum, densitat, flotació i pes aparent dins l'aigua, pensat per a l'alumnat i per projectar a la pissarra digital.">
   <meta name="theme-color" content="#0F172A">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <!-- Icones de línia reutilitzables -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-ajuda" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.5-2.7 4.1"/><path d="M12 17.4h.01"/></symbol>
+    <symbol id="i-forces" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M9.5 5.5L12 3l2.5 2.5M12 21v-6M9.5 18.5L12 21l2.5-2.5"/></symbol>
+    <symbol id="i-ull" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-ull-tancat" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.6c.5-.1.9-.1 1.4-.1 6.4 0 10 6.5 10 6.5a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.6 6.5 10 6.5c1.6 0 3.1-.4 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+    <symbol id="i-pissarra" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+    <symbol id="i-reinicia" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-treu" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-tara" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><ellipse cx="12" cy="12" rx="2.6" ry="3.6"/></symbol>
+    <symbol id="i-got" viewBox="0 0 24 24"><path d="M4.5 4h15M6 4v14.5A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5V4"/><path d="M6 12h12"/></symbol>
+    <symbol id="i-vareta" viewBox="0 0 24 24"><path d="M12 2v11"/><rect x="7.5" y="13" width="9" height="7.5" rx="1.5"/><path d="M4 22h16"/></symbol>
+    <symbol id="i-caure" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-balanca" viewBox="0 0 24 24"><path d="M4 20h16l-2-7H6z"/><path d="M7 9h10M12 9v4"/></symbol>
+    <symbol id="i-proveta" viewBox="0 0 24 24"><path d="M8.5 3h7M10 3v15.5a2 2 0 0 0 4 0V3"/><path d="M10 12.5h4"/></symbol>
+    <symbol id="i-tanc" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11.5" rx="1.5"/><path d="M4 13.5h16M12 2v9"/></symbol>
+    <symbol id="i-tots" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-ma" viewBox="0 0 24 24"><path d="M9 11V5a1.5 1.5 0 0 1 3 0v5"/><path d="M12 10V8.5a1.5 1.5 0 0 1 3 0V11"/><path d="M15 10.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-4.6-2.2L4 15.6a1.5 1.5 0 0 1 2.3-1.9L9 16"/></symbol>
+    <symbol id="i-calcul" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></symbol>
+    <symbol id="i-pantalla-completa" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+    <symbol id="i-guia" viewBox="0 0 24 24"><path d="M12 3l2.6 5.6L20.5 9l-4.3 4 1.1 6L12 16.2 6.7 19l1.1-6-4.3-4 5.9-.4z"/></symbol>
+  </svg>
+
   <div id="app" class="app-shell">
     <!-- Barra superior -->
     <header class="topbar" role="banner">
@@ -21,7 +44,7 @@
         </svg>
         <div>
           <h1 class="brand-title">Densitats</h1>
-          <p class="brand-sub">Simulador de massa, volum i immersió</p>
+          <p class="brand-sub">Simulador de massa, volum i flotació</p>
         </div>
       </div>
 
@@ -36,41 +59,37 @@
           <span id="val-liquid-density" class="mono-pill">1,00 g/cm³</span>
         </div>
 
-        <div class="toggle-group" role="group" aria-label="Opcions de pissarra">
-          <button id="btn-forces" class="btn-toggle active" type="button" aria-pressed="true" title="Mostra o amaga els vectors de força P, E i T">
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="3"/><path d="M12 3v6M9.5 5.5L12 3l2.5 2.5M12 21v-6M9.5 18.5L12 21l2.5-2.5"/>
-            </svg>
+        <div class="toggle-group" role="group" aria-label="Opcions de la classe">
+          <button id="btn-forces" class="btn-toggle active" type="button" aria-pressed="true" title="Mostra o amaga les fletxes de les forces P, E, T i N">
+            <svg class="ic" aria-hidden="true"><use href="#i-forces"/></svg>
             <span>Forces</span>
           </button>
 
-          <button id="btn-calculs" class="btn-toggle active" type="button" aria-pressed="true" title="Mostra o amaga els càlculs de densitat i pes per preguntar a classe">
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/>
-            </svg>
-            <span>Mostra càlculs</span>
+          <button id="btn-calculs" class="btn-toggle" type="button" aria-pressed="false" title="Amaga els resultats per preguntar-los a classe; després es poden revelar un per un">
+            <svg class="ic" aria-hidden="true"><use id="ic-calculs" href="#i-ull-tancat"/></svg>
+            <span id="txt-calculs">Amaga resultats</span>
           </button>
 
-          <button id="btn-projector" class="btn-toggle" type="button" aria-pressed="false" title="Augmenta el contrast i la mida dels textos per projectar">
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>
-            </svg>
+          <button id="btn-projector" class="btn-toggle" type="button" aria-pressed="false" title="Pantalla completa, tot més gran i més contrast per a la pissarra digital">
+            <svg class="ic" aria-hidden="true"><use href="#i-pissarra"/></svg>
             <span>Pissarra</span>
           </button>
 
           <button id="btn-reinicia" class="btn-action" type="button" title="Buida tots els instruments">
-            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
-            </svg>
+            <svg class="ic" aria-hidden="true"><use href="#i-reinicia"/></svg>
             <span>Reinicia</span>
+          </button>
+
+          <button id="btn-ajuda" class="btn-ajuda" type="button" title="Instruccions, experiments preparats i guia ràpida (tecla ?)">
+            <svg class="ic" aria-hidden="true"><use href="#i-ajuda"/></svg>
+            <span>Ajuda</span>
           </button>
         </div>
       </div>
     </header>
 
-    <!-- Cos principal: prestatge d'objectes + taula de laboratori -->
+    <!-- Cos principal: catàleg d'objectes + taula de laboratori -->
     <main class="workspace" role="main">
-      <!-- Barra lateral d'objectes -->
       <aside class="catalog-panel" aria-label="Catàleg d'objectes">
         <div class="cat-tabs" id="cat-tabs" role="tablist"></div>
 
@@ -110,7 +129,10 @@
             </div>
             <input id="custom-volum" type="range" min="20" max="400" step="5" value="100">
           </div>
-          <button id="btn-use-custom" class="btn-primary full-w" type="button">Selecciona aquest objecte</button>
+          <button id="btn-use-custom" class="btn-primary full-w" type="button">
+            <svg class="ic" aria-hidden="true"><use href="#i-tots"/></svg>
+            Posa'l als 3 instruments
+          </button>
         </div>
 
         <!-- Targeta de l'objecte seleccionat i accions ràpides -->
@@ -119,14 +141,22 @@
             <div id="selected-thumb" class="selected-thumb"></div>
             <div>
               <div id="selected-name" class="selected-name">Cap objecte triat</div>
-              <div id="selected-desc" class="selected-desc">Tria o arrossega un objecte</div>
+              <div id="selected-desc" class="selected-desc">Toca o arrossega un objecte</div>
             </div>
           </div>
           <div class="quick-send">
-            <button type="button" class="btn-send" data-target="balanca" title="Posa l'objecte a la balança">Balança</button>
-            <button type="button" class="btn-send" data-target="proveta" title="Posa l'objecte a la proveta">Proveta</button>
-            <button type="button" class="btn-send" data-target="tanc" title="Posa l'objecte al tanc">Tanc</button>
-            <button type="button" class="btn-send accent" data-target="tots" title="Mostra'l als tres instruments alhora">Als 3</button>
+            <button type="button" class="btn-send" data-target="balanca" title="Posa l'objecte a la balança">
+              <svg class="ic" aria-hidden="true"><use href="#i-balanca"/></svg><span>Balança</span>
+            </button>
+            <button type="button" class="btn-send" data-target="proveta" title="Posa l'objecte a la proveta">
+              <svg class="ic" aria-hidden="true"><use href="#i-proveta"/></svg><span>Proveta</span>
+            </button>
+            <button type="button" class="btn-send" data-target="tanc" title="Posa l'objecte al tanc">
+              <svg class="ic" aria-hidden="true"><use href="#i-tanc"/></svg><span>Tanc</span>
+            </button>
+            <button type="button" class="btn-send accent" data-target="tots" title="Posa l'objecte als tres instruments alhora">
+              <svg class="ic" aria-hidden="true"><use href="#i-tots"/></svg><span>Als 3</span>
+            </button>
           </div>
         </div>
       </aside>
@@ -139,14 +169,26 @@
             <header class="station-head">
               <div>
                 <h2 class="station-title">1. Balança digital</h2>
-                <p class="station-hint">Mesura la massa (g) i el pes real (N)</p>
+                <p class="station-hint">Mesura la massa (g)</p>
               </div>
-              <div class="station-actions">
-                <button id="btn-tara" class="btn-mini" type="button" title="Posa la balança a zero">Tara</button>
-                <button id="btn-treu-balanca" class="btn-mini" type="button" title="Treu l'objecte de la balança">Treu</button>
-              </div>
+              <button class="btn-info" type="button" data-ajuda="balanca" title="Com funciona la balança" aria-label="Ajuda de la balança">
+                <svg class="ic" aria-hidden="true"><use href="#i-ajuda"/></svg>
+              </button>
             </header>
             <div id="stage-balanca" class="station-stage"></div>
+            <footer class="station-foot">
+              <div class="foot-row">
+                <button id="btn-got" class="btn-mini btn-mini-toggle" type="button" aria-pressed="false" title="Posa o treu un got de vidre buit (120 g) al plat">
+                  <svg class="ic" aria-hidden="true"><use href="#i-got"/></svg><span>Got</span>
+                </button>
+                <button id="btn-tara" class="btn-mini" type="button" title="Posa la pantalla a zero amb el que hi ha al plat">
+                  <svg class="ic" aria-hidden="true"><use href="#i-tara"/></svg><span>Tara</span>
+                </button>
+                <button id="btn-treu-balanca" class="btn-mini" type="button" title="Treu l'objecte de la balança">
+                  <svg class="ic" aria-hidden="true"><use href="#i-treu"/></svg><span>Treu</span>
+                </button>
+              </div>
+            </footer>
           </article>
 
           <!-- 2. Proveta -->
@@ -156,22 +198,27 @@
                 <h2 class="station-title">2. Proveta graduada</h2>
                 <p class="station-hint">Mesura el volum per desplaçament</p>
               </div>
-              <div class="station-actions">
+              <button class="btn-info" type="button" data-ajuda="proveta" title="Com funciona la proveta" aria-label="Ajuda de la proveta">
+                <svg class="ic" aria-hidden="true"><use href="#i-ajuda"/></svg>
+              </button>
+            </header>
+            <div id="stage-proveta" class="station-stage"></div>
+            <footer class="station-foot">
+              <div class="foot-row">
+                <label for="range-v0" class="range-label">V₀: <strong id="val-v0">200 mL</strong></label>
+                <input id="range-v0" type="range" min="50" max="375" step="25" value="200">
+              </div>
+              <div class="foot-row">
                 <select id="select-proveta-cap" class="select-mini" aria-label="Capacitat de la proveta">
                   <option value="250">250 mL</option>
                   <option value="500" selected>500 mL</option>
                   <option value="1000">1000 mL</option>
                 </select>
-                <button id="btn-treu-proveta" class="btn-mini" type="button" title="Treu l'objecte de la proveta">Treu</button>
-              </div>
-            </header>
-            <div id="stage-proveta" class="station-stage"></div>
-            <footer class="station-foot">
-              <div class="foot-row">
-                <label for="range-v0">V₀: <strong id="val-v0">200 mL</strong></label>
-                <input id="range-v0" type="range" min="50" max="400" step="25" value="200">
-                <button id="btn-vareta" class="btn-mini-toggle" type="button" aria-pressed="false" title="Empènyer l'objecte fins al fons amb la vareta">
-                  Vareta
+                <button id="btn-vareta" class="btn-mini btn-mini-toggle" type="button" aria-pressed="false" title="Enfonsa del tot amb una vareta prima un objecte que sura, per mesurar-ne tot el volum">
+                  <svg class="ic" aria-hidden="true"><use href="#i-vareta"/></svg><span>Enfonsa'l</span>
+                </button>
+                <button id="btn-treu-proveta" class="btn-mini" type="button" title="Treu l'objecte de la proveta">
+                  <svg class="ic" aria-hidden="true"><use href="#i-treu"/></svg><span>Treu</span>
                 </button>
               </div>
             </footer>
@@ -182,37 +229,54 @@
             <header class="station-head">
               <div>
                 <h2 class="station-title">3. Tanc d'immersió i dinamòmetre</h2>
-                <p class="station-hint">Pes aparent dins el líquid, empenyiment i flotació</p>
+                <p class="station-hint">Pes dins el líquid, empenyiment i flotació</p>
               </div>
-              <div class="station-actions">
-                <div class="mode-pills" role="group" aria-label="Mode del tanc">
-                  <button id="btn-mode-din" class="pill-btn active" type="button">Dinamòmetre</button>
-                  <button id="btn-mode-lliure" class="pill-btn" type="button">Flotació lliure</button>
-                </div>
-                <button id="btn-treu-tanc" class="btn-mini" type="button" title="Treu l'objecte del tanc">Treu</button>
-              </div>
+              <button class="btn-info" type="button" data-ajuda="tanc" title="Com funciona el tanc" aria-label="Ajuda del tanc">
+                <svg class="ic" aria-hidden="true"><use href="#i-ajuda"/></svg>
+              </button>
             </header>
             <div id="stage-tanc" class="station-stage"></div>
             <footer class="station-foot">
+              <div class="foot-row">
+                <div class="mode-pills" role="group" aria-label="Mode del tanc">
+                  <button id="btn-mode-din" class="pill-btn active" type="button" aria-pressed="true">Penjat del dinamòmetre</button>
+                  <button id="btn-mode-lliure" class="pill-btn" type="button" aria-pressed="false">Flotació lliure</button>
+                </div>
+                <button id="btn-treu-tanc" class="btn-mini" type="button" title="Treu l'objecte del tanc">
+                  <svg class="ic" aria-hidden="true"><use href="#i-treu"/></svg><span>Treu</span>
+                </button>
+              </div>
               <div id="dinamometre-controls" class="foot-row">
-                <label for="range-immersio">Immersió: <strong id="val-immersio">0 %</strong></label>
-                <input id="range-immersio" type="range" min="0" max="100" step="1" value="0">
+                <label for="range-immersio" class="range-label">Immersió: <strong id="val-immersio">0 %</strong></label>
+                <div class="range-wrap">
+                  <input id="range-immersio" type="range" min="0" max="100" step="1" value="0">
+                  <span id="immersio-limit" class="range-limit hidden" title="Fins aquí s'enfonsa sol: més enllà la corda s'afluixa"></span>
+                </div>
                 <div class="preset-imm">
                   <button type="button" class="btn-mini" data-imm="0">Aire</button>
                   <button type="button" class="btn-mini" data-imm="50">50 %</button>
-                  <button type="button" class="btn-mini" data-imm="100">Submergit</button>
+                  <button type="button" class="btn-mini" data-imm="100">Dins</button>
                 </div>
               </div>
               <div id="lliure-controls" class="foot-row hidden">
                 <span id="lliure-status" class="status-note">L'objecte s'ajusta lliurement segons la seva densitat.</span>
-                <button id="btn-deixa-caure" class="btn-mini" type="button">Torna a deixar caure</button>
+                <button id="btn-deixa-caure" class="btn-mini" type="button">
+                  <svg class="ic" aria-hidden="true"><use href="#i-caure"/></svg><span>Deixa'l caure</span>
+                </button>
               </div>
             </footer>
           </article>
         </div>
 
-        <!-- Barra resum de magnituds per a la pissarra -->
-        <section class="summary-bar" aria-label="Resum de magnituds">
+        <!-- Barra de resultats: només mostra el que s'ha mesurat -->
+        <section class="summary-bar" id="summary-bar" aria-label="Resultats de l'objecte analitzat" aria-live="polite">
+          <div class="sum-item sum-obj">
+            <div id="sum-thumb" class="sum-thumb"></div>
+            <div class="sum-obj-text">
+              <span class="sum-lbl">Objecte</span>
+              <strong id="sum-nom" class="sum-nom">—</strong>
+            </div>
+          </div>
           <div class="sum-item">
             <span class="sum-lbl">Massa (m)</span>
             <strong id="sum-massa" class="sum-val">—</strong>
@@ -222,7 +286,7 @@
             <strong id="sum-volum" class="sum-val">—</strong>
           </div>
           <div class="sum-item highlight">
-            <span class="sum-lbl">Densitat (ρ = m / V)</span>
+            <span class="sum-lbl">Densitat (ρ)</span>
             <strong id="sum-densitat" class="sum-val">—</strong>
           </div>
           <div class="sum-item">
@@ -234,7 +298,7 @@
             <strong id="sum-emp" class="sum-val">—</strong>
           </div>
           <div class="sum-item highlight-green">
-            <span class="sum-lbl">Pes dins el líquid (Pₐₚ)</span>
+            <span class="sum-lbl">Pes dins el líquid</span>
             <strong id="sum-pap" class="sum-val">—</strong>
           </div>
         </section>
@@ -257,6 +321,173 @@
         <p>Codi: <a href="LICENSE" target="_blank" rel="noopener noreferrer">AGPLv3</a> · Continguts: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> · <a href="https://github.com/felipsarroca/edu-apps/issues/new" target="_blank" rel="noopener noreferrer">Suggeriments i errors</a></p>
       </div>
     </footer>
+  </div>
+
+  <!-- Objecte que segueix el dit o el ratolí mentre s'arrossega -->
+  <div id="drag-ghost" class="drag-ghost hidden" aria-hidden="true"></div>
+
+  <!-- Finestra d'ajuda -->
+  <dialog id="ajuda" class="ajuda" aria-labelledby="ajuda-titol">
+    <div class="ajuda-cap">
+      <h2 id="ajuda-titol">
+        <svg class="ic" aria-hidden="true"><use href="#i-ajuda"/></svg>
+        Ajuda de Densitats
+      </h2>
+      <div class="ajuda-tabs" role="tablist" aria-label="Apartats de l'ajuda">
+        <button type="button" class="ajuda-tab active" role="tab" aria-selected="true" data-tab="com">Com funciona</button>
+        <button type="button" class="ajuda-tab" role="tab" aria-selected="false" data-tab="instruments">Instruments</button>
+        <button type="button" class="ajuda-tab" role="tab" aria-selected="false" data-tab="experiments">Experiments</button>
+        <button type="button" class="ajuda-tab" role="tab" aria-selected="false" data-tab="professorat">Per al professorat</button>
+      </div>
+      <button type="button" class="ajuda-tanca" id="ajuda-tanca" autofocus aria-label="Tanca l'ajuda" title="Tanca (Esc)">
+        <svg class="ic" aria-hidden="true"><use href="#i-treu"/></svg>
+      </button>
+    </div>
+
+    <div class="ajuda-cos">
+      <!-- Com funciona -->
+      <section class="ajuda-panell" data-panell="com">
+        <ol class="passos">
+          <li class="pas">
+            <span class="pas-num">1</span>
+            <div class="pas-dibuix" id="dib-pas-1"></div>
+            <h3>Tria un objecte</h3>
+            <p>Toca'n un del catàleg. Les pestanyes l'ordenen per tipus.</p>
+          </li>
+          <li class="pas">
+            <span class="pas-num">2</span>
+            <div class="pas-dibuix" id="dib-pas-2"></div>
+            <h3>Posa'l a un instrument</h3>
+            <p>Toca l'instrument que vulguis, o arrossega-hi l'objecte. <strong>Als 3</strong> el posa a tots alhora.</p>
+          </li>
+          <li class="pas">
+            <span class="pas-num">3</span>
+            <div class="pas-dibuix" id="dib-pas-3"></div>
+            <h3>Mesura</h3>
+            <p>La balança dona la <strong>massa</strong>. La proveta, el <strong>volum</strong>: V = V<sub>f</sub> − V₀. El tanc, les <strong>forces</strong>.</p>
+          </li>
+          <li class="pas">
+            <span class="pas-num">4</span>
+            <div class="pas-dibuix pas-formula">
+              <span class="formula">ρ = <span class="frac"><span>m</span><span>V</span></span></span>
+            </div>
+            <h3>Calcula la densitat</h3>
+            <p>Si ρ és més petita que la del líquid, l'objecte <strong>sura</strong>. Si és més gran, <strong>s'enfonsa</strong>.</p>
+          </li>
+        </ol>
+
+        <div class="llegenda-forces">
+          <h3>Les fletxes del tanc</h3>
+          <ul>
+            <li><span class="fx fx-p">P</span> <strong>Pes:</strong> la Terra estira l'objecte cap avall.</li>
+            <li><span class="fx fx-e">E</span> <strong>Empenyiment:</strong> el líquid l'empeny cap amunt. E = pes del líquid desallotjat (principi d'Arquimedes).</li>
+            <li><span class="fx fx-t">T</span> <strong>Tensió:</strong> el que marca el dinamòmetre. És el pes aparent: T = P − E.</li>
+            <li><span class="fx fx-n">N</span> <strong>Normal:</strong> el fons del tanc aguanta l'objecte quan s'enfonsa.</li>
+          </ul>
+        </div>
+
+        <div class="ajuda-peu">
+          <button type="button" class="btn-primary" id="btn-guia">
+            <svg class="ic" aria-hidden="true"><use href="#i-guia"/></svg>
+            Mostra la guia ràpida sobre la pantalla
+          </button>
+        </div>
+      </section>
+
+      <!-- Instruments -->
+      <section class="ajuda-panell hidden" data-panell="instruments">
+        <div class="inst-ajuda" data-inst="balanca">
+          <div class="inst-dibuix" id="dib-balanca"></div>
+          <div class="inst-text">
+            <h3><svg class="ic" aria-hidden="true"><use href="#i-balanca"/></svg> 1. Balança digital</h3>
+            <p><strong>Mesura:</strong> la massa de l'objecte, en grams (g). A sota mostra també el pes en newtons: P = m · g.</p>
+            <ul>
+              <li><strong>Got:</strong> posa un got buit de 120 g al plat.</li>
+              <li><strong>Tara:</strong> posa la pantalla a zero amb el que hi ha al plat. Posa el got, prem Tara i afegeix l'objecte: la balança mostra només la massa de l'objecte.</li>
+              <li><strong>Treu:</strong> buida el plat.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="inst-ajuda" data-inst="proveta">
+          <div class="inst-dibuix" id="dib-proveta"></div>
+          <div class="inst-text">
+            <h3><svg class="ic" aria-hidden="true"><use href="#i-proveta"/></svg> 2. Proveta graduada</h3>
+            <p><strong>Mesura:</strong> el volum per desplaçament. Llegeix el nivell abans (V₀) i després (V<sub>f</sub>) de posar l'objecte: <strong>V = V<sub>f</sub> − V₀</strong>. 1 mL = 1 cm³.</p>
+            <ul>
+              <li><strong>V₀:</strong> tria quanta aigua hi ha abans de posar l'objecte.</li>
+              <li><strong>250 / 500 / 1000 mL:</strong> canvia la mida de la proveta.</li>
+              <li><strong>Enfonsa'l:</strong> si l'objecte sura, una vareta prima el submergeix del tot per mesurar-ne tot el volum.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="inst-ajuda" data-inst="tanc">
+          <div class="inst-dibuix" id="dib-tanc"></div>
+          <div class="inst-text">
+            <h3><svg class="ic" aria-hidden="true"><use href="#i-tanc"/></svg> 3. Tanc i dinamòmetre</h3>
+            <p><strong>Mesura:</strong> les forces dins el líquid. El dinamòmetre marca el pes aparent, que baixa a mesura que l'objecte entra al líquid.</p>
+            <ul>
+              <li><strong>Penjat del dinamòmetre:</strong> mou el control d'immersió (o prem Aire, 50 % o Dins).</li>
+              <li><strong>Flotació lliure:</strong> deixa anar l'objecte i mira si sura o s'enfonsa.</li>
+              <li>Si l'objecte sura, la marca groga del control indica fins on s'enfonsa sol: a partir d'aquí la corda s'afluixa.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experiments -->
+      <section class="ajuda-panell hidden" data-panell="experiments">
+        <p class="ajuda-intro">Toca <strong>Prepara'l</strong> i l'app posarà el líquid, l'objecte i el mode del tanc a punt.</p>
+        <div class="exp-grid" id="exp-grid"></div>
+      </section>
+
+      <!-- Professorat -->
+      <section class="ajuda-panell hidden" data-panell="professorat">
+        <div class="prof-grid">
+          <div class="prof-card">
+            <svg class="prof-ic" aria-hidden="true"><use href="#i-ull-tancat"/></svg>
+            <h3>Amaga resultats</h3>
+            <p>Amaga el volum, la densitat, el pes i les forces (a la barra de resultats, al dinamòmetre i a les fletxes). L'alumnat els ha de calcular. Toca <strong>Revela</strong> a la barra de resultats per descobrir-los un per un.</p>
+          </div>
+          <div class="prof-card">
+            <svg class="prof-ic" aria-hidden="true"><use href="#i-pissarra"/></svg>
+            <h3>Pissarra</h3>
+            <p>Posa l'app a pantalla completa, ho fa tot més gran i augmenta el contrast perquè es vegi bé des del fons de l'aula. Torna-hi a prémer per sortir.</p>
+          </div>
+          <div class="prof-card">
+            <svg class="prof-ic" aria-hidden="true"><use href="#i-ma"/></svg>
+            <h3>Pantalla tàctil</h3>
+            <p>Toca un objecte i després l'instrument on el vols posar. També el pots arrossegar amb el dit cap a la dreta.</p>
+          </div>
+          <div class="prof-card">
+            <svg class="prof-ic" aria-hidden="true"><use href="#i-forces"/></svg>
+            <h3>Forces</h3>
+            <p>Mostra o amaga les fletxes P, E, T i N. Amaga-les per demanar a la classe que les dibuixi abans de mostrar-les.</p>
+          </div>
+          <div class="prof-card">
+            <svg class="prof-ic" aria-hidden="true"><use href="#i-calcul"/></svg>
+            <h3>Barra de resultats</h3>
+            <p>Mostra només el que s'ha mesurat de l'objecte analitzat: la massa apareix quan és a la balança i el volum quan és a la proveta.</p>
+          </div>
+          <div class="prof-card">
+            <svg class="prof-ic" aria-hidden="true"><use href="#i-reinicia"/></svg>
+            <h3>Reinicia i dreceres</h3>
+            <p><strong>Reinicia</strong> buida els tres instruments. Tecles: <kbd>?</kbd> obre l'ajuda i <kbd>Esc</kbd> la tanca o cancel·la la col·locació.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <!-- Guia ràpida sobre la pantalla -->
+  <div id="guia-capa" class="guia-capa hidden" aria-hidden="true"></div>
+  <div id="guia-bombolla" class="guia-bombolla hidden" role="dialog" aria-live="polite" aria-labelledby="guia-titol">
+    <div class="guia-pas" id="guia-pas">1 de 4</div>
+    <h3 id="guia-titol"></h3>
+    <p id="guia-text"></p>
+    <div class="guia-botons">
+      <button type="button" class="btn-link" id="guia-salta">Salta la guia</button>
+      <button type="button" class="btn-primary" id="guia-seguent">Següent</button>
+    </div>
   </div>
 
   <script type="module" src="js/app.js"></script>
