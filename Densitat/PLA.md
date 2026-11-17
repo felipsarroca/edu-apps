@@ -116,7 +116,7 @@ El detall, amb criteris d'acceptació, és a [`11-fases-i-validacio.md`](planifi
 
 Indico la meva recomanació a cada punt. Pots respondre per números («d'acord amb tot excepte la 3 i la 7», per exemple).
 
-1. **Nom i subtítol.** *Decidit:* «Densitat · Laboratori virtual de densitat i flotació», a la carpeta `Densitat`, amb l'àlies `ja.cat/densitat` (o `ja.cat/labdensitat` si està ocupat).
+1. **Nom i subtítol.** *Decidit:* «Densitat · Laboratori virtual de densitat i flotació», a la carpeta `Densitat`, amb l'àlies `ja.cat/labdensitat` (publicat).
 2. **Vocabulari.** *Decidit:* «surar» i «flotar» són correctes i es poden alternar a la interfície per facilitar la comprensió (per exemple, «sura (flota)» la primera vegada que surt en una investigació); «flotar» és el terme del llibre de Science Bits. «Empenyiment» i «líquid desplaçat».
 3. **Símbols.** *Decidit:* `d` per a la densitat a tota l'app, com el llibre (`d = m / V`), `dL` per al líquid i `E = dL · g · V` per a l'empenyiment. Al nivell 3, una nota: «En física també s'escriu ρ».
 4. **Gravetat.** *Decidit:* `g = 9,8 N/kg` per defecte, com el llibre. El docent pot canviar-lo a 10 o a 9,81 des del mode docent; la Lluna (1,6) i Mart (3,7) només surten a la investigació E7.
