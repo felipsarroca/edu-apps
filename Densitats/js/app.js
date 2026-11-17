@@ -306,6 +306,18 @@ function renderProveta() {
 function renderTanc() {
   const liq = liquidActual();
   const obj = estat.tancObj;
+  // Un objecte que sura no es pot enfonsar més que el seu punt de flotació:
+  // el control s'hi atura perquè, en tornar-lo a baixar, la corda es tensi de seguida
+  if (obj && estat.modeTanc === "dinamometre") {
+    const dObj = magnitudsObjecte(obj).densitat;
+    if (dObj < liq.densitat) {
+      const maxImm = (dObj / liq.densitat) * 100;
+      if (estat.immersioSlider > maxImm) {
+        estat.immersioSlider = maxImm;
+        els.rangeImmersio.value = String(maxImm);
+      }
+    }
+  }
   const estatDin = obj ? estatDinamometre(obj, liq.densitat, estat.immersioSlider / 100) : null;
   const estatLliure = obj ? estatEquilibriLliure(obj, liq.densitat) : null;
 
@@ -329,7 +341,7 @@ function renderTanc() {
   } else {
     els.immersioLimit.classList.add("hidden");
   }
-  if (fEq !== null && estat.immersioSlider / 100 > fEq + 1e-4) {
+  if (fEq !== null && estatDin && !estatDin.cordaTensa && estat.immersioSlider > 1) {
     els.valImmersio.textContent = `${Math.round(fEq * 100)} % (sura)`;
   } else {
     els.valImmersio.textContent = `${estat.immersioSlider} %`;
