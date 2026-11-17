@@ -53,7 +53,8 @@ import { icona } from "./eines/icones.js";
 
 // Estat volàtil de la interfície (subvistes, filtres, eines emergents)
 const ui = {
-  blocIniciObert: "C",
+  blocIniciObert: null, // null = el tema de la investigació proposada
+  menuObert: null, // null | "opcions" | "vistes"
   quadernFiltre: null,
   consultaOpcions: { filtreEstat: "tots", cercaGlossari: "" },
   resultatMonteCarlo: null,
@@ -91,6 +92,7 @@ export function ajustaEscalaPantalla() {
   const eh = h / z;
   root.style.setProperty("--ui-zoom", String(z));
   root.classList.toggle("projector", Boolean(estat.configuracio?.projector));
+  root.classList.toggle("vista-completa", Boolean(estat.configuracio?.vistaCompleta));
   root.classList.toggle("mode-compacte", w >= 760 && w < 1180);
   root.classList.toggle("mode-mobil", w < 760);
   root.classList.toggle("h-700", eh <= 700);
@@ -110,12 +112,44 @@ function mostraToast(text) {
 }
 
 /**
+ * Tanca qualsevol menú emergent obert sense tornar a renderitzar la pantalla
+ * (així no es perd res del que l'alumne tingui marcat o escrit a la guia).
+ */
+function tancaMenus() {
+  ui.menuObert = null;
+  document.querySelectorAll(".menu-emergent").forEach(m => {
+    m.hidden = true;
+  });
+  document.querySelectorAll("[data-toggle-menu]").forEach(b => {
+    b.setAttribute("aria-expanded", "false");
+    if (b.classList.contains("bt-suport")) b.classList.remove("actiu");
+  });
+}
+
+/**
  * Renderitza la barra superior global (48 px, 08-disseny-visual-i-interaccio.md §3.1).
+ * Navegació en llenguatge planer; els ajustos (lectura fàcil, vista completa, projector i nivell) s'agrupen al menú «Opcions».
  */
 function renderitzaCapcalera(estat) {
   const cfg = estat.configuracio;
-  const vistes = estat.laboratori.vistes;
   const invActiva = INVESTIGACIONS[estat.investigacio?.id] || INVESTIGACIONS.C4;
+  const nMesures = estat.quadern.mesures.length;
+  const codiLab = cfg.vistaCompleta
+    ? estat.modeLaboratori === "investigacio"
+      ? ` (${invActiva.id})`
+      : " (lliure)"
+    : "";
+
+  const botoNav = (id, ic, text, extra = "") => `
+          <button type="button" class="bt-nav ${estat.pantalla === id ? "actiu" : ""}" data-canvia-pantalla="${id}" ${estat.pantalla === id ? 'aria-current="page"' : ""}>
+            ${icona(ic)} <span>${text}</span>${extra}
+          </button>`;
+
+  const interruptor = (clau, titol, ajuda) => `
+            <label class="opcio-fila">
+              <input type="checkbox" data-docent-toggle="${clau}" ${cfg[clau] ? "checked" : ""}>
+              <span class="opcio-text"><strong>${titol}</strong><small>${ajuda}</small></span>
+            </label>`;
 
   return `
     <div class="header-inner">
@@ -126,63 +160,40 @@ function renderitzaCapcalera(estat) {
         </button>
 
         <nav class="nav-principal" aria-label="Espais de l'aplicació">
-          <button type="button" class="bt-nav ${estat.pantalla === "inici" ? "actiu" : ""}" data-canvia-pantalla="inici">
-            ${icona("inici")} <span>Inici</span>
-          </button>
-          <button type="button" class="bt-nav ${estat.pantalla === "laboratori" ? "actiu" : ""}" data-canvia-pantalla="laboratori">
-            ${icona("laboratori")} <span>Laboratori${estat.modeLaboratori === "investigacio" ? ` (${invActiva.id})` : " (lliure)"}</span>
-          </button>
-          <button type="button" class="bt-nav ${estat.pantalla === "quadern" ? "actiu" : ""}" data-canvia-pantalla="quadern">
-            ${icona("quadern")} <span>Quadern (${estat.quadern.mesures.length})</span>
-          </button>
-          <button type="button" class="bt-nav ${estat.pantalla === "consulta" ? "actiu" : ""}" data-canvia-pantalla="consulta">
-            ${icona("consulta")} <span>Consulta</span>
-          </button>
-          <button type="button" class="bt-nav ${estat.pantalla === "progres" ? "actiu" : ""}" data-canvia-pantalla="progres">
-            ${icona("progres")} <span>Progrés</span>
-          </button>
-          <button type="button" class="bt-nav ${estat.pantalla === "docent" ? "actiu" : ""}" data-canvia-pantalla="docent">
-            ${icona("docent")} <span>Docent</span>
-          </button>
+          ${botoNav("inici", "inici", "Inici")}
+          ${botoNav("laboratori", "laboratori", `Laboratori${codiLab}`)}
+          ${botoNav("quadern", "quadern", "Quadern", nMesures > 0 ? `<span class="nav-comptador" title="${nMesures} mesures anotades">${nMesures}</span>` : "")}
+          ${botoNav("consulta", "consulta", "Fórmules i ajuda")}
+          ${botoNav("progres", "progres", "Progrés")}
         </nav>
       </div>
 
       <div class="header-dreta">
-        ${
-          estat.pantalla === "laboratori"
-            ? `
-          <div class="grup-vistes-header" role="group" aria-label="Mirades sincronitzades">
-            <button type="button" class="bt-vista ${vistes.cubets ? "activa" : ""}" data-toggle-vista="cubets" aria-pressed="${vistes.cubets}" title="Vista de cubets d'1 cm³">
-              ${icona("cubets")} <span>Cubets</span>
-            </button>
-            <button type="button" class="bt-vista ${vistes.volums ? "activa" : ""}" data-toggle-vista="volums" aria-pressed="${vistes.volums}" title="Vista de volums i cavitats">
-              ${icona("volums")} <span>Volums</span>
-            </button>
-            <button type="button" class="bt-vista ${vistes.forces ? "activa" : ""}" data-toggle-vista="forces" aria-pressed="${vistes.forces}" title="Vectors de força (P, E, N, T)">
-              ${icona("forces")} <span>Forces</span>
-            </button>
-            <button type="button" class="bt-vista ${vistes.particules ? "activa" : ""}" data-toggle-vista="particules" aria-pressed="${vistes.particules}" title="Model didàctic de partícules">
-              ${icona("particules")} <span>Partícules</span>
-            </button>
-          </div>`
-            : ""
-        }
+        <button type="button" class="bt-suport ${estat.pantalla === "docent" ? "actiu" : ""}" data-canvia-pantalla="docent" title="Eines per al professorat: enllaços per a Classroom, solucionari i rúbrica">
+          ${icona("docent")} <span>Professorat</span>
+        </button>
 
-        <div class="grup-suports-header">
-          <label class="selector-nivell-top" title="${cfg.nivellFixatPerDocent ? "Nivell fixat per l'enllaç del docent" : "Tria el nivell de profunditat"}">
-            <span class="sr-only">Nivell</span>
-            <select id="header-sel-nivell" ${cfg.nivellFixatPerDocent ? "disabled" : ""}>
-              <option value="1" ${cfg.nivell === 1 ? "selected" : ""}>Nivell 1 · Descoberta</option>
-              <option value="2" ${cfg.nivell === 2 ? "selected" : ""}>Nivell 2 · Mesura</option>
-              <option value="3" ${cfg.nivell === 3 ? "selected" : ""}>Nivell 3 · Models</option>
-            </select>
-          </label>
-          <button type="button" class="bt-suport ${cfg.lecturaFacil ? "actiu" : ""}" data-toggle-facil="true" aria-pressed="${cfg.lecturaFacil}" title="Activa la lectura fàcil (nivell A2)">
-            A2 fàcil
+        <div class="menu-ancora" data-menu="opcions">
+          <button type="button" class="bt-suport ${ui.menuObert === "opcions" ? "actiu" : ""}" data-toggle-menu="opcions" aria-haspopup="true" aria-expanded="${ui.menuObert === "opcions"}">
+            ${icona("opcions")} <span>Opcions</span>
           </button>
-          <button type="button" class="bt-suport ${cfg.projector ? "actiu" : ""}" data-toggle-projector="true" aria-pressed="${cfg.projector}" title="Mode projector per a l'aula">
-            ${icona("projector")}
-          </button>
+          <div class="menu-emergent menu-avall menu-dreta menu-opcions" role="group" aria-label="Opcions" ${ui.menuObert === "opcions" ? "" : "hidden"}>
+            ${interruptor("lecturaFacil", "Lectura fàcil", "Textos més curts i senzills")}
+            ${interruptor("vistaCompleta", "Vista completa", "Totes les eines i els detalls tècnics a la vista")}
+            ${interruptor("projector", "Mode projector", "Lletra més gran per a la pissarra digital")}
+            <label class="opcio-fila opcio-fila-select" title="${cfg.nivellFixatPerDocent ? "Nivell fixat per l'enllaç del docent" : "Com més alt, més precisió es demana a les respostes"}">
+              <span class="opcio-text"><strong>Nivell</strong><small>Precisió que es demana a les respostes</small></span>
+              <select id="header-sel-nivell" ${cfg.nivellFixatPerDocent ? "disabled" : ""}>
+                <option value="1" ${cfg.nivell === 1 ? "selected" : ""}>1 · Descoberta</option>
+                <option value="2" ${cfg.nivell === 2 ? "selected" : ""}>2 · Mesura</option>
+                <option value="3" ${cfg.nivell === 3 ? "selected" : ""}>3 · Models</option>
+              </select>
+            </label>
+            <button type="button" class="menu-element" data-obre-guia-rapida="true">
+              ${icona("ajuda")}
+              <span class="menu-element-text"><strong>Com funciona el laboratori</strong><small>Torna a veure els primers passos</small></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -207,7 +218,7 @@ export function renderitzaApp() {
       mainEl.innerHTML = renderitzaPantallaInici(estat, ui.blocIniciObert);
       break;
     case "laboratori":
-      mainEl.innerHTML = renderitzaPantallaLaboratori(estat, ui.eines);
+      mainEl.innerHTML = renderitzaPantallaLaboratori(estat, ui.eines, ui);
       break;
     case "quadern":
       mainEl.innerHTML = renderitzaPantallaQuadern(estat, ui.quadernFiltre);
@@ -281,10 +292,38 @@ function inicialitzaEsdeveniments() {
     const estat = obteEstat();
     const lab = estat.laboratori;
 
+    // 0. Menús emergents (Opcions, Més eines, Mostra): s'obren amb el seu botó i es tanquen en fer clic a fora
+    const btMenu = e.target.closest("[data-toggle-menu]");
+    if (btMenu) {
+      ui.menuObert = ui.menuObert === btMenu.dataset.toggleMenu ? null : btMenu.dataset.toggleMenu;
+      renderitzaApp();
+      return;
+    }
+    if (ui.menuObert && !e.target.closest("[data-menu]")) {
+      tancaMenus();
+    }
+
+    // 0b. Guia ràpida de primers passos del laboratori
+    if (e.target.closest("[data-tanca-guia-rapida]")) {
+      estat.configuracio.guiaRapidaVista = true;
+      notifica();
+      return;
+    }
+    if (e.target.closest("[data-obre-guia-rapida]")) {
+      const jaVisible = estat.pantalla === "laboratori" && !estat.configuracio.guiaRapidaVista;
+      estat.configuracio.guiaRapidaVista = jaVisible;
+      estat.pantalla = "laboratori";
+      ui.menuObert = null;
+      notifica();
+      return;
+    }
+
     // 1. Canvi de pantalla
     const btPantalla = e.target.closest("[data-canvia-pantalla]");
     if (btPantalla) {
       estat.pantalla = btPantalla.dataset.canviaPantalla;
+      ui.menuObert = null;
+      if (estat.pantalla === "inici") ui.blocIniciObert = null;
       notifica();
       return;
     }
@@ -347,6 +386,7 @@ function inicialitzaEsdeveniments() {
     if (btEina) {
       const idEina = btEina.dataset.obreEina;
       lab.einaActiva = lab.einaActiva === idEina ? null : idEina;
+      ui.menuObert = null;
       notifica();
       return;
     }
@@ -789,13 +829,14 @@ function inicialitzaEsdeveniments() {
         });
       }
       estat.progres.evidencies.push({ dimensio: "raonament", valor: 5 });
-      estat.investigacio.feedbackPas = { ok: true, text: "Anotat. Comprovem-ho." };
+      estat.investigacio.feedbackPas = { ok: true, text: "Predicció desada." };
       if (estat.investigacio.pas < inv.passos.length - 1) {
         estat.investigacio.pas += 1;
+        estat.investigacio.feedbackPas = null;
       }
       desaProgresEntradaInvestigacio(estat);
       notifica();
-      mostraToast("Anotat. Comprovem-ho al laboratori.");
+      mostraToast("Predicció desada. Ara comprova-ho al laboratori.");
       return;
     }
 
@@ -861,7 +902,7 @@ function inicialitzaEsdeveniments() {
         }
         estat.investigacio.feedbackPas = {
           ok: true,
-          text: `Has completat la investigació ${inv.id}: ${estat.configuracio.lecturaFacil ? inv.conclusioFacil : inv.conclusio}`
+          text: "Molt bé, resposta correcta! Has completat la investigació."
         };
       } else {
         estat.investigacio.feedbackPas = { ok: false, text: av.missatge };
@@ -1266,6 +1307,15 @@ function inicialitzaEsdeveniments() {
 
   // Dreceres de teclat (Ctrl+Z per desfer, Ctrl+Y per refer)
   document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      if (ui.menuObert) {
+        tancaMenus();
+      } else if (obteEstat().laboratori.einaActiva) {
+        obteEstat().laboratori.einaActiva = null;
+        notifica();
+      }
+      return;
+    }
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
       e.preventDefault();
       desfesLaboratori();

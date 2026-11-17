@@ -1,39 +1,73 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 /**
- * Pantalla d'Inici: itinerari d'investigacions per blocs (A a G), accés directe a continuar i laboratori lliure (08-disseny-visual-i-interaccio.md §3.2).
+ * Pantalla d'Inici: una acció principal clara (començar o continuar), la ruta recomanada en ordre
+ * i totes les investigacions agrupades per temes (08-disseny-visual-i-interaccio.md §3.2).
  */
 
-import { BLOCS, INVESTIGACIONS_LLISTA, INVESTIGACIONS, REPTES } from "../dades/investigacions/index.js";
+import {
+  BLOCS,
+  INVESTIGACIONS_LLISTA,
+  INVESTIGACIONS,
+  RUTA_RECOMANADA,
+  seguentInvestigacio,
+  dificultatInvestigacio
+} from "../dades/investigacions/index.js";
 import { icona } from "../eines/icones.js";
 
-export function renderitzaPantallaInici(estat, blocObert = "C") {
+/**
+ * Decideix quina investigació s'ha de proposar al botó principal.
+ */
+function proposaInvestigacio(estat) {
   const fetes = estat.progres?.fetes || [];
-  const invActual = INVESTIGACIONS[estat.investigacio?.id] || INVESTIGACIONS.C4;
-  const blocActiu = BLOCS.find(b => b.id === blocObert) || BLOCS[2];
-  const invsDelBloc = INVESTIGACIONS_LLISTA.filter(i => i.bloc === blocActiu.id);
+  const haComencat =
+    fetes.length > 0 ||
+    Object.keys(estat.quadern?.entrades || {}).length > 0 ||
+    (estat.quadern?.mesures || []).length > 0;
+  const actual = INVESTIGACIONS[estat.investigacio?.id];
 
-  const targetesBlocsHtml = BLOCS.map(b => {
+  if (!haComencat) {
+    return { inv: INVESTIGACIONS[RUTA_RECOMANADA[0]], verb: "Comença", haComencat };
+  }
+  if (actual && !fetes.includes(actual.id)) {
+    return { inv: actual, verb: "Continua", haComencat };
+  }
+  const seguent = seguentInvestigacio(fetes, actual?.id);
+  return { inv: seguent || actual || INVESTIGACIONS[RUTA_RECOMANADA[0]], verb: seguent ? "Següent" : "Repeteix", haComencat };
+}
+
+export function renderitzaPantallaInici(estat, blocObert = null) {
+  const fetes = estat.progres?.fetes || [];
+  const facil = estat.configuracio.lecturaFacil;
+  const proposta = proposaInvestigacio(estat);
+  const blocActiu = BLOCS.find(b => b.id === (blocObert || proposta.inv.bloc)) || BLOCS[0];
+  const invsDelBloc = INVESTIGACIONS_LLISTA.filter(i => i.bloc === blocActiu.id);
+  const fetesRuta = RUTA_RECOMANADA.filter(id => fetes.includes(id)).length;
+  const seguentRuta = RUTA_RECOMANADA.find(id => !fetes.includes(id));
+
+  const rutaHtml = RUTA_RECOMANADA.map((id, idx) => {
+    const inv = INVESTIGACIONS[id];
+    const feta = fetes.includes(id);
+    const esSeguent = id === seguentRuta;
+    return `
+      <li>
+        <button type="button" class="ini-pas-ruta ${feta ? "fet" : ""} ${esSeguent ? "seguent" : ""}" data-obre-inv="${id}" title="${facil ? inv.preguntaFacil : inv.pregunta}">
+          <span class="ini-pas-num" aria-hidden="true">${feta ? icona("verifica") : idx + 1}</span>
+          <span class="ini-pas-titol">${inv.titol}</span>
+          <span class="sr-only">${feta ? "(feta)" : esSeguent ? "(la següent)" : ""}</span>
+        </button>
+      </li>
+    `;
+  }).join("");
+
+  const temesHtml = BLOCS.map(b => {
     const llista = INVESTIGACIONS_LLISTA.filter(i => i.bloc === b.id);
     const fetesBloc = llista.filter(i => fetes.includes(i.id)).length;
-    const puntsHtml = llista
-      .map(
-        i =>
-          `<span class="punt-inv ${fetes.includes(i.id) ? "fet" : ""} ${i.id === estat.investigacio?.id ? "actual" : ""}" title="${i.id} · ${i.titol}"></span>`
-      )
-      .join("");
-
+    const pct = Math.round((fetesBloc / llista.length) * 100);
     return `
-      <button type="button" class="targeta-bloc ${b.id === blocActiu.id ? "seleccionat" : ""}" data-selecciona-bloc="${b.id}" aria-expanded="${b.id === blocActiu.id}">
-        <div class="targeta-bloc-cap">
-          <span class="lletra-bloc">Bloc ${b.id}</span>
-          <span class="curs-bloc">${b.nivellPrincipal}</span>
-        </div>
-        <h3>${b.titol}</h3>
-        <p>${b.subtitol}</p>
-        <div class="targeta-bloc-peu">
-          <div class="punts-progres" aria-hidden="true">${puntsHtml}</div>
-          <span class="comptador-bloc">${fetesBloc}/${llista.length}</span>
-        </div>
+      <button type="button" class="ini-tema ${b.id === blocActiu.id ? "seleccionat" : ""}" data-selecciona-bloc="${b.id}" aria-pressed="${b.id === blocActiu.id}" title="${b.subtitol}">
+        <strong>${b.titol}</strong>
+        <span class="ini-tema-meta">${b.nivellPrincipal} d'ESO · ${fetesBloc} de ${llista.length}</span>
+        <span class="ini-tema-barra" aria-hidden="true"><span style="width:${pct}%"></span></span>
       </button>
     `;
   }).join("");
@@ -41,89 +75,69 @@ export function renderitzaPantallaInici(estat, blocObert = "C") {
   const llistaInvsHtml = invsDelBloc
     .map(inv => {
       const feta = fetes.includes(inv.id);
-      const preg = estat.configuracio.lecturaFacil ? inv.preguntaFacil : inv.pregunta;
-      const esNucli1a = inv.fase === "1a";
+      const dif = dificultatInvestigacio(inv.nivells);
+      const recomanada = RUTA_RECOMANADA.includes(inv.id);
       return `
-        <article class="item-inv-card ${feta ? "inv-feta" : ""}">
-          <div class="item-inv-info">
-            <div class="item-inv-meta">
-              <span class="codi-inv">${inv.id}</span>
+        <button type="button" class="ini-inv ${feta ? "feta" : ""}" data-obre-inv="${inv.id}">
+          <span class="ini-inv-cos">
+            <span class="ini-inv-cap">
               <strong>${inv.titol}</strong>
-              ${esNucli1a ? `<span class="badge-essencial">Essencial</span>` : ""}
-              <span class="badge-nivell">Nivell ${inv.nivells.join("–")}</span>
-              <span class="badge-durada">${inv.durada} min</span>
-              ${feta ? `<span class="segell-completat">✓ Completada</span>` : ""}
-            </div>
-            <p class="item-inv-preg">${preg}</p>
-          </div>
-          <button type="button" class="bt bt-primari bt-petit" data-obre-inv="${inv.id}">
-            ${feta ? "Repeteix" : "Investiga →"}
-          </button>
-        </article>
+              ${feta ? `<span class="ini-etiqueta ini-etiqueta-feta">${icona("verifica")} Feta</span>` : ""}
+              ${recomanada && !feta ? `<span class="ini-etiqueta ini-etiqueta-ruta">Recomanada</span>` : ""}
+            </span>
+            <span class="ini-inv-preg">${facil ? inv.preguntaFacil : inv.pregunta}</span>
+            <span class="ini-inv-meta">
+              <span class="ini-dificultat ini-dif-${dif.grau}" title="Dificultat: ${dif.text}"><i></i><i></i><i></i> ${dif.text}</span>
+              <span>${inv.durada} min</span>
+              <span class="ini-inv-codi" title="Codi de la investigació">${inv.id}</span>
+            </span>
+          </span>
+          <span class="ini-inv-accio">${feta ? "Repeteix" : "Comença"} ${icona("plega")}</span>
+        </button>
       `;
     })
     .join("");
 
   return `
-    <section class="pantalla-inici">
-      <div class="inici-hero">
-        <div class="inici-hero-text">
-          <span class="avant-titol">Laboratori digital de Física i Química · 1r a 4t d'ESO</span>
-          <h1>Laboratori virtual de densitat i flotació</h1>
-          <p class="inici-subtitol">Mesura, prediu i comprova per què uns objectes suren (floten) i d'altres s'enfonsen, amb un únic motor físic rigorós i quadern científic integrat.</p>
-          <div class="inici-accions-principals">
-            <button type="button" class="bt bt-primari bt-gran" data-obre-inv="${invActual.id}">
-              ${icona("laboratori")} Continua: ${invActual.id} · ${invActual.titol}
+    <section class="pantalla-inici ini">
+      <div class="ini-hero">
+        <div class="ini-hero-text">
+          <h1>Per què unes coses suren i d'altres s'enfonsen?</h1>
+          <p class="ini-subtitol">Descobreix-ho fent experiments en un laboratori virtual: pesa objectes, mesura'n el volum i comprova si suren. Cada investigació et guia pas a pas.</p>
+          <div class="ini-accions">
+            <button type="button" class="bt bt-primari bt-gran ini-bt-principal" data-obre-inv="${proposta.inv.id}">
+              ${icona("laboratori")}
+              <span>${proposta.verb}: «${proposta.inv.titol}»</span>
             </button>
-            <button type="button" class="bt bt-secundari bt-gran" data-obre-lliure="mesura">
-              ${icona("balanca")} Laboratori lliure
-            </button>
-            <button type="button" class="bt bt-neutre" data-canvia-pantalla="progres">
-              ${icona("progres")} Diagnòstic adaptatiu i progrés (${fetes.length}/51)
+            <button type="button" class="bt bt-secundari bt-gran" data-obre-lliure="mesura" title="Entra al laboratori sense guia i prova el que vulguis">
+              ${icona("balanca")} Experimenta lliurement
             </button>
           </div>
         </div>
-        <div class="inici-hero-resum">
-          <div class="inici-acces-rapid">
-            <h4>Itinerari essencial recomanat (Fase 1a)</h4>
-            <div class="chips-inici-1a">
-              ${["A7", "C3", "C4", "C6", "D1", "D2", "D3", "D4", "D5"]
-                .map(id => {
-                  const i = INVESTIGACIONS[id];
-                  const f = fetes.includes(id);
-                  return `<button type="button" class="chip-inv-1a ${f ? "fet" : ""}" data-obre-inv="${id}" title="${i.pregunta}">
-                    <strong>${id}</strong> · ${i.titol} ${f ? "✓" : ""}
-                  </button>`;
-                })
-                .join("")}
-            </div>
-          </div>
-        </div>
+        <ol class="ini-com-funciona" aria-label="Com funciona">
+          <li><span class="ini-cf-num">1</span><span><strong>Tria</strong> una investigació (o segueix la ruta recomanada).</span></li>
+          <li><span class="ini-cf-num">2</span><span><strong>Experimenta</strong> al laboratori: la guia et diu què fer a cada pas.</span></li>
+          <li><span class="ini-cf-num">3</span><span><strong>Anota</strong> les mesures i explica què has descobert.</span></li>
+        </ol>
       </div>
 
-      <div class="inici-cos">
-        <div class="graella-blocs" role="tablist" aria-label="Blocs d'investigació">
-          ${targetesBlocsHtml}
+      <div class="ini-seccio">
+        <div class="ini-seccio-cap">
+          <h2>Ruta recomanada</h2>
+          <span class="ini-seccio-nota">Nou investigacions per entendre la densitat des de zero · ${fetesRuta} de ${RUTA_RECOMANADA.length} fetes</span>
         </div>
+        <ol class="ini-ruta">${rutaHtml}</ol>
+      </div>
 
-        <div class="desplegable-bloc" role="region" aria-label="Investigacions del bloc ${blocActiu.id}">
-          <div class="desplegable-bloc-cap">
-            <div>
-              <h2>Bloc ${blocActiu.id} · ${blocActiu.titol}</h2>
-              <p>${blocActiu.subtitol}</p>
-            </div>
-            <div class="reptes-lliures-acc">
-              <button type="button" class="bt bt-secundari bt-petit" data-obre-lliure="taller">
-                ${icona("taller")} Taller i Drassana
-              </button>
-              <button type="button" class="bt bt-secundari bt-petit" data-obre-lliure="tanc">
-                ${icona("tanc")} Tanc d'Arquimedes
-              </button>
-            </div>
-          </div>
-          <div class="llista-invs-grid">
-            ${llistaInvsHtml}
-          </div>
+      <div class="ini-seccio ini-seccio-temes">
+        <div class="ini-seccio-cap">
+          <h2>Totes les investigacions, per temes</h2>
+          <span class="ini-seccio-nota">${fetes.length} de ${INVESTIGACIONS_LLISTA.length} fetes</span>
+        </div>
+        <div class="ini-temes" role="group" aria-label="Temes">${temesHtml}</div>
+        <div class="ini-llista" role="region" aria-label="Investigacions del tema ${blocActiu.titol}">
+          <p class="ini-llista-intro"><strong>${blocActiu.titol}.</strong> ${blocActiu.subtitol}.</p>
+          <div class="ini-llista-grid">${llistaInvsHtml}</div>
         </div>
       </div>
     </section>

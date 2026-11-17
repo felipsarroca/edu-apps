@@ -77,6 +77,41 @@ export const INVESTIGACIONS = Object.fromEntries(
 );
 
 /**
+ * Ruta recomanada per començar: les nou investigacions essencials, en ordre.
+ */
+export const RUTA_RECOMANADA = ["A7", "C3", "C4", "C6", "D1", "D2", "D3", "D4", "D5"];
+
+/**
+ * Proposa la investigació següent: primer la ruta recomanada i després la resta del catàleg, saltant les ja fetes.
+ * @param {string[]} fetes Ids de les investigacions completades
+ * @param {string} [actualId] Investigació que s'acaba de fer (es descarta com a proposta)
+ * @returns {object|null}
+ */
+export function seguentInvestigacio(fetes = [], actualId = "") {
+  const pendent = id => id !== actualId && !fetes.includes(id);
+  const idRuta = RUTA_RECOMANADA.find(pendent);
+  if (idRuta) return INVESTIGACIONS[idRuta];
+  const idxActual = INVESTIGACIONS_LLISTA.findIndex(i => i.id === actualId);
+  const ordenades = [
+    ...INVESTIGACIONS_LLISTA.slice(idxActual + 1),
+    ...INVESTIGACIONS_LLISTA.slice(0, Math.max(0, idxActual))
+  ];
+  return ordenades.find(i => pendent(i.id)) || null;
+}
+
+/**
+ * Tradueix els nivells d'una investigació a una dificultat entenedora.
+ * @param {number[]} nivells
+ * @returns {{text: string, grau: number}}
+ */
+export function dificultatInvestigacio(nivells = [1]) {
+  const max = Math.max(...nivells);
+  if (max <= 1) return { text: "Fàcil", grau: 1 };
+  if (max === 2) return { text: "Mitjana", grau: 2 };
+  return { text: "Avançada", grau: 3 };
+}
+
+/**
  * Targetes de repte per al laboratori lliure (06-cataleg-investigacions-2.md).
  */
 export const REPTES = [

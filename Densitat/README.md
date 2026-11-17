@@ -15,16 +15,16 @@ En lloc d'una col·lecció d'animacions predeterminades, tota l'aplicació funci
 
 ## Captures de pantalla
 
-### Pantalla d'inici i itinerari per blocs (A–G)
-![Pantalla d'inici amb els 7 blocs d'investigació](docs/captures/01-inici-1920x1080.png)
+### Pantalla d'inici: una acció principal, la ruta recomanada i les investigacions per temes
+![Pantalla d'inici amb la ruta recomanada i els set temes](docs/captures/01-inici-1920x1080.png)
 
-### Taula de Mesura: balança digital, proveta amb menisc i vas de flotació
-![Taula de mesura del laboratori](docs/captures/02-laboratori-mesura-1920x1080.png)
+### Zona «Pesar i mesurar»: balança digital, proveta i vas de flotació, amb la guia pas a pas
+![Zona de pesar i mesurar del laboratori](docs/captures/02-laboratori-mesura-1920x1080.png)
 
-### Taula de la Columna: torre de líquids i dissolució de sal amb l'ou
-![Taula de la columna de densitats i sal](docs/captures/03-laboratori-columna-sal.png)
+### Zona «Columna de líquids»: torre de líquids i dissolució de sal amb l'ou
+![Columna de líquids i aigua amb sal](docs/captures/03-laboratori-columna-sal.png)
 
-### Taula del Tanc: dinamòmetre, vas de vessament d'Arquimedes i taller de barques
+### Zona «Tanc d'aigua»: dinamòmetre, vas de vessament d'Arquimedes i assaig de barques
 ![Taula del tanc amb el muntatge d'Arquimedes](docs/captures/04-laboratori-tanc-arquimedes.png)
 ![Assaig de càrrega d'una barca al tanc](docs/captures/05-laboratori-tanc-barca.png)
 
@@ -34,9 +34,16 @@ En lloc d'una col·lecció d'animacions predeterminades, tota l'aplicació funci
 
 ---
 
+## Pensada perquè no calgui ser expert
+
+- **Inici amb un sol camí clar:** un botó principal per començar o continuar, una **ruta recomanada** de nou investigacions en ordre i la resta agrupades per temes, amb la dificultat i la durada de cadascuna.
+- **Guia pas a pas:** a cada pas del laboratori, la guia diu què cal fer, indica què falta («en portes 1 de 2 mesures») i, en acabar, proposa la investigació següent.
+- **Primers passos visibles:** la primera vegada que s'entra al laboratori es mostra una targeta de tres passos (tria un objecte, posa'l en un instrument, anota la mesura), recuperable amb el botó d'ajuda.
+- **Vista senzilla per defecte:** rètols en llenguatge planer i només els objectes de l'activitat. Al menú **Opcions**, la **vista completa** afegeix els detalls tècnics (resolucions, codis d'investigació), el catàleg sencer i les ampolles de líquids; també s'hi activen la lectura fàcil, el mode projector i el nivell.
+
 ## Què inclou l'aplicació
 
-### 1. Quatre taules de treball i un prestatge d'objectes persistents
+### 1. Quatre zones de treball i un prestatge d'objectes persistents
 - **Mesura:** balança digital (models de cuina d'1 g, de laboratori de 0,1 g i de precisió de 0,01 g, amb tara i canvi d'unitat g/kg), cinc provetes graduades (25, 100, 250, 500 i 1000 mL) amb comprovació del diàmetre de boca, vareta d'immersió, **lupa interactiva de menisc** (error de paral·laxi amb l'ull alt/baix i lectura de la tangent) i vas d'assaig amb sis líquids.
 - **Columna:** columna multicapa de líquids (mel, aigua, oli, alcohol) amb control d'abocat amb cura, vareta de remenar (mescla de líquids miscibles de la mateixa família i separació d'inmiscibles) i estació de dissolució de sal en cullerades de 5 g fins al límit de saturació (26 %).
 - **Tanc:** tanc hidrostàtic amb regle en centímetres, dinamòmetre amb control continu d'immersió, vas de vessament d'Arquimedes amb vas col·lector sobre balança, selector planetari de gravetat (Terra, Lluna i Mart) i mòduls d'assaig per a **barques i càrrega**, **submarí amb tanc de llast**, **sonda de pressió hidrostàtica**, **cambra de globus i gasos**, **bany tèrmic (0–100 °C)** i **densímetre**.

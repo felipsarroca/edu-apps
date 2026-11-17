@@ -404,7 +404,7 @@ export const BLOC_C = [
     passos: [
       {
         tipus: "observa",
-        text: "Tenim sis objectes misteri (M1 a M6) pintats de gris neutre. Obre «Consulta → Densitats» per tenir a mà la taula de referència.",
+        text: "Tenim sis objectes misteri (M1 a M6) pintats de gris neutre. Obre «Fórmules i ajuda → Taula de densitats» per tenir a mà la taula de referència.",
         facil: "Mira els objectes misteri M1 a M6. Tots estan pintats de gris."
       },
       {

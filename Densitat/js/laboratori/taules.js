@@ -32,6 +32,16 @@ import {
 import { icona } from "../eines/icones.js";
 
 /**
+ * En la vista senzilla, treu dels rètols els codis d'investigació («(F1–F4)», «, C7)») que només orienten el professorat.
+ */
+function retol(text, cfg) {
+  if (cfg?.vistaCompleta) return text;
+  return text
+    .replace(/\s*\((?:[A-G]\d+)(?:(?:, ?|–)[A-G]\d+)*\)/g, "")
+    .replace(/, [A-G]\d+\)/g, ")");
+}
+
+/**
  * Definicions de gradients i patrons reutilitzables per als SVGs del laboratori.
  */
 function defsSVGComuns() {
@@ -308,6 +318,12 @@ export function renderitzaTaulaMesura(estat) {
   const fraccioNivellProv = Math.min(1.06, nivProv.volumTotalAparent / recProv.capacitat);
   const ySuperficieProv = yBaseProv - fraccioNivellProv * hEscalaPx;
 
+  // Caixa «Desplaçament ΔV»: centrada entre V0 i Vf o, si la pujada és petita, sota la línia de V0
+  // perquè no tapi l'etiqueta de Vf.
+  const ySupVisibleProv = Math.max(92, ySuperficieProv);
+  const yCaixaDV =
+    yInicialProv - ySupVisibleProv < 56 ? yInicialProv + 12 : (yInicialProv + ySupVisibleProv) / 2 - 20;
+
   // Coordenades SVG del vas (yBase = 305, ySup = 195)
   const yBaseVas = 305;
   const ySupVas = 195;
@@ -345,7 +361,7 @@ export function renderitzaTaulaMesura(estat) {
         <g class="zona-drop" data-drop-zone="balanca" style="cursor:pointer">
           <title>Fes clic o arrossega per pesar «${objSel?.nom || "l'objecte"}» a la balança</title>
           <rect x="30" y="52" width="245" height="256" rx="10" fill="transparent" stroke="transparent" class="drop-highlight"/>
-          <text x="152" y="36" fill="#16303F" font-size="13" font-weight="700" text-anchor="middle">1. Balança (${modelBal.model}, ${formataNombre(modelBal.resolucio)} g)</text>
+          <text x="152" y="36" fill="#16303F" font-size="13" font-weight="700" text-anchor="middle">${cfg.vistaCompleta ? `1. Balança (${modelBal.model}, ${formataNombre(modelBal.resolucio)} g)` : "Balança"}</text>
 
           <!-- Plat metàl·lic i cos de la balança -->
           <rect x="72" y="226" width="160" height="8" rx="3" fill="#94A3B8" stroke="#475569" stroke-width="1.5"/>
@@ -396,7 +412,7 @@ export function renderitzaTaulaMesura(estat) {
         <g class="zona-drop" data-drop-zone="proveta" style="cursor:pointer">
           <title>Fes clic o arrossega per submergir «${objSel?.nom || "l'objecte"}» a la proveta</title>
           <rect x="295" y="50" width="270" height="258" rx="10" fill="transparent" stroke="transparent" class="drop-highlight"/>
-          <text x="438" y="36" fill="#16303F" font-size="13" font-weight="700" text-anchor="middle">2. ${recProv.nom} (div. ${formataNombre(recProv.graduacio)} mL · Ø ${formataNombre(recProv.diametreBoca)} cm)</text>
+          <text x="438" y="36" fill="#16303F" font-size="13" font-weight="700" text-anchor="middle">${cfg.vistaCompleta ? `2. ${recProv.nom.charAt(0).toUpperCase() + recProv.nom.slice(1)} (div. ${formataNombre(recProv.graduacio)} mL · Ø ${formataNombre(recProv.diametreBoca)} cm)` : `Proveta de ${formataNombre(recProv.capacitat)} mL`}</text>
 
           <!-- Base i cos cilíndric de la proveta -->
           <rect x="382" y="299" width="112" height="11" rx="3" fill="#CBD5E1" stroke="#475569" stroke-width="2"/>
@@ -418,9 +434,9 @@ export function renderitzaTaulaMesura(estat) {
 
               <!-- Fletxa de cota ΔV entre V0 i Vf -->
               <line x1="388" y1="${yInicialProv - 6}" x2="388" y2="${Math.max(92, ySuperficieProv - 6)}" stroke="#0F766E" stroke-width="2.5"/>
-              <rect x="294" y="${(yInicialProv + Math.max(92, ySuperficieProv)) / 2 - 20}" width="90" height="26" rx="5" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.5"/>
-              <text x="339" y="${(yInicialProv + Math.max(92, ySuperficieProv)) / 2 - 9}" fill="#0F766E" font-size="9.5" font-weight="700" text-anchor="middle">Desplaçament ΔV</text>
-              <text x="339" y="${(yInicialProv + Math.max(92, ySuperficieProv)) / 2 + 2}" fill="#115E59" font-size="11" font-weight="800" text-anchor="middle">+${formataNombre(nivProv.pujadaNivell)} cm³</text>
+              <rect x="294" y="${yCaixaDV}" width="90" height="26" rx="5" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.5"/>
+              <text x="339" y="${yCaixaDV + 11}" fill="#0F766E" font-size="9.5" font-weight="700" text-anchor="middle">Desplaçament ΔV</text>
+              <text x="339" y="${yCaixaDV + 22}" fill="#115E59" font-size="11" font-weight="800" text-anchor="middle">+${formataNombre(nivProv.pujadaNivell)} cm³</text>
             </g>`
               : `
             <!-- Indicador de lectura del nivell inicial quan no hi ha objecte -->
@@ -497,7 +513,7 @@ export function renderitzaTaulaMesura(estat) {
         <g class="zona-drop" data-drop-zone="vas" style="cursor:pointer">
           <title>Fes clic o arrossega per provar si «${objSel?.nom || "l'objecte"}» sura al vas</title>
           <rect x="585" y="52" width="275" height="256" rx="10" fill="transparent" stroke="transparent" class="drop-highlight"/>
-          <text x="722" y="36" fill="#16303F" font-size="13" font-weight="700" text-anchor="middle">3. Vas de flotació (${liqVas.nom}: ${formataNombre(dLiqVas, 2)} g/cm³)</text>
+          <text x="722" y="36" fill="#16303F" font-size="13" font-weight="700" text-anchor="middle">${cfg.vistaCompleta ? `3. Vas de flotació (${liqVas.nom}: ${formataNombre(dLiqVas, 2)} g/cm³)` : `Vas amb ${liqVas.nom}`}</text>
 
           <!-- Vas de 600 mL -->
           <rect x="632" y="130" width="180" height="180" rx="6" fill="url(#grad-vidre)" stroke="#475569" stroke-width="2.2"/>
@@ -557,15 +573,15 @@ export function renderitzaTaulaMesura(estat) {
             </select>
           </div>
           <div class="bts-estacio">
-            <button type="button" class="bt bt-secundari bt-petit" data-accio-balanca="tara">Tara (0,0)</button>
-            <button type="button" class="bt bt-secundari bt-petit" data-accio-balanca="unitat">Unitat (${lab.balanca.unitat})</button>
+            <button type="button" class="bt bt-secundari bt-petit" data-accio-balanca="tara" title="Tara: la balança torna a marcar zero amb el que hi ha ara al plat">Posa a zero (tara)</button>
+            <button type="button" class="bt bt-secundari bt-petit" data-accio-balanca="unitat" title="Canvia la unitat de la pantalla de la balança (ara: ${lab.balanca.unitat})">Unitat (g/kg)</button>
             <button type="button" class="bt bt-secundari bt-petit ${lab.balanca.recipientSobrePlat ? "actiu" : ""}" data-accio-balanca="recipient">
-              ${lab.balanca.recipientSobrePlat ? "Treu recipient" : "+ Vas / 1 L líquid"}
+              ${lab.balanca.recipientSobrePlat ? "Treu el vas" : "Pesa un líquid"}
             </button>
             <button type="button" class="bt bt-primari bt-petit" data-anota-instrument="balanca"
                     data-obj-id="${idMostraBalanca}" data-obj-nom="${nomMostraBalanca}"
                     data-val="${lecturaBal.lectura ?? 0}" data-uni="${lecturaBal.unitat}" data-res="${lecturaBal.resolucio}" data-inst="${modelBal.nom}">
-              ${icona("anota")} Anota (${lecturaBal.lecturaFormatada} ${lecturaBal.unitat})
+              ${icona("anota")} Anota la massa: ${lecturaBal.lecturaFormatada} ${lecturaBal.unitat}
             </button>
           </div>
           ${
@@ -585,7 +601,7 @@ export function renderitzaTaulaMesura(estat) {
         <!-- Controls Proveta -->
         <div class="targeta-control-estacio">
           <div class="fila-entre">
-            <strong>${icona("proveta")} Proveta i menisc</strong>
+            <strong>${icona("proveta")} Proveta</strong>
             <select id="sel-model-proveta" aria-label="Mida de la proveta">
               <option value="proveta25" ${lab.proveta.tipus === "proveta25" ? "selected" : ""}>25 mL (div. 0,5 mL · Ø 1,6 cm)</option>
               <option value="proveta100" ${lab.proveta.tipus === "proveta100" ? "selected" : ""}>100 mL (div. 1 mL · Ø 2,6 cm)</option>
@@ -595,23 +611,23 @@ export function renderitzaTaulaMesura(estat) {
             </select>
           </div>
           <div class="bts-estacio">
-            <button type="button" class="bt bt-secundari bt-petit ${lab.proveta.vareta ? "actiu" : ""}" data-accio-proveta="vareta">
-              ${icona("vareta")} Vareta (${lab.proveta.vareta ? "Sí" : "No"})
+            <button type="button" class="bt bt-secundari bt-petit ${lab.proveta.vareta ? "actiu" : ""}" data-accio-proveta="vareta" aria-pressed="${lab.proveta.vareta}" title="Si l'objecte sura, la vareta l'enfonsa del tot per poder-ne mesurar el volum">
+              ${icona("vareta")} ${lab.proveta.vareta ? "Treu la vareta" : "Enfonsa'l amb la vareta"}
             </button>
-            <button type="button" class="bt bt-secundari bt-petit" data-obre-eina="lupa">
-              ${icona("lupa")} Lupa menisc
+            <button type="button" class="bt bt-secundari bt-petit" data-obre-eina="lupa" title="Amplia el nivell del líquid per llegir-lo amb precisió">
+              ${icona("lupa")} Lupa
             </button>
             ${
               objProveta && (!estObjProv.sura || lab.proveta.vareta) && !nivProv.foraDEscala
                 ? `<button type="button" class="bt bt-primari bt-petit" data-anota-instrument="proveta"
                           data-obj-id="${objProveta.id}" data-obj-nom="${objProveta.nom}"
                           data-mag="Volum per desplaçament" data-val="${nivProv.pujadaNivell}" data-uni="cm³" data-res="${recProv.graduacio}" data-inst="${recProv.nom}">
-                    ${icona("anota")} Anota ΔV (${formataNombre(nivProv.pujadaNivell)} cm³)
+                    ${icona("anota")} Anota el volum: ${formataNombre(nivProv.pujadaNivell)} cm³
                   </button>`
                 : `<button type="button" class="bt bt-primari bt-petit" data-anota-instrument="proveta"
                           data-obj-id="${objProveta ? objProveta.id : lab.proveta.liquid}" data-obj-nom="${objProveta ? objProveta.nom : liqProv.nom}"
                           data-mag="Volum llegit" data-val="${meniscProv.lecturaObservada ?? 0}" data-uni="mL" data-res="${recProv.graduacio}" data-inst="${recProv.nom}">
-                    ${icona("anota")} Anota lectura (${formataNombre(meniscProv.lecturaObservada)} mL)
+                    ${icona("anota")} Anota el nivell: ${formataNombre(meniscProv.lecturaObservada)} mL
                   </button>`
             }
           </div>
@@ -620,7 +636,7 @@ export function renderitzaTaulaMesura(estat) {
         <!-- Controls Vas de Flotació -->
         <div class="targeta-control-estacio">
           <div class="fila-entre">
-            <strong>${icona("vas")} Vas d'assaig</strong>
+            <strong>${icona("vas")} Vas: sura o s'enfonsa?</strong>
             <select id="sel-liquid-vas" aria-label="Líquid del vas">
               ${["aigua", "alcohol", "oli", "aigua_salada", "mel", "mercuri"]
                 .map(
@@ -636,9 +652,9 @@ export function renderitzaTaulaMesura(estat) {
                 ? `<button type="button" class="bt bt-primari bt-petit" data-anota-instrument="vas"
                           data-obj-id="${objVas.id}" data-obj-nom="${objVas.nom}"
                           data-mag="Flotació en ${liqVas.nom}" data-val="${estObjVas.percentatgeSubmergit}" data-uni="%" data-res="1" data-inst="Vas d'assaig">
-                    ${icona("anota")} Anota resultat (${estObjVas.sura ? `Sura ${formataNombre(estObjVas.percentatgeSubmergit, 0)} %` : "S'enfonsa"})
+                    ${icona("anota")} Anota el resultat: ${estObjVas.sura ? `sura (${formataNombre(estObjVas.percentatgeSubmergit, 0)} % submergit)` : "s'enfonsa"}
                   </button>`
-                : `<span class="etiqueta-petita">Fes clic al vas o arrossega qualsevol objecte per comprovar si sura o s'enfonsa.</span>`
+                : `<span class="etiqueta-petita">Tria un objecte i fes clic al vas per veure si sura o s'enfonsa.</span>`
             }
           </div>
         </div>
@@ -696,7 +712,7 @@ export function renderitzaTaulaColumna(estat) {
         <!-- ==================== ESTACIÓ 1: COLUMNA DE LÍQUIDS (x = 40..460) ==================== -->
         <g class="zona-drop" data-drop-zone="columna" style="cursor:pointer">
           <title>Fes clic per deixar caure «${objSel.nom}» a la columna de líquids</title>
-          <text x="245" y="34" fill="#16303F" font-size="13.5" font-weight="700" text-anchor="middle">1. Columna de líquids i fronteres d'equilibri (D3, D7)</text>
+          <text x="245" y="34" fill="#16303F" font-size="13.5" font-weight="700" text-anchor="middle">${cfg.vistaCompleta ? "1. Columna de líquids i fronteres d'equilibri (D3, D7)" : "Columna de líquids"}</text>
           <rect x="145" y="298" width="170" height="11" rx="3" fill="#CBD5E1" stroke="#475569" stroke-width="2"/>
           <rect x="160" y="70" width="140" height="228" fill="url(#grad-vidre)" stroke="#475569" stroke-width="2.5"/>
 
@@ -745,7 +761,7 @@ export function renderitzaTaulaColumna(estat) {
 
         <!-- ==================== ESTACIÓ 2: L'OU I L'AIGUA SALADA (x = 490..850) ==================== -->
         <g class="zona-drop" data-drop-zone="vas" style="cursor:pointer">
-          <text x="675" y="34" fill="#16303F" font-size="13.5" font-weight="700" text-anchor="middle">2. Dissolució de sal i flotació de l'ou (D5)</text>
+          <text x="675" y="34" fill="#16303F" font-size="13.5" font-weight="700" text-anchor="middle">${cfg.vistaCompleta ? "2. Dissolució de sal i flotació de l'ou (D5)" : "Aigua amb sal i un ou"}</text>
 
           <rect x="575" y="106" width="200" height="202" rx="6" fill="url(#grad-vidre)" stroke="#475569" stroke-width="2.5"/>
           <rect x="577" y="140" width="196" height="166" rx="4" fill="${disSal.pctMassa > 2 ? "#67E8F9" : "#BAE6FD"}" opacity="0.84"/>
@@ -807,10 +823,10 @@ export function renderitzaTaulaColumna(estat) {
       <div class="controls-estacions-grid">
         <div class="targeta-control-estacio">
           <div class="fila-entre">
-            <strong>Columna de líquids (abocar i remenar)</strong>
+            <strong>${icona("proveta")} Columna de líquids</strong>
             <label class="fila-switch">
               <input type="checkbox" id="chk-amb-cura" ${lab.columna.ambCura ? "checked" : ""}>
-              <span>Aboca amb cura</span>
+              <span title="Si aboques a poc a poc, els líquids no es barregen">Aboca amb cura</span>
             </label>
           </div>
           <div class="bts-estacio">
@@ -818,7 +834,7 @@ export function renderitzaTaulaColumna(estat) {
               .map(
                 l => `
               <button type="button" class="bt bt-secundari bt-petit" data-aboca-columna="${l}">
-                + ${LIQUIDS[l].nom.split(" ")[0]} (${formataNombre(LIQUIDS[l].dEscolar, 2)})
+                + ${LIQUIDS[l].nom.split(" ")[0]}${cfg.vistaCompleta ? ` (${formataNombre(LIQUIDS[l].dEscolar, 2)})` : ""}
               </button>`
               )
               .join("")}
@@ -826,10 +842,10 @@ export function renderitzaTaulaColumna(estat) {
               ${icona("remena")} Remena
             </button>
             <button type="button" class="bt bt-secundari bt-petit" data-accio-columna="quatre_capes">
-              4 capes (D3)
+              Omple les 4 capes
             </button>
             <button type="button" class="bt bt-secundari bt-petit" data-accio-columna="buida">
-              Buida
+              Buida-la
             </button>
             <button type="button" class="bt bt-primari bt-petit" data-anota-instrument="columna"
                     data-obj-id="columna" data-obj-nom="Columna (${capes.length} capes)"
@@ -841,13 +857,13 @@ export function renderitzaTaulaColumna(estat) {
 
         <div class="targeta-control-estacio">
           <div class="fila-entre">
-            <strong>${icona("sal")} Aigua amb sal i l'ou (500 mL d'aigua inicial)</strong>
-            <span>Ou: 60 g / 56 cm³ (1,071 g/cm³)</span>
+            <strong>${icona("sal")} Aigua amb sal i un ou</strong>
+            <span class="etiqueta-petita">${cfg.vistaCompleta ? "500 mL d'aigua · Ou: 60 g / 56 cm³ (1,071 g/cm³)" : `Sal afegida: ${formataNombre(lab.salGrams || 0)} g`}</span>
           </div>
           <div class="bts-estacio">
             <button type="button" class="bt bt-primari bt-petit" data-afegeix-sal="5">+ 1 cullerada de sal (5 g)</button>
             <button type="button" class="bt bt-secundari bt-petit" data-afegeix-sal="25">+ 5 cullerades (25 g)</button>
-            <button type="button" class="bt bt-secundari bt-petit" data-afegeix-sal="0">Aigua dolça (0 g sal)</button>
+            <button type="button" class="bt bt-secundari bt-petit" data-afegeix-sal="0">Treu tota la sal</button>
             <button type="button" class="bt bt-primari bt-petit" data-anota-instrument="sal"
                     data-obj-id="ou" data-obj-nom="Ou en aigua amb ${lab.salGrams || 0} g de sal"
                     data-mag="Densitat aigua salada" data-val="${disSal.densitat}" data-uni="g/mL" data-res="0.001" data-inst="Matràs 100 mL + Balança">
@@ -941,7 +957,7 @@ export function renderitzaTaulaTanc(estat) {
           .map(
             m => `
           <button type="button" class="bt-submode ${modeEsp === m.id ? "actiu" : ""}" data-tanc-mode="${m.id}">
-            ${icona(m.ic)} ${m.label}
+            ${icona(m.ic)} ${retol(m.label, cfg)}
           </button>`
           )
           .join("")}
@@ -1243,7 +1259,7 @@ export function renderitzaTaulaTanc(estat) {
       <div class="controls-estacions-grid">
         <div class="targeta-control-estacio">
           <div class="fila-entre">
-            <strong>Paràmetres del tanc i gravetat</strong>
+            <strong>${icona("tanc")} Líquid del tanc</strong>
             <select id="sel-liquid-tanc" aria-label="Líquid del tanc">
               ${["aigua", "alcohol", "oli", "aigua_mar", "aigua_salada", "mel", "mercuri"]
                 .map(l => `<option value="${l}" ${lab.tanc.liquid === l ? "selected" : ""}>${LIQUIDS[l].nom} (${formataNombre(LIQUIDS[l].dEscolar, 2)} g/cm³)</option>`)
@@ -1252,7 +1268,7 @@ export function renderitzaTaulaTanc(estat) {
           </div>
           <div class="bts-estacio">
             <label class="etiqueta-inline">
-              <span>Astre (g):</span>
+              <span>On som:</span>
               <select id="sel-astre-tanc">
                 <option value="9.8" ${cfg.g === 9.8 ? "selected" : ""}>Terra (9,8 N/kg)</option>
                 <option value="1.6" ${cfg.g === 1.6 ? "selected" : ""}>Lluna (1,6 N/kg)</option>
@@ -1422,7 +1438,7 @@ export function renderitzaTaulaTaller(estat) {
 
         <!-- ESTACIÓ VISUAL 1: BANC DE TALL I PROPIETAT INTENSIVA (x = 10..280) -->
         <g>
-          <text x="145" y="24" fill="#16303F" font-size="12" font-weight="700" text-anchor="middle">1. Banc de tall: la densitat es conserva (C4)</text>
+          <text x="145" y="24" fill="#16303F" font-size="12" font-weight="700" text-anchor="middle">${retol("1. Banc de tall: la densitat es conserva (C4)", cfg)}</text>
           <!-- Objecte sencer amb línia de tall -->
           ${dibuixaObjecteSVG(objSel, 78, 92, 64, 44, vistes.volums, true)}
           <line x1="78" y1="56" x2="78" y2="128" stroke="#DC2626" stroke-width="2" stroke-dasharray="4 3"/>
@@ -1441,7 +1457,7 @@ export function renderitzaTaulaTaller(estat) {
 
         <!-- ESTACIÓ VISUAL 2: PREVISUALITZACIÓ DEL CONSTRUCTOR C7 (x = 295..558) -->
         <g>
-          <text x="426" y="24" fill="#16303F" font-size="12" font-weight="700" text-anchor="middle">2. Constructor d'objectes: d = m / V (C7)</text>
+          <text x="426" y="24" fill="#16303F" font-size="12" font-weight="700" text-anchor="middle">${retol("2. Constructor d'objectes: d = m / V (C7)", cfg)}</text>
           <rect x="${426 - costatCstPx / 2}" y="${95 - costatCstPx / 2}" width="${costatCstPx}" height="${costatCstPx}" rx="5"
                 fill="${matCst.aspecte?.color || "#CBD5E1"}" stroke="${matCst.aspecte?.contorn || "#334155"}" stroke-width="2.2"/>
           <text x="426" y="99" fill="#0F172A" font-size="10.5" font-weight="800" text-anchor="middle">${matCst.nom}</text>
@@ -1489,7 +1505,7 @@ export function renderitzaTaulaTaller(estat) {
         <!-- 1. Tallar i Modelar objectes del prestatge -->
         <div class="targeta-consulta">
           <h3>${icona("ganivet")} 1. Tallar i modelar l'objecte seleccionat (${objSel.etiqueta} · ${objSel.nom})</h3>
-          <p class="etiqueta-petita">En tallar un objecte homogeni, la massa i el volum es reparteixen proporcionalment i la densitat es conserva (R2 i R3). En modelar es conserven la massa i el volum de material (R5).</p>
+          <p class="etiqueta-petita">En tallar un objecte homogeni, la massa i el volum es reparteixen proporcionalment i la densitat es conserva${cfg.vistaCompleta ? " (R2 i R3)" : ""}. En modelar es conserven la massa i el volum de material${cfg.vistaCompleta ? " (R5)" : ""}.</p>
           <div class="taller-bloc-accions">
             <div>
               <strong>Dividir amb el ganivet:</strong>
@@ -1517,8 +1533,8 @@ export function renderitzaTaulaTaller(estat) {
 
         <!-- 2. Constructor d'objectes i «L'objecte impossible» (C7) -->
         <div class="targeta-consulta">
-          <h3>${icona("taller")} 2. Constructor d'objectes («L'objecte impossible», C7)</h3>
-          <p class="etiqueta-petita">Només es poden fixar dues de les tres magnituds: la tercera queda determinada per <em>d = m / V</em> (regla R4).</p>
+          <h3>${icona("taller")} ${retol("2. Constructor d'objectes («L'objecte impossible», C7)", cfg)}</h3>
+          <p class="etiqueta-petita">Només es poden fixar dues de les tres magnituds: la tercera queda determinada per <em>d = m / V</em>${cfg.vistaCompleta ? " (regla R4)" : ""}.</p>
           <div class="constructor-form">
             <label class="comp-fila">
               <span>Quines dues magnituds fixes?</span>
@@ -1559,7 +1575,7 @@ export function renderitzaTaulaTaller(estat) {
       <div class="targeta-consulta">
         <div class="fila-entre">
           <div>
-            <h3>${icona("barca")} 3. Drassana: constructor de barques i bucs (F1–F4)</h3>
+            <h3>${icona("barca")} ${retol("3. Drassana: constructor de barques i bucs (F1–F4)", cfg)}</h3>
             <p class="etiqueta-petita">Dóna forma de buc obert (L × B × H) a 200 g de plastilina o a 500 g d'acer. El motor calcula el gruix de paret <em>t</em>, el calat, el francbord i la càrrega màxima.</p>
           </div>
           <div class="bts-estacio">

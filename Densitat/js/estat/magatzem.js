@@ -381,7 +381,7 @@ export function obreLaboratoriLliure(taula = "mesura") {
   desaSnapshotLaboratori();
   estat.pantalla = "laboratori";
   estat.modeLaboratori = "lliure";
-  estat.pestanyaPanell = "dades";
+  estat.pestanyaPanell = "guia";
   estat.laboratori.taula = taula;
   notifica();
 }

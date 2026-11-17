@@ -135,11 +135,15 @@ export function renderitzaEscalaDensitatsViva(estat, dLiquid = 1.0, nomLiquid = 
     }
   }
 
+  // En la vista senzilla, l'escala només apareix quan hi ha algun objecte per situar-hi:
+  // així no ocupa espai ni avança la resposta abans que l'alumne hagi mesurat res.
+  if (!cfg.vistaCompleta && puntsObjectes.length === 0) return "";
+
   return `
     <div class="escala-densitats-card" role="region" aria-label="Escala comparativa de densitats i frontera de flotació">
       <div class="escala-densitats-cap">
         <span class="escala-titol">
-          <strong>Regla visual de flotació:</strong>
+          <strong>${cfg.vistaCompleta ? "Regla visual de flotació:" : "On queda cada objecte?"}</strong>
           <span class="pindola-zona-sura">SURA si <em>d</em><sub>obj</sub> &lt; <em>d</em><sub>líq</sub></span>
           <span class="pindola-frontera">Frontera (${nomLiquid}): <strong>${formataNombre(dLiquid, 2)} g/cm³</strong></span>
           <span class="pindola-zona-enfonsa">S'ENFONSA si <em>d</em><sub>obj</sub> &gt; <em>d</em><sub>líq</sub></span>

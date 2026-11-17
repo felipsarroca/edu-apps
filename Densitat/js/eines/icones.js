@@ -53,6 +53,12 @@ export const ICONES_SVG = {
   submari: '<rect x="4" y="10" width="15" height="7" rx="3.5"/><path d="M9 10V7h4v3M19 13.5h2M21 11.5v4"/>',
   sonda: '<circle cx="12" cy="16" r="3"/><path d="M12 3v10M9 6h6"/>',
   termometre: '<path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z"/>',
+  opcions: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+  ajuda: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/>',
+  ull: '<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/>',
+  mes: '<circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/>',
+  enrere: '<path d="M10 6l-6 6 6 6"/><path d="M4 12h16"/>',
+  prestatge: '<path d="M4 4v16M20 4v16M4 9h16M4 16h16"/><path d="M8 9V6h3v3M14 16v-3h3v3"/>',
   globus: '<path d="M12 3a6 6 0 0 1 6 6c0 4-3 7-6 8-3-1-6-4-6-8a6 6 0 0 1 6-6z"/><path d="M12 17v4"/>'
 };
 

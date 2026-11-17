@@ -1,0 +1,1100 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/**
+ * Capa d'usabilitat: inici amb una acció principal clara, capçalera amb menú d'opcions,
+ * laboratori en vista senzilla (pestanyes de zones, eines agrupades, guia pas a pas) i menús emergents.
+ * Es carrega després de la resta de fulls d'estil.
+ */
+
+/* ==================== CAPÇALERA I MENÚS EMERGENTS ==================== */
+.app-header {
+  position: relative;
+  z-index: 100;
+}
+
+.nav-comptador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: #38BDF8;
+  color: #0F172A;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.header-dreta .bt-suport {
+  padding: 5px 10px;
+  font-size: 0.84rem;
+}
+
+.menu-ancora {
+  position: relative;
+  display: inline-flex;
+}
+
+.menu-emergent {
+  position: absolute;
+  left: 0;
+  z-index: 200;
+  min-width: 270px;
+  max-width: min(340px, calc(100vw - 16px));
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+  text-align: left;
+}
+.menu-emergent[hidden] {
+  display: none;
+}
+.menu-emergent.menu-avall {
+  top: calc(100% + 8px);
+}
+.menu-emergent.menu-amunt {
+  bottom: calc(100% + 8px);
+}
+.menu-emergent.menu-dreta {
+  left: auto;
+  right: 0;
+}
+
+.menu-titol {
+  padding: 4px 8px 2px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.menu-element {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  text-align: left;
+  cursor: pointer;
+}
+.menu-element:hover {
+  background: var(--surface-soft);
+  border-color: var(--line-soft);
+}
+.menu-element.actiu {
+  background: var(--primary-soft);
+  border-color: #A7DDE2;
+}
+.menu-element > .ic {
+  width: 18px;
+  height: 18px;
+  color: var(--primary-deep);
+}
+.menu-element-text,
+.opcio-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.25;
+}
+.menu-element-text strong,
+.opcio-text strong {
+  font-size: 0.86rem;
+}
+.menu-element-text small,
+.opcio-text small {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+.menu-element-marca {
+  width: 16px;
+  color: var(--primary-deep);
+  display: inline-flex;
+}
+
+/* Files d'opcions amb interruptor */
+.opcio-fila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+}
+.opcio-fila:hover {
+  background: var(--surface-soft);
+}
+.opcio-fila input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  border-radius: 10px;
+  background: #CBD5E1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.opcio-fila input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.3);
+  transition: transform 0.15s ease;
+}
+.opcio-fila input[type="checkbox"]:checked {
+  background: var(--primary);
+}
+.opcio-fila input[type="checkbox"]:checked::after {
+  transform: translateX(14px);
+}
+.opcio-fila-select select {
+  padding: 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.menu-opcions > .menu-element {
+  border-top: 1px solid var(--line-soft);
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  margin-top: 2px;
+  padding-top: 9px;
+}
+
+/* ==================== PANTALLA D'INICI ==================== */
+.pantalla-inici.ini {
+  gap: 12px;
+  padding: 14px 20px 16px;
+}
+
+.ini-hero {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 18px 24px;
+  border-radius: var(--radius-l);
+  background: linear-gradient(120deg, #0A5E66 0%, #0E7C86 58%, #1798A3 100%);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-1);
+}
+.ini-hero h1 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.ini-subtitol {
+  margin: 6px 0 12px;
+  max-width: 62ch;
+  font-size: 0.92rem;
+  color: #E0F4F6;
+}
+.ini-accions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ini-hero .ini-bt-principal {
+  background: #FFFFFF;
+  color: var(--primary-deep);
+  font-weight: 700;
+  padding: 10px 18px;
+  font-size: 0.98rem;
+  box-shadow: 0 2px 8px rgba(10, 60, 66, 0.25);
+  white-space: normal;
+  text-align: left;
+}
+.ini-hero .ini-bt-principal:hover:not(:disabled) {
+  background: #E0F4F6;
+}
+.ini-hero .bt-secundari {
+  background: transparent;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.ini-hero .bt-secundari:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.ini-com-funciona {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-m);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.86rem;
+  line-height: 1.3;
+}
+.ini-com-funciona li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ini-cf-num,
+.guia-rapida-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.ini-cf-num {
+  background: #FFFFFF;
+  color: var(--primary-deep);
+}
+
+.ini-seccio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ini-seccio-cap {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ini-seccio-cap h2 {
+  font-size: 1.02rem;
+}
+.ini-seccio-nota {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+/* Ruta recomanada */
+.ini-ruta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 6px;
+}
+.ini-pas-ruta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  min-height: 48px;
+  padding: 6px 9px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-m);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ini-pas-ruta:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-1);
+}
+.ini-pas-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--line-soft);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.ini-pas-num .ic {
+  width: 14px;
+  height: 14px;
+}
+.ini-pas-titol {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.ini-pas-ruta.fet {
+  background: var(--surface-soft);
+}
+.ini-pas-ruta.fet .ini-pas-num {
+  background: var(--confirm);
+  color: #FFFFFF;
+}
+.ini-pas-ruta.fet .ini-pas-titol {
+  color: var(--ink-soft);
+}
+.ini-pas-ruta.seguent {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.ini-pas-ruta.seguent .ini-pas-num {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+/* Temes i llista d'investigacions */
+.ini-temes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+}
+.ini-tema {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-m);
+  text-align: left;
+  cursor: pointer;
+}
+.ini-tema:hover {
+  border-color: var(--primary);
+}
+.ini-tema strong {
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+.ini-tema-meta {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+.ini-tema-barra {
+  display: block;
+  height: 4px;
+  margin-top: 2px;
+  border-radius: 2px;
+  background: var(--line-soft);
+  overflow: hidden;
+}
+.ini-tema-barra > span {
+  display: block;
+  height: 100%;
+  background: var(--confirm);
+}
+.ini-tema.seleccionat {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: inset 0 -3px 0 var(--primary);
+}
+
+.ini-llista {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 10px 12px 12px;
+  box-shadow: var(--shadow-1);
+}
+.ini-llista-intro {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.ini-llista-intro strong {
+  color: var(--ink);
+}
+.ini-llista-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 8px;
+}
+.ini-inv {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  background: var(--surface-soft);
+  border: 1.5px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.ini-inv:hover {
+  border-color: var(--primary);
+  background: var(--surface);
+}
+.ini-inv-cos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.ini-inv-cap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ini-inv-cap strong {
+  font-size: 0.9rem;
+}
+.ini-inv-preg {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.3;
+}
+.ini-inv-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+.ini-inv-codi {
+  margin-left: auto;
+  font-weight: 600;
+  opacity: 0.7;
+}
+.ini-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 7px;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.ini-etiqueta .ic {
+  width: 11px;
+  height: 11px;
+}
+.ini-etiqueta-ruta {
+  background: var(--warn-soft);
+  color: #854D0E;
+}
+.ini-etiqueta-feta {
+  background: var(--confirm-soft);
+  color: var(--confirm);
+}
+.ini-dificultat {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.ini-dificultat i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.ini-dificultat i:last-of-type {
+  margin-right: 4px;
+}
+.ini-dif-1 i:nth-child(-n + 1),
+.ini-dif-2 i:nth-child(-n + 2),
+.ini-dif-3 i:nth-child(-n + 3) {
+  background: var(--primary);
+}
+.ini-inv-accio {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  padding: 5px 8px 5px 11px;
+  border-radius: var(--radius-s);
+  background: var(--primary);
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.ini-inv-accio .ic {
+  width: 14px;
+  height: 14px;
+}
+.ini-inv.feta .ini-inv-accio {
+  background: transparent;
+  color: var(--primary-deep);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* ==================== LABORATORI: BARRA SUPERIOR I ESCENA ==================== */
+.lab-barra-superior {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 12px 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+.lab-taules {
+  display: flex;
+  gap: 2px;
+  min-width: 0;
+}
+.lab-taules .bt-taula {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  padding: 7px 12px 6px;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.lab-taules .bt-taula:hover {
+  color: var(--ink);
+  background: var(--surface-soft);
+}
+.lab-taules .bt-taula.activa {
+  background: transparent;
+  color: var(--primary-deep);
+  border-bottom-color: var(--primary);
+}
+.lab-accions-escena {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 5px;
+}
+.bt-accio-escena {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 30px;
+  min-width: 30px;
+  padding: 0 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-accio-escena.amb-text {
+  padding: 0 9px;
+}
+.bt-accio-escena:hover:not(:disabled) {
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.bt-accio-escena:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.bt-accio-escena.activa {
+  color: var(--primary-deep);
+  background: var(--primary-soft);
+}
+
+/* L'escena aprofita l'alçada disponible en pantalles grans */
+.svg-escena {
+  max-height: calc(54 * var(--dvh));
+  min-height: 250px;
+  flex-shrink: 0;
+}
+
+/* Guia ràpida de primers passos */
+.guia-rapida {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: var(--primary-soft);
+  border: 1.5px solid #8FD3D9;
+  border-radius: var(--radius-m);
+  font-size: 0.84rem;
+}
+.guia-rapida-passos {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.guia-rapida-passos li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.25;
+}
+.guia-rapida-num {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+/* Targetes de control dels instruments */
+.targeta-control-estacio > .fila-entre > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.targeta-control-estacio .bt-primari {
+  font-weight: 700;
+}
+
+/* Barra inferior d'eines */
+.barra-eines-laboratori {
+  overflow: visible;
+  position: relative;
+  z-index: 45;
+}
+.barra-eines-laboratori .grup-eines-pensa {
+  flex-wrap: wrap;
+}
+html.mode-compacte .barra-eines-laboratori {
+  height: auto;
+  min-height: 52px;
+  padding: 6px 12px;
+}
+.barra-rotul {
+  margin-right: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+/* ==================== LABORATORI: PRESTATGE SENZILL ==================== */
+.prestatge-ajuda {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  line-height: 1.25;
+}
+.prestatge-senzill .prestatge-llista {
+  flex: 1 1 130px;
+  min-height: 108px;
+  max-height: none;
+}
+.prestatge-senzill .fitxa-prestatge {
+  padding: 6px 8px;
+}
+.prestatge-senzill .fitxa-prestatge-info strong {
+  font-size: 0.82rem;
+}
+.fitxa-prestatge.en-us .fitxa-mostra-svg {
+  box-shadow: 0 0 0 2px var(--primary-soft), 0 0 0 3.5px var(--primary);
+}
+
+.bt-mes-objectes {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  padding: 5px 8px;
+  background: transparent;
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius-s);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-mes-objectes:hover {
+  border-color: var(--primary);
+  color: var(--primary-deep);
+}
+.bt-mes-objectes .ic {
+  width: 13px;
+  height: 13px;
+}
+
+.fitxa-detall-objecte {
+  flex-shrink: 0;
+  gap: 7px;
+}
+.fitxa-detall-cap {
+  font-size: 0.84rem;
+}
+.fitxa-destinacions {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.prestatge-senzill .bts-destinacio {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+.bt-desti {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.prestatge-senzill .bt-desti {
+  padding: 6px 9px;
+  font-size: 0.8rem;
+  border-radius: var(--radius-s);
+  text-align: left;
+}
+.bt-desti .ic {
+  width: 15px;
+  height: 15px;
+  color: var(--primary-deep);
+}
+.bt-desti.actiu .ic,
+.bt-desti:hover .ic {
+  color: #FFFFFF;
+}
+.bt-torna-prestatge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 2px 4px;
+  background: none;
+  border: none;
+  color: var(--primary-deep);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-torna-prestatge:hover {
+  text-decoration: underline;
+}
+.bt-torna-prestatge .ic {
+  width: 13px;
+  height: 13px;
+}
+.fitxa-accions-rapides .bt {
+  flex: 1 1 auto;
+}
+.fitxa-dl {
+  padding-top: 5px;
+  border-top: 1px solid var(--line-soft);
+}
+.dada-pendent {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.dada-sabuda {
+  font-variant-numeric: tabular-nums;
+}
+.bt-dades-reals {
+  align-self: flex-start;
+  padding: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* ==================== LABORATORI: GUIA PAS A PAS ==================== */
+.guia-pregunta-box h3 {
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+
+.guia-cami {
+  display: flex;
+  margin: 2px 0;
+}
+.guia-cami-pas {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+.guia-cami-pas + .guia-cami-pas::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+}
+.guia-cami-pas.completat + .guia-cami-pas::before {
+  background: var(--confirm);
+}
+.guia-cami-pas button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+.guia-cami-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.guia-cami-num .ic {
+  width: 14px;
+  height: 14px;
+}
+.guia-cami-nom {
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.guia-cami-pas.completat .guia-cami-num {
+  background: var(--confirm);
+  border-color: var(--confirm);
+  color: #FFFFFF;
+}
+.guia-cami-pas.actiu .guia-cami-num {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+.guia-cami-pas.actiu .guia-cami-nom {
+  color: var(--ink);
+  font-weight: 700;
+}
+.guia-cami-pas button:hover .guia-cami-num {
+  border-color: var(--primary);
+}
+
+.guia-pas-card {
+  background: var(--surface);
+  border-color: var(--line);
+  box-shadow: var(--shadow-1);
+  padding: 11px 12px 12px;
+  gap: 9px;
+}
+.guia-pas-cap {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.guia-pas-ajuda {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.guia-enunciat {
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.guia-condicio {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: var(--radius-s);
+  background: #FFF8E1;
+  border: 1px solid #F3D98B;
+  color: #7A4D05;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.guia-condicio .ic {
+  margin-top: 1px;
+}
+.guia-condicio.feta {
+  background: var(--confirm-soft);
+  border-color: #86EFAC;
+  color: var(--confirm);
+}
+
+.opcio-radio {
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+.opcio-radio:hover {
+  border-color: var(--primary);
+}
+.opcio-radio input {
+  margin-top: 2px;
+  accent-color: var(--primary);
+}
+
+.bt-pista {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 9px;
+  background: transparent;
+  border: 1.5px dashed #E5C76B;
+  border-radius: var(--radius-s);
+  color: #7A4D05;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bt-pista:hover {
+  background: #FFF8E1;
+}
+
+.guia-conclusio-final {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.guia-conclusio-final h4 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--confirm);
+}
+.guia-conclusio-accions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.guia-conclusio-accions .bt {
+  white-space: normal;
+}
+.bt-canvia-inv {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.bt-canvia-inv .ic {
+  width: 13px;
+  height: 13px;
+}
+
+.panell-buit {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-s);
+  background: var(--surface-soft);
+  border: 1px dashed var(--line);
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+}
+.panell-notes-reptes .quadern-textarea {
+  width: 100%;
+  margin-top: 6px;
+}
+.targeta-repte-mini .bt {
+  align-self: flex-start;
+}
+
+/* ==================== MODES COMPACTE I MÒBIL ==================== */
+html.mode-compacte .header-dreta .bt-suport span,
+html.mode-mobil .header-dreta .bt-suport span,
+html.mode-mobil .nav-comptador {
+  display: none;
+}
+html.mode-compacte .lab-taules .bt-taula {
+  padding: 6px 8px 5px;
+  font-size: 0.78rem;
+}
+html.mode-compacte .bt-accio-escena.amb-text span {
+  display: none;
+}
+html.mode-compacte .ini-hero {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+html.mode-compacte .ini-com-funciona {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+html.mode-mobil .pantalla-inici.ini {
+  padding: 10px;
+  overflow: visible;
+}
+html.mode-mobil .ini-hero {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 14px;
+}
+html.mode-mobil .ini-hero h1 {
+  font-size: 1.25rem;
+}
+html.mode-mobil .ini-accions .bt {
+  width: 100%;
+}
+html.mode-mobil .ini-ruta,
+html.mode-mobil .ini-temes {
+  grid-template-columns: 1fr 1fr;
+}
+html.mode-mobil .ini-llista-grid {
+  grid-template-columns: 1fr;
+}
+html.mode-mobil .ini-inv {
+  flex-wrap: wrap;
+}
+html.mode-mobil .lab-barra-superior {
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 8px 0;
+}
+html.mode-mobil .lab-taules {
+  flex-wrap: wrap;
+}
+html.mode-mobil .lab-taules .bt-taula {
+  padding: 6px 8px 5px;
+  font-size: 0.78rem;
+}
+html.mode-mobil .bt-accio-escena.amb-text span {
+  display: none;
+}
+html.mode-mobil .guia-rapida {
+  flex-direction: column;
+  align-items: stretch;
+}
+html.mode-mobil .guia-rapida-passos {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+html.mode-mobil .barra-eines-laboratori {
+  gap: 6px;
+}
+html.mode-mobil .barra-eines-laboratori .grup-eines-pensa {
+  flex-wrap: wrap;
+}
+html.mode-mobil .svg-escena {
+  max-height: none;
+  min-height: 0;
+}
+html.mode-mobil .prestatge-senzill .prestatge-llista {
+  flex: none;
+  max-height: 220px;
+}
+html.mode-mobil .prestatge-senzill .bts-destinacio {
+  grid-template-columns: 1fr 1fr;
+}
+html.mode-mobil .menu-emergent {
+  max-width: calc(100vw - 16px);
+}

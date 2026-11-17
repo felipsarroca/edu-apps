@@ -71,6 +71,51 @@ export function comprovaCondicioPas(estat, pas, invId) {
 }
 
 /**
+ * Explica en llenguatge planer què falta fer al laboratori per completar un pas experimental
+ * (o confirma que ja està fet), perquè l'alumne sàpiga sempre quin és el pas següent.
+ * @param {object} estat
+ * @param {object} pas
+ * @param {string} invId
+ * @returns {{fet: boolean, text: string}|null} null si el pas no té cap condició de laboratori
+ */
+export function descriuCondicioPas(estat, pas, invId) {
+  if (!pas || !pas.condicio) return null;
+  const fet = comprovaCondicioPas(estat, pas, invId);
+  if (fet) return { fet: true, text: "Fet! Ja pots continuar." };
+
+  const cond = pas.condicio;
+  const nMesures = (estat?.quadern?.mesures || []).filter(
+    m => !m.investigacioId || m.investigacioId === invId
+  ).length;
+  const textos = {
+    tallat_o_anotat: "Talla l'objecte (botó «Talla per la meitat» de la seva fitxa) o anota una mesura.",
+    objecte_en_columna: "Posa un objecte a la columna de líquids.",
+    objecte_en_vas_o_anotat: "Posa un objecte al vas per veure si sura o s'enfonsa.",
+    sal_afegida_o_anotat: "Afegeix cullerades de sal a l'aigua.",
+    remenat_o_anotat: "Remena la columna de líquids.",
+    objecte_construit_o_anotat: "Construeix un objecte al Taller.",
+    barca_provada_o_anotat: "Prova la barca: canvia'n la càrrega o les mides.",
+    submari_equilibri_o_anotat: "Mou el llast del submarí.",
+    globus_provat_o_anotat: "Tria un gas per al globus.",
+    temperatura_provada_o_anotat: "Canvia la temperatura de l'aigua.",
+    densimetre_provat_o_anotat: "Prova el densímetre en un líquid.",
+    sonda_provada_o_anotat: "Mou la sonda de pressió."
+  };
+
+  if (cond.tipus === "anotacions_minimes") {
+    const min = cond.min ?? 1;
+    return {
+      fet: false,
+      text:
+        min === 1
+          ? "Fes una mesura i prem «Anota» per desar-la."
+          : `Prem «Anota» després de cada mesura: en portes ${Math.min(nMesures, min)} de ${min}.`
+    };
+  }
+  return { fet: false, text: textos[cond.tipus] || "Fes una mesura i prem «Anota» per desar-la." };
+}
+
+/**
  * Retorna l'etiqueta amable de cada tipus de pas del cicle d'indagació.
  * @param {string} tipus
  * @returns {string}

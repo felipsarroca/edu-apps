@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 /**
- * Prestatge d'objectes persistents amb filtre intel·ligent («Activitat» vs «Tots»),
- * fitxa de l'objecte (mode experimental vs mode d'anàlisi) i selector d'ampolles de líquids (04-laboratori-i-instruments.md §1, §4, §6).
+ * Prestatge d'objectes persistents: llista dels objectes de l'activitat (amb accés a tot el catàleg),
+ * fitxa de l'objecte triat amb les destinacions possibles i, en la vista completa, les ampolles de líquids
+ * (04-laboratori-i-instruments.md §1, §4, §6).
  */
 
 import { MATERIALS } from "../dades/materials.js";
@@ -13,14 +14,24 @@ import { formataNombre } from "../fisica/unitats.js";
 import { icona } from "../eines/icones.js";
 
 const ETIQUETA_UBICACIO = {
-  prestatge: "Prestatge",
-  balanca: "Balança",
-  proveta: "Proveta",
-  vas: "Vas",
-  columna: "Columna",
-  tanc: "Tanc",
-  dinamometre: "Dinamòmetre",
-  taller: "Taller"
+  prestatge: "Al prestatge",
+  balanca: "A la balança",
+  proveta: "A la proveta",
+  vas: "Al vas",
+  columna: "A la columna",
+  tanc: "Al tanc",
+  dinamometre: "Al dinamòmetre",
+  taller: "Al taller"
+};
+
+const ICONA_DESTI = {
+  balanca: "balanca",
+  proveta: "proveta",
+  vas: "vas",
+  columna: "proveta",
+  tanc: "tanc",
+  dinamometre: "dinamometre",
+  taller: "taller"
 };
 
 /**
@@ -29,6 +40,7 @@ const ETIQUETA_UBICACIO = {
 export function renderitzaPrestatge(estat) {
   const lab = estat.laboratori;
   const cfg = estat.configuracio;
+  const completa = Boolean(cfg.vistaCompleta);
   const invActiva = INVESTIGACIONS[estat.investigacio?.id] || INVESTIGACIONS.C4;
 
   // Objectes protagonistes de l'activitat actual (o kit bàsic per taula)
@@ -40,22 +52,21 @@ export function renderitzaPrestatge(estat) {
       : ["A", "B", "C", "patata", "pedra"];
 
   const idsActivitat = new Set([
-    ...(invActiva?.escena?.objectes || []),
+    ...(estat.modeLaboratori === "investigacio" ? invActiva?.escena?.objectes || [] : []),
     ...kitTaula
   ]);
 
   // Afegim sempre qualsevol objecte en ús, tallat o construït
   for (const [id, ub] of Object.entries(lab.ubicacions || {})) {
-    if (ub !== "prestatge" || id.includes("_") || id.startsWith("const_")) {
-      if (ub !== "prestatge" || id.startsWith("patata_") || id.startsWith("B_") || id.startsWith("const_")) {
-        idsActivitat.add(id);
-      }
+    if (ub !== "prestatge" || !OBJECTES_PRESTATGE[id]) {
+      idsActivitat.add(id);
     }
   }
 
   const totsCatalogIds = Object.keys(lab.objectes || {});
   const mostraTots = Boolean(lab.mostraTotsPrestatge);
-  const llistaRender = mostraTots ? totsCatalogIds : [...idsActivitat].filter(id => lab.objectes[id]);
+  const idsActivitatValids = [...idsActivitat].filter(id => lab.objectes[id]);
+  const llistaRender = mostraTots ? totsCatalogIds : idsActivitatValids;
 
   const objSelId =
     lab.objecteSeleccionat && lab.objectes[lab.objecteSeleccionat]
@@ -73,62 +84,56 @@ export function renderitzaPrestatge(estat) {
       const color = obj.misteri ? "#94A3B8" : mat.aspecte?.color || "#CBD5E1";
       const contorn = obj.misteri ? "#475569" : mat.aspecte?.contorn || "#475569";
       const actiu = id === objSelId;
+      const enUs = ub !== "prestatge";
 
       return `
         <button type="button"
-                class="fitxa-prestatge ${actiu ? "seleccionada" : ""} ${ub !== "prestatge" ? "en-us" : ""}"
+                class="fitxa-prestatge ${actiu ? "seleccionada" : ""} ${enUs ? "en-us" : ""}"
                 data-selecciona-obj="${id}"
                 draggable="true"
                 data-drag-obj="${id}"
+                aria-pressed="${actiu}"
                 title="${obj.nom} (${ETIQUETA_UBICACIO[ub] || ub})">
           <span class="fitxa-mostra-svg" style="background:${color};border-color:${contorn}">${obj.etiqueta || id}</span>
           <span class="fitxa-prestatge-info">
             <strong>${obj.nom}</strong>
-            <small class="badge-ubicacio ${ub !== "prestatge" ? "ub-activa" : ""}">${ETIQUETA_UBICACIO[ub] || ub}</small>
+            ${enUs || completa ? `<small class="badge-ubicacio ${enUs ? "ub-activa" : ""}">${ETIQUETA_UBICACIO[ub] || ub}</small>` : ""}
           </span>
         </button>
       `;
     })
     .join("");
 
-  // Opcions per afegir qualsevol altre objecte del catàleg al prestatge
+  // Opcions per afegir qualsevol altre objecte del catàleg al prestatge (vista completa)
   const altresObjectes = Object.values(OBJECTES_PRESTATGE).filter(o => !idsActivitat.has(o.id));
 
-  return `
-    <aside class="laboratori-prestatge" aria-label="Prestatge d'objectes i líquids">
-      <div class="prestatge-cap">
-        <h4>Prestatge</h4>
-        <button type="button" class="bt-link bt-petit" data-endreca="true" title="Torna tots els objectes al prestatge">
-          Endreça
-        </button>
-      </div>
-
+  const capcaleraLlista = completa
+    ? `
       <div class="prestatge-filtre-tabs" role="tablist" aria-label="Filtre d'objectes del prestatge">
         <button type="button" class="bt-filtre-prest ${!mostraTots ? "actiu" : ""}" data-filtre-prestatge="activitat">
-          Activitat (${[...idsActivitat].filter(id => lab.objectes[id]).length})
+          Activitat (${idsActivitatValids.length})
         </button>
         <button type="button" class="bt-filtre-prest ${mostraTots ? "actiu" : ""}" data-filtre-prestatge="tots">
           Catàleg (${totsCatalogIds.length})
         </button>
-      </div>
+      </div>`
+    : `<p class="prestatge-ajuda">Tria'n un i posa'l en un instrument.</p>`;
 
-      <div class="prestatge-llista" role="listbox" aria-label="Objectes disponibles">
-        ${fitxesHtml}
-      </div>
+  const peuLlista = completa
+    ? altresObjectes.length > 0 && !mostraTots
+      ? `<div class="prestatge-afegir">
+          <select id="sel-afegeix-objecte" aria-label="Afegeix més objectes al prestatge">
+            <option value="">+ Afegeix peça del catàleg...</option>
+            ${altresObjectes.map(o => `<option value="${o.id}">${o.etiqueta} · ${o.nom}</option>`).join("")}
+          </select>
+        </div>`
+      : ""
+    : `<button type="button" class="bt-mes-objectes" data-filtre-prestatge="${mostraTots ? "activitat" : "tots"}">
+        ${mostraTots ? `${icona("enrere")} Només els d'aquesta activitat` : `${icona("anota")} Més objectes (${totsCatalogIds.length})`}
+      </button>`;
 
-      ${
-        altresObjectes.length > 0 && !mostraTots
-          ? `<div class="prestatge-afegir">
-              <select id="sel-afegeix-objecte" aria-label="Afegeix més objectes al prestatge">
-                <option value="">+ Afegeix peça del catàleg...</option>
-                ${altresObjectes.map(o => `<option value="${o.id}">${o.etiqueta} · ${o.nom}</option>`).join("")}
-              </select>
-            </div>`
-          : ""
-      }
-
-      ${objSel ? renderitzaFitxaObjecteSeleccionat(estat, objSel) : ""}
-
+  const liquidsHtml = completa
+    ? `
       <div class="prestatge-liquids">
         <h4>Líquids del laboratori</h4>
         <div class="ampolles-grid">
@@ -154,18 +159,41 @@ export function renderitzaPrestatge(estat) {
             })
             .join("")}
         </div>
+      </div>`
+    : "";
+
+  return `
+    <aside class="laboratori-prestatge ${completa ? "" : "prestatge-senzill"}" aria-label="Objectes del laboratori">
+      <div class="prestatge-cap">
+        <h4>${completa ? "Prestatge" : "Objectes"}</h4>
+        <button type="button" class="bt-link bt-petit" data-endreca="true" title="Torna tots els objectes al prestatge">
+          Endreça
+        </button>
       </div>
+
+      ${capcaleraLlista}
+
+      <div class="prestatge-llista" role="group" aria-label="Objectes disponibles">
+        ${fitxesHtml}
+      </div>
+
+      ${peuLlista}
+
+      ${objSel ? renderitzaFitxaObjecteSeleccionat(estat, objSel) : ""}
+
+      ${liquidsHtml}
     </aside>
   `;
 }
 
 /**
- * Renderitza la fitxa de l'objecte seleccionat, respectant el mode experimental vs anàlisi
- * i permetent alternar-lo amb un clic (04-laboratori-i-instruments.md §6).
+ * Renderitza la fitxa de l'objecte seleccionat: on es pot posar, què se'n pot fer i què se n'ha descobert.
+ * Respecta el mode experimental (només el que l'alumne ha mesurat) i el mode d'anàlisi (dades reals) (04 §6).
  */
 function renderitzaFitxaObjecteSeleccionat(estat, obj) {
   const lab = estat.laboratori;
   const cfg = estat.configuracio;
+  const completa = Boolean(cfg.vistaCompleta);
   const modeAnalisi = lab.visibilitat === "analisi";
   const mag = magnitudsObjecte(obj, {
     materials: MATERIALS,
@@ -179,101 +207,124 @@ function renderitzaFitxaObjecteSeleccionat(estat, obj) {
   const vAnotat = mesuresObj.find(m => m.unitat === "cm³" || m.unitat === "mL");
   const dAnotada = mesuresObj.find(m => m.unitat === "g/cm³" || m.unitat === "g/mL");
 
+  const pendent = text => `<span class="dada-pendent">${text}</span>`;
+  const sabuda = text => `<span class="dada-sabuda">${text}</span>`;
+
   const txtMassa = modeAnalisi
-    ? `${formataNombre(mag.massa)} g`
+    ? sabuda(`${formataNombre(mag.massa)} g`)
     : mAnotada
-    ? `${formataNombre(mAnotada.valor)} ${mAnotada.unitat} ✓`
-    : "— (pesa'l)";
+    ? sabuda(`${formataNombre(mAnotada.valor)} ${mAnotada.unitat}`)
+    : pendent("pesa'l");
 
   const txtVolum = modeAnalisi
-    ? `${formataNombre(mag.volumExterior)} cm³`
+    ? sabuda(`${formataNombre(mag.volumExterior)} cm³`)
     : vAnotat
-    ? `${formataNombre(vAnotat.valor)} ${vAnotat.unitat} ✓`
-    : "— (mesura'l)";
+    ? sabuda(`${formataNombre(vAnotat.valor)} ${vAnotat.unitat}`)
+    : pendent("mesura'l");
 
   const txtDensitat = modeAnalisi
-    ? `${formataNombre(mag.densitatMitjana, 2)} g/cm³`
+    ? sabuda(`${formataNombre(mag.densitatMitjana, 2)} g/cm³`)
     : dAnotada
-    ? `${formataNombre(dAnotada.valor, 2)} ${dAnotada.unitat} ✓`
-    : "— (calcula-la)";
+    ? sabuda(`${formataNombre(dAnotada.valor, 2)} ${dAnotada.unitat}`)
+    : pendent("calcula-la");
 
   const matId = obj.parts?.[0]?.material;
   const matInfo = MATERIALS[matId];
-  const txtMaterial = obj.misteri && !modeAnalisi ? "? (a descobrir)" : matInfo?.nom || matId;
+  const txtMaterial = obj.misteri && !modeAnalisi ? pendent("a descobrir") : matInfo?.nom || matId;
 
   const ubActual = lab.ubicacions[obj.id] || "prestatge";
 
-  // Destinacions ràpides segons la taula activa (alternativa accessible a arrossegar o fer clic a l'escena, 04 §2)
+  // Destinacions segons la zona de treball activa (alternativa accessible a arrossegar o fer clic a l'escena, 04 §2)
   let destinacions = [];
   if (lab.taula === "mesura") {
     destinacions = [
       { id: "balanca", label: "Balança" },
       { id: "proveta", label: "Proveta" },
-      { id: "vas", label: "Vas" },
-      { id: "prestatge", label: "Prestatge" }
+      { id: "vas", label: "Vas" }
     ];
   } else if (lab.taula === "columna") {
     destinacions = [
       { id: "columna", label: "Columna" },
-      { id: "vas", label: "Vas amb sal" },
-      { id: "prestatge", label: "Prestatge" }
+      { id: "vas", label: "Vas amb sal" }
     ];
   } else if (lab.taula === "tanc") {
     destinacions = [
-      { id: "tanc", label: "Tanc / Vessament" },
-      { id: "dinamometre", label: "Dinamòmetre" },
-      { id: "prestatge", label: "Prestatge" }
+      { id: "tanc", label: "Tanc" },
+      { id: "dinamometre", label: "Dinamòmetre" }
     ];
   } else if (lab.taula === "taller") {
-    destinacions = [
-      { id: "taller", label: "Banc del taller" },
-      { id: "prestatge", label: "Prestatge" }
-    ];
+    destinacions = [{ id: "taller", label: "Banc del taller" }];
   }
 
   return `
     <div class="fitxa-detall-objecte" role="region" aria-label="Fitxa de l'objecte ${obj.nom}">
       <div class="fitxa-detall-cap">
         <strong>${obj.etiqueta} · ${obj.nom}</strong>
-        <button type="button" class="badge-mode-vis ${modeAnalisi ? "mode-analisi-actiu" : ""}" data-toggle-visibilitat="true" title="Canvia entre mode Experimental (descobreix mesurant) i mode Anàlisi (mostra dades de referència)">
-          ${modeAnalisi ? "Anàlisi (dades)" : "Experimental"}
-        </button>
+        ${
+          completa
+            ? `<button type="button" class="badge-mode-vis ${modeAnalisi ? "mode-analisi-actiu" : ""}" data-toggle-visibilitat="true" title="Canvia entre mode Experimental (descobreix mesurant) i mode Anàlisi (mostra dades de referència)">
+                ${modeAnalisi ? "Anàlisi (dades)" : "Experimental"}
+              </button>`
+            : ""
+        }
       </div>
-      <dl class="fitxa-dl">
-        <div><dt>Massa</dt><dd class="num-tabular">${txtMassa}</dd></div>
-        <div><dt>Volum</dt><dd class="num-tabular">${txtVolum}</dd></div>
-        <div><dt>Densitat</dt><dd class="num-tabular">${txtDensitat}</dd></div>
-        <div><dt>Material</dt><dd>${txtMaterial}</dd></div>
-      </dl>
+
       <div class="fitxa-destinacions">
-        <span class="etiqueta-petita">Col·loca a (o fes clic a l'instrument):</span>
+        <span class="etiqueta-petita">Posa'l a…</span>
         <div class="bts-destinacio">
           ${destinacions
             .map(
               d => `
-            <button type="button" class="bt-desti ${ubActual === d.id ? "actiu" : ""}" data-mou-obj="${obj.id}" data-desti="${d.id}">
-              ${d.label}
+            <button type="button" class="bt-desti ${ubActual === d.id ? "actiu" : ""}" data-mou-obj="${obj.id}" data-desti="${d.id}" aria-pressed="${ubActual === d.id}">
+              ${icona(ICONA_DESTI[d.id] || "laboratori")} <span>${d.label}</span>
             </button>`
             )
             .join("")}
         </div>
-      </div>
-      <div class="fitxa-accions-rapides">
         ${
-          matInfo?.tallable
-            ? `<button type="button" class="bt bt-secundari bt-petit" data-talla-rapid="${obj.id}" data-frac="0.5" title="Talla per la meitat">
-                ${icona("ganivet")} Talla 1/2
-              </button>`
-            : ""
-        }
-        ${
-          matInfo?.deformable
-            ? `<button type="button" class="bt bt-secundari bt-petit" data-modela-rapid="${obj.id}">
-                ${icona("taller")} Modela (${obj.formaModelada || "bola"})
+          ubActual !== "prestatge"
+            ? `<button type="button" class="bt-torna-prestatge" data-mou-obj="${obj.id}" data-desti="prestatge">
+                ${icona("enrere")} Torna'l al prestatge
               </button>`
             : ""
         }
       </div>
+
+      ${
+        matInfo?.tallable || matInfo?.deformable
+          ? `<div class="fitxa-accions-rapides">
+              ${
+                matInfo?.tallable
+                  ? `<button type="button" class="bt bt-secundari bt-petit" data-talla-rapid="${obj.id}" data-frac="0.5" title="Divideix l'objecte en dues meitats">
+                      ${icona("ganivet")} Talla per la meitat
+                    </button>`
+                  : ""
+              }
+              ${
+                matInfo?.deformable
+                  ? `<button type="button" class="bt bt-secundari bt-petit" data-modela-rapid="${obj.id}" title="Dona-li una altra forma (ara: ${obj.formaModelada || "bola"})">
+                      ${icona("taller")} Modela (canvia la forma)
+                    </button>`
+                  : ""
+              }
+            </div>`
+          : ""
+      }
+
+      <dl class="fitxa-dl">
+        <div><dt>Massa</dt><dd>${txtMassa}</dd></div>
+        <div><dt>Volum</dt><dd>${txtVolum}</dd></div>
+        <div><dt>Densitat</dt><dd>${txtDensitat}</dd></div>
+        <div><dt>Material</dt><dd>${txtMaterial}</dd></div>
+      </dl>
+
+      ${
+        completa
+          ? ""
+          : `<button type="button" class="bt-link bt-dades-reals" data-toggle-visibilitat="true" title="Mostra o amaga la massa, el volum i la densitat reals de cada objecte">
+              ${modeAnalisi ? "Amaga les dades reals" : "Mostra les dades reals"}
+            </button>`
+      }
     </div>
   `;
 }
