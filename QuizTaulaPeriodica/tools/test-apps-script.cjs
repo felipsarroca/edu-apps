@@ -85,4 +85,19 @@ context.netejaDuplicatsMillorTemps();
 assert.ok(cleanAttempts >= 3);
 context.SpreadsheetApp = { openById: () => { throw new Error('Permís denegat'); } };
 assert.throws(() => context.netejaDuplicatsMillorTemps(), /Permís denegat/);
+
+// Els errors temporals del bloqueig no han de fer fallar l'activador.
+const serverError = () => { throw new Error("We're sorry, a server error occurred. Please wait a bit and try again."); };
+context.LockService = { getScriptLock: serverError };
+context.netejaDuplicatsMillorTemps();
+context.LockService = { getScriptLock: () => ({ tryLock: serverError, releaseLock: () => {} }) };
+context.netejaDuplicatsMillorTemps();
+
+// La sincronització reutilitza el document obert i no torna a cridar openById.
+let opens = 0;
+const sheetAmbPare = { ...sheet, getParent: () => ({ getSheetByName: () => historySheet }) };
+context.SpreadsheetApp = { openById: () => { opens++; return { getSheetByName: () => sheetAmbPare }; } };
+context.LockService = { getScriptLock: () => ({ tryLock: () => true, releaseLock: serverError }) };
+context.netejaDuplicatsMillorTemps();
+assert.equal(opens, 1);
 console.log('Neteja i reintents: correcte');

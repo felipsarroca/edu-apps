@@ -129,13 +129,16 @@ function doPost(e) {
  * Programa un trigger Time-driven (cada hora/dia) sobre aquesta funció.
  */
 function netejaDuplicatsMillorTemps() {
-  const lock = LockService.getScriptLock();
-  if (!lock.tryLock(30000)) {
-    // Un registre o una altra neteja està en curs: l'activador següent ho tornarà a provar.
-    console.warn('Neteja ajornada: el bloqueig és ocupat.');
-    return;
-  }
+  let lock = null;
   try {
+    // El bloqueig també pot retornar errors temporals de Google: queden dins del try.
+    lock = LockService.getScriptLock();
+    if (!lock.tryLock(30000)) {
+      // Un registre o una altra neteja està en curs: l'activador següent ho tornarà a provar.
+      lock = null;
+      console.warn('Neteja ajornada: el bloqueig és ocupat.');
+      return;
+    }
     for (let intent = 1; intent <= 3; intent++) {
       try {
         const sheet = obreFullAmbReintents().getSheetByName(SHEET_NAME);
@@ -144,16 +147,18 @@ function netejaDuplicatsMillorTemps() {
         return;
       } catch (err) {
         if (!esErrorTemporal(err)) throw err;
-        if (intent === 3) {
-          // Error intern de Google persistent: la neteja és idempotent i es repetirà a la propera execució.
-          console.warn(`Neteja ajornada per un error temporal de Google: ${err}`);
-          return;
-        }
+        if (intent === 3) throw err;
         Utilities.sleep(5000 * intent);
       }
     }
+  } catch (err) {
+    if (!esErrorTemporal(err)) throw err;
+    // Error intern de Google persistent: la neteja és idempotent i es repetirà a la propera execució.
+    console.warn(`Neteja ajornada per un error temporal de Google: ${err}`);
   } finally {
-    lock.releaseLock();
+    if (lock) {
+      try { lock.releaseLock(); } catch (err) { console.warn(`No s'ha pogut alliberar el bloqueig: ${err}`); }
+    }
   }
 }
 
@@ -248,8 +253,8 @@ function netejaResultats(sheet) {
 }
 
 /** L'històric viu sempre al mateix document privat que els resultats. */
-function fullHistoric() {
-  const sheet = obreFullAmbReintents().getSheetByName('Històric');
+function fullHistoric(ss) {
+  const sheet = (ss || obreFullAmbReintents()).getSheetByName('Històric');
   if (!sheet) throw new Error("No s'ha trobat la pestanya 'Històric'.");
   return sheet;
 }
@@ -305,7 +310,8 @@ function sincronitzaHistoric(sheet, motius = new Map()) {
     if (header.indexOf(nom) === -1) throw new Error(`Falta la columna '${nom}'.`);
   }
 
-  const historic = fullHistoric();
+  // Reutilitza el document ja obert: cada openById és una crida més que pot fallar.
+  const historic = fullHistoric(sheet.getParent ? sheet.getParent() : null);
   const registres = historic.getDataRange().getValues();
   const posicions = new Map();
   for (let i = 1; i < registres.length; i++) posicions.set(String(registres[i][0]), i + 1);
