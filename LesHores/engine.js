@@ -1,275 +1,82 @@
-// Core logic for building pools, questions, and options.
-// Exports are plain functions to wire into UI code.
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+// Motor del joc: tria de preguntes sense repeticions i distractors versemblants.
+// Les hores són de rellotge (1-12): el que es veu igual a l'analògic és la mateixa pregunta.
 
-function shuffle(arr, rng = Math.random) {
+export function shuffle(arr, rng = Math.random) {
   const copy = arr.slice();
   for (let i = copy.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rng() * (i + 1));
-    const tmp = copy[i];
-    copy[i] = copy[j];
-    copy[j] = tmp;
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
 }
 
-function randomSample(arr, n, rng = Math.random) {
-  if (n >= arr.length) return shuffle(arr, rng);
-  return shuffle(arr, rng).slice(0, n);
+const wrap12 = (h) => ((((h - 1) % 12) + 12) % 12) + 1;
+const wrap60 = (m) => ((m % 60) + 60) % 60;
+
+/** Hores que formen part d'un nivell. */
+export function levelItems(level, bank) {
+  return bank.filter((e) => level.minutes.includes(e.m) && (!level.text || e[level.text]));
 }
 
-function uniqueById(arr) {
-  const seen = new Set();
-  const out = [];
-  for (const item of arr) {
-    if (!seen.has(item.id)) {
-      seen.add(item.id);
-      out.push(item);
+/**
+ * Baralla de preguntes: no repeteix cap hora fins que s'han vist totes i evita
+ * que la mateixa hora (agulla petita) surti en dues preguntes properes.
+ */
+export function createDeck(items, rng = Math.random) {
+  let deck = shuffle(items, rng);
+  const recent = [];
+  const gapHours = items.length >= 24 ? 2 : 1;
+
+  function pick() {
+    if (deck.length === 0) deck = shuffle(items, rng);
+    const lastIds = recent.slice(-3).map((e) => e.id);
+    const lastHours = recent.slice(-gapHours).map((e) => e.h);
+    const tests = [
+      (e) => !lastIds.includes(e.id) && !lastHours.includes(e.h),
+      (e) => !lastIds.includes(e.id) && e.h !== recent.at(-1)?.h,
+      (e) => e.id !== recent.at(-1)?.id,
+    ];
+    for (const ok of tests) {
+      const i = deck.findIndex(ok);
+      if (i !== -1) return take(i);
     }
-  }
-  return out;
-}
-
-function wrapHour(h) {
-  return (h + 24) % 24;
-}
-
-function filterByTags(entries, filters = {}) {
-  const tagsAll = filters.tagsAll || [];
-  const tagsAny = filters.tagsAny || [];
-  let out = entries.slice();
-  if (tagsAll.length > 0) {
-    out = out.filter((e) => tagsAll.every((t) => e.tags.includes(t)));
-  }
-  if (tagsAny.length > 0) {
-    out = out.filter((e) => tagsAny.some((t) => e.tags.includes(t)));
-  }
-  return out;
-}
-
-function uniqueByTime(arr) {
-  const seen = new Set();
-  const out = [];
-  for (const item of arr) {
-    const key = `${item.h}:${item.m}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      out.push(item);
-    }
-  }
-  return out;
-}
-
-function buildPool(level, timeBank, rng = Math.random) {
-  const candidates = filterByTags(timeBank, level.filters);
-  const poolSize = level.questionPool?.size || 30;
-
-  if (level.questionPool?.perTag) {
-    let pool = [];
-    for (const [tag, count] of Object.entries(level.questionPool.perTag)) {
-      const tagged = candidates.filter((e) => e.tags.includes(tag));
-      pool = pool.concat(randomSample(tagged, count, rng));
-    }
-    pool = uniqueByTime(uniqueById(pool));
-    if (pool.length < poolSize) {
-      const remaining = candidates.filter(
-        (e) => !pool.some((p) => p.id === e.id) && !pool.some((p) => p.h === e.h && p.m === e.m)
-      );
-      pool = pool.concat(randomSample(remaining, poolSize - pool.length, rng));
-    }
-    return uniqueByTime(uniqueById(pool));
+    // Si a la baralla no en queda cap de vàlid, se'n barreja una de nova.
+    deck = shuffle(items, rng);
+    const i = deck.findIndex(tests[0]);
+    return take(i === -1 ? 0 : i);
   }
 
-  return uniqueByTime(randomSample(candidates, poolSize, rng));
-}
-
-function buildChallenge(pool, count = 10, rng = Math.random) {
-  return randomSample(pool, count, rng);
-}
-
-function optionValue(entry, level, settings = {}) {
-  if (level.mode === "textToClock") return entry.id;
-  if (level.mode === "say") return entry.catalan;
-  return settings.use24h ? entry.digital24 : entry.digital12;
-}
-
-function entriesSameMinuteNeighborHour(entry, pool) {
-  const h1 = wrapHour(entry.h - 1);
-  const h2 = wrapHour(entry.h + 1);
-  return pool.filter((e) => e.m === entry.m && (e.h === h1 || e.h === h2));
-}
-
-function entriesHourDeltas(entry, pool, deltas) {
-  const out = [];
-  for (const d of deltas || []) {
-    const h1 = wrapHour(entry.h + d);
-    const h2 = wrapHour(entry.h - d);
-    const sameMinute = pool.filter((e) => e.m === entry.m && (e.h === h1 || e.h === h2));
-    out.push(...sameMinute);
-  }
-  return out;
-}
-
-function entriesMinuteDeltas(entry, pool, deltas) {
-  const out = [];
-  for (const d of deltas || []) {
-    const m1 = (entry.m + d) % 60;
-    const m2 = (entry.m - d + 60) % 60;
-    for (const m of [m1, m2]) {
-      const sameHour = pool.filter((e) => e.h === entry.h && e.m === m);
-      out.push(...sameHour);
-    }
-  }
-  return out;
-}
-
-function entriesQuarterNeighborHour(entry, pool) {
-  if (![15, 30, 45].includes(entry.m)) return [];
-  return entriesSameMinuteNeighborHour(entry, pool);
-}
-
-function textSamePatternNeighborHour(entry, pool) {
-  const patternTags = ["en_punt", "mitja", "quarts", "menys"];
-  const tag = patternTags.find((t) => entry.tags.includes(t));
-  if (!tag) return [];
-  const h1 = wrapHour(entry.h - 1);
-  const h2 = wrapHour(entry.h + 1);
-  return pool.filter((e) => e.tags.includes(tag) && (e.h === h1 || e.h === h2));
-}
-
-function textEnPuntVsMitja(entry, pool) {
-  if (entry.tags.includes("en_punt")) {
-    return pool.filter((e) => e.tags.includes("mitja") && e.h === entry.h);
-  }
-  if (entry.tags.includes("mitja")) {
-    return pool.filter((e) => e.tags.includes("en_punt") && e.h === entry.h);
-  }
-  return [];
-}
-
-function textQuartsMin5Confusion(entry, pool) {
-  if (!entry.tags.includes("quarts")) return [];
-  const h1 = entry.h;
-  return pool.filter((e) => e.tags.includes("quarts") && e.tags.includes("min5") && e.h === h1);
-}
-
-function textMenysNeighborHour(entry, pool) {
-  if (!entry.tags.includes("menys")) return [];
-  return entriesSameMinuteNeighborHour(entry, pool);
-}
-
-function textMenysVsQuarts(entry, pool) {
-  if (!entry.tags.includes("menys")) return [];
-  const h1 = entry.h;
-  return pool.filter((e) => e.tags.includes("quarts") && e.h === h1);
-}
-
-function buildOptions(entry, level, pool, settings = {}, rng = Math.random, allCandidates = null) {
-  const correct = optionValue(entry, level, settings);
-  const universe = allCandidates || pool;
-  let candidates = [];
-  const maxOptions = level.optionsRules?.count || 4;
-
-  if (level.mode === "say") {
-    candidates = candidates.concat(textSamePatternNeighborHour(entry, universe));
-
-    const textRules = level.optionsRules?.textDistractors || [];
-    if (textRules.includes("en_punt_vs_mitja")) {
-      candidates = candidates.concat(textEnPuntVsMitja(entry, universe));
-    }
-    if (textRules.includes("same_quarter_neighbor_hour")) {
-      candidates = candidates.concat(textSamePatternNeighborHour(entry, universe));
-    }
-    if (textRules.includes("quarts_i_min5_confusion")) {
-      candidates = candidates.concat(textQuartsMin5Confusion(entry, universe));
-    }
-    if (textRules.includes("menys_neighbor_hour")) {
-      candidates = candidates.concat(textMenysNeighborHour(entry, universe));
-    }
-    if (textRules.includes("menys_vs_quarts")) {
-      candidates = candidates.concat(textMenysVsQuarts(entry, universe));
-    }
-  } else {
-    const strategy = level.optionsRules?.distractorStrategy || "";
-    if (strategy === "same_quarter_neighbor_hour") {
-      candidates = candidates.concat(entriesQuarterNeighborHour(entry, universe));
-    }
-    if (strategy === "neighbor_hour_same_minute") {
-      candidates = candidates.concat(entriesSameMinuteNeighborHour(entry, universe));
-    }
-
-    candidates = candidates.concat(entriesSameMinuteNeighborHour(entry, universe));
-    candidates = candidates.concat(entriesMinuteDeltas(entry, universe, level.optionsRules?.minuteDeltas || []));
-    candidates = candidates.concat(entriesHourDeltas(entry, universe, level.optionsRules?.hourDeltas || []));
+  function take(i) {
+    const [item] = deck.splice(i, 1);
+    recent.push(item);
+    if (recent.length > 6) recent.shift();
+    return item;
   }
 
-  candidates = uniqueById(candidates).filter((e) => e.id !== entry.id);
-  let optionEntries = randomSample(candidates, maxOptions - 1, rng);
-
-  // Fallback if we don't have enough plausible distractors
-  if (optionEntries.length < maxOptions - 1) {
-    const remaining = universe.filter((e) => e.id !== entry.id && !optionEntries.some((o) => o.id === e.id));
-    const needed = maxOptions - 1 - optionEntries.length;
-    optionEntries = optionEntries.concat(randomSample(remaining, needed, rng));
-  }
-
-  const optionValues = optionEntries.map((e) => optionValue(e, level, settings));
-  const seen = new Set([correct]);
-  const uniqueOptions = [correct];
-
-  for (const opt of optionValues) {
-    if (uniqueOptions.length >= maxOptions) break;
-    if (!seen.has(opt)) {
-      uniqueOptions.push(opt);
-      seen.add(opt);
-    }
-  }
-
-  if (uniqueOptions.length < maxOptions) {
-    const remaining = shuffle(
-      universe.filter((e) => e.id !== entry.id),
-      rng
-    );
-    for (const candidate of remaining) {
-      if (uniqueOptions.length >= maxOptions) break;
-      const value = optionValue(candidate, level, settings);
-      if (!seen.has(value)) {
-        uniqueOptions.push(value);
-        seen.add(value);
-      }
-    }
-  }
-
-  const options = shuffle(uniqueOptions, rng);
-  return options;
+  return { next: pick };
 }
 
-function buildQuestion(entry, level, pool, settings = {}, rng = Math.random, allCandidates = null) {
-  const options = buildOptions(entry, level, pool, settings, rng, allCandidates);
-  const correct = optionValue(entry, level, settings);
-  return {
-    entry,
-    prompt: level.mode === "textToClock" ? entry.catalan : entry,
-    correct,
-    options,
+/** Tres distractors: confusió d'hora, de minuts o d'agulles, i un de variat. */
+export function buildOptions(item, level, bank, rng = Math.random) {
+  const allowed = new Set(level.optionMinutes || level.minutes);
+  const byKey = new Map(bank.map((e) => [`${e.h}:${e.m}`, e]));
+  const usable = (e) => e && e.id !== item.id && allowed.has(e.m) && (!level.text || e[level.text]);
+  const get = (h, m) => byKey.get(`${wrap12(h)}:${wrap60(m)}`);
+
+  const hourTrap = [get(item.h - 1, item.m), get(item.h + 1, item.m)];
+  const minuteTrap = [5, 10, 15, 30].flatMap((d) => [get(item.h, item.m + d), get(item.h, item.m - d)]);
+  const swapped = item.m % 5 === 0 ? [get(item.m === 0 ? 12 : item.m / 5, (item.h % 12) * 5)] : [];
+  const far = [get(item.h + 2, item.m), get(item.h - 2, item.m), get(item.h + 6, item.m)];
+
+  const groups = [hourTrap, [...minuteTrap, ...swapped], far].map((g) => shuffle(g.filter(usable), rng));
+  const chosen = [];
+  const add = (e) => {
+    if (e && chosen.length < 3 && !chosen.some((c) => c.id === e.id)) chosen.push(e);
   };
-}
+  groups.forEach((g) => add(g[0]));
+  shuffle(groups.flat(), rng).forEach(add);
+  shuffle(bank.filter(usable), rng).forEach(add);
 
-function validatePool(level, pool) {
-  const expected = level.questionPool?.size || 30;
-  return {
-    levelId: level.levelId,
-    size: pool.length,
-    ok: pool.length === expected,
-  };
+  return shuffle([item, ...chosen], rng);
 }
-
-export {
-  buildPool,
-  buildChallenge,
-  buildQuestion,
-  buildOptions,
-  validatePool,
-  randomSample,
-  shuffle,
-  uniqueById,
-};

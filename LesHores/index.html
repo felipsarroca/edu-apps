@@ -1,218 +1,218 @@
 <!doctype html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-NC-SA-4.0 -->
 <html lang="ca">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Ara és l'hora</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3" sizes="any" />
-    <link rel="apple-touch-icon" href="favicon.svg?v=3" sizes="any" />
+    <meta name="description" content="Aprèn a llegir les hores en rellotges analògics i a dir-les en català, pas a pas." />
+    <meta name="theme-color" content="#ff4b5c" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=4" sizes="any" />
+    <link rel="apple-touch-icon" href="favicon.svg?v=4" />
     <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="styles.css?v=4" />
   </head>
-  <body>
-    <div class="bg-shapes"></div>
+  <body data-screen="home">
+    <div class="bg-shapes" aria-hidden="true"></div>
+
     <main class="app">
       <header class="app-header">
         <div class="brand">
-          <img src="icona.svg" alt="Icona de l'app" class="brand-icon" />
+          <img src="icona.svg" alt="" class="brand-icon" />
           <div class="brand-text">
-            <div class="logo"><strong>Ara és l'hora</strong></div>
+            <h1 class="logo">Ara és l'hora</h1>
             <div class="subtitle">Aprèn a llegir les hores pas a pas</div>
           </div>
         </div>
         <div class="header-right">
-          <div class="hud-panel header-hud">
+          <div class="hud-panel">
             <div class="hud-main">
-              <div class="hud-name" id="hudName">Jugador</div>
+              <div class="hud-name" id="hudName">Sense perfil</div>
               <div class="hud-level" id="hudLevel">Nivell 1</div>
             </div>
-            <div class="hud-stats">
-              <div class="hud-pill">
-                <span class="hud-label">Punts</span>
-                <span class="hud-value" id="hudPoints">0</span>
-              </div>
-              <div class="hud-pill">
-                <span class="hud-label">Ratxa</span>
-                <span class="hud-value" id="hudStreak">0</span>
-              </div>
+            <div class="hud-pill">
+              <span class="hud-label">Punts</span>
+              <span class="hud-value" id="hudPoints">0</span>
+            </div>
+            <div class="hud-pill">
+              <span class="hud-label">Insígnies</span>
+              <span class="hud-value" id="hudBadges">0</span>
             </div>
           </div>
-          <button class="info-btn" id="infoBtn" aria-label="Informació">ℹ️</button>
+          <button class="icon-btn" id="infoBtn" type="button" aria-label="Com funciona" title="Com funciona">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="0.6" class="dot"/></svg>
+          </button>
         </div>
       </header>
 
+      <!-- Inici -->
       <section class="screen active" id="screen-home" data-screen="home">
-        <div class="card">
-          <h2>Perfil</h2>
-          <div class="profile-row">
-            <input id="playerName" type="text" placeholder="Nom del jugador" />
-            <button class="btn primary" id="saveProfile">Desa</button>
-          </div>
+        <div class="card profile-card">
+          <h2>Qui juga?</h2>
+          <form class="profile-row" id="profileForm" autocomplete="off">
+            <input id="playerName" type="text" maxlength="24" placeholder="Escriu el teu nom" aria-label="Nom del jugador" />
+            <button class="btn primary" type="submit">Desa</button>
+          </form>
           <div class="profile-list" id="profileList"></div>
           <div class="profile-actions">
-            <button class="btn" id="continueBtn">Continua</button>
-            <button class="btn ghost" id="newBtn">Nou jugador</button>
+            <button class="btn ghost" id="newBtn" type="button">Nou jugador</button>
           </div>
+          <p class="hint" id="profileHint" hidden>Primer escriu el teu nom i prem «Desa».</p>
         </div>
 
-        <div class="grid-buttons home-buttons">
-          <button class="btn large home-play" id="playBtn" data-go="game">
+        <div class="home-buttons">
+          <button class="btn large home-play" id="playBtn" type="button">
             <span class="btn-label">Jugar</span>
-            <span class="btn-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" role="img">
-                <polygon points="8,5 20,12 8,19" fill="currentColor"></polygon>
-              </svg>
-            </span>
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
           </button>
-          <button class="btn large home-levels" data-go="levels">
+          <button class="btn large home-levels" data-go="levels" type="button">
             <span class="btn-label">Nivells</span>
-            <span class="btn-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" role="img">
-                <rect x="4" y="4" width="6" height="16" rx="2"></rect>
-                <rect x="10" y="7" width="6" height="13" rx="2"></rect>
-                <rect x="16" y="10" width="4" height="10" rx="2"></rect>
-              </svg>
-            </span>
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V14h4v6M10 20V9h4v11M16 20V4h4v16"/></svg>
           </button>
-          <button class="btn large home-badges" data-go="badges">
+          <button class="btn large home-badges" data-go="badges" type="button">
             <span class="btn-label">Insígnies</span>
-            <span class="btn-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" role="img">
-                <circle cx="12" cy="9" r="5"></circle>
-                <path d="M8 14l-2 6 4-2 2 2 2-2 4 2-2-6"></path>
-              </svg>
-            </span>
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5 7 21l5-2.5 5 2.5-1.5-7.5"/></svg>
           </button>
-          <button class="btn large home-options" data-go="options">
+          <button class="btn large home-options" data-go="options" type="button">
             <span class="btn-label">Opcions</span>
-            <span class="btn-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" role="img">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M19.4 4.6l-2.1 2.1M4.6 19.4l2.1-2.1"></path>
-              </svg>
-            </span>
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg>
           </button>
         </div>
       </section>
 
+      <!-- Joc -->
       <section class="screen" id="screen-game" data-screen="game">
-        <div class="progress-wrap">
-          <div class="progress-bar"><span id="progressFill"></span></div>
-          <div class="progress-text" id="progressText">0/10 encerts</div>
-        </div>
-        <div class="badge-strip" id="badgeStrip"></div>
-
-        <div class="game-area">
-          <div class="clock-wrap">
-            <div id="clockContainer" class="clock-container"></div>
-          </div>
-
-          <div class="options-column">
-            <div class="options-wrap" id="optionsWrap"></div>
-            <div class="question-repeat" id="questionRepeat"></div>
-            <div class="game-actions">
-              <button class="btn ghost back-btn" data-go="home">&larr; Torna</button>
+        <div class="game-bar">
+          <button class="btn back-btn" data-go="levels" type="button" aria-label="Torna als nivells">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            <span>Torna</span>
+          </button>
+          <div class="game-level">
+            <span class="game-badge" id="gameBadge" aria-hidden="true"></span>
+            <div class="game-level-text">
+              <div class="game-title" id="gameTitle">Nivell 1</div>
+              <div class="progress-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" id="progressBar"><span id="progressFill"></span></div>
+                <span class="progress-text" id="progressText">0/10</span>
+              </div>
             </div>
           </div>
+          <div class="game-stats">
+            <div class="stat"><span class="hud-label">Punts</span><span class="hud-value" id="gamePoints">0</span></div>
+            <div class="stat"><span class="hud-label">Ratxa</span><span class="hud-value" id="gameStreak">0</span></div>
+          </div>
         </div>
 
-        <div class="feedback" id="feedback"></div>
+        <div class="game-area" id="gameArea">
+          <div class="prompt-card" id="promptCard"></div>
+          <div class="options-wrap" id="optionsWrap"></div>
+          <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+        </div>
       </section>
 
+      <!-- Nivells -->
       <section class="screen" id="screen-levels" data-screen="levels">
-        <div class="card">
+        <div class="screen-head">
           <h2>Nivells</h2>
-          <p>Tria el nivell disponible i aconsegueix insígnies.</p>
-          <div class="levels-list" id="levelsList"></div>
+          <button class="btn back-btn" data-go="home" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Inici</span>
+          </button>
         </div>
-        <button class="btn ghost back-btn" data-go="home">&larr; Torna</button>
+        <div class="levels-list" id="levelsList"></div>
       </section>
 
+      <!-- Insígnies -->
       <section class="screen" id="screen-badges" data-screen="badges">
-        <div class="card">
+        <div class="screen-head">
           <h2>Insígnies</h2>
-          <div class="badges-grid" id="badgesGrid"></div>
+          <button class="btn back-btn" data-go="home" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Inici</span>
+          </button>
         </div>
-        <button class="btn ghost back-btn" data-go="home">&larr; Torna</button>
+        <div class="badges-grid" id="badgesGrid"></div>
       </section>
 
+      <!-- Opcions -->
       <section class="screen" id="screen-options" data-screen="options">
-        <div class="card">
+        <div class="screen-head">
           <h2>Opcions</h2>
-          <label class="toggle">
-            <input type="checkbox" id="soundOn" checked />
-            <span>So</span>
-          </label>
+          <button class="btn back-btn" data-go="home" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Inici</span>
+          </button>
+        </div>
+        <div class="card options-card">
+          <div class="toggle-group">
+            <div class="toggle-title">So</div>
+            <div class="segmented" role="group" aria-label="So">
+              <button class="seg-btn" data-sound="1" type="button">Activat</button>
+              <button class="seg-btn" data-sound="0" type="button">Desactivat</button>
+            </div>
+          </div>
           <div class="toggle-group">
             <div class="toggle-title">Tema</div>
-            <div class="segmented">
-              <button class="seg-btn active" data-theme="light">Clar</button>
-              <button class="seg-btn" data-theme="dark">Fosc</button>
+            <div class="segmented" role="group" aria-label="Tema">
+              <button class="seg-btn" data-theme-btn="light" type="button">Clar</button>
+              <button class="seg-btn" data-theme-btn="dark" type="button">Fosc</button>
             </div>
           </div>
-          <div class="toggle-group">
-            <div class="toggle-title">Pantalla</div>
-            <div class="segmented">
-              <button class="seg-btn active" data-screenmode="desktop">Ordinador</button>
-              <button class="seg-btn" data-screenmode="mobile">Mòbil</button>
-            </div>
-          </div>
+          <p class="hint">La pantalla s'adapta sola a l'ordinador, la tauleta i el mòbil.</p>
         </div>
-        <button class="btn ghost back-btn" data-go="home">&larr; Torna</button>
       </section>
-
-      <footer class="app-footer">
-        <img src="CC_BY-NC-SA.svg" alt="Llicència CC BY-NC-SA" class="cc-logo" />
-        <div class="credits">
-          <div>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener">Felip Sarroca</a></div>
-          <div>Obra sota llicència CC BY-NC-SA 4.0</div>
-        </div>
-      </footer>
     </main>
 
-    <div class="modal" id="levelModal">
-      <canvas id="confettiCanvas"></canvas>
+    <footer class="felip-app-footer" role="contentinfo">
+      <a class="felip-license-image-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer" aria-label="Llicència Creative Commons BY-NC-SA 4.0">
+        <img class="felip-license-image" src="CC_BY-NC-SA.svg" alt="Creative Commons BY-NC-SA" />
+      </a>
+      <div class="felip-footer-text">
+        <p>Aplicació creada per <a href="https://ja.cat/felipsarroca" target="_blank" rel="noopener noreferrer">Felip Sarroca</a> amb assistència de la IA</p>
+        <p>Codi: <a href="LICENSE" target="_blank" rel="noopener noreferrer">AGPLv3</a> · Continguts: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> · <a href="https://github.com/felipsarroca/edu-apps/issues/new?template=leshores.yml" target="_blank" rel="noopener noreferrer">Suggeriments i errors</a></p>
+      </div>
+    </footer>
+
+    <div class="modal" id="levelModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <canvas id="confettiCanvas" aria-hidden="true"></canvas>
       <div class="modal-card">
-        <div class="modal-badge" id="modalBadge">&#127941;</div>
+        <div class="modal-badge" id="modalBadge"></div>
         <h3 id="modalTitle">Nivell superat!</h3>
-        <p id="modalText">Has desbloquejat una nova insígnia.</p>
-        <audio id="winSound" preload="auto">
-          <source src="data:audio/wav;base64,UklGRjQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQQAAAAA" type="audio/wav">
-        </audio>
+        <p id="modalText"></p>
         <div class="modal-actions">
-          <button class="btn primary" id="modalNext">Següent nivell</button>
-          <button class="btn ghost" id="modalLevels">Torna a nivells</button>
+          <button class="btn primary" id="modalNext" type="button">Següent nivell</button>
+          <button class="btn ghost" id="modalLevels" type="button">Torna als nivells</button>
         </div>
       </div>
     </div>
 
-    <div class="modal" id="infoModal">
+    <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
       <div class="modal-card info-card">
-        <h3>Com funciona</h3>
+        <h3 id="infoTitle">Com funciona</h3>
         <div class="info-grid">
           <div class="info-item">
-            <div class="info-icon">&#9201;</div>
-            <div>Aconsegueix 10 encerts per superar un nivell.</div>
+            <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg>
+            <div>Mira el rellotge (o llegeix la frase) i tria la resposta correcta.</div>
           </div>
           <div class="info-item">
-            <div class="info-icon">&#127942;</div>
-            <div>Cal una ratxa mínima de 5 encerts per passar de nivell. Si no l'aconsegueixes, repetiràs el nivell.</div>
+            <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            <div>Per superar un nivell calen <strong>10 encerts</strong> i, en algun moment, <strong>5 encerts seguits</strong>.</div>
           </div>
           <div class="info-item">
-            <div class="info-icon">&#11088;</div>
-            <div>Guanya insígnies i desbloqueja nivells nous.</div>
+            <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5 7 21l5-2.5 5 2.5-1.5-7.5"/></svg>
+            <div>Cada nivell superat et dona una insígnia i obre el nivell següent.</div>
           </div>
           <div class="info-item">
-            <div class="info-icon">&#128190;</div>
-            <div>El progrés queda guardat pel teu nom.</div>
+            <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>
+            <div>El progrés es desa amb el teu nom en aquest navegador.</div>
           </div>
         </div>
         <div class="modal-actions">
-          <button class="btn primary" id="infoClose">Entesos</button>
+          <button class="btn primary" id="infoClose" type="button">Entesos</button>
         </div>
       </div>
     </div>
 
-    <script type="module" src="app.js"></script>
+    <script type="module" src="app.js?v=4"></script>
   </body>
 </html>

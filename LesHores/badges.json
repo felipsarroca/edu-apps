@@ -2,97 +2,73 @@
   {
     "badgeId": "b_en_punt",
     "name": "Campió del punt",
-    "description": "Superes el nivell d'en punt amb 10 encerts.",
-    "icon": "🕐",
-    "condition": "levelCompleted:L1",
-    "rarity": "comú"
+    "description": "Llegeixes les hores en punt.",
+    "icon": "🕐"
   },
   {
     "badgeId": "b_mitja",
-    "name": "Mestre de la mitja",
-    "description": "Domines les hores i mitges.",
-    "icon": "🕧",
-    "condition": "levelCompleted:L2",
-    "rarity": "comú"
+    "name": "Mestre dels dos quarts",
+    "description": "Domines les hores en punt i de dos quarts.",
+    "icon": "🕧"
   },
   {
     "badgeId": "b_quarts",
     "name": "Senyor dels quarts",
     "description": "Quarts clars com l'aigua.",
-    "icon": "🕒",
-    "condition": "levelCompleted:L3",
-    "rarity": "comú"
+    "icon": "🕒"
   },
   {
     "badgeId": "b_min5",
     "name": "Rellotger de cinc",
     "description": "Minuts de 5 sense dubtar.",
-    "icon": "🕔",
-    "condition": "levelCompleted:L4",
-    "rarity": "comú"
+    "icon": "🕔"
   },
   {
     "badgeId": "b_min5_sense_nums",
     "name": "Ull d'agulla",
     "description": "Minuts de 5 sense números.",
-    "icon": "👀",
-    "condition": "levelCompleted:L5",
-    "rarity": "rar"
+    "icon": "👀"
   },
   {
     "badgeId": "b_min5_net",
     "name": "Rellotge net",
     "description": "Minuts de 5 amb només agulles.",
-    "icon": "✨",
-    "condition": "levelCompleted:L6",
-    "rarity": "rar"
+    "icon": "✨"
   },
   {
     "badgeId": "b_text_punt_mitja",
     "name": "Orador puntual",
-    "description": "Textos d'en punt i mitja sense fallar.",
-    "icon": "💬",
-    "condition": "levelCompleted:L7",
-    "rarity": "comú"
+    "description": "Dius en català les hores en punt i de dos quarts.",
+    "icon": "💬"
   },
   {
     "badgeId": "b_text_quarts",
     "name": "Quarts de llengua",
     "description": "Expresses els quarts amb seguretat.",
-    "icon": "📝",
-    "condition": "levelCompleted:L8",
-    "rarity": "comú"
+    "icon": "📝"
   },
   {
     "badgeId": "b_text_quarts_min5",
     "name": "Filador de minuts",
     "description": "Quarts i minuts de 5 ben trenats.",
-    "icon": "🧵",
-    "condition": "levelCompleted:L9",
-    "rarity": "rar"
+    "icon": "🧵"
   },
   {
     "badgeId": "b_text_menys",
     "name": "Domador del menys",
     "description": "Control absolut de la forma 'menys'.",
-    "icon": "➖",
-    "condition": "levelCompleted:L10",
-    "rarity": "rar"
+    "icon": "➖"
   },
   {
     "badgeId": "b_text_clock_quarts_min5",
     "name": "Lectura d'ulls",
     "description": "Llegir text i trobar rellotge és el teu fort.",
-    "icon": "🔄",
-    "condition": "levelCompleted:L11",
-    "rarity": "èpic"
+    "icon": "🔄"
   },
   {
     "badgeId": "b_text_clock_menys",
     "name": "Savi del temps",
     "description": "Domines el text i el rellotge en el nivell més difícil.",
-    "icon": "⏳",
-    "condition": "levelCompleted:L12",
-    "rarity": "èpic"
+    "icon": "⏳"
   }
 ]
