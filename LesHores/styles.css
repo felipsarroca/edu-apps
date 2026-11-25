@@ -984,6 +984,10 @@ body[data-screen="game"] .app {
   .felip-app-footer { font-size: 0.64rem; }
 }
 
+@media (max-width: 600px) {
+  .footer-suggestions { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
